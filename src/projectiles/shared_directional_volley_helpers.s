@@ -12,7 +12,7 @@ Projectile_SpawnFourDirectionalShots_Loop:              ; CODE XREF: Projectile_
                 bne.s   Projectile_SpawnFourDirectionalShots_Return
                 jsr     (Projectile_InitType1A8).l
                 move.l  #SharedProjectileDuration4Animation,8(a0)
-                move.w  (word_FF808A).w,d0
+                move.w  (GlobalSpritePriorityBit).w,d0
                 addi.w  #$4000,d0
                 move.w  d0,$E(a0)
                 move.w  d5,$10(a0)
@@ -39,7 +39,7 @@ Projectile_SpawnType1A8AtAngle:                         ; CODE XREF: Stage11_Ris
                 jsr     (Projectile_InitType1A8).l
                 clr.b   $21(a0)
                 move.l  #SharedProjectileDuration4Animation,8(a0)
-                move.w  (word_FF808A).w,d0
+                move.w  (GlobalSpritePriorityBit).w,d0
                 addi.w  #$4000,d0
                 move.w  d0,$E(a0)
                 move.w  d5,$10(a0)

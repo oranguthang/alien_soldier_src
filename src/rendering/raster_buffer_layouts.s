@@ -1,5 +1,5 @@
 RasterBuffer_CopySelectedLayout:                        ; CODE XREF: Sys_VBlankHandler+24   p  ; was: sub_29E2E
-                move.w  (word_FF8090).w,d0
+                move.w  (RasterLayoutOffset).w,d0
                 movea.w RasterBuffer_LayoutOffsets(pc,d0.w),a0
                 adda.l  #RasterBuffer_CopyXiTigerOffsets,a0
                 jmp     (a0)

@@ -27,11 +27,11 @@ Int_VBlank_RunEffects:                                  ; CODE XREF: VBLANK+36  
                 move.b  #1,(SoundRequestQueue+3).w
 Int_VBlank_UpdateFrameDivider:                          ; CODE XREF: VBLANK+50   j  ; was: loc_AD8
                                         ; VBLANK+56   j
-                subq.w  #1,(word_FF8096).w
+                subq.w  #1,(VBlankFrameDivider).w
                 bpl.s   Int_VBlank_CheckExtendedHandler
                 move.w  #4,d0
                 sub.w   (FrameSkipLevel).w,d0
-                move.w  d0,(word_FF8096).w
+                move.w  d0,(VBlankFrameDivider).w
 Int_VBlank_CheckExtendedHandler:                        ; CODE XREF: VBLANK+62   j  ; was: loc_AEA
                 tst.b   (VBlankUpdateReady).w
                 bne.s   Sys_VBlankHandler
@@ -55,7 +55,7 @@ Sys_VBlankHandler:                                      ; CODE XREF: VBLANK+74  
                 beq.s   Sys_VBlankHandler_RunUpdate
                 tst.b   (FrameControlFlags).w
                 bmi.s   Sys_VBlankHandler_RunUpdate
-                cmpi.w  #1,(word_FF8096).w
+                cmpi.w  #1,(VBlankFrameDivider).w
                 beq.s   Int_VBlank_AcquireZ80BusForExit
 Sys_VBlankHandler_RunUpdate:                            ; CODE XREF: Sys_VBlankHandler+4   j  ; was: loc_B2E
                                         ; Sys_VBlankHandler+A   j

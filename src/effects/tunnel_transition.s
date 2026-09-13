@@ -18,7 +18,7 @@ TunnelTransition_InitializeObject:                      ; DATA XREF: TunnelTrans
                 move.w  #2,4(a5)
                 move.w  #$100,2(a5)
                 move.b  #4,(byte_FFA95B).w
-                clr.w   (word_FF808A).w
+                clr.w   (GlobalSpritePriorityBit).w
                 bra.w   Effect_ClearTransitionPatternBuffer
 ; End of function TunnelTransition_InitializeObject
 ; Loads the shared transition graphics
@@ -42,37 +42,37 @@ TunnelTransition_GraphicsLoadDescriptor:    dc.w    7   ; field_0  ; was: stru_2
 TunnelTransition_ConfigureEffect:                       ; DATA XREF: TunnelTransition_ObjectMain+14   o  ; was: sub_2798C
                 addq.w  #2,4(a5)
                 move.b  #3,(byte_FFA95B).w
-                move.w  #4,(word_FF8090).w
+                move.w  #4,(RasterLayoutOffset).w
                 move.w  #$10,(RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w
-                clr.w   (word_FF807C).w
+                clr.w   (TransitionProgress).w
                 move.b  #$AA,d0
                 jsr     (Sound_PlaySFX).l
-                move.w  #2,(word_FF807A).w
+                move.w  #2,(TransitionModeOffset).w
                 rts
 ; End of function TunnelTransition_ConfigureEffect
 ; Builds the tunnel transition's initial mask pattern
 TunnelTransition_BuildInitialPattern:                   ; DATA XREF: TunnelTransition_ObjectMain+16   o  ; was: sub_279C2
                 addq.w  #2,4(a5)
-                move.l  #$18000,(dword_FF80A0).w
+                move.l  #$18000,(TransitionEdgeSpan).w
                 bsr.w   Effect_BuildTransitionPattern
 ; End of function TunnelTransition_BuildInitialPattern
 ; Advances the tunnel transition and delays mask growth until progress $4E
 TunnelTransition_Update:                                ; DATA XREF: TunnelTransition_ObjectMain+18   o  ; was: sub_279D2
                 bsr.w   Effect_UpdateScrollPosition
-                move.w  $10(a5),(dword_FF807E).w
-                move.w  $14(a5),(dword_FF807E+2).w
+                move.w  $10(a5),(TransitionOriginXY).w
+                move.w  $14(a5),(TransitionOriginXY+2).w
                 move.w  (FrameCounter).w,d0
                 andi.w  #1,d0
                 addq.w  #1,d0
-                add.w   d0,(word_FF807C).w
-                cmpi.w  #$7F,(word_FF807C).w
+                add.w   d0,(TransitionProgress).w
+                cmpi.w  #$7F,(TransitionProgress).w
                 bmi.s   TunnelTransition_UpdateMask
-                clr.w   (word_FF807A).w
+                clr.w   (TransitionModeOffset).w
                 clr.w   (RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
-                clr.w   (word_FF8090).w
+                clr.w   (RasterLayoutOffset).w
                 bset    #4,2(a5)
                 move.b  #4,(byte_FFA95B).w
                 bra.w   Effect_ClearTransitionPatternBuffer
@@ -81,10 +81,10 @@ TunnelTransition_Return:                                ; CODE XREF: TunnelTrans
                 rts
 ; ---------------------------------------------------------------------------
 TunnelTransition_UpdateMask:                            ; CODE XREF: TunnelTransition_Update+24   j  ; was: loc_27A1A
-                move.w  (word_FF807C).w,d0
+                move.w  (TransitionProgress).w,d0
                 subi.w  #$4E,d0                         ; 'N'
                 bmi.s   TunnelTransition_Return
                 asr.w   #4,d0
-                move.w  d0,(word_FF8082).w
+                move.w  d0,(TransitionMaskStep).w
                 bra.w   Effect_ApplyTransitionMask
 ; End of function TunnelTransition_Update

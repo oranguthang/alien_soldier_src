@@ -248,7 +248,7 @@ Stage_SevenForcesInitializeVictoryTransition:           ; DATA XREF: ROM:0000E4C
                 move.w  #0,d1
                 moveq   #$7E,d7                         ; '~'
                 jsr     (Gfx_UpdateTilemapIndices).l
-                move.w  #$8000,(word_FF808A).w
+                move.w  #$8000,(GlobalSpritePriorityBit).w
 Stage_SevenForcesInitializeVictoryTransitionReturn:     ; CODE XREF: Stage_SevenForcesInitializeVictoryTransition+8   j ; was: locret_EA74
                 rts
 ; End of function Stage_SevenForcesInitializeVictoryTransition

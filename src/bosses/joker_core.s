@@ -108,7 +108,7 @@ Boss_JokerEnableLinkedPartFlag7:                        ; CODE XREF: Boss_JokerS
                 move.w  #$40,$1DC(a5)                   ; '@'
                 move.w  #$10,(RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
-                move.w  #$E,(word_FF8090).w
+                move.w  #$E,(RasterLayoutOffset).w
                 move.b  #2,(byte_FFA95B).w
                 bra.w   Boss_JokerBeginDiveState
 ; End of function Boss_JokerSetup
@@ -190,7 +190,7 @@ Boss_JokerRenderPhaseGatePose:                          ; CODE XREF: Boss_JokerU
 ; End of function Boss_JokerWaitForPlayerSequenceState
 ; Initializes Joker's health-zero falling sequence
 Boss_JokerBeginDefeatFall:                              ; CODE XREF: Boss_JokerMain+22   j  ; was: sub_3B4D8
-                move.w  #4,(word_FF808C).w
+                move.w  #4,(StageSpawnCountdown).w
                 move.b  #2,(BossColorEffectFlags).w
                 bset    #0,(StageTimerPauseFlag).w
                 jsr     (Sprite_ClearObjectFlags).l

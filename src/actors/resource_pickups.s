@@ -69,7 +69,7 @@ Pickup_InitializeSelectedSize:                          ; CODE XREF: Pickup_Spaw
                 move.w  #$194,(a0)
                 move.w  #$E140,2(a0)
                 move.w  #$480,d0
-                or.w    (word_FF808A).w,d0
+                or.w    (GlobalSpritePriorityBit).w,d0
                 move.w  d0,$E(a0)
                 clr.w   $C(a0)
                 clr.b   $20(a0)
@@ -131,7 +131,7 @@ Pickup_Remove:                                          ; CODE XREF: Pickup_Upda
 Pickup_UpdateMotion:                                    ; CODE XREF: Pickup_Update+28   j  ; was: loc_2BE26
                                         ; Pickup_Update+30   j
                 andi.w  #$E7FF,$E(a5)
-                lea     (Object_CameraPriorityTable).l,a0
+                lea     (SpriteFlipBitsTable).l,a0
                 move.w  (FrameCounter).w,d0
                 asr.w   #1,d0
                 andi.w  #6,d0

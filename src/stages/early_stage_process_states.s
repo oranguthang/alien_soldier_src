@@ -220,7 +220,7 @@ Stage3_InitializePostShellshogunTransition:             ; DATA XREF: ROM:0000C86
                 clr.b   (VDPReg11Shadow+1).w
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
-                move.w  #$8000,(word_FF808A).w
+                move.w  #$8000,(GlobalSpritePriorityBit).w
                 addq.w  #2,(StageStateOffset).w
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
                 clr.w   (SecondaryCameraYPos).w
@@ -393,7 +393,7 @@ Stage5_InitializeMadamBarbarEncounter:                  ; DATA XREF: ROM:0000C87
                 move.w  d0,(PrimaryCameraXPosition).w
                 move.w  d0,(CameraXLowerBound).w
                 move.w  d0,(CameraXUpperBound).w
-                move.w  #$8000,(word_FF808A).w
+                move.w  #$8000,(GlobalSpritePriorityBit).w
                 lea     (Boss_MadamBarbarAssetSet).l,a1
                 jmp     Boss_LoadAssetSet
 ; End of function Stage5_InitializeMadamBarbarEncounter
@@ -414,7 +414,7 @@ Stage5_StartPostMadamBarbarTransition:                  ; DATA XREF: ROM:0000C88
                 move.b  #$81,d0
                 jsr     (Sound_QueueBGMRequest).l
 Stage5_StartPostMadamBarbarTransition_Continue:         ; CODE XREF: Stage5_StartPostMadamBarbarTransition+4   j  ; was: loc_CC30
-                clr.w   (word_FF808A).w
+                clr.w   (GlobalSpritePriorityBit).w
                 bsr.w   Stage_StartNextPhaseBanner
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage5_StartPostMadamBarbarTransition
@@ -440,7 +440,7 @@ Stage6_InitializeJokerEncounter:                        ; DATA XREF: ROM:0000C88
                 move.w  d0,(PrimaryCameraXPosition).w
                 move.w  d0,(CameraXLowerBound).w
                 move.w  d0,(CameraXUpperBound).w
-                move.w  #$8000,(word_FF808A).w
+                move.w  #$8000,(GlobalSpritePriorityBit).w
                 lea     (Boss_JokerAssetSet).l,a1
                 jmp     Boss_LoadAssetSet
 ; End of function Stage6_InitializeJokerEncounter
@@ -455,7 +455,7 @@ Stage6_UpdatePostJokerCamera:                           ; CODE XREF: Stage6_Upda
 ; End of function Stage6_UpdatePostJoker
 ; Post-Joker transition clearing flags and updating camera
 Stage6_StartPostJokerTransition:                        ; DATA XREF: ROM:0000C888   o  ; was: sub_CC96
-                clr.w   (word_FF808A).w
+                clr.w   (GlobalSpritePriorityBit).w
                 bsr.w   Stage_StartNextPhaseBanner
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage6_StartPostJokerTransition
@@ -523,7 +523,7 @@ Stage7_InitializeTerobusterEncounter:                   ; DATA XREF: ROM:0000C88
                 tst.w   (dword_FF8062).w
                 bpl.s   Stage7_UpdateScrollToTerobuster_Return
                 addq.w  #2,(StageStateOffset).w
-                move.w  #$8000,(word_FF808A).w
+                move.w  #$8000,(GlobalSpritePriorityBit).w
                 lea     (Boss_TerobusterAssetSet).l,a1
                 jmp     Boss_LoadAssetSet
 ; End of function Stage7_InitializeTerobusterEncounter

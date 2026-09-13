@@ -34,7 +34,7 @@ Projectile_InitializeEightDirectionShot:                ; CODE XREF: Boss_Terobu
                 move.w  Projectile_EightDirectionInitialFrameTable(pc,d0.w),$E(a0)
                 move.w  #$A00,8(a0)
                 move.w  #$F4F4,$A(a0)
-                move.w  (word_FF808A).w,d0
+                move.w  (GlobalSpritePriorityBit).w,d0
                 andi.w  #$8000,d0
                 or.w    d0,$E(a0)
                 rts
@@ -62,7 +62,7 @@ Projectile_ActivateEightDirectionShot:                  ; DATA XREF: ROM:Entity_
                 move.w  Projectile_EightDirectionActiveFrameTable(pc,d0.w),$E(a5)
                 move.w  #0,8(a5)
                 move.w  #$FCFC,$A(a5)
-                move.w  (word_FF808A).w,d0
+                move.w  (GlobalSpritePriorityBit).w,d0
                 andi.w  #$8000,d0
                 or.w    d0,$E(a5)
 Projectile_ActivateEightDirectionShotReturn:            ; CODE XREF: Projectile_ActivateEightDirectionShot+4   j  ; was: locret_2B09A
@@ -89,7 +89,7 @@ Projectile_RetireEightDirectionShot:                    ; CODE XREF: Projectile_
                 rts
 ; ---------------------------------------------------------------------------
 Projectile_CheckEightDirectionShotImpact:               ; CODE XREF: Projectile_UpdateEightDirectionShotCollision+1E   j  ; was: loc_2B0E4
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.s   Projectile_ConvertEightDirectionShotToPickup
                 btst    #7,$22(a5)
                 beq.s   Projectile_CheckEightDirectionShotTerrain
@@ -228,7 +228,7 @@ Projectile_TwoSpeedShotReturn:                          ; CODE XREF: Projectile_
                 rts
 ; ---------------------------------------------------------------------------
 Projectile_CheckTwoSpeedShotImpact:                     ; CODE XREF: Projectile_UpdateTwoSpeedShotCollision+2C   j  ; was: loc_2B2F0
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.s   Projectile_ConvertTwoSpeedShotToPickup
                 btst    #7,$22(a5)
                 beq.s   Projectile_CheckTwoSpeedShotTerrain
@@ -331,7 +331,7 @@ Projectile_Type254TwoSpeedShotReturn:                   ; CODE XREF: Projectile_
                 rts
 ; ---------------------------------------------------------------------------
 Projectile_CheckType254TwoSpeedShotImpact:              ; CODE XREF: Projectile_UpdateType254TwoSpeedShotCollision+2C   j  ; was: loc_2B43C
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.s   Projectile_ConvertType254TwoSpeedShotToPickup
                 btst    #7,$22(a5)
                 beq.s   Projectile_CheckType254TwoSpeedShotTerrain
@@ -465,7 +465,7 @@ Projectile_RetireDelayedCollisionShot:                  ; CODE XREF: Projectile_
                 rts
 ; ---------------------------------------------------------------------------
 Projectile_CheckDelayedCollisionShotImpact:             ; CODE XREF: Projectile_UpdateDelayedCollisionShot+56   j  ; was: loc_2B5A2
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.s   Projectile_ConvertDelayedCollisionShotToPickup
                 btst    #7,$22(a5)
                 beq.s   Projectile_CheckDelayedCollisionShotTerrainDepth

@@ -99,7 +99,7 @@ Enemy_Stage10BeetleController:                          ; DATA XREF: ROM:Entity_
                 beq.s   Enemy_Stage10BeetleController_UpdateState
                 tst.w   $24(a5)
                 bmi.w   Enemy_ConvertStage10BeetleToDefeatDebris
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.w   Enemy_ConvertStage10BeetleToDefeatDebris
                 jsr     (RandomNumber).l
                 clr.w   6(a5)

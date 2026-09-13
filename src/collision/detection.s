@@ -256,7 +256,7 @@ Collision_CheckWeaponProjectilesAgainstEnemies_SubtractFlaggedHealth:  ; CODE XR
                 move.w  $26(a3),d4
                 move.w  #$FFFF,$26(a3)
                 move.w  $24(a2),(CombatPercentIndex).w
-                move.w  #$20,(word_FF809A).w            ; ' '
+                move.w  #$20,(CombatPercentTimer).w     ; ' '
                 mulu.w  $24(a2),d4
                 sub.w   d4,(BossHealth).w
                 bpl.w   Collision_CheckWeaponProjectilesAgainstEnemies_NextWeaponSlot
@@ -523,7 +523,7 @@ Collision_CheckSpecialAttackTargets_ApplyFlaggedDamage:  ; CODE XREF: Collision_
                 or.b    d4,$22(a2)
                 move.w  $26(a3),d4
                 move.w  $24(a2),(CombatPercentIndex).w
-                move.w  #$20,(word_FF809A).w            ; ' '
+                move.w  #$20,(CombatPercentTimer).w     ; ' '
                 mulu.w  $24(a2),d4
                 sub.w   d4,(BossHealth).w
                 bpl.s   Collision_CheckSpecialAttackTargets_NextTarget

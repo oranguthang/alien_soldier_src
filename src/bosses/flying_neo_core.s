@@ -132,7 +132,7 @@ Boss_FlyingNeoWaitForScrollingBackground:               ; DATA XREF: ROM:0003C0A
                 jsr     (Tilemap_QueueNextScrollingRow).l
                 bpl.s   Boss_FlyingNeoInitOrWaitReturn
                 addq.w  #2,4(a5)
-                clr.w   (word_FF808A).w
+                clr.w   (GlobalSpritePriorityBit).w
                 rts
 ; End of function Boss_FlyingNeoWaitForScrollingBackground
 ; Complex setup with metasprite and palette initialization
@@ -191,7 +191,7 @@ Boss_FlyingNeoSetup:                                    ; DATA XREF: ROM:0003C0A
                 jsr     (Gfx_ClearColorFadeState).l
                 move.w  #$28,(RasterEffectIndex).w      ; '('
                 clr.w   (RasterEffectInitState).w
-                move.w  #$C,(word_FF8090).w
+                move.w  #$C,(RasterLayoutOffset).w
                 move.b  #3,(byte_FFA95B).w
                 move.w  #6,4(a5)
                 move.w  a5,$48(a5)
@@ -248,7 +248,7 @@ Boss_FlyingNeoDefeatInit:                               ; CODE XREF: Boss_Flying
                 bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(BossColorEffectFlags).w
                 jsr     (Sprite_ClearObjectFlags).l
-                move.w  #4,(word_FF808C).w
+                move.w  #4,(StageSpawnCountdown).w
 ; End of function Boss_FlyingNeoDefeatInit
 ; Converts one linked-object slot every six frames while walking forward
 Boss_FlyingNeoDefeatConvertForwardSlotRangeState:       ; DATA XREF: ROM:0003C0B4   o  ; was: sub_3C31C

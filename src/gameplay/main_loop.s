@@ -214,11 +214,12 @@ UI_DisplayPauseGraphics_Render:                         ; CODE XREF: UI_DisplayP
                 jmp     (Sprite_AppendOAMEntries).l
 ; End of function UI_DisplayPauseGraphics
 ; ---------------------------------------------------------------------------
-Object_CameraPriorityTable: dc.w    0, $800, $1800, $1000  ; was: word_1C972
+; Attribute-bit combinations for the four horizontal/vertical flip phases
+SpriteFlipBitsTable:    dc.w    0, $800, $1800, $1000   ; was: word_1C972
                                         ; DATA XREF: Object_ApplyCameraMotion:Object_ApplyCameraMotion_Begin   o
                                         ; Pickup_Update+7C   o
 
-; Applies camera deltas and shared motion biases to active objects
+; Publishes cyclic sprite flip bits and applies camera deltas to active objects
 Object_ApplyCameraMotion:                               ; CODE XREF: StoryScreen_MainLoop:StoryScreen_RunFrame   p  ; was: sub_1C97A
                                         ; UI_UpdateOptionsScreen+46   p
                 tst.b   (FrameControlFlags).w
@@ -226,11 +227,11 @@ Object_ApplyCameraMotion:                               ; CODE XREF: StoryScreen
                 rts
 ; ---------------------------------------------------------------------------
 Object_ApplyCameraMotion_Begin:                         ; CODE XREF: Object_ApplyCameraMotion+4   j  ; was: loc_1C982
-                movea.l #Object_CameraPriorityTable,a0
+                movea.l #SpriteFlipBitsTable,a0
                 move.w  (FrameCounter).w,d0
                 asl.w   #1,d0
                 andi.w  #6,d0
-                move.w  (a0,d0.w),(word_FF8092).w
+                move.w  (a0,d0.w),(GlobalSpriteFlipBits).w
                 move.w  (PrimaryCameraXPosition).w,d0
                 sub.w   (PreviousCameraXPosition).w,d0
                 move.w  (PrimaryCameraYPosition).w,d1

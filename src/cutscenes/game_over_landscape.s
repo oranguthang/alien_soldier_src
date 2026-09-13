@@ -13,7 +13,7 @@ GameOver_InitializeScreen_Activate:                     ; CODE XREF: GameOver_In
                 move.w  #$4C,(RasterEffectIndex).w      ; 'L'
                 clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w
-                move.w  #$12,(word_FF8090).w
+                move.w  #$12,(RasterLayoutOffset).w
                 move.b  #$28,(VDPReg2Shadow+1).w        ; '('
                 move.b  #5,(VDPReg4Shadow+1).w
                 move.b  #0,(VDPReg18Shadow+1).w
@@ -34,7 +34,7 @@ GameOver_InitializeScreen_Activate:                     ; CODE XREF: GameOver_In
                 move.l  #$8F02977F,-(a1)
                 move.l  #$94009340,-(a1)
                 move.w  a1,(VDPCommandQueueHead).w
-                move.w  #1,(dword_FF807E).w
+                move.w  #1,(GameOverLandscapeDepth).w
                 move.b  #4,d0
                 jsr     (Sound_QueueRequest).l
                 rts
@@ -73,54 +73,54 @@ GameOver_UpdateInteractiveLandscape:                    ; DATA XREF: GameOver_Up
                                         ; ROM:GameOver_StateOffsets   o
                 btst    #6,(ControllerPressedState).w
                 beq.s   GameOver_UpdateInteractiveLandscape_CheckReverseAngle
-                addi.w  #$400,(word_FF807C).w
-                cmpi.w  #$2000,(word_FF807C).w
+                addi.w  #$400,(GameOverLandscapeAngle).w
+                cmpi.w  #$2000,(GameOverLandscapeAngle).w
                 bmi.s   GameOver_UpdateInteractiveLandscape_CheckReverseAngle
-                clr.w   (word_FF807C).w
+                clr.w   (GameOverLandscapeAngle).w
 GameOver_UpdateInteractiveLandscape_CheckReverseAngle:  ; CODE XREF: GameOver_UpdateInteractiveLandscape+6   j  ; was: loc_276C2
                                         ; GameOver_UpdateInteractiveLandscape+14   j
                 btst    #4,(ControllerPressedState).w
                 beq.s   GameOver_UpdateInteractiveLandscape_CheckIncreaseDepth
-                subi.w  #$400,(word_FF807C).w
+                subi.w  #$400,(GameOverLandscapeAngle).w
                 bpl.s   GameOver_UpdateInteractiveLandscape_CheckIncreaseDepth
-                move.w  #$2000,(word_FF807C).w
+                move.w  #$2000,(GameOverLandscapeAngle).w
 GameOver_UpdateInteractiveLandscape_CheckIncreaseDepth:  ; CODE XREF: GameOver_UpdateInteractiveLandscape+20   j  ; was: loc_276D8
                                         ; GameOver_UpdateInteractiveLandscape+28   j
                 btst    #1,(ControllerHeldState).w
                 beq.s   GameOver_UpdateInteractiveLandscape_CheckDecreaseDepth
-                addi.w  #$10,(dword_FF807E).w
+                addi.w  #$10,(GameOverLandscapeDepth).w
 GameOver_UpdateInteractiveLandscape_CheckDecreaseDepth:  ; CODE XREF: GameOver_UpdateInteractiveLandscape+36   j  ; was: loc_276E6
                 btst    #0,(ControllerHeldState).w
                 beq.s   GameOver_UpdateInteractiveLandscape_CheckAdvance
-                subi.w  #$10,(dword_FF807E).w
+                subi.w  #$10,(GameOverLandscapeDepth).w
                 bmi.s   GameOver_UpdateInteractiveLandscape_ClampMinimumDepth
                 bne.s   GameOver_UpdateInteractiveLandscape_CheckAdvance
 GameOver_UpdateInteractiveLandscape_ClampMinimumDepth:  ; CODE XREF: GameOver_UpdateInteractiveLandscape+4C   j  ; was: loc_276F8
-                move.w  #$10,(dword_FF807E).w
+                move.w  #$10,(GameOverLandscapeDepth).w
 GameOver_UpdateInteractiveLandscape_CheckAdvance:       ; CODE XREF: GameOver_UpdateInteractiveLandscape+44   j  ; was: loc_276FE
                                         ; GameOver_UpdateInteractiveLandscape+4E   j
                 btst    #6,(ControllerPressedState).w
                 beq.s   GameOver_UpdateInteractiveLandscape_Render
                 addq.w  #2,(GameSubstateIndex).w
                 clr.w   (GameOverLandscapeIndex).w
-                move.w  #$50,(dword_FF807E).w           ; 'P'
-                move.w  #$20,(word_FF8082).w            ; ' '
+                move.w  #$50,(GameOverLandscapeDepth).w  ; 'P'
+                move.w  #$20,(GameOverViewOffset).w     ; ' '
 GameOver_UpdateInteractiveLandscape_Render:             ; CODE XREF: GameOver_UpdateInteractiveLandscape+5C   j  ; was: loc_2771A
                 bsr.w   GameOver_InitializeRowBuffer
                 bra.w   GameOver_BuildPerspectiveBuffers
 ; End of function GameOver_UpdateInteractiveLandscape
 ; Auto-advances camera through predefined positions using data table
 GameOver_UpdateAutoLandscape:                           ; DATA XREF: ROM:000276A4   o  ; was: sub_27722
-                addi.w  #$18,(dword_FF807E).w
-                cmpi.w  #$450,(dword_FF807E).w
+                addi.w  #$18,(GameOverLandscapeDepth).w
+                cmpi.w  #$450,(GameOverLandscapeDepth).w
                 bmi.s   GameOver_UpdateAutoLandscape_AdvanceTimer
                 addq.w  #2,(GameOverLandscapeIndex).w
-                move.w  #$20,(dword_FF807E).w           ; ' '
-                move.w  #$20,(word_FF8082).w            ; ' '
+                move.w  #$20,(GameOverLandscapeDepth).w  ; ' '
+                move.w  #$20,(GameOverViewOffset).w     ; ' '
 GameOver_UpdateAutoLandscape_AdvanceTimer:              ; CODE XREF: GameOver_UpdateAutoLandscape+C   j  ; was: loc_27740
-                subq.w  #1,(word_FF8082).w
+                subq.w  #1,(GameOverViewOffset).w
                 move.w  (GameOverLandscapeIndex).w,d0
-                move.w  GameOver_LandscapeAngleSequence(pc,d0.w),(word_FF807C).w
+                move.w  GameOver_LandscapeAngleSequence(pc,d0.w),(GameOverLandscapeAngle).w
                 bpl.s   GameOver_UpdateAutoLandscape_Render
                 addq.w  #2,(GameSubstateIndex).w
                 rts
@@ -221,13 +221,13 @@ GameOver_InitializeRowBuffer_Loop:                      ; CODE XREF: GameOver_In
 ; Builds row and coordinate buffers for the perspective landscape
 GameOver_BuildPerspectiveBuffers:                       ; CODE XREF: GameOver_UpdateInteractiveLandscape+76   j  ; was: sub_27870
                                         ; GameOver_UpdateAutoLandscape:GameOver_UpdateAutoLandscape_Render   j
-                tst.w   (dword_FF807E).w
+                tst.w   (GameOverLandscapeDepth).w
                 beq.w   GameOver_BuildPerspectiveBuffers_Return
                 move.l  #$8000,d4
-                divu.w  (dword_FF807E).w,d4
+                divu.w  (GameOverLandscapeDepth).w,d4
                 subi.w  #$A0,d4
                 moveq   #0,d0
-                move.w  (word_FF807C).w,d0
+                move.w  (GameOverLandscapeAngle).w,d0
                 ext.l   d0
                 addi.l  #GameOver_PerspectiveLookupTable,d0
                 movea.l d0,a0
@@ -236,16 +236,16 @@ GameOver_BuildPerspectiveBuffers:                       ; CODE XREF: GameOver_Up
                 move.w  d4,d1
                 asl.w   #3,d1
                 moveq   #0,d0
-                move.w  (word_FF8082).w,d0
+                move.w  (GameOverViewOffset).w,d0
                 asl.w   #3,d0
                 add.w   d1,d0
                 swap    d0
                 moveq   #0,d1
-                move.w  (dword_FF807E).w,d1
+                move.w  (GameOverLandscapeDepth).w,d1
                 swap    d1
                 asr.l   #5,d1
                 moveq   #$FFFFFFFF,d5
-                move.w  (dword_FF807E).w,d6
+                move.w  (GameOverLandscapeDepth).w,d6
                 move.w  #$6F,d7                         ; 'o'
 GameOver_BuildPerspectiveBuffers_ProjectRowLoop:        ; CODE XREF: GameOver_BuildPerspectiveBuffers+A2   j  ; was: loc_278C2
                                         ; GameOver_BuildPerspectiveBuffers+B2   j

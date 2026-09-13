@@ -5,7 +5,7 @@ Weapon_UpdateRotatingProjectile:                        ; DATA XREF: ROM:Entity_
                 move.w  d0,$48(a5)
                 movea.l $4A(a5),a0
                 move.w  (a0,d0.w),d1
-                or.w    (word_FF808A).w,d1
+                or.w    (GlobalSpritePriorityBit).w,d1
                 move.w  d1,$E(a5)
                 move.w  $10(a0,d0.w),8(a5)
                 move.w  $20(a0,d0.w),$A(a5)
@@ -39,7 +39,7 @@ Weapon_HandleProjectileHit_InitImpact:                  ; CODE XREF: Weapon_Hand
 ; ---------------------------------------------------------------------------
 Weapon_HandleProjectileHit_InitBurst:                   ; CODE XREF: Weapon_HandleProjectileHit+16   j  ; was: loc_18AF6
                 move.w  #$44D6,d0
-                add.w   (word_FF808A).w,d0
+                add.w   (GlobalSpritePriorityBit).w,d0
                 move.w  d0,$E(a5)
                 move.w  #$A00,8(a5)
                 move.w  #$F4F4,$A(a5)
@@ -77,7 +77,7 @@ Weapon_HandleExplosiveImpact_InitExplosion:             ; CODE XREF: Weapon_Hand
                 move.w  #$400,(a5)
                 move.w  #$EC00,2(a5)
                 move.w  #$480,d0
-                or.w    (word_FF808A).w,d0
+                or.w    (GlobalSpritePriorityBit).w,d0
                 move.w  d0,$E(a5)
                 move.l  #SharedCombatSpriteAnimation01,8(a5)
                 clr.w   $C(a5)
@@ -96,7 +96,7 @@ Weapon_HandleExplosiveImpact_InitImpact:                ; CODE XREF: Weapon_Hand
 ; ---------------------------------------------------------------------------
 Weapon_HandleExplosiveImpact_InitBurst:                 ; CODE XREF: Weapon_HandleExplosiveImpact+18   j  ; was: loc_18BA8
                 move.w  #$44D6,d0
-                add.w   (word_FF808A).w,d0
+                add.w   (GlobalSpritePriorityBit).w,d0
                 move.w  d0,$E(a5)
                 move.w  #$A00,8(a5)
                 move.w  #$F4F4,$A(a5)
@@ -121,7 +121,7 @@ Weapon_AnimateExplosionFade:                            ; CODE XREF: Weapon_Hand
 Weapon_GetExplosionFrameData:                           ; CODE XREF: Weapon_AnimateExplosionFade+12   j  ; was: loc_18BE8
                 andi.w  #6,d0
                 move.w  Weapon_ExplosionFadeTiles(pc,d0.w),d1
-                or.w    (word_FF808A).w,d1
+                or.w    (GlobalSpritePriorityBit).w,d1
                 move.w  d1,$E(a5)
                 move.w  Weapon_ExplosionFadeSizes(pc,d0.w),8(a5)
                 move.w  Weapon_ExplosionFadeOffsets(pc,d0.w),$A(a5)
@@ -215,8 +215,8 @@ Effect_UpdateImpactParticleAnimation:                   ; CODE XREF: Effect_Upda
                 bmi.s   Effect_UpdateImpactParticleSpawner_Deactivate
                 move.w  $48(a5),d0
                 move.w  Effect_ImpactParticleTiles(pc,d0.w),d1
-                or.w    (word_FF808A).w,d1
-                or.w    (word_FF8092).w,d1
+                or.w    (GlobalSpritePriorityBit).w,d1
+                or.w    (GlobalSpriteFlipBits).w,d1
                 move.w  d1,$E(a5)
                 move.w  Effect_ImpactParticleSizes(pc,d0.w),8(a5)
                 move.w  Effect_ImpactParticleOffsets(pc,d0.w),$A(a5)
@@ -317,8 +317,8 @@ Weapon_UpdateSeekingMissile_ApplyVelocity:              ; CODE XREF: Weapon_Upda
 Weapon_UpdateSeekingMissile_SelectFrame:                ; CODE XREF: Weapon_UpdateSeekingMissile+EA   j  ; was: loc_18E4C
                 andi.w  #$E,d0
                 move.w  Weapon_SeekingMissileTiles(pc,d0.w),d1
-                or.w    (word_FF808A).w,d1
-                or.w    (word_FF8092).w,d1
+                or.w    (GlobalSpritePriorityBit).w,d1
+                or.w    (GlobalSpriteFlipBits).w,d1
                 move.w  d1,$E(a5)
                 cmpi.w  #4,d0
                 bmi.s   Weapon_SetMissileSize
@@ -542,7 +542,7 @@ Effect_SpawnPlayerDeathSpark_Initialize:                ; CODE XREF: Effect_Spaw
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.w  #$480,$E(a0)
-                move.w  (word_FF808A).w,d0
+                move.w  (GlobalSpritePriorityBit).w,d0
                 or.w    d0,$E(a0)
                 move.l  #SharedCombatSpriteAnimation01,8(a0)
                 clr.w   $C(a0)

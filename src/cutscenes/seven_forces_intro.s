@@ -611,7 +611,7 @@ Entity_SevenForcesExplosionSequenceCheckTransition:     ; CODE XREF: Entity_Seve
                 addq.w  #2,4(a5)
                 move.w  #$200,$48(a5)
                 move.b  #1,(SoundFadeOutDelay).w
-                move.w  #$C0,(word_FF809E).w
+                move.w  #$C0,(ExplosionSoundDelay).w
 Entity_SevenForcesSpawnRandomExplosion:                 ; CODE XREF: Entity_SevenForcesExplosionSequenceState36+20   j  ; was: loc_55352
                                         ; sub_553CC:Entity_SevenForcesExplosionWaitUpdate   p
                 move.w  #2,(PlaneAShakeLevel).w

@@ -639,7 +639,7 @@ Boss_WolfGaropaOrbProjectilePairReturn:                 ; CODE XREF: Boss_WolfGa
 ; End of function Boss_WolfGaropaSpawnOrbProjectilePair
 ; Wave projectile
 Projectile_WolfGaropaOrbShot:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_50AF0
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.s   Projectile_WolfGaropaOrbShotFallback
                 btst    #7,$22(a5)
                 beq.s   Projectile_WolfGaropaCheckOrbShotArenaBounds

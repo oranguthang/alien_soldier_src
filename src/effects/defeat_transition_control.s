@@ -36,7 +36,7 @@ AlternateTransition_InitializeObject:                   ; DATA XREF: AlternateTr
                 move.w  #2,4(a5)
                 move.w  #$100,2(a5)
                 move.b  #4,(byte_FFA95B).w
-                clr.w   (word_FF808A).w
+                clr.w   (GlobalSpritePriorityBit).w
                 bra.w   Effect_ClearTransitionPatternBuffer
 ; End of function AlternateTransition_InitializeObject
 ; Loads the shared transition graphics
@@ -60,28 +60,28 @@ AlternateTransition_GraphicsLoadDescriptor: dc.w    7   ; field_0  ; was: stru_2
 AlternateTransition_ConfigureEffect:                    ; DATA XREF: ROM:0002693C   o  ; was: sub_26980
                 addq.w  #2,4(a5)
                 move.b  #3,(byte_FFA95B).w
-                move.w  #$14,(word_FF8090).w
+                move.w  #$14,(RasterLayoutOffset).w
                 move.w  #4,(RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w
-                clr.w   (word_FF807C).w
-                move.w  #8,(word_FF807A).w
+                clr.w   (TransitionProgress).w
+                move.w  #8,(TransitionModeOffset).w
                 move.b  #$CA,d0
                 jmp     (Sound_PlaySFX).l
 ; End of function AlternateTransition_ConfigureEffect
 ; Builds the alternate transition's initial mask pattern
 AlternateTransition_BuildInitialPattern:                ; DATA XREF: ROM:0002693E   o  ; was: sub_269B4
                 addq.w  #2,4(a5)
-                move.l  #$18000,(dword_FF80A0).w
+                move.l  #$18000,(TransitionEdgeSpan).w
                 bsr.w   Effect_InitDefeatScroll
 ; End of function AlternateTransition_BuildInitialPattern
 ; Advances the alternate transition until the shared completion threshold
 AlternateTransition_Update:                             ; DATA XREF: ROM:00026940   o  ; was: sub_269C4
                 bsr.w   Effect_UpdateScrollPosition
-                move.w  $10(a5),(dword_FF807E).w
-                move.w  $14(a5),(dword_FF807E+2).w
-                addq.w  #3,(word_FF807C).w
-                cmpi.w  #$7F,(word_FF807C).w
+                move.w  $10(a5),(TransitionOriginXY).w
+                move.w  $14(a5),(TransitionOriginXY+2).w
+                addq.w  #3,(TransitionProgress).w
+                cmpi.w  #$7F,(TransitionProgress).w
                 bmi.w   Effect_ApplyTransitionMask
                 bra.w   TransitionEffect_Finish
 ; End of function AlternateTransition_Update
@@ -116,7 +116,7 @@ TransitionEffect_InitializeObject:                      ; DATA XREF: TransitionE
                 move.w  #2,4(a5)
                 move.w  #$100,2(a5)
                 move.b  #4,(byte_FFA95B).w
-                clr.w   (word_FF808A).w
+                clr.w   (GlobalSpritePriorityBit).w
                 bra.w   Effect_ClearTransitionPatternBuffer
 ; End of function TransitionEffect_InitializeObject
 ; Loads transition graphics data
@@ -140,46 +140,46 @@ TransitionEffect_GraphicsLoadDescriptor:    dc.w    7   ; field_0  ; was: stru_2
 TransitionEffect_ConfigureEffect:                       ; DATA XREF: ROM:00026A14   o  ; was: sub_26A58
                 addq.w  #2,4(a5)
                 move.b  #3,(byte_FFA95B).w
-                move.w  #4,(word_FF8090).w
+                move.w  #4,(RasterLayoutOffset).w
                 move.w  #$10,(RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w
-                clr.w   (word_FF807C).w
+                clr.w   (TransitionProgress).w
                 move.b  #$CA,d0
                 jsr     (Sound_PlaySFX).l
-                move.w  #2,(word_FF807A).w
+                move.w  #2,(TransitionModeOffset).w
                 rts
 ; End of function TransitionEffect_ConfigureEffect
 ; Builds the standard transition's initial mask pattern
 TransitionEffect_BuildInitialPattern:                   ; DATA XREF: ROM:00026A16   o  ; was: sub_26A8E
                 addq.w  #2,4(a5)
-                move.l  #$18000,(dword_FF80A0).w
+                move.l  #$18000,(TransitionEdgeSpan).w
                 bsr.w   Effect_BuildTransitionPattern
 ; End of function TransitionEffect_BuildInitialPattern
 ; Advances the standard transition until the shared completion threshold
 TransitionEffect_Update:                                ; DATA XREF: ROM:00026A18   o  ; was: sub_26A9E
                 bsr.w   Effect_UpdateScrollPosition
-                move.w  $10(a5),(dword_FF807E).w
-                move.w  $14(a5),(dword_FF807E+2).w
-                subi.l  #$3C0,(dword_FF80A0).w
+                move.w  $10(a5),(TransitionOriginXY).w
+                move.w  $14(a5),(TransitionOriginXY+2).w
+                subi.l  #$3C0,(TransitionEdgeSpan).w
                 move.w  (FrameCounter).w,d0
                 andi.w  #1,d0
                 addq.w  #1,d0
-                add.w   d0,(word_FF807C).w
-                cmpi.w  #$7F,(word_FF807C).w
+                add.w   d0,(TransitionProgress).w
+                cmpi.w  #$7F,(TransitionProgress).w
                 bmi.w   Effect_ApplyTransitionMask
 TransitionEffect_Finish:                                ; CODE XREF: AlternateTransition_Update+1E   j  ; was: loc_26ACE
-                clr.w   (word_FF807A).w
+                clr.w   (TransitionModeOffset).w
                 clr.w   (RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
-                clr.w   (word_FF8090).w
+                clr.w   (RasterLayoutOffset).w
                 bset    #4,2(a5)
                 move.b  #4,(byte_FFA95B).w
                 bra.w   Effect_ClearTransitionPatternBuffer
 ; End of function TransitionEffect_Update
 ; Configures raster state for the selected transition buffer mode
 TransitionEffect_ConfigureRasterMode:                   ; CODE XREF: Credits_InitializeScreen+84   p  ; was: sub_26AEE
-                move.w  (word_FF807A).w,d0
+                move.w  (TransitionModeOffset).w,d0
                 movea.w TransitionEffect_RasterModeOffsets(pc,d0.w),a0
                 adda.l  #TransitionEffect_ConfigureRasterMode0,a0
                 jmp     (a0)
@@ -195,38 +195,38 @@ TransitionEffect_RasterModeOffsets: dc.w    TransitionEffect_ConfigureRasterMode
 ; Configures raster registers for transition buffer mode zero
 TransitionEffect_ConfigureRasterMode0:                  ; DATA XREF: TransitionEffect_ConfigureRasterMode+8   o  ; was: sub_26B08
                                         ; ROM:TransitionEffect_RasterModeOffsets   o
-                move.w  #4,(word_FF8090).w
+                move.w  #4,(RasterLayoutOffset).w
                 move.b  #$80,(byte_FFA95B).w
                 move.w  #$10,(RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w
-                clr.w   (word_FF807C).w
+                clr.w   (TransitionProgress).w
                 rts
 ; End of function TransitionEffect_ConfigureRasterMode0
 ; Configures raster registers for transition buffer mode one
 TransitionEffect_ConfigureRasterMode1:                  ; DATA XREF: ROM:00026B00   o  ; was: sub_26B2A
-                move.w  #4,(word_FF8090).w
+                move.w  #4,(RasterLayoutOffset).w
                 move.b  #$80,(byte_FFA95B).w
                 move.w  #$10,(RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w
-                clr.w   (word_FF807C).w
+                clr.w   (TransitionProgress).w
                 rts
 ; End of function TransitionEffect_ConfigureRasterMode1
 ; Configures raster registers for transition buffer mode four
 TransitionEffect_ConfigureRasterMode4:                  ; DATA XREF: ROM:00026B06   o  ; was: sub_26B4C
-                move.w  #$14,(word_FF8090).w
+                move.w  #$14,(RasterLayoutOffset).w
                 move.b  #$80,(byte_FFA95B).w
                 move.w  #4,(RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w
-                clr.w   (word_FF807C).w
+                clr.w   (TransitionProgress).w
                 rts
 ; End of function TransitionEffect_ConfigureRasterMode4
 ; Configures the shared raster registers for buffer modes two and three
 TransitionEffect_ConfigureRasterModes2And3:             ; DATA XREF: ROM:00026B02   o  ; was: sub_26B6E
                                         ; ROM:00026B04   o
-                move.w  #4,(word_FF8090).w
+                move.w  #4,(RasterLayoutOffset).w
                 move.b  #$80,(byte_FFA95B).w
                 move.w  #$10,(RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
@@ -236,7 +236,7 @@ TransitionEffect_ConfigureRasterModes2And3:             ; DATA XREF: ROM:00026B0
 ; Dispatches construction of the selected transition-effect output buffers
 TransitionEffect_UpdateBuffers:                         ; CODE XREF: EndingSequence_Dispatch   p  ; was: sub_26B8C
                                         ; Sys_GameplayMainLoop+118   p
-                move.w  (word_FF807A).w,d0
+                move.w  (TransitionModeOffset).w,d0
                 movea.w TransitionEffect_BufferModeOffsets(pc,d0.w),a0
                 adda.l  #TransitionEffect_UpdateMode1Buffers,a0
                 jmp     (a0)
@@ -267,9 +267,9 @@ TransitionEffect_UpdateMode0:                           ; DATA XREF: ROM:Transit
 
 ; Builds cleared, filled, and constant-offset output buffers for mode three
 TransitionEffect_UpdateMode3Buffers:                    ; DATA XREF: ROM:00026BA2   o  ; was: sub_26BBC
-                tst.w   (word_FF8082).w
+                tst.w   (TransitionMaskStep).w
                 bpl.s   TransitionEffect_UpdateMode3Buffers_Prepare
-                clr.w   (word_FF8082).w
+                clr.w   (TransitionMaskStep).w
 TransitionEffect_UpdateMode3Buffers_Prepare:            ; CODE XREF: TransitionEffect_UpdateMode3Buffers+4   j  ; was: loc_26BC6
                 bsr.w   Effect_ClearScrollBuffer
                 bsr.w   TransitionEffect_CopyWorkingBuffer
@@ -282,7 +282,7 @@ TransitionEffect_BuildSymmetricRamp:                    ; CODE XREF: TransitionE
                 movea.w #(word_FF9480-M68K_RAM),a1
                 moveq   #$3E,d7                         ; '>'
                 movea.l #Effect_TransitionSineTable,a2
-                move.w  (word_FF807C).w,d0
+                move.w  (TransitionProgress).w,d0
                 andi.w  #$1FE,d0
                 cmpi.w  #$80,d0
                 beq.s   TransitionEffect_BuildSymmetricRamp_FillMaximum

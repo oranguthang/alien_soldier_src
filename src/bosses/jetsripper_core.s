@@ -614,7 +614,7 @@ Boss_JetsripperProcessSegmentChain:                     ; CODE XREF: Boss_Jetsri
 ; Initializes Jetsripper death sequence with particles
 Boss_JetsripperDeathInit:                               ; DATA XREF: ROM:000356F6   o  ; was: sub_35D54
                 addq.w  #2,4(a5)
-                move.w  #3,(word_FF808C).w
+                move.w  #3,(StageSpawnCountdown).w
                 jsr     (Sprite_ClearObjectFlags).l
                 clr.w   2(a5)
                 move.w  #$C0,$4C(a5)

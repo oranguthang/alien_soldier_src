@@ -13,7 +13,7 @@ ZLeoEnding_InitializeScene:                             ; DATA XREF: ROM:0001E85
                 move.w  #$EC00,(PrimaryCameraYPosition).w
                 jsr     (Tilemap_DirectTransferFromPrimaryCamera).l
                 move.w  #$EC10,(PrimaryCameraYPosition).w
-                move.w  #$8000,(word_FF808A).w
+                move.w  #$8000,(GlobalSpritePriorityBit).w
                 rts
 ; End of function ZLeoEnding_InitializeScene
 ; ---------------------------------------------------------------------------
@@ -101,7 +101,7 @@ WeaponSetup_ActivateScreen:                             ; CODE XREF: WeaponSetup
                 bsr.w   WeaponSetup_InitializeColorTables
                 move.w  #$20,(RasterEffectIndex).w      ; ' '
                 clr.w   (RasterEffectInitState).w
-                move.w  #6,(word_FF8090).w
+                move.w  #6,(RasterLayoutOffset).w
                 move.b  #2,(byte_FFA95A).w
                 move.w  #$7000,d0
                 move.w  d0,(BossHealth).w
@@ -113,7 +113,7 @@ WeaponSetup_ActivateScreen:                             ; CODE XREF: WeaponSetup
                 move.w  #$130,(PlayerYPosition).w
                 move.w  #$330,(StageTimeRemaining).w
                 bset    #0,(StageTimerPauseFlag).w
-                move.w  #$8000,(word_FF808A).w
+                move.w  #$8000,(GlobalSpritePriorityBit).w
                 lea     (StageStartPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 bsr.w   WeaponSetup_InitializeTextAndTiles

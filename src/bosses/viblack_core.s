@@ -158,7 +158,7 @@ Boss_ViblackEntranceDescentState:                       ; DATA XREF: ROM:000439E
                 bset    #5,(byte_FF8245).w
                 bset    #4,(PlayerSpriteAttributes).w
                 jsr     (Sys_ClearObjectBlocks16).l
-                move.w  #$8000,(word_FF808A).w
+                move.w  #$8000,(GlobalSpritePriorityBit).w
                 move.w  #4,(PlaneAShakeLevel).w
                 move.b  #$DA,d0
                 jsr     (Sound_PlaySFX).l
@@ -338,7 +338,7 @@ Boss_ViblackDefeatInit:                                 ; CODE XREF: Boss_Viblac
                 bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(BossColorEffectFlags).w
                 clr.b   $21(a5)
-                move.w  #$80,(word_FF808C).w
+                move.w  #$80,(StageSpawnCountdown).w
                 move.w  #$780,$52(a5)
                 move.w  #$C8,$54(a5)
 ; Moves Viblack to the fixed defeat-transition target

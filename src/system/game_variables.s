@@ -19,7 +19,7 @@ UI_InitializeGameVariables_Common:                      ; CODE XREF: UI_SetPassw
                 clr.w   (DestroyedEnemyCountBCD).w
                 clr.w   (PlayerDamageBCD).w
                 clr.w   (FrameSkipLevel).w
-                clr.w   (word_FF8090).w
+                clr.w   (RasterLayoutOffset).w
                 clr.b   (MessageDisplayFlags).w
                 bsr.w   Results_InitializeStageHistory
                 bra.s   UI_ResetPaletteAndMessageMode_Clear
@@ -45,7 +45,7 @@ StageEntry_InitializeGameplayState_CopyAmmo:            ; was: loc_1CD5A
                 clr.w   (PlayerDamageBCD).w
                 clr.w   (FrameSkipLevel).w
                 clr.w   (WeaponStateIndex).w
-                clr.w   (word_FF8090).w
+                clr.w   (RasterLayoutOffset).w
                 clr.b   (MessageDisplayFlags).w
                 bsr.s   UI_ResetPaletteAndMessageMode
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
@@ -59,7 +59,7 @@ StageEntry_InitializeGameplayState_CopyAmmo:            ; was: loc_1CD5A
 StageEntry_ClearTransientState:                         ; was: sub_1CDA8
                 clr.w   (DebugResourceRefill).w
                 clr.w   (WeaponStateIndex).w
-                clr.w   (word_FF8090).w
+                clr.w   (RasterLayoutOffset).w
 ; End of function StageEntry_ClearTransientState
 ; Clears both 128-byte palette buffers and resets the message option to 4
 UI_ResetPaletteAndMessageMode:                          ; CODE XREF: StageEntry_InitializeGameplayState+58   p  ; was: sub_1CDB4

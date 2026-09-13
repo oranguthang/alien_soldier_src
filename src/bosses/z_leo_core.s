@@ -119,7 +119,7 @@ Boss_ZLeoInit:                                          ; DATA XREF: ROM:Boss_ZL
                 jsr     (Object_ClearAllExceptTypes).l
                 move.w  #$54,(RasterEffectIndex).w      ; 'T'
                 clr.w   (RasterEffectInitState).w
-                move.w  #$18,(word_FF8090).w
+                move.w  #$18,(RasterLayoutOffset).w
                 bset    #7,(CameraMotionLockFlags).w
                 bset    #6,(CameraMotionLockFlags).w
                 movea.l #$FFFF4520,a0
@@ -442,7 +442,7 @@ Boss_ZLeoRenderBossMessageWait:                         ; CODE XREF: Boss_ZLeoWa
 Boss_ZLeoBeginDefeatSequence:                           ; CODE XREF: Boss_ZLeoMain+24   j  ; was: sub_52046
                 move.w  #6,4(a5)
                 move.b  #$40,(GameplayControlFlags).w   ; '@'
-                move.w  #8,(word_FF808C).w
+                move.w  #8,(StageSpawnCountdown).w
                 move.b  #2,(BossColorEffectFlags).w
                 bset    #0,(StageTimerPauseFlag).w
                 clr.b   $21(a5)

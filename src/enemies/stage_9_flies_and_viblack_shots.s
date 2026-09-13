@@ -5,7 +5,7 @@ Enemy_Stage9FlyController:                              ; DATA XREF: ROM:Entity_
                 bmi.w   Enemy_ResetCirclingState
                 bclr    #7,$22(a5)
                 bne.w   Enemy_ResetCirclingState
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.w   Enemy_ResetCirclingState
                 jsr     (RandomNumber).l
                 clr.w   6(a5)
@@ -98,7 +98,7 @@ Projectile_ViblackSideShotController:                   ; DATA XREF: ROM:Entity_
                 bmi.w   Projectile_ViblackSideShotBeginBurst
                 bclr    #7,$22(a5)
                 bne.w   Projectile_ViblackSideShotBeginBurst
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.w   Projectile_ViblackSideShotBeginBurst
                 jsr     (RandomNumber).l
                 clr.w   6(a5)

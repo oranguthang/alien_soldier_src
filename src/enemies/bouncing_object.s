@@ -1,6 +1,6 @@
 ; Shared bouncing object, pickup release, and effect conversion
 Enemy_UpdateBouncingObject:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3F114
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.s   Enemy_ResetBouncingObjectMotion
                 bclr    #7,$22(a5)
                 beq.s   Enemy_CheckBouncingObjectFloor

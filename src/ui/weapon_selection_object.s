@@ -1,7 +1,7 @@
 UI_InitWeaponSelectionObject:                           ; CODE XREF: UI_WeaponSelectionObject+6   p  ; was: sub_2BB86
                 addq.w  #2,4(a5)
                 move.w  #$C700,2(a5)
-                move.w  (word_FF808A).w,$E(a5)
+                move.w  (GlobalSpritePriorityBit).w,$E(a5)
                 move.b  #$C0,$21(a5)
                 move.b  #$30,$23(a5)                    ; '0'
                 move.l  #$F808F808,$2C(a5)

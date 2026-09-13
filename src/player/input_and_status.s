@@ -37,7 +37,7 @@ Player_UpdateDirectionBit:                              ; CODE XREF: Player_Upda
                 btst    #5,(byte_FF8244).w
                 bne.s   Player_UpdateDirectionBit_Return
                 bclr    #7,$E(a5)
-                move.w  (word_FF808A).w,d0
+                move.w  (GlobalSpritePriorityBit).w,d0
                 or.w    d0,$E(a5)
 Player_UpdateDirectionBit_Return:                       ; CODE XREF: Player_UpdateDirectionBit+6   j  ; was: locret_16B72
                 rts

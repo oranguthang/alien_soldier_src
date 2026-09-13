@@ -14,7 +14,7 @@ Boss_MadamBarbarMain:                                   ; DATA XREF: ROM:Entity_
                 bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(BossColorEffectFlags).w
                 jsr     (Sprite_ClearObjectFlags).l
-                move.w  #4,(word_FF808C).w
+                move.w  #4,(StageSpawnCountdown).w
                 bra.w   Boss_MadamBarbarBeginMainAttack
 ; ---------------------------------------------------------------------------
 Boss_MadamBarbarPrepareStateDispatch:                   ; CODE XREF: Boss_MadamBarbarMain+14   j  ; was: loc_3A4C2
@@ -159,7 +159,7 @@ Boss_MadamBarbarBeginMainAttack:                        ; CODE XREF: Boss_MadamB
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.w  #$11F,$11C(a5)
-                move.w  #$48,(word_FF809E).w            ; 'H'
+                move.w  #$48,(ExplosionSoundDelay).w    ; 'H'
 ; Runs the timed bullet barrage and flashes linked parts near its end
 Boss_MadamBarbarBulletBarrageState:                     ; DATA XREF: ROM:0003A4EE   o  ; was: loc_3A6AE
                 subq.w  #1,$11C(a5)

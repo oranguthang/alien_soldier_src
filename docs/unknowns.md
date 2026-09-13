@@ -6965,3 +6965,83 @@ and the audit registry from 13,141 to 13,147. Auditing the four existing code
 labels reduces the semantic review upper bound from 3,100 to 3,096. The
 enforced address-derived ceiling falls from 110 to 108, all still confined to
 RAM equates.
+
+The raster, sprite-attribute, HUD, and asteroid control pass resolves five more
+raw fields and corrects one generated table name. `RasterLayoutOffset` is the
+even selector consumed by VBlank's thirteen-entry raster-copy dispatcher.
+`VBlankFrameDivider` is reloaded from four minus the configured skip level.
+`CombatPercentTimer` is loaded to `$20` on flagged boss hits and controls the
+temporary percentage readout. `AsteroidBoundaryFlag` is raised only when the
+scroll accumulator changes its `$100` boundary bit. The former
+`Object_CameraPriorityTable` entries are `$0000/$0800/$1800/$1000`; all callers
+merge them through mask `$E7FF`, proving that they are sprite flip-bit
+combinations. The table and published global are therefore now
+`SpriteFlipBitsTable` and `GlobalSpriteFlipBits`.
+
+The five RAM definitions add provenance and all six names add exact-address
+audit records. Provenance rises from 15,943 to 15,948 mappings and the audit
+registry from 13,147 to 13,153. Auditing the corrected table reduces the
+semantic review upper bound from 3,096 to 3,095. The enforced address-derived
+ceiling falls from 108 to 103, all still confined to RAM equates.
+
+The low-RAM stage-entry and transition pass resolves four more shared fields.
+The paired stage-record words now describe how gameplay entry streams Plane A
+and Plane B: zero selects constant fill, ordinary small offsets select a VRAM
+parameter record, and Plane A's high bit selects its mirrored-row path.
+`TransitionEdgeSpan` is the 16.16 numerator divided by transition progress to
+derive edge-sample spacing. `ExplosionSoundDelay` is initialized by several
+boss defeat or barrage sequences and consumed by the shared projectile helpers
+before their randomized explosion sounds begin. The write-only
+`word_FF809C` remains raw because no reconstructed consumer proves its role.
+
+All four RAM definitions receive provenance and exact-address audit records.
+Provenance rises from 15,948 to 15,952 mappings and the audit registry from
+13,153 to 13,157. The semantic review upper bound remains 3,095 because every
+new mapping has a matching record. The enforced address-derived ceiling falls
+from 103 to 99, all still confined to RAM equates.
+
+The global sprite-attribute and stage-spawn pass resolves two heavily shared
+words. Stage configuration records and scripted transitions publish only zero
+or `$8000` through `GlobalSpritePriorityBit`; renderers across player, weapon,
+enemy, pickup, projectile, and effect subsystems merge it into sprite attribute
+words. `StageSpawnCountdown` is decremented by the object spawner until it
+becomes negative, while active enemy and projectile handlers use its
+nonnegative interval to reset or suppress themselves during encounter
+transitions.
+
+Both RAM definitions receive provenance and exact-address audit records.
+Provenance rises from 15,952 to 15,954 mappings and the audit registry from
+13,157 to 13,159. The semantic review upper bound remains 3,095 because both
+new mappings have matching records. The enforced address-derived ceiling falls
+from 99 to 97, all still confined to RAM equates.
+
+The transition-mode dispatch pass resolves the shared selector at `$FFFF807A`.
+Both `TransitionEffect_ConfigureRasterMode` and
+`TransitionEffect_UpdateBuffers` use `TransitionModeOffset` directly as an
+even byte offset into parallel five-entry tables. Credits and ordinary stage
+initialization select mode zero, standard and tunnel transitions publish two
+for mode one, and the alternate transition publishes eight for mode four.
+This supports the offset name without inventing a more specific visual role.
+
+The RAM definition receives provenance and an exact-address static audit
+record. Provenance rises from 15,954 to 15,955 mappings and the audit registry
+from 13,159 to 13,160. The semantic review upper bound remains 3,095 because
+the new mapping has a matching record. The enforced address-derived ceiling
+falls from 97 to 96, all still confined to RAM equates.
+
+The transition-scene workspace pass resolves the next three words without
+hiding their mutually exclusive Game Over lifetime. `TransitionProgress`
+advances toward `$7F` and drives interpolation, palette, and mask phases, while
+`GameOverLandscapeAngle` addresses a perspective lookup-table slice.
+`TransitionOriginXY` packs the transition object's high-word X and Y positions;
+`GameOverLandscapeDepth` reuses its first word as the landscape projection
+divisor. `TransitionMaskStep` is cleared at transition setup and derived from
+tunnel progress, whereas `GameOverViewOffset` contributes to the perspective
+accumulator and decreases during automatic landscape motion.
+
+The three raw definitions retain their transition-owned names and gain
+context-specific Game Over overlays. Provenance rises from 15,955 to 15,958
+mappings and the exact-address audit registry from 13,160 to 13,163. The
+semantic review upper bound remains 3,095 because every new imported mapping
+has a matching record. The enforced address-derived ceiling falls from 96 to
+93, all still confined to RAM equates.

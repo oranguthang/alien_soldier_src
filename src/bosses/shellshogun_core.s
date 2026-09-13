@@ -201,7 +201,7 @@ Boss_ShellshogunBeginDefeat:                            ; CODE XREF: Boss_Shells
                 bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(BossColorEffectFlags).w
                 jsr     (Sprite_ClearObjectFlags).l
-                move.w  #$48,(word_FF809E).w            ; 'H'
+                move.w  #$48,(ExplosionSoundDelay).w    ; 'H'
                 move.w  #$12,4(a5)
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)

@@ -510,7 +510,7 @@ Boss_XiTigerApplyLandingVelocity:                       ; CODE XREF: Boss_XiTige
 ; Launches the boss into the scripted defeat leap
 Boss_XiTigerBeginDefeatLeap:                            ; CODE XREF: Boss_XiTigerMain+42   j  ; was: sub_3DEBA
                 move.w  #$1C,4(a5)
-                move.w  #$30,(word_FF809E).w            ; '0'
+                move.w  #$30,(ExplosionSoundDelay).w    ; '0'
                 move.l  #Boss_XiTigerAirborneBodyMapping,$68(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)

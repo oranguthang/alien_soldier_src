@@ -92,7 +92,7 @@ StageTransition_InitializeAsteroidField:                ; DATA XREF: Stage_Dispa
                 move.b  #$80,(byte_FFA958).w
                 clr.l   (dword_FFA964).w
                 clr.w   (word_FFA968).w
-                clr.b   (byte_FFA96A).w
+                clr.b   (AsteroidBoundaryFlag).w
                 move.l  #$10000,(dword_FF8062).w
                 move.l  #$10000,(dword_FFA960).w
                 move.l  #$7000,(BackdropVelocityB).w
@@ -118,7 +118,7 @@ StageTransition_UpdateAsteroidFieldEntry:               ; DATA XREF: ROM:0000F0F
 StageTransition_StartAsteroidFieldScroll:               ; DATA XREF: ROM:0000F100   o  ; was: sub_F218
                 bsr.w   StageTransition_FillAsteroidFieldVScroll
                 bsr.w   StageTransition_UpdateSegmentedBackdropScroll
-                tst.b   (byte_FFA96A).w
+                tst.b   (AsteroidBoundaryFlag).w
                 beq.w   StageTransition_UpdateAsteroidFieldScroll
                 addq.w  #2,(StageStateOffset).w
                 move.b  #$40,(byte_FFA958).w            ; '@'
@@ -132,7 +132,7 @@ StageTransition_FinishAsteroidFieldScroll:              ; DATA XREF: ROM:0000F10
                 bsr.w   StageTransition_UpdateSegmentedBackdropScroll
                 cmpi.w  #$F600,(PrimaryCameraYPosition).w
                 bpl.w   StageTransition_RenderAsteroidField
-                move.w  #$8000,(word_FF808A).w
+                move.w  #$8000,(GlobalSpritePriorityBit).w
                 move.b  #$80,(byte_FFA958).w
                 move.w  #$80,(StageSceneDelayTimer).w
                 jmp     Stage_TransitionToNextPhase
@@ -160,7 +160,7 @@ StageTransition_ConfigureDestroyerProtoBackdrop:        ; CODE XREF: StageTransi
                 clr.b   (byte_FFA958).w
                 move.w  #$50,(RasterEffectIndex).w      ; 'P'
                 clr.w   (RasterEffectInitState).w
-                move.w  #$16,(word_FF8090).w
+                move.w  #$16,(RasterLayoutOffset).w
                 move.w  #$60,(BackdropBandOffset).w     ; '`'
                 move.l  #$4000,(BackdropVelocityB).w
                 move.l  #$8000,(BackdropVelocityA).w
@@ -248,7 +248,7 @@ StageTransition_WaitForShieldViperEntry:                ; DATA XREF: ROM:0000F10
                 addq.w  #2,(StageStateOffset).w
                 clr.w   (RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
-                clr.w   (word_FF8090).w
+                clr.w   (RasterLayoutOffset).w
 StageTransition_ShieldViperEntryWaitReturn:             ; CODE XREF: StageTransition_WaitForShieldViperEntry+E   j  ; was: locret_F400
                 rts
 ; End of function StageTransition_WaitForShieldViperEntry
@@ -326,7 +326,7 @@ StageTransition_CompleteShieldViperVramTransfer:        ; CODE XREF: StageTransi
                 bpl.w   StageTransition_SharedReturn
                 move.w  #$50,(RasterEffectIndex).w      ; 'P'
                 clr.w   (RasterEffectInitState).w
-                move.w  #$16,(word_FF8090).w
+                move.w  #$16,(RasterLayoutOffset).w
                 clr.l   (dword_FF8066).w
                 move.l  #$600000,(BackdropRasterSpan).w
                 clr.l   (BackdropPositionA).w
@@ -383,7 +383,7 @@ StageTransition_CheckWolfGaropaBackdropPosition:        ; CODE XREF: StageTransi
                 addq.w  #2,(StageStateOffset).w
                 clr.w   (RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
-                clr.w   (word_FF8090).w
+                clr.w   (RasterLayoutOffset).w
                 clr.b   (VDPReg11Shadow+1).w
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w

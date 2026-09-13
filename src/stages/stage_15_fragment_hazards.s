@@ -157,7 +157,7 @@ Projectile_SpawnFragmentCluster:                        ; was: sub_30670
                 move.w  d4,d0
                 lsr.w   #1,d0
                 move.w  #$480,d1
-                or.w    (word_FF808A).w,d1
+                or.w    (GlobalSpritePriorityBit).w,d1
                 lea     Projectile_FragmentOrientationAttributes(pc),a1
                 nop
                 or.w    (a1,d0.w),d1
@@ -393,7 +393,7 @@ Projectile_FragmentClusterResponseLoop:
                 move.l  (a1,d0.w),$1C(a0)
                 lsr.w   #1,d0
                 move.w  #$480,d1
-                or.w    (word_FF808A).w,d1
+                or.w    (GlobalSpritePriorityBit).w,d1
                 lea     Projectile_FragmentOrientationAttributes(pc),a1
                 or.w    (a1,d0.w),d1
                 move.w  d1,$E(a0)

@@ -6,9 +6,9 @@ Sys_UpdateObjectSpawner:                                ; CODE XREF: Sys_Gamepla
                 rts
 ; ---------------------------------------------------------------------------
 Sys_UpdateObjectSpawner_TickDelay:                      ; CODE XREF: Sys_UpdateObjectSpawner+4   j  ; was: loc_1A28A
-                move.w  (word_FF808C).w,d0
+                move.w  (StageSpawnCountdown).w,d0
                 bmi.w   Sys_UpdateObjectSpawner_ProcessList
-                subq.w  #1,(word_FF808C).w
+                subq.w  #1,(StageSpawnCountdown).w
 Sys_UpdateObjectSpawner_ProcessList:                    ; CODE XREF: Sys_UpdateObjectSpawner+E   j  ; was: loc_1A296
                 jsr     Sys_ProcessSpawnList(pc)        ; (pc)
                 nop

@@ -127,7 +127,7 @@ Boss_ShiperSetupState:                                  ; DATA XREF: ROM:000364A
                 addq.w  #2,(StageStateOffset).w
                 move.w  #$24,(RasterEffectIndex).w      ; '$'
                 clr.w   (RasterEffectInitState).w
-                move.w  #$A,(word_FF8090).w
+                move.w  #$A,(RasterLayoutOffset).w
                 move.b  #3,(byte_FFA95B).w
                 move.w  #8,$5A(a5)
                 move.w  #2,$5C(a5)
@@ -406,7 +406,7 @@ Boss_ShiperInitDefeat:                                  ; CODE XREF: Boss_Shiper
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  #$1E,4(a5)
                 clr.l   $78(a5)
-                move.w  #4,(word_FF808C).w
+                move.w  #4,(StageSpawnCountdown).w
 ; End of function Boss_ShiperInitDefeat
 ; Checks boss phase transition conditions based on altitude and flags
 Boss_ShiperPhaseCheck:                                  ; DATA XREF: ROM:000364B8   o  ; was: sub_3694C
@@ -450,7 +450,7 @@ Boss_ShiperDefeatSequenceBeginCleanup:                  ; CODE XREF: Boss_Shiper
                 move.w  #$30,$4A(a5)                    ; '0'
                 clr.w   (RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
-                clr.w   (word_FF8090).w
+                clr.w   (RasterLayoutOffset).w
                 move.b  #4,(byte_FFA95B).w
                 move.w  #$24,d0                         ; '$'
                 move.w  #$134,d1

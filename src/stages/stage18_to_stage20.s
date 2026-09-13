@@ -33,7 +33,7 @@ Stage18_InitializeDestroyerMk2Encounter:                ; DATA XREF: ROM:0000E43
                 move.w  d0,(PrimaryCameraXPosition).w
                 move.w  d0,(CameraXLowerBound).w
                 move.w  d0,(CameraXUpperBound).w
-                move.w  #$8000,(word_FF808A).w
+                move.w  #$8000,(GlobalSpritePriorityBit).w
                 lea     (Boss_DestroyerMK2AssetSet).l,a1
                 jmp     Boss_LoadAssetSet
 ; End of function Stage18_InitializeDestroyerMk2Encounter

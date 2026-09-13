@@ -19,7 +19,7 @@ Effect_ConvertCurrentToTypeC4Burst:                     ; CODE XREF: Object_Upda
                 clr.l   $18(a0)
                 clr.l   $1C(a0)
                 move.w  #$480,d0
-                add.w   (word_FF808A).w,d0
+                add.w   (GlobalSpritePriorityBit).w,d0
                 move.w  $E(a0),d1
                 andi.w  #$1000,d1
                 add.w   d1,d0
@@ -36,12 +36,12 @@ Effect_ConvertCurrentToTypeC4Burst:                     ; CODE XREF: Object_Upda
                 move.b  #$BC,d0
                 jmp     (Sound_PlaySFX).l
 ; End of function Effect_ConvertCurrentToTypeC4Burst
-; Waits on the shared delay counter, then enters the common projectile update
+; Waits on the shared explosion-sound delay, then enters the projectile update
 Projectile_UpdateAfterGlobalDelay:                      ; CODE XREF: Enemy_ShipSpawnDebrisProjectile   p  ; was: sub_2A390
                                         ; sub_3A122   p
-                subq.w  #1,(word_FF809E).w
+                subq.w  #1,(ExplosionSoundDelay).w
                 bpl.s   Projectile_UpdateWithImpactFrames_Update
-                move.w  #$FFFF,(word_FF809E).w
+                move.w  #$FFFF,(ExplosionSoundDelay).w
 ; End of function Projectile_UpdateAfterGlobalDelay
 ; Updates a projectile and selects one of two shared impact-frame tables
 Projectile_UpdateWithImpactFrames:                      ; CODE XREF: Boss_ShiperSpawnDebris+6   p  ; was: sub_2A39C
@@ -75,9 +75,9 @@ Projectile_UpdateWithImpactFrames_Return:               ; CODE XREF: Projectile_
 ; Updates a projectile while emitting randomized explosion sounds
 Projectile_UpdateWithExplosionSound:                    ; CODE XREF: Boss_DestroyerProtoEmitDefeatParticle+12   p  ; was: sub_2A3E6
                                         ; Boss_JokerSpawnDefeatEffect   p
-                subq.w  #1,(word_FF809E).w
+                subq.w  #1,(ExplosionSoundDelay).w
                 bpl.s   Projectile_UpdateWithImpactFrames_Update
-                move.w  #$FFFF,(word_FF809E).w
+                move.w  #$FFFF,(ExplosionSoundDelay).w
                 move.w  (FrameCounter).w,d0
                 move.w  d0,d1
                 andi.w  #$1F,d1
@@ -262,7 +262,7 @@ Sprite_InitFromTable:                                   ; CODE XREF: ShipSequenc
                 move.w  (a1)+,8(a0)
                 move.w  (a1)+,$A(a0)
                 move.l  a1,$48(a0)
-                move.w  (word_FF808A).w,d0
+                move.w  (GlobalSpritePriorityBit).w,d0
                 or.w    d0,$E(a0)
                 clr.b   $21(a0)
                 rts
@@ -335,7 +335,7 @@ Anim_UpdateWithPaletteSwap_UseAlternatePalette:         ; CODE XREF: Anim_Update
 Anim_UpdateWithGlobalAttributes:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A6B4
                 bsr.w   Anim_UpdateSpriteFrame
                 andi.w  #$E7FF,$E(a5)
-                move.w  (word_FF8092).w,d0
+                move.w  (GlobalSpriteFlipBits).w,d0
                 or.w    d0,$E(a5)
                 rts
 ; End of function Anim_UpdateWithGlobalAttributes
@@ -359,7 +359,7 @@ Anim_UpdateSpriteFrame:                                 ; CODE XREF: XiTigerCuts
                 move.w  (a0)+,8(a5)
                 move.w  (a0)+,$A(a5)
                 move.l  a0,$48(a5)
-                move.w  (word_FF808A).w,d0
+                move.w  (GlobalSpritePriorityBit).w,d0
                 or.w    d0,$E(a5)
 Anim_UpdateSpriteFrame_Return:                          ; CODE XREF: Anim_UpdateSpriteFrame+4   j  ; was: locret_2A700
                 rts
@@ -378,7 +378,7 @@ Anim_RunCallbackScript:                                 ; DATA XREF: ROM:Entity_
                 move.w  (a0)+,8(a5)
                 move.w  (a0)+,$A(a5)
                 move.l  a0,$54(a5)
-                move.w  (word_FF808A).w,d0
+                move.w  (GlobalSpritePriorityBit).w,d0
                 or.w    d0,$E(a5)
                 rts
 ; ---------------------------------------------------------------------------
@@ -399,7 +399,7 @@ Anim_UpdateScriptAndHide:
                 move.w  (a0)+,8(a5)
                 move.w  (a0)+,$A(a5)
                 move.l  a0,$48(a5)
-                or.w    (word_FF808A).w,d0
+                or.w    (GlobalSpritePriorityBit).w,d0
                 move.w  d0,$E(a5)
 Anim_UpdateScriptAndHide_Return:                        ; CODE XREF: Anim_UpdateScriptAndHide+4   j  ; was: locret_2A764
                 rts
@@ -420,7 +420,7 @@ Anim_UpdateLoopingScript_ReadFrame:                     ; CODE XREF: Anim_Update
                 move.w  (a0)+,8(a5)
                 move.w  (a0)+,$A(a5)
                 move.l  a0,$48(a5)
-                or.w    (word_FF808A).w,d0
+                or.w    (GlobalSpritePriorityBit).w,d0
                 move.w  d0,$E(a5)
 Anim_UpdateLoopingScript_Return:                        ; CODE XREF: Anim_UpdateLoopingScript+4   j  ; was: locret_2A794
                 rts
@@ -480,7 +480,7 @@ Sprite_InitializeEffectGraphics:                        ; CODE XREF: Projectile_
                                         ; Effect_SpawnExplosionType188+4   j
                 move.w  #$ED40,2(a0)
                 move.w  #$480,d0
-                or.w    (word_FF808A).w,d0
+                or.w    (GlobalSpritePriorityBit).w,d0
                 move.w  d0,$E(a0)
                 clr.w   $C(a0)
                 clr.b   $21(a0)
@@ -521,7 +521,7 @@ Projectile_FallWithGravity_Return:                      ; CODE XREF: Projectile_
 ; Applies global stage attribute bits to the projectile sprite
 Projectile_ApplyGlobalAttributes:                       ; CODE XREF: Projectile_FallWithGravity:loc_2A80C   p  ; was: sub_2A824
                 andi.w  #$E7FF,$E(a5)
-                move.w  (word_FF8092).w,d0
+                move.w  (GlobalSpriteFlipBits).w,d0
                 or.w    d0,$E(a5)
                 rts
 ; End of function Projectile_ApplyGlobalAttributes
@@ -555,7 +555,7 @@ Effect_InitDebrisSprite:                                ; CODE XREF: Boss_JokerS
                 move.w  #$480,$E(a0)
                 move.l  #SharedCombatSpriteAnimation03,8(a0)
                 clr.w   $C(a0)
-                move.w  (word_FF808A).w,d0
+                move.w  (GlobalSpritePriorityBit).w,d0
                 or.w    d0,$E(a0)
                 clr.b   $21(a0)
                 move.w  (RandomNumberState).w,d0

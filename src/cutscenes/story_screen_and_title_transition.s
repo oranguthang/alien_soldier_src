@@ -249,7 +249,7 @@ StoryTitle_ClearPlaneATail:                             ; was: loc_4B96
                 move.w  #$21,(StoryTitleExpandSpan).l   ; '!'
                 clr.w   (CutscenePaletteStep).l
                 bsr.w   StoryTitle_UpdateRevealPalette
-                move.w  #$10,(word_FF8090).w
+                move.w  #$10,(RasterLayoutOffset).w
                 move.w  #$C,(StoryTitleGlyphsLeft).l
                 lea     (CutsceneWorkBuffer).l,a0
                 moveq   #0,d1

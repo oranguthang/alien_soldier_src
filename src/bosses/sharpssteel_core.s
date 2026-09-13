@@ -566,9 +566,9 @@ Boss_SharpssteelDiveAttackState:                        ; DATA XREF: ROM:00047C7
                 move.w  $10(a5),d5
                 move.w  #$150,d6
                 moveq   #$60,d3                         ; '`'
-                clr.w   (word_FF808A).w
+                clr.w   (GlobalSpritePriorityBit).w
                 jsr     (Projectile_SpawnFourDirectionalShotsWithSubtypeInD3).l
-                move.w  #$8000,(word_FF808A).w
+                move.w  #$8000,(GlobalSpritePriorityBit).w
                 move.b  #$4D,d0                         ; 'M'
                 jsr     (Sound_PlaySFX).l
 Boss_SharpssteelUpdateDiveAttackPose:                   ; CODE XREF: Boss_SharpssteelDiveAttackState+16   j

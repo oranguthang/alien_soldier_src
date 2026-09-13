@@ -1,5 +1,5 @@
 Sys_InitStageState:                                     ; CODE XREF: Stage_UpdateGameplayEntry+32   p  ; was: sub_1221C
-                clr.w   (word_FF807A).w
+                clr.w   (TransitionModeOffset).w
                 jsr     (Stage_InitializationNoOpHook).l
                 bsr.w   Weapon_ClearAmmoRegenTimers
                 clr.w   (FrameSkipLevel).w

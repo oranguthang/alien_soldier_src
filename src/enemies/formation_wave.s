@@ -8,7 +8,7 @@ Enemy_FormationWaveMain:                                ; DATA XREF: ROM:Entity_
                 bne.s   Enemy_FormationWaveFinishUpdate
                 tst.w   $24(a5)
                 bmi.s   Enemy_FormationWavePrepareAimedShot
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bmi.w   Enemy_FormationWaveReturn
 Enemy_FormationWavePrepareAimedShot:                    ; CODE XREF: Enemy_FormationWaveMain+1A   j  ; was: loc_32F04
                 jsr     (Math_CalculateAngleToPlayer).l
@@ -18,7 +18,7 @@ Enemy_FormationWavePrepareAimedShot:                    ; CODE XREF: Enemy_Forma
                 moveq   #9,d7
                 moveq   #0,d0
                 moveq   #1,d1
-                move.w  (word_FF808A).w,d2
+                move.w  (GlobalSpritePriorityBit).w,d2
                 jsr     (Projectile_InitializeTwoSpeedShot).l
 Enemy_FormationWaveFinishUpdate:                        ; CODE XREF: Enemy_FormationWaveMain+C   j  ; was: loc_32F24
                                         ; Enemy_FormationWaveMain+14   j

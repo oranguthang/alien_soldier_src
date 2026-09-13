@@ -331,7 +331,7 @@ ShipSequence_ClearNextRowProgress:                      ; CODE XREF: ShipSequenc
                 move.b  #$30,d0                         ; '0'
                 jsr     (Sound_QueueRequest).l
                 move.l  #$8000,(ShipVerticalVelocity).l
-                move.w  #$8000,(word_FF808A).w
+                move.w  #$8000,(GlobalSpritePriorityBit).w
                 bsr.w   ShipPattern_ClearBuffer
                 addq.w  #2,(ShipSequenceState).l
 ; Reveals the staged pattern row by row while emitting radial star particles
@@ -345,7 +345,7 @@ ShipSequence_RevealPattern:                             ; DATA XREF: ROM:0000881
                 bcs.w   Cutscene_Return
                 movea.l #ShipSequence_ClearedArrivalTiles,a0
                 jsr     (Tilemap_QueueIndexedRows).l
-                clr.w   (word_FF808A).w
+                clr.w   (GlobalSpritePriorityBit).w
                 move.l  #Gfx_ScrollVRAMTransferParameters,(TilemapTransferBase).w
                 move.w  #0,(TilemapRowXOrFillWord).w
                 move.w  #0,(TilemapRowYPosition).w

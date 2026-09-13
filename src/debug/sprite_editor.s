@@ -50,7 +50,7 @@ UI_DebugSpriteEditor_ApplyPaletteLine:                  ; CODE XREF: UI_DebugSpr
                 andi.w  #$6000,$48(a5)
                 move.w  $48(a5),d0
                 or.w    d0,$E(a5)
-                move.w  (word_FF808A).w,d0
+                move.w  (GlobalSpritePriorityBit).w,d0
                 or.w    d0,$E(a5)
                 btst    #1,(ControllerPressedState).w
                 beq.w   UI_DebugSpriteEditor_CheckPriorityToggle

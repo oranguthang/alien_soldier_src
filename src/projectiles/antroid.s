@@ -51,7 +51,7 @@ Boss_AntroidSpawnWaitProjectileReturn:                  ; CODE XREF: Boss_Antroi
 
 ; Updates type $158 motion, rebound, palette steps, and removal
 Projectile_AntroidUpdate:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_380A4
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.s   Projectile_AntroidDeactivate
                 bclr    #7,$22(a5)
                 beq.s   Projectile_AntroidApplyMotion

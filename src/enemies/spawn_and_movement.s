@@ -179,7 +179,7 @@ Enemy_SetupBehaviorSprite:                              ; CODE XREF: Enemy_MainS
                                         ; Enemy_BeginDestructionDelay+6   p
                 move.w  #$EF00,2(a5)
                 move.w  (SpawnedEnemyTileAttr).w,d1
-                or.w    (word_FF808A).w,d1
+                or.w    (GlobalSpritePriorityBit).w,d1
                 move.w  d1,$E(a5)
                 btst    #7,$5F(a5)
                 beq.s   Enemy_SetupBehaviorSprite_ApplyAttributes
@@ -286,7 +286,7 @@ Enemy_SpawnTrackedProjectile:                           ; CODE XREF: Enemy_MainS
 Enemy_SpawnTrackedProjectile_Initialize:                ; CODE XREF: Enemy_SpawnTrackedProjectile+6   j  ; was: loc_2C5F4
                 moveq   #$FFFFFFE8,d0
                 moveq   #$FFFFFFFA,d1
-                move.w  (word_FF808A).w,d2
+                move.w  (GlobalSpritePriorityBit).w,d2
                 move.b  $20(a5),d2
                 subq.w  #4,d2
                 move.w  #$100,d6

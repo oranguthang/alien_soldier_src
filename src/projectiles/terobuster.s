@@ -5,7 +5,7 @@ Projectile_TerobusterHomingMissileUpdate:               ; DATA XREF: ROM:Entity_
                 bne.s   Projectile_TerobusterHomingMissileConvertToImpact
                 btst    #7,$22(a5)
                 bne.s   Projectile_TerobusterHomingMissileConvertToImpact
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.s   Projectile_TerobusterHomingMissileConvertToImpact
                 tst.w   $24(a5)
                 bpl.s   Projectile_TerobusterHomingMissileUpdateFlight

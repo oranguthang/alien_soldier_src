@@ -216,7 +216,7 @@ Projectile_UpdateTrailingArcHazardType1D0_ConvertToType88:  ; CODE XREF: Project
 ; End of function Projectile_UpdateTrailingArcHazardType1D0
 ; Update type-$104 controller and emit type-$108 hazards from above the screen
 Hazard_UpdateTopFallingSpawnerType104:                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2B9C4
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bmi.s   Hazard_UpdateTopFallingSpawnerType104_Tick
                 bset    #4,2(a5)
                 rts
@@ -259,7 +259,7 @@ Hazard_TopFallingSpawnerDifficultyBaseDelays:   dc.w    $40, $28, $10  ; DATA XR
 
 ; Update a type-$108 falling hazard and resolve terrain or deflection impact
 Projectile_UpdateTopFallingHazardType108:               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2BA5E
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bmi.s   Projectile_UpdateTopFallingHazardType108_CheckTerrain
 Projectile_UpdateTopFallingHazardType108_ConvertToType88:  ; CODE XREF: Projectile_UpdateTopFallingHazardType108+4A   j  ; was: loc_2BA64
                 move.l  #SharedCombatSpriteAnimation02,8(a5)

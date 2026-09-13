@@ -13,12 +13,12 @@ StageTransition_UpdateAsteroidFieldScroll:              ; CODE XREF: StageTransi
                 move.l  (dword_FFA960).w,d0
                 add.l   d0,(PrimaryCameraYPosition).w
                 add.l   d0,(dword_FFA964).w
-                clr.b   (byte_FFA96A).w
+                clr.b   (AsteroidBoundaryFlag).w
                 move.w  (dword_FFA964).w,d0
                 andi.w  #$100,d0
                 cmp.w   (word_FFA968).w,d0
                 beq.s   StageTransition_SharedReturn
-                addq.b  #1,(byte_FFA96A).w
+                addq.b  #1,(AsteroidBoundaryFlag).w
                 move.w  d0,(word_FFA968).w
 ; Shared return for inactive or incomplete transition states
 StageTransition_SharedReturn:                           ; CODE XREF: StageTransition_LoadDestroyerProtoAssets+8   j  ; was: locret_FB60

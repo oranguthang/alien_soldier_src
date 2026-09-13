@@ -112,7 +112,7 @@ Projectile_DestroyerProtoInitFromPart:                  ; CODE XREF: Projectile_
                 move.l  d1,$14(a0)
                 move.b  #0,$20(a0)
                 move.w  #$480,d1
-                or.w    (word_FF808A).w,d1
+                or.w    (GlobalSpritePriorityBit).w,d1
                 move.w  d1,$E(a0)
                 move.w  #6,$48(a0)
                 move.w  #8,$4A(a0)

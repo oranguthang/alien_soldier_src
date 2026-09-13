@@ -39,7 +39,7 @@ Effect_UpdateStage25DestructionParticle_ConvertObject:  ; CODE XREF: Effect_Upda
 Effect_ApplyStage25ParticleOrientation:                 ; CODE XREF: Effect_UpdateStage25DestructionParticle+6   j  ; was: loc_2BB3C
                                         ; Effect_UpdateStage25DestructionParticle+E   j
                 bclr    #7,$E(a5)
-                move.w  (word_FF808A).w,d0
+                move.w  (GlobalSpritePriorityBit).w,d0
                 or.w    d0,$E(a5)
                 rts
 ; End of function Effect_UpdateStage25DestructionParticle

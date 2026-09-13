@@ -1,7 +1,7 @@
 Enemy_InitBirdSprite:                                   ; CODE XREF: Enemy_BirdInit+2   p  ; was: sub_2DA3A
                 move.w  #$6F00,2(a5)
                 move.w  (BirdEnemyTileAttr).w,d1
-                or.w    (word_FF808A).w,d1
+                or.w    (GlobalSpritePriorityBit).w,d1
                 move.w  d1,$E(a5)
                 move.b  #$48,$20(a5)                    ; 'H'
                 move.b  #$C0,$21(a5)
@@ -59,7 +59,7 @@ Enemy_BirdController:                                   ; DATA XREF: ROM:Entity_
                 beq.s   Enemy_BirdController_DispatchAndRender
                 tst.w   $24(a5)
                 bmi.w   Enemy_ConvertBirdToDefeatDebris
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.w   Enemy_ConvertBirdToDefeatDebris
                 bclr    #7,$22(a5)
                 beq.s   Enemy_BirdController_UpdateState

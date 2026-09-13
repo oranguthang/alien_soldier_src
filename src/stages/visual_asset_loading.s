@@ -408,7 +408,7 @@ UnreferencedSharedGameplayTileAssetLoadList:    dc.w    7  ; field_0  ; was: str
 
 ; Initializes Xi-Tiger stage RAM, configuration, weapon selection, and player state
 Stage_InitializeXiTigerState:                           ; CODE XREF: XiTigerStage_UpdateGameplayEntry+22   p  ; was: sub_1219E
-                clr.w   (word_FF807A).w
+                clr.w   (TransitionModeOffset).w
                 jsr     (Stage_InitializationNoOpHook).l
                 bsr.w   Weapon_ClearAmmoRegenTimers
                 clr.w   (FrameSkipLevel).w
@@ -455,13 +455,13 @@ XiTigerStageConfigRecord:   dc.w    $76                 ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    $8000                           ; word_FF808A
+                dc.w    $8000                           ; GlobalSpritePriorityBit
                 dc.w    $800                            ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    8                               ; word_FF80AA
-                dc.w    0                               ; word_FF80AC
+                dc.w    8                               ; StagePlaneAEntryMode
+                dc.w    0                               ; StagePlaneBEntryMode
                 dc.b    $F0                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $A8                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    XiTigerAndStage9PaletteOffsetList  ; palette offset list pointer

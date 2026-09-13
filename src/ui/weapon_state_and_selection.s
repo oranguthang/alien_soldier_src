@@ -110,7 +110,7 @@ WeaponSelect_Initialize:                                ; DATA XREF: ROM:0001799
                 move.w  #$80,$10(a0)
                 move.w  #$80,$14(a0)
                 move.w  #$C80,$E(a0)
-                move.w  (word_FF808A).w,d6
+                move.w  (GlobalSpritePriorityBit).w,d6
                 or.w    d6,$E(a0)
                 movea.w #(PlayerEffectAllocStart-M68K_RAM),a0
                 movea.w #(WeaponSlotConfig0-M68K_RAM),a1
@@ -118,7 +118,7 @@ WeaponSelect_Initialize:                                ; DATA XREF: ROM:0001799
                 nop
                 lea     WeaponSelect_SpriteFramePointers(pc),a4
                 movea.w #(PlayerObjectType-M68K_RAM),a5
-                move.w  (word_FF808A).w,d3
+                move.w  (GlobalSpritePriorityBit).w,d3
                 moveq   #0,d4
                 moveq   #3,d7
 ; Initializes all four weapon-selection slot objects

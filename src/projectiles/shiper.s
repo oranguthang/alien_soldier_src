@@ -49,7 +49,7 @@ Projectile_ShiperOscillatingShot:                       ; DATA XREF: ROM:Entity_
                 rts
 ; ---------------------------------------------------------------------------
 Projectile_ShiperOscillatingShotUpdate:                 ; CODE XREF: Projectile_ShiperOscillatingShot+C   j  ; was: loc_3728C
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.s   Projectile_ShiperOscillatingShotBurst
                 tst.w   $24(a5)
                 bpl.s   Projectile_ShiperOscillatingShotSteer
@@ -170,7 +170,7 @@ Boss_ShiperCircleShotObjectParameters:  dc.w    $A3F7, $A00, $F4F4, $7A, $A410, 
 
 ; Updates Shiper's rotating bouncing shot and converts it to debris on impact
 Projectile_ShiperBouncingShot:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_37436
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.w   Projectile_ShiperBouncingShotConvertToDebris
                 moveq   #1,d1
                 tst.w   $18(a5)
@@ -182,7 +182,7 @@ Projectile_ShiperBouncingShotUpdateRotation:            ; CODE XREF: Projectile_
                 asr.w   #1,d0
                 andi.w  #6,d0
                 andi.w  #$E7FF,$E(a5)
-                lea     (Object_CameraPriorityTable).l,a0
+                lea     (SpriteFlipBitsTable).l,a0
                 move.w  (a0,d0.w),d0
                 or.w    d0,$E(a5)
                 bclr    #7,$22(a5)

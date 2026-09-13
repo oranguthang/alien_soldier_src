@@ -496,7 +496,7 @@ Boss_TerobusterBeginDefeat:                             ; CODE XREF: Boss_Terobu
                 move.w  #$A,4(a5)
                 move.b  #2,(BossColorEffectFlags).w
                 clr.w   8(a5)
-                move.w  #4,(word_FF808C).w
+                move.w  #4,(StageSpawnCountdown).w
                 move.w  #8,(PlaneAShakeLevel).w
                 move.w  #8,(PlaneBShakeLevel).w
                 jsr     (Sprite_ClearObjectFlags).l

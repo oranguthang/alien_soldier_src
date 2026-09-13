@@ -1,6 +1,6 @@
 ; Madam Barbar debris motion states and shared-effect handoff
 Projectile_MadamBarbarDebris:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3AE36
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.s   Projectile_MadamBarbarDebrisConvertToType160
                 tst.w   $24(a5)
                 bpl.s   Projectile_MadamBarbarDebrisUpdateActive
@@ -209,7 +209,7 @@ Boss_MadamBarbarSpawnDropProjectile:                    ; CODE XREF: Boss_MadamB
 ; End of function Boss_MadamBarbarSpawnDropProjectile
 ; Updates the Madam Barbar drop projectile startup and terrain contacts
 Projectile_MadamBarbarDropUpdate:                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3B0C0
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bmi.s   Projectile_MadamBarbarDropUpdateActive
                 bset    #4,2(a5)
                 rts

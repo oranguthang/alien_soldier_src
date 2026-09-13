@@ -22,7 +22,7 @@ Stage9_InitializeFlyCorridor:                           ; DATA XREF: ROM:0000C8A
                 move.b  #$30,(byte_FFA95B).w            ; '0'
                 move.w  #$2C,(RasterEffectIndex).w      ; ','
                 clr.w   (RasterEffectInitState).w
-                move.w  #8,(word_FF8090).w
+                move.w  #8,(RasterLayoutOffset).w
                 clr.b   (Stage8TilemapMode).l
                 jmp     Stage_PrepareFourWordRangesWithD
 ; End of function Stage9_InitializeFlyCorridor
@@ -36,7 +36,7 @@ Stage9_UpdateFlyCorridor:                               ; DATA XREF: ROM:0000C8A
                 addq.w  #2,(StageStateOffset).w
                 clr.w   (RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
-                clr.w   (word_FF8090).w
+                clr.w   (RasterLayoutOffset).w
                 bra.s   Stage9_InitializeCaterpillarCamera
 ; End of function Stage9_UpdateFlyCorridor
 ; Build the corridor raster offsets while advancing the camera and reveal columns
@@ -145,7 +145,7 @@ Stage9_InitializeCaterpillarEncounter:                  ; CODE XREF: Stage9_Init
                 addq.w  #2,(StageStateOffset).w
                 clr.w   (MidgameLightningMode).w
                 clr.l   (StageCameraYVelocity).w
-                move.w  #$8000,(word_FF808A).w
+                move.w  #$8000,(GlobalSpritePriorityBit).w
                 move.w  #$128,(Entity_ObjectPool).w
                 move.w  #$C470,(HUDDynamicStripTileAttr).w
                 clr.w   (HUDDynamicStripYOffset).w
@@ -269,7 +269,7 @@ Stage9_InitializeXiTigerEncounter:                      ; DATA XREF: ROM:0000C8C
                 move.w  (PlayerHealth).w,(DisplayedPlayerHealth).w
                 move.b  #$10,(byte_FFA95A).w
                 move.b  #$40,(GameplayControlFlags).w   ; '@'
-                move.w  #$8000,(word_FF808A).w
+                move.w  #$8000,(GlobalSpritePriorityBit).w
                 move.w  #$20,(PlayerScriptStateOffset).w  ; ' '
                 move.w  #$40,(ScriptedInputStepTimer).w  ; '@'
 Stage9_LoadXiTigerEncounterAssets:                      ; CODE XREF: Stage9_UpdateCaterpillarShipExit+68   j  ; was: loc_D450

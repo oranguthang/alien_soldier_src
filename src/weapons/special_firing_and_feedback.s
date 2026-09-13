@@ -56,7 +56,7 @@ Weapon_CircleAttack_SetupProjectiles:                   ; CODE XREF: Player_Spaw
                 moveq   #7,d7
                 movea.l #Weapon_CircleAttackSpriteData,a2
                 moveq   #1,d5
-                move.w  (word_FF808A).w,d0
+                move.w  (GlobalSpritePriorityBit).w,d0
                 andi.w  #$8000,d0
 Weapon_CircleAttack_SpawnLoop:                          ; CODE XREF: Player_SpawnCircleAttack+150   j  ; was: loc_18600
                 move.w  #$60,(a0)                       ; '`'
@@ -180,7 +180,7 @@ Weapon_SetHomingProjectileData:                         ; CODE XREF: Weapon_Fire
                 asr.w   #3,d6
                 movea.l #Weapon_HomingShotSpriteData,a1
                 move.w  (a1,d6.w),d0
-                or.w    (word_FF808A).w,d0
+                or.w    (GlobalSpritePriorityBit).w,d0
                 move.w  d0,$E(a0)
                 move.w  $10(a1,d6.w),8(a0)
                 move.w  $20(a1,d6.w),$A(a0)
@@ -373,7 +373,7 @@ Effect_UpdateKnockbackParticle_Return:                  ; CODE XREF: Effect_Upda
 Effect_UpdateKnockbackParticle_InitImpact:              ; CODE XREF: Effect_UpdateKnockbackParticle+16   j  ; was: loc_18A0C
                 move.l  #Weapon_ProjectileSpriteTiles,$4A(a5)
                 move.w  #$456C,d0
-                add.w   (word_FF808A).w,d0
+                add.w   (GlobalSpritePriorityBit).w,d0
                 move.w  d0,$E(a5)
                 move.w  #$F00,8(a5)
                 move.w  #$F0F0,$A(a5)

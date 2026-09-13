@@ -8,7 +8,7 @@ Projectile_BackStringerRetireFallingDrop:               ; CODE XREF: Projectile_
                 rts
 ; ---------------------------------------------------------------------------
 Projectile_BackStringerUpdateFallingDrop:               ; CODE XREF: Projectile_BackStringerFallingDropMain+C   j  ; was: loc_45792
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.s   Projectile_BackStringerBounceFallingDrop
                 tst.w   $24(a5)
                 bpl.s   Projectile_BackStringerUpdateFallingDropMotion
@@ -144,7 +144,7 @@ Projectile_SpawnBackStringerAngledShotReturn:           ; CODE XREF: Projectile_
 ; End of function Projectile_SpawnBackStringerAngledShot
 ; Updates an angled shot, its collision conversion, and its rebound copy
 Projectile_BackStringerAngledShotMain:                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_45946
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.s   Projectile_BackStringerConvertAngledShotToImpact
                 bclr    #7,$22(a5)
                 beq.s   Projectile_BackStringerUpdateAngledShotFlight
@@ -181,7 +181,7 @@ Projectile_BackStringerUpdateAngledShotSpin:            ; CODE XREF: Projectile_
                 andi.w  #6,d0
                 move.w  d0,$4C(a5)
                 andi.w  #$E7FF,$E(a5)
-                lea     (Object_CameraPriorityTable).l,a0
+                lea     (SpriteFlipBitsTable).l,a0
                 move.w  (a0,d0.w),d0
                 or.w    d0,$E(a5)
                 move.w  $56(a5),d0
@@ -232,7 +232,7 @@ Projectile_BackStringerUpdateReboundShotFrame:          ; CODE XREF: Projectile_
                 andi.w  #6,d0
                 move.w  d0,$48(a5)
                 andi.w  #$E7FF,$E(a5)
-                lea     (Object_CameraPriorityTable).l,a0
+                lea     (SpriteFlipBitsTable).l,a0
                 move.w  (a0,d0.w),d0
                 or.w    d0,$E(a5)
                 rts

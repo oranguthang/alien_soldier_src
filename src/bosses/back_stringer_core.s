@@ -686,7 +686,7 @@ Boss_BackStringerDefeatInit:                            ; CODE XREF: Boss_BackSt
                 move.b  #1,(SoundFadeOutDelay).w
                 bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(BossColorEffectFlags).w
-                move.w  #8,(word_FF808C).w
+                move.w  #8,(StageSpawnCountdown).w
                 clr.w   8(a5)
                 move.w  #6,(PlaneAShakeLevel).w
                 move.w  #6,(PlaneBShakeLevel).w

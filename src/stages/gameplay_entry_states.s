@@ -21,7 +21,7 @@ Stage_UpdateGameplayEntry_Return:                       ; CODE XREF: Stage_Updat
                 rts
 ; ---------------------------------------------------------------------------
 Stage_StreamGameplayEntryPrimaryPlane:                  ; CODE XREF: Stage_UpdateGameplayEntry+14   j  ; was: loc_1C44A
-                move.w  (word_FF80AA).w,d0
+                move.w  (StagePlaneAEntryMode).w,d0
                 bne.s   Stage_StreamGameplayEntryPrimaryPlane_Rows
                 clr.w   (TilemapRowXOrFillWord).w
                 move.w  #$4000,(TilemapTransferBase).w
@@ -57,7 +57,7 @@ Stage_AdvanceGameplayEntryToSecondaryPlane:             ; CODE XREF: Stage_Strea
                 rts
 ; ---------------------------------------------------------------------------
 Stage_StreamGameplayEntrySecondaryPlane:                ; CODE XREF: Stage_UpdateGameplayEntry+C   j  ; was: loc_1C4C2
-                move.w  (word_FF80AC).w,d0
+                move.w  (StagePlaneBEntryMode).w,d0
                 bne.s   Stage_StreamGameplayEntrySecondaryPlane_Rows
                 clr.w   (TilemapRowXOrFillWord).w
                 move.w  #$6000,(TilemapTransferBase).w
@@ -124,7 +124,7 @@ XiTigerStage_UpdateGameplayEntry_Return:                ; CODE XREF: XiTigerStag
                 rts
 ; ---------------------------------------------------------------------------
 XiTigerStage_StreamPrimaryPlane:                        ; CODE XREF: XiTigerStage_UpdateGameplayEntry+14   j  ; was: loc_1C5AA
-                move.w  (word_FF80AA).w,d0
+                move.w  (StagePlaneAEntryMode).w,d0
                 bne.s   XiTigerStage_StreamPrimaryPlane_Rows
                 clr.w   (TilemapRowXOrFillWord).w
                 move.w  #$4000,(TilemapTransferBase).w
@@ -147,7 +147,7 @@ XiTigerStage_AdvanceToSecondaryPlane:                   ; CODE XREF: XiTigerStag
                 rts
 ; ---------------------------------------------------------------------------
 XiTigerStage_StreamSecondaryPlane:                      ; CODE XREF: XiTigerStage_UpdateGameplayEntry+C   j  ; was: loc_1C5FC
-                move.w  (word_FF80AC).w,d0
+                move.w  (StagePlaneBEntryMode).w,d0
                 bne.s   XiTigerStage_StreamSecondaryPlane_Rows
                 clr.w   (TilemapRowXOrFillWord).w
                 move.w  #$6000,(TilemapTransferBase).w

@@ -95,7 +95,7 @@ Projectile_RemoveArtemisEmitterOutsideBounds:           ; CODE XREF: Projectile_
                 rts
 ; ---------------------------------------------------------------------------
 Projectile_HandleArtemisEmitterCollision:               ; CODE XREF: Projectile_UpdateArtemisRadialEmitter+B8   j  ; was: loc_58B20
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.s   Projectile_ConvertArtemisEmitterToEffect
                 bclr    #7,$22(a5)
                 beq.s   Projectile_ReflectArtemisEmitter

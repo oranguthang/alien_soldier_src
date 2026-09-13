@@ -223,7 +223,7 @@ Stage12_UpdateScrollToExit:                             ; DATA XREF: ROM:0000D97
                 bmi.w   Stage_MidgameStateReturn
                 addq.w  #2,(StageStateOffset).w
                 move.w  #$80,(word_FF806E).w
-                move.w  #$8000,(word_FF808A).w
+                move.w  #$8000,(GlobalSpritePriorityBit).w
                 move.b  #1,(SoundFadeOutDelay).w
                 rts
 ; End of function Stage12_InitializeScroll
@@ -279,7 +279,7 @@ Stage12_EmptyState1E:                                   ; DATA XREF: ROM:0000D97
 Stage12_InitializeSharpssteelEncounter:                 ; DATA XREF: ROM:0000D97C   o  ; was: sub_DBA0
                 tst.w   (SpecialTargetCount).w
                 bne.w   Stage_MidgameStateReturn
-                move.w  #9,(word_FF808C).w
+                move.w  #9,(StageSpawnCountdown).w
                 bsr.w   Stage_TransitionToNextPhase
                 lea     (Boss_SharpssteelAssetSet).l,a1
                 bra.w   Boss_LoadAssetSet

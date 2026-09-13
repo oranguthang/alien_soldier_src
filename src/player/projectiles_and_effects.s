@@ -401,7 +401,7 @@ Effect_UpdateDashTrail_Return:                          ; CODE XREF: Effect_Upda
 ; Updates sprite facing flags
 Effect_UpdateFacingFlags:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_178BC
                 andi.w  #$E7FF,$E(a5)
-                move.w  (word_FF8092).w,d0
+                move.w  (GlobalSpriteFlipBits).w,d0
                 or.w    d0,$E(a5)
                 cmpi.w  #$80,$C(a5)
                 bmi.s   Effect_UpdateFacingFlags_Return

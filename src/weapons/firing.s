@@ -117,7 +117,7 @@ Weapon_InitProjectileSprite:                            ; DATA XREF: Weapon_Fire
                 move.b  #1,$23(a5)
                 move.w  $5C(a5),d6
                 move.w  Weapon_ProjectileSpriteTiles(pc,d6.w),d0
-                or.w    (word_FF808A).w,d0
+                or.w    (GlobalSpritePriorityBit).w,d0
                 move.w  d0,$E(a5)
                 move.w  Weapon_ProjectileSpriteSizes(pc,d6.w),8(a5)
                 move.w  Weapon_ProjectileSpriteOffsets(pc,d6.w),$A(a5)
@@ -186,7 +186,7 @@ Weapon_SpawnHomingEffect_Initialize:                    ; CODE XREF: Weapon_Spaw
                 lea     Weapon_HomingEffectSpriteData(pc),a1
                 nop
                 move.w  (a1,d6.w),d0
-                or.w    (word_FF808A).w,d0
+                or.w    (GlobalSpritePriorityBit).w,d0
                 move.w  d0,$E(a0)
                 move.w  $10(a1,d6.w),8(a0)
                 move.w  $20(a1,d6.w),$A(a0)

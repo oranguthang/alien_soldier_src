@@ -519,7 +519,7 @@ Projectile_SpawnSunsetStingSegmentShot:                 ; CODE XREF: Boss_Sunset
                 move.w  #$1F8,(a0)
                 move.w  #$CD00,2(a0)
                 move.w  #$8480,d0
-                or.w    (word_FF808A).w,d0
+                or.w    (GlobalSpritePriorityBit).w,d0
                 move.w  d0,$E(a0)
                 move.l  #SharedCombatSpriteFrame35,8(a0)
                 move.b  #4,$20(a0)

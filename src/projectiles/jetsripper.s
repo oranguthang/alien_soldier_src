@@ -39,7 +39,7 @@ Boss_JetsripperProjectileUpdate:                        ; DATA XREF: ROM:Entity_
                 bpl.s   Boss_JetsripperProjectileDeactivate
                 cmpi.w  #$6D0,d0
                 bmi.s   Boss_JetsripperProjectileDeactivate
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bmi.s   Boss_JetsripperProjectileHandleImpact
 Boss_JetsripperProjectileDeactivate:                    ; CODE XREF: Boss_JetsripperProjectileUpdate+C   j  ; was: loc_36382
                                         ; Boss_JetsripperProjectileUpdate+12   j
@@ -89,7 +89,7 @@ Boss_JetsripperProjectileUpdateTrajectory:              ; CODE XREF: Boss_Jetsri
 ; Applies the current global palette bits to the projectile
 Boss_JetsripperProjectileApplyPalette:                  ; CODE XREF: Boss_JetsripperProjectileUpdate+90   j  ; was: loc_3640A
                 andi.w  #$E7FF,$E(a5)
-                move.w  (word_FF8092).w,d0
+                move.w  (GlobalSpriteFlipBits).w,d0
                 or.w    d0,$E(a5)
                 rts
 ; End of function Boss_JetsripperProjectileUpdate

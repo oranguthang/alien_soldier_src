@@ -64,9 +64,9 @@ UI_RenderWeaponStatusHUD_WritePartialEnergySegment:     ; CODE XREF: UI_RenderWe
                 move.w  d1,(a3)+
 UI_RenderWeaponStatusHUD_UpdateCombatPercentTimer:      ; CODE XREF: UI_RenderWeaponStatusHUD+64   j  ; was: loc_12EEE
                                         ; UI_RenderWeaponStatusHUD+7E   j
-                subq.w  #1,(word_FF809A).w
+                subq.w  #1,(CombatPercentTimer).w
                 bpl.s   UI_RenderWeaponStatusHUD_WriteCombatPercent
-                move.w  #$FFFF,(word_FF809A).w
+                move.w  #$FFFF,(CombatPercentTimer).w
                 bra.s   UI_RenderWeaponStatusHUD_PadRow
 ; ---------------------------------------------------------------------------
 UI_RenderWeaponStatusHUD_WriteCombatPercent:            ; CODE XREF: UI_RenderWeaponStatusHUD+A2   j  ; was: loc_12EFC

@@ -353,7 +353,7 @@ Boss_JokerSpawnDescendingShotEmitterReturn:             ; CODE XREF: Boss_JokerS
 ; End of function Boss_JokerSpawnDescendingShotEmitter
 ; Descends while tracking the player, emits aimed shots, then bursts four ways
 Projectile_JokerDescendingShotEmitter:                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3BE84
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bmi.s   Projectile_JokerDescendingShotEmitterUpdate
                 bset    #4,2(a5)
                 rts

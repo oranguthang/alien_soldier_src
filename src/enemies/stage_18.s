@@ -51,7 +51,7 @@ OrphanedFloatingOscillator_Return:                      ; CODE XREF: OrphanedFlo
 ; Pinned TAS evidence: active at frame 41500 with mapping Stage18MovingPlatformSpriteMapping
 Stage18_MovingPlatform:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2FDAA
                 bclr    #7,$E(a5)
-                move.w  (word_FF808A).w,d0
+                move.w  (GlobalSpritePriorityBit).w,d0
                 or.w    d0,$E(a5)
                 tst.w   4(a5)
                 bne.w   Stage18_MovingPlatform_Update

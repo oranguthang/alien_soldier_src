@@ -6,7 +6,7 @@ CutsceneProjection_Initialize:                          ; CODE XREF: Cutscene_In
                 move.w  #0,(CutsceneVerticalOffset).w
                 move.w  #8,(RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
-                move.w  #2,(word_FF8090).w
+                move.w  #2,(RasterLayoutOffset).w
                 rts
 ; End of function CutsceneProjection_Initialize
 ; Resamples a cutscene frame, queues its row transfers, and builds the line-offset table

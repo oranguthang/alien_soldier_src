@@ -100,7 +100,7 @@ Enemy_Stage11FishController:                            ; DATA XREF: ROM:Entity_
                 beq.s   Enemy_Stage11FishController_DispatchState
                 tst.w   $24(a5)
                 bmi.w   Enemy_DestroyStage11FishAndEmitter
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.w   Enemy_DestroyStage11FishAndEmitter
                 cmpi.w  #$1C,4(a5)
                 bcc.s   Enemy_Stage11FishController_PositionEmitter

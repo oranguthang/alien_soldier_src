@@ -28,7 +28,7 @@ Credits_InitializeScreen_Activate:                      ; CODE XREF: Credits_Ini
                 clr.w   (PrimaryCameraXPosition).w
                 clr.w   (PrimaryCameraYPosition).w
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
-                move.w  #0,(word_FF807A).w
+                move.w  #0,(TransitionModeOffset).w
                 jsr     (TransitionEffect_ConfigureRasterMode).l
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w

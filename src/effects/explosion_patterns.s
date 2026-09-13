@@ -70,7 +70,7 @@ Effect_InitializeExplosion:                             ; CODE XREF: Effect_Spaw
                 move.w  #$ED40,2(a0)
                 move.w  #$480,$E(a0)
                 clr.w   $C(a0)
-                move.w  (word_FF808A).w,d0
+                move.w  (GlobalSpritePriorityBit).w,d0
                 or.w    d0,$E(a0)
                 clr.b   $21(a0)
                 move.w  #2,(PlaneAShakeLevel).w

@@ -153,24 +153,27 @@ dword_FF8062            equ     $FFFF8062
 dword_FF8066            equ     $FFFF8066
 dword_FF806A            equ     $FFFF806A
 word_FF806E             equ     $FFFF806E
-word_FF807A             equ     $FFFF807A
-word_FF807C             equ     $FFFF807C
-dword_FF807E            equ     $FFFF807E
-word_FF8082             equ     $FFFF8082
+TransitionModeOffset    equ     $FFFF807A               ; was: word_FF807A
+TransitionProgress      equ     $FFFF807C               ; was: word_FF807C
+GameOverLandscapeAngle  equ     TransitionProgress
+TransitionOriginXY      equ     $FFFF807E               ; was: dword_FF807E
+GameOverLandscapeDepth  equ     TransitionOriginXY
+TransitionMaskStep      equ     $FFFF8082               ; was: word_FF8082
+GameOverViewOffset      equ     TransitionMaskStep
 SpriteShakeYOffset      equ     $FFFF8086               ; was: word_FF8086
 PlaneBShakeWriteOnly    equ     $FFFF8088               ; was: word_FF8088
-word_FF808A             equ     $FFFF808A
-word_FF808C             equ     $FFFF808C
-word_FF8090             equ     $FFFF8090
-word_FF8092             equ     $FFFF8092
-word_FF8096             equ     $FFFF8096
-word_FF809A             equ     $FFFF809A
+GlobalSpritePriorityBit equ     $FFFF808A               ; was: word_FF808A
+StageSpawnCountdown     equ     $FFFF808C               ; was: word_FF808C
+RasterLayoutOffset      equ     $FFFF8090               ; was: word_FF8090
+GlobalSpriteFlipBits    equ     $FFFF8092               ; was: word_FF8092
+VBlankFrameDivider      equ     $FFFF8096               ; was: word_FF8096
+CombatPercentTimer      equ     $FFFF809A               ; was: word_FF809A
 word_FF809C             equ     $FFFF809C
-word_FF809E             equ     $FFFF809E
-dword_FF80A0            equ     $FFFF80A0
+ExplosionSoundDelay     equ     $FFFF809E               ; was: word_FF809E
+TransitionEdgeSpan      equ     $FFFF80A0               ; was: dword_FF80A0
 MessageSequenceFlags    equ     $FFFF80A8               ; was: byte_FF80A8
-word_FF80AA             equ     $FFFF80AA
-word_FF80AC             equ     $FFFF80AC
+StagePlaneAEntryMode    equ     $FFFF80AA               ; was: word_FF80AA
+StagePlaneBEntryMode    equ     $FFFF80AC               ; was: word_FF80AC
 MessageSequenceState    equ     $FFFF80C2               ; was: word_FF80C2
 word_FF80C4             equ     $FFFF80C4
 word_FF80C6             equ     $FFFF80C6
@@ -587,7 +590,7 @@ byte_FFA95B             equ     $FFFFA95B
 dword_FFA960            equ     $FFFFA960
 dword_FFA964            equ     $FFFFA964
 word_FFA968             equ     $FFFFA968
-byte_FFA96A             equ     $FFFFA96A
+AsteroidBoundaryFlag    equ     $FFFFA96A               ; was: byte_FFA96A
 CameraXLowerBound       equ     $FFFFA970               ; was: word_FFA970
 CameraXUpperBound       equ     $FFFFA974               ; was: word_FFA974
 DebugJumpInput          equ     $FFFFA980               ; was: word_FFA980

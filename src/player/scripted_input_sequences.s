@@ -262,7 +262,7 @@ PlayerScript_InitializeFlyingNeoEntryState1A:           ; DATA XREF: ROM:00019A4
                 bset    #5,(byte_FF8245).w
                 move.w  #$148,$10(a5)
                 bclr    #3,$E(a5)
-                move.w  #$8000,(word_FF808A).w
+                move.w  #$8000,(GlobalSpritePriorityBit).w
                 bset    #3,$E(a5)
                 move.b  #$20,$6A(a5)                    ; ' '
                 bclr    #0,2(a5)

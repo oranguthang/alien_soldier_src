@@ -59,7 +59,7 @@ Projectile_SharpssteelFallingShotSpawnOffsets:  dc.b    $D0, 0, $E0, $F8, $F0, $
 
 ; Type-$364 Sharpssteel shot: rises, arms while falling, and handles hits or bounds
 Projectile_SharpssteelFallingShotMain:                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_48E48
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.w   Projectile_SharpssteelConvertFallingShotToDebris
                 addi.l  #$B00,$1C(a5)
                 tst.w   4(a5)
@@ -144,7 +144,7 @@ Boss_SharpssteelBeginDefeatFragmentBurst:               ; CODE XREF: Boss_Sharps
                 move.b  #1,(SoundFadeOutDelay).w
                 clr.w   8(a5)
                 bset    #0,(StageTimerPauseFlag).w
-                move.w  #8,(word_FF808C).w
+                move.w  #8,(StageSpawnCountdown).w
                 move.b  #2,(BossColorEffectFlags).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  #$1E,4(a5)
@@ -258,7 +258,7 @@ Projectile_SharpssteelInitializeBladeShotReturn:        ; CODE XREF: Projectile_
 ; End of function Projectile_SharpssteelInitializeBladeShot
 ; Type-$414 blade shot: flashes for its configured lifetime, then removes itself
 Projectile_SharpssteelBladeShotMain:                    ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_49100
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.s   Projectile_SharpssteelMarkBladeShotForRemoval
                 bset    #7,2(a5)
                 move.w  $4A(a5),d0

@@ -278,7 +278,7 @@ Enemy_HomingAttackBurstState:                           ; DATA XREF: ROM:0002CE4
                 move.w  d3,d0
                 move.w  d4,d1
                 move.w  d2,d6
-                move.w  (word_FF808A).w,d2
+                move.w  (GlobalSpritePriorityBit).w,d2
                 addi.w  #$40,d2                         ; '@'
                 moveq   #$A,d7
                 jmp     Projectile_InitializeTwoSpeedShot

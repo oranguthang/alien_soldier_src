@@ -22,13 +22,13 @@ Stage_ApplyConfigurationRecord:                         ; CODE XREF: Stage_Apply
                 move.w  (a0)+,(EnemySpawnDirectorState).w
                 move.b  (a0)+,(PalettePrimaryIndex+1).w
                 move.b  (a0)+,(PaletteSecondaryIndex+1).w
-                move.w  (a0)+,(word_FF808A).w
+                move.w  (a0)+,(GlobalSpritePriorityBit).w
                 move.w  (a0)+,(PrimaryCameraXPosition).w
                 move.w  (a0)+,(PrimaryCameraYPosition).w
                 move.w  (a0)+,(SecondaryCameraXPos).w
                 move.w  (a0)+,(SecondaryCameraYPos).w
-                move.w  (a0)+,(word_FF80AA).w
-                move.w  (a0)+,(word_FF80AC).w
+                move.w  (a0)+,(StagePlaneAEntryMode).w
+                move.w  (a0)+,(StagePlaneBEntryMode).w
                 moveq   #0,d0
                 move.b  (a0)+,d0
                 addi.w  #$80,d0
@@ -47,9 +47,9 @@ Stage_ApplyConfigurationRecord:                         ; CODE XREF: Stage_Apply
 ; +$06 word -> EnemySpawnDirectorState
 ; +$08 byte -> PalettePrimaryIndex+1
 ; +$09 byte -> PaletteSecondaryIndex+1
-; +$0A word -> word_FF808A
+; +$0A word -> GlobalSpritePriorityBit
 ; +$0C/+0E/+10/+12 words -> PrimaryCameraXPosition/904/908/90C
-; +$14/+16 words -> word_FF80AA/AC
+; +$14/+16 words -> StagePlaneAEntryMode/AC
 ; +$18/+19 bytes, each biased by $80 -> words at PlayerXPosition/414
 ; +$1A long -> palette offset list passed to Gfx_LoadMultiplePalettes
 Stage1ConfigRecord: dc.w    0                           ; StageStateOffset  ; was: stru_127A8
@@ -58,13 +58,13 @@ Stage1ConfigRecord: dc.w    0                           ; StageStateOffset  ; wa
                 dc.w    2                               ; EnemySpawnDirectorState
                 dc.b    2                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    $8000                           ; word_FF808A
+                dc.w    $8000                           ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    EarlyStagePaletteOffsetList     ; palette offset list pointer
@@ -74,13 +74,13 @@ Stage2ConfigRecord: dc.w    $A                          ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    2                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    $8000                           ; word_FF808A
+                dc.w    $8000                           ; GlobalSpritePriorityBit
                 dc.w    $700                            ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    EarlyStagePaletteOffsetList     ; palette offset list pointer
@@ -90,13 +90,13 @@ Stage3ConfigRecord: dc.w    $12                         ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    2                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    $8000                           ; word_FF808A
+                dc.w    $8000                           ; GlobalSpritePriorityBit
                 dc.w    $BC0                            ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    EarlyStagePaletteOffsetList     ; palette offset list pointer
@@ -106,13 +106,13 @@ Stage4ConfigRecord: dc.w    $22                         ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    4                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    $8000                           ; word_FF808A
+                dc.w    $8000                           ; GlobalSpritePriorityBit
                 dc.w    $1200                           ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    ShellshogunStagePaletteOffsetList  ; palette offset list pointer
@@ -122,13 +122,13 @@ Stage5ConfigRecord: dc.w    $2E                         ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    6                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    0                               ; word_FF808A
+                dc.w    0                               ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage5To7PaletteOffsetList      ; palette offset list pointer
@@ -138,13 +138,13 @@ Stage6ConfigRecord: dc.w    $38                         ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    6                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    0                               ; word_FF808A
+                dc.w    0                               ; GlobalSpritePriorityBit
                 dc.w    $480                            ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage5To7PaletteOffsetList      ; palette offset list pointer
@@ -154,13 +154,13 @@ Stage7ConfigRecord: dc.w    $40                         ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    6                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    0                               ; word_FF808A
+                dc.w    0                               ; GlobalSpritePriorityBit
                 dc.w    $AA0                            ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage5To7PaletteOffsetList      ; palette offset list pointer
@@ -170,13 +170,13 @@ Stage8ConfigRecord: dc.w    $50                         ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    0                               ; word_FF808A
+                dc.w    0                               ; GlobalSpritePriorityBit
                 dc.w    $C00                            ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    $730                            ; word at SecondaryCameraXPos
                 dc.w    $F700                           ; word at SecondaryCameraYPos
-                dc.w    8                               ; word_FF80AA
-                dc.w    8                               ; word_FF80AC
+                dc.w    8                               ; StagePlaneAEntryMode
+                dc.w    8                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage8InitialPaletteOffsetList  ; palette offset list pointer
@@ -186,13 +186,13 @@ Stage9ConfigRecord: dc.w    $62                         ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    0                               ; word_FF808A
+                dc.w    0                               ; GlobalSpritePriorityBit
                 dc.w    $800                            ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    $C00                            ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    8                               ; word_FF80AA
-                dc.w    8                               ; word_FF80AC
+                dc.w    8                               ; StagePlaneAEntryMode
+                dc.w    8                               ; StagePlaneBEntryMode
                 dc.b    $60                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $A8                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    XiTigerAndStage9PaletteOffsetList  ; palette offset list pointer
@@ -202,13 +202,13 @@ Stage10ConfigRecord:    dc.w    0                       ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    0                               ; word_FF808A
+                dc.w    0                               ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    $FC00                           ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $78                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage10To13PaletteOffsetList    ; palette offset list pointer
@@ -218,13 +218,13 @@ Stage11ConfigRecord:    dc.w    $A                      ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    0                               ; word_FF808A
+                dc.w    0                               ; GlobalSpritePriorityBit
                 dc.w    $7B0                            ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    $FC00                           ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $78                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage10To13PaletteOffsetList    ; palette offset list pointer
@@ -234,13 +234,13 @@ Stage12ConfigRecord:    dc.w    $14                     ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    0                               ; word_FF808A
+                dc.w    0                               ; GlobalSpritePriorityBit
                 dc.w    $10C0                           ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    $FC00                           ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $5C                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $70                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage10To13PaletteOffsetList    ; palette offset list pointer
@@ -250,13 +250,13 @@ Stage13ConfigRecord:    dc.w    $34                     ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    $8000                           ; word_FF808A
+                dc.w    $8000                           ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    $FC00                           ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $80                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage10To13PaletteOffsetList    ; palette offset list pointer
@@ -266,13 +266,13 @@ Stage14ConfigRecord:    dc.w    $40                     ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $C                              ; PalettePrimaryIndex+1
                 dc.b    4                               ; PaletteSecondaryIndex+1
-                dc.w    $8000                           ; word_FF808A
+                dc.w    $8000                           ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    $E100                           ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $58                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage14To16PaletteOffsetList    ; palette offset list pointer
@@ -282,13 +282,13 @@ Stage15ConfigRecord:    dc.w    $4A                     ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $C                              ; PalettePrimaryIndex+1
                 dc.b    4                               ; PaletteSecondaryIndex+1
-                dc.w    $8000                           ; word_FF808A
+                dc.w    $8000                           ; GlobalSpritePriorityBit
                 dc.w    $480                            ; word at PrimaryCameraXPosition
                 dc.w    $E100                           ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage14To16PaletteOffsetList    ; palette offset list pointer
@@ -298,13 +298,13 @@ Stage16ConfigRecord:    dc.w    $56                     ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $C                              ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    $8000                           ; word_FF808A
+                dc.w    $8000                           ; GlobalSpritePriorityBit
                 dc.w    $620                            ; word at PrimaryCameraXPosition
                 dc.w    $E440                           ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $C0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage14To16PaletteOffsetList    ; palette offset list pointer
@@ -314,13 +314,13 @@ Stage17BossConfigRecord:    dc.w    $6C                 ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    0                               ; word_FF808A
+                dc.w    0                               ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    0                               ; word_FF80AA
-                dc.w    8                               ; word_FF80AC
+                dc.w    0                               ; StagePlaneAEntryMode
+                dc.w    8                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $80                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage17PaletteOffsetList        ; palette offset list pointer
@@ -330,13 +330,13 @@ Stage18ConfigRecord:    dc.w    0                       ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    0                               ; word_FF808A
+                dc.w    0                               ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    $8008                           ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    $8008                           ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage18And19PaletteOffsetList   ; palette offset list pointer
@@ -346,13 +346,13 @@ Stage19ConfigRecord:    dc.w    $A                      ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    $8000                           ; word_FF808A
+                dc.w    $8000                           ; GlobalSpritePriorityBit
                 dc.w    $D50                            ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    $8008                           ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    $8008                           ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage18And19PaletteOffsetList   ; palette offset list pointer
@@ -362,13 +362,13 @@ UnreferencedStage20Variant1ConfigRecord:    dc.w    $28  ; StageStateOffset  ; w
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $10                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    $8000                           ; word_FF808A
+                dc.w    $8000                           ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    8                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    8                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    UnreferencedStage20VariantPaletteOffsetList  ; palette offset list pointer
@@ -378,13 +378,13 @@ UnreferencedStage20Variant2ConfigRecord:    dc.w    $30  ; StageStateOffset  ; w
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $10                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    $8000                           ; word_FF808A
+                dc.w    $8000                           ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    8                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    8                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    UnreferencedStage20VariantPaletteOffsetList  ; palette offset list pointer
@@ -394,13 +394,13 @@ UnreferencedStage20Variant3ConfigRecord:    dc.w    $38  ; StageStateOffset  ; w
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $10                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    $8000                           ; word_FF808A
+                dc.w    $8000                           ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    8                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    8                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    UnreferencedStage20VariantPaletteOffsetList  ; palette offset list pointer
@@ -410,13 +410,13 @@ UnreferencedStage20Variant4ConfigRecord:    dc.w    $40  ; StageStateOffset  ; w
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $10                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    $8000                           ; word_FF808A
+                dc.w    $8000                           ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    8                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    8                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    UnreferencedStage20VariantPaletteOffsetList  ; palette offset list pointer
@@ -426,13 +426,13 @@ Stage20ConfigRecord:    dc.w    $70                     ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    0                               ; word_FF808A
+                dc.w    0                               ; GlobalSpritePriorityBit
                 dc.w    $600                            ; word at PrimaryCameraXPosition
                 dc.w    $F800                           ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    $F500                           ; word at SecondaryCameraYPos
-                dc.w    8                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    8                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $80                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    0                               ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage20PaletteOffsetLists       ; palette offset list pointer
@@ -442,13 +442,13 @@ Stage21ConfigRecord:    dc.w    0                       ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $E                              ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    0                               ; word_FF808A
+                dc.w    0                               ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    $F800                           ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    $F100                           ; word at SecondaryCameraYPos
-                dc.w    8                               ; word_FF80AA
-                dc.w    8                               ; word_FF80AC
+                dc.w    8                               ; StagePlaneAEntryMode
+                dc.w    8                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage21And23PaletteOffsetList   ; palette offset list pointer
@@ -458,13 +458,13 @@ Stage22ConfigRecord:    dc.w    $2C                     ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $E                              ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    $8000                           ; word_FF808A
+                dc.w    $8000                           ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    $F600                           ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    $F100                           ; word at SecondaryCameraYPos
-                dc.w    8                               ; word_FF80AA
-                dc.w    8                               ; word_FF80AC
+                dc.w    8                               ; StagePlaneAEntryMode
+                dc.w    8                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage22PaletteOffsetList        ; palette offset list pointer
@@ -474,13 +474,13 @@ Stage23ConfigRecord:    dc.w    $2E                     ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $12                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    $8000                           ; word_FF808A
+                dc.w    $8000                           ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    $F3E0                           ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    8                               ; word_FF80AA
-                dc.w    0                               ; word_FF80AC
+                dc.w    8                               ; StagePlaneAEntryMode
+                dc.w    0                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage21And23PaletteOffsetList   ; palette offset list pointer
@@ -490,13 +490,13 @@ Stage24ConfigRecord:    dc.w    $40                     ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    0                               ; word_FF808A
+                dc.w    0                               ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage24PaletteOffsetList        ; palette offset list pointer
@@ -506,13 +506,13 @@ UnreferencedFlaggedConfigRecordA:   dc.w    $4E         ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    0                               ; word_FF808A
+                dc.w    0                               ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    UnreferencedFlaggedPaletteOffsetListA  ; palette offset list pointer
@@ -522,13 +522,13 @@ UnreferencedFlaggedConfigRecordB:   dc.w    $62         ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    0                               ; word_FF808A
+                dc.w    0                               ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    $FF00                           ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    UnreferencedFlaggedPaletteOffsetListB  ; palette offset list pointer
@@ -538,13 +538,13 @@ Stage25ConfigRecord:    dc.w    $76                     ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    $8000                           ; word_FF808A
+                dc.w    $8000                           ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    $FE00                           ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $60                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage25PaletteOffsetList        ; palette offset list pointer
@@ -554,13 +554,13 @@ Stage26ConfigRecord:    dc.w    $8A                     ; StageStateOffset  ; wa
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
-                dc.w    $8000                           ; word_FF808A
+                dc.w    $8000                           ; GlobalSpritePriorityBit
                 dc.w    0                               ; word at PrimaryCameraXPosition
                 dc.w    0                               ; word at PrimaryCameraYPosition
                 dc.w    0                               ; word at SecondaryCameraXPos
                 dc.w    0                               ; word at SecondaryCameraYPos
-                dc.w    4                               ; word_FF80AA
-                dc.w    4                               ; word_FF80AC
+                dc.w    4                               ; StagePlaneAEntryMode
+                dc.w    4                               ; StagePlaneBEntryMode
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage26PaletteOffsetList        ; palette offset list pointer

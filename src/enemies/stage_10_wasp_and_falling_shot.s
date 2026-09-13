@@ -71,7 +71,7 @@ Projectile_FallingShotUpdate_Return:                    ; CODE XREF: Projectile_
 Enemy_Stage10WaspInit:                                  ; CODE XREF: Enemy_Stage10WaspInitState+2   p  ; was: sub_2E048
                 move.w  #$EF00,2(a5)
                 move.w  (Stage10WaspTileAttr).w,d1
-                or.w    (word_FF808A).w,d1
+                or.w    (GlobalSpritePriorityBit).w,d1
                 move.w  d1,$E(a5)
                 move.b  #$48,$20(a5)                    ; 'H'
                 move.b  #$C0,$21(a5)
@@ -112,7 +112,7 @@ Enemy_Stage10WaspController:                            ; DATA XREF: ROM:Entity_
                 beq.s   Enemy_Stage10WaspController_DispatchAndRender
                 tst.w   $24(a5)
                 bmi.w   Enemy_ConvertStage10WaspToDefeatDebris
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.w   Enemy_ConvertStage10WaspToDefeatDebris
                 bclr    #7,$22(a5)
                 beq.s   Enemy_Stage10WaspController_UpdateState

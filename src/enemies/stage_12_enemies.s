@@ -42,7 +42,7 @@ Enemy_Stage12FloaterController:                         ; DATA XREF: ROM:Entity_
                 beq.s   Enemy_Stage12FloaterController_UpdateState
                 tst.w   $24(a5)
                 bmi.w   Enemy_ConvertStage12ObjectToDefeatDebris
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.w   Enemy_ConvertStage12ObjectToDefeatDebris
                 bclr    #7,$22(a5)
                 bne.w   Enemy_ConvertStage12ObjectToDefeatDebris
@@ -201,7 +201,7 @@ Enemy_UpdateStage12DefeatDebris_Return:                 ; CODE XREF: Enemy_Updat
 ; End of function Enemy_UpdateStage12DefeatDebris
 ; Updates the camera-attached Stage 12 turret and its periodic shot
 Enemy_Stage12TurretController:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2E4DC
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.w   Enemy_Stage12TurretHide
                 bsr.s   Enemy_DispatchStage12TurretState
                 move.l  (Entity57XPos).w,$10(a5)
@@ -326,7 +326,7 @@ Enemy_Stage12LauncherController:                        ; DATA XREF: ROM:Entity_
                 beq.s   Enemy_Stage12LauncherController_UpdateState
                 tst.w   $24(a5)
                 bmi.w   Enemy_ConvertStage12ObjectToDefeatDebris
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.w   Enemy_ConvertStage12ObjectToDefeatDebris
                 bclr    #7,$22(a5)
                 bne.w   Enemy_ConvertStage12ObjectToDefeatDebris

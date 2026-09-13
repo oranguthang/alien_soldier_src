@@ -3,7 +3,7 @@ Enemy_InitCirclingSprite:                               ; CODE XREF: Enemy_Circl
                                         ; Enemy_Stage9FlyInit+2   p
                 move.w  #$ED00,2(a5)
                 move.w  (CirclingEnemyTileAttr).w,d1
-                or.w    (word_FF808A).w,d1
+                or.w    (GlobalSpritePriorityBit).w,d1
                 move.w  d1,$E(a5)
                 move.b  #$48,$20(a5)                    ; 'H'
                 move.b  #$C0,$21(a5)
@@ -49,7 +49,7 @@ Enemy_UpdateCirclingRotationSprite:                     ; CODE XREF: Enemy_Circl
                 lsr.w   #1,d0
                 move.w  (CirclingEnemyTileAttr).w,d1
                 andi.w  #$F7FF,d1
-                or.w    (word_FF808A).w,d1
+                or.w    (GlobalSpritePriorityBit).w,d1
                 or.w    Enemy_CirclingRotationAttributes(pc,d0.w),d1
                 move.w  d1,$E(a5)
                 move.w  #$CD00,2(a5)
@@ -117,7 +117,7 @@ Enemy_CirclingController:                               ; DATA XREF: ROM:Entity_
                 bmi.w   Enemy_ResetCirclingState
                 bclr    #7,$22(a5)
                 bne.w   Enemy_ResetCirclingState
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.w   Enemy_ResetCirclingState
                 jsr     (RandomNumber).l
                 clr.w   6(a5)

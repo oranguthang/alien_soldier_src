@@ -81,7 +81,7 @@ Boss_ViblackInitChainSegment:                           ; CODE XREF: Boss_Viblac
 ; End of function Boss_ViblackInitChainSegment
 ; Chain projectile main handler
 Projectile_ViblackChainMain:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_444C2
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.s   Projectile_ViblackChainReleaseSegments
                 tst.w   $24(a5)
                 bpl.s   Projectile_ViblackChainUpdateLaunchedController

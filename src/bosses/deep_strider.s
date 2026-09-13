@@ -488,7 +488,7 @@ Boss_DeepStriderDiveAttackStateReturn:                  ; CODE XREF: Boss_DeepSt
 ; End of function Boss_DeepStriderDiveAttackState
 ; Starts the final defeat sequence after the boss counter reaches zero
 Boss_DeepStriderBeginDefeat:                            ; CODE XREF: Boss_DeepStriderMain+22   j  ; was: sub_3EBCA
-                move.w  #4,(word_FF808C).w
+                move.w  #4,(StageSpawnCountdown).w
                 move.b  #2,(BossColorEffectFlags).w
                 bset    #0,(StageTimerPauseFlag).w
                 jsr     (Sprite_ClearObjectFlags).l

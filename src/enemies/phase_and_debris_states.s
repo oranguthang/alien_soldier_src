@@ -3,7 +3,7 @@ Enemy_PhasePatternController:                           ; DATA XREF: ROM:Entity_
                 beq.s   Enemy_PhasePatternController_UpdateState
                 tst.w   $24(a5)
                 bmi.w   Enemy_ResetPhasePattern
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.w   Enemy_ResetPhasePattern
                 jsr     (RandomNumber).l
                 clr.w   6(a5)

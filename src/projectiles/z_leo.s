@@ -103,7 +103,7 @@ Boss_ZLeoOrbSpawnOffsetTable:   dc.w    0, $20, $18, $18, $20, 0, $18, $FFE8, 0,
 
 ; Orb projectile main
 Projectile_ZLeoOrbMain:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_5305A
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.s   Projectile_ZLeoOrbTrySpawnRemovalPickup
                 btst    #7,$22(a5)
                 beq.s   Projectile_ZLeoOrbCheckBounds
@@ -199,7 +199,7 @@ Projectile_ZLeoLaserRemoveOutsideVerticalBounds:        ; CODE XREF: Projectile_
                 rts
 ; ---------------------------------------------------------------------------
 Projectile_ZLeoLaserResolveOrbitState:                  ; CODE XREF: Projectile_ZLeoLaserMain+E   j  ; was: loc_5319A
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.s   Projectile_ZLeoLaserConvertToParticle
                 bclr    #7,$22(a5)
                 beq.s   Projectile_ZLeoLaserUpdateExpandingOrbit

@@ -172,6 +172,13 @@ fields to seed its displayed state.
 | `SetupTransitionIndex` | `$FFFFA29C` | The weapon-setup updater uses even values as offsets into its seven-entry page/state table. The later transition dispatcher reuses values `0`, `2`, and `4` to select Xi-Tiger, the Z-Leo ending scene, or the shared ending sequence. |
 | `XiTigerConfigIndex` | `$FFFF814C` | The Xi-Tiger cutscene initializer writes zero, and stage initialization uses the word as an offset into the adjacent Xi-Tiger configuration table. Only the zero entry and zero writer are currently present in source. |
 | `GameplayExitMode` | `$FFFF8230` | Palette-fade completion maps zero, one, three, and the remaining nonzero values to distinct gameplay exits; stage, defeat, and ending paths publish those values before requesting the fade. |
+| `StagePlaneAEntryMode` | `$FFFF80AA` | Stage configuration supplies zero, four, eight, or high-bit-marked eight; gameplay entry selects constant fill, direct row streaming, or mirrored Plane A streaming from that value. |
+| `StagePlaneBEntryMode` | `$FFFF80AC` | Stage configuration supplies zero, four, or eight; gameplay entry uses it to select constant fill or one of the Plane B row-stream parameter sets. |
+| `TransitionEdgeSpan` | `$FFFF80A0` | Standard, alternate, and tunnel transitions initialize this 16.16 numerator to `$00018000`; edge builders divide it by transition progress, while the standard effect contracts it by `$3C0` per update. |
+| `TransitionModeOffset` | `$FFFF807A` | This even byte offset selects corresponding entries in both transition raster-configuration and output-buffer dispatch tables; observed publishers choose modes zero, one, or four with values zero, two, or eight. |
+| `TransitionProgress` (`GameOverLandscapeAngle` overlay) | `$FFFF807C` | Transition effects advance this word toward `$7F` and use it for interpolation, palette, and mask phases; the mutually exclusive Game Over landscape uses the same storage as its lookup-table angle offset. |
+| `TransitionOriginXY` (`GameOverLandscapeDepth` overlay) | `$FFFF807E` | Transition objects publish their high-word X and Y positions as a packed pair for buffer construction; Game Over reuses the first word as the perspective depth divisor. |
+| `TransitionMaskStep` (`GameOverViewOffset` overlay) | `$FFFF8082` | Transition setup clears this mask step and the tunnel effect derives it from progress; Game Over reuses the word as the signed view offset added to its perspective accumulator. |
 
 `SetupTransitionIndex` is deliberately named for both observed lifetimes. A
 narrow weapon-page or cutscene-route name would be false because the same RAM
@@ -569,11 +576,14 @@ by their verified byte order rather than receiving invented codec meanings.
 |---|---:|---|
 | `FrameFreezeTimer` | `$FFFF813C` | Impact/destruction paths load the timer; the gameplay loop decrements it and asserts the frame-control high bit while it remains nonnegative. |
 | `FrameControlFlags` | `$FFFF813E` | The gameplay loop combines freeze and pause state here; a negative byte gates object, player, collision, palette, and message processing. |
+| `VBlankFrameDivider` | `$FFFF8096` | VBlank counts this word down, then reloads it from four minus `FrameSkipLevel`; the extended handler uses value one as its early-exit boundary. |
 | `PaletteRGBAdjustLevel` | `$FFFF8140` | The RGB-adjust routine converts this level to a component delta and reduces it by the configured step until zero. |
 | `PaletteRGBChannelMask` | `$FFFF8142` | Bits five through seven independently enable the red, green, and blue computed deltas. |
 | `PaletteRGBAdjustStep` | `$FFFF8143` | The RGB-adjust routine zero-extends this byte and subtracts it from the active level each update. |
 | `PlayerModeFlags` | `$FFFF8144` | Player update uses bit one to clear the object and bits zero/two to select the two Seven Forces processing modes. |
 | `PlayerDefeatPhase` | `$FFFF80E6` | Zero permits normal player processing, negative `$8000` marks the animated defeat sequence, and positive two selects the final timed defeat/exit state. |
+| `GlobalSpriteFlipBits` | `$FFFF8092` | The camera/object pass cycles the four combinations from `SpriteFlipBitsTable`; projectile, pickup, and effect renderers merge bits 11/12 into their sprite attributes. |
+| `GlobalSpritePriorityBit` | `$FFFF808A` | Stage configuration and scripted transitions publish zero or `$8000`; player, weapon, enemy, pickup, projectile, and effect renderers merge it into their sprite attributes. |
 
 ## Reviewed wave, HUD, and enemy-spawn fields
 
@@ -586,6 +596,7 @@ by their verified byte order rather than receiving invented codec meanings.
 | `HUDDynamicStripYOffset` | `$FFFF8112` | The HUD builder adds this signed word to the strip's base Y coordinate; Caterpillar and Viblack flows move or remove the strip through it. |
 | `EnemySpawnDirectorState` | `$FFFF8114` | The enemy-spawn director uses this even word to select its idle, start, or timed-update handler. |
 | `EnemySpawnDelayTimer` | `$FFFF8116` | The director counts down its low word and reloads it with a randomized `$20`--`$9F` delay; reset clears the containing longword. |
+| `StageSpawnCountdown` | `$FFFF808C` | The object spawner decrements nonnegative values toward the normal negative state; enemy and projectile handlers reset or suppress themselves while the countdown is active. |
 
 ## Reviewed pickup and scripted-input fields
 
@@ -607,6 +618,7 @@ by their verified byte order rather than receiving invented codec meanings.
 | `ColorFadeTriggerState` | `$FFFF8246` | Zero selects cyclic RGB deltas, a positive trigger starts one randomized-channel fade, and the resulting negative state returns the next update to the normal fade path. |
 | `StageTimerFrameCounter` | `$FFFF8204` | Active gameplay reloads this byte to `$3B`; each expiry decrements the packed-BCD stage timer once. |
 | `CombatPercentIndex` | `$FFFF8210` | Flagged hits copy the target damage-scale field here; the transient HUD halves it to index `CombatPercentDisplayTable`. |
+| `CombatPercentTimer` | `$FFFF809A` | Successful flagged hits load `$20`; the weapon HUD decrements it while showing `CombatPercentIndex`, then parks it at minus one. |
 | `MidgameLightningMode` | `$FFFF821E` | Stage 8/9 mode one suppresses the randomized lightning composite, Xi-Tiger mode two suppresses its sound, and a negative value disables the updater. |
 | `DebugMenuStateOffset` | `$FFFF8226` | The debug dispatcher uses this even word as its handler-table byte offset. |
 | `DebugSoundRequestId` | `$FFFF8228` | Debug controls edit and render its low byte, which the dormant handler can submit as a sound request. |
@@ -615,6 +627,8 @@ by their verified byte order rather than receiving invented codec meanings.
 | `ContactDamageCooldown` | `$FFFF825D` | Hostile collision permits contact damage only after this signed byte expires; cutscene exit reloads `$30`. |
 | `SpecialTargetCount` | `$FFFF829E` | Stage 12 initializes fifteen marked targets, defeat collision decrements only objects with flag bit six, the HUD renders the remaining count, and the Sharpssteel transition waits for zero. |
 | `StageAssetCommandBuffer` | `$FFFF82A0` | The stage loader expands compact commands into terminated eight-byte load records beginning here. |
+| `RasterLayoutOffset` | `$FFFF8090` | VBlank uses this even word directly as the byte offset into `RasterBuffer_LayoutOffsets`; scene, boss, and transition initializers select the required copy layout. |
+| `AsteroidBoundaryFlag` | `$FFFFA96A` | The asteroid-field updater clears it each step and sets it when the accumulated scroll crosses the tested `$100` boundary; the transition state waits for that event. |
 | `LowTimeWarningTimer` | `$FFFF8306` | Below time `$30`, expiry reloads `$26`, plays the warning sound, and blanks the displayed timer for that frame. |
 | `WeaponIconDMABuffer` | `$FFFF8478` | VBlank submits the complete 16-byte weapon-icon VDP command block from this address. |
 | `WeaponIconDMABufferEnd` | `$FFFF8488` | Weapon-icon setup predecrements from this exclusive end while constructing the command block. |
@@ -660,6 +674,7 @@ loaded tile base with the active palette or orientation bits.
 | `HealthDeltaDisplayTimer` | `$FFFF8268` | Damage and pickups load `$30`; it paces HUD health convergence and expires the transient value. |
 | `WeaponSwitchRepeatTimer` | `$FFFF826A` | Player input parks the word at minus one while idle, reloads sixteen on a new weapon-switch press, and requests another switch after the repeat delay. |
 | `SoundFadeOutDelay` | `$FFFF830E` | Scene and boss-transition writers load one or two frames; VBlank decrements the byte and queues sound control request 1, the music fade-out command, when it expires. |
+| `ExplosionSoundDelay` | `$FFFF809E` | Defeat and barrage sequences load a delay; shared explosion-projectile helpers count it down before enabling their randomized explosion sound cadence. |
 
 ## Reviewed HUD DMA and debug tile buffers
 

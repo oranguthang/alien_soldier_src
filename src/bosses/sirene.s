@@ -48,7 +48,7 @@ Boss_InitSireneState0:                                  ; CODE XREF: Boss_InitSi
                                         ; DATA XREF: Boss_UpdateSirene+58   o
                 bsr.s   Boss_InitSireneMetasprite
                 move.w  #2,$1DE(a5)
-                move.w  #$8000,(word_FF808A).w
+                move.w  #$8000,(GlobalSpritePriorityBit).w
                 bra.w   Boss_EnterSireneState4
 ; End of function Boss_InitSireneState0
 ; Initialize Sirene's 28-part metasprite and pose-frame source
@@ -103,7 +103,7 @@ Boss_NormalizeSireneState2PoseAngle:                    ; CODE XREF: Boss_Update
 ; ---------------------------------------------------------------------------
 Boss_EnterSireneState4:                                 ; CODE XREF: Boss_InitSireneState0+E   j  ; was: loc_575DE
                 bset    #7,(byte_FF8245).w
-                move.w  #$8000,(word_FF808A).w
+                move.w  #$8000,(GlobalSpritePriorityBit).w
                 move.w  #4,4(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
@@ -746,7 +746,7 @@ Projectile_RemoveSireneHomingOutsideBounds:             ; CODE XREF: Projectile_
                 rts
 ; ---------------------------------------------------------------------------
 Projectile_ProcessSireneHomingInBounds:                 ; CODE XREF: Projectile_UpdateSireneHoming+22   j  ; was: loc_57E20
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.s   Projectile_ConvertSireneHomingToParticle
                 bclr    #7,$22(a5)
                 beq.s   Projectile_HomeSireneProjectileTowardPlayer

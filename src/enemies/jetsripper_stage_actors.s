@@ -4,7 +4,7 @@ Enemy_BehaviorController:                               ; DATA XREF: ROM:Entity_
                 beq.s   Enemy_DispatchBehaviorState
                 tst.w   $24(a5)
                 bmi.w   Enemy_ConvertToDefeatProjectile
-                tst.w   (word_FF808C).w
+                tst.w   (StageSpawnCountdown).w
                 bpl.w   Enemy_ConvertToDefeatProjectile
                 btst    #7,$22(a5)
                 beq.s   Enemy_BehaviorController_UpdateDelay
@@ -238,7 +238,7 @@ Enemy_UpdateDestructionDelay_Return:                    ; CODE XREF: Enemy_Begin
 Sprite_InitializeEnemySprite:                           ; CODE XREF: Enemy_InitializeWithHealth+6   p  ; was: sub_2C93A
                 move.w  #$E300,2(a5)
                 move.w  (StandardEnemyTileAttr).w,d0
-                or.w    (word_FF808A).w,d0
+                or.w    (GlobalSpritePriorityBit).w,d0
                 move.w  d0,$E(a5)
                 move.b  #$48,$20(a5)                    ; 'H'
                 move.b  #$C0,$21(a5)
@@ -346,7 +346,7 @@ Sprite_InitializeProjectileSprite:                      ; CODE XREF: Enemy_Proje
                                         ; Enemy_HomingAttackInit+6   p
                 move.w  #$EF00,2(a5)
                 move.w  (EnemyProjectileTileAttr).w,d0
-                or.w    (word_FF808A).w,d0
+                or.w    (GlobalSpritePriorityBit).w,d0
                 move.w  d0,$E(a5)
                 move.b  #$48,$20(a5)                    ; 'H'
                 move.b  #$C0,$21(a5)

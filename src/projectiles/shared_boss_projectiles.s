@@ -214,7 +214,7 @@ Effect_InitSharedExplosion:                             ; CODE XREF: Boss_Sunset
                 move.w  #$C4,(a0)
                 move.l  #$FFFDC000,$1C(a0)
                 move.w  #$480,d0
-                add.w   (word_FF808A).w,d0
+                add.w   (GlobalSpritePriorityBit).w,d0
                 btst    #4,$E(a0)
                 beq.s   Effect_ConfigureSharedExplosion
                 bset    #$C,d0
