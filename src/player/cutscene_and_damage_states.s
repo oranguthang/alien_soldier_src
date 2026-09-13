@@ -119,8 +119,8 @@ Player_AlternateSpecialState_SelectFrame:               ; CODE XREF: Player_Alte
                 moveq   #$FFFFFFFE,d6
                 bra.w   Player_BuildSpritePieces
 ; End of function Player_AlternateSpecialState
-; Initializes player cutscene state clearing velocities and flags
-Player_InitCutsceneState:                               ; CODE XREF: Player_Update+72   p  ; was: sub_16210
+; Enters the forced-position state and clears player motion
+Player_InitForcedPositionState:                         ; CODE XREF: Player_Update+72   p  ; was: sub_16210
                 move.b  #$7F,(PlayerInputMask).w
                 move.w  #$8000,(word_FF80E6).w
                 move.w  #$32,4(a5)                      ; '2'
@@ -131,47 +131,47 @@ Player_InitCutsceneState:                               ; CODE XREF: Player_Upda
                 clr.w   $52(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                bset    #1,(byte_FF825C).w
+                bset    #1,(ForcedPositionFlags).w
                 rts
-; End of function Player_InitCutsceneState
-; Handles cutscene player control with timer and position management
-Player_HandleCutsceneControl:                           ; DATA XREF: ROM:00015094   o  ; was: sub_1624A
+; End of function Player_InitForcedPositionState
+; Applies a published forced position until its request or timer expires
+Player_HandleForcedPositionState:                       ; DATA XREF: ROM:00015094   o  ; was: sub_1624A
                                         ; ROM:00015096   o
                 bset    #3,(byte_FF8244).w
-                bclr    #0,(byte_FF825C).w
-                bne.s   Player_HandleCutsceneControl_ProcessActive
-                bra.w   Player_HandleCutsceneControl_Finish
+                bclr    #0,(ForcedPositionFlags).w
+                bne.s   Player_HandleForcedPosition_ProcessActive
+                bra.w   Player_HandleForcedPosition_Finish
 ; ---------------------------------------------------------------------------
-Player_HandleCutsceneControl_ProcessActive:             ; CODE XREF: Player_HandleCutsceneControl+C   j  ; was: loc_1625C
-                bclr    #2,(byte_FF825C).w
-                bne.s   Player_HandleCutsceneControl_ApplyPosition
+Player_HandleForcedPosition_ProcessActive:              ; CODE XREF: Player_HandleForcedPositionState+C   j  ; was: loc_1625C
+                bclr    #2,(ForcedPositionFlags).w
+                bne.s   Player_HandleForcedPosition_ApplyPosition
                 move.b  $6A(a5),d0
                 andi.b  #$2C,d0                         ; ','
-                beq.s   Player_HandleCutsceneControl_CheckTimer
+                beq.s   Player_HandleForcedPosition_CheckTimer
                 addq.w  #1,$4A(a5)
-Player_HandleCutsceneControl_CheckTimer:                ; CODE XREF: Player_HandleCutsceneControl+22   j  ; was: loc_16272
-                move.w  (word_FF824E).w,d0
+Player_HandleForcedPosition_CheckTimer:                 ; CODE XREF: Player_HandleForcedPositionState+22   j  ; was: loc_16272
+                move.w  (ForcedPositionTimer).w,d0
                 cmp.w   $4A(a5),d0
-                bpl.s   Player_HandleCutsceneControl_ApplyPosition
-                bclr    #1,(byte_FF825C).w
-                bra.w   Player_HandleCutsceneControl_Finish
+                bpl.s   Player_HandleForcedPosition_ApplyPosition
+                bclr    #1,(ForcedPositionFlags).w
+                bra.w   Player_HandleForcedPosition_Finish
 ; ---------------------------------------------------------------------------
-Player_HandleCutsceneControl_ApplyPosition:             ; CODE XREF: Player_HandleCutsceneControl+18   j  ; was: loc_16286
-                                        ; Player_HandleCutsceneControl+30   j
-                bset    #1,(byte_FF825C).w
-                move.w  (word_FF8250).w,$10(a5)
-                move.w  (word_FF8252).w,$14(a5)
+Player_HandleForcedPosition_ApplyPosition:              ; CODE XREF: Player_HandleForcedPositionState+18   j  ; was: loc_16286
+                                        ; Player_HandleForcedPositionState+30   j
+                bset    #1,(ForcedPositionFlags).w
+                move.w  (ForcedPositionX).w,$10(a5)
+                move.w  (ForcedPositionY).w,$14(a5)
                 moveq   #$FFFFFFFE,d1
                 bra.w   Player_AdvanceAnimationFrame
 ; ---------------------------------------------------------------------------
-Player_HandleCutsceneControl_Finish:                    ; CODE XREF: Player_HandleCutsceneControl+E   j  ; was: loc_1629E
-                                        ; Player_HandleCutsceneControl+38   j
+Player_HandleForcedPosition_Finish:                     ; CODE XREF: Player_HandleForcedPositionState+E   j  ; was: loc_1629E
+                                        ; Player_HandleForcedPositionState+38   j
                 move.b  #$30,(ContactDamageCooldown).w  ; '0'
                 bra.w   *+4
-; End of function Player_HandleCutsceneControl
+; End of function Player_HandleForcedPositionState
 ; Initializes player knockback/damaged state with sound and velocity
 Player_InitKnockbackState:                              ; CODE XREF: Player_Update+64   p  ; was: sub_162A8
-                                        ; Player_HandleCutsceneControl+5A   j
+                                        ; Player_HandleForcedPositionState+5A   j
                 move.b  #$7F,(PlayerInputMask).w
                 bclr    #4,$E(a5)
                 move.w  #$8000,(word_FF80E6).w
@@ -187,10 +187,10 @@ Player_InitKnockbackState:                              ; CODE XREF: Player_Upda
                 jsr     (Sound_PlaySFX).l
 Player_InitKnockbackState_SetDefaultVelocity:           ; CODE XREF: Player_InitKnockbackState+32   j  ; was: loc_162E6
                 move.l  #$FFFEA000,$1C(a5)
-                tst.l   (dword_FF8300).w
+                tst.l   (PlayerKnockbackXVel).w
                 beq.s   Player_InitKnockbackState_SetFacingVelocity
 Player_InitKnockbackState_UseStoredHorizontalVelocity:  ; CODE XREF: Player_InitKnockbackState+80   j  ; was: loc_162F4
-                move.l  (dword_FF8300).w,$18(a5)
+                move.l  (PlayerKnockbackXVel).w,$18(a5)
                 rts
 ; ---------------------------------------------------------------------------
 Player_InitKnockbackState_SetFacingVelocity:            ; CODE XREF: Player_InitKnockbackState+4A   j  ; was: loc_162FC
@@ -205,7 +205,7 @@ Player_InitKnockbackState_SetAlternateVerticalVelocity:  ; CODE XREF: Player_Ini
                 move.b  #$19,d0
                 jsr     (Sound_PlaySFX).l
                 move.l  #$FFFE8000,$1C(a5)
-                tst.w   (dword_FF8300).w
+                tst.w   (PlayerKnockbackXVel).w
                 bne.w   Player_InitKnockbackState_UseStoredHorizontalVelocity
                 bra.s   Player_SetKnockbackVelocity
 ; End of function Player_InitKnockbackState

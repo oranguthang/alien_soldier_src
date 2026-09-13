@@ -48,7 +48,7 @@ Midgame_LoadFlyingNeoPaletteCommands:                   ; CODE XREF: Stage8_Init
 ; Update the random Stage 8/9 lightning palette effect and optional composite
 Midgame_UpdateRandomLightningEffect:                    ; CODE XREF: Stage8_UpdateTrainEffectsAndVerticalOscillation+8   p  ; was: sub_D766
                                         ; Stage8_UpdateFlyingNeoVerticalScrollAndEffects+3A   p
-                move.w  (word_FF821E).w,d7
+                move.w  (MidgameLightningMode).w,d7
                 bmi.w   Midgame_UpdateRandomLightningEffect_Return
                 tst.w   (PalettePrimaryIndex).w
                 bne.w   Midgame_UpdateRandomLightningEffect_Return

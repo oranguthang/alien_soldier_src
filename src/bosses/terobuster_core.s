@@ -122,7 +122,7 @@ Boss_TerobusterSelectPartOrderA:                        ; CODE XREF: Boss_Terobu
 Boss_TerobusterEnterDecisionState:                      ; CODE XREF: Boss_TerobusterSetup+D2   j  ; was: loc_386A2
                                         ; Boss_TerobusterDecisionState+286   j
                 move.w  #4,4(a5)
-                tst.w   (word_FF8234).w
+                tst.w   (BossCombatCounter).w
                 beq.s   Boss_TerobusterEnterRecoveryDecisionState
                 bpl.s   Boss_TerobusterResetDecisionAnimation
 Boss_TerobusterEnterRecoveryDecisionState:              ; CODE XREF: Boss_TerobusterSetup+E2   j  ; was: loc_386B0
@@ -149,10 +149,10 @@ Boss_TerobusterDecisionState:                           ; DATA XREF: ROM:0003857
                                         ; ROM:00038596   o
                 cmpi.w  #$20,4(a5)                      ; ' '
                 bne.s   Boss_TerobusterDecisionTick
-                addi.w  #$C,(word_FF8234).w
-                cmpi.w  #$1E0,(word_FF8234).w
+                addi.w  #$C,(BossCombatCounter).w
+                cmpi.w  #$1E0,(BossCombatCounter).w
                 bmi.s   Boss_TerobusterDecisionAnimate
-                move.w  #$1E0,(word_FF8234).w
+                move.w  #$1E0,(BossCombatCounter).w
 Boss_TerobusterDecisionTick:                            ; CODE XREF: Boss_TerobusterDecisionState+6   j  ; was: loc_3870A
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_TerobusterDecisionAnimate
@@ -208,7 +208,7 @@ Boss_TerobusterMissileAttackAHandlePoseEvent:           ; CODE XREF: Boss_Terobu
                 move.w  #3,(PlaneBShakeLevel).w
                 move.b  #$49,d0                         ; 'I'
                 jsr     (Sound_PlaySFX).l
-                subi.w  #$80,(word_FF8234).w
+                subi.w  #$80,(BossCombatCounter).w
                 bmi.s   Boss_TerobusterMissileAttackAChooseExitOrder
                 subq.w  #1,$11C(a5)
                 bmi.s   Boss_TerobusterMissileAttackAChooseExitOrder
@@ -275,7 +275,7 @@ Boss_TerobusterMissileAttackBHandlePoseEvent:           ; CODE XREF: Boss_Terobu
                 move.w  #3,(PlaneBShakeLevel).w
                 move.b  #$49,d0                         ; 'I'
                 jsr     (Sound_PlaySFX).l
-                subi.w  #$80,(word_FF8234).w
+                subi.w  #$80,(BossCombatCounter).w
                 bmi.s   Boss_TerobusterMissileAttackBChooseExitOrder
                 subq.w  #1,$11C(a5)
                 bmi.s   Boss_TerobusterMissileAttackBChooseExitOrder
@@ -352,10 +352,10 @@ Boss_TerobusterFallingRockAttack:                       ; DATA XREF: ROM:0003859
 Boss_TerobusterSelectFallingRockPattern:                ; CODE XREF: Boss_TerobusterDecisionState+24E   j  ; was: loc_38944
                 subq.w  #1,$17C(a5)
                 bmi.s   Boss_TerobusterFallingRockFinale
-                addi.w  #6,(word_FF8234).w
-                cmpi.w  #$1E0,(word_FF8234).w
+                addi.w  #6,(BossCombatCounter).w
+                cmpi.w  #$1E0,(BossCombatCounter).w
                 bmi.s   Boss_TerobusterSpawnFallingRocks
-                move.w  #$1E0,(word_FF8234).w
+                move.w  #$1E0,(BossCombatCounter).w
 Boss_TerobusterSpawnFallingRocks:                       ; CODE XREF: Boss_TerobusterDecisionState+268   j  ; was: loc_3895E
                 lea     Boss_TerobusterFallingRockPoseCommands(pc),a1
                 nop
@@ -364,7 +364,7 @@ Boss_TerobusterSpawnFallingRocks:                       ; CODE XREF: Boss_Terobu
                 bra.s   Boss_TerobusterRenderFallingRockAttack
 ; ---------------------------------------------------------------------------
 Boss_TerobusterFallingRockFinale:                       ; CODE XREF: Boss_TerobusterDecisionState+25A   j  ; was: loc_3896E
-                subi.w  #$E,(word_FF8234).w
+                subi.w  #$E,(BossCombatCounter).w
                 bmi.w   Boss_TerobusterEnterDecisionState
                 lea     Boss_TerobusterFallingRockFinalePoseCommands(pc),a1
                 nop

@@ -246,7 +246,7 @@ StatusDisplayModeOffset equ     $FFFF820C               ; was: word_FF820C
 CombatPercentIndex      equ     $FFFF8210               ; was: word_FF8210
 PaletteEffectControl    equ     $FFFF8218               ; was: word_FF8218
 PaletteEntryLists       equ     $FFFF821A               ; was: dword_FF821A
-word_FF821E             equ     $FFFF821E
+MidgameLightningMode    equ     $FFFF821E               ; was: word_FF821E
 PalettePrimaryIndex     equ     $FFFF8220               ; was: word_FF8220
 PaletteSecondaryIndex   equ     $FFFF8222               ; was: word_FF8222
 word_FF8224             equ     $FFFF8224
@@ -256,26 +256,26 @@ DebugResourceRefill     equ     $FFFF822A               ; was: word_FF822A
 ResultsTimeBonusBCD     equ     $FFFF822C               ; was: word_FF822C
 word_FF8230             equ     $FFFF8230
 StageNumberBCD          equ     $FFFF8232               ; was: byte_FF8232
-word_FF8234             equ     $FFFF8234
-word_FF8236             equ     $FFFF8236
+BossCombatCounter       equ     $FFFF8234               ; was: word_FF8234
+BossCombatCounterMax    equ     $FFFF8236               ; was: word_FF8236
 WeaponFireCooldown      equ     $FFFF8238               ; was: word_FF8238
-dword_FF8240            equ     $FFFF8240
+StageMotionXDelta       equ     $FFFF8240               ; was: dword_FF8240
 byte_FF8244             equ     $FFFF8244
 byte_FF8245             equ     $FFFF8245
-word_FF8246             equ     $FFFF8246
+ColorFadeTriggerState   equ     $FFFF8246               ; was: word_FF8246
 PlayerCenterX           equ     $FFFF8248               ; was: word_FF8248
 PlayerCenterY           equ     $FFFF824A               ; was: word_FF824A
-word_FF824E             equ     $FFFF824E
-word_FF8250             equ     $FFFF8250
-word_FF8252             equ     $FFFF8252
-byte_FF825C             equ     $FFFF825C
+ForcedPositionTimer     equ     $FFFF824E               ; was: word_FF824E
+ForcedPositionX         equ     $FFFF8250               ; was: word_FF8250
+ForcedPositionY         equ     $FFFF8252               ; was: word_FF8252
+ForcedPositionFlags     equ     $FFFF825C               ; was: byte_FF825C
 ContactDamageCooldown   equ     $FFFF825D               ; was: byte_FF825D
 byte_FF8260             equ     $FFFF8260
 HealthDeltaDisplayValue equ     $FFFF8262               ; was: word_FF8262
 TransientValueScreenX   equ     $FFFF8264               ; was: word_FF8264
 TransientValueScreenY   equ     $FFFF8266               ; was: word_FF8266
 HealthDeltaDisplayTimer equ     $FFFF8268               ; was: word_FF8268
-word_FF826A             equ     $FFFF826A
+WeaponSwitchRepeatTimer equ     $FFFF826A               ; was: word_FF826A
 byte_FF826C             equ     $FFFF826C
 SpawnedEnemyTileAttr    equ     $FFFF826E               ; was: word_FF826E
 StandardEnemyTileAttr   equ     $FFFF8270               ; was: word_FF8270
@@ -284,17 +284,17 @@ BirdEnemyTileAttr       equ     $FFFF8274               ; was: word_FF8274
 PhaseEnemyTileAttr      equ     $FFFF8276               ; was: word_FF8276
 Stage10WaspTileAttr     equ     $FFFF8278               ; was: word_FF8278
 CirclingEnemyTileAttr   equ     $FFFF827A               ; was: word_FF827A
-word_FF829E             equ     $FFFF829E
+SpecialTargetCount      equ     $FFFF829E               ; was: word_FF829E
 StageAssetCommandBuffer equ     $FFFF82A0               ; was: byte_FF82A0
-dword_FF8300            equ     $FFFF8300
+PlayerKnockbackXVel     equ     $FFFF8300               ; was: dword_FF8300
 word_FF8304             equ     $FFFF8304
 LowTimeWarningTimer     equ     $FFFF8306               ; was: word_FF8306
-byte_FF8308             equ     $FFFF8308
-dword_FF830A            equ     $FFFF830A
+CombatHitFlags          equ     $FFFF8308               ; was: byte_FF8308
+StageMotionYDelta       equ     $FFFF830A               ; was: dword_FF830A
 byte_FF830E             equ     $FFFF830E
 PlayerInputMask         equ     $FFFF830F               ; was: byte_FF830F
 MessageAdvanceButtons   equ     $FFFF8310               ; was: byte_FF8310
-byte_FF8311             equ     $FFFF8311
+PlayerDashStopFlag      equ     $FFFF8311               ; was: byte_FF8311
 WeaponIconDMABuffer     equ     $FFFF8478               ; was: byte_FF8478
 WeaponIconDMABufferEnd  equ     $FFFF8488               ; was: byte_FF8488
 PrimaryHUDDMABuffer     equ     $FFFF84A0               ; was: dword_FF84A0
@@ -370,7 +370,7 @@ dword_FF943C            equ     $FFFF943C
 word_FF9440             equ     $FFFF9440
 word_FF9442             equ     $FFFF9442
 word_FF9444             equ     $FFFF9444
-word_FF9446             equ     $FFFF9446
+Epsilon1TileDMARecord   equ     $FFFF9446               ; was: word_FF9446
 dword_FF944E            equ     $FFFF944E
 dword_FF9452            equ     $FFFF9452
 dword_FF9456            equ     $FFFF9456
@@ -387,7 +387,7 @@ word_FF9480             equ     $FFFF9480
 ShieldViperTrailAngles  equ     $FFFF94A0               ; was: word_FF94A0
 word_FF9500             equ     $FFFF9500
 word_FF9502             equ     $FFFF9502
-byte_FF9506             equ     $FFFF9506
+FlyingNeoVScrollRamp    equ     $FFFF9506               ; was: byte_FF9506
 word_FF9508             equ     $FFFF9508
 word_FF9510             equ     $FFFF9510
 word_FF951A             equ     $FFFF951A
@@ -397,7 +397,7 @@ word_FF9600             equ     $FFFF9600
 word_FF9602             equ     $FFFF9602
 byte_FF9604             equ     $FFFF9604
 word_FF9608             equ     $FFFF9608
-word_FF960A             equ     $FFFF960A
+SharpssteelTargetTail   equ     $FFFF960A               ; was: word_FF960A
 dword_FF9610            equ     $FFFF9610
 dword_FF9614            equ     $FFFF9614
 word_FF961A             equ     $FFFF961A
@@ -416,12 +416,12 @@ byte_FF9808             equ     $FFFF9808
 word_FF9810             equ     $FFFF9810
 byte_FF981E             equ     $FFFF981E
 word_FF9820             equ     $FFFF9820
-word_FF9852             equ     $FFFF9852
+ResultsSummaryRowBuffer equ     $FFFF9852               ; was: word_FF9852
 word_FF9880             equ     $FFFF9880
-word_FF98B0             equ     $FFFF98B0
+DestroyerMK2ScrollTable equ     $FFFF98B0               ; was: word_FF98B0
 word_FF9900             equ     $FFFF9900
-byte_FF9906             equ     $FFFF9906
-byte_FF9907             equ     $FFFF9907
+PasswordStageTensGlyph  equ     $FFFF9906               ; was: byte_FF9906
+PasswordStageOnesGlyph  equ     $FFFF9907               ; was: byte_FF9907
 byte_FF9980             equ     $FFFF9980
 dword_FF99A0            equ     $FFFF99A0
 dword_FF9A00            equ     $FFFF9A00

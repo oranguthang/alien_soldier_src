@@ -504,7 +504,7 @@ Boss_SunsetStingApplySelectedPosePattern:               ; CODE XREF: Boss_Sunset
                 beq.s   Boss_SunsetStingNormalizePosePatternIndex
                 eori.b  #8,(SunsetStingChainCycle).w
                 addq.w  #2,4(a5)
-                subi.w  #$80,(word_FF8234).w
+                subi.w  #$80,(BossCombatCounter).w
 Boss_SunsetStingNormalizePosePatternIndex:              ; CODE XREF: Boss_SunsetStingApplyPosePatternCState+36   j  ; was: loc_41F1E
                 andi.b  #$E,(SunsetStingChainCycle).w
                 move.b  #$20,(SunsetStingChainCycle+1).w  ; ' '
@@ -518,7 +518,7 @@ Boss_SunsetStingCheckHealthThreshold:                   ; CODE XREF: Boss_Sunset
                 andi.b  #$BF,$6E1(a5)
                 andi.b  #$BF,$921(a5)
                 andi.b  #$BF,$B61(a5)
-                cmpi.w  #$C0,(word_FF8234).w
+                cmpi.w  #$C0,(BossCombatCounter).w
                 bgt.s   Boss_SunsetStingCheckPhaseTransition
                 bra.w   Boss_SunsetStingBeginHealthRefillState
 ; End of function Boss_SunsetStingCheckHealthThreshold
@@ -535,8 +535,8 @@ Boss_SunsetStingBeginHealthRefillState:                 ; CODE XREF: Boss_Sunset
 ; End of function Boss_SunsetStingBeginHealthRefillState
 ; Refills shared health while applying pose pattern C to all four chains
 Boss_SunsetStingRefillHealthState:                      ; DATA XREF: ROM:00041962   o  ; was: sub_41F6A
-                addi.w  #2,(word_FF8234).w
-                cmpi.w  #$1E0,(word_FF8234).w
+                addi.w  #2,(BossCombatCounter).w
+                cmpi.w  #$1E0,(BossCombatCounter).w
                 bge.w   Boss_SunsetStingSetIdleState
                 move.w  #0,d0
                 move.w  #3,d7

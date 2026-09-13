@@ -132,7 +132,7 @@ Boss_GustheadWaitForArenaTransitionState:               ; DATA XREF: ROM:0003F28
                 bsr.w   Boss_GustheadUpdateArenaScrollVelocity
                 bsr.w   Boss_GustheadSpawnScrollingDebris
                 bsr.w   Boss_GustheadUpdateVerticalBounce
-                addq.w  #2,(word_FF8234).w
+                addq.w  #2,(BossCombatCounter).w
                 btst    #0,(byte_FF8260).w
                 beq.s   Boss_GustheadArenaTransitionReturn
                 bclr    #6,$4A(a5)
@@ -262,7 +262,7 @@ Boss_GustheadInitializeFinalBattleMotion:               ; CODE XREF: Boss_Gusthe
                 addq.w  #2,4(a5)
                 move.l  #$FFFF0000,$1C(a5)
                 move.l  #$2000,$4C(a5)
-                clr.l   (dword_FF8240).w
+                clr.l   (StageMotionXDelta).w
                 clr.l   (dword_FF940C).w
                 clr.l   (dword_FF9410).w
                 clr.l   (dword_FF9414).w

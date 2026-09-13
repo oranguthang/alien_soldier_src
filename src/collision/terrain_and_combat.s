@@ -52,7 +52,7 @@ Collision_PlayerWeaponVsEnemy_ApplyFlaggedDamage:       ; CODE XREF: Collision_P
                 move.b  #$AE,d0
                 jsr     (Sound_PlaySFX).l
                 movem.l (sp)+,d0
-                ori.b   #$40,(byte_FF8308).w            ; '@'
+                ori.b   #$40,(CombatHitFlags).w         ; '@'
                 bset    #0,(byte_FF80EC).w
                 move.b  $21(a3),d4
                 or.b    d4,$22(a2)
@@ -65,8 +65,8 @@ Collision_PlayerWeaponVsEnemy_ApplyFlaggedDamage:       ; CODE XREF: Collision_P
                 clr.w   (BossHealth).w
                 clr.w   (BossMaxHealth).w
                 clr.b   (byte_FF80EC).w
-                clr.w   (word_FF8234).w
-                clr.w   (word_FF8236).w
+                clr.w   (BossCombatCounter).w
+                clr.w   (BossCombatCounterMax).w
                 clr.b   (byte_FF8260).w
                 bsr.w   Results_IncrementDestroyedEnemyCountBCD
                 bra.w   Collision_PlayerWeaponVsEnemy_NextTarget
@@ -87,9 +87,9 @@ Collision_PlayerWeaponVsEnemy_ApplyStandardDamage:      ; CODE XREF: Collision_P
                 bpl.w   Collision_PlayerWeaponVsEnemy_NextTarget
                 btst    #6,$23(a2)
                 beq.s   Collision_PlayerWeaponVsEnemy_FinishStandardDefeat
-                subq.w  #1,(word_FF829E).w
+                subq.w  #1,(SpecialTargetCount).w
                 bpl.s   Collision_PlayerWeaponVsEnemy_FinishStandardDefeat
-                clr.w   (word_FF829E).w
+                clr.w   (SpecialTargetCount).w
 Collision_PlayerWeaponVsEnemy_FinishStandardDefeat:     ; CODE XREF: Collision_PlayerWeaponVsEnemy+12A   j  ; was: loc_142C6
                                         ; Collision_PlayerWeaponVsEnemy+130   j
                 btst    #7,$23(a2)

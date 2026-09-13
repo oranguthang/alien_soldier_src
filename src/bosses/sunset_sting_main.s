@@ -9,7 +9,7 @@ Boss_SunsetStingMain:                                   ; DATA XREF: ROM:Entity_
                 cmpi.w  #$12,d0
                 bcc.s   Boss_SunsetStingMainReturn
                 jsr     (Gfx_ProcessDefaultColorFade).l
-                tst.w   (word_FF8234).w
+                tst.w   (BossCombatCounter).w
                 bne.s   Boss_SunsetStingMainCheckDefeatTrigger
                 move.w  4(a5),d0
                 andi.w  #$7FFF,d0
@@ -267,7 +267,7 @@ Boss_SunsetStingBattleResumeMovement:                   ; CODE XREF: Boss_Sunset
 ; ---------------------------------------------------------------------------
 Boss_SunsetStingBattleSelectAttack:                     ; CODE XREF: Boss_SunsetStingBattleActive+70   j  ; was: loc_42D5C
                 move.w  #$FFFF,2(a4)
-                subi.w  #$50,(word_FF8234).w            ; 'P'
+                subi.w  #$50,(BossCombatCounter).w      ; 'P'
                 moveq   #$A,d7
                 jsr     (RandomNumber).l
                 andi.w  #7,d0
@@ -296,7 +296,7 @@ Boss_SunsetStingBeginCoreRepositionDelay:               ; CODE XREF: Boss_Sunset
                 bne.w   Boss_SunsetStingReturn
                 move.l  #$FFFBC000,$1C(a5)
                 move.l  #$1000,$4A(a5)
-                addi.w  #$30,(word_FF8234).w            ; '0'
+                addi.w  #$30,(BossCombatCounter).w      ; '0'
                 bra.w   Boss_SunsetStingNextState
 ; End of function Boss_SunsetStingBeginCoreRepositionState
 ; Repositions the visible core and its controller before resuming battle
@@ -319,7 +319,7 @@ Boss_SunsetStingCoreRepositionTrackX:                   ; CODE XREF: Boss_Sunset
                 clr.l   $18(a3)
                 clr.l   $1C(a3)
                 clr.l   $4A(a3)
-                subi.w  #$50,(word_FF8234).w            ; 'P'
+                subi.w  #$50,(BossCombatCounter).w      ; 'P'
                 bset    #6,4(a5)
                 bra.s   Boss_SunsetStingCoreRepositionUpdateController
 ; ---------------------------------------------------------------------------
@@ -560,7 +560,7 @@ Boss_SunsetStingArenaTransitionSelectOscillationLimit:  ; CODE XREF: Boss_Sunset
                 bne.s   Boss_SunsetStingArenaTransitionCheckComplete
                 neg.l   $58(a5)
 Boss_SunsetStingArenaTransitionCheckComplete:           ; CODE XREF: Boss_SunsetStingWaitForArenaTransitionState+52   j  ; was: loc_430F6
-                addq.w  #2,(word_FF8234).w
+                addq.w  #2,(BossCombatCounter).w
                 btst    #0,(byte_FF8260).w
                 beq.w   Boss_SunsetStingReturn
                 move.w  #4,4(a5)

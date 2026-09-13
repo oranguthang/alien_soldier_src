@@ -61,7 +61,7 @@ Boss_SunsetStingSegmentOrbitUpdatePosition:             ; CODE XREF: Boss_Sunset
                 beq.w   Boss_SunsetStingReturn
                 cmpi.w  #$FFFF,2(a4)
                 beq.s   Boss_SunsetStingSegmentLaunchFromRing
-                subi.w  #$F,(word_FF8234).w
+                subi.w  #$F,(BossCombatCounter).w
 Boss_SunsetStingSegmentLaunchFromRing:                  ; CODE XREF: Boss_SunsetStingSegmentOrbitState+5A   j  ; was: loc_433E4
                 move.w  6(a5),d0
                 moveq   #8,d2
@@ -240,7 +240,7 @@ Boss_SunsetStingSecondarySegmentOrbitUpdatePosition:    ; CODE XREF: Boss_Sunset
                 andi.w  #$3FF,d0
                 cmpi.w  #$240,d0
                 bcc.w   Boss_SunsetStingReturn
-                subi.w  #$A,(word_FF8234).w
+                subi.w  #$A,(BossCombatCounter).w
 Boss_SunsetStingSecondarySegmentLaunchFromRing:         ; CODE XREF: Boss_SunsetStingSecondarySegmentOrbitState+5A   j  ; was: loc_435F8
                 move.w  6(a5),$44(a5)
                 move.w  #$230,$48(a5)

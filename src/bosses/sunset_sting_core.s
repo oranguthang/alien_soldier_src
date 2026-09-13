@@ -112,7 +112,7 @@ Boss_SunsetStingResetForAttack:                         ; CODE XREF: Boss_Sunset
                 move.w  #8,4(a5)
                 move.b  #$40,$4B(a5)                    ; '@'
                 clr.l   $18(a5)
-                cmpi.w  #$100,(word_FF8234).w
+                cmpi.w  #$100,(BossCombatCounter).w
                 bgt.s   Boss_SunsetStingResetDisableCollision
                 move.b  #$C0,$4B(a5)
                 move.w  #$A,4(a5)
@@ -122,7 +122,7 @@ Boss_SunsetStingResetDisableCollision:                  ; CODE XREF: Boss_Sunset
 ; End of function Boss_SunsetStingResetForAttack
 ; Increments the shared battle counter before the idle update
 Boss_SunsetStingIncreaseSharedCounterState:             ; DATA XREF: ROM:00040D0C   o  ; was: sub_40E8E
-                addi.w  #2,(word_FF8234).w
+                addi.w  #2,(BossCombatCounter).w
                 clr.w   d3
                 bsr.w   Boss_SunsetStingCalculateAngleAndFlip
 ; End of function Boss_SunsetStingIncreaseSharedCounterState
@@ -255,7 +255,7 @@ Boss_SunsetStingDashAttack_MoveAway:                    ; DATA XREF: ROM:00040D1
                 move.b  #$C,$4B(a5)
                 addq.w  #2,4(a5)
                 move.b  #0,$4A(a5)
-                subi.w  #$40,(word_FF8234).w            ; '@'
+                subi.w  #$40,(BossCombatCounter).w      ; '@'
                 bra.w   Boss_SunsetStingUpdateGraphics
 ; End of function Boss_SunsetStingDashAttack
 ; Starts the dive windup state
@@ -276,7 +276,7 @@ Boss_SunsetStingPrepareDive:                            ; DATA XREF: ROM:00040D1
                 move.b  #6,$4A(a5)
                 addq.w  #2,4(a5)
                 move.b  #$30,$4B(a5)                    ; '0'
-                subi.w  #$50,(word_FF8234).w            ; 'P'
+                subi.w  #$50,(BossCombatCounter).w      ; 'P'
                 bra.w   Boss_SunsetStingUpdateGraphics
 ; End of function Boss_SunsetStingPrepareDive
 ; Waits for timer countdown before resetting attack state
@@ -324,7 +324,7 @@ Boss_SunsetStingSerpentineAttack_MoveIn:                ; DATA XREF: ROM:00040D2
                 bne.w   Boss_SunsetStingSerpentineCheckBounds
                 addq.w  #2,4(a5)
                 move.b  #$10,$4B(a5)
-                subi.w  #$140,(word_FF8234).w
+                subi.w  #$140,(BossCombatCounter).w
 ; Serpentine pattern movement away from target
 Boss_SunsetStingSerpentineAttack_MoveOut:               ; DATA XREF: ROM:00040D22   o  ; was: loc_410F6
                 move.w  #2,d2
@@ -353,7 +353,7 @@ Boss_SunsetStingBeginRotationRecovery:                  ; CODE XREF: Boss_Sunset
                 move.w  #$22,4(a5)                      ; '"'
                 move.b  #$38,$4B(a5)                    ; '8'
                 move.b  #$A,$4A(a5)
-                subi.w  #$148,(word_FF8234).w
+                subi.w  #$148,(BossCombatCounter).w
                 bsr.w   Boss_SunsetStingEnableCollision
                 bra.w   Boss_SunsetStingUpdateGraphics
 ; End of function Boss_SunsetStingBeginRotationRecovery

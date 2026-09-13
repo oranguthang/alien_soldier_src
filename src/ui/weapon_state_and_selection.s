@@ -380,7 +380,7 @@ Weapon_State6CalculateVelocity:                         ; CODE XREF: Weapon_Conf
                 asl.l   d3,d1
                 asl.l   d3,d2
                 move.l  d1,(WeaponYMotionParameter).w
-                move.l  (dword_FF8240).w,d0
+                move.l  (StageMotionXDelta).w,d0
                 asl.l   #1,d0
                 add.l   d0,d2
                 move.l  d2,(WeaponXMotionParameter).w

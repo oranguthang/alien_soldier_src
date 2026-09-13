@@ -99,26 +99,26 @@ Projectile_MadamBarbarDebrisCheckMotionStateThree:      ; CODE XREF: Projectile_
 Projectile_MadamBarbarDebrisEnterSharedEffectState:     ; CODE XREF: Projectile_MadamBarbarDebris+180   j  ; was: loc_3AF6A
                 move.w  #3,4(a5)
                 clr.l   $18(a5)
-                bclr    #1,(byte_FF825C).w
+                bclr    #1,(ForcedPositionFlags).w
                 bne.s   Projectile_MadamBarbarDebrisPublishSharedEffectPosition
                 subq.w  #1,4(a5)
                 clr.w   $48(a5)
                 rts
 ; ---------------------------------------------------------------------------
 Projectile_MadamBarbarDebrisPublishSharedEffectPosition:  ; CODE XREF: Projectile_MadamBarbarDebris+144   j  ; was: loc_3AF86
-                move.w  #7,(word_FF824E).w
-                bset    #0,(byte_FF825C).w
+                move.w  #7,(ForcedPositionTimer).w
+                bset    #0,(ForcedPositionFlags).w
                 move.w  $10(a5),d0
-                move.w  d0,(word_FF8250).w
+                move.w  d0,(ForcedPositionX).w
                 move.w  $14(a5),d0
                 addi.w  #-$14,d0
-                move.w  d0,(word_FF8252).w
+                move.w  d0,(ForcedPositionY).w
                 rts
 ; ---------------------------------------------------------------------------
 Projectile_MadamBarbarDebrisCheckSharedEffectTrigger:   ; CODE XREF: Projectile_MadamBarbarDebris+132   j  ; was: loc_3AFA8
                 bclr    #1,$22(a5)
                 beq.s   Projectile_MadamBarbarDebrisUpdateMotionStateTwo
-                bset    #1,(byte_FF825C).w
+                bset    #1,(ForcedPositionFlags).w
                 bra.s   Projectile_MadamBarbarDebrisEnterSharedEffectState
 ; ---------------------------------------------------------------------------
 Projectile_MadamBarbarDebrisUpdateMotionStateTwo:       ; CODE XREF: Projectile_MadamBarbarDebris+178   j  ; was: loc_3AFB8

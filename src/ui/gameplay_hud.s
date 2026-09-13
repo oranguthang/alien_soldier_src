@@ -73,16 +73,16 @@ UI_UpdateGameplayHUD_StoreStageTimerSeconds:            ; CODE XREF: UI_UpdateGa
 UI_UpdateGameplayHUD_UpdateBossHealthClamp:             ; CODE XREF: UI_UpdateGameplayHUD+74   j  ; was: loc_12C30
                                         ; UI_UpdateGameplayHUD+7C   j
                 bclr    #0,(byte_FF8260).w
-                move.w  (word_FF8234).w,d0
+                move.w  (BossCombatCounter).w,d0
                 beq.s   UI_UpdateGameplayHUD_PrepareAlternatingSection
                 bpl.s   UI_UpdateGameplayHUD_CheckBossHealthMaximum
-                clr.w   (word_FF8234).w
+                clr.w   (BossCombatCounter).w
                 bra.s   UI_UpdateGameplayHUD_PrepareAlternatingSection
 ; ---------------------------------------------------------------------------
 UI_UpdateGameplayHUD_CheckBossHealthMaximum:            ; CODE XREF: UI_UpdateGameplayHUD+D2   j  ; was: loc_12C44
-                cmp.w   (word_FF8236).w,d0
+                cmp.w   (BossCombatCounterMax).w,d0
                 bmi.s   UI_UpdateGameplayHUD_PrepareAlternatingSection
-                move.w  (word_FF8236).w,(word_FF8234).w
+                move.w  (BossCombatCounterMax).w,(BossCombatCounter).w
                 bset    #0,(byte_FF8260).w
 UI_UpdateGameplayHUD_PrepareAlternatingSection:         ; CODE XREF: UI_UpdateGameplayHUD+D0   j  ; was: loc_12C56
                                         ; UI_UpdateGameplayHUD+D8   j

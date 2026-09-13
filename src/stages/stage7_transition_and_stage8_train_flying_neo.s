@@ -40,7 +40,7 @@ Stage8_FlyingNeoStridedControlBytes:    dc.b    $1C, $1D, $21, $22, $26, $27  ; 
 
 ; Initialize the Stage 8 train sequence and Flying Neo composite
 Stage8_InitializeTrainSequence:                         ; DATA XREF: ROM:0000C89A   o  ; was: sub_CE58
-                move.w  #1,(word_FF821E).w
+                move.w  #1,(MidgameLightningMode).w
                 addq.w  #2,(StageStateOffset).w
                 move.w  #$730,(PrimaryCameraXPosition).w
                 move.w  #0,(PrimaryCameraYPosition).w

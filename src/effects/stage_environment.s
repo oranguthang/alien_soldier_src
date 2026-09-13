@@ -194,7 +194,7 @@ Midgame_UpdateAmbientParticle:                          ; DATA XREF: ROM:Entity_
                 asr.w   #1,d0
                 sub.w   d0,$10(a5)
                 move.w  (PrimaryCameraXPosition).w,$48(a5)
-                move.l  (dword_FF8240).w,d0
+                move.l  (StageMotionXDelta).w,d0
                 asl.l   #1,d0
                 move.l  d0,$18(a5)
                 rts

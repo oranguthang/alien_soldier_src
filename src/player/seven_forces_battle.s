@@ -23,7 +23,7 @@ Player_UpdateSevenForcesBattleFinalizeFrame:            ; CODE XREF: Player_Upda
                 move.b  $69(a5),$6B(a5)
                 jsr     (Player_UpdateInvulnerabilityTimer).l
                 jsr     (Player_SetHitbox).l
-                clr.b   (byte_FF8311).w
+                clr.b   (PlayerDashStopFlag).w
                 jmp     Player_CalculateCenterPosition
 ; End of function Player_UpdateSevenForcesBattle
 ; Dispatch the Seven Forces player battle state
@@ -207,7 +207,7 @@ Player_TryStartSevenForcesDashReturn:                   ; CODE XREF: Player_TryS
 ; End of function Player_TryStartSevenForcesDash
 ; State 6: update or finish the active dash
 Player_SevenForcesDashState6:                           ; DATA XREF: ROM:00019E1C   o  ; was: sub_1A01C
-                tst.b   (byte_FF8311).w
+                tst.b   (PlayerDashStopFlag).w
                 bne.s   Player_EndSevenForcesDash
                 subq.w  #1,$50(a5)
                 bpl.s   Player_UpdateSevenForcesDash
@@ -269,7 +269,7 @@ Player_EnterSevenForcesDefeatStateA:                    ; CODE XREF: Player_Upda
                 jsr     (Sys_ClearObjectBlocks17).l
                 move.w  #$A,4(a5)
                 move.w  #$10,$48(a5)
-                tst.w   (dword_FF8300).w
+                tst.w   (PlayerKnockbackXVel).w
                 beq.s   Player_SetSevenForcesDefeatVelocityByFacing
                 bmi.s   Player_SetSevenForcesDefeatVelocityLeft
                 move.l  #$38000,$18(a5)

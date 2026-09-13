@@ -3,7 +3,7 @@ Boss_Epsilon1BeginForcedTransitionState:                ; DATA XREF: ROM:00045D3
                 move.w  #0,(dword_FF9414+2).w
                 addq.w  #2,4(a5)
                 move.l  #$FFFF0000,(SecondaryEntityYVel).w
-                bclr    #0,(byte_FF8308).w
+                bclr    #0,(CombatHitFlags).w
                 bne.s   Boss_Epsilon1SetLeftwardTransitionVelocity
                 move.w  #6,(SecondaryEntityXVel).w
                 rts
@@ -71,7 +71,7 @@ Boss_Epsilon1ReturnToUpperBoundaryReturn:               ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1ReturnToUpperBoundaryState
 ; Clears the forced-transition flags and returns to attack selection
 Boss_Epsilon1FinishForcedTransitionState:               ; DATA XREF: ROM:00045D4A   o  ; was: sub_4688C
-                bclr    #2,(byte_FF8308).w
+                bclr    #2,(CombatHitFlags).w
                 bclr    #2,$4C(a5)
                 move.w  #$12,4(a5)
                 rts

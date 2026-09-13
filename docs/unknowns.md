@@ -6751,3 +6751,101 @@ Provenance rises from 15,882 to 15,886 mappings and the audit registry from
 13,071 to 13,075. The semantic review upper bound remains 3,111 because every
 new mapping has a matching record. The enforced address-derived ceiling falls
 from 169 to 165, all still confined to RAM equates.
+
+The midgame-lightning and player-control pass replaces three independent raw
+RAM aliases. `MidgameLightningMode` is selected by Stage 8/9 and Xi-Tiger:
+mode one suppresses the randomized composite, mode two suppresses its sound,
+and a negative value disables the updater. `WeaponSwitchRepeatTimer` is parked
+at minus one while idle and reloaded to sixteen on a new switch press before
+the held-input repeat path raises its request bit. `PlayerDashStopFlag` is
+cleared before player state dispatch and set by the Wolf Garopa boundary after
+it pushes the player and cancels horizontal velocity; normal and Seven Forces
+dash states both terminate on that byte.
+
+The three RAM aliases add provenance and exact-address audit mappings, and the
+existing weapon-switch updater receives its missing current-name audit record.
+Provenance rises from 15,886 to 15,889 mappings, the audit registry from 13,075
+to 13,079, and the semantic review upper bound falls from 3,111 to 3,110. The
+enforced address-derived ceiling falls from 165 to 162, all still confined to
+RAM equates.
+
+The forced-position protocol pass replaces four adjacent raw RAM aliases and
+corrects six earlier cutscene-labelled player-state names. Bugmax, Madam
+Barbar, Deep Strider, and Back Stringer contact paths publish a duration and
+X/Y coordinates, set request bit zero, and optionally set immediate bit two.
+The player state consumes the request, copies the coordinates until the timer
+expires, and refreshes bit one as a handshake observed by the publishing
+object. No reconstructed path associates this protocol with a cutscene, so
+`Player_InitCutsceneState` and `Player_HandleCutsceneControl` were overly broad
+generated interpretations rather than release-quality names.
+
+The four RAM aliases add provenance mappings, and all ten changed definitions
+receive exact-address audit records that retain both their previous semantic
+names and original IDA identities. Provenance rises from 15,889 to 15,893
+mappings, the audit registry from 13,079 to 13,089, and the semantic review
+upper bound falls from 3,110 to 3,104. The enforced address-derived ceiling
+falls from 162 to 158, all still confined to RAM equates.
+
+The boss-counter and knockback pass replaces three raw RAM aliases. Boss setup
+copies one stage-indexed default into `BossCombatCounter` and
+`BossCombatCounterMax`; boss state machines mutate the former, and the HUD
+compares and clamps it against the latter. Hostile collision stores the
+damaging object's horizontal velocity in `PlayerKnockbackXVel`, which the
+player knockback initializer consumes when nonzero; the Seven Forces defeat
+path also uses its sign to select direction. These producer/consumer chains
+support the names without assigning a specific boss to the shared fields.
+
+The three RAM aliases add provenance and exact-address audit mappings, and the
+existing player knockback initializer receives its missing current-name audit
+record. Provenance rises from 15,893 to 15,896 mappings, the audit registry
+from 13,089 to 13,093, and the semantic review upper bound falls from 3,104 to
+3,103. The enforced address-derived ceiling falls from 158 to 155, all still
+confined to RAM equates.
+
+The combat-event and color-fade pass replaces three raw RAM aliases.
+`SpecialTargetCount` starts at fifteen in Stage 12; every defeat collision path
+decrements it only for objects with flag bit six, the HUD renders it through
+the special-status path, and the Sharpssteel transition waits for zero.
+`CombatHitFlags` accumulates status bits from successful hits; Epsilon 1
+consumes bits two and zero as forced-state and direction events.
+`ColorFadeTriggerState` distinguishes the cyclic path, a newly requested
+random-channel fade, and the following normal RGB-fade update.
+
+The three RAM aliases add provenance and exact-address audit mappings. The two
+color-fade entry points also receive their missing current-name audit records,
+and stale audit prose is updated to use the reviewed RAM names. Provenance
+rises from 15,896 to 15,899 mappings, the audit registry from 13,093 to 13,098,
+and the semantic review upper bound falls from 3,103 to 3,101. The enforced
+address-derived ceiling falls from 155 to 152, all still confined to RAM
+equates.
+
+The stage-motion pass replaces the two raw longwords used as signed 16.16
+global movement compensation. Stage 9, Stage 12, Seven Forces transitions,
+and Gusthead arena logic publish `StageMotionXDelta`; shared physics, weapon,
+debris, pickup, and environment paths apply it to horizontal motion.
+`StageMotionYDelta` is the paired Stage 12 value applied by shared physics and
+pickup movement. These cross-subsystem producers and consumers support stage
+motion without assigning either field to one scene or object.
+
+The two RAM aliases add provenance and exact-address audit mappings, and the
+shared bounded-velocity routine receives its missing current-name audit
+record. Provenance rises from 15,899 to 15,901 mappings, the audit registry
+from 13,098 to 13,101, and the semantic review upper bound falls from 3,101 to
+3,100. The enforced address-derived ceiling falls from 152 to 150, all still
+confined to RAM equates.
+
+The high-RAM workspace-anchor pass replaces seven single-purpose raw aliases.
+The selected addresses mark an Epsilon 1 animated-tile DMA record, Flying
+Neo's vertical-scroll ramp, Sharpssteel's sixth target-history sample, the
+results-summary row destination, Destroyer MK2's scroll table, and the two
+packed-BCD stage glyph positions in the validated-password row. Although the
+surrounding high RAM is overlaid by different scenes, every renamed anchor has
+one exact reconstructed consumer and its name claims only that observed
+context.
+
+The seven RAM aliases add provenance and exact-address audit mappings; two
+older audit descriptions are updated to reference the reviewed symbols.
+Provenance rises from 15,901 to 15,908 mappings and the audit registry from
+13,101 to 13,108. The semantic review upper bound remains 3,100 because every
+new mapping has a matching record. The enforced address-derived ceiling falls
+from 150 to 143, all still confined to RAM equates.

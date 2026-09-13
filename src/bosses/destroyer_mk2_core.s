@@ -11,7 +11,7 @@ Boss_DestroyerMK2Main:                                  ; DATA XREF: ROM:Entity_
                 bne.s   Boss_DestroyerMK2CheckFinalTransitionTrigger
                 move.w  $50(a5),d0
                 beq.s   Boss_DestroyerMK2CheckFinalTransitionTrigger
-                sub.w   d0,(word_FF8234).w
+                sub.w   d0,(BossCombatCounter).w
 Boss_DestroyerMK2CheckFinalTransitionTrigger:           ; CODE XREF: Boss_DestroyerMK2Main+12   j  ; was: loc_4A876
                                         ; Boss_DestroyerMK2Main+1C   j
                 btst    #2,(byte_FF80EC).w
@@ -34,7 +34,7 @@ Boss_DestroyerMK2UpdateEncounterEffects:                ; CODE XREF: Boss_Destro
                 sub.w   (PrimaryCameraXPosition).w,d0
                 addi.w  #-$80,d0
                 lea     (HScrollPlaneARow72).w,a0
-                lea     (word_FF98B0).w,a1
+                lea     (DestroyerMK2ScrollTable).w,a1
                 move.w  #$B6,d7
 Boss_DestroyerMK2WriteScrollRowsLoop:                   ; CODE XREF: Boss_DestroyerMK2Main+88   j  ; was: loc_4A8CE
                 move.w  d0,(a0)

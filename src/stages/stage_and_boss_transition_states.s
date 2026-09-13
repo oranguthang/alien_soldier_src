@@ -488,9 +488,9 @@ StageTransition_UpdateWolfGaropaScroll:                 ; DATA XREF: ROM:0000F12
 ; End of function StageTransition_UpdateWolfGaropaScroll
 ; Decelerates the Wolf Garopa transition scroll
 StageTransition_DecelerateWolfGaropaScroll:             ; CODE XREF: StageTransition_LoadWolfGaropaAssets   p  ; was: sub_F6FA
-                cmpi.l  #$FFFF0000,(dword_FF8240).w
+                cmpi.l  #$FFFF0000,(StageMotionXDelta).w
                 beq.s   StageTransition_UpdateWolfGaropaCameraPosition
-                subi.l  #$800,(dword_FF8240).w
+                subi.l  #$800,(StageMotionXDelta).w
 StageTransition_UpdateWolfGaropaCameraPosition:         ; CODE XREF: StageTransition_DecelerateWolfGaropaScroll+8   j  ; was: loc_F70C
                 move.l  (dword_FF8062).w,d0
                 cmpi.l  #$FFF60000,d0

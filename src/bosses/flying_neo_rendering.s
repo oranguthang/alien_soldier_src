@@ -338,7 +338,7 @@ Boss_FlyingNeoBuildLineScrollTables:                    ; CODE XREF: Boss_Flying
                 bmi.s   Boss_FlyingNeoBuildVerticalScrollRamp
                 move.w  #$FE,$14(a5)
 Boss_FlyingNeoBuildVerticalScrollRamp:                  ; CODE XREF: Boss_FlyingNeoBuildLineScrollTables+6   j  ; was: loc_3CBA6
-                movea.w #(byte_FF9506-M68K_RAM),a0
+                movea.w #(FlyingNeoVScrollRamp-M68K_RAM),a0
                 moveq   #0,d0
                 move.w  (PrimaryCameraYPosition).w,d7
                 subi.w  #$60,d7                         ; '`'

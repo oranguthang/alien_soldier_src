@@ -289,7 +289,7 @@ PlayerScript_FinishFlyingNeoEntryState1E:               ; DATA XREF: ROM:00019A5
                 bne.w   PlayerScript_NoOpAndSharedReturn
                 clr.w   (PlayerScriptStateOffset).w
                 clr.w   (ScriptedInputActive).w
-                move.l  #$FFFEE000,(dword_FF8240).w
+                move.l  #$FFFEE000,(StageMotionXDelta).w
                 rts
 ; End of function PlayerScript_InitializeFlyingNeoEntryState1A
 ; Wait for the Xi-Tiger intro delay, then disable scripted input

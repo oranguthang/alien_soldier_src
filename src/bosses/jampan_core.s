@@ -17,7 +17,7 @@ Boss_JampanUpdateAndDispatch:                           ; CODE XREF: Boss_Jampan
                 bne.s   Boss_JampanCheckDefeatTrigger
                 move.w  $4E(a5),d0
                 beq.s   Boss_JampanCheckDefeatTrigger
-                sub.w   d0,(word_FF8234).w
+                sub.w   d0,(BossCombatCounter).w
 Boss_JampanCheckDefeatTrigger:                          ; CODE XREF: Boss_JampanUpdateAndDispatch+E   j
                                         ; Boss_JampanUpdateAndDispatch+18   j
                 btst    #2,(byte_FF80EC).w
@@ -28,7 +28,7 @@ Boss_JampanCheckDefeatTrigger:                          ; CODE XREF: Boss_Jampan
                 bne.s   Boss_JampanUpdateScreenPositionAndMotion
                 move.b  #2,(byte_FF80EC).w
                 bset    #0,$4C(a5)
-                clr.l   (dword_FF8240).w
+                clr.l   (StageMotionXDelta).w
                 move.w  #$52,4(a5)                      ; 'R'
                 bset    #0,(StageTimerPauseFlag).w
 Boss_JampanUpdateScreenPositionAndMotion:               ; CODE XREF: Boss_JampanUpdateAndDispatch+2A   j
@@ -419,7 +419,7 @@ Boss_JampanSelectAttackState:                           ; DATA XREF: ROM:000491E
                 bsr.w   Boss_JampanTrackVerticalOrbitOffset
                 bsr.w   Boss_JampanAttackSelectionNoOpHook
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
-                tst.w   (word_FF8234).w
+                tst.w   (BossCombatCounter).w
                 ble.w   Boss_JampanSelectNoTargetsRecovery
                 move.w  (FrameCounter).w,d0
                 tst.w   (DifficultyMode).w
@@ -550,7 +550,7 @@ Boss_JampanMoveRightTowardScreenThreshold:              ; CODE XREF: Boss_Jampan
                 addi.l  #$8000,$10(a5)
 Boss_JampanUpdateScreenThresholdMovement:               ; CODE XREF: Boss_JampanMoveToScreenThresholdState+14   j
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
-                addq.w  #8,(word_FF8234).w
+                addq.w  #8,(BossCombatCounter).w
                 subq.w  #1,$48(a5)
                 bne.s   Boss_JampanMoveToScreenThresholdReturn
                 addq.w  #2,4(a5)
@@ -560,7 +560,7 @@ Boss_JampanMoveToScreenThresholdReturn:                 ; CODE XREF: Boss_Jampan
 ; Waits for stage motion flag zero before advancing
 Boss_JampanWaitForStageMotionFlagState:                 ; DATA XREF: ROM:000491F2   o  ; was: sub_49898
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
-                addq.w  #8,(word_FF8234).w
+                addq.w  #8,(BossCombatCounter).w
                 btst    #0,(byte_FF8260).w
                 beq.s   Boss_JampanWaitForStageMotionFlagReturn
                 move.w  #$40,$48(a5)                    ; '@'

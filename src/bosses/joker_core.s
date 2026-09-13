@@ -338,7 +338,7 @@ Boss_JokerSelectNextState:                              ; CODE XREF: Boss_JokerP
                 move.w  #$144,$374(a5)
                 clr.l   $18(a5)
                 move.w  #$40,$1DC(a5)                   ; '@'
-                tst.w   (word_FF8234).w
+                tst.w   (BossCombatCounter).w
                 bmi.s   Boss_JokerBeginInterruptWaitState
                 beq.s   Boss_JokerBeginInterruptWaitState
                 jsr     (Physics_GetPlayerDelta).l
@@ -364,7 +364,7 @@ Boss_JokerBeginInterruptWaitState:                      ; CODE XREF: Boss_JokerS
 Boss_JokerInterruptWaitState:                           ; DATA XREF: ROM:0003B30C   o  ; was: loc_3B704
                 bclr    #0,(byte_FF8260).w
                 bne.w   Boss_JokerSelectNextState
-                addi.w  #2,(word_FF8234).w
+                addi.w  #2,(BossCombatCounter).w
                 lea     Boss_JokerInterruptWaitPoseCommands(pc),a1
                 nop
                 bsr.w   Boss_JokerUpdatePose
@@ -404,7 +404,7 @@ Boss_JokerInitializeDiveMotion:                         ; CODE XREF: Boss_JokerD
                 jsr     (Sound_PlaySFX).l
                 tst.w   $35C(a5)
                 bne.s   Boss_JokerSelectDiveHorizontalMotion
-                subi.w  #$C,(word_FF8234).w
+                subi.w  #$C,(BossCombatCounter).w
 Boss_JokerSelectDiveHorizontalMotion:                   ; CODE XREF: Boss_JokerDivePrep+54   j  ; was: loc_3B7A4
                 tst.w   $35C(a5)
                 beq.s   Boss_JokerSetPlayerDirectedDiveMotion
@@ -529,7 +529,7 @@ Boss_JokerInitializeJumpAscent:                         ; CODE XREF: Boss_JokerJ
                 move.w  #$FFFF,$C(a5)
                 move.w  a5,$4A(a5)
                 move.l  #$FFF80000,$1C(a5)
-                subi.w  #$3E,(word_FF8234).w            ; '>'
+                subi.w  #$3E,(BossCombatCounter).w      ; '>'
                 move.w  #2,(PlaneAShakeLevel).w
                 move.b  #$44,d0                         ; 'D'
                 jsr     (Sound_PlaySFX).l

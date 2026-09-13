@@ -114,7 +114,7 @@ Boss_GustheadSpawnEdgeDebris:                           ; CODE XREF: Boss_Gusthe
                 move.w  (FrameCounter).w,d0
                 andi.w  #$1F,d0
                 bne.s   Boss_GustheadSpawnEdgeDebrisReturn
-                tst.l   (dword_FF8240).w
+                tst.l   (StageMotionXDelta).w
                 beq.s   Boss_GustheadSpawnEdgeDebrisReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_GustheadSpawnEdgeDebrisReturn
@@ -128,7 +128,7 @@ Boss_GustheadSpawnEdgeDebris:                           ; CODE XREF: Boss_Gusthe
                 move.w  #8,$26(a0)
                 move.b  #$10,$20(a0)
                 move.w  #$F0,$14(a0)
-                tst.l   (dword_FF8240).w
+                tst.l   (StageMotionXDelta).w
                 bmi.s   Boss_GustheadUseRightDebrisSpawnX
                 move.w  #$78,$10(a0)                    ; 'x'
 Boss_GustheadSpawnEdgeDebrisReturn:                     ; CODE XREF: Boss_GustheadSpawnEdgeDebris+8   j  ; was: locret_402EE
@@ -188,7 +188,7 @@ Enemy_GustheadDebrisStates: dc.w    Enemy_GustheadDebrisInit-*  ; DATA XREF: Ene
 ; Initializes debris with velocity
 Enemy_GustheadDebrisInit:                               ; DATA XREF: ROM:Enemy_GustheadDebrisStates   o  ; was: sub_4036A
                 addq.w  #2,4(a5)
-                move.l  (dword_FF8240).w,d0
+                move.l  (StageMotionXDelta).w,d0
                 add.l   d0,d0
                 add.l   d0,d0
                 tst.w   (DifficultyMode).w
@@ -379,7 +379,7 @@ Boss_GustheadUseFullArenaScrollVelocity:                ; CODE XREF: Boss_Gusthe
                 asr.l   #4,d0
 Boss_GustheadStoreArenaScrollVelocity:                  ; CODE XREF: Boss_GustheadUpdateArenaScrollVelocity+A   j  ; was: loc_405A2
                                         ; Boss_GustheadUpdateArenaScrollVelocity+14   j
-                move.l  d0,(dword_FF8240).w
+                move.l  d0,(StageMotionXDelta).w
                 rts
 ; End of function Boss_GustheadUpdateArenaScrollVelocity
 ; Advances the three shared fixed-point joint angles

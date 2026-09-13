@@ -324,7 +324,7 @@ Boss_Epsilon1TileStreamingReturn:                       ; CODE XREF: Boss_Epsilo
 ; Builds and submits one animated tile-transfer descriptor
 Boss_Epsilon1QueueAnimatedTileTransfer:                 ; CODE XREF: Boss_Epsilon1UpdateVisibleTileBands+E4   p  ; was: sub_47B08
                                         ; Boss_Epsilon1UpdateVisibleTileBands+EC   p
-                lea     (word_FF9446).w,a0
+                lea     (Epsilon1TileDMARecord).w,a0
                 add.w   d0,d0
                 move.w  #$4000,d1
                 add.w   Boss_Epsilon1AnimatedTileDestinations(pc,d0.w),d1

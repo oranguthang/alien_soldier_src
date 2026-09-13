@@ -42,7 +42,7 @@ Boss_FlyingNeoCheckHealthFadeThreshold:                 ; CODE XREF: Boss_Flying
                 bra.s   Boss_FlyingNeoCheckDefeat
 ; ---------------------------------------------------------------------------
 Boss_FlyingNeoSetSharedPhaseTwo:                        ; CODE XREF: Boss_FlyingNeoMain+7E   j  ; was: loc_3C07E
-                move.w  #2,(word_FF8246).w
+                move.w  #2,(ColorFadeTriggerState).w
 Boss_FlyingNeoCheckDefeat:                              ; CODE XREF: Boss_FlyingNeoMain+3C   j  ; was: loc_3C084
                                         ; Boss_FlyingNeoMain+48   j
                 tst.w   (BossHealth).w

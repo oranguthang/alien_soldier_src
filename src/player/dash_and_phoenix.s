@@ -245,7 +245,7 @@ Player_PlayDashAttackSound:                             ; CODE XREF: Player_Init
 ; Updates the active dash attack, terrain contact, and exit transitions
 Player_DashAttackState:                                 ; DATA XREF: ROM:00015072   o  ; was: sub_159E0
                                         ; ROM:00015086   o
-                tst.b   (byte_FF8311).w
+                tst.b   (PlayerDashStopFlag).w
                 bne.s   Player_DashAttackState_Finish
                 subq.w  #1,$50(a5)
                 bmi.s   Player_DashAttackState_Finish

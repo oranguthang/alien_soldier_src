@@ -222,7 +222,7 @@ Boss_JetsripperSegmentDisplayReturn:                    ; CODE XREF: Boss_Jetsri
 ; Idle state with oscillation and attack condition checks
 Boss_JetsripperIdleState:                               ; DATA XREF: ROM:000356E2   o  ; was: sub_35898
                 bsr.w   Boss_JetsripperOscillate
-                subi.w  #1,(word_FF8234).w
+                subi.w  #1,(BossCombatCounter).w
                 bmi.w   Boss_JetsripperSetIncreasingAngle
                 cmpi.w  #0,$56(a5)
                 bne.s   Boss_JetsripperIdleCheckAlternateTransition
@@ -236,7 +236,7 @@ Boss_JetsripperIdleState:                               ; DATA XREF: ROM:000356E
 ; ---------------------------------------------------------------------------
 Boss_JetsripperIdleCheckAlternateTransition:            ; CODE XREF: Boss_JetsripperIdleState+14   j  ; was: loc_358CA
                                         ; Boss_JetsripperIdleState+1A   j
-                cmpi.w  #$12,(word_FF8234).w
+                cmpi.w  #$12,(BossCombatCounter).w
                 bmi.w   Boss_JetsripperUpdateSegmentDisplay
                 btst    #0,(RandomNumberState+1).w
                 beq.w   Boss_JetsripperUpdateSegmentDisplay
@@ -281,7 +281,7 @@ Boss_JetsripperAlignStateStoreAngle:                    ; CODE XREF: Boss_Jetsri
 ; Patrol state with oscillation and position threshold checks
 Boss_JetsripperPatrolState:                             ; DATA XREF: ROM:000356E6   o  ; was: sub_35954
                 bsr.w   Boss_JetsripperOscillate
-                subi.w  #1,(word_FF8234).w
+                subi.w  #1,(BossCombatCounter).w
                 bmi.w   Boss_JetsripperSetDecreasingAngle
                 cmpi.w  #$100,$56(a5)
                 bne.s   Boss_JetsripperPatrolCheckAlternateTransition
@@ -295,7 +295,7 @@ Boss_JetsripperPatrolState:                             ; DATA XREF: ROM:000356E
 ; ---------------------------------------------------------------------------
 Boss_JetsripperPatrolCheckAlternateTransition:          ; CODE XREF: Boss_JetsripperPatrolState+14   j  ; was: loc_35986
                                         ; Boss_JetsripperPatrolState+1A   j
-                cmpi.w  #$12,(word_FF8234).w
+                cmpi.w  #$12,(BossCombatCounter).w
                 bmi.w   Boss_JetsripperUpdateSegmentDisplay
                 btst    #0,(RandomNumberState+1).w
                 bne.w   Boss_JetsripperUpdateSegmentDisplay
@@ -366,7 +366,7 @@ Boss_JetsripperAlignToCenterStoreAngle:                 ; CODE XREF: Boss_Jetsri
 ; Main movement update with direction oscillation
 Boss_JetsripperUpdateMovement:                          ; CODE XREF: Boss_JetsripperAttackTimer+4   j  ; was: sub_35A4E
                                         ; Boss_JetsripperAttackTimer+24   j
-                addi.w  #2,(word_FF8234).w
+                addi.w  #2,(BossCombatCounter).w
                 move.w  $56(a5),d0
                 move.b  (RandomNumberState).w,d1
                 andi.w  #$F,d1
@@ -441,7 +441,7 @@ Boss_JetsripperBodyFrames:  dc.l    Boss_JetsripperSpriteMapping16  ; DATA XREF:
 
 ; Prepares dive attack with velocity calculation and sound
 Boss_JetsripperDivePrep:                                ; DATA XREF: ROM:000356F0   o  ; was: sub_35B24
-                subi.w  #1,(word_FF8234).w
+                subi.w  #1,(BossCombatCounter).w
                 move.w  #1,$52(a5)
                 bsr.w   Boss_JetsripperCalculateAngleVelocity
                 add.l   d2,$130(a5)
@@ -514,7 +514,7 @@ Boss_JetsripperDiveStoreAngles:                         ; CODE XREF: Boss_Jetsri
                 bsr.w   Boss_JetsripperProcessSegmentChain
                 move.l  #$28000,$18(a5)
                 move.l  #$FFFA8000,$1C(a5)
-                subi.w  #$34,(word_FF8234).w            ; '4'
+                subi.w  #$34,(BossCombatCounter).w      ; '4'
                 jsr     (Physics_GetPlayerDelta).l
                 tst.w   d1
                 bpl.s   Boss_JetsripperDiveLaunchReturn

@@ -548,18 +548,18 @@ UnreferencedApplyClampedPaletteFade:                    ; CODE XREF: Unreference
 ; End of function UnreferencedClampAndApplyPaletteFade
 ; Dampens the shared horizontal velocity toward zero
 Stage_SevenForcesDampenHorizontalVelocity:              ; CODE XREF: Stage_SevenForcesBeginArtemisTransition+4   p  ; was: sub_F08C
-                tst.l   (dword_FF8240).w
+                tst.l   (StageMotionXDelta).w
                 beq.s   Stage_SevenForcesHorizontalVelocityDampingReturn
                 bpl.s   Stage_SevenForcesDampenPositiveHorizontalVelocity
-                addi.l  #$800,(dword_FF8240).w
+                addi.l  #$800,(StageMotionXDelta).w
                 bmi.s   Stage_SevenForcesHorizontalVelocityDampingReturn
-                clr.l   (dword_FF8240).w
+                clr.l   (StageMotionXDelta).w
                 rts
 ; ---------------------------------------------------------------------------
 Stage_SevenForcesDampenPositiveHorizontalVelocity:      ; CODE XREF: Stage_SevenForcesDampenHorizontalVelocity+6   j  ; was: loc_F0A4
-                subi.l  #$800,(dword_FF8240).w
+                subi.l  #$800,(StageMotionXDelta).w
                 bpl.s   Stage_SevenForcesHorizontalVelocityDampingReturn
-                clr.l   (dword_FF8240).w
+                clr.l   (StageMotionXDelta).w
 Stage_SevenForcesHorizontalVelocityDampingReturn:       ; CODE XREF: Stage_SevenForcesDampenHorizontalVelocity+4   j  ; was: locret_F0B2
                                         ; Stage_SevenForcesDampenHorizontalVelocity+10   j
                 rts
@@ -568,19 +568,19 @@ Stage_SevenForcesHorizontalVelocityDampingReturn:       ; CODE XREF: Stage_Seven
 Stage_SevenForcesUpdateSylpheedForegroundScroll:        ; CODE XREF: Stage_SevenForcesAdvanceSylpheedForeground:Stage_SevenForcesUpdateSylpheedForeground   j  ; was: sub_F0B4
                 btst    #3,(PlayerSpriteAttributes).w
                 bne.s   Stage_SevenForcesIncreaseSylpheedForegroundVelocity
-                subi.l  #$1000,(dword_FF8240).w
+                subi.l  #$1000,(StageMotionXDelta).w
                 bpl.s   Stage_SevenForcesApplySylpheedForegroundVelocity
-                clr.l   (dword_FF8240).w
+                clr.l   (StageMotionXDelta).w
                 bra.s   Stage_SevenForcesApplySylpheedForegroundVelocity
 ; ---------------------------------------------------------------------------
 Stage_SevenForcesIncreaseSylpheedForegroundVelocity:    ; CODE XREF: Stage_SevenForcesUpdateSylpheedForegroundScroll+6   j  ; was: loc_F0CC
-                addi.l  #$2000,(dword_FF8240).w
-                cmpi.w  #4,(dword_FF8240).w
+                addi.l  #$2000,(StageMotionXDelta).w
+                cmpi.w  #4,(StageMotionXDelta).w
                 bmi.s   Stage_SevenForcesApplySylpheedForegroundVelocity
-                move.l  #$40000,(dword_FF8240).w
+                move.l  #$40000,(StageMotionXDelta).w
 Stage_SevenForcesApplySylpheedForegroundVelocity:       ; CODE XREF: Stage_SevenForcesUpdateSylpheedForegroundScroll+10   j  ; was: loc_F0E4
                                         ; Stage_SevenForcesUpdateSylpheedForegroundScroll+16   j
-                move.l  (dword_FF8240).w,d0
+                move.l  (StageMotionXDelta).w,d0
                 asl.l   #1,d0
                 add.l   d0,(SecondaryCameraXPos).w
                 rts

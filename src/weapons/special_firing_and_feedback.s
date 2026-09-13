@@ -262,7 +262,7 @@ Effect_CreateDebrisParticle:                            ; CODE XREF: Effect_Spaw
                 asr.l   #1,d0
                 asr.l   #1,d1
                 move.l  d0,$1C(a0)
-                add.l   (dword_FF8240).w,d1
+                add.l   (StageMotionXDelta).w,d1
                 move.l  d1,$18(a0)
                 btst    #1,(FrameCounter+1).w
                 bne.s   Effect_CreateDebrisParticle_Return

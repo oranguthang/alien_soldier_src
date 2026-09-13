@@ -248,7 +248,7 @@ Boss_ShiperSpinAttackReverseRotation:                   ; CODE XREF: Boss_Shiper
                 move.b  #$A1,d0
                 jsr     (Sound_PlaySFX).l
                 bsr.w   Boss_ShiperSpawnCircleShot
-                subi.w  #$12C,(word_FF8234).w
+                subi.w  #$12C,(BossCombatCounter).w
                 clr.w   $174(a5)
                 bra.w   Boss_ShiperRotationInit
 ; End of function Boss_ShiperSpinAttack

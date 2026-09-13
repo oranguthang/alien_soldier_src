@@ -415,20 +415,20 @@ Boss_BugmaxHandleAimedChainContactEffect:               ; CODE XREF: Boss_Bugmax
                 bne.s   Boss_BugmaxPollAimedChainContactSignal
                 bclr    #1,$22(a0)
                 beq.s   Boss_BugmaxAimedChainContactReturn
-                bset    #1,(byte_FF825C).w
+                bset    #1,(ForcedPositionFlags).w
                 move.w  #2,$5C(a0)
 Boss_BugmaxPollAimedChainContactSignal:                 ; CODE XREF: Boss_BugmaxHandleAimedChainContactEffect+8   j  ; was: loc_4D894
-                bclr    #1,(byte_FF825C).w
+                bclr    #1,(ForcedPositionFlags).w
                 bne.s   Boss_BugmaxPublishAimedChainImpactEffect
                 clr.w   $5C(a0)
                 rts
 ; ---------------------------------------------------------------------------
 Boss_BugmaxPublishAimedChainImpactEffect:               ; CODE XREF: Boss_BugmaxHandleAimedChainContactEffect+24   j  ; was: loc_4D8A2
-                move.w  #$2BC,(word_FF824E).w
-                bset    #0,(byte_FF825C).w
-                bset    #2,(byte_FF825C).w
-                move.w  $10(a0),(word_FF8250).w
-                move.w  $14(a0),(word_FF8252).w
+                move.w  #$2BC,(ForcedPositionTimer).w
+                bset    #0,(ForcedPositionFlags).w
+                bset    #2,(ForcedPositionFlags).w
+                move.w  $10(a0),(ForcedPositionX).w
+                move.w  $14(a0),(ForcedPositionY).w
 Boss_BugmaxAimedChainContactReturn:                     ; CODE XREF: Boss_BugmaxHandleAimedChainContactEffect+10   j  ; was: locret_4D8C0
                 rts
 ; End of function Boss_BugmaxHandleAimedChainContactEffect

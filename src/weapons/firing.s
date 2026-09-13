@@ -97,7 +97,7 @@ Weapon_FireProjectile_SetDamageAndVelocity:             ; CODE XREF: Weapon_Fire
                 move.l  (a1,d6.w),d0
                 move.l  $20(a1,d6.w),d1
                 move.l  d0,$4C(a0)
-                move.l  (dword_FF8240).w,d0
+                move.l  (StageMotionXDelta).w,d0
                 asl.l   #2,d0
                 add.l   d0,d1
                 move.l  d1,$50(a0)
@@ -285,7 +285,7 @@ Weapon_InitSpreadShot_SetVelocity:                      ; CODE XREF: Weapon_Init
                 move.l  (a2,d6.w),d3
                 move.l  $20(a2,d6.w),d4
                 move.l  d3,$4C(a0)
-                move.l  (dword_FF8240).w,d5
+                move.l  (StageMotionXDelta).w,d5
                 asl.l   #2,d5
                 add.l   d4,d5
                 move.l  d5,$50(a0)

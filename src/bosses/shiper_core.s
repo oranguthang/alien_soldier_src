@@ -202,7 +202,7 @@ Boss_ShiperAttackDecision:                              ; DATA XREF: ROM:000364A
                 bpl.s   Boss_ShiperUpdateAttackAndSpawnProjectile
                 addq.w  #2,4(a5)
                 move.w  #$E,$174(a5)
-                cmpi.w  #$13C,(word_FF8234).w
+                cmpi.w  #$13C,(BossCombatCounter).w
                 bpl.s   Boss_ShiperAttackDecisionResetMotion
                 clr.w   $174(a5)
 Boss_ShiperAttackDecisionResetMotion:                   ; CODE XREF: Boss_ShiperAttackDecision+18   j  ; was: loc_3671A
@@ -251,7 +251,7 @@ Boss_ShiperRetreatState:                                ; CODE XREF: Boss_Shiper
                 move.w  #8,4(a5)
                 clr.w   $5C(a5)
                 move.w  #$1E0,d0
-                sub.w   (word_FF8234).w,d0
+                sub.w   (BossCombatCounter).w,d0
                 asr.w   #4,d0
                 addq.w  #1,d0
                 move.w  d0,$5A(a5)
@@ -268,8 +268,8 @@ Boss_ShiperCheckHealthTransition:                       ; DATA XREF: ROM:000364B
 Boss_ShiperCheckHealthTransition_WaitFade:              ; CODE XREF: Boss_ShiperCheckHealthTransition+6   j  ; was: loc_367CC
                                         ; DATA XREF: ROM:000364C0   o
                 bsr.w   Boss_ShiperUpdateMain
-                addi.w  #4,(word_FF8234).w
-                cmpi.w  #$1E0,(word_FF8234).w
+                addi.w  #4,(BossCombatCounter).w
+                cmpi.w  #$1E0,(BossCombatCounter).w
                 bmi.s   Boss_ShiperCheckHealthTransitionReturn
                 subq.w  #1,$5A(a5)
                 bpl.s   Boss_ShiperCheckHealthTransitionReturn
@@ -317,7 +317,7 @@ Boss_ShiperHoverState:                                  ; DATA XREF: ROM:000364A
                 rts
 ; ---------------------------------------------------------------------------
 Boss_ShiperHoverStateUpdateRetreat:                     ; CODE XREF: Boss_ShiperHoverState+12   j  ; was: loc_3684A
-                subi.w  #$28,(word_FF8234).w            ; '('
+                subi.w  #$28,(BossCombatCounter).w      ; '('
                 bmi.w   Boss_ShiperInitHoverState
                 cmpi.w  #$1BC8,$58(a5)
                 bmi.w   Boss_ShiperRetreatState
@@ -348,7 +348,7 @@ Boss_ShiperRetreatLogic:                                ; DATA XREF: ROM:000364A
                 bsr.w   Boss_ShiperUpdateMain
                 btst    #0,$5E(a5)
                 beq.s   Boss_ShiperRetreatLogicReturn
-                subi.w  #$28,(word_FF8234).w            ; '('
+                subi.w  #$28,(BossCombatCounter).w      ; '('
                 bmi.w   Boss_ShiperInitHoverState
                 cmpi.w  #$1C98,$58(a5)
                 bpl.w   Boss_ShiperRetreatState

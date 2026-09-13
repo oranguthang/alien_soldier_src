@@ -311,7 +311,7 @@ Boss_SharpssteelInitializeFallingShotCycle:             ; CODE XREF: Boss_Sharps
 ; Loads the sixth blade-target history sample into the active target field
 Boss_SharpssteelLoadBladeTargetHistoryTail:             ; CODE XREF: Boss_SharpssteelAttackSelectionDelayState:Boss_SharpssteelUpdateAttackSelectionDelayPose   p  ; was: sub_47F9C
                                         ; Boss_SharpssteelInitializeAttackSelection+10   p
-                move.w  (word_FF960A).w,$190(a5)
+                move.w  (SharpssteelTargetTail).w,$190(a5)
 ; End of function Boss_SharpssteelLoadBladeTargetHistoryTail
 ; Derives the blade target velocity from shared motion and the travel accumulator
 Boss_SharpssteelUpdateBladeTargetVelocity:              ; CODE XREF: Boss_SharpssteelAccelerateBladeAssemblyState+10   p  ; was: sub_47FA2

@@ -9,9 +9,9 @@ Stage9_InitializeFlyCorridor:                           ; DATA XREF: ROM:0000C8A
                 bsr.w   Midgame_LoadFlyingNeoPaletteCommands
                 move.w  #$2AC,(Entity_ObjectPool).w
                 clr.w   (PrimaryEntityState).w
-                move.l  #$FFFEE000,(dword_FF8240).w
+                move.l  #$FFFEE000,(StageMotionXDelta).w
                 addq.w  #2,(StageStateOffset).w
-                move.w  #1,(word_FF821E).w
+                move.w  #1,(MidgameLightningMode).w
                 clr.w   (dword_FF8058).w
                 clr.w   (dword_FFA960).w
                 move.l  #$180000,(dword_FFA960+2).w
@@ -105,7 +105,7 @@ UnreferencedStage9_UpdateCaterpillarScroll:
 Stage9_UpdateFlyCorridorRevealColumns:                  ; CODE XREF: Stage9_UpdateFlyCorridorScroll+24   p  ; was: sub_D1FE
                 cmpi.w  #$20,(dword_FF8058).w           ; ' '
                 bne.s   Stage9_RevealNextFlyCorridorColumn
-                clr.l   (dword_FF8240).w
+                clr.l   (StageMotionXDelta).w
                 rts
 ; ---------------------------------------------------------------------------
 Stage9_RevealNextFlyCorridorColumn:                     ; CODE XREF: Stage9_UpdateFlyCorridorRevealColumns+6   j  ; was: loc_D20C
@@ -124,9 +124,9 @@ Stage9_ClearFlyCorridorColumnRows:                      ; CODE XREF: Stage9_Upda
                 move.l  #$8F02977F,-(a4)
                 move.l  #$94019310,-(a4)
                 move.w  a4,(VDPCommandQueueHead).w
-                addi.l  #$200,(dword_FF8240).w
+                addi.l  #$200,(StageMotionXDelta).w
                 bmi.s   Stage9_UpdateFlyCorridorRevealTimer
-                clr.l   (dword_FF8240).w
+                clr.l   (StageMotionXDelta).w
 Stage9_UpdateFlyCorridorRevealTimer:                    ; CODE XREF: Stage9_UpdateFlyCorridorRevealColumns+52   j  ; was: loc_D256
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
@@ -143,7 +143,7 @@ UnreferencedStage9IndexPermutation: binclude "data/other/unreferenced_stage_9_in
 Stage9_InitializeCaterpillarEncounter:                  ; CODE XREF: Stage9_InitializeCaterpillarCamera+C   j  ; was: sub_D286
                                         ; DATA XREF: ROM:0000C8B2   o
                 addq.w  #2,(StageStateOffset).w
-                clr.w   (word_FF821E).w
+                clr.w   (MidgameLightningMode).w
                 clr.l   (StageCameraYVelocity).w
                 move.w  #$8000,(word_FF808A).w
                 move.w  #$128,(Entity_ObjectPool).w

@@ -223,10 +223,10 @@ Boss_MadamBarbarIdleProgressState:                      ; DATA XREF: ROM:0003A4F
                 tst.w   $17E(a5)
                 bpl.s   Boss_MadamBarbarUpdateIdleProgress
                 clr.w   $17E(a5)
-                cmpi.w  #$1E0,(word_FF8234).w
+                cmpi.w  #$1E0,(BossCombatCounter).w
                 bpl.w   Boss_MadamBarbarPrepareAIState
 Boss_MadamBarbarUpdateIdleProgress:                     ; CODE XREF: Boss_MadamBarbarIdleProgressState+4   j  ; was: loc_3A75E
-                addi.w  #2,(word_FF8234).w
+                addi.w  #2,(BossCombatCounter).w
                 bsr.w   Boss_MadamBarbarSpawnAnimationEffect
                 lea     Boss_MadamBarbarIntroIdlePoseCommands(pc),a1
                 nop
@@ -288,7 +288,7 @@ Boss_MadamBarbarPlayerLeftSidePoseState:                ; DATA XREF: ROM:0003A4F
                 bsr.w   Boss_MadamBarbarSpawnDebris
                 tst.w   $17E(a5)
                 bpl.s   Boss_MadamBarbarUpdatePlayerLeftSidePose
-                subi.w  #0,(word_FF8234).w
+                subi.w  #0,(BossCombatCounter).w
                 bmi.w   Boss_MadamBarbarBeginIdleState
                 move.w  (PlayerXPosition).w,d0
                 addi.w  #$60,d0                         ; '`'
@@ -325,7 +325,7 @@ Boss_MadamBarbarPlayerRightSidePoseState:               ; DATA XREF: ROM:0003A4F
                 bsr.w   Boss_MadamBarbarSpawnDebris
                 tst.w   $17E(a5)
                 bpl.s   Boss_MadamBarbarUpdatePlayerRightSidePose
-                subi.w  #0,(word_FF8234).w
+                subi.w  #0,(BossCombatCounter).w
                 bmi.w   Boss_MadamBarbarBeginIdleState
                 move.w  (PlayerXPosition).w,d0
                 subi.w  #$60,d0                         ; '`'
@@ -363,7 +363,7 @@ Boss_MadamBarbarCenterSpinState:                        ; DATA XREF: ROM:0003A4F
                 bsr.w   Boss_MadamBarbarSpawnDebris
                 move.w  $58(a5),d0
                 bpl.s   Boss_MadamBarbarCheckCenterSpinTrigger
-                tst.w   (word_FF8234).w
+                tst.w   (BossCombatCounter).w
                 bmi.w   Boss_MadamBarbarBeginIdleState
                 bra.w   Boss_MadamBarbarPrepareAIState
 ; ---------------------------------------------------------------------------
@@ -372,7 +372,7 @@ Boss_MadamBarbarCheckCenterSpinTrigger:                 ; CODE XREF: Boss_MadamB
                 bne.s   Boss_MadamBarbarSelectCenterSpinPartValue
                 cmpi.w  #$C,d0
                 bne.s   Boss_MadamBarbarSelectCenterSpinPartValue
-                subi.w  #$52,(word_FF8234).w            ; 'R'
+                subi.w  #$52,(BossCombatCounter).w      ; 'R'
                 addq.w  #1,$11E(a5)
                 move.b  #$B2,d0
                 jsr     (Sound_PlaySFX).l
@@ -429,7 +429,7 @@ Boss_MadamBarbarBeginDropProjectileState:               ; CODE XREF: Boss_MadamB
                 move.w  d0,$17E(a5)
 ; Runs the bounded drop-projectile pose
 Boss_MadamBarbarDropProjectileState:                    ; DATA XREF: ROM:0003A4FA   o  ; was: loc_3A9CE
-                subi.w  #1,(word_FF8234).w
+                subi.w  #1,(BossCombatCounter).w
                 bmi.w   Boss_MadamBarbarBeginIdleState
                 tst.w   $17E(a5)
                 bmi.w   Boss_MadamBarbarPrepareAIState

@@ -277,7 +277,7 @@ Stage12_EmptyState1E:                                   ; DATA XREF: ROM:0000D97
 ; End of function Stage12_EmptyState1E
 ; Submit the Sharpssteel asset set when its external trigger clears
 Stage12_InitializeSharpssteelEncounter:                 ; DATA XREF: ROM:0000D97C   o  ; was: sub_DBA0
-                tst.w   (word_FF829E).w
+                tst.w   (SpecialTargetCount).w
                 bne.w   Stage_MidgameStateReturn
                 move.w  #9,(word_FF808C).w
                 bsr.w   Stage_TransitionToNextPhase
@@ -323,8 +323,8 @@ Stage12To13_AdvanceTeleportFadeDelay:                   ; CODE XREF: Stage12To13
                 jsr     (Object_ClearAllExceptTypes).l
                 bset    #6,(CameraMotionLockFlags).w
                 move.w  #$50,(PlayerStateOffset).w      ; 'P'
-                clr.l   (dword_FF8240).w
-                clr.l   (dword_FF830A).w
+                clr.l   (StageMotionXDelta).w
+                clr.l   (StageMotionYDelta).w
                 move.w  #$4000,(TilemapTransferBase).w
                 move.w  #0,(TilemapRowXOrFillWord).w
                 jsr     (Tilemap_FillPlaneDirectToVRAM).l
@@ -455,8 +455,8 @@ Stage13_InitializeBugmaxEncounter:                      ; CODE XREF: Stage13_Upd
                 addq.w  #2,(StageStateOffset).w
                 move.w  #$7000,(BossHealth).w
                 move.w  #$7000,(BossMaxHealth).w
-                move.w  #$1E0,(word_FF8234).w
-                move.w  #$1E0,(word_FF8236).w
+                move.w  #$1E0,(BossCombatCounter).w
+                move.w  #$1E0,(BossCombatCounterMax).w
                 lea     (Boss_BugmaxAssetSet).l,a1
                 bra.w   Boss_LoadAssetSet
 ; End of function Stage13_UpdateBugmaxApproach

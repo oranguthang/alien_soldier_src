@@ -30,7 +30,7 @@ Boss_Epsilon1UpdatePeriodicSharedOffset:                ; CODE XREF: Boss_Epsilo
                 bne.s   Boss_Epsilon1UpdatePresentation
                 move.w  $50(a5),d0
                 beq.s   Boss_Epsilon1UpdatePresentation
-                sub.w   d0,(word_FF8234).w
+                sub.w   d0,(BossCombatCounter).w
 Boss_Epsilon1UpdatePresentation:                        ; CODE XREF: Boss_Epsilon1Main+4A   j  ; was: loc_45B30
                                         ; Boss_Epsilon1Main+54   j
                 jsr     (Gfx_ProcessDefaultColorFade).l
@@ -109,7 +109,7 @@ Boss_Epsilon1AdvanceAngleHistorySample:                 ; CODE XREF: Boss_Epsilo
                 bcs.s   Boss_Epsilon1CheckForcedStateSignal
                 bsr.w   Boss_Epsilon1CyclePaletteColor
 Boss_Epsilon1CheckForcedStateSignal:                    ; CODE XREF: Boss_Epsilon1Main+16C   j  ; was: loc_45C42
-                bclr    #2,(byte_FF8308).w
+                bclr    #2,(CombatHitFlags).w
                 beq.s   Boss_Epsilon1UpdateLinkedParts
                 btst    #2,$4C(a5)
                 bne.s   Boss_Epsilon1UpdateLinkedParts

@@ -40,8 +40,8 @@ Stage_InitializeBossHealthAndCounter:                   ; CODE XREF: Stage9_Init
                 nop
                 move.w  (a0,d0.w),(BossMaxHealth).w
                 move.w  (a0,d0.w),(BossHealth).w
-                move.w  (a1,d0.w),(word_FF8236).w
-                move.w  (a1,d0.w),(word_FF8234).w
+                move.w  (a1,d0.w),(BossCombatCounterMax).w
+                move.w  (a1,d0.w),(BossCombatCounter).w
                 rts
 ; End of function Stage_TransitionToNextPhase
 ; ---------------------------------------------------------------------------

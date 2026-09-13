@@ -102,7 +102,7 @@ Stage_SevenForcesBeginArtemisTransition:                ; DATA XREF: ROM:0000E4B
                 tst.w   (DataLoaderControl).w
                 bmi.s   Stage_SevenForcesBeginArtemisTransitionReturn
                 addq.w  #2,(StageStateOffset).w
-                clr.l   (dword_FF8240).w
+                clr.l   (StageMotionXDelta).w
 Stage_SevenForcesBeginArtemisTransitionReturn:          ; CODE XREF: Stage_SevenForcesBeginArtemisTransition+C   j ; was: locret_E8F8
                                         ; Stage_SevenForcesBeginArtemisTransition+12   j
                 rts

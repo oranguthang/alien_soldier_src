@@ -174,7 +174,7 @@ Boss_AntroidFinishNeutralAnimation:                     ; CODE XREF: Boss_Antroi
                 bne.w   Boss_AntroidBeginPhaseGate
                 addq.w  #2,4(a5)
                 move.w  #$1E0,d0
-                sub.w   (word_FF8234).w,d0
+                sub.w   (BossCombatCounter).w,d0
                 asr.w   #5,d0
                 addq.w  #2,d0
                 move.w  d0,$11C(a5)
@@ -185,7 +185,7 @@ Boss_AntroidBattleDecision:                             ; CODE XREF: Boss_Antroi
                 bpl.s   Boss_AntroidUpdateDecisionAnimation
                 tst.w   $23E(a5)
                 beq.s   Boss_AntroidUpdateDecisionAnimation
-                tst.w   (word_FF8234).w
+                tst.w   (BossCombatCounter).w
                 beq.w   Boss_AntroidBeginHealthRecovery
                 move.w  (RandomNumberState).w,d7
                 move.w  d7,d0
@@ -244,7 +244,7 @@ Boss_AntroidBeginHealthRecovery:                        ; CODE XREF: Boss_Antroi
 Boss_AntroidHealthRecoveryState:                        ; DATA XREF: ROM:00037540   o  ; was: sub_37788
                 subq.w  #1,$11C(a5)
                 bmi.w   Boss_AntroidReturnToNeutralLoadAnimation
-                addi.w  #3,(word_FF8234).w
+                addi.w  #3,(BossCombatCounter).w
                 lea     Boss_AntroidHealthRecoveryPoseCommands(pc),a1
                 nop
                 bsr.w   Boss_AntroidUpdatePoseAnimation
@@ -427,7 +427,7 @@ Boss_AntroidApplyAttackImpact:                          ; CODE XREF: Boss_Antroi
                 move.w  #2,(PlaneAShakeLevel).w
                 tst.w   $1DE(a5)
                 bne.s   Boss_AntroidApplyAttackImpactReturn
-                subi.w  #$A,(word_FF8234).w
+                subi.w  #$A,(BossCombatCounter).w
 Boss_AntroidApplyAttackImpactReturn:                    ; CODE XREF: Boss_AntroidApplyAttackImpact+14   j  ; was: locret_3799E
                 rts
 ; End of function Boss_AntroidApplyAttackImpact

@@ -71,7 +71,7 @@ Results_AdvanceStageSummaryInput:                       ; CODE XREF: Results_Com
 ; Builds the three total rows appended after the per-stage result rows
 Results_BuildSummaryRows:                               ; CODE XREF: Results_ComputeSummaryData+C8   p  ; was: sub_20318
                 lea     ((dword_FF944E+2)).w,a0
-                adda.w  #(word_FF9852-(dword_FF944E+2)),a0
+                adda.w  #(ResultsSummaryRowBuffer-(dword_FF944E+2)),a0
                 lea     Results_TotalTimeLabel(pc),a1
                 nop
                 move.w  #$15,d7

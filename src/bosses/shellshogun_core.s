@@ -298,7 +298,7 @@ Boss_ShellshogunDefeatCompletionDelayReturn:            ; CODE XREF: Boss_Shells
 Boss_ShellshogunReturnToDecisionState:                  ; CODE XREF: Boss_ShellshogunPoseGateState+2A   j  ; was: sub_398C2
                                         ; Boss_ShellshogunSlamFollowThroughState+2E   j
                 move.w  #$1E0,d0
-                sub.w   (word_FF8234).w,d0
+                sub.w   (BossCombatCounter).w,d0
                 asr.w   #4,d0
                 addq.w  #2,d0
                 move.w  d0,$BC(a5)
@@ -325,7 +325,7 @@ Boss_ShellshogunDecisionState:                          ; CODE XREF: Boss_Shells
 Boss_ShellshogunCheckDecisionTimer:                     ; CODE XREF: Boss_ShellshogunDecisionState+8   j  ; was: loc_3990C
                 subq.w  #1,$BC(a5)
                 bpl.s   Boss_ShellshogunUpdateDecisionPose
-                move.w  (word_FF8234).w,d0
+                move.w  (BossCombatCounter).w,d0
                 beq.w   Boss_ShellshogunBeginTimedStageAdvance
                 cmpi.w  #$6000,(BossHealth).w
                 bpl.s   Boss_ShellshogunSelectAttackByDistance
@@ -376,7 +376,7 @@ Boss_ShellshogunTimedStageAdvanceState:                 ; DATA XREF: ROM:0003954
                 bra.w   Boss_ShellshogunInitializeDecisionState
 ; ---------------------------------------------------------------------------
 Boss_ShellshogunUpdateTimedStageAdvance:                ; CODE XREF: Boss_ShellshogunDecisionState+AE   j  ; was: loc_399B8
-                addi.w  #3,(word_FF8234).w
+                addi.w  #3,(BossCombatCounter).w
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #4,(PlaneBShakeLevel).w
                 lea     Boss_ShellshogunTimedStageAdvancePoseCommands(pc),a1
@@ -396,7 +396,7 @@ Boss_ShellshogunPoseGateState:                          ; DATA XREF: ROM:0003952
                 beq.s   Boss_ShellshogunTriggerPoseGateEffect
                 cmpi.w  #4,$58(a5)
                 bne.s   Boss_ShellshogunPoseGateReturn
-                tst.w   (word_FF8234).w
+                tst.w   (BossCombatCounter).w
                 bne.s   Boss_ShellshogunEvaluatePoseGatePosition
                 clr.w   $58(a5)
                 move.w  #4,$BC(a5)
@@ -456,7 +456,7 @@ Boss_ShellshogunSlamPreparationState:                   ; DATA XREF: ROM:0003953
                 move.w  #$CEC0,$48(a5)
                 move.w  $296(a5),$29C(a5)
                 move.b  #$C0,$A41(a5)
-                subi.w  #$50,(word_FF8234).w            ; 'P'
+                subi.w  #$50,(BossCombatCounter).w      ; 'P'
                 move.b  #$D1,d0
                 jsr     (Sound_PlaySFX).l
                 bra.s   Boss_ShellshogunUpdateSlamAnimation
@@ -540,7 +540,7 @@ Boss_ShellshogunCheckDirectionalAttackLaunch:           ; CODE XREF: Boss_Shells
                 bne.s   Boss_ShellshogunApplyDirectionalAttackVelocity
                 move.b  #$D0,d0
                 jsr     (Sound_PlaySFX).l
-                subi.w  #$62,(word_FF8234).w            ; 'b'
+                subi.w  #$62,(BossCombatCounter).w      ; 'b'
                 move.w  #3,(PlaneAShakeLevel).w
                 move.w  #3,(PlaneBShakeLevel).w
                 addq.w  #1,$11C(a5)
@@ -616,7 +616,7 @@ Boss_ShellshogunBeginJumpAttackAirState:                ; CODE XREF: Boss_Shells
                 move.w  #$C860,$23E(a5)
 ; Shellshogun jump attack air phase with rotation
 Boss_ShellshogunJumpAttackAirState:                     ; DATA XREF: ROM:00039542   o  ; was: loc_39CAE
-                subq.w  #1,(word_FF8234).w
+                subq.w  #1,(BossCombatCounter).w
                 tst.w   $58(a5)
                 bpl.s   Boss_ShellshogunUpdateJumpAirRotation
                 move.b  #$C,$A40(a5)
@@ -668,7 +668,7 @@ Boss_ShellshogunLeapFlightState:                        ; DATA XREF: ROM:0003954
                 bne.s   Boss_ShellshogunUpdateLeapFlightRotation
                 move.w  #3,(PlaneAShakeLevel).w
                 move.w  #3,(PlaneBShakeLevel).w
-                subi.w  #$7D,(word_FF8234).w            ; '}'
+                subi.w  #$7D,(BossCombatCounter).w      ; '}'
                 moveq   #0,d0
                 move.w  (RandomNumberState).w,d0
                 asl.l   #1,d0

@@ -329,8 +329,8 @@ PasswordValidation_RenderMatch:                         ; CODE XREF: PasswordMen
                 addq.w  #1,d1
                 andi.w  #$F,d0
                 andi.w  #$F,d1
-                move.b  d0,(byte_FF9907).w
-                move.b  d1,(byte_FF9906).w
+                move.b  d0,(PasswordStageOnesGlyph).w
+                move.b  d1,(PasswordStageTensGlyph).w
                 btst    #5,(ControllerPressedState).w
                 beq.s   PasswordInput_WaitForConfirm
                 move.w  (dword_FF805E).w,d0

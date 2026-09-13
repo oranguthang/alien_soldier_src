@@ -290,7 +290,7 @@ Boss_DeepStriderAdvanceBattleAscent:                    ; CODE XREF: Boss_DeepSt
 Boss_DeepStriderBeginBattleDecisionState:               ; CODE XREF: Boss_DeepStriderBeginBattleCycle+28A   j  ; was: loc_3E952
                                         ; Boss_DeepStriderDiveAttackState+10   j
                 move.w  #$1A,4(a5)
-                bclr    #0,(byte_FF825C).w
+                bclr    #0,(ForcedPositionFlags).w
                 move.b  #$10,$141(a5)
                 move.w  #$18,$534(a5)
                 move.w  #$CB00,$48(a5)
@@ -465,24 +465,24 @@ Boss_DeepStriderUpdateDiveImpactSignal:                 ; CODE XREF: Boss_DeepSt
                 bne.s   Boss_DeepStriderPollDiveImpactSignal
                 bclr    #1,$142(a5)
                 beq.s   Boss_DeepStriderDiveAttackStateReturn
-                bset    #1,(byte_FF825C).w
+                bset    #1,(ForcedPositionFlags).w
                 move.w  #2,$17E(a5)
 Boss_DeepStriderPollDiveImpactSignal:                   ; CODE XREF: Boss_DeepStriderDiveAttackState+20   j  ; was: loc_3EB90
-                bclr    #1,(byte_FF825C).w
+                bclr    #1,(ForcedPositionFlags).w
                 bne.s   Boss_DeepStriderPublishDiveImpactPosition
                 clr.w   $17E(a5)
                 rts
 ; ---------------------------------------------------------------------------
 Boss_DeepStriderPublishDiveImpactPosition:              ; CODE XREF: Boss_DeepStriderDiveAttackState+3C   j  ; was: loc_3EB9E
-                move.w  #$64,(word_FF824E).w            ; 'd'
-                bset    #0,(byte_FF825C).w
-                bset    #2,(byte_FF825C).w
+                move.w  #$64,(ForcedPositionTimer).w    ; 'd'
+                bset    #0,(ForcedPositionFlags).w
+                bset    #2,(ForcedPositionFlags).w
                 move.w  $130(a5),d0
                 addi.w  #0,d0
-                move.w  d0,(word_FF8250).w
+                move.w  d0,(ForcedPositionX).w
                 move.w  $134(a5),d0
                 addi.w  #0,d0
-                move.w  d0,(word_FF8252).w
+                move.w  d0,(ForcedPositionY).w
 Boss_DeepStriderDiveAttackStateReturn:                  ; CODE XREF: Boss_DeepStriderDiveAttackState+28   j  ; was: locret_3EBC8
                 rts
 ; End of function Boss_DeepStriderDiveAttackState

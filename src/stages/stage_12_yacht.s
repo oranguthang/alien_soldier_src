@@ -159,11 +159,11 @@ Stage12_YachtVerticalMotionReturn:                      ; CODE XREF: Stage12_Yac
 ; Accelerates the stage scroll and derives camera compensation
 Stage12_YachtAccelerateScroll:                          ; CODE XREF: Stage12_YachtBeginMotion+3A   p  ; was: sub_2F790
                                         ; sub_2F672:Stage12_YachtUpdateRecovery   p
-                cmpi.l  #$C000,(dword_FF830A).w
+                cmpi.l  #$C000,(StageMotionYDelta).w
                 bpl.s   Stage12_YachtApplyScrollCompensation
-                addi.l  #$100,(dword_FF830A).w
+                addi.l  #$100,(StageMotionYDelta).w
 Stage12_YachtApplyScrollCompensation:                   ; CODE XREF: Stage12_YachtAccelerateScroll+8   j
-                clr.l   (dword_FF8240).w
+                clr.l   (StageMotionXDelta).w
                 btst    #5,(byte_FF8244).w
                 bne.s   Stage12_YachtSetScrollCompensation
                 btst    #0,(byte_FF8244).w
@@ -172,7 +172,7 @@ Stage12_YachtSetScrollCompensation:                     ; CODE XREF: Stage12_Yac
                 move.l  $54(a5),d0
                 neg.l   d0
                 asr.l   #2,d0
-                move.l  d0,(dword_FF8240).w
+                move.l  d0,(StageMotionXDelta).w
 Stage12_YachtAccelerateScrollRate:                      ; CODE XREF: Stage12_YachtAccelerateScroll+24   j
                 cmpi.l  #$B0000,$54(a5)
                 bpl.s   Stage12_YachtScrollAccelerationReturn
@@ -463,7 +463,7 @@ Stage12_TeddyBearPilotStart:                            ; DATA XREF: ROM:0002F93
                 clr.w   $C(a5)
                 addq.w  #2,(StageStateOffset).w
                 addq.w  #2,(Entity57State).w
-                move.w  #$F,(word_FF829E).w
+                move.w  #$F,(SpecialTargetCount).w
                 bclr    #0,(StageTimerPauseFlag).w
                 move.l  #Stage12_TeddyBearDropAndPilotAnimation,8(a5)
                 rts

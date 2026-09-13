@@ -116,6 +116,8 @@ alone does not yet prove the exact player-facing counting convention.
 | Symbol | Address | Static evidence |
 |---|---:|---|
 | `PasswordDigits` | `$FFFFFF3A` | Boot initializes the four bytes to one. The title-menu editor changes and clamps each byte from one through `$0A`, validates the longword against `Password_StageCodeTable`, and the Continue display stores the selected stage code back into the same field. |
+| `PasswordStageTensGlyph` | `$FFFF9906` | A successful validation writes the one-based stage number's high packed-BCD digit into this primary confirmation-row position. |
+| `PasswordStageOnesGlyph` | `$FFFF9907` | The corresponding low packed-BCD digit occupies the following confirmation-row byte. |
 
 ## Reviewed demo-playback fields
 
@@ -155,6 +157,8 @@ alone does not yet prove the exact player-facing counting convention.
 | `BossHealth` | `$FFFF8200` | Boss setup routines initialize it, combat collision paths subtract damage and clear it at defeat, and boss state machines use it for health thresholds. |
 | `BossMaxHealth` | `$FFFF8202` | Boss setup initializes this alongside `BossHealth`; collision defeat paths clear both, and the alternate HUD presentation renders it as the reference maximum. |
 | `DisplayedBossHealth` | `$FFFF8206` | Stage and Xi-Tiger setup copy or initialize boss health here. The boss HUD approaches `BossHealth` in `$100` steps before rendering it. |
+| `BossCombatCounter` | `$FFFF8234` | Boss setup loads the stage-specific default, boss state machines adjust the current value, and the HUD clamps it against `BossCombatCounterMax`. |
+| `BossCombatCounterMax` | `$FFFF8236` | Setup initializes this from the same table entry as the mutable counter; the HUD retains it as the paired upper bound. |
 
 These names describe the stable cross-subsystem role of the words, not a
 particular boss or cutscene. The Xi-Tiger transition reuses the same health
@@ -596,13 +600,16 @@ by their verified byte order rather than receiving invented codec meanings.
 | Symbol | Address | Static evidence |
 |---|---:|---|
 | `ColorFadePhase` | `$FFFF80EE` | The color-fade engine steps this word downward by five or advances its low phase modulo sixteen to derive RGB deltas. |
+| `ColorFadeTriggerState` | `$FFFF8246` | Zero selects cyclic RGB deltas, a positive trigger starts one randomized-channel fade, and the resulting negative state returns the next update to the normal fade path. |
 | `StageTimerFrameCounter` | `$FFFF8204` | Active gameplay reloads this byte to `$3B`; each expiry decrements the packed-BCD stage timer once. |
 | `CombatPercentIndex` | `$FFFF8210` | Flagged hits copy the target damage-scale field here; the transient HUD halves it to index `CombatPercentDisplayTable`. |
+| `MidgameLightningMode` | `$FFFF821E` | Stage 8/9 mode one suppresses the randomized lightning composite, Xi-Tiger mode two suppresses its sound, and a negative value disables the updater. |
 | `DebugMenuStateOffset` | `$FFFF8226` | The debug dispatcher uses this even word as its handler-table byte offset. |
 | `DebugSoundRequestId` | `$FFFF8228` | Debug controls edit and render its low byte, which the dormant handler can submit as a sound request. |
 | `ResultsTimeBonusBCD` | `$FFFF822C` | Results preserves the masked stage time here and renders its four packed-BCD digits. |
 | `StageNumberBCD` | `$FFFF8232` | The stage-index conversion writes a packed-BCD stage number that the message renderer splits into two digits. |
 | `ContactDamageCooldown` | `$FFFF825D` | Hostile collision permits contact damage only after this signed byte expires; cutscene exit reloads `$30`. |
+| `SpecialTargetCount` | `$FFFF829E` | Stage 12 initializes fifteen marked targets, defeat collision decrements only objects with flag bit six, the HUD renders the remaining count, and the Sharpssteel transition waits for zero. |
 | `StageAssetCommandBuffer` | `$FFFF82A0` | The stage loader expands compact commands into terminated eight-byte load records beginning here. |
 | `LowTimeWarningTimer` | `$FFFF8306` | Below time `$30`, expiry reloads `$26`, plays the warning sound, and blanks the displayed timer for that frame. |
 | `WeaponIconDMABuffer` | `$FFFF8478` | VBlank submits the complete 16-byte weapon-icon VDP command block from this address. |
@@ -631,12 +638,21 @@ loaded tile base with the active palette or orientation bits.
 | `StatusDisplayModeOffset` | `$FFFF820C` | The dormant status-display dispatcher uses this even word as its four-entry handler-table offset; transitions clear it. |
 | `DebugResourceRefill` | `$FFFF822A` | Debug health selection `$FF` enables this word; collision update then restores maximum health and time `$5000`. |
 | `WeaponFireCooldown` | `$FFFF8238` | Fire handlers require a negative value and load weapon-specific delays; weapon update counts it down. |
+| `StageMotionXDelta` | `$FFFF8240` | Stage and arena controllers publish this signed 16.16 horizontal motion; physics, weapons, debris, pickups, and effects apply it as global compensation. |
 | `PlayerCenterX` | `$FFFF8248` | Player update computes hitbox midpoint plus object X; targeting code consumes the result. |
 | `PlayerCenterY` | `$FFFF824A` | Player update computes hitbox midpoint plus object Y; targeting code consumes the result. |
+| `ForcedPositionTimer` | `$FFFF824E` | Boss-contact publishers load a duration; the forced-position player state applies the shared coordinates until its elapsed counter exceeds that value. |
+| `ForcedPositionX` | `$FFFF8250` | Bugmax, Madam Barbar, Deep Strider, and Back Stringer contact paths publish an X coordinate that the player state copies directly. |
+| `ForcedPositionY` | `$FFFF8252` | The same contact paths publish the corresponding object-relative Y coordinate. |
+| `ForcedPositionFlags` | `$FFFF825C` | Bits zero and two request normal or immediate placement; bit one handshakes between the player state and the publishing contact object. |
+| `PlayerKnockbackXVel` | `$FFFF8300` | Hostile collision records the damaging object's horizontal velocity; player knockback consumes it when nonzero and otherwise derives direction from facing. |
+| `CombatHitFlags` | `$FFFF8308` | Successful weapon collision publishes target status bits and a hit bit; Epsilon 1 consumes bits two and zero as forced-state and direction events. |
+| `StageMotionYDelta` | `$FFFF830A` | Stage 12 publishes the paired signed 16.16 vertical motion; shared physics and pickup movement consume it as global compensation. |
 | `HealthDeltaDisplayValue` | `$FFFF8262` | Damage sets bit 15 and pickups leave it clear; renderers consume the sign and lower three decimal digits. |
 | `TransientValueScreenX` | `$FFFF8264` | Transient-value rendering uses this as the first digit X and advances by eight; its source writer is not reconstructed. |
 | `TransientValueScreenY` | `$FFFF8266` | Rendering moves this Y upward every other frame and clamps it at `$A0`. |
 | `HealthDeltaDisplayTimer` | `$FFFF8268` | Damage and pickups load `$30`; it paces HUD health convergence and expires the transient value. |
+| `WeaponSwitchRepeatTimer` | `$FFFF826A` | Player input parks the word at minus one while idle, reloads sixteen on a new weapon-switch press, and requests another switch after the repeat delay. |
 
 ## Reviewed HUD DMA and debug tile buffers
 
@@ -674,6 +690,7 @@ The weapon and boss tile regions are reused by the two debug pages.
 | Symbol | Address | Static evidence |
 |---|---:|---|
 | `PlayerInputMask` | `$FFFF830F` | The input reader ANDs both held and pressed controller bytes with this mask; player states select `$7F`, dash/Phoenix states `$73`, and teleport states `$70`. |
+| `PlayerDashStopFlag` | `$FFFF8311` | Player update clears this byte before state dispatch; Wolf Garopa's boundary effect sets it after pushing the player, and active dash states then terminate. |
 | `ScrollPlaneBufferOffset` | `$FFFF8640` | Scroll preparation uses this word to select alternate VDP plane bases and offsets both horizontal and vertical buffer pairs; Sunset Sting sets it to two and clears it on exit. |
 | `TargetReticleScanDelay` | `$FFFF8642` | Targeting update decrements the word before each scan, clears it while scanning, and reloads `$80` after a complete pass finds no eligible target. |
 | `ScriptedInputStepTimer` | `$FFFF8644` | Scripted-input states load or copy this timer and count it down before advancing delayed run, input-hold, and Xi-Tiger intro steps. |
@@ -726,6 +743,11 @@ repeats the resulting four-word group into `HorizontalScrollProfile`.
 | `Epsilon1ProximityFlag` | `$FFFF9474` | The proximity threshold sets this word; it changes attack selection and terminates ring repetitions until battle-center recovery clears it. |
 | `Epsilon1VerticalAccel` | `$FFFF9478` | Epsilon 1 attack states load signed acceleration values here, and the shared motion helper adds the longword to the boss vertical velocity. |
 | `ShieldViperTrailAngles` | `$FFFF94A0` | Shield Viper initializes and shifts angle-history words from this base, then applies or interpolates them across linked body records. |
+| `Epsilon1TileDMARecord` | `$FFFF9446` | The animated-tile helper builds one four-word destination/source/count/frame record here before submitting it to the indexed-column loader. |
+| `FlyingNeoVScrollRamp` | `$FFFF9506` | Flying Neo's line-scroll builder writes its descending vertical ramp and camera-relative tail from this address. |
+| `SharpssteelTargetTail` | `$FFFF960A` | The attack selector loads this sixth blade-target history word into its active target field. |
+| `ResultsSummaryRowBuffer` | `$FFFF9852` | Results appends the three aggregate label/value rows from this exact workspace destination. |
+| `DestroyerMK2ScrollTable` | `$FFFF98B0` | Destroyer MK2 walks this word table while constructing its paired scroll-row effect. |
 | `SharedRasterSplitPoint` (`BackdropLineOffsetsEnd`, `WaveSineTableCenter` overlays) | `$FFFF9F00` | The transition backdrop builder writes 96 words backward from this boundary, while the wave generator writes 128 words in each direction around the same point. |
 | `XiTigerVScrollBuffer` | `$FFFF9FC0` | The raster-layout copier moves one 64-byte `CutsceneLineOffsetTable` block here, and the Xi-Tiger VBlank selector exposes this address to the installed HBlank writer. |
 | `Stage10HBlankScrollData` | `$FFFF9FF8` | Stage 10 VBlank writes two vertical-scroll words and one selected horizontal-scroll word here; the installed HBlank routine consumes those three words in order. |

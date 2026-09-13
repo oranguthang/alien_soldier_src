@@ -197,7 +197,7 @@ UI_RenderStageTimerAndBossHealth_DecreaseDisplayedBossHealth:  ; CODE XREF: UI_R
                 subi.w  #$100,(DisplayedBossHealth).w
 UI_RenderStageTimerAndBossHealth_SelectBossHealthPresentation:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+9E   j  ; was: loc_13088
                                         ; UI_RenderStageTimerAndBossHealth+B6   j
-                tst.w   (word_FF829E).w
+                tst.w   (SpecialTargetCount).w
                 bne.w   UI_RenderSpecialBossStatus
                 btst    #2,(ControlLayoutFlags).w
                 beq.s   UI_RenderStageTimerAndBossHealth_RenderSegmentedBossHealth
@@ -271,7 +271,7 @@ UI_RenderSpecialBossStatus:                             ; CODE XREF: UI_RenderSt
                 bne.s   UI_RenderSpecialBossStatus_PreparePadding
                 move.w  #$C7F8,(a0)+
                 move.w  #$C7B4,d5
-                move.w  (word_FF829E).w,d0
+                move.w  (SpecialTargetCount).w,d0
                 asl.w   #1,d0
                 move.w  (a4,d0.w),(dword_FF8040).w
                 movea.w #(dword_FF8040-M68K_RAM),a1

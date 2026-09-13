@@ -170,22 +170,22 @@ Boss_BackStringerUpdateTailSegmentLoop:                 ; CODE XREF: Boss_BackSt
                 bclr    #1,$22(a0)
                 beq.s   Boss_BackStringerUpdateTailSegmentsReturn
                 move.w  #$8080,2(a0)
-                bset    #1,(byte_FF825C).w
+                bset    #1,(ForcedPositionFlags).w
                 move.w  #2,$29E(a5)
                 bset    #4,(PlayerSpriteAttributes).w
 Boss_BackStringerCheckTailContactRelease:               ; CODE XREF: Boss_BackStringerUpdateTailSegmentPositions+46   j  ; was: loc_45176
-                bclr    #1,(byte_FF825C).w
+                bclr    #1,(ForcedPositionFlags).w
                 bne.s   Boss_BackStringerPublishTailContact
                 clr.w   $29E(a5)
                 bra.s   Boss_BackStringerUpdateTailSegmentsReturn
 ; ---------------------------------------------------------------------------
 Boss_BackStringerPublishTailContact:                    ; CODE XREF: Boss_BackStringerUpdateTailSegmentPositions+6E   j  ; was: loc_45184
                 bset    #7,(PlayerSpriteAttributes).w
-                move.w  #$C8,(word_FF824E).w
-                bset    #0,(byte_FF825C).w
-                bset    #2,(byte_FF825C).w
-                move.w  $10(a0),(word_FF8250).w
-                move.w  $14(a0),(word_FF8252).w
+                move.w  #$C8,(ForcedPositionTimer).w
+                bset    #0,(ForcedPositionFlags).w
+                bset    #2,(ForcedPositionFlags).w
+                move.w  $10(a0),(ForcedPositionX).w
+                move.w  $14(a0),(ForcedPositionY).w
 Boss_BackStringerUpdateTailSegmentsReturn:              ; CODE XREF: Boss_BackStringerUpdateTailSegmentPositions+44   j  ; was: locret_451A8
                                         ; Boss_BackStringerUpdateTailSegmentPositions+4E   j
                 rts

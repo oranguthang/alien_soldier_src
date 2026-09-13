@@ -17,7 +17,7 @@ Boss_AntroidPrepareJumpAttack:                          ; DATA XREF: ROM:0003751
                 bra.w   Boss_AntroidSelectBlinkMetasprite
 ; ---------------------------------------------------------------------------
 Boss_AntroidJumpAttackLaunch:                           ; CODE XREF: Boss_AntroidPrepareJumpAttack+6   j  ; was: loc_379C4
-                subi.w  #$3C,(word_FF8234).w            ; '<'
+                subi.w  #$3C,(BossCombatCounter).w      ; '<'
                 addq.w  #2,4(a5)
                 move.w  #2,(PlaneAShakeLevel).w
                 move.w  a5,$48(a5)
@@ -120,7 +120,7 @@ Boss_AntroidJumpSlamAnimateFirstArc:                    ; CODE XREF: Boss_Antroi
                 bra.w   Boss_AntroidRenderPose
 ; ---------------------------------------------------------------------------
 Boss_AntroidJumpSlamResolveFirstLanding:                ; CODE XREF: Boss_AntroidJumpSlamAttack+6A   j  ; was: loc_37B0E
-                subi.w  #$58,(word_FF8234).w            ; 'X'
+                subi.w  #$58,(BossCombatCounter).w      ; 'X'
                 bmi.s   Boss_AntroidJumpSlamBeginDeceleration
                 tst.w   $54(a5)
                 beq.s   Boss_AntroidJumpSlamCheckAlternateScreenBound
@@ -279,7 +279,7 @@ Boss_AntroidWaitUpdateActive:                           ; CODE XREF: Boss_Antroi
                                         ; Boss_AntroidWaitState+3C   j
                 btst    #1,(FrameCounter+1).w
                 beq.s   Boss_AntroidWaitSpawnProjectileAndAnimate
-                subq.w  #1,(word_FF8234).w
+                subq.w  #1,(BossCombatCounter).w
 Boss_AntroidWaitSpawnProjectileAndAnimate:              ; CODE XREF: Boss_AntroidWaitState+68   j  ; was: loc_37D18
                 bsr.w   Boss_AntroidSpawnWaitProjectile
                 lea     Boss_AntroidWaitFiringPoseCommands(pc),a1

@@ -137,9 +137,9 @@ Pickup_UpdateMotion:                                    ; CODE XREF: Pickup_Upda
                 andi.w  #6,d0
                 move.w  (a0,d0.w),d0
                 or.w    d0,$E(a5)
-                move.l  (dword_FF8240).w,d0
+                move.l  (StageMotionXDelta).w,d0
                 add.l   d0,$10(a5)
-                move.l  (dword_FF830A).w,d0
+                move.l  (StageMotionYDelta).w,d0
                 add.l   d0,$14(a5)
                 rts
 ; End of function Pickup_Update

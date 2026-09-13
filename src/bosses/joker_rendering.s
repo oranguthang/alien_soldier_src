@@ -332,7 +332,7 @@ Boss_JokerSpawnDescendingShotEmitter:                   ; CODE XREF: Boss_JokerD
                 movea.w #(FortySixthEntityType-M68K_RAM),a0
                 jsr     (Projectile_FindFreePrimarySlot_CheckFinalRange).l
                 bne.s   Boss_JokerSpawnDescendingShotEmitterReturn
-                subi.w  #$14,(word_FF8234).w
+                subi.w  #$14,(BossCombatCounter).w
                 move.w  #$198,(a0)
                 move.w  #$8100,2(a0)
                 move.w  #$436A,$E(a0)

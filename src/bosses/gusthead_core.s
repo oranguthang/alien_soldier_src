@@ -28,7 +28,7 @@ Boss_GustheadAfterRootMappingToggle:                    ; CODE XREF: Boss_Gusthe
 Boss_GustheadSelectDebrisDrift:                         ; CODE XREF: Boss_GustheadMain+32   j  ; was: loc_3F1E0
                 cmpi.w  #$50,4(a5)                      ; 'P'
                 bcc.s   Boss_GustheadUseArenaMotionDebrisDrift
-                move.l  (dword_FF8240).w,(dword_FF9428).w
+                move.l  (StageMotionXDelta).w,(dword_FF9428).w
                 bra.s   Boss_GustheadCheckStageExit
 ; ---------------------------------------------------------------------------
 Boss_GustheadUseArenaMotionDebrisDrift:                 ; CODE XREF: Boss_GustheadMain+42   j  ; was: loc_3F1F0
@@ -45,7 +45,7 @@ Boss_GustheadCheckStageExit:                            ; CODE XREF: Boss_Gusthe
                 bne.s   Boss_GustheadUpdatePaletteAndScreenX
                 move.b  #2,(byte_FF80EC).w
                 bset    #7,$4A(a5)
-                clr.l   (dword_FF8240).w
+                clr.l   (StageMotionXDelta).w
                 move.w  #$5C,4(a5)                      ; '\'
                 bset    #0,(StageTimerPauseFlag).w
 Boss_GustheadUpdatePaletteAndScreenX:                   ; CODE XREF: Boss_GustheadMain+5E   j  ; was: loc_3F22E
@@ -537,7 +537,7 @@ Boss_GustheadBeginBouncePattern:                        ; CODE XREF: Boss_Gusthe
                                         ; DATA XREF: ROM:0003F26C   o
                 move.l  #$FFFF0000,$1C(a5)
                 move.l  #$2000,$4C(a5)
-                clr.l   (dword_FF8240).w
+                clr.l   (StageMotionXDelta).w
                 andi.l  #$1F80000,(dword_FF9400).w
                 andi.l  #$1F80000,(dword_FF9404).w
                 andi.l  #$1F80000,(dword_FF9408).w

@@ -103,7 +103,7 @@ Gfx_ProcessColorFade_Return:                            ; CODE XREF: Gfx_Process
 Gfx_InitColorFadeState:
                 lea     PaletteFade_DefaultEntryOffsets(pc),a2  ; was: sub_3CCE
                 nop
-                clr.w   (word_FF8246).w
+                clr.w   (ColorFadeTriggerState).w
                 clr.w   (ColorFadePhase).w
                 bclr    #0,(byte_FF80EC).w
                 rts
@@ -115,14 +115,14 @@ Gfx_ProcessColorFadeEffect:
                 moveq   #0,d1
                 moveq   #0,d2
                 moveq   #0,d3
-                tst.w   (word_FF8246).w
+                tst.w   (ColorFadeTriggerState).w
                 beq.w   Gfx_ProcessColorFadeEffect_AdvanceOscillation
                 bpl.s   Gfx_ProcessColorFadeEffect_StartRandomChannelFade
-                clr.w   (word_FF8246).w
+                clr.w   (ColorFadeTriggerState).w
                 bra.w   Gfx_FadeRGBColor_LoadEntryCount
 ; ---------------------------------------------------------------------------
 Gfx_ProcessColorFadeEffect_StartRandomChannelFade:      ; CODE XREF: Gfx_ProcessColorFadeEffect+14   j  ; was: loc_3D02
-                move.w  #$FFFF,(word_FF8246).w
+                move.w  #$FFFF,(ColorFadeTriggerState).w
                 clr.w   (ColorFadePhase).w
                 btst    #1,(byte_FF80EC).w
                 bne.w   Gfx_ProcessColorFadeEffect_Return

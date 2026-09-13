@@ -328,7 +328,7 @@ Physics_ApplyVelocityWithBounds:                        ; CODE XREF: Object_Appl
                 btst    d5,d2
                 beq.s   Physics_ApplyVelocityWithBounds_ProcessVertical
                 move.l  $18(a5),d3
-                move.l  (dword_FF8240).w,d4
+                move.l  (StageMotionXDelta).w,d4
                 btst    #1,(byte_FF8244).w
                 beq.s   Physics_ApplyVelocityWithBounds_AddHorizontalBias
                 asr.l   #2,d4
@@ -354,7 +354,7 @@ Physics_ApplyVelocityWithBounds_ProcessVertical:        ; CODE XREF: Physics_App
                 btst    d6,d2
                 beq.s   Physics_ApplyVelocityWithBounds_Return
                 move.l  $1C(a5),d3
-                add.l   (dword_FF830A).w,d3
+                add.l   (StageMotionYDelta).w,d3
                 move.l  (PhysicsYVelocityLimit).w,d4
                 tst.l   d3
                 bmi.s   Physics_ApplyVelocityWithBounds_ClampNegativeVertical

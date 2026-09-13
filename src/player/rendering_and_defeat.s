@@ -259,7 +259,7 @@ Player_UpdateAnimationState:                            ; CODE XREF: Player_Hand
 ; End of function Player_UpdateAnimationState
 ; Selects animation frame data from table
 Player_AdvanceAnimationFrame:                           ; CODE XREF: Player_HandleBounceState+4A   j  ; was: sub_171D6
-                                        ; Player_HandleCutsceneControl+50   j
+                                        ; Player_HandleForcedPositionState+50   j
                 move.w  $52(a5),d0
                 add.w   d1,d0
                 move.w  d0,$52(a5)

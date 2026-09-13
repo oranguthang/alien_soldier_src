@@ -263,8 +263,8 @@ Collision_CheckWeaponProjectilesAgainstEnemies_SubtractFlaggedHealth:  ; CODE XR
                 clr.w   (BossHealth).w
                 clr.w   (BossMaxHealth).w
                 clr.b   (byte_FF80EC).w
-                clr.w   (word_FF8234).w
-                clr.w   (word_FF8236).w
+                clr.w   (BossCombatCounter).w
+                clr.w   (BossCombatCounterMax).w
                 clr.b   (byte_FF8260).w
                 bsr.w   Results_IncrementDestroyedEnemyCountBCD
                 bra.w   Collision_CheckWeaponProjectilesAgainstEnemies_NextWeaponSlot
@@ -292,9 +292,9 @@ Collision_CheckWeaponProjectilesAgainstEnemies_ResolveStandardTarget:  ; CODE XR
                 move.w  d4,$26(a3)
                 btst    #6,$23(a2)
                 beq.s   Collision_CheckWeaponProjectilesAgainstEnemies_FinishStandardDefeat
-                subq.w  #1,(word_FF829E).w
+                subq.w  #1,(SpecialTargetCount).w
                 bpl.s   Collision_CheckWeaponProjectilesAgainstEnemies_FinishStandardDefeat
-                clr.w   (word_FF829E).w
+                clr.w   (SpecialTargetCount).w
 Collision_CheckWeaponProjectilesAgainstEnemies_FinishStandardDefeat:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+180   j  ; was: loc_13E56
                                         ; Collision_CheckWeaponProjectilesAgainstEnemies+186   j
                 btst    #7,$23(a2)
@@ -325,7 +325,7 @@ Collision_CheckPlayerAgainstHostiles:                   ; CODE XREF: Collision_U
                 bpl.s   Collision_CheckPlayerAgainstHostiles_Begin
                 move.b  #$FF,(ContactDamageCooldown).w
 Collision_CheckPlayerAgainstHostiles_Begin:             ; CODE XREF: Collision_CheckPlayerAgainstHostiles+E   j  ; was: loc_13EB0
-                clr.l   (dword_FF8300).w
+                clr.l   (PlayerKnockbackXVel).w
                 movea.w #(PlayerObjectType-M68K_RAM),a0
                 tst.b   $21(a0)
                 beq.w   Collision_CheckPlayerAgainstHostiles_Return
@@ -413,7 +413,7 @@ Collision_CheckPlayerAgainstHostiles_ApplyDamage:       ; CODE XREF: Collision_C
                 bcc.s   Collision_CheckPlayerAgainstHostiles_StoreDamageFeedback
                 move.w  #$9999,(PlayerDamageBCD).w
 Collision_CheckPlayerAgainstHostiles_StoreDamageFeedback:  ; CODE XREF: Collision_CheckPlayerAgainstHostiles+116   j  ; was: loc_13FB8
-                move.l  $18(a2),(dword_FF8300).w
+                move.l  $18(a2),(PlayerKnockbackXVel).w
                 move.w  d4,(HealthDeltaDisplayValue).w
                 ori.w   #$8000,(HealthDeltaDisplayValue).w
                 move.w  #$30,(HealthDeltaDisplayTimer).w  ; '0'
@@ -517,8 +517,8 @@ Collision_CheckSpecialAttackTargets_ApplyFlaggedDamage:  ; CODE XREF: Collision_
                 jsr     (Sound_PlaySFX).l
                 movem.l (sp)+,d0
                 move.b  $21(a3),d4
-                or.b    d4,(byte_FF8308).w
-                bset    #0,(byte_FF8308).w
+                or.b    d4,(CombatHitFlags).w
+                bset    #0,(CombatHitFlags).w
                 bset    #0,(byte_FF80EC).w
                 or.b    d4,$22(a2)
                 move.w  $26(a3),d4
@@ -530,8 +530,8 @@ Collision_CheckSpecialAttackTargets_ApplyFlaggedDamage:  ; CODE XREF: Collision_
                 clr.w   (BossHealth).w
                 clr.w   (BossMaxHealth).w
                 clr.b   (byte_FF80EC).w
-                clr.w   (word_FF8234).w
-                clr.w   (word_FF8236).w
+                clr.w   (BossCombatCounter).w
+                clr.w   (BossCombatCounterMax).w
                 clr.b   (byte_FF8260).w
                 bsr.w   Results_IncrementDestroyedEnemyCountBCD
                 bra.w   Collision_CheckSpecialAttackTargets_NextTarget
@@ -553,9 +553,9 @@ Collision_CheckSpecialAttackTargets_ApplyStandardDamage:  ; CODE XREF: Collision
                 bpl.w   Collision_CheckSpecialAttackTargets_NextTarget
                 btst    #6,$23(a2)
                 beq.s   Collision_CheckSpecialAttackTargets_FinishStandardDefeat
-                subq.w  #1,(word_FF829E).w
+                subq.w  #1,(SpecialTargetCount).w
                 bpl.s   Collision_CheckSpecialAttackTargets_FinishStandardDefeat
-                clr.w   (word_FF829E).w
+                clr.w   (SpecialTargetCount).w
 Collision_CheckSpecialAttackTargets_FinishStandardDefeat:  ; CODE XREF: Collision_CheckSpecialAttackTargets+166   j  ; was: loc_1417E
                                         ; Collision_CheckSpecialAttackTargets+16C   j
                 btst    #7,$23(a2)

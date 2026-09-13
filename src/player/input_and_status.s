@@ -12,7 +12,7 @@ Input_ReadPlayerInput_Return:                           ; CODE XREF: Input_ReadP
 ; Updates weapon switch timer and cooldown
 Player_UpdateWeaponSwitchTimer:                         ; CODE XREF: Player_Update:Player_Update_RunState   p  ; was: sub_16B24
                                         ; sub_19DAE:Player_UpdateSevenForcesBattleDispatchState   p
-                subq.w  #1,(word_FF826A).w
+                subq.w  #1,(WeaponSwitchRepeatTimer).w
                 bmi.s   Player_UpdateWeaponSwitchTimer_CheckRestart
                 btst    #4,$6A(a5)
                 beq.s   Player_UpdateWeaponSwitchTimer_UpdatePositionDelta
@@ -20,10 +20,10 @@ Player_UpdateWeaponSwitchTimer:                         ; CODE XREF: Player_Upda
                 bra.s   Player_UpdateWeaponSwitchTimer_UpdatePositionDelta
 ; ---------------------------------------------------------------------------
 Player_UpdateWeaponSwitchTimer_CheckRestart:            ; CODE XREF: Player_UpdateWeaponSwitchTimer+4   j  ; was: loc_16B3A
-                move.w  #$FFFF,(word_FF826A).w
+                move.w  #$FFFF,(WeaponSwitchRepeatTimer).w
                 btst    #4,$6A(a5)
                 beq.s   Player_UpdateWeaponSwitchTimer_UpdatePositionDelta
-                move.w  #$10,(word_FF826A).w
+                move.w  #$10,(WeaponSwitchRepeatTimer).w
 Player_UpdateWeaponSwitchTimer_UpdatePositionDelta:     ; CODE XREF: Player_UpdateWeaponSwitchTimer+C   j  ; was: loc_16B4E
                                         ; Player_UpdateWeaponSwitchTimer+14   j
                 move.w  (PlayerHealth).w,d0

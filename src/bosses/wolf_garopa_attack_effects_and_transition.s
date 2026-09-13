@@ -86,7 +86,7 @@ Effect_PushPlayerFromWolfGaropaBoundary:                ; CODE XREF: Effect_Wolf
                 subq.w  #2,d0
                 move.w  d0,(PlayerXPosition).w
                 clr.l   (PlayerXVelocity).w
-                move.b  #1,(byte_FF8311).w
+                move.b  #1,(PlayerDashStopFlag).w
                 cmpi.w  #$91,(PlayerXPosition).w
                 bpl.s   Effect_WolfGaropaBoundaryReturn
                 bset    #6,$21(a5)

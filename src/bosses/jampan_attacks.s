@@ -18,7 +18,7 @@ Boss_JampanMoveOffsetAttackAcrossScreenState:           ; DATA XREF: ROM:000491F
                 move.w  #1,(SeventhEntityWork52).w
                 move.w  #1,(TertiaryEntityWork52).w
                 move.w  #1,(FifthEntityWork52).w
-                tst.w   (word_FF8234).w
+                tst.w   (BossCombatCounter).w
                 ble.s   Boss_JampanFinishOffsetAttack
                 subq.w  #2,4(a5)
                 rts
@@ -129,7 +129,7 @@ Boss_JampanRotateShieldPatternBackwardState:            ; DATA XREF: ROM:0004920
                 subq.w  #1,$48(a5)
                 bne.w   Boss_JampanRotateShieldPatternBackwardReturn
                 bset    #1,$4C(a5)
-                tst.w   (word_FF8234).w
+                tst.w   (BossCombatCounter).w
                 ble.s   Boss_JampanFinishShieldRotationCycle
                 move.w  (PlayerXPosition).w,d0
                 sub.w   $10(a5),d0
@@ -265,7 +265,7 @@ Boss_JampanUpdateAlternatePatternHold:                  ; CODE XREF: Boss_Jampan
                 bsr.w   Boss_JampanTrackPlayerX
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 bsr.w   Boss_JampanUpdateShieldFormationGeometry
-                tst.w   (word_FF8234).w
+                tst.w   (BossCombatCounter).w
                 ble.s   Boss_JampanFinishAlternatePatternHold
                 subq.w  #1,$48(a5)
                 bne.s   Boss_JampanTrackPlayerDuringAlternatePatternReturn

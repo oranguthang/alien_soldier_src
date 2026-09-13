@@ -73,7 +73,7 @@ Player_Update_CheckGameplayReady:                       ; CODE XREF: Player_Upda
 Player_Update_CheckCutsceneTrigger:                     ; CODE XREF: Player_Update+62   j  ; was: loc_15002
                 bclr    #1,$22(a5)
                 beq.s   Player_Update_CheckFallBoundary
-                bsr.w   Player_InitCutsceneState
+                bsr.w   Player_InitForcedPositionState
                 bra.s   Player_UpdateCoreAttributes
 ; ---------------------------------------------------------------------------
 Player_Update_CheckFallBoundary:                        ; CODE XREF: Player_Update+70   j  ; was: loc_15010
@@ -96,7 +96,7 @@ Player_UpdateCoreAttributes:                            ; CODE XREF: Player_Upda
                 move.b  $69(a5),$6B(a5)
                 bsr.w   Player_UpdateInvulnerabilityTimer
                 bsr.w   Player_SetHitbox
-                clr.b   (byte_FF8311).w
+                clr.b   (PlayerDashStopFlag).w
                 bra.w   Player_CalculateCenterPosition
 ; End of function Player_Update
 ; Updates player state machine
@@ -133,8 +133,8 @@ Player_StateHandlerOffsets: dc.w    Player_HandleJump-Player_HandleDeathSequence
                 dc.w    Player_Update_Return-Player_HandleDeathSequence
                 dc.w    Player_Update_Return-Player_HandleDeathSequence
                 dc.w    Player_Update_Return-Player_HandleDeathSequence
-                dc.w    Player_HandleCutsceneControl-Player_HandleDeathSequence
-                dc.w    Player_HandleCutsceneControl-Player_HandleDeathSequence
+                dc.w    Player_HandleForcedPositionState-Player_HandleDeathSequence
+                dc.w    Player_HandleForcedPositionState-Player_HandleDeathSequence
                 dc.w    Player_HandleDeathSequence_SetFlags-Player_HandleDeathSequence
                 dc.w    Player_HandleRespawnGravity-Player_HandleDeathSequence
                 dc.w    Player_GroundedDamageState-Player_HandleDeathSequence
