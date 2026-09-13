@@ -480,7 +480,7 @@ Message_CopyGlyphTile:                                  ; CODE XREF: Message_Loa
                 asl.w   #6,d0
                 addi.l  #tiles_font,d0
                 movea.l d0,a0
-                movea.w #(byte_FFA300-M68K_RAM),a1
+                movea.w #(MessageGlyphTileBuffer-M68K_RAM),a1
                 moveq   #$F,d7
 Message_CopyGlyphTileLoop:                              ; CODE XREF: Message_LoadNextGlyphTile+2A   j  ; was: loc_B3B4
                 move.l  (a0)+,(a1)+

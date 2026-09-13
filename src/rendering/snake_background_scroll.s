@@ -1,7 +1,7 @@
 ; Update the four paired rows of the Snake-stage background
 Scroll_UpdateSnakeBackground:                           ; CODE XREF: Stage12To13_UpdateTeleportAndSnakeScroll   p  ; was: sub_E34E
                                         ; Stage13_UpdateSnakeEncounterTransition   p
-                movea.w #(byte_FFA3E0-M68K_RAM),a0
+                movea.w #(SnakeScrollAccumulators-M68K_RAM),a0
                 lea     SnakeBackgroundScrollVelocityDeltas(pc),a1
                 nop
                 lea     SnakeBackgroundTileIndexNibbles(pc),a2

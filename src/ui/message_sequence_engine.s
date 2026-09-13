@@ -327,7 +327,7 @@ MessageScript_DrawGlyph:                                ; CODE XREF: MessageScri
                 asl.w   #6,d0
                 addi.l  #tiles_font,d0
                 movea.l d0,a0
-                movea.w #(byte_FFA300-M68K_RAM),a1
+                movea.w #(MessageGlyphTileBuffer-M68K_RAM),a1
                 moveq   #$F,d7
 MessageScript_CopyGlyphRowLoop:                         ; CODE XREF: MessageScript_RenderGlyph+90   j  ; was: loc_AC98
                 move.l  (a0)+,d2

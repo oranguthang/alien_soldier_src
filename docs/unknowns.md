@@ -47,7 +47,7 @@ generated Z-Leo names are recorded in `config/name_audit.json`.
 The debug and shared-effect pass reduced the count to 11,063. The sprite editor
 was separated from 22 cross-subsystem sprite-frame tables, the misplaced
 Shield Viper block was reclassified under `src/bosses/`, and the unrelated
-`Object_CopyDataBlock` helper was moved into `src/gameplay/`. Six generated
+`UnreferencedPrepareObjectRecord` helper was moved into `src/gameplay/`. Six generated
 Shield Viper names that described pattern-buffer rendering as movement,
 palette, cleanup, or shooting logic are recorded in the name audit.
 
@@ -6611,3 +6611,39 @@ to 15,847 mappings and the audit registry from 13,001 to 13,012. Auditing the
 eight inherited labels reduces the semantic review upper bound from 3,143 to
 3,135. The enforced address-derived ceiling falls from 207 to 204, all still
 confined to RAM equates.
+
+The message-glyph and Snake-scroll pass replaces two raw RAM aliases and
+statically confirms eleven related Sonnet names without changing them. Both
+glyph paths stage exactly sixteen longwords at `$FFFFA300`, one 64-byte 8x8
+4bpp tile, before queueing DMA. The 63-line Snake renderer advances eight
+consecutive fixed-point values at `$FFFFA3E0`, two for each of four row pairs,
+and uses their integer parts to select high/low tile-index nibbles. Its routine,
+three loop labels, helper, delta table, and nibble table all match that observed
+behavior; the four glyph-copy labels likewise match their data flow.
+
+The two RAM aliases add provenance mappings and exact-address audit records.
+The eleven related semantic definitions were already present in the registry;
+this pass rechecks their existing evidence without duplicating their addresses.
+Provenance rises from 15,847 to 15,849 mappings and the audit registry from
+13,012 to 13,014. The semantic review upper bound remains 3,135. The enforced
+address-derived ceiling falls from 204 to 202, all still confined to RAM
+equates.
+
+The object-buffer boundary pass replaces twelve raw RAM aliases and corrects
+twelve older procedure names. The complete clear from `$FFFFA400` covers
+exactly 1024 bytes, while the two 512-byte helpers prove `$FFFFA600` as its
+second-half boundary. Graphics initialization also clears a separate 256-byte
+area at `$FFFFA800`, including a 96-byte object-shaped record. The only helper
+that populates that record has no reconstructed caller: it copies four player
+display fields, supplies fixed `$0120/$00F0` coordinates, and clears coordinate
+fractions and velocities. The `OrphanedObject*` prefix records that lack of a
+consumer instead of inventing an in-game owner. Its 14-line module is renamed
+to `gameplay/orphaned_object_record_setup.s` while remaining at the same ROM
+range.
+
+The twelve RAM aliases add provenance mappings. Those records, the twelve
+corrected procedures, and two confirmed whole-buffer definitions add 26 unique
+audit entries. Provenance rises from 15,849 to 15,861 mappings, the audit
+registry from 13,014 to 13,040, and the semantic review upper bound falls from
+3,135 to 3,121. The enforced address-derived ceiling falls from 202 to 190,
+all still confined to RAM equates.

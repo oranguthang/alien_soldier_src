@@ -133,6 +133,7 @@ alone does not yet prove the exact player-facing counting convention.
 | `MessageSequenceState` | `$FFFF80C2` | The central dispatcher uses this even word directly as an offset into its handler table. Stage, result, boss, and ship-cutscene callers publish a starting state here and wait for it to return to zero. |
 | `MessageAdvanceButtons` | `$FFFF8310` | The dispatcher stores the controller byte masked with `$70`; the glyph-delay state advances immediately when the result is nonzero. |
 | `MessageDisplayFlags` | `$FFFFFF31` | Message-script entry sets bit 7 and finalization clears it. The signed HUD path suppresses its update while that bit is set; initialization clears the whole byte. |
+| `MessageGlyphTileBuffer` | `$FFFFA300` | Both message glyph paths write exactly sixteen longwords, staging one 64-byte 8x8 4bpp tile before queuing its DMA transfer. |
 
 ## Reviewed interstage-transition fields
 
@@ -213,6 +214,21 @@ their runtime reachability remain unproven.
 | `HScrollDMASource` | `$FFFFF710` | Initialization points this longword at `HScrollBuffer`; the horizontal-scroll DMA builder encodes it as the transfer source. |
 | `VScrollDMASource` | `$FFFFF714` | Initialization points this longword at `VScrollBuffer`; the vertical-scroll DMA builder encodes it as the transfer source. |
 | `FrameTimingDebugFlag` | `$FFFFF746` | A debug controller chord toggles its sign bit; the gameplay loop then emits VDP timing markers between subsystem updates and runs the debug backdrop helpers. |
+| `SnakeScrollAccumulators` | `$FFFFA3E0` | The Snake renderer updates exactly eight consecutive fixed-point values, two for each of four background row pairs, before selecting tile-index nibbles from their integer parts. |
+
+## Reviewed object-buffer boundaries
+
+| Name | Address | Established role |
+|---|---:|---|
+| `ObjectBufferSecondHalf` | `$FFFFA600` | The full clear spans 1024 bytes from `$FFFFA400`; the paired 512-byte helpers split that range exactly here. |
+| `OrphanedObjectType` | `$FFFFA800` | Offset zero of a 96-byte object-shaped record. Initialization clears it, while the only field-population helper has no reconstructed caller and leaves this word zero. |
+| `OrphanedObjectFlags` | `$FFFFA802` | The unreferenced helper copies `PlayerObjectFlags` here. |
+| `OrphanedObjectSpriteMap` | `$FFFFA808` | The same helper copies `PlayerSpriteMapping` here. |
+| `OrphanedObjectAnimTimer` | `$FFFFA80C` | The same helper copies `PlayerAnimationTimer` here. |
+| `OrphanedObjectAttr` | `$FFFFA80E` | The same helper copies `PlayerSpriteAttributes` here. |
+| `OrphanedObjectXPosition` / `OrphanedObjectXFraction` | `$FFFFA810` / `$FFFFA812` | The helper stores integer X `$0120` and zero fractional X. |
+| `OrphanedObjectYPosition` / `OrphanedObjectYFraction` | `$FFFFA814` / `$FFFFA816` | The helper stores integer Y `$00F0` and zero fractional Y. |
+| `OrphanedObjectXVelocity` / `OrphanedObjectYVelocity` | `$FFFFA818` / `$FFFFA81C` | The helper clears the two 32-bit fields at the standard object velocity offsets. No reader proves later motion. |
 
 The active palette aliases use zero-padded decimal CRAM indices. Full-word
 aliases name a 12-bit Genesis color; byte aliases explicitly name only the

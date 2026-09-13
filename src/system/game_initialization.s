@@ -41,7 +41,7 @@ Sys_InitSubsystems:                                     ; CODE XREF: Sys_InitFul
 Sys_InitGraphicsChain:                                  ; CODE XREF: Sys_InitFullGame+C   p  ; was: sub_2DB4
                                         ; Sys_InitGameMode+C   p
                 bsr.w   Gfx_InitializeChain
-                bsr.w   Sys_ClearBufferFFA800
+                bsr.w   Sys_ClearOrphanedObjectArea
                 bsr.w   Sprite_ClearOAMBuildState
                 bsr.w   Sprite_ClearOAMBuffer
                 bsr.w   VDP_ClearData

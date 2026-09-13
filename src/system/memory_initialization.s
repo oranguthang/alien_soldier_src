@@ -112,80 +112,80 @@ Sys_ClearObjectBuffer_Loop:                             ; CODE XREF: Sys_ClearOb
                 dbf     d1,Sys_ClearObjectBuffer_Loop
                 rts
 ; End of function Sys_ClearObjectBuffer
-; Clears first half of object buffer at FFA400
-Sys_ClearObjectBufferHalf:
+; Clears the first 512-byte half of the object buffer
+Sys_ClearObjectBufferFirstHalf:
                 lea     (PlayerObjectType).w,a0         ; was: sub_2F7E
                 moveq   #0,d0
                 move.w  #$1F,d1
-Sys_ClearObjectBufferHalf_Loop:                         ; CODE XREF: Sys_ClearObjectBufferHalf+12   j  ; was: loc_2F88
+Sys_ClearObjectBufferFirstHalf_Loop:                    ; CODE XREF: Sys_ClearObjectBufferFirstHalf+12   j  ; was: loc_2F88
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearObjectBufferHalf_Loop
+                dbf     d1,Sys_ClearObjectBufferFirstHalf_Loop
                 rts
-; End of function Sys_ClearObjectBufferHalf
-; Clears FFA600 buffer area (512 bytes)
-Sys_ClearBufferFFA600:
-                lea     (dword_FFA600).w,a0             ; was: sub_2F96
+; End of function Sys_ClearObjectBufferFirstHalf
+; Clears the second 512-byte half of the object buffer
+Sys_ClearObjectBufferSecondHalf:
+                lea     (ObjectBufferSecondHalf).w,a0   ; was: sub_2F96
                 moveq   #0,d0
                 move.w  #$1F,d1
-Sys_ClearBufferFFA600_Loop:                             ; CODE XREF: Sys_ClearBufferFFA600+12   j  ; was: loc_2FA0
+Sys_ClearObjectBufferSecondHalf_Loop:                   ; CODE XREF: Sys_ClearObjectBufferSecondHalf+12   j  ; was: loc_2FA0
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearBufferFFA600_Loop
+                dbf     d1,Sys_ClearObjectBufferSecondHalf_Loop
                 rts
-; End of function Sys_ClearBufferFFA600
-; Clears FFA400 and FFA600 buffers (96 bytes each)
-Sys_ClearDualObjectBuffers:                             ; CODE XREF: Gfx_InitializeChain   p  ; was: sub_2FAE
+; End of function Sys_ClearObjectBufferSecondHalf
+; Clears the first 96-byte object-shaped record in each buffer half
+Sys_ClearFirstRecordEachHalf:                           ; CODE XREF: Gfx_InitializeChain   p  ; was: sub_2FAE
                 lea     (PlayerObjectType).w,a0
                 moveq   #0,d0
                 move.w  #5,d1
-Sys_ClearDualObjectBuffers_FirstLoop:                   ; CODE XREF: Sys_ClearDualObjectBuffers+12   j  ; was: loc_2FB8
+Sys_ClearFirstRecordEachHalf_FirstHalfLoop:             ; CODE XREF: Sys_ClearFirstRecordEachHalf+12   j  ; was: loc_2FB8
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearDualObjectBuffers_FirstLoop
-                lea     (dword_FFA600).w,a0
+                dbf     d1,Sys_ClearFirstRecordEachHalf_FirstHalfLoop
+                lea     (ObjectBufferSecondHalf).w,a0
                 moveq   #0,d0
                 move.w  #5,d1
-Sys_ClearDualObjectBuffers_SecondLoop:                  ; CODE XREF: Sys_ClearDualObjectBuffers+28   j  ; was: loc_2FCE
+Sys_ClearFirstRecordEachHalf_SecondHalfLoop:            ; CODE XREF: Sys_ClearFirstRecordEachHalf+28   j  ; was: loc_2FCE
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearDualObjectBuffers_SecondLoop
+                dbf     d1,Sys_ClearFirstRecordEachHalf_SecondHalfLoop
                 rts
-; End of function Sys_ClearDualObjectBuffers
-; Clears FFA800 buffer area (256 bytes)
-Sys_ClearBufferFFA800:                                  ; CODE XREF: Sys_InitGraphicsChain+4   p  ; was: sub_2FDC
-                lea     (word_FFA800).w,a0
+; End of function Sys_ClearFirstRecordEachHalf
+; Clears the 256-byte area containing the orphaned object-shaped record
+Sys_ClearOrphanedObjectArea:                            ; CODE XREF: Sys_InitGraphicsChain+4   p  ; was: sub_2FDC
+                lea     (OrphanedObjectType).w,a0
                 moveq   #0,d0
                 move.w  #$F,d1
-Sys_ClearBufferFFA800_Loop:                             ; CODE XREF: Sys_ClearBufferFFA800+12   j  ; was: loc_2FE6
+Sys_ClearOrphanedObjectArea_Loop:                       ; CODE XREF: Sys_ClearOrphanedObjectArea+12   j  ; was: loc_2FE6
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearBufferFFA800_Loop
+                dbf     d1,Sys_ClearOrphanedObjectArea_Loop
                 rts
-; End of function Sys_ClearBufferFFA800
-; Clears first 96 bytes of FFA800 buffer
-Sys_ClearBufferFFA800Partial:                           ; CODE XREF: Gfx_InitializeChain+4   p  ; was: sub_2FF4
-                lea     (word_FFA800).w,a0
+; End of function Sys_ClearOrphanedObjectArea
+; Clears the 96-byte orphaned object-shaped record
+Sys_ClearOrphanedObjectRecord:                          ; CODE XREF: Gfx_InitializeChain+4   p  ; was: sub_2FF4
+                lea     (OrphanedObjectType).w,a0
                 moveq   #0,d0
                 move.w  #5,d1
-Sys_ClearBufferFFA800Partial_Loop:                      ; CODE XREF: Sys_ClearBufferFFA800Partial+12   j  ; was: loc_2FFE
+Sys_ClearOrphanedObjectRecord_Loop:                     ; CODE XREF: Sys_ClearOrphanedObjectRecord+12   j  ; was: loc_2FFE
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearBufferFFA800Partial_Loop
+                dbf     d1,Sys_ClearOrphanedObjectRecord_Loop
                 rts
-; End of function Sys_ClearBufferFFA800Partial
+; End of function Sys_ClearOrphanedObjectRecord
 ; Clears scroll position buffer for stage initialization
 Sys_ClearScrollBuffer:                                  ; CODE XREF: Sys_InitSubsystems+C   p  ; was: sub_300C
                 lea     (PrimaryCameraXPosition).w,a0
@@ -253,8 +253,8 @@ Sprite_ClearOAMBuildState_Loop:                         ; CODE XREF: Sprite_Clea
 ; End of function Sprite_ClearOAMBuildState
 ; Initializes graphics chain with RAM clear operations
 Gfx_InitializeChain:                                    ; CODE XREF: Sys_InitGraphicsChain   p  ; was: sub_3084
-                bsr.w   Sys_ClearDualObjectBuffers
-                bsr.w   Sys_ClearBufferFFA800Partial
+                bsr.w   Sys_ClearFirstRecordEachHalf
+                bsr.w   Sys_ClearOrphanedObjectRecord
                 lea     (SharedEffectObjectPool).w,a0
                 moveq   #0,d0
                 move.w  #$1CD,d1

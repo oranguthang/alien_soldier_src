@@ -495,8 +495,8 @@ VBlankCountdown         equ     $FFFFA282               ; was: word_FFA282
 GameModeIndex           equ     $FFFFA284               ; was: word_FFA284
 GameSubstateIndex       equ     $FFFFA286               ; was: word_FFA286
 SetupTransitionIndex    equ     $FFFFA29C               ; was: word_FFA29C
-byte_FFA300             equ     $FFFFA300
-byte_FFA3E0             equ     $FFFFA3E0
+MessageGlyphTileBuffer  equ     $FFFFA300               ; was: byte_FFA300
+SnakeScrollAccumulators equ     $FFFFA3E0               ; was: byte_FFA3E0
 PlayerObjectType        equ     $FFFFA400               ; was: word_FFA400
 PlayerObjectFlags       equ     $FFFFA402               ; was: word_FFA402
 PlayerStateOffset       equ     $FFFFA404               ; was: word_FFA404
@@ -512,18 +512,18 @@ byte_FFA420             equ     $FFFFA420
 word_FFA448             equ     $FFFFA448
 PlayerInvulnTimer       equ     $FFFFA45E               ; was: word_FFA45E
 PlayerPressedInput      equ     $FFFFA46A               ; was: byte_FFA46A
-dword_FFA600            equ     $FFFFA600
-word_FFA800             equ     $FFFFA800
-word_FFA802             equ     $FFFFA802
-dword_FFA808            equ     $FFFFA808
-word_FFA80C             equ     $FFFFA80C
-word_FFA80E             equ     $FFFFA80E
-word_FFA810             equ     $FFFFA810
-word_FFA812             equ     $FFFFA812
-word_FFA814             equ     $FFFFA814
-word_FFA816             equ     $FFFFA816
-dword_FFA818            equ     $FFFFA818
-dword_FFA81C            equ     $FFFFA81C
+ObjectBufferSecondHalf  equ     $FFFFA600               ; was: dword_FFA600
+OrphanedObjectType      equ     $FFFFA800               ; was: word_FFA800
+OrphanedObjectFlags     equ     $FFFFA802               ; was: word_FFA802
+OrphanedObjectSpriteMap equ     $FFFFA808               ; was: dword_FFA808
+OrphanedObjectAnimTimer equ     $FFFFA80C               ; was: word_FFA80C
+OrphanedObjectAttr      equ     $FFFFA80E               ; was: word_FFA80E
+OrphanedObjectXPosition equ     $FFFFA810               ; was: word_FFA810
+OrphanedObjectXFraction equ     $FFFFA812               ; was: word_FFA812
+OrphanedObjectYPosition equ     $FFFFA814               ; was: word_FFA814
+OrphanedObjectYFraction equ     $FFFFA816               ; was: word_FFA816
+OrphanedObjectXVelocity equ     $FFFFA818               ; was: dword_FFA818
+OrphanedObjectYVelocity equ     $FFFFA81C               ; was: dword_FFA81C
 PrimaryCameraXPosition  equ     $FFFFA900               ; was: dword_FFA900
 PrimaryCameraYPosition  equ     $FFFFA904               ; was: dword_FFA904
 SecondaryCameraXPos     equ     $FFFFA908               ; was: dword_FFA908
