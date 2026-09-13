@@ -4,9 +4,9 @@ Boss_AntroidMainHandler:                                ; DATA XREF: ROM:Entity_
                 beq.w   Boss_AntroidStateDispatch
                 tst.w   8(a5)
                 beq.s   Boss_AntroidStateDispatch
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_AntroidMainUpdateActive
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_AntroidMainUpdateActive
                 tst.w   (BossHealth).w
                 beq.w   Boss_AntroidBeginRamAttack
@@ -109,7 +109,7 @@ Boss_AntroidPhaseGateAdvance:                           ; CODE XREF: Boss_Antroi
 Boss_AntroidWaitForStageReady:                          ; DATA XREF: ROM:0003752A   o  ; was: loc_375FE
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_AntroidWaitForStageReadyAnimate
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 subi.w  #$40,(CameraXLowerBound).w      ; '@'
                 clr.w   $1DE(a5)
                 move.w  #6,4(a5)

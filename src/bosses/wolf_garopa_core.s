@@ -4,9 +4,9 @@ Boss_WolfGaropaUpdate:                                  ; DATA XREF: ROM:Entity_
                 beq.w   Boss_WolfGaropaDispatchState
                 tst.w   8(a5)
                 beq.s   Boss_WolfGaropaDispatchState
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_WolfGaropaRunDefeatEffects
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_WolfGaropaRunDefeatEffects
                 tst.w   (BossHealth).w
                 beq.w   Boss_WolfGaropaBeginDefeatTransition
@@ -171,7 +171,7 @@ Boss_WolfGaropaUpdateBattleStartWait:                   ; DATA XREF: Boss_WolfGa
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_WolfGaropaUpdateMovementAndOrbTarget
                 addq.w  #2,4(a5)
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 bra.w   Boss_WolfGaropaBeginOrbAttackCycle
 ; ---------------------------------------------------------------------------
 Boss_WolfGaropaUpdateMovementAndOrbTarget:              ; CODE XREF: Boss_WolfGaropaUpdateLeftEntry+6   j  ; was: loc_4FB4C

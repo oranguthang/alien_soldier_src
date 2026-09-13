@@ -201,7 +201,7 @@ Boss_SunsetStingIntroSelectOscillationLimit:            ; CODE XREF: Boss_Sunset
 Boss_SunsetStingIntroWaitForBanner:                     ; CODE XREF: Boss_SunsetStingWaitForBattleBanner+18   j  ; was: loc_42CA4
                 tst.w   (MessageSequenceState).w
                 bne.w   Boss_SunsetStingReturn
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 move.w  #$620,(CameraXLowerBound).w
                 move.w  #$6A0,(CameraXUpperBound).w
                 bra.w   Boss_SunsetStingNextState

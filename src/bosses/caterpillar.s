@@ -346,11 +346,11 @@ Boss_CaterpillarShipController:                         ; DATA XREF: ROM:Entity_
                 move.w  d0,$4E(a5)
                 btst    #1,$4C(a5)
                 bne.s   Boss_CaterpillarUpdateShipTrailHistory
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_CaterpillarUpdateShipTrailHistory
                 tst.w   (BossHealth).w
                 bne.s   Boss_CaterpillarUpdateShipTrailHistory
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 move.w  #$A,4(a5)
 Boss_CaterpillarUpdateShipTrailHistory:                 ; CODE XREF: Boss_CaterpillarShipController+1A   j  ; was: loc_3D4EC
                                         ; Boss_CaterpillarShipController+22   j
@@ -418,7 +418,7 @@ Boss_CaterpillarShipInit:                               ; DATA XREF: ROM:Boss_Ca
                 move.l  #$F010F010,$28(a5)
                 move.w  #$28,$24(a5)                    ; '('
                 move.w  #$80,$26(a5)
-                move.b  #6,(byte_FF80EC).w
+                move.b  #6,(BossColorEffectFlags).w
                 move.w  #6,d7
                 lea     $60(a5),a0
 Boss_CaterpillarInitializeShipTrailPart:                ; CODE XREF: Boss_CaterpillarShipInit+C8   j  ; was: loc_3D5D4
@@ -446,7 +446,7 @@ Boss_CaterpillarShipInitReturn:                         ; CODE XREF: Boss_Caterp
 Boss_CaterpillarShipBeginOscillationState:              ; DATA XREF: ROM:0003D554   o  ; was: sub_3D630
                 bsr.w   Boss_CaterpillarUpdateShipSteering
                 move.b  #$80,$23(a5)
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 clr.w   $4A(a5)
                 move.w  #$220,(dword_FF9408).w
                 move.w  #$80,$48(a5)

@@ -4,9 +4,9 @@ Boss_DeepStriderMain:                                   ; DATA XREF: ROM:Entity_
                 beq.w   Boss_DeepStriderStateDispatch
                 tst.w   8(a5)
                 beq.s   Boss_DeepStriderStateDispatch
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_DeepStriderUpdateStageRelativeX
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_DeepStriderUpdateStageRelativeX
                 tst.w   (BossHealth).w
                 beq.w   Boss_DeepStriderBeginDefeat
@@ -188,7 +188,7 @@ Boss_DeepStriderBattleEntryPoseState:                   ; CODE XREF: Boss_DeepSt
                 bne.s   Boss_DeepStriderUpdateBattleEntryPose
                 addq.w  #2,4(a5)
                 move.w  #$40,$17E(a5)                   ; '@'
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 subi.w  #$A0,(CameraXLowerBound).w
 Boss_DeepStriderUpdateBattleEntryPose:                  ; CODE XREF: Boss_DeepStriderBattleEntryDelayState+4   j  ; was: loc_3E80C
                                         ; Boss_DeepStriderBattleEntryPoseState+4   j
@@ -489,7 +489,7 @@ Boss_DeepStriderDiveAttackStateReturn:                  ; CODE XREF: Boss_DeepSt
 ; Starts the final defeat sequence after the boss counter reaches zero
 Boss_DeepStriderBeginDefeat:                            ; CODE XREF: Boss_DeepStriderMain+22   j  ; was: sub_3EBCA
                 move.w  #4,(word_FF808C).w
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 bset    #0,(StageTimerPauseFlag).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  #$1E,4(a5)

@@ -145,7 +145,7 @@ Boss_SharpssteelBeginDefeatFragmentBurst:               ; CODE XREF: Boss_Sharps
                 clr.w   8(a5)
                 bset    #0,(StageTimerPauseFlag).w
                 move.w  #8,(word_FF808C).w
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  #$1E,4(a5)
                 clr.w   2(a5)

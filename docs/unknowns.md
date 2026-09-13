@@ -6946,3 +6946,22 @@ Provenance rises from 15,936 to 15,941 mappings and the audit registry from
 13,136 to 13,141. The semantic review upper bound remains 3,100 because every
 new mapping has a matching record. The enforced address-derived ceiling falls
 from 115 to 110, all still confined to RAM equates.
+
+The defeat and boss-color pass replaces two raw globals and corrects four
+misleading Sonnet-era labels. `PlayerDefeatPhase` distinguishes normal zero,
+negative `$8000` defeat-animation processing, and positive state two for the
+final timed exit. The former “invulnerability” initializer is reached only
+when health or stage time is zero; its updater selects `GameplayExitMode` one,
+requests the fade, and spawns player-death sparks. The separate
+`Player_UpdateInvulnerabilityTimer` routine remains unchanged because it does
+manage the player's actual hit-flash/invulnerability timer. The other global,
+`BossColorEffectFlags`, is shared by combat collision, boss controllers, and
+the boss color-fade engine, so the name deliberately does not assign individual
+bit meanings beyond the proven subsystem boundary.
+
+The two RAM definitions add provenance, and all six corrected or new names add
+exact-address audit records. Provenance rises from 15,941 to 15,943 mappings
+and the audit registry from 13,141 to 13,147. Auditing the four existing code
+labels reduces the semantic review upper bound from 3,100 to 3,096. The
+enforced address-derived ceiling falls from 110 to 108, all still confined to
+RAM equates.

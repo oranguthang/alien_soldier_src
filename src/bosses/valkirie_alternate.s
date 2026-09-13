@@ -3,9 +3,9 @@ Boss_ValkirieAlternateMain:                             ; DATA XREF: ROM:Entity_
                 beq.w   Boss_ValkirieAlternateDispatchState
                 tst.w   8(a5)
                 beq.s   Boss_ValkirieAlternateDispatchState
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_ValkirieAlternateUpdatePalette
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_ValkirieAlternateUpdatePalette
                 tst.w   (BossHealth).w
                 bne.s   Boss_ValkirieAlternateUpdatePalette
@@ -63,7 +63,7 @@ Boss_ValkirieAlternateInitState2:
                 move.w  #$FFFF,$C(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
 ; End of function Boss_ValkirieAlternateInitState2
@@ -81,7 +81,7 @@ Boss_ValkirieAlternateInitState4:                       ; CODE XREF: Boss_Valkir
                 move.w  #$FFFF,$C(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
                 move.w  #$70,$11C(a5)                   ; 'p'

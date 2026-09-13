@@ -65,7 +65,7 @@ Boss_ZLeoBeginPostAttackDelay:                          ; CODE XREF: Boss_ZLeoBe
                 move.l  #$100000,(SecondaryCameraYPos).w
                 move.l  #$F00000,$35C(a5)
                 move.w  #$20,$11C(a5)                   ; ' '
-                bclr    #1,(byte_FF80EC).w
+                bclr    #1,(BossColorEffectFlags).w
                 move.b  #$10,$21(a5)
 ; Hold the restored position before returning to attack selection
 Boss_ZLeoRunPostAttackDelay:                            ; DATA XREF: ROM:00051BB8   o  ; was: loc_5260A

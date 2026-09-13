@@ -228,7 +228,7 @@ Weapon_ClearRuntimeParameters:                          ; CODE XREF: WeaponSelec
 ; Updates the weapon-selection overlay and handles its close transition
 WeaponSelect_Update:                                    ; DATA XREF: ROM:00017998   o  ; was: sub_17B8A
                 bsr.w   WeaponSelect_CommitSelectedSlot
-                tst.w   (word_FF80E6).w
+                tst.w   (PlayerDefeatPhase).w
                 bne.w   WeaponSelect_StartCloseDelay
                 btst    #6,(byte_FF8244).w
                 bne.s   WeaponSelect_UpdateOpenState

@@ -220,7 +220,7 @@ Collision_CheckWeaponProjectilesAgainstEnemies_NextWeaponSlot:  ; CODE XREF: Col
                 rts
 ; ---------------------------------------------------------------------------
 Collision_CheckWeaponProjectilesAgainstEnemies_ResolveFlaggedTarget:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+58   j  ; was: loc_13D36
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Collision_CheckWeaponProjectilesAgainstEnemies_CheckLinkedTarget
                 tst.w   (BossHealth).w
                 beq.s   Collision_CheckWeaponProjectilesAgainstEnemies_NextTarget
@@ -230,7 +230,7 @@ Collision_CheckWeaponProjectilesAgainstEnemies_CheckLinkedTarget:  ; CODE XREF: 
                 cmpa.w  (WeaponTargetOrFrame).w,a2
                 bne.s   Collision_CheckWeaponProjectilesAgainstEnemies_NextTarget
 Collision_CheckWeaponProjectilesAgainstEnemies_ApplyFlaggedDamage:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+80   j  ; was: loc_13D52
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.w   Collision_CheckWeaponProjectilesAgainstEnemies_ResolveBlockedHit
                 btst    #4,$23(a2)
                 bne.w   Collision_CheckWeaponProjectilesAgainstEnemies_ResolveBlockedHit
@@ -243,9 +243,9 @@ Collision_CheckWeaponProjectilesAgainstEnemies_ApplyFlaggedDamage:  ; CODE XREF:
                 beq.s   Collision_CheckWeaponProjectilesAgainstEnemies_MarkFlaggedHit
                 move.b  #$AE,d0
                 jsr     (Sound_PlaySFX).l
-                bset    #3,(byte_FF80EC).w
+                bset    #3,(BossColorEffectFlags).w
 Collision_CheckWeaponProjectilesAgainstEnemies_MarkFlaggedHit:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+B4   j  ; was: loc_13D90
-                bset    #0,(byte_FF80EC).w
+                bset    #0,(BossColorEffectFlags).w
                 bset    #7,$22(a3)
                 bset    #6,$22(a2)
                 btst    #7,$23(a3)
@@ -262,7 +262,7 @@ Collision_CheckWeaponProjectilesAgainstEnemies_SubtractFlaggedHealth:  ; CODE XR
                 bpl.w   Collision_CheckWeaponProjectilesAgainstEnemies_NextWeaponSlot
                 clr.w   (BossHealth).w
                 clr.w   (BossMaxHealth).w
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 clr.w   (BossCombatCounter).w
                 clr.w   (BossCombatCounterMax).w
                 clr.b   (BossCounterMaxFlag).w
@@ -502,13 +502,13 @@ Collision_CheckSpecialAttackTargets_Return:             ; CODE XREF: Collision_C
                 rts
 ; ---------------------------------------------------------------------------
 Collision_CheckSpecialAttackTargets_ResolveFlaggedTarget:  ; CODE XREF: Collision_CheckSpecialAttackTargets+8A   j  ; was: loc_140A2
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Collision_CheckSpecialAttackTargets_ApplyFlaggedDamage
                 tst.w   (BossHealth).w
                 beq.s   Collision_CheckSpecialAttackTargets_NextTarget
 Collision_CheckSpecialAttackTargets_ApplyFlaggedDamage:  ; CODE XREF: Collision_CheckSpecialAttackTargets+9C   j  ; was: loc_140B0
                 bset    #7,$22(a3)
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Collision_CheckSpecialAttackTargets_NextTarget
                 btst    #4,$23(a2)
                 bne.s   Collision_CheckSpecialAttackTargets_NextTarget
@@ -519,7 +519,7 @@ Collision_CheckSpecialAttackTargets_ApplyFlaggedDamage:  ; CODE XREF: Collision_
                 move.b  $21(a3),d4
                 or.b    d4,(CombatHitFlags).w
                 bset    #0,(CombatHitFlags).w
-                bset    #0,(byte_FF80EC).w
+                bset    #0,(BossColorEffectFlags).w
                 or.b    d4,$22(a2)
                 move.w  $26(a3),d4
                 move.w  $24(a2),(CombatPercentIndex).w
@@ -529,7 +529,7 @@ Collision_CheckSpecialAttackTargets_ApplyFlaggedDamage:  ; CODE XREF: Collision_
                 bpl.s   Collision_CheckSpecialAttackTargets_NextTarget
                 clr.w   (BossHealth).w
                 clr.w   (BossMaxHealth).w
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 clr.w   (BossCombatCounter).w
                 clr.w   (BossCombatCounterMax).w
                 clr.b   (BossCounterMaxFlag).w

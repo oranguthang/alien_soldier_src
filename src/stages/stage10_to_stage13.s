@@ -305,7 +305,7 @@ Stage12_StartTeleportTransitionToStage13:               ; DATA XREF: ROM:0000D98
 ; End of function Stage12_StartTeleportTransitionToStage13
 ; Delay, initialize, and apply the first Stage 12-to-13 teleport fade
 Stage12To13_UpdateTeleportFadeIn:                       ; DATA XREF: ROM:0000D982   o  ; was: sub_DBF4
-                tst.w   (word_FF80E6).w
+                tst.w   (PlayerDefeatPhase).w
                 beq.s   Stage12To13_AdvanceTeleportFadeDelay
                 bpl.s   Stage12To13_ApplyTeleportFadeLevel
 Stage12To13_AdvanceTeleportFadeDelay:                   ; CODE XREF: Stage12To13_UpdateTeleportFadeIn+4   j  ; was: loc_DBFC

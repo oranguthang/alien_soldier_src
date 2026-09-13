@@ -14,13 +14,13 @@ Boss_DestroyerMK2Main:                                  ; DATA XREF: ROM:Entity_
                 sub.w   d0,(BossCombatCounter).w
 Boss_DestroyerMK2CheckFinalTransitionTrigger:           ; CODE XREF: Boss_DestroyerMK2Main+12   j  ; was: loc_4A876
                                         ; Boss_DestroyerMK2Main+1C   j
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_DestroyerMK2UpdateEncounterEffects
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_DestroyerMK2UpdateEncounterEffects
                 tst.w   (BossHealth).w
                 bne.s   Boss_DestroyerMK2UpdateEncounterEffects
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 bset    #0,$4C(a5)
                 move.w  #$2A,4(a5)                      ; '*'
                 bset    #0,(StageTimerPauseFlag).w
@@ -322,7 +322,7 @@ Boss_DestroyerMK2WaitForExternalEffectState:            ; DATA XREF: ROM:0004A91
                 bne.s   Boss_DestroyerMK2WaitForExternalEffectReturn
                 addq.w  #2,4(a5)
                 subi.w  #$A0,(CameraXLowerBound).w
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 movea.w #(NinthEntityType-M68K_RAM),a0
                 move.w  #8,d7
 Boss_DestroyerMK2LowerOrbitingPartCollisionLoop:        ; CODE XREF: Boss_DestroyerMK2WaitForExternalEffectState+2A   j  ; was: loc_4AC9C

@@ -41,7 +41,7 @@ Projectile_MissirayAndRisingShotMain:                   ; DATA XREF: ROM:Entity_
                 bcc.s   Projectile_MissirayAndRisingShotDispatchState
                 cmpi.w  #$3E0,(Entity57Type).w
                 bne.s   Projectile_MissirayAndRisingShotCheckCollision
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.w   Projectile_MissirayAndRisingShotBeginImpact
                 moveq   #0,d0
                 move.b  $2C(a5),d0
@@ -351,7 +351,7 @@ Projectile_MissirayBulletMain:                          ; DATA XREF: ROM:Entity_
                 beq.s   Projectile_MissirayBulletDispatchState
                 bclr    #7,$22(a5)
                 bne.s   Projectile_MissirayBulletBeginImpact
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Projectile_MissirayBulletBeginImpact
                 tst.w   $24(a5)
                 bpl.s   Projectile_MissirayBulletDispatchState

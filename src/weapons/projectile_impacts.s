@@ -524,7 +524,7 @@ Effect_CreateExplosionDebris:                           ; CODE XREF: Weapon_Upda
                 rts
 ; End of function Effect_CreateExplosionDebris
 ; Spawns spark particle during player death sequence
-Effect_SpawnPlayerDeathSpark:                           ; CODE XREF: Player_HandleInvulnerabilityTimer:Player_HandleInvulnerabilityTimer_SpawnSpark   j  ; was: sub_190D2
+Effect_SpawnPlayerDeathSpark:                           ; CODE XREF: Player_UpdateDefeatExitState:Player_UpdateDefeatExitState_SpawnSpark   j  ; was: sub_190D2
                                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o
                 movea.w #(SharedEffectObjectPool-M68K_RAM),a0
                 moveq   #$F,d7

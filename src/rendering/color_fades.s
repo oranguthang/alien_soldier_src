@@ -11,8 +11,8 @@ Gfx_ResetDefaultColorFadeState:                         ; CODE XREF: Boss_LoadAs
 Gfx_ClearColorFadeState:                                ; CODE XREF: Boss_FlyingNeoSetup+E2   p  ; was: sub_3C0E
                                         ; Boss_ViblackInit+AC   p
                 clr.w   (ColorFadePhase).w
-                bclr    #0,(byte_FF80EC).w
-                bclr    #3,(byte_FF80EC).w
+                bclr    #0,(BossColorEffectFlags).w
+                bclr    #3,(BossColorEffectFlags).w
                 rts
 ; End of function Gfx_ClearColorFadeState
 ; Loads the default entry list and falls through to process one color-fade step
@@ -29,10 +29,10 @@ Gfx_ProcessColorFade:                                   ; CODE XREF: Boss_Flying
                 moveq   #0,d3
                 tst.w   (ColorFadePhase).w
                 bne.s   Gfx_ProcessColorFade_AdvanceStep
-                bclr    #0,(byte_FF80EC).w
+                bclr    #0,(BossColorEffectFlags).w
                 beq.w   Gfx_ProcessColorFade_Return
                 move.w  #$A,(ColorFadePhase).w
-                bclr    #3,(byte_FF80EC).w
+                bclr    #3,(BossColorEffectFlags).w
                 beq.w   Gfx_ProcessColorFade_AdvanceStep
                 move.w  #$19,(ColorFadePhase).w
 Gfx_ProcessColorFade_AdvanceStep:                       ; CODE XREF: Gfx_ProcessColorFade+A   j  ; was: loc_3C52
@@ -95,7 +95,7 @@ Gfx_ProcessColorFade_StoreColor:                        ; CODE XREF: Gfx_Process
                 or.w    d1,d5
                 move.w  d5,(a1)
                 dbf     d7,Gfx_ProcessColorFade_ColorLoop
-                bclr    #0,(byte_FF80EC).w
+                bclr    #0,(BossColorEffectFlags).w
 Gfx_ProcessColorFade_Return:                            ; CODE XREF: Gfx_ProcessColorFade+12   j  ; was: locret_3CCC
                 rts
 ; End of function Gfx_ProcessColorFade
@@ -105,7 +105,7 @@ Gfx_InitColorFadeState:
                 nop
                 clr.w   (ColorFadeTriggerState).w
                 clr.w   (ColorFadePhase).w
-                bclr    #0,(byte_FF80EC).w
+                bclr    #0,(BossColorEffectFlags).w
                 rts
 ; End of function Gfx_InitColorFadeState
 ; Processes complex color fade effects with RGB component clamping
@@ -124,7 +124,7 @@ Gfx_ProcessColorFadeEffect:
 Gfx_ProcessColorFadeEffect_StartRandomChannelFade:      ; CODE XREF: Gfx_ProcessColorFadeEffect+14   j  ; was: loc_3D02
                 move.w  #$FFFF,(ColorFadeTriggerState).w
                 clr.w   (ColorFadePhase).w
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.w   Gfx_ProcessColorFadeEffect_Return
                 move.w  (FrameCounter).w,d0
                 move.w  d0,d4
@@ -155,7 +155,7 @@ Gfx_RandomFadeChannelMaskTable: dc.w    1, 2, 4, 3, 6, 5, 3, 5  ; was: word_3D4E
 Gfx_ProcessColorFadeEffect_AdvanceOscillation:          ; CODE XREF: Gfx_ProcessColorFadeEffect+10   j  ; was: loc_3D5E
                 tst.w   (ColorFadePhase).w
                 bne.s   Gfx_ProcessColorFadeEffect_PrepareOscillationDeltas
-                bclr    #0,(byte_FF80EC).w
+                bclr    #0,(BossColorEffectFlags).w
                 beq.w   Gfx_ProcessColorFadeEffect_Return
 Gfx_ProcessColorFadeEffect_PrepareOscillationDeltas:    ; CODE XREF: Gfx_ProcessColorFadeEffect+7E   j  ; was: loc_3D6E
                 move.w  (ColorFadePhase).w,d2
@@ -219,7 +219,7 @@ Gfx_ProcessColorFadeEffect_StoreColor:                  ; CODE XREF: Gfx_Process
                 or.w    d1,d5
                 move.w  d5,(a1)
                 dbf     d7,Gfx_ProcessColorFadeEffect_ColorLoop
-                bclr    #0,(byte_FF80EC).w
+                bclr    #0,(BossColorEffectFlags).w
 Gfx_ProcessColorFadeEffect_Return:                      ; CODE XREF: Gfx_ProcessColorFadeEffect+2E   j  ; was: locret_3DF2
                                         ; Gfx_ProcessColorFadeEffect+86   j
                 rts

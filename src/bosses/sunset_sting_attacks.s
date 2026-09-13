@@ -136,7 +136,7 @@ Boss_SunsetStingQueueSecondFormIntroMessageState:       ; DATA XREF: ROM:0004194
 Boss_SunsetStingWaitForSecondFormIntroMessageState:     ; DATA XREF: ROM:0004194C   o  ; was: sub_41AC2
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_SunsetStingSecondFormIntroUpdate
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 addq.w  #2,4(a5)
 Boss_SunsetStingSecondFormIntroUpdate:                  ; CODE XREF: Boss_SunsetStingQueueSecondFormIntroMessageState+4   j  ; was: loc_41AD0
                                         ; Boss_SunsetStingQueueSecondFormIntroMessageState+14   j

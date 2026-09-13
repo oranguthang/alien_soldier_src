@@ -3,9 +3,9 @@ Entity_UpdateValkirieBattle:                            ; DATA XREF: ROM:Entity_
                 beq.w   Entity_DispatchValkirieBattleState
                 tst.w   8(a5)
                 beq.s   Entity_DispatchValkirieBattleState
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Entity_UpdateValkirieBattleActive
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Entity_UpdateValkirieBattleActive
                 tst.w   (BossHealth).w
                 bne.s   Entity_UpdateValkirieBattleActive
@@ -134,7 +134,7 @@ Entity_UpdateValkirieBattleState6:                      ; DATA XREF: ROM:000557C
                 tst.w   (MessageSequenceState).w
                 bne.s   Entity_RenderValkirieBattleState6
                 addq.w  #2,4(a5)
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 clr.w   (PlayerScriptStateOffset).w
                 subi.w  #$58,(CameraXLowerBound).w      ; 'X'
                 bra.w   Entity_StartValkirieBattleState8

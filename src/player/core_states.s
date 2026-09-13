@@ -51,14 +51,14 @@ Player_Update:                                          ; CODE XREF: Sys_Gamepla
                 bsr.w   Input_ReadPlayerInput
                 clr.b   (byte_FF8244).w
                 clr.w   6(a5)
-                tst.w   (word_FF80E6).w
+                tst.w   (PlayerDefeatPhase).w
                 beq.s   Player_Update_CheckGameplayReady
-                bpl.w   Player_HandleInvulnerabilityTimer
+                bpl.w   Player_UpdateDefeatExitState
 Player_Update_CheckGameplayReady:                       ; CODE XREF: Player_Update+2A   j  ; was: loc_14FC8
                 tst.w   (StageTimeRemaining).w
-                beq.w   Player_InitInvulnerabilityState
+                beq.w   Player_InitDefeatExitState
                 tst.w   (PlayerHealth).w
-                beq.w   Player_InitInvulnerabilityState
+                beq.w   Player_InitDefeatExitState
                 btst    #0,(PlayerModeFlags).w
                 bne.w   Player_UpdateSevenForcesBattle
                 btst    #2,(PlayerModeFlags).w
@@ -163,7 +163,7 @@ Player_HandleDeathSequence:                             ; CODE XREF: Player_Upda
                 move.b  #$2B,d0                         ; '+'
                 jsr     (Sound_PlaySFX).l
                 move.b  #$73,(PlayerInputMask).w        ; 's'
-                move.w  #$8000,(word_FF80E6).w
+                move.w  #$8000,(PlayerDefeatPhase).w
                 jsr     (Sys_ClearObjectBlocks17).l
                 move.b  #1,(PlayerAirDashUsedFlag).w
                 move.b  #1,(PlayerAirShotUsedFlag).w
@@ -208,7 +208,7 @@ Player_HandleDeathSequence_RenderParticles:             ; CODE XREF: Player_Hand
 ; ---------------------------------------------------------------------------
 Player_HandleDeathSequence_BeginRespawn:                ; CODE XREF: Player_HandleDeathSequence+A4   j  ; was: loc_15186
                                         ; Player_HandleDeathSequence+BE   j
-                clr.w   (word_FF80E6).w
+                clr.w   (PlayerDefeatPhase).w
                 move.b  #$7F,(PlayerInputMask).w
                 move.w  #$38,4(a5)                      ; '8'
                 move.w  #$CD00,2(a5)

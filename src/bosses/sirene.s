@@ -4,9 +4,9 @@ Boss_UpdateSirene:                                      ; DATA XREF: ROM:Entity_
                 beq.w   Boss_DispatchSireneState
                 tst.w   8(a5)
                 beq.s   Boss_DispatchSireneState
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_UpdateSireneBattleEffects
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_UpdateSireneBattleEffects
                 tst.w   (BossHealth).w
                 bne.s   Boss_UpdateSireneBattleEffects
@@ -210,7 +210,7 @@ Boss_UpdateSireneState10:                               ; DATA XREF: ROM:0005750
                 clr.w   (PlayerScriptStateOffset).w
                 subi.w  #$20,(CameraXLowerBound).w      ; ' '
                 addi.w  #$20,(CameraXUpperBound).w      ; ' '
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 bclr    #0,(StageTimerPauseFlag).w
                 movea.l #Boss_SireneObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l

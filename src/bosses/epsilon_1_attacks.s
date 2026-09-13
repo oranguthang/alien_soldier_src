@@ -72,7 +72,7 @@ Boss_Epsilon1WaitForBattleMessageState:                 ; DATA XREF: ROM:00045D0
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_Epsilon1WaitForBattleMessageReturn
                 addq.w  #2,4(a5)
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 move.w  #$40,$48(a5)                    ; '@'
 Boss_Epsilon1WaitForBattleMessageReturn:                ; CODE XREF: Boss_Epsilon1WaitForBattleMessageState+4   j  ; was: locret_46278
                 rts

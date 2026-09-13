@@ -122,7 +122,7 @@ Player_AlternateSpecialState_SelectFrame:               ; CODE XREF: Player_Alte
 ; Enters the forced-position state and clears player motion
 Player_InitForcedPositionState:                         ; CODE XREF: Player_Update+72   p  ; was: sub_16210
                 move.b  #$7F,(PlayerInputMask).w
-                move.w  #$8000,(word_FF80E6).w
+                move.w  #$8000,(PlayerDefeatPhase).w
                 move.w  #$32,4(a5)                      ; '2'
                 move.b  #$80,$21(a5)
                 move.w  #4,$5C(a5)
@@ -174,7 +174,7 @@ Player_InitKnockbackState:                              ; CODE XREF: Player_Upda
                                         ; Player_HandleForcedPositionState+5A   j
                 move.b  #$7F,(PlayerInputMask).w
                 bclr    #4,$E(a5)
-                move.w  #$8000,(word_FF80E6).w
+                move.w  #$8000,(PlayerDefeatPhase).w
                 jsr     (Sys_ClearObjectBlocks17).l
                 move.w  #$2A,4(a5)                      ; '*'
                 move.w  #$C,$48(a5)
@@ -267,7 +267,7 @@ Player_StateNoOp_Return:                                ; CODE XREF: Player_Knoc
 ; Clears player knockback flag and resets sprite state after hit
 Player_ClearKnockbackState:                             ; CODE XREF: Player_KnockbackState+1A   p  ; was: sub_163BE
                                         ; Player_KnockbackState+50   p
-                clr.w   (word_FF80E6).w
+                clr.w   (PlayerDefeatPhase).w
                 move.w  #$CD00,2(a5)
                 move.b  #$81,$21(a5)
                 rts

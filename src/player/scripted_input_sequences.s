@@ -302,7 +302,7 @@ PlayerScript_WaitForXiTigerIntroState20_Return:         ; CODE XREF: PlayerScrip
 ; End of function PlayerScript_WaitForXiTigerIntroState20
 ; Start player state $48 once the Viblack readiness word clears
 PlayerScript_StartViblackPlayerState30:                 ; DATA XREF: ROM:00019A64   o  ; was: sub_19D4E
-                tst.w   (word_FF80E6).w
+                tst.w   (PlayerDefeatPhase).w
                 bne.s   PlayerScript_StartViblackPlayerState30_Return
                 move.w  #$48,(PlayerStateOffset).w      ; 'H'
 PlayerScript_StartViblackPlayerState30_Return:          ; CODE XREF: PlayerScript_StartViblackPlayerState30+4   j  ; was: locret_19D5A

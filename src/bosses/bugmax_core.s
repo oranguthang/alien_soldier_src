@@ -402,13 +402,13 @@ Boss_BugmaxProjectSecondaryChainPart:                   ; CODE XREF: Boss_Bugmax
                 bsr.w   Boss_BugmaxToggleCentralPartMapping
 Boss_BugmaxCheckForcedFinalState:                       ; CODE XREF: Boss_BugmaxUpdateLinkedChainGeometry+114   j  ; was: loc_4C392
                                         ; Boss_BugmaxUpdateReverseLinkedChainGeometry+8E   j
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_BugmaxDispatchMainState
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.w   Boss_BugmaxDispatchMainState
                 tst.w   (BossHealth).w
                 bne.s   Boss_BugmaxDispatchMainState
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
 Boss_BugmaxEnterForcedFinalState:                       ; was: loc_4C3B0
                 bset    #0,$5A(a5)
                 move.w  #$56,4(a5)                      ; 'V'
@@ -632,7 +632,7 @@ Boss_BugmaxWaitForOpeningTransition:                    ; DATA XREF: ROM:0004C3E
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_BugmaxOpeningTransitionWaitReturn
                 move.b  #$D0,$21(a5)
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 clr.w   (dword_FF9428+2).w
                 subi.w  #$A0,(CameraXLowerBound).w
                 addq.w  #2,4(a5)

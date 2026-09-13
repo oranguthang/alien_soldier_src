@@ -5,13 +5,13 @@ Boss_MissirayMain:                                      ; DATA XREF: ROM:Entity_
                 move.w  $10(a5),d0
                 add.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$4C(a5)
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_MissirayUpdateLinkedSegmentPositions
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.w   Boss_MissirayUpdateVScrollBuffer
                 tst.w   (BossHealth).w
                 bne.s   Boss_MissirayUpdateLinkedSegmentPositions
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 move.w  #$1A,4(a5)
                 bset    #0,(StageTimerPauseFlag).w
 Boss_MissirayUpdateLinkedSegmentPositions:              ; CODE XREF: Boss_MissirayMain+20   j  ; was: loc_537FC
@@ -423,7 +423,7 @@ Boss_MissirayStartBossMessage:                          ; DATA XREF: ROM:000538C
 Boss_MissirayWaitForBossMessage:                        ; DATA XREF: ROM:000538CC   o  ; was: sub_53C8A
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_MissirayWaitForBossMessageReturn
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 addq.w  #2,4(a5)
 Boss_MissirayWaitForBossMessageReturn:                  ; CODE XREF: Boss_MissirayWaitForBossMessage+4   j  ; was: locret_53C98
                 rts

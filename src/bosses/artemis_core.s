@@ -4,9 +4,9 @@ Boss_UpdateArtemis:                                     ; DATA XREF: ROM:Entity_
                 beq.w   Boss_DispatchArtemisState
                 tst.w   8(a5)
                 beq.s   Boss_DispatchArtemisState
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_UpdateArtemisBattleEffects
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_UpdateArtemisBattleEffects
                 tst.w   (BossHealth).w
                 bne.s   Boss_UpdateArtemisBattleEffects
@@ -193,7 +193,7 @@ Boss_EnterArtemisStateC:                                ; CODE XREF: Boss_Update
 Boss_UpdateArtemisStateC:                               ; DATA XREF: ROM:00057F2A   o  ; was: sub_58136
                 tst.w   $58(a5)
                 bpl.s   Boss_RenderArtemisStateC
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 bclr    #0,(StageTimerPauseFlag).w
                 clr.w   (PlayerScriptStateOffset).w
                 subi.w  #$40,(CameraXLowerBound).w      ; '@'

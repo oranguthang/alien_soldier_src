@@ -5,14 +5,14 @@ Boss_XiTigerMain:                                       ; DATA XREF: ROM:Entity_
                 beq.w   Boss_XiTigerDispatchState
                 tst.w   8(a5)
                 beq.s   Boss_XiTigerDispatchState
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_XiTigerUpdateStageRelativeCoordinates
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_XiTigerUpdateStageRelativeCoordinates
                 tst.w   (BossHealth).w
                 bne.s   Boss_XiTigerUpdateStageRelativeCoordinates
                 bset    #0,(StageTimerPauseFlag).w
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.b  #1,(SoundFadeOutDelay).w
                 move.w  #$FFFF,(MidgameLightningMode).w
@@ -198,7 +198,7 @@ Boss_XiTigerUpdateActiveBattlePose:                     ; CODE XREF: Boss_XiTige
 Boss_XiTigerWaitForSequenceState:                       ; DATA XREF: ROM:0003D892   o  ; was: sub_3DA94
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_XiTigerUpdateActiveBattlePose
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 addi.w  #$40,(CameraXUpperBound).w      ; '@'
                 bra.w   Boss_XiTigerSetIdleState
 ; End of function Boss_XiTigerWaitForSequenceState

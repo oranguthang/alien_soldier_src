@@ -20,13 +20,13 @@ Boss_JampanUpdateAndDispatch:                           ; CODE XREF: Boss_Jampan
                 sub.w   d0,(BossCombatCounter).w
 Boss_JampanCheckDefeatTrigger:                          ; CODE XREF: Boss_JampanUpdateAndDispatch+E   j
                                         ; Boss_JampanUpdateAndDispatch+18   j
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_JampanUpdateScreenPositionAndMotion
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_JampanUpdateScreenPositionAndMotion
                 tst.w   (BossHealth).w
                 bne.s   Boss_JampanUpdateScreenPositionAndMotion
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 bset    #0,$4C(a5)
                 clr.l   (StageMotionXDelta).w
                 move.w  #$52,4(a5)                      ; 'R'
@@ -393,7 +393,7 @@ Boss_JampanWaitForOpeningObjectClearState:              ; DATA XREF: ROM:000491E
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_JampanWaitForOpeningObjectClearReturn
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 move.w  #1,(TertiaryEntityWork52).w
                 move.w  #1,(FifthEntityWork52).w
                 addq.w  #2,4(a5)

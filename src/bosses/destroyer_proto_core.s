@@ -273,7 +273,7 @@ Boss_DestroyerProtoWaitForBattleStart:                  ; DATA XREF: ROM:0003151
                 bsr.w   Boss_DestroyerProtoUpdateViewportOffset
                 tst.w   (MessageSequenceState).w
                 bne.w   Entity_UpdateReturn
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 andi.b  #$EF,$23(a5)
                 move.w  #$20,$4A(a5)                    ; ' '
                 addq.w  #2,4(a5)

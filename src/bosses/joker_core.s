@@ -3,9 +3,9 @@ Boss_JokerMain:                                         ; DATA XREF: ROM:Entity_
                 beq.w   Boss_JokerDispatchState
                 tst.w   8(a5)
                 beq.s   Boss_JokerDispatchState
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_JokerUpdatePaletteAndScreenX
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_JokerUpdatePaletteAndScreenX
                 tst.w   (BossHealth).w
                 beq.w   Boss_JokerBeginDefeatFall
@@ -142,7 +142,7 @@ Boss_JokerWaitForPlayerSequenceState:                   ; DATA XREF: ROM:0003B30
 Boss_JokerPhaseGateCompletionDelayState:                ; DATA XREF: ROM:0003B302   o  ; was: loc_3B446
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_JokerUpdatePhaseGatePose
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 clr.w   $35C(a5)
                 subi.w  #$60,(CameraXLowerBound).w      ; '`'
                 addi.w  #$40,(CameraXUpperBound).w      ; '@'
@@ -191,7 +191,7 @@ Boss_JokerRenderPhaseGatePose:                          ; CODE XREF: Boss_JokerU
 ; Initializes Joker's health-zero falling sequence
 Boss_JokerBeginDefeatFall:                              ; CODE XREF: Boss_JokerMain+22   j  ; was: sub_3B4D8
                 move.w  #4,(word_FF808C).w
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 bset    #0,(StageTimerPauseFlag).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  #$1E,4(a5)

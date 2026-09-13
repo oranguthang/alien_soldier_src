@@ -3,9 +3,9 @@ Boss_UpdateMedusa:                                      ; DATA XREF: ROM:Entity_
                 beq.w   Boss_DispatchMedusaState
                 tst.w   8(a5)
                 beq.s   Boss_DispatchMedusaState
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_UpdateMedusaBattleEffects
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_UpdateMedusaBattleEffects
                 tst.w   (BossHealth).w
                 bne.s   Boss_UpdateMedusaBattleEffects
@@ -188,7 +188,7 @@ Boss_EnterMedusaStateA:                                 ; CODE XREF: Boss_Update
 Boss_UpdateMedusaStateA:                                ; DATA XREF: ROM:000569FA   o  ; was: loc_56C04
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_UpdateMedusaStateAApproach
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 bclr    #0,(StageTimerPauseFlag).w
                 move.w  #1,(word_FF9804).w
                 move.l  #Medusa_StateASpawnSchedule,$59C(a5)

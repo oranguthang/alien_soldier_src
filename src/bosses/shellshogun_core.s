@@ -3,9 +3,9 @@ Boss_ShellshogunMainHandler:                            ; DATA XREF: ROM:Entity_
                 beq.w   Boss_ShellshogunDispatchState
                 tst.w   $26(a5)
                 beq.w   Boss_ShellshogunDispatchState
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_ShellshogunUpdatePaletteAndScreenPosition
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_ShellshogunUpdatePaletteAndScreenPosition
                 tst.w   (BossHealth).w
                 beq.w   Boss_ShellshogunBeginDefeat
@@ -190,7 +190,7 @@ Boss_ShellshogunWaitForStageReadyState:                 ; DATA XREF: ROM:0003952
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_ShellshogunWaitForStageReadyReturn
                 addq.w  #2,4(a5)
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 subi.w  #$40,(CameraXLowerBound).w      ; '@'
 Boss_ShellshogunWaitForStageReadyReturn:                ; CODE XREF: Boss_ShellshogunWaitForStageReadyState+E   j  ; was: locret_39776
                 rts
@@ -199,7 +199,7 @@ Boss_ShellshogunWaitForStageReadyReturn:                ; CODE XREF: Boss_Shells
 Boss_ShellshogunBeginDefeat:                            ; CODE XREF: Boss_ShellshogunMainHandler+24   j  ; was: sub_39778
                 move.b  #1,(SoundFadeOutDelay).w
                 bset    #0,(StageTimerPauseFlag).w
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  #$48,(word_FF809E).w            ; 'H'
                 move.w  #$12,4(a5)

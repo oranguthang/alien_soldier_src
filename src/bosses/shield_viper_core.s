@@ -7,11 +7,11 @@ Boss_ShieldViperUpdate:                                 ; DATA XREF: ROM:Entity_
                 move.w  d0,$5A(a5)
                 bsr.w   Gfx_ShieldViperUpdateBodyMappings
                 jsr     (Gfx_ProcessDefaultColorFade).l
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_ShieldViperUpdateGeometryUnlessTransitioning
                 tst.w   (BossHealth).w
                 bne.s   Boss_ShieldViperUpdateGeometryUnlessTransitioning
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 move.w  #$70,4(a5)                      ; 'p'
                 bset    #0,$58(a5)
                 bset    #0,(StageTimerPauseFlag).w
@@ -256,7 +256,7 @@ Boss_ShieldViperInitialize:                             ; DATA XREF: ROM:Boss_Sh
                 move.l  #$F010F010,$28(a5)
                 move.w  #$14,$24(a5)
                 move.w  #$80,$26(a5)
-                move.b  #6,(byte_FF80EC).w
+                move.b  #6,(BossColorEffectFlags).w
                 move.b  #$80,$23(a5)
                 moveq   #0,d6
                 move.w  #$17,d7
@@ -434,7 +434,7 @@ Boss_ShieldViperWaitForStageTransitionAndEnterAttackSequence:  ; DATA XREF: ROM:
                 bsr.w   Boss_ShieldViperRotateAndMoveRadially
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_ShieldViperStageTransitionWaitReturn
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 move.w  #$32,4(a5)                      ; '2'
 Boss_ShieldViperStageTransitionWaitReturn:              ; CODE XREF: Boss_ShieldViperWaitForStageTransitionAndEnterAttackSequence+8   j  ; was: locret_4E304
                 rts

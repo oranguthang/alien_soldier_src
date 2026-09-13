@@ -6,11 +6,11 @@ Boss_SnakeMain:                                         ; DATA XREF: ROM:Entity_
                 move.w  d0,$4E(a5)
                 btst    #1,$4C(a5)
                 bne.s   Boss_SnakeUpdateBody
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_SnakeUpdateBody
                 tst.w   (BossHealth).w
                 bne.s   Boss_SnakeUpdateBody
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 move.w  #$A,4(a5)
 Boss_SnakeUpdateBody:                                   ; CODE XREF: Boss_SnakeMain+1A   j  ; was: loc_407D4
                                         ; Boss_SnakeMain+22   j
@@ -84,7 +84,7 @@ Boss_SnakeInit:                                         ; DATA XREF: ROM:Boss_Sn
                 move.l  #$F010F010,$28(a5)
                 move.w  #$28,$24(a5)                    ; '('
                 move.w  #$80,$26(a5)
-                move.b  #6,(byte_FF80EC).w
+                move.b  #6,(BossColorEffectFlags).w
                 move.b  #$80,$23(a5)
                 move.w  #$16,d7
                 clr.w   d6
@@ -119,7 +119,7 @@ Boss_SnakeInitReturn:                                   ; CODE XREF: Boss_SnakeI
 ; Initializes Snake's target-following encounter motion
 Boss_SnakeBeginEncounterState:                          ; DATA XREF: ROM:00040846   o  ; was: sub_40942
                 bsr.w   Boss_SnakeSteerTowardTarget
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 clr.w   $4A(a5)
                 move.w  (PrimaryCameraXPosition).w,(dword_FF9404+2).w
                 addi.w  #$120,(dword_FF9404+2).w

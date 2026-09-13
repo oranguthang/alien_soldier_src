@@ -122,7 +122,7 @@ Boss_WolfGaropaBeginDefeatTransition:                   ; CODE XREF: Boss_WolfGa
                 clr.w   $26(a5)
                 bset    #0,(StageTimerPauseFlag).w
                 move.w  #8,(word_FF808C).w
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 jmp     Sprite_ClearObjectFlags
 ; End of function Boss_WolfGaropaBeginDefeatTransition
 ; Update Wolf Garopa's defeat fade and periodically emit debris effects

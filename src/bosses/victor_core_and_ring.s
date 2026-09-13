@@ -197,7 +197,7 @@ Boss_VictorWaitForArenaReady:                           ; DATA XREF: ROM:0003243
                 bsr.w   Boss_VictorUpdateAnimation
                 tst.w   (MessageSequenceState).w
                 bne.w   Entity_UpdateReturn
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 andi.b  #$EF,$23(a5)
                 addq.w  #2,4(a5)
                 rts

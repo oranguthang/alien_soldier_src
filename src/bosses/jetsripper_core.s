@@ -52,13 +52,13 @@ Boss_JetsripperMainReturn:                              ; CODE XREF: Boss_Jetsri
 Boss_JetsripperUpdateState:                             ; CODE XREF: Boss_JetsripperMainHandler+4   p  ; was: sub_35682
                 tst.w   4(a5)
                 beq.w   Boss_JetsripperStateDispatch
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_JetsripperUpdateActiveState
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_JetsripperUpdateActiveState
                 tst.w   (BossHealth).w
                 bne.s   Boss_JetsripperUpdateActiveState
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 move.w  #$1E,4(a5)
                 bset    #0,(StageTimerPauseFlag).w
 Boss_JetsripperUpdateActiveState:                       ; CODE XREF: Boss_JetsripperUpdateState+E   j  ; was: loc_356B2
@@ -183,7 +183,7 @@ Boss_JetsripperEndAttack:                               ; DATA XREF: ROM:000356E
                 move.w  #6,4(a5)
                 move.w  #8,$5C(a5)
                 move.w  #$60,$11E(a5)                   ; '`'
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 subi.w  #$A0,(CameraXLowerBound).w
                 bra.w   Boss_JetsripperUpdateMovement
 ; End of function Boss_JetsripperEndAttack

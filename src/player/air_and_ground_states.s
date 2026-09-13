@@ -372,7 +372,7 @@ Player_JumpApexState:                                   ; DATA XREF: ROM:000150A
 ; End of function Player_JumpApexState
 ; Player dash effect during teleport
 Player_TeleportDash:                                    ; DATA XREF: ROM:000150B2   o  ; was: sub_16942
-                clr.w   (word_FF80E6).w
+                clr.w   (PlayerDefeatPhase).w
                 move.b  #$70,(PlayerInputMask).w        ; 'p'
                 bset    #0,(byte_FF8245).w
                 move.w  #$CD00,2(a5)
@@ -453,32 +453,32 @@ Player_TeleportDashReturnState:                         ; DATA XREF: ROM:000150C
 Player_TeleportDashReturnState_Return:                  ; CODE XREF: Player_InitTeleportDashReturnState+50   j  ; was: locret_16AA6
                 rts
 ; End of function Player_InitTeleportDashReturnState
-; Initializes player invulnerability state with timer and sound effect
-Player_InitInvulnerabilityState:                        ; CODE XREF: Player_Update+34   j  ; was: sub_16AA8
+; Starts the timed defeat exit after health or stage time reaches zero
+Player_InitDefeatExitState:                             ; CODE XREF: Player_Update+34   j  ; was: sub_16AA8
                                         ; Player_Update+3C   j
-                move.w  #2,(word_FF80E6).w
+                move.w  #2,(PlayerDefeatPhase).w
                 move.w  #$100,2(a5)
                 clr.b   $21(a5)
                 move.b  #$10,$23(a5)
                 move.w  #$30,$48(a5)                    ; '0'
                 move.b  #$1F,d0
                 jmp     (Sound_PlaySFX).l
-; End of function Player_InitInvulnerabilityState
-; Manages invulnerability timer countdown and triggers palette fade effects when expired
-Player_HandleInvulnerabilityTimer:                      ; CODE XREF: Player_Update+2C   j  ; was: sub_16ACE
+; End of function Player_InitDefeatExitState
+; Counts down the defeat exit and requests its gameplay fade when expired
+Player_UpdateDefeatExitState:                           ; CODE XREF: Player_Update+2C   j  ; was: sub_16ACE
                 bclr    #7,2(a5)
                 tst.w   $48(a5)
-                bmi.s   Player_HandleInvulnerabilityTimer_Return
+                bmi.s   Player_UpdateDefeatExitState_Return
                 subq.w  #1,$48(a5)
-                bne.s   Player_HandleInvulnerabilityTimer_SpawnSpark
+                bne.s   Player_UpdateDefeatExitState_SpawnSpark
                 move.w  #1,(GameplayExitMode).w
                 move.w  #$8002,(PaletteFadeMode).w
                 clr.w   (PaletteFadeColorOffset).w
                 move.w  #$E000,(PaletteFadeMaskStatus).w
                 move.b  #$80,(GameplayControlFlags).w
-Player_HandleInvulnerabilityTimer_SpawnSpark:           ; CODE XREF: Player_HandleInvulnerabilityTimer+10   j  ; was: loc_16AFC
+Player_UpdateDefeatExitState_SpawnSpark:                ; CODE XREF: Player_UpdateDefeatExitState+10   j  ; was: loc_16AFC
                 jmp     Effect_SpawnPlayerDeathSpark
 ; ---------------------------------------------------------------------------
-Player_HandleInvulnerabilityTimer_Return:               ; CODE XREF: Player_HandleInvulnerabilityTimer+A   j  ; was: locret_16B02
+Player_UpdateDefeatExitState_Return:                    ; CODE XREF: Player_UpdateDefeatExitState+A   j  ; was: locret_16B02
                 rts
-; End of function Player_HandleInvulnerabilityTimer
+; End of function Player_UpdateDefeatExitState

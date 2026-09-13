@@ -4,9 +4,9 @@ Boss_SharpssteelMain:                                   ; DATA XREF: ROM:Entity_
                 beq.w   Boss_SharpssteelDispatchState
                 tst.w   8(a5)
                 beq.s   Boss_SharpssteelDispatchState
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_SharpssteelUpdatePaletteAndCore
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_SharpssteelUpdatePaletteAndCore
                 tst.w   (BossHealth).w
                 beq.w   Boss_SharpssteelBeginDefeatFragmentBurst
@@ -97,7 +97,7 @@ Boss_SharpssteelInitializeManualControl:
                 move.w  #$FFFF,$C(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
                 moveq   #4,d0
@@ -265,7 +265,7 @@ Boss_SharpssteelFinishRotationSweep:                    ; CODE XREF: Boss_Sharps
 Boss_SharpssteelAttackSelectionDelayState:              ; DATA XREF: ROM:00047C78   o  ; was: sub_47F02
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_SharpssteelUpdateAttackSelectionDelayPose
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 move.w  #$B,$35C(a5)
                 bra.w   Boss_SharpssteelAdvanceAttackSelection
 ; ---------------------------------------------------------------------------

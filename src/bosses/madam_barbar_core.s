@@ -4,15 +4,15 @@ Boss_MadamBarbarMain:                                   ; DATA XREF: ROM:Entity_
                 beq.w   Boss_MadamBarbarDispatchState
                 tst.w   8(a5)
                 beq.s   Boss_MadamBarbarDispatchState
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_MadamBarbarPrepareStateDispatch
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_MadamBarbarPrepareStateDispatch
                 tst.w   (BossHealth).w
                 bne.s   Boss_MadamBarbarPrepareStateDispatch
                 move.b  #1,(SoundFadeOutDelay).w
                 bset    #0,(StageTimerPauseFlag).w
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  #4,(word_FF808C).w
                 bra.w   Boss_MadamBarbarBeginMainAttack
@@ -147,7 +147,7 @@ Boss_MadamBarbarWaitForPlayerSequence:                  ; DATA XREF: ROM:0003A4E
                 bsr.w   Boss_MadamBarbarSpawnAnimationEffect
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_MadamBarbarUpdateIntroPose
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 subi.w  #$A0,(CameraXLowerBound).w
                 bra.w   Boss_MadamBarbarBeginAIState
 ; ---------------------------------------------------------------------------

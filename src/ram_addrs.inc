@@ -180,8 +180,8 @@ dword_FF80CE            equ     $FFFF80CE
 word_FF80D2             equ     $FFFF80D2
 word_FF80D4             equ     $FFFF80D4
 word_FF80D6             equ     $FFFF80D6
-word_FF80E6             equ     $FFFF80E6
-byte_FF80EC             equ     $FFFF80EC
+PlayerDefeatPhase       equ     $FFFF80E6               ; was: word_FF80E6
+BossColorEffectFlags    equ     $FFFF80EC               ; was: byte_FF80EC
 ColorFadePhase          equ     $FFFF80EE               ; was: word_FF80EE
 PaletteFadeColorOffset  equ     $FFFF80F0               ; was: word_FF80F0
 PaletteFadeMode         equ     $FFFF80F2               ; was: word_FF80F2

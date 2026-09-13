@@ -4,16 +4,16 @@ Boss_FlyingNeoMain:                                     ; DATA XREF: ROM:Entity_
                 tst.w   $23C(a5)
                 bmi.s   Boss_FlyingNeoProcessMainColorFade
                 beq.s   Boss_FlyingNeoProcessMainColorFade
-                bclr    #0,(byte_FF80EC).w
+                bclr    #0,(BossColorEffectFlags).w
 Boss_FlyingNeoProcessMainColorFade:                     ; CODE XREF: Boss_FlyingNeoMain+C   j  ; was: loc_3C00C
                                         ; Boss_FlyingNeoMain+E   j
                 lea     (PaletteFade_FlyingNeoEntryOffsets).l,a2
                 jsr     (Gfx_ProcessColorFade).l
                 tst.w   8(a5)
                 beq.s   Boss_FlyingNeoStateDispatch
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_FlyingNeoPublishScreenX
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_FlyingNeoPublishScreenX
                 tst.w   $23C(a5)
                 bmi.s   Boss_FlyingNeoCheckDefeat
@@ -229,7 +229,7 @@ Boss_FlyingNeoWaitForPlayerSequenceState:               ; DATA XREF: ROM:0003C0B
                 addq.w  #2,4(a5)
                 move.w  #$30,$1DE(a5)                   ; '0'
                 subi.w  #$A0,(CameraXLowerBound).w
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
 ; Counts down the final delay before initializing the attack pattern
 Boss_FlyingNeoAttackStartDelayState:                    ; DATA XREF: ROM:0003C0B2   o  ; was: loc_3C2DA
                 subq.w  #1,$1DE(a5)
@@ -246,7 +246,7 @@ Boss_FlyingNeoDefeatInit:                               ; CODE XREF: Boss_Flying
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 bset    #0,(StageTimerPauseFlag).w
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  #4,(word_FF808C).w
 ; End of function Boss_FlyingNeoDefeatInit

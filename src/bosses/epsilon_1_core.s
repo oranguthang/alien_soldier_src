@@ -55,13 +55,13 @@ Boss_Epsilon1UpdatePresentation:                        ; CODE XREF: Boss_Epsilo
                 move.w  d0,(SecondaryCameraYPos).w
                 bsr.w   Boss_Epsilon1BuildScrollProfile
                 bsr.w   Boss_Epsilon1UpdateVisibleTileBands
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_Epsilon1UpdateBodyAndAngleHistory
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.w   Boss_Epsilon1UpdateLinkedParts
                 tst.w   (BossHealth).w
                 bne.s   Boss_Epsilon1UpdateBodyAndAngleHistory
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 bset    #0,$4C(a5)
                 move.w  #$5C,4(a5)                      ; '\'
                 clr.l   (SecondaryEntityXVel).w

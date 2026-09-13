@@ -265,7 +265,7 @@ Player_EnterSevenForcesDefeatStateA:                    ; CODE XREF: Player_Upda
                 move.b  #$19,d0
                 jsr     (Sound_PlaySFX).l
                 move.b  #$7F,(PlayerInputMask).w
-                move.w  #$8000,(word_FF80E6).w
+                move.w  #$8000,(PlayerDefeatPhase).w
                 jsr     (Sys_ClearObjectBlocks17).l
                 move.w  #$A,4(a5)
                 move.w  #$10,$48(a5)
@@ -297,7 +297,7 @@ Player_SevenForcesDefeatStateA:                         ; DATA XREF: ROM:00019E2
                 jsr     (Player_BuildSpritePieces).l
                 subq.w  #1,$48(a5)
                 bpl.s   Player_SevenForcesDefeatStateReturn
-                clr.w   (word_FF80E6).w
+                clr.w   (PlayerDefeatPhase).w
                 move.w  #$CC00,2(a5)
                 move.b  #$80,$21(a5)
                 bra.w   Player_ResetSevenForcesBattleState

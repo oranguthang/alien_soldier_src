@@ -51,9 +51,9 @@ Boss_ViblackMain:                                       ; DATA XREF: ROM:Entity_
                 add.w   $10(a5),d0
                 move.w  d0,$5E(a5)
                 movea.w #(SecondaryEntityType-M68K_RAM),a4
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_ViblackStateDispatch
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_ViblackStateDispatch
                 tst.w   (BossHealth).w
                 beq.w   Boss_ViblackDefeatInit
@@ -95,7 +95,7 @@ Boss_ViblackInit:                                       ; DATA XREF: Boss_Viblac
                 move.b  #$20,(byte_FFA95B).w            ; ' '
                 move.w  #1,(PaletteEffectControl).w
                 move.w  #$30,$48(a5)                    ; '0'
-                move.b  #6,(byte_FF80EC).w
+                move.b  #6,(BossColorEffectFlags).w
 ; Sets up intro graphics and position
 Boss_ViblackIntroSetup:                                 ; DATA XREF: ROM:000439DE   o  ; was: loc_43A30
                 subq.w  #1,$48(a5)
@@ -181,7 +181,7 @@ Boss_ViblackFinishEntranceMotionState:                  ; DATA XREF: ROM:000439E
                 move.w  #$FFFF,$50(a5)
                 move.w  #$780,$52(a5)
                 move.w  #$C8,$54(a5)
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 clr.w   (PlayerScriptStateOffset).w
                 bclr    #5,(byte_FF8245).w
                 addq.w  #2,(PlayerStateOffset).w
@@ -336,7 +336,7 @@ Boss_ViblackDefeatInit:                                 ; CODE XREF: Boss_Viblac
                 move.b  #1,(SoundFadeOutDelay).w
                 move.w  #$C,4(a5)
                 bset    #0,(StageTimerPauseFlag).w
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 clr.b   $21(a5)
                 move.w  #$80,(word_FF808C).w
                 move.w  #$780,$52(a5)

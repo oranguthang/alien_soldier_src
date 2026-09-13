@@ -3,9 +3,9 @@ Boss_UpdateSylpheed:                                    ; DATA XREF: ROM:Entity_
                 beq.w   Boss_DispatchSylpheedState
                 tst.w   8(a5)
                 beq.s   Boss_DispatchSylpheedState
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_UpdateSylpheedPaletteAndBounds
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_UpdateSylpheedPaletteAndBounds
                 tst.w   (BossHealth).w
                 bne.s   Boss_UpdateSylpheedPaletteAndBounds
@@ -257,7 +257,7 @@ Boss_EnterSylpheedAttackHoldState1C:                    ; CODE XREF: Boss_EnterS
 Boss_UpdateSylpheedAttackHoldState1C:                   ; DATA XREF: ROM:0005945E   o  ; was: loc_59710
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_UpdateSylpheedAttackHoldMotion
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 bclr    #0,(StageTimerPauseFlag).w
                 move.w  #4,4(a5)
                 bra.w   Boss_ArmSylpheedDecisionTimer

@@ -36,7 +36,7 @@ Boss_SunsetStingEarlyFormUnusedTableTail:
 
 ; Sets up battle arena parameters and clears sprite slots
 Boss_SunsetStingSetupArena:                             ; DATA XREF: ROM:Boss_SunsetStingEarlyFormStates   o  ; was: sub_40D34
-                move.b  #6,(byte_FF80EC).w
+                move.b  #6,(BossColorEffectFlags).w
                 move.w  #$1C0,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
@@ -93,7 +93,7 @@ Boss_SunsetStingQueueIntroMessageState:                 ; DATA XREF: ROM:00040D0
 Boss_SunsetStingWaitForIntroMessageState:               ; DATA XREF: ROM:00040D08   o  ; was: sub_40E34
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_SunsetStingIntroUpdateMotion
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 subi.w  #$A0,(CameraXLowerBound).w
                 addq.w  #2,4(a5)
 Boss_SunsetStingIntroUpdateMotion:                      ; CODE XREF: Boss_SunsetStingQueueIntroMessageState+C   j  ; was: loc_40E48
@@ -509,9 +509,9 @@ Boss_SunsetStingCalculateVerticalVelocity:              ; CODE XREF: Boss_Sunset
 Boss_SunsetStingUpdateGraphics:                         ; CODE XREF: Boss_SunsetStingWaitForIntroMessageState:Boss_SunsetStingIntroRender   j  ; was: sub_412E6
                                         ; Boss_SunsetStingResetForAttack+28   j
                 bsr.w   Boss_SunsetStingUpdatePartAngles
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_SunsetStingUpdateBodyGraphics
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_SunsetStingUpdateBodyGraphics
                 tst.w   (BossHealth).w
                 beq.w   Boss_SunsetStingBeginEarlyFormDefeatState
@@ -544,7 +544,7 @@ Boss_SunsetStingLoadTileTableEntry:                     ; CODE XREF: Boss_Sunset
 Boss_SunsetStingBeginEarlyFormDefeatState:              ; CODE XREF: Boss_SunsetStingUpdateGraphics+18   j  ; was: sub_4133E
                 move.b  #1,(SoundFadeOutDelay).w
                 bset    #0,(StageTimerPauseFlag).w
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #4,(PlaneBShakeLevel).w

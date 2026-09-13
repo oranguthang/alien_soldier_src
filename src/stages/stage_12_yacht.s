@@ -182,7 +182,7 @@ Stage12_YachtScrollAccelerationReturn:                  ; CODE XREF: Stage12_Yac
 ; End of function Stage12_YachtAccelerateScroll
 ; Applies player-directed horizontal yacht steering
 Stage12_YachtApplySteering:                             ; CODE XREF: Stage12_YachtBeginMotion+3E   p  ; was: sub_2F7D6
-                tst.w   (word_FF80E6).w
+                tst.w   (PlayerDefeatPhase).w
                 bne.w   Stage12_YachtClampHorizontalVelocity
                 btst    #0,(byte_FF8244).w
                 bne.s   Stage12_YachtClampHorizontalVelocity

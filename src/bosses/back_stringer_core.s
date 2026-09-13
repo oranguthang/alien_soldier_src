@@ -3,9 +3,9 @@ Boss_BackStringerMain:                                  ; DATA XREF: ROM:Entity_
                 beq.w   Boss_BackStringerDispatchState
                 tst.w   8(a5)
                 beq.s   Boss_BackStringerDispatchState
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_BackStringerUpdateActiveFrame
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_BackStringerUpdateActiveFrame
                 tst.w   (BossHealth).w
                 beq.w   Boss_BackStringerDefeatInit
@@ -103,7 +103,7 @@ Boss_BackStringerResetManualControlState:               ; CODE XREF: Boss_BackSt
                 move.w  #4,4(a5)
                 move.w  #$120,$10(a5)
                 move.w  #$110,$14(a5)
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
                 bra.w   Boss_BackStringerResetTailSegments
@@ -232,7 +232,7 @@ Boss_BackStringerPostEntranceDelayState:                ; DATA XREF: ROM:0004472
 Boss_BackStringerWaitForBattleStartState:               ; DATA XREF: ROM:00044726   o  ; was: loc_4496A
                 tst.w   (MessageSequenceState).w
                 bne.w   Boss_BackStringerUseOpeningDelayPoseAndRender
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 move.w  #7,$41C(a5)
                 move.w  #$FFFF,$47C(a5)
                 move.w  #4,$47E(a5)
@@ -685,7 +685,7 @@ Boss_BackStringerApplyTrackingAngle:                    ; CODE XREF: Boss_BackSt
 Boss_BackStringerDefeatInit:                            ; CODE XREF: Boss_BackStringerMain+22   j  ; was: sub_44E6E
                 move.b  #1,(SoundFadeOutDelay).w
                 bset    #0,(StageTimerPauseFlag).w
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 move.w  #8,(word_FF808C).w
                 clr.w   8(a5)
                 move.w  #6,(PlaneAShakeLevel).w

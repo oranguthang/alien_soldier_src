@@ -6,9 +6,9 @@ Boss_TerobusterMain:                                    ; DATA XREF: ROM:Entity_
                 jsr     (Gfx_ProcessDefaultColorFade).l
                 tst.w   8(a5)
                 beq.s   Boss_TerobusterDispatchState
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_TerobusterUpdatePartOscillation
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_TerobusterUpdatePartOscillation
                 tst.w   (BossHealth).w
                 beq.w   Boss_TerobusterBeginDefeat
@@ -480,7 +480,7 @@ Boss_TerobusterStartStageGate:                          ; CODE XREF: Boss_Terobu
 Boss_TerobusterWaitForStageReady:                       ; DATA XREF: ROM:00038590   o  ; was: sub_38AB0
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_TerobusterWaitForStageReadyAnimate
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 subi.w  #$A0,(CameraXLowerBound).w
                 bra.w   Boss_TerobusterSelectPartOrderA
 ; ---------------------------------------------------------------------------
@@ -494,7 +494,7 @@ Boss_TerobusterBeginDefeat:                             ; CODE XREF: Boss_Terobu
                 jsr     (Sound_PlaySFX).l
                 bset    #0,(StageTimerPauseFlag).w
                 move.w  #$A,4(a5)
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 clr.w   8(a5)
                 move.w  #4,(word_FF808C).w
                 move.w  #8,(PlaneAShakeLevel).w

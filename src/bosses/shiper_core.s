@@ -5,9 +5,9 @@ Boss_ShiperMainHandler:                                 ; DATA XREF: ROM:Entity_
                 beq.s   Boss_ShiperDispatchState
                 tst.w   6(a5)
                 beq.s   Boss_ShiperDispatchState
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_ShiperUpdateActiveState
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_ShiperUpdateActiveState
                 tst.w   (BossHealth).w
                 bne.s   Boss_ShiperUpdateActiveState
@@ -392,7 +392,7 @@ Boss_ShiperWaitForBossMessageState:                     ; DATA XREF: ROM:000364B
                 cmpi.w  #2,$174(a5)
                 bne.s   Boss_ShiperWaitForBossMessageReturn
                 subi.w  #$A0,(CameraXLowerBound).w
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 move.w  #$104,(Entity57Type).w
                 bra.w   Boss_ShiperRetreatState
 ; ---------------------------------------------------------------------------
@@ -402,7 +402,7 @@ Boss_ShiperWaitForBossMessageReturn:                    ; CODE XREF: Boss_Shiper
 ; End of function Boss_ShiperWaitForBossMessageState
 ; Sets boss defeat flags clears state and increments stage counter
 Boss_ShiperInitDefeat:                                  ; CODE XREF: Boss_ShiperMainHandler+2E   j  ; was: sub_36930
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  #$1E,4(a5)
                 clr.l   $78(a5)

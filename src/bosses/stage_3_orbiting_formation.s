@@ -34,7 +34,7 @@ Boss_Stage3OrbitingFormationSpinSoundDelays:    dc.w    0, $28, $20, $2C, $18  ;
 Boss_Stage3OrbitingFormationCheckDefeat:                ; CODE XREF: Boss_Stage3OrbitingFormationMain   p  ; was: sub_33F84
                 cmpi.w  #2,4(a5)
                 bls.w   Boss_Stage3OrbitingFormationReturn
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.w   Boss_Stage3OrbitingFormationReturn
                 tst.w   (BossHealth).w
                 bne.w   Boss_Stage3OrbitingFormationReturn
@@ -219,7 +219,7 @@ Boss_Stage3OrbitingFormationInit:                       ; DATA XREF: ROM:Boss_St
                 move.w  #2,$26(a5)
                 clr.w   (BossHealth).w
                 move.w  #$28,$24(a5)                    ; '('
-                move.b  #6,(byte_FF80EC).w
+                move.b  #6,(BossColorEffectFlags).w
                 move.b  #$80,$23(a5)
                 move.w  #7,d7
                 clr.w   d6
@@ -277,7 +277,7 @@ Boss_Stage3OrbitingFormationEnterBattle:                ; DATA XREF: ROM:0003418
                 bcc.w   Boss_Stage3OrbitingFormationReturn
                 move.w  #$1E00,(BossMaxHealth).w
                 move.w  #$1E00,(BossHealth).w
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_Stage3OrbitingFormationEnterBattle

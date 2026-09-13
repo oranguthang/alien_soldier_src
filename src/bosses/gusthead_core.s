@@ -37,13 +37,13 @@ Boss_GustheadUseArenaMotionDebrisDrift:                 ; CODE XREF: Boss_Gusthe
                 neg.l   d0
                 move.l  d0,(dword_FF9428).w
 Boss_GustheadCheckStageExit:                            ; CODE XREF: Boss_GustheadMain+4A   j  ; was: loc_3F1FC
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_GustheadUpdatePaletteAndScreenX
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_GustheadUpdatePaletteAndScreenX
                 tst.w   (BossHealth).w
                 bne.s   Boss_GustheadUpdatePaletteAndScreenX
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 bset    #7,$4A(a5)
                 clr.l   (StageMotionXDelta).w
                 move.w  #$5C,4(a5)                      ; '\'
@@ -274,7 +274,7 @@ Boss_GustheadWaitForBattleBannerState:                  ; DATA XREF: ROM:0003F25
                 bsr.w   Boss_GustheadUpdateVerticalBounce
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_GustheadWaitForBattleBannerReturn
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 ori.w   #$100,2(a5)
                 subi.w  #$A0,(CameraXLowerBound).w
                 addq.w  #2,4(a5)

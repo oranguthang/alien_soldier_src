@@ -38,13 +38,13 @@ Collision_PlayerWeaponVsEnemy_Return:                   ; CODE XREF: Collision_P
                 rts
 ; ---------------------------------------------------------------------------
 Collision_PlayerWeaponVsEnemy_ResolveFlaggedTarget:     ; CODE XREF: Collision_PlayerWeaponVsEnemy+52   j  ; was: loc_141F2
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Collision_PlayerWeaponVsEnemy_ApplyFlaggedDamage
                 tst.w   (BossHealth).w
                 beq.w   Collision_PlayerWeaponVsEnemy_NextTarget
 Collision_PlayerWeaponVsEnemy_ApplyFlaggedDamage:       ; CODE XREF: Collision_PlayerWeaponVsEnemy+68   j  ; was: loc_14202
                 bset    #7,$22(a3)
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Collision_PlayerWeaponVsEnemy_NextTarget
                 btst    #4,$23(a2)
                 bne.s   Collision_PlayerWeaponVsEnemy_NextTarget
@@ -53,7 +53,7 @@ Collision_PlayerWeaponVsEnemy_ApplyFlaggedDamage:       ; CODE XREF: Collision_P
                 jsr     (Sound_PlaySFX).l
                 movem.l (sp)+,d0
                 ori.b   #$40,(CombatHitFlags).w         ; '@'
-                bset    #0,(byte_FF80EC).w
+                bset    #0,(BossColorEffectFlags).w
                 move.b  $21(a3),d4
                 or.b    d4,$22(a2)
                 move.w  $26(a3),d4
@@ -64,7 +64,7 @@ Collision_PlayerWeaponVsEnemy_ApplyFlaggedDamage:       ; CODE XREF: Collision_P
                 bpl.s   Collision_PlayerWeaponVsEnemy_NextTarget
                 clr.w   (BossHealth).w
                 clr.w   (BossMaxHealth).w
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 clr.w   (BossCombatCounter).w
                 clr.w   (BossCombatCounterMax).w
                 clr.b   (BossCounterMaxFlag).w

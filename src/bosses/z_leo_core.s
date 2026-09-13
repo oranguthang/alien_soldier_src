@@ -4,9 +4,9 @@ Boss_ZLeoMain:                                          ; DATA XREF: ROM:Entity_
                 beq.w   Boss_ZLeoDispatchStateAndClearProjectileFlag
                 tst.w   8(a5)
                 beq.w   Boss_ZLeoDispatchStateAndClearProjectileFlag
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_ZLeoUpdateFirstPaletteFade
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_ZLeoUpdateFirstPaletteFade
                 tst.w   (BossHealth).w
                 beq.w   Boss_ZLeoBeginDefeatSequence
@@ -253,7 +253,7 @@ Boss_ZLeoRunIntroDescent:                               ; DATA XREF: ROM:00051B8
                 cmpi.w  #$E8,$35C(a5)
                 bpl.s   Boss_ZLeoUpdateIntroDescentPose
                 move.w  #$E8,$35C(a5)
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
 Boss_ZLeoUpdateIntroDescentPose:                        ; CODE XREF: Boss_ZLeoPrepareIntroDescent+36   j  ; was: loc_51E24
                 move.w  $5B4(a5),d0
                 addi.w  #0,d0
@@ -430,7 +430,7 @@ Boss_ZLeoWaitForBossMessage:                            ; DATA XREF: ROM:00051B9
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_ZLeoRenderBossMessageWait
                 move.w  #$1E,4(a5)
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 bra.w   Boss_ZLeoSelectAttackState
 ; ---------------------------------------------------------------------------
 Boss_ZLeoRenderBossMessageWait:                         ; CODE XREF: Boss_ZLeoWaitForBossMessage+4   j  ; was: loc_5203C
@@ -443,7 +443,7 @@ Boss_ZLeoBeginDefeatSequence:                           ; CODE XREF: Boss_ZLeoMa
                 move.w  #6,4(a5)
                 move.b  #$40,(GameplayControlFlags).w   ; '@'
                 move.w  #8,(word_FF808C).w
-                move.b  #2,(byte_FF80EC).w
+                move.b  #2,(BossColorEffectFlags).w
                 bset    #0,(StageTimerPauseFlag).w
                 clr.b   $21(a5)
                 move.w  #$34,(PlayerScriptStateOffset).w  ; '4'
@@ -673,7 +673,7 @@ Boss_ZLeoBeginScrollingLaserAttack:                     ; CODE XREF: Boss_ZLeoBe
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 clr.b   $23E(a5)
-                bset    #1,(byte_FF80EC).w
+                bset    #1,(BossColorEffectFlags).w
                 clr.b   $21(a5)
                 bset    #0,(StageTimerPauseFlag).w
 ; Wait for the entry pose to signal the start of stage scrolling

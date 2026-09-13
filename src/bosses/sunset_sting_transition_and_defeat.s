@@ -190,7 +190,7 @@ Boss_SunsetStingContractTrailState:                     ; DATA XREF: ROM:0004196
 Boss_SunsetStingFinishTrailTransitionState:             ; DATA XREF: ROM:0004196A   o  ; was: sub_42224
                 subq.b  #1,$4B(a5)
                 bne.w   Boss_SunsetStingSecondFormUpdateBody
-                clr.b   (byte_FF80EC).w
+                clr.b   (BossColorEffectFlags).w
                 bra.w   Boss_SunsetStingCheckHealthThreshold
 ; End of function Boss_SunsetStingFinishTrailTransitionState
 ; Calculates a direction-dependent horizontal screen offset
@@ -256,9 +256,9 @@ Boss_SunsetStingSecondFormUpdateBody:                   ; CODE XREF: Boss_Sunset
                 add.w   d0,d0
                 sub.w   $56(a5),d0
                 move.w  d0,$B6(a5)
-                btst    #2,(byte_FF80EC).w
+                btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_SunsetStingSecondFormRender
-                btst    #1,(byte_FF80EC).w
+                btst    #1,(BossColorEffectFlags).w
                 bne.s   Boss_SunsetStingSecondFormRender
                 move.w  (BossHealth).w,d0
                 beq.w   Boss_SunsetStingResetAfterPrimaryHealthDepletion
@@ -268,7 +268,7 @@ Boss_SunsetStingSecondFormUpdateBody:                   ; CODE XREF: Boss_Sunset
                 bhi.s   Boss_SunsetStingSecondFormRender
                 move.b  #1,(SecondaryEntityWork5C).w
                 move.w  #$1E,4(a5)
-                move.b  #6,(byte_FF80EC).w
+                move.b  #6,(BossColorEffectFlags).w
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
 Boss_SunsetStingSecondFormRender:                       ; CODE XREF: Boss_SunsetStingSecondFormUpdate+3C   j  ; was: loc_4230C

@@ -573,6 +573,7 @@ by their verified byte order rather than receiving invented codec meanings.
 | `PaletteRGBChannelMask` | `$FFFF8142` | Bits five through seven independently enable the red, green, and blue computed deltas. |
 | `PaletteRGBAdjustStep` | `$FFFF8143` | The RGB-adjust routine zero-extends this byte and subtracts it from the active level each update. |
 | `PlayerModeFlags` | `$FFFF8144` | Player update uses bit one to clear the object and bits zero/two to select the two Seven Forces processing modes. |
+| `PlayerDefeatPhase` | `$FFFF80E6` | Zero permits normal player processing, negative `$8000` marks the animated defeat sequence, and positive two selects the final timed defeat/exit state. |
 
 ## Reviewed wave, HUD, and enemy-spawn fields
 
@@ -602,6 +603,7 @@ by their verified byte order rather than receiving invented codec meanings.
 | Symbol | Address | Static evidence |
 |---|---:|---|
 | `ColorFadePhase` | `$FFFF80EE` | The color-fade engine steps this word downward by five or advances its low phase modulo sixteen to derive RGB deltas. |
+| `BossColorEffectFlags` | `$FFFF80EC` | Combat collision and boss controllers use bits zero through three to request or gate boss hit/color effects; the color-fade engine consumes and clears the corresponding request bits. |
 | `ColorFadeTriggerState` | `$FFFF8246` | Zero selects cyclic RGB deltas, a positive trigger starts one randomized-channel fade, and the resulting negative state returns the next update to the normal fade path. |
 | `StageTimerFrameCounter` | `$FFFF8204` | Active gameplay reloads this byte to `$3B`; each expiry decrements the packed-BCD stage timer once. |
 | `CombatPercentIndex` | `$FFFF8210` | Flagged hits copy the target damage-scale field here; the transient HUD halves it to index `CombatPercentDisplayTable`. |
