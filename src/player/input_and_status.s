@@ -34,7 +34,7 @@ Player_UpdateCounterForceInput_StoreHealthDelta:        ; CODE XREF: Player_Upda
 ; Updates player direction bit from controller state
 Player_UpdateDirectionBit:                              ; CODE XREF: Player_Update:loc_15038   p  ; was: sub_16B5C
                                         ; sub_19DAE:Player_UpdateSevenForcesBattleFinalizeFrame   p
-                btst    #5,(byte_FF8244).w
+                btst    #5,(PlayerActionStateFlags).w
                 bne.s   Player_UpdateDirectionBit_Return
                 bclr    #7,$E(a5)
                 move.w  (GlobalSpritePriorityBit).w,d0
@@ -106,7 +106,7 @@ Player_UpdateInvulnerabilityTimer:                      ; CODE XREF: Player_Upda
 ; ---------------------------------------------------------------------------
 Player_UpdateInvulnerabilityTimer_Active:               ; CODE XREF: Player_UpdateInvulnerabilityTimer+A   j  ; was: loc_16C22
                 bset    #4,$23(a5)
-                btst    #5,(byte_FF8244).w
+                btst    #5,(PlayerActionStateFlags).w
                 bne.s   Player_UpdateInvulnerabilityTimer_Return
                 btst    #0,(FrameCounter+1).w
                 beq.s   Player_UpdateInvulnerabilityTimer_Return

@@ -44,7 +44,7 @@ Stage15_UpdateScrollToSunsetSting:                      ; DATA XREF: ROM:0000D9A
                 bmi.w   Stage_MidgameStateReturn
                 addq.w  #2,(StageStateOffset).w
                 move.w  #$660,(PrimaryCameraXPosition).w
-                bset    #6,(byte_FF8245).w
+                bset    #6,(PlayerRestrictionFlags).w
                 rts
 ; End of function Stage15_UpdateScrollToSunsetSting
 ; Advance the Stage 15 Sylpheed backdrop to the encounter transition

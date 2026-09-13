@@ -1,7 +1,7 @@
 Boss_Epsilon1Main:                                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_45AD0
                 cmpi.w  #6,4(a5)
                 bls.w   Boss_Epsilon1DispatchAndPublishScroll
-                btst    #6,(byte_FF8244).w
+                btst    #6,(PlayerActionStateFlags).w
                 bne.s   Boss_Epsilon1UpdateProximityTimer
                 jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$C,d0

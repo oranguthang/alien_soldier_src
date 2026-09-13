@@ -164,9 +164,9 @@ Stage12_YachtAccelerateScroll:                          ; CODE XREF: Stage12_Yac
                 addi.l  #$100,(StageMotionYDelta).w
 Stage12_YachtApplyScrollCompensation:                   ; CODE XREF: Stage12_YachtAccelerateScroll+8   j
                 clr.l   (StageMotionXDelta).w
-                btst    #5,(byte_FF8244).w
+                btst    #5,(PlayerActionStateFlags).w
                 bne.s   Stage12_YachtSetScrollCompensation
-                btst    #0,(byte_FF8244).w
+                btst    #0,(PlayerActionStateFlags).w
                 beq.s   Stage12_YachtAccelerateScrollRate
 Stage12_YachtSetScrollCompensation:                     ; CODE XREF: Stage12_YachtAccelerateScroll+1C   j
                 move.l  $54(a5),d0
@@ -184,7 +184,7 @@ Stage12_YachtScrollAccelerationReturn:                  ; CODE XREF: Stage12_Yac
 Stage12_YachtApplySteering:                             ; CODE XREF: Stage12_YachtBeginMotion+3E   p  ; was: sub_2F7D6
                 tst.w   (PlayerDefeatPhase).w
                 bne.w   Stage12_YachtClampHorizontalVelocity
-                btst    #0,(byte_FF8244).w
+                btst    #0,(PlayerActionStateFlags).w
                 bne.s   Stage12_YachtClampHorizontalVelocity
                 btst    #2,(ControllerHeldState).w
                 beq.s   Stage12_YachtCheckSteerRight

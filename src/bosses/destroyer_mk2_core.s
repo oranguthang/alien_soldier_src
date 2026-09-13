@@ -96,8 +96,8 @@ Boss_DestroyerMK2InitializeEncounterState:              ; DATA XREF: ROM:Boss_De
                 move.l  d0,(dword_FF9408).w
                 move.l  d0,(dword_FF940C).w
                 clr.w   (dword_FF9418).w
-                lea     (word_FF9820).w,a0
-                lea     (word_FF9620).w,a1
+                lea     (DestroyerMK2ScrollRows).w,a0
+                lea     (DestroyerMK2RowSpeeds).w,a1
                 move.w  #$7F,d7
 Boss_DestroyerMK2ClearScrollBuffersLoop:                ; CODE XREF: Boss_DestroyerMK2InitializeEncounterState+2E   j  ; was: loc_4A962
                 move.l  d0,(a0)+
@@ -462,8 +462,8 @@ Gfx_DestroyerMK2ApplyPaletteFadeWithBase:               ; CODE XREF: Boss_Destro
 Boss_DestroyerMK2WriteFourScrollOffsets:                ; CODE XREF: Boss_DestroyerMK2WriteInitialScrollBandsState+14   p  ; was: sub_4ADE0
                                         ; sub_4AEFA   p
                 lea     (dword_FF9420).w,a0
-                lea     (word_FF9820).w,a1
-                lea     (word_FF9620).w,a2
+                lea     (DestroyerMK2ScrollRows).w,a1
+                lea     (DestroyerMK2RowSpeeds).w,a2
                 move.w  $4A(a5),d1
                 add.w   d1,d1
                 move.w  #3,d7
@@ -479,7 +479,7 @@ Boss_DestroyerMK2WriteFourScrollOffsetsLoop:            ; CODE XREF: Boss_Destro
 ; Seeds alternating signed velocities in four selected scroll rows
 Boss_DestroyerMK2SeedFourScrollVelocities:              ; CODE XREF: Boss_DestroyerMK2AnimateScrollWaveState+18   p  ; was: sub_4AE0C
                 lea     (dword_FF9420).w,a0
-                lea     (word_FF9620).w,a1
+                lea     (DestroyerMK2RowSpeeds).w,a1
                 move.w  $4A(a5),d1
                 add.w   d1,d1
                 move.w  #3,d7
@@ -503,8 +503,8 @@ Boss_DestroyerMK2AdvanceScrollVelocityIndex:            ; CODE XREF: Boss_Destro
 Boss_DestroyerMK2IntegrateScrollVelocities:             ; CODE XREF: Boss_DestroyerMK2AnimateScrollWaveState+4   p  ; was: sub_4AE42
                                         ; Boss_DestroyerMK2WriteScrollWaveState+4   p
                 move.w  #$FE,d7
-                lea     (word_FF9820).w,a0
-                lea     (word_FF9620).w,a1
+                lea     (DestroyerMK2ScrollRows).w,a0
+                lea     (DestroyerMK2RowSpeeds).w,a1
 Boss_DestroyerMK2IntegrateScrollVelocityLoop:           ; CODE XREF: Boss_DestroyerMK2IntegrateScrollVelocities+20   j  ; was: loc_4AE4E
                 tst.w   (a1)
                 beq.s   Boss_DestroyerMK2AdvanceScrollVelocityRow

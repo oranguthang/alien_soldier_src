@@ -330,7 +330,7 @@ Boss_SunsetStingSecondarySegmentCheckAttach:            ; CODE XREF: Boss_Sunset
                 sub.w   $14(a0),d0
                 cmpi.w  #$18,d0
                 bgt.s   Boss_SunsetStingSecondarySegmentCheckBounds
-                btst    #1,(byte_FF8244).w
+                btst    #1,(PlayerActionStateFlags).w
                 beq.s   Boss_SunsetStingSecondarySegmentStoreAttachY
                 subi.b  #$14,d0
                 bmi.s   Boss_SunsetStingSecondarySegmentStoreAttachY
@@ -400,7 +400,7 @@ Boss_SunsetStingAttachedSegmentStoreX:                  ; CODE XREF: Boss_Sunset
                 move.w  d0,$10(a5)
                 move.w  $48(a5),d0
                 ext.w   d0
-                btst    #1,(byte_FF8244).w
+                btst    #1,(PlayerActionStateFlags).w
                 beq.s   Boss_SunsetStingAttachedSegmentStoreY
                 cmpi.w  #$FFF8,d0
                 bpl.s   Boss_SunsetStingAttachedSegmentAdjustY
@@ -416,7 +416,7 @@ Boss_SunsetStingAttachedSegmentStoreY:                  ; CODE XREF: Boss_Sunset
                                         ; Boss_SunsetStingSegmentAttachedToPlayer+68   j
                 add.w   $14(a0),d0
                 move.w  d0,$14(a5)
-                btst    #4,(byte_FF8244).w
+                btst    #4,(PlayerActionStateFlags).w
                 beq.w   Boss_SunsetStingReturn
                 subq.w  #2,$1C(a5)
                 move.l  #$1800,$58(a5)

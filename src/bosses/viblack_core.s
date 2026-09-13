@@ -155,7 +155,7 @@ Boss_ViblackEntranceDescentState:                       ; DATA XREF: ROM:000439E
                 addq.w  #2,4(a5)
                 move.l  #$30000,$1C(a5)
                 move.w  #$30,(PlayerScriptStateOffset).w  ; '0'
-                bset    #5,(byte_FF8245).w
+                bset    #5,(PlayerRestrictionFlags).w
                 bset    #4,(PlayerSpriteAttributes).w
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.w  #$8000,(GlobalSpritePriorityBit).w
@@ -183,7 +183,7 @@ Boss_ViblackFinishEntranceMotionState:                  ; DATA XREF: ROM:000439E
                 move.w  #$C8,$54(a5)
                 clr.b   (BossColorEffectFlags).w
                 clr.w   (PlayerScriptStateOffset).w
-                bclr    #5,(byte_FF8245).w
+                bclr    #5,(PlayerRestrictionFlags).w
                 addq.w  #2,(PlayerStateOffset).w
 Boss_ViblackUpdateStageSurfaceReference:                ; CODE XREF: Boss_ViblackEntranceDescentState+58   j  ; was: loc_43BD0
                                         ; Boss_ViblackFinishEntranceMotionState+10   j

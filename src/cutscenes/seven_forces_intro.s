@@ -250,10 +250,10 @@ Debug_SevenForcesScrollTableTestBuildSecondaryLoop:     ; CODE XREF: Debug_Seven
                 move.w  #0,(PaletteActiveColor12).w
                 btst    #0,(FrameCounter+1).w
                 bne.s   Debug_SevenForcesScrollTableTestWriteAlternateMarkers
-                move.w  #$FCCC,(word_FF9608).w
-                move.w  #$ECCC,(word_FF961A).w
-                move.w  #$2CCC,(word_FF9628).w
-                move.w  #$1CCC,(word_FF963A).w
+                move.w  #$FCCC,(SevenForcesPatchA).w
+                move.w  #$ECCC,(SevenForcesPatchB).w
+                move.w  #$2CCC,(SevenForcesPatchC).w
+                move.w  #$1CCC,(SevenForcesPatchD).w
                 move.w  #$E0,(PaletteActiveColor14).w
                 move.w  #$E0,(PaletteActiveColor15).w
                 move.w  #$E0,(PaletteActiveColor01).w
@@ -261,10 +261,10 @@ Debug_SevenForcesScrollTableTestBuildSecondaryLoop:     ; CODE XREF: Debug_Seven
                 rts
 ; ---------------------------------------------------------------------------
 Debug_SevenForcesScrollTableTestWriteAlternateMarkers:  ; CODE XREF: Debug_SevenForcesScrollTableTest+23C   j  ; was: loc_54EF2
-                move.w  #$CCEC,(dword_FF9610).w
-                move.w  #$CCFC,(word_FF9602).w
-                move.w  #$CC2C,(word_FF9630).w
-                move.w  #$CC1C,(word_FF9622).w
+                move.w  #$CCEC,(SevenForcesAltPatchA).w
+                move.w  #$CCFC,(SevenForcesAltPatchB).w
+                move.w  #$CC2C,(SevenForcesAltPatchC).w
+                move.w  #$CC1C,(SevenForcesAltPatchD).w
                 move.w  #$E0,(PaletteActiveColor14).w
                 move.w  #$E0,(PaletteActiveColor15).w
                 move.w  #$E0,(PaletteActiveColor01).w
@@ -460,7 +460,7 @@ Entity_SevenForcesStartArtemisEntranceState22:          ; DATA XREF: ROM:00054BB
                 clr.l   (PlayerXVelocity).w
                 clr.l   (PlayerYVelocity).w
                 move.w  #$34,(PlayerScriptStateOffset).w  ; '4'
-                bset    #2,(byte_FF8245).w
+                bset    #2,(PlayerRestrictionFlags).w
                 jsr     (Sys_ClearObjectBlocks17).l
                 move.l  #$38000,$1C(a5)
                 move.l  #$22000,$18(a5)
@@ -507,7 +507,7 @@ Entity_SevenForcesArtemisFadeOutState28:                ; DATA XREF: ROM:00054BC
                 subq.w  #1,$48(a5)
                 bpl.w   Gfx_UpdateSevenForcesArtemisPaletteFade
                 move.b  #1,(SceneSequenceFlags).w
-                bclr    #2,(byte_FF8245).w
+                bclr    #2,(PlayerRestrictionFlags).w
 Entity_SevenForcesArtemisFadeOutUpdateTimer:            ; CODE XREF: Entity_SevenForcesArtemisFadeOutState28+4   j  ; was: loc_55210
                 subq.w  #1,$4A(a5)
                 bne.s   Entity_SevenForcesArtemisFadeOutApplyPalette

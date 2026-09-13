@@ -298,8 +298,8 @@ BossCombatCounter       equ     $FFFF8234               ; was: word_FF8234
 BossCombatCounterMax    equ     $FFFF8236               ; was: word_FF8236
 WeaponFireCooldown      equ     $FFFF8238               ; was: word_FF8238
 StageMotionXDelta       equ     $FFFF8240               ; was: dword_FF8240
-byte_FF8244             equ     $FFFF8244
-byte_FF8245             equ     $FFFF8245
+PlayerActionStateFlags  equ     $FFFF8244               ; was: byte_FF8244
+PlayerRestrictionFlags  equ     $FFFF8245               ; was: byte_FF8245
 ColorFadeTriggerState   equ     $FFFF8246               ; was: word_FF8246
 PlayerCenterX           equ     $FFFF8248               ; was: word_FF8248
 PlayerCenterY           equ     $FFFF824A               ; was: word_FF824A
@@ -440,27 +440,40 @@ Epsilon1AngleHistory    equ     SharedProfileBuffer
 ViblackScrollSamples    equ     SharedProfileBuffer
 ShieldViperTrailAngles  equ     $FFFF94A0               ; was: word_FF94A0
 word_FF9500             equ     $FFFF9500
-word_FF9502             equ     $FFFF9502
+SharedPatternOverlay    equ     $FFFF9502               ; was: word_FF9502
+GustheadMappingCounts   equ     SharedPatternOverlay
+SirenePatternAltB       equ     SharedPatternOverlay
 FlyingNeoVScrollRamp    equ     $FFFF9506               ; was: byte_FF9506
-word_FF9508             equ     $FFFF9508
-word_FF9510             equ     $FFFF9510
-word_FF951A             equ     $FFFF951A
+SirenePatternNormalA    equ     $FFFF9508               ; was: word_FF9508
+SirenePatternAltA       equ     $FFFF9510               ; was: word_FF9510
+SirenePatternNormalB    equ     $FFFF951A               ; was: word_FF951A
 BossPerspectiveRows     equ     $FFFF9520               ; was: byte_FF9520
 BugmaxPositionHistory   equ     $FFFF95E0               ; was: word_FF95E0
 word_FF9600             equ     $FFFF9600
-word_FF9602             equ     $FFFF9602
-byte_FF9604             equ     $FFFF9604
-word_FF9608             equ     $FFFF9608
+SharedCameraPatternWord equ     $FFFF9602               ; was: word_FF9602
+ZLeoPreviousCameraY     equ     SharedCameraPatternWord
+SevenForcesAltPatchB    equ     SharedCameraPatternWord
+ZLeoTileDMARecord       equ     $FFFF9604               ; was: byte_FF9604
+SharedPosePatternBase   equ     $FFFF9608               ; was: word_FF9608
+BackStringerPoseGroup   equ     SharedPosePatternBase
+SevenForcesPatchA       equ     SharedPosePatternBase
 SharpssteelTargetTail   equ     $FFFF960A               ; was: word_FF960A
-dword_FF9610            equ     $FFFF9610
-dword_FF9614            equ     $FFFF9614
-word_FF961A             equ     $FFFF961A
-dword_FF961C            equ     $FFFF961C
-word_FF9620             equ     $FFFF9620
-word_FF9622             equ     $FFFF9622
-word_FF9628             equ     $FFFF9628
-word_FF9630             equ     $FFFF9630
-word_FF963A             equ     $FFFF963A
+SharedScrollPatternLong equ     $FFFF9610               ; was: dword_FF9610
+SevenForcesMedusaSpeed  equ     SharedScrollPatternLong
+SevenForcesAltPatchA    equ     SharedScrollPatternLong
+JokerTileWordGroup      equ     SharedScrollPatternLong
+SharedPoseTileLong      equ     $FFFF9614               ; was: dword_FF9614
+SevenForcesPlaneASpeed  equ     SharedPoseTileLong
+SevenForcesPatchB       equ     $FFFF961A               ; was: word_FF961A
+SevenForcesPlaneBSpeed  equ     $FFFF961C               ; was: dword_FF961C
+SharedWordWorkspace     equ     $FFFF9620               ; was: word_FF9620
+DestroyerMK2RowSpeeds   equ     SharedWordWorkspace
+ShieldViperAngleDelay   equ     SharedWordWorkspace
+SevenForcesFadeValue    equ     SharedWordWorkspace
+SevenForcesAltPatchD    equ     $FFFF9622               ; was: word_FF9622
+SevenForcesPatchC       equ     $FFFF9628               ; was: word_FF9628
+SevenForcesAltPatchC    equ     $FFFF9630               ; was: word_FF9630
+SevenForcesPatchD       equ     $FFFF963A               ; was: word_FF963A
 BugmaxAuxAngleHistory   equ     $FFFF9680               ; was: word_FF9680
 ShieldViperPoseHistory  equ     $FFFF9700               ; was: dword_FF9700
 word_FF9800             equ     $FFFF9800
@@ -469,7 +482,7 @@ FlyingNeoAngleTapBase   equ     $FFFF9806               ; was: byte_FF9806
 JetsripperAngleTapBase  equ     $FFFF9808               ; was: byte_FF9808
 SunsetStingWaveTable    equ     $FFFF9810               ; was: word_FF9810
 BossBackdropBandBufferA equ     $FFFF981E               ; was: byte_FF981E
-word_FF9820             equ     $FFFF9820
+DestroyerMK2ScrollRows  equ     $FFFF9820               ; was: word_FF9820
 ResultsSummaryRowBuffer equ     $FFFF9852               ; was: word_FF9852
 word_FF9880             equ     $FFFF9880
 DestroyerMK2ScrollTable equ     $FFFF98B0               ; was: word_FF98B0

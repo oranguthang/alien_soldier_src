@@ -137,7 +137,7 @@ Boss_ShieldViperRebaseNextLinkedBodyAngle:              ; CODE XREF: Boss_Shield
                 lea     $60(a0),a0
                 dbf     d7,Boss_ShieldViperRebaseNextLinkedBodyAngle
                 lea     $660(a5),a0
-                lea     (word_FF9620).w,a1
+                lea     (ShieldViperAngleDelay).w,a1
                 move.w  #7,d7
 Boss_ShieldViperSeedNextTrailingAngleGroup:             ; CODE XREF: Boss_ShieldViperEnableLinkedBodyGeometry+48   j  ; was: loc_4F362
                 move.w  $56(a0),d0

@@ -12,7 +12,7 @@ Boss_UpdateSirene:                                      ; DATA XREF: ROM:Entity_
                 bne.s   Boss_UpdateSireneBattleEffects
                 move.b  #$C1,d0
                 jsr     (Sound_PlaySFX).l
-                bclr    #7,(byte_FF8245).w
+                bclr    #7,(PlayerRestrictionFlags).w
                 moveq   #$E,d0
                 jmp     Boss_QueueSevenForcesPostBattleTransition
 ; ---------------------------------------------------------------------------
@@ -102,7 +102,7 @@ Boss_NormalizeSireneState2PoseAngle:                    ; CODE XREF: Boss_Update
                 bra.w   Boss_RenderSirenePose
 ; ---------------------------------------------------------------------------
 Boss_EnterSireneState4:                                 ; CODE XREF: Boss_InitSireneState0+E   j  ; was: loc_575DE
-                bset    #7,(byte_FF8245).w
+                bset    #7,(PlayerRestrictionFlags).w
                 move.w  #$8000,(GlobalSpritePriorityBit).w
                 move.w  #4,4(a5)
                 clr.w   $58(a5)
@@ -129,7 +129,7 @@ Boss_UpdateSireneState4:                                ; DATA XREF: ROM:000574F
 ; ---------------------------------------------------------------------------
 Boss_EnterSireneState6:                                 ; CODE XREF: Boss_UpdateSireneState4+1A   j  ; was: loc_57642
                 addq.w  #2,4(a5)
-                bset    #0,(byte_FF8245).w
+                bset    #0,(PlayerRestrictionFlags).w
                 move.w  #$58,(PlayerStateOffset).w      ; 'X'
 ; State six advances the opening pose before enabling the active battle phase
 Boss_UpdateSireneState6:                                ; DATA XREF: ROM:000574FE   o  ; was: loc_57652
@@ -434,15 +434,15 @@ Gfx_WriteSireneBattlePattern:                           ; CODE XREF: Gfx_UpdateS
                 jsr     (VDP_QueueCommand_Build).l
                 btst    #0,(FrameCounter+1).w
                 bne.s   Gfx_UseSireneAlternateBattlePattern
-                move.w  #$F000,(word_FF9508).w
-                move.w  #$E000,(word_FF951A).w
+                move.w  #$F000,(SirenePatternNormalA).w
+                move.w  #$E000,(SirenePatternNormalB).w
                 move.w  #$820,(PaletteActiveColor30).w
                 move.w  #$E20,(PaletteActiveColor31).w
                 rts
 ; ---------------------------------------------------------------------------
 Gfx_UseSireneAlternateBattlePattern:                    ; CODE XREF: Gfx_UpdateSireneBattleEffectPattern+48   j  ; was: loc_57A58
-                move.w  #$E0,(word_FF9510).w
-                move.w  #$F0,(word_FF9502).w
+                move.w  #$E0,(SirenePatternAltA).w
+                move.w  #$F0,(SirenePatternAltB).w
                 move.w  #$E00,(PaletteActiveColor30).w
                 move.w  #$A00,(PaletteActiveColor31).w
                 rts

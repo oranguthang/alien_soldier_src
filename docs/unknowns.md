@@ -7307,3 +7307,84 @@ The buffer adds one provenance mapping and exact-address audit record.
 Provenance rises from 15,999 to 16,000 mappings, the audit registry from
 13,238 to 13,239, and the semantic-review upper bound remains 3,061. The
 enforced address-derived ceiling falls from 52 to 51 RAM equates.
+
+The shared word-workspace pass resolves `$FFFF9620` and `$FFFF9820` without
+assigning mutually exclusive RAM overlays to one subsystem. Destroyer MK2
+clears a 256-word speed workspace at the first address and a matching
+256-word row workspace at the second, then integrates the first 255 pairs.
+Shield Viper independently uses `$FFFF9620` as a 65-word trailing-angle delay,
+while an unreferenced Seven Forces palette helper uses its first word as a
+clamped fade value. Contextual aliases expose those roles while
+`SharedWordWorkspace` remains the honest physical identity.
+
+The two definitions add provenance mappings and exact-address audit records.
+Provenance rises from 16,000 to 16,002 mappings, the audit registry from
+13,239 to 13,241, and the semantic-review upper bound remains 3,061. The
+enforced address-derived ceiling falls from 51 to 49 RAM equates.
+
+The player-state policy pass resolves the adjacent flag bytes at `$FFFF8244`
+and `$FFFF8245`. Player damage, jump, dash, shot, and teleport states populate
+`PlayerActionStateFlags`; camera, physics, boss, stage, weapon, and scripted
+input paths consume its individual action-condition bits. Scripted movement,
+boss entrances, and encounter transitions populate `PlayerRestrictionFlags`,
+whose bits suppress selected playfield bounds, hostile collision, terrain
+probes, or weapon fire. The names deliberately describe the grouped roles
+without inventing unsupported names for individual bits.
+
+The two definitions add provenance mappings and exact-address audit records.
+Provenance rises from 16,002 to 16,004 mappings, the audit registry from
+13,241 to 13,243, and the semantic-review upper bound remains 3,061. The
+enforced address-derived ceiling falls from 49 to 47 RAM equates.
+
+The Sirene/Gusthead pattern-overlay pass resolves four words within the shared
+`$FFFF9500` workspace. Sirene fills a 32-byte alternating battle-effect
+pattern, then frame parity selects either the normal patches at `$FFFF9508`
+and `$FFFF951A` or the alternate patches at `$FFFF9510` and `$FFFF9502`.
+Gusthead independently indexes a word counter array from `$FFFF9502` by the
+selected segment mapping. `SharedPatternOverlay` therefore retains a neutral
+physical identity while contextual aliases expose both consumers.
+
+The four definitions add provenance mappings and exact-address audit records.
+Provenance rises from 16,004 to 16,008 mappings, the audit registry from
+13,243 to 13,247, and the semantic-review upper bound remains 3,061. The
+enforced address-derived ceiling falls from 47 to 43 RAM equates.
+
+The Seven Forces debug-pattern pass resolves six words in the `$FFFF9600`
+workspace. The routine fills 64 bytes with C nibbles, queues the pattern for
+VDP transfer, and patches one of two four-marker sets according to frame
+parity. Five addresses belong only to those patches. `$FFFF9608` is also the
+base from which Back Stringer reads four strided pose bytes, so it retains the
+neutral `SharedPosePatternBase` identity and exposes contextual aliases for
+the Back Stringer pose group and first Seven Forces patch.
+
+The six definitions add provenance mappings and exact-address audit records.
+Provenance rises from 16,008 to 16,014 mappings, the audit registry from
+13,247 to 13,253, and the semantic-review upper bound remains 3,061. The
+enforced address-derived ceiling falls from 43 to 37 RAM equates.
+
+The camera/pattern overlay pass resolves `$FFFF9602`, `$FFFF9604`, and
+`$FFFF9610`. Z-Leo stores the previous camera Y at the first word and builds a
+12-byte indexed-row DMA descriptor at the following address. Seven Forces
+independently uses `$FFFF9602` and `$FFFF9610` as its second and first
+alternate debug-pattern patches, while the stage transition treats the latter
+as signed 16.16 Medusa camera speed. Joker also uses `$FFFF9610` as the base
+of a cycling tile-word group. Neutral physical names and contextual aliases
+keep these mutually exclusive layouts explicit.
+
+The three definitions add provenance mappings and exact-address audit records.
+Provenance rises from 16,014 to 16,017 mappings, the audit registry from
+13,253 to 13,256, and the semantic-review upper bound remains 3,061. The
+enforced address-derived ceiling falls from 37 to 34 RAM equates.
+
+The Seven Forces plane-speed pass resolves `$FFFF9614` and `$FFFF961C` as the
+signed 16.16 speeds used by the primary and secondary Sylpheed/Sirene plane
+updates. `$FFFF9614` also receives indirect Back Stringer pose-byte reads and
+Joker tile-word writes through their respective overlay bases, so
+`SharedPoseTileLong` remains its neutral physical identity and
+`SevenForcesPlaneASpeed` is the contextual stage alias. The second speed has
+no competing direct layout and is named `SevenForcesPlaneBSpeed`.
+
+The two definitions add provenance mappings and exact-address audit records.
+Provenance rises from 16,017 to 16,019 mappings, the audit registry from
+13,256 to 13,258, and the semantic-review upper bound remains 3,061. The
+enforced address-derived ceiling falls from 34 to 32 RAM equates.

@@ -32,7 +32,7 @@ Player_CeilingDashState_Return:                         ; CODE XREF: Player_Ceil
 
 ; Handles dash movement while the player remains attached to upper terrain
 Player_CeilingDashState:                                ; DATA XREF: ROM:00015084   o  ; was: sub_1652C
-                bset    #1,(byte_FF8244).w
+                bset    #1,(PlayerActionStateFlags).w
                 jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
                 jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
@@ -374,7 +374,7 @@ Player_JumpApexState:                                   ; DATA XREF: ROM:000150A
 Player_TeleportDash:                                    ; DATA XREF: ROM:000150B2   o  ; was: sub_16942
                 clr.w   (PlayerDefeatPhase).w
                 move.b  #$70,(PlayerInputMask).w        ; 'p'
-                bset    #0,(byte_FF8245).w
+                bset    #0,(PlayerRestrictionFlags).w
                 move.w  #$CD00,2(a5)
                 addq.w  #2,4(a5)
                 clr.w   $48(a5)
@@ -408,14 +408,14 @@ Player_TeleportDash_ApplyVelocity:                      ; DATA XREF: ROM:000150B
                 subi.l  #$C00,$18(a5)
                 bset    #6,$21(a5)
                 bset    #4,$23(a5)
-                bset    #4,(byte_FF8244).w
+                bset    #4,(PlayerActionStateFlags).w
                 bra.w   Effect_CreateDashTrail
 ; ---------------------------------------------------------------------------
 Player_TeleportDash_Finish:                             ; CODE XREF: Player_TeleportDash+A2   j  ; was: loc_16A0E
                 bclr    #6,$21(a5)
                 bclr    #4,$23(a5)
                 jsr     (Sys_ClearObjectBlocks17).l
-                bclr    #0,(byte_FF8245).w
+                bclr    #0,(PlayerRestrictionFlags).w
                 move.w  #$FFE0,$52(a5)
                 move.l  #$68000,$18(a5)
                 move.w  #$FFFF,$1C(a5)
@@ -435,7 +435,7 @@ Player_UpdateAnimStateMinus4:                           ; DATA XREF: ROM:000150B
 Player_InitTeleportDashReturnState:                     ; DATA XREF: ROM:000150BE   o  ; was: sub_16A4A
                 addq.w  #2,4(a5)
                 move.b  #$70,(PlayerInputMask).w        ; 'p'
-                bset    #0,(byte_FF8245).w
+                bset    #0,(PlayerRestrictionFlags).w
                 move.w  #$CD00,2(a5)
                 jsr     (Sys_ClearObjectBlocks17).l
                 move.w  #$120,$10(a5)

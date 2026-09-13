@@ -105,14 +105,14 @@ Boss_ShieldViperProjectTrailingBodyRecordsLoop:         ; CODE XREF: Boss_Shield
                 move.w  $656(a5),d0
                 add.w   $652(a5),d0
 ; Delay the first trailing-record angle through a 65-word history buffer
-                lea     (word_FF9620).w,a0
+                lea     (ShieldViperAngleDelay).w,a0
                 move.w  #$40,d7                         ; '@'
 Boss_ShieldViperShiftTrailingAngleHistoryLoop:          ; CODE XREF: Boss_ShieldViperUpdate+17A   j  ; was: loc_4DF46
                 move.w  (a0),d1
                 move.w  d0,(a0)+
                 move.w  d1,d0
                 dbf     d7,Boss_ShieldViperShiftTrailingAngleHistoryLoop
-                lea     (word_FF9620).w,a1
+                lea     (ShieldViperAngleDelay).w,a1
                 lea     $660(a5),a0
                 moveq   #0,d6
                 move.w  #7,d7
@@ -318,7 +318,7 @@ Boss_ShieldViperInitializeBodyAnglesLoop:               ; CODE XREF: Boss_Shield
 Boss_ShieldViperInitializeTrailAngleHistoryLoop:        ; CODE XREF: Boss_ShieldViperInitializeAuxiliaryRecordsAndHistory+34   j  ; was: loc_4E1CA
                 move.l  d0,(a1)+
                 dbf     d7,Boss_ShieldViperInitializeTrailAngleHistoryLoop
-                lea     (word_FF9620).w,a1
+                lea     (ShieldViperAngleDelay).w,a1
                 move.w  #$1F,d7
 Boss_ShieldViperInitializeTrailingAngleHistoryLoop:     ; CODE XREF: Boss_ShieldViperInitializeAuxiliaryRecordsAndHistory+42   j  ; was: loc_4E1D8
                 move.l  d0,(a1)+

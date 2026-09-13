@@ -1,8 +1,8 @@
 ; Handles the airborne recovery phase after the special attack
 Player_SpecialMoveRecoveryState:                        ; CODE XREF: Player_HandleSpecialAttack+18   j  ; was: sub_1609A
                                         ; DATA XREF: ROM:000150A8   o
-                bset    #0,(byte_FF8244).w
-                bset    #6,(byte_FF8244).w
+                bset    #0,(PlayerActionStateFlags).w
+                bset    #6,(PlayerActionStateFlags).w
                 jsr     Physics_ExtendedWallCheckWrapper(pc)  ; (pc)
                 nop
                 clr.b   6(a5)
@@ -92,8 +92,8 @@ Player_StartRecoveryWeaponSelect:                       ; CODE XREF: Player_Chec
 ; End of function Player_StartRecoveryWeaponSelect
 ; Holds recovery state 0x54 while the weapon selector is active
 Player_RecoveryWeaponSelectState:                       ; DATA XREF: ROM:000150B6   o  ; was: sub_161A6
-                bset    #0,(byte_FF8244).w
-                bset    #6,(byte_FF8244).w
+                bset    #0,(PlayerActionStateFlags).w
+                bset    #6,(PlayerActionStateFlags).w
                 jsr     Physics_ExtendedWallCheckWrapper(pc)  ; (pc)
                 nop
                 clr.b   6(a5)
@@ -137,7 +137,7 @@ Player_InitForcedPositionState:                         ; CODE XREF: Player_Upda
 ; Applies a published forced position until its request or timer expires
 Player_HandleForcedPositionState:                       ; DATA XREF: ROM:00015094   o  ; was: sub_1624A
                                         ; ROM:00015096   o
-                bset    #3,(byte_FF8244).w
+                bset    #3,(PlayerActionStateFlags).w
                 bclr    #0,(ForcedPositionFlags).w
                 bne.s   Player_HandleForcedPosition_ProcessActive
                 bra.w   Player_HandleForcedPosition_Finish

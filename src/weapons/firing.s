@@ -17,7 +17,7 @@ Weapon_UpdatePlayerFiring_ApplyMuzzleOffset:            ; CODE XREF: Weapon_Upda
                 adda.w  #(WeaponSlotConfig0-M68K_RAM),a4
                 tst.w   $10(a4)
                 beq.s   Weapon_DispatchSelectedType
-                bset    #2,(byte_FF8244).w
+                bset    #2,(PlayerActionStateFlags).w
 ; Dispatches the handler selected by the current weapon type
 Weapon_DispatchSelectedType:                            ; CODE XREF: Weapon_UpdatePlayerFiring+34   j  ; was: loc_17F14
                 move.w  (WeaponStateIndex).w,d0
@@ -346,7 +346,7 @@ Weapon_EmptySpreadProjectileHandler:                    ; was: nullsub_46
 
 ; Handles player bullet firing with ammo check
 Weapon_FireBulletHandler:                               ; DATA XREF: ROM:00017F2A   o  ; was: sub_18328
-                btst    #7,(byte_FF8245).w
+                btst    #7,(PlayerRestrictionFlags).w
                 bne.w   Effect_SpawnRandomDebris
                 tst.w   $10(a4)
                 beq.w   Effect_SpawnRandomDebris
@@ -414,7 +414,7 @@ Weapon_EmptyBulletCompanionHandler:                     ; was: nullsub_47
 
 ; Fires beam weapon with continuous fire and ammo consumption
 Weapon_FireBeamWeapon:                                  ; DATA XREF: ROM:00017F2C   o  ; was: sub_183FE
-                btst    #7,(byte_FF8245).w
+                btst    #7,(PlayerRestrictionFlags).w
                 bne.w   Effect_SpawnRandomDebris
                 tst.w   $10(a4)
                 beq.w   Effect_SpawnRandomDebris

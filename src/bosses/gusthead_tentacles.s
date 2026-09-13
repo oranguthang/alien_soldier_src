@@ -340,7 +340,7 @@ Boss_GustheadUpdateSegmentMapping:                      ; CODE XREF: Boss_Gusthe
                 move.l  Boss_GustheadSegmentMappings(pc,d0.w),8(a0)
                 clr.w   $C(a0)
                 lsr.w   #1,d0
-                lea     (word_FF9502).w,a1
+                lea     (GustheadMappingCounts).w,a1
                 addq.w  #1,(a1,d0.w)
                 rts
 ; End of function Boss_GustheadUpdateSegmentMapping

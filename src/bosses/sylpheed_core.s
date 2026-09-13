@@ -298,7 +298,7 @@ Boss_UpdateSylpheedDecisionState4:                      ; DATA XREF: ROM:0005944
                 cmpi.w  #$2858,(BossHealth).w
                 bmi.s   Boss_CountDownSylpheedDecisionTimer
 Boss_CheckSylpheedForcedCharge:                         ; CODE XREF: Boss_EnterSylpheedDecisionState4+52   j  ; was: loc_59794
-                btst    #2,(byte_FF8244).w
+                btst    #2,(PlayerActionStateFlags).w
                 beq.s   Boss_CountDownSylpheedDecisionTimer
                 bra.w   Boss_EnterSylpheedChargeState6
 ; ---------------------------------------------------------------------------
@@ -344,7 +344,7 @@ Boss_EnterSylpheedRecoveryState8:                       ; CODE XREF: Boss_EnterS
 Boss_UpdateSylpheedRecoveryState8:                      ; DATA XREF: ROM:0005944A   o  ; was: sub_59818
                 subq.w  #1,$11C(a5)
                 bmi.w   Boss_ResetSylpheedDecisionState4
-                btst    #2,(byte_FF8244).w
+                btst    #2,(PlayerActionStateFlags).w
                 beq.s   Boss_UpdateSylpheedRecoveryTarget
                 move.w  #$60,$11C(a5)                   ; '`'
 Boss_UpdateSylpheedRecoveryTarget:                      ; CODE XREF: Boss_UpdateSylpheedRecoveryState8+E   j  ; was: loc_5982E

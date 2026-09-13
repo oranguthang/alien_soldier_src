@@ -49,7 +49,7 @@ Player_Update:                                          ; CODE XREF: Sys_Gamepla
                 bmi.s   Player_SetDisplayFlag
                 jsr     (Player_UpdateScriptedInput).l
                 bsr.w   Input_ReadPlayerInput
-                clr.b   (byte_FF8244).w
+                clr.b   (PlayerActionStateFlags).w
                 clr.w   6(a5)
                 tst.w   (PlayerDefeatPhase).w
                 beq.s   Player_Update_CheckGameplayReady
@@ -81,7 +81,7 @@ Player_Update_CheckFallBoundary:                        ; CODE XREF: Player_Upda
                 beq.s   Player_Update_RunState
                 tst.w   $1C(a5)
                 bmi.s   Player_Update_RunState
-                btst    #0,(byte_FF8245).w
+                btst    #0,(PlayerRestrictionFlags).w
                 bne.s   Player_Update_RunState
                 cmpi.w  #$171,$14(a5)
                 bpl.w   Player_HandleDeathSequence
@@ -182,8 +182,8 @@ Player_HandleDeathSequence:                             ; CODE XREF: Player_Upda
                 move.w  #$A0,$4A(a5)
 ; Sets player death animation flags and counters
 Player_HandleDeathSequence_SetFlags:                    ; DATA XREF: ROM:00015098   o  ; was: loc_15134
-                bset    #5,(byte_FF8244).w
-                bset    #0,(byte_FF8244).w
+                bset    #5,(PlayerActionStateFlags).w
+                bset    #0,(PlayerActionStateFlags).w
                 move.b  #8,$20(a5)
                 btst    #0,(FrameCounter+1).w
                 bne.s   Player_HandleDeathSequence_ClampEnergy
@@ -413,7 +413,7 @@ Player_HandleAirState_Return:                           ; CODE XREF: Player_Hand
 
 ; Handles player airborne state logic
 Player_HandleAirState:                                  ; DATA XREF: ROM:00015070   o  ; was: sub_15408
-                bset    #1,(byte_FF8244).w
+                bset    #1,(PlayerActionStateFlags).w
                 jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
                 bsr.w   Physics_LowerTerrainCheckWrapper
@@ -506,7 +506,7 @@ Player_InitLandingState:                                ; CODE XREF: Player_AirC
 ; End of function Player_InitLandingState
 ; Handles player landing state logic
 Player_HandleLandingState:                              ; DATA XREF: ROM:00015078   o  ; was: sub_15532
-                bset    #1,(byte_FF8244).w
+                bset    #1,(PlayerActionStateFlags).w
                 jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
                 bsr.w   Physics_LowerTerrainCheckWrapper

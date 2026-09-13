@@ -131,7 +131,7 @@ Player_PhoenixAttackUpdate_SelectState:                 ; CODE XREF: Player_Phoe
 Player_PhoenixAttackUpdate_TryProjectile:               ; CODE XREF: Player_PhoenixAttackUpdate+38   j  ; was: loc_1587A
                 tst.w   (PhoenixAttackStatus).w
                 bne.s   Player_PhoenixAttackUpdate_PlayBlockedSound
-                btst    #7,(byte_FF8245).w
+                btst    #7,(PlayerRestrictionFlags).w
                 bne.s   Player_PhoenixAttackUpdate_PlayBlockedSound
                 move.l  #Player_PhoenixAndTeleportDashSpriteMapping,8(a5)
                 bsr.w   Player_SpawnProjectile
@@ -146,7 +146,7 @@ Player_PhoenixAttackUpdate_UpdateCollision:             ; CODE XREF: Player_Phoe
                 move.w  #1,(DashActiveWriteOnly).w
                 bset    #6,$21(a5)
                 bset    #4,$23(a5)
-                bset    #4,(byte_FF8244).w
+                bset    #4,(PlayerActionStateFlags).w
                 clr.w   6(a5)
                 bsr.w   Physics_FacingExtendedWallCheckWrapper
                 bsr.w   Physics_FacingTerrainCheckWrapper
@@ -224,7 +224,7 @@ Player_InitiateDashAttack_FaceRight:                    ; CODE XREF: Player_Init
 Player_InitiateDashAttack_TryProjectile:                ; CODE XREF: Player_InitiateDashAttack+62   j  ; was: loc_159A0
                 tst.w   (PhoenixAttackStatus).w
                 bne.s   Player_PlayDashAttackSound
-                btst    #7,(byte_FF8245).w
+                btst    #7,(PlayerRestrictionFlags).w
                 bne.s   Player_PlayDashAttackSound
                 bsr.w   Player_SpawnProjectile
                 move.l  #Player_PhoenixAndTeleportDashSpriteMapping,8(a5)
@@ -305,7 +305,7 @@ Player_DashAttackState_UpdateMovement:                  ; CODE XREF: Player_Dash
                 bne.s   Player_DashAttackState_CleanupAfterMovement
                 bsr.w   Player_ApplyHorizontalMovement
                 bne.s   Player_DashAttackState_CleanupAfterMovement
-                bset    #4,(byte_FF8244).w
+                bset    #4,(PlayerActionStateFlags).w
                 bra.w   Effect_CreateDashTrail
 ; End of function Player_DashAttackState
 ; Applies horizontal movement with boundary checking
@@ -326,7 +326,7 @@ Player_ApplyHorizontalMovement_CheckLeftCollision:      ; CODE XREF: Player_Appl
 Player_ApplyHorizontalMovement_Apply:                   ; CODE XREF: Player_ApplyHorizontalMovement+18   j  ; was: loc_15AC0
                 move.l  $48(a5),d0
                 add.l   d0,$10(a5)
-                btst    #1,(byte_FF8245).w
+                btst    #1,(PlayerRestrictionFlags).w
                 bne.s   Player_ApplyHorizontalMovement_ReturnNoCollision
                 cmpi.w  #$1AF,$10(a5)
                 bmi.s   Player_ApplyHorizontalMovement_ClampLeft
@@ -426,7 +426,7 @@ Player_CheckSpecialMoveActivation:                      ; CODE XREF: Player_Hand
                 move.b  $69(a5),d0
                 andi.b  #$C,d0
                 bne.w   Player_InitiateDashAttack_UseGroundState
-                btst    #6,(byte_FF8245).w
+                btst    #6,(PlayerRestrictionFlags).w
                 bne.w   Player_InitiateDashAttack_UseGroundState
                 btst    #2,6(a5)
                 beq.w   Player_InitiateDashAttack_UseGroundState

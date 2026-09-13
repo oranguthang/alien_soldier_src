@@ -319,7 +319,7 @@ Collision_CheckWeaponProjectilesAgainstEnemies_ResolveBlockedHit:  ; CODE XREF: 
 ; End of function Collision_CheckWeaponProjectilesAgainstEnemies
 ; Checks the player object against hostile collision entries
 Collision_CheckPlayerAgainstHostiles:                   ; CODE XREF: Collision_UpdateSystem+22   p  ; was: sub_13E9A
-                btst    #4,(byte_FF8245).w
+                btst    #4,(PlayerRestrictionFlags).w
                 bne.w   Collision_CheckPlayerAgainstHostiles_Return
                 subq.b  #1,(ContactDamageCooldown).w
                 bpl.s   Collision_CheckPlayerAgainstHostiles_Begin

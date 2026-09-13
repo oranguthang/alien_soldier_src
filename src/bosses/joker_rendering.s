@@ -80,7 +80,7 @@ Boss_JokerBuildBodyHeightRasterValuesNextPair:          ; CODE XREF: Boss_JokerR
                 swap    d4
                 dbf     d7,Boss_JokerBuildBodyHeightRasterValuesNextPair
                 movea.w #(word_FF9600-M68K_RAM),a0
-                movea.w #(dword_FF9610-M68K_RAM),a1
+                movea.w #(JokerTileWordGroup-M68K_RAM),a1
                 lea     Boss_JokerCyclingTileWords(pc),a2
                 nop
                 move.w  (FrameCounter).w,d0

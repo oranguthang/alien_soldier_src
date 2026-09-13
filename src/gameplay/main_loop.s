@@ -330,7 +330,7 @@ Physics_ApplyVelocityWithBounds:                        ; CODE XREF: Object_Appl
                 beq.s   Physics_ApplyVelocityWithBounds_ProcessVertical
                 move.l  $18(a5),d3
                 move.l  (StageMotionXDelta).w,d4
-                btst    #1,(byte_FF8244).w
+                btst    #1,(PlayerActionStateFlags).w
                 beq.s   Physics_ApplyVelocityWithBounds_AddHorizontalBias
                 asr.l   #2,d4
 Physics_ApplyVelocityWithBounds_AddHorizontalBias:      ; CODE XREF: Physics_ApplyVelocityWithBounds+12   j  ; was: loc_1CA9C
@@ -387,7 +387,7 @@ Physics_ApplyPositionOffset_Return:                     ; CODE XREF: Physics_App
 ; Clamps an object's position to the enabled playfield bounds
 Object_ClampToPlayfield:                                ; CODE XREF: Object_ApplyCameraMotion+7E   p  ; was: sub_1CAF2
                                         ; Object_ApplyCameraMotion+D6   p
-                btst    #1,(byte_FF8245).w
+                btst    #1,(PlayerRestrictionFlags).w
                 bne.s   Object_ClampToPlayfield_CheckTop
                 cmpi.w  #$90,$10(a5)
                 bpl.s   Object_ClampToPlayfield_CheckRight
@@ -400,7 +400,7 @@ Object_ClampToPlayfield_CheckRight:                     ; CODE XREF: Object_Clam
                 move.w  #$1AF,$10(a5)
 Object_ClampToPlayfield_CheckTop:                       ; CODE XREF: Object_ClampToPlayfield+6   j  ; was: loc_1CB18
                                         ; Object_ClampToPlayfield+16   j
-                btst    #2,(byte_FF8245).w
+                btst    #2,(PlayerRestrictionFlags).w
                 bne.s   Object_ClampToPlayfield_Return
                 cmpi.w  #$98,$14(a5)
                 bpl.s   Object_ClampToPlayfield_Return

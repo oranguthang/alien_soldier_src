@@ -38,12 +38,12 @@ Stage_SevenForcesUpdateMedusaCamera:                    ; CODE XREF: Stage_Seven
 ; End of function Stage_SevenForcesAdvanceToMedusa
 ; Brake the Medusa scroll before initializing the Sylpheed transition
 Stage_SevenForcesFinishMedusaScroll:                    ; DATA XREF: ROM:0000E4AE   o  ; was: sub_E858
-                subi.l  #$1400,(dword_FF9610).w
+                subi.l  #$1400,(SevenForcesMedusaSpeed).w
                 bpl.s   Stage_SevenForcesApplyMedusaScroll
                 addq.w  #2,(StageStateOffset).w
-                clr.l   (dword_FF9610).w
+                clr.l   (SevenForcesMedusaSpeed).w
 Stage_SevenForcesApplyMedusaScroll:                     ; CODE XREF: Stage_SevenForcesFinishMedusaScroll+8   j ; was: loc_E86A
-                move.l  (dword_FF9610).w,d0
+                move.l  (SevenForcesMedusaSpeed).w,d0
                 sub.l   d0,(PrimaryCameraXPosition).w
                 bra.w   Stage_SevenForcesWrapVerticalCamera
 ; End of function Stage_SevenForcesFinishMedusaScroll
@@ -53,8 +53,8 @@ Stage_SevenForcesInitializeSylpheedScroll:              ; DATA XREF: ROM:0000E4B
                 beq.s   Stage_SevenForcesInitializeSylpheedScrollReturn
                 addq.w  #2,(StageStateOffset).w
                 clr.b   (SceneSequenceFlags).w
-                clr.l   (dword_FF9614).w
-                clr.l   (dword_FF961C).w
+                clr.l   (SevenForcesPlaneASpeed).w
+                clr.l   (SevenForcesPlaneBSpeed).w
                 bsr.w   Gfx_ClearSylpheedPlaneModes
 Stage_SevenForcesInitializeSylpheedScrollReturn:        ; CODE XREF: Stage_SevenForcesInitializeSylpheedScroll+4   j ; was: locret_E890
                 rts
@@ -143,8 +143,8 @@ Stage_SevenForcesScrollArtemisForeground:               ; DATA XREF: ROM:0000E4C
                 beq.s   Stage_SevenForcesScrollArtemisForegroundReturn
                 addq.w  #2,(StageStateOffset).w
                 move.w  #$40,(SevenForcesTimer).w       ; '@'
-                clr.l   (dword_FF9614).w
-                clr.l   (dword_FF961C).w
+                clr.l   (SevenForcesPlaneASpeed).w
+                clr.l   (SevenForcesPlaneBSpeed).w
                 move.b  #$F4,d0
                 jsr     (Sound_PlaySFX).l
 Stage_SevenForcesScrollArtemisForegroundReturn:         ; CODE XREF: Stage_SevenForcesScrollArtemisForeground+C   j ; was: locret_E95A
@@ -157,7 +157,7 @@ Stage_SevenForcesBeginSireneTransition:                 ; DATA XREF: ROM:0000E4C
                 bpl.s   Stage_SevenForcesUpdateSireneCamera
                 addq.w  #2,(StageStateOffset).w
                 clr.b   (SceneSequenceFlags).w
-                clr.l   (dword_FF9614).w
+                clr.l   (SevenForcesPlaneASpeed).w
                 move.b  #$F5,d0
                 jsr     (Sound_PlaySFX).l
                 move.w  #$E400,(PrimaryCameraYPosition).w

@@ -37,7 +37,7 @@ Player_InitFallingTransition:                           ; CODE XREF: Player_Chec
 ; Handles player falling state with gravity
 Player_HandleFallingState:                              ; CODE XREF: Player_KnockbackState+2E   j  ; was: sub_15CE4
                                         ; DATA XREF: ROM:00015068   o
-                bset    #0,(byte_FF8244).w
+                bset    #0,(PlayerActionStateFlags).w
                 btst    #5,$69(a5)
                 bne.s   Player_HandleFallingState_UpdateTimer
                 move.w  #$FFFF,$48(a5)
@@ -219,7 +219,7 @@ Player_InitHardLanding:                                 ; CODE XREF: Player_Hand
 ; End of function Player_InitHardLanding
 ; Handles bounce state with gravity and terrain collision checks
 Player_HandleBounceState:                               ; DATA XREF: ROM:00015074   o  ; was: sub_15EB6
-                bset    #0,(byte_FF8244).w
+                bset    #0,(PlayerActionStateFlags).w
                 addi.l  #$8800,$1C(a5)
                 jsr     Physics_ExtendedWallCheckWrapper(pc)  ; (pc)
                 nop
@@ -317,8 +317,8 @@ Player_HandleSpecialAttack:                             ; DATA XREF: ROM:000150B
                 bra.w   Player_SpecialMoveRecoveryState
 ; ---------------------------------------------------------------------------
 Player_HandleSpecialAttack_UpdateActive:                ; CODE XREF: Player_HandleSpecialAttack+4   j  ; was: loc_15FE0
-                bset    #0,(byte_FF8244).w
-                bset    #6,(byte_FF8244).w
+                bset    #0,(PlayerActionStateFlags).w
+                bset    #6,(PlayerActionStateFlags).w
                 jsr     Physics_ExtendedWallCheckWrapper(pc)  ; (pc)
                 nop
                 addi.l  #$C000,$1C(a5)

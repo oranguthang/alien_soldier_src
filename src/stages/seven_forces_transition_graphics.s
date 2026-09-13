@@ -115,12 +115,12 @@ UnreferencedSevenForcesBossTransitionCheck:
 ; End of function UnreferencedSevenForcesBossTransitionCheck
 ; Camera control for Medusa
 Stage_SevenForcesUpdateMedusaCameraAndParallax:         ; CODE XREF: Stage_SevenForcesAdvanceToMedusa:Stage_SevenForcesUpdateMedusaCamera   j  ; was: sub_EB9E
-                addi.l  #$200,(dword_FF9610).w
-                cmpi.w  #2,(dword_FF9610).w
+                addi.l  #$200,(SevenForcesMedusaSpeed).w
+                cmpi.w  #2,(SevenForcesMedusaSpeed).w
                 bmi.s   Stage_SevenForcesStoreMedusaCameraVelocity
-                move.l  #$20000,(dword_FF9610).w
+                move.l  #$20000,(SevenForcesMedusaSpeed).w
 Stage_SevenForcesStoreMedusaCameraVelocity:             ; CODE XREF: Stage_SevenForcesUpdateMedusaCameraAndParallax+E   j  ; was: loc_EBB6
-                move.l  (dword_FF9610).w,d0
+                move.l  (SevenForcesMedusaSpeed).w,d0
                 sub.l   d0,(PrimaryCameraXPosition).w
 Stage_SevenForcesWrapVerticalCamera:                    ; CODE XREF: Stage_SevenForcesFinishMedusaScroll+1A   j  ; was: loc_EBBE
                 bpl.s   Stage_SevenForcesPrepareMedusaPrimaryPlaneOrigin
@@ -170,13 +170,13 @@ Gfx_WriteSevenForcesPrimaryParallaxRowsB:               ; CODE XREF: Stage_Seven
 ; End of function Stage_SevenForcesUpdateMedusaCameraAndParallax
 ; Camera lock handler
 Stage_SevenForcesUpdateSylpheedPrimaryPlane:            ; CODE XREF: Stage_SevenForcesUpdateSylpheedScroll   p  ; was: sub_EC38
-                move.l  (dword_FF9614).w,d0
+                move.l  (SevenForcesPlaneASpeed).w,d0
                 subi.l  #$2000,d0
                 cmpi.l  #$FFF88000,d0
                 bpl.s   Stage_SevenForcesStoreSylpheedPrimaryVelocity
                 move.l  #$FFF88000,d0
 Stage_SevenForcesStoreSylpheedPrimaryVelocity:          ; CODE XREF: Stage_SevenForcesUpdateSylpheedPrimaryPlane+10   j  ; was: loc_EC50
-                move.l  d0,(dword_FF9614).w
+                move.l  d0,(SevenForcesPlaneASpeed).w
                 add.l   d0,(PrimaryCameraYPosition).w
                 cmpi.w  #$F600,(PrimaryCameraYPosition).w
                 bpl.s   Stage_SevenForcesPrepareSylpheedPrimaryOrigin
@@ -209,13 +209,13 @@ Stage_SevenForcesRenderSylpheedSecondaryPlane:          ; CODE XREF: Stage_Seven
 ; Loads Sylpheed palette
 Stage_SevenForcesAdvanceSylpheedSecondaryScroll:        ; CODE XREF: Stage_SevenForcesFinishSylpheedForeground:Stage_SevenForcesContinueSylpheedForeground   p  ; was: sub_ECAA
                                         ; sub_EC86   p
-                move.l  (dword_FF961C).w,d0
+                move.l  (SevenForcesPlaneBSpeed).w,d0
                 subi.l  #$1000,d0
                 cmpi.l  #$FFF88000,d0
                 bpl.s   Stage_SevenForcesApplySylpheedSecondaryVelocity
                 move.l  #$FFF88000,d0
 Stage_SevenForcesApplySylpheedSecondaryVelocity:        ; CODE XREF: Stage_SevenForcesAdvanceSylpheedSecondaryScroll+10   j  ; was: loc_ECC2
-                move.l  d0,(dword_FF961C).w
+                move.l  d0,(SevenForcesPlaneBSpeed).w
                 add.l   d0,(SecondaryCameraYPos).w
                 rts
 ; End of function Stage_SevenForcesAdvanceSylpheedSecondaryScroll
@@ -256,13 +256,13 @@ Stage_SevenForcesCheckArtemisForegroundLimit:           ; CODE XREF: Stage_Seven
 ; End of function Stage_SevenForcesUpdateArtemisForegroundMotion
 ; Advances and renders the Sirene primary plane
 Stage_SevenForcesUpdateSirenePrimaryPlane:              ; CODE XREF: Stage_SevenForcesAdvanceSireneTransition+6   p  ; was: sub_ED32
-                move.l  (dword_FF9614).w,d0
+                move.l  (SevenForcesPlaneASpeed).w,d0
                 addi.l  #$200,d0
                 cmpi.l  #$8000,d0
                 bmi.s   Stage_SevenForcesStoreSirenePrimaryVelocity
                 move.l  #$8000,d0
 Stage_SevenForcesStoreSirenePrimaryVelocity:            ; CODE XREF: Stage_SevenForcesUpdateSirenePrimaryPlane+10   j  ; was: loc_ED4A
-                move.l  d0,(dword_FF9614).w
+                move.l  d0,(SevenForcesPlaneASpeed).w
                 add.l   d0,(PrimaryCameraYPosition).w
                 cmpi.w  #$E4C0,(PrimaryCameraYPosition).w
                 bmi.s   Stage_SevenForcesRenderSirenePrimaryPlane
@@ -278,7 +278,7 @@ Stage_SevenForcesRenderSirenePrimaryPlane:              ; CODE XREF: Stage_Seven
 ; End of function Stage_SevenForcesUpdateSirenePrimaryPlane
 ; Advances and renders the Sirene secondary plane
 Stage_SevenForcesRenderSireneSecondaryPlane:            ; CODE XREF: Stage_SevenForcesFinishSireneTransition+6   p  ; was: sub_ED7E
-                move.l  (dword_FF961C).w,d0
+                move.l  (SevenForcesPlaneBSpeed).w,d0
                 add.l   d0,(PrimaryCameraYPosition).w
                 moveq   #0,d0
                 move.w  (PrimaryCameraYPosition).w,d1
@@ -289,13 +289,13 @@ Stage_SevenForcesRenderSireneSecondaryPlane:            ; CODE XREF: Stage_Seven
 ; Advances the Sirene secondary scroll
 Stage_SevenForcesUpdateSireneSecondaryScroll:           ; CODE XREF: Stage_SevenForcesAdvanceSireneTransition+2   p  ; was: sub_ED9A
                                         ; Stage_SevenForcesFinishSireneTransition+2   p
-                move.l  (dword_FF961C).w,d0
+                move.l  (SevenForcesPlaneBSpeed).w,d0
                 subi.l  #$100,d0
                 cmpi.l  #$FFFFC000,d0
                 bpl.s   Stage_SevenForcesStoreSireneSecondaryVelocity
                 move.l  #$FFFFC000,d0
 Stage_SevenForcesStoreSireneSecondaryVelocity:          ; CODE XREF: Stage_SevenForcesUpdateSireneSecondaryScroll+10   j  ; was: loc_EDB2
-                move.l  d0,(dword_FF961C).w
+                move.l  d0,(SevenForcesPlaneBSpeed).w
                 add.l   d0,(SecondaryCameraYPos).w
                 cmpi.w  #$E340,(SecondaryCameraYPos).w
                 bpl.s   Stage_SevenForcesRenderSireneSecondaryScroll
@@ -354,7 +354,7 @@ Cutscene_SevenForcesCamera3Render:                      ; CODE XREF: Cutscene_Se
 ; Initializes the Artemis camera, tilemap, and graphics transfers
 Stage_SevenForcesInitializeArtemisCameraAndAssets:      ; CODE XREF: Stage_SevenForcesFinishSylpheedForeground+10   j  ; was: sub_EE62
                 bsr.w   Gfx_InitializeArtemisTilemapRow
-                bset    #6,(byte_FF8245).w
+                bset    #6,(PlayerRestrictionFlags).w
                 move.w  #$60,(PrimaryCameraXPosition).w  ; '`'
                 move.w  #$60,(PreviousCameraXPosition).w  ; '`'
                 move.w  #$E300,(PrimaryCameraYPosition).w
@@ -528,7 +528,7 @@ Gfx_ClearSevenForcesTilemapMode:                        ; CODE XREF: Stage_Seven
 ; End of function Gfx_ClearSevenForcesTilemapMode
 ; Unreferenced helper that clamps and applies a palette fade
 UnreferencedClampAndApplyPaletteFade:
-                move.w  (word_FF9620).w,d0              ; was: sub_F064
+                move.w  (SevenForcesFadeValue).w,d0     ; was: sub_F064
                 bpl.s   UnreferencedClampPaletteFadePositive
                 cmpi.w  #$FFE4,d0
                 bpl.s   UnreferencedApplyClampedPaletteFade
@@ -540,7 +540,7 @@ UnreferencedClampPaletteFadePositive:                   ; CODE XREF: Unreference
                 moveq   #0,d0
 UnreferencedApplyClampedPaletteFade:                    ; CODE XREF: UnreferencedClampAndApplyPaletteFade+A   j  ; was: loc_F078
                                         ; UnreferencedClampAndApplyPaletteFade+E   j
-                move.w  d0,(word_FF9620).w
+                move.w  d0,(SevenForcesFadeValue).w
                 movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 moveq   #$1F,d5
                 move.w  #$E000,d7

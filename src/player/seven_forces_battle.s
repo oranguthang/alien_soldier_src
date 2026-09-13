@@ -189,7 +189,7 @@ Player_StartSevenForcesDashRight:                       ; CODE XREF: Player_TryS
 Player_StartSevenForcesDashProjectile:                  ; CODE XREF: Player_TryStartSevenForcesDash+64   j  ; was: loc_19FE4
                 tst.w   (PhoenixAttackStatus).w
                 bne.s   Player_StartSevenForcesDashAlternateProjectile
-                btst    #7,(byte_FF8245).w
+                btst    #7,(PlayerRestrictionFlags).w
                 bne.s   Player_StartSevenForcesDashAlternateProjectile
                 jsr     (Player_SpawnProjectile).l
                 move.l  #Player_PhoenixAndTeleportDashSpriteMapping,8(a5)
@@ -226,7 +226,7 @@ Player_UpdateSevenForcesDash:                           ; CODE XREF: Player_Seve
                 bsr.s   Player_ApplySevenForcesDashVelocity
                 bsr.s   Player_ApplySevenForcesDashVelocity
                 bsr.s   Player_ApplySevenForcesDashVelocity
-                bset    #4,(byte_FF8244).w
+                bset    #4,(PlayerActionStateFlags).w
                 jmp     Effect_CreateDashTrail
 ; End of function Player_SevenForcesDashState6
 ; Apply one horizontal dash-velocity step

@@ -230,9 +230,9 @@ WeaponSelect_Update:                                    ; DATA XREF: ROM:0001799
                 bsr.w   WeaponSelect_CommitSelectedSlot
                 tst.w   (PlayerDefeatPhase).w
                 bne.w   WeaponSelect_StartCloseDelay
-                btst    #6,(byte_FF8244).w
+                btst    #6,(PlayerActionStateFlags).w
                 bne.s   WeaponSelect_UpdateOpenState
-                btst    #0,(byte_FF8244).w
+                btst    #0,(PlayerActionStateFlags).w
                 bne.w   Weapon_CommitStateTransition
 WeaponSelect_UpdateOpenState:                           ; CODE XREF: WeaponSelect_Update+12   j  ; was: loc_17BA8
                 tst.w   (PlayerScriptStateOffset).w

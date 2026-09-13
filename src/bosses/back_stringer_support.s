@@ -320,7 +320,7 @@ Boss_BackStringerPublishPoseAngles:                     ; CODE XREF: Boss_BackSt
                 asl.w   #1,d1
                 and.w   d7,d1
                 move.w  d1,$116(a5)
-                movea.w #(word_FF9608-M68K_RAM),a0
+                movea.w #(BackStringerPoseGroup-M68K_RAM),a0
                 move.b  (a0),d2
                 asl.w   #1,d2
                 and.w   d7,d2

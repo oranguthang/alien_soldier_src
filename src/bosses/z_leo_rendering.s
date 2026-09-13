@@ -115,15 +115,15 @@ Boss_ZLeoUseAlternateFlashColor:                        ; CODE XREF: Boss_ZLeoBe
 ; Tile update handler
 Boss_ZLeoTileUpdate:                                    ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+F2   p  ; was: sub_52682
                                         ; Boss_ZLeoBeginRisingReturn+112   p
-                movea.w #(byte_FF9604-M68K_RAM),a3
+                movea.w #(ZLeoTileDMARecord-M68K_RAM),a3
                 lea     Boss_ZLeoTileVramDestinations(pc),a4
                 nop
                 move.w  (word_FF9600).w,d7
                 move.w  (PrimaryCameraYPosition).w,d0
                 addi.w  #$20,d0                         ; ' '
                 bmi.w   Boss_ZLeoNoOp
-                move.w  (word_FF9602).w,d1
-                move.w  d0,(word_FF9602).w
+                move.w  (ZLeoPreviousCameraY).w,d1
+                move.w  d0,(ZLeoPreviousCameraY).w
                 cmp.w   d1,d0
                 beq.w   Boss_ZLeoNoOp
                 lea     Boss_ZLeoTileScrollThresholds(pc),a0
@@ -157,7 +157,7 @@ Boss_ZLeoQueueTileChunkClear:                           ; CODE XREF: Boss_ZLeoTi
                 move.l  d0,(a3)+
                 move.w  d0,(a3)+
 Boss_ZLeoExecuteTileChunkTransfer:                      ; CODE XREF: Boss_ZLeoTileUpdate+5C   j  ; was: loc_52704
-                movea.w #(byte_FF9604-M68K_RAM),a0
+                movea.w #(ZLeoTileDMARecord-M68K_RAM),a0
                 jmp     Tilemap_QueueIndexedRows
 ; End of function Boss_ZLeoTileUpdate
 ; ---------------------------------------------------------------------------

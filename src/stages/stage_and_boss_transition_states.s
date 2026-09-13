@@ -692,7 +692,7 @@ StageTransition_UpdateMissiraySceneObject:              ; DATA XREF: ROM:Entity_
                 beq.s   StageTransition_SyncMissiraySceneObjectHeight
                 tst.w   (ShootingMode).w
                 beq.s   StageTransition_CheckMissiraySceneUpInput
-                btst    #2,(byte_FF8244).w
+                btst    #2,(PlayerActionStateFlags).w
                 bne.s   StageTransition_SyncMissiraySceneObjectHeight
 StageTransition_CheckMissiraySceneUpInput:              ; CODE XREF: StageTransition_UpdateMissiraySceneObject+1C   j  ; was: loc_F976
                 btst    #0,(ControllerHeldState).w

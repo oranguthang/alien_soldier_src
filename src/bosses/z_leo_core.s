@@ -113,7 +113,7 @@ Boss_ZLeoInit:                                          ; DATA XREF: ROM:Boss_ZL
                 tst.w   (MessageSequenceState).w
                 bne.w   Boss_ZLeoInitReturn
                 addq.w  #2,4(a5)
-                bset    #0,(byte_FF8245).w
+                bset    #0,(PlayerRestrictionFlags).w
                 move.w  #$3F8,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
@@ -183,7 +183,7 @@ Boss_ZLeoIntroInit:                                     ; DATA XREF: ROM:00051B8
                 clr.w   (word_FF9600).w
                 clr.w   (PrimaryCameraXPosition).w
                 move.w  #$100,(PrimaryCameraYPosition).w
-                move.w  #$100,(word_FF9602).w
+                move.w  #$100,(ZLeoPreviousCameraY).w
                 bset    #7,(CameraMotionLockFlags).w
                 bset    #6,(CameraMotionLockFlags).w
                 move.w  #$10,d0
@@ -686,7 +686,7 @@ Boss_ZLeoWaitForScrollingLaserCue:                      ; DATA XREF: ROM:00051BA
 ; ---------------------------------------------------------------------------
 Boss_ZLeoStartScrollingLaserAttack:                     ; CODE XREF: Boss_ZLeoBeginScrollingLaserAttack+2A   j  ; was: loc_5232C
                 addq.w  #2,4(a5)
-                bset    #2,(byte_FF8245).w
+                bset    #2,(PlayerRestrictionFlags).w
                 bset    #2,(Entity57Flags).w
                 move.l  #$FFF00000,(Entity57YVel).w
                 move.b  #$4F,d0                         ; 'O'
@@ -795,7 +795,7 @@ Boss_ZLeoRunScrollReversal:                             ; DATA XREF: ROM:00051BB
                 cmpi.w  #$C0,(Entity57YPos).w
                 bmi.s   Boss_ZLeoUpdateStageScrollReversal
                 clr.w   (PlayerScriptStateOffset).w
-                bclr    #2,(byte_FF8245).w
+                bclr    #2,(PlayerRestrictionFlags).w
                 bclr    #0,(StageTimerPauseFlag).w
 Boss_ZLeoUpdateStageScrollReversal:                     ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+12A   j  ; was: loc_524AC
                                         ; Boss_ZLeoRunScrollingLaserEntryPose+132   j

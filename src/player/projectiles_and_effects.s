@@ -35,7 +35,7 @@ Player_SpawnProjectile_UseAlternateParameters:          ; CODE XREF: Player_Spaw
 ; Calculates weapon data table offset
 Player_GetWeaponTableOffset:
                 bne.s   Player_GetWeaponTableOffset_SelectFrame  ; was: sub_17490
-                bset    #1,(byte_FF8244).w
+                bset    #1,(PlayerActionStateFlags).w
 Player_GetWeaponTableOffset_SelectFrame:                ; CODE XREF: Player_GetWeaponTableOffset   j  ; was: loc_17498
                 movea.l $48(a5),a0
                 move.w  (FrameCounter).w,d0
@@ -379,7 +379,7 @@ Effect_CreateDashTrail_Return:                          ; CODE XREF: Effect_Crea
 ; End of function Effect_CreateDashTrail
 ; Updates dash trail position with acceleration
 Effect_UpdateDashTrail:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_17884
-                btst    #4,(byte_FF8244).w
+                btst    #4,(PlayerActionStateFlags).w
                 bne.s   Effect_UpdateDashTrail_ApplyMotion
 Effect_UpdateDashTrail_SetDisplayFlag:                  ; CODE XREF: Effect_UpdateDashTrail+14   j  ; was: loc_1788C
                 bset    #4,2(a5)

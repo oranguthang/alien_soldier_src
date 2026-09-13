@@ -47,7 +47,7 @@ Camera_AdvanceBossApproachScroll:                       ; CODE XREF: Camera_Upda
 ; Updates the horizontal camera position towards the player
 Camera_UpdateHorizontalTowardsPlayer:                   ; CODE XREF: Camera_BossPhaseHandler:loc_C91A   p  ; was: sub_10086
                                         ; Camera_Stage2PhaseHandler+4   p
-                btst    #5,(byte_FF8244).w
+                btst    #5,(PlayerActionStateFlags).w
                 bne.w   Camera_HorizontalUpdateReturn
                 tst.w   (a5)
                 beq.w   Camera_HorizontalUpdateReturn
@@ -174,7 +174,7 @@ Camera_ClampFollowToLowerHorizontalBound:               ; CODE XREF: Camera_Smoo
 ; Follows the player from a fixed horizontal anchor within camera bounds
 Camera_FollowPlayerFromFixedHorizontalAnchor:           ; CODE XREF: Stage16_UpdateScrollToViblack+1E   j  ; was: sub_1019A
                                         ; sub_DF8E   j
-                btst    #5,(byte_FF8244).w
+                btst    #5,(PlayerActionStateFlags).w
                 bne.w   Camera_HorizontalUpdateReturn
                 tst.w   (a5)
                 beq.w   Camera_HorizontalUpdateReturn
@@ -242,7 +242,7 @@ Camera_FixedAnchorClampToLowerBound:                    ; CODE XREF: Camera_Foll
 ; End of function Camera_FollowPlayerFromFixedHorizontalAnchor
 ; Unreferenced camera adjustment selected by player-state flags
 UnreferencedCameraAdjustForPlayerState:
-                btst    #5,(byte_FF8244).w              ; was: sub_10236
+                btst    #5,(PlayerActionStateFlags).w   ; was: sub_10236
                 bne.w   Camera_HorizontalUpdateReturn
                 tst.w   (a5)
                 beq.s   UnreferencedCameraPlayerStateReturn
@@ -336,7 +336,7 @@ Scroll_AccumulateQuarterHorizontalDelta:                ; CODE XREF: Stage10_Upd
 ; Follows the player beyond horizontal threshold $F0 at up to six pixels per update
 Camera_FollowPlayerBeyondHorizontalThreshold:           ; CODE XREF: Stage18_UpdateScrollAndRenderTilemap   p  ; was: sub_102FC
                                         ; sub_10060   p
-                btst    #5,(byte_FF8244).w
+                btst    #5,(PlayerActionStateFlags).w
                 bne.w   Camera_HorizontalUpdateReturn
                 tst.w   (a5)
                 beq.s   Camera_HorizontalUpdateReturn

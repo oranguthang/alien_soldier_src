@@ -411,10 +411,10 @@ Boss_DestroyerMK2ProjectedEffectLoop:                   ; CODE XREF: Boss_Destro
 ; End of function Boss_DestroyerMK2EmitFourProjectedEffects
 ; Adds a uniform offset to all 255 scroll rows until the first row reaches $110
 Gfx_DestroyerMK2ApplyUniformScrollOffset:               ; CODE XREF: Boss_DestroyerMK2ApplySineScrollWaveState:Boss_DestroyerMK2ApplySineWaveRowOffset   p  ; was: sub_4B470
-                cmpi.w  #$110,(word_FF9820).w
+                cmpi.w  #$110,(DestroyerMK2ScrollRows).w
                 bge.s   Gfx_DestroyerMK2ReportScrollOffsetLimit
                 move.w  #$FE,d7
-                lea     (word_FF9820).w,a0
+                lea     (DestroyerMK2ScrollRows).w,a0
 Gfx_DestroyerMK2ApplyUniformScrollOffsetLoop:           ; CODE XREF: Gfx_DestroyerMK2ApplyUniformScrollOffset+12   j  ; was: loc_4B480
                 add.w   d0,(a0)+
                 dbf     d7,Gfx_DestroyerMK2ApplyUniformScrollOffsetLoop

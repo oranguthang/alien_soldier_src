@@ -205,7 +205,7 @@ Stage_InitializeStage16:                                ; DATA XREF: ROM:0001228
                 bsr.w   Stage_ApplyConfigurationRecord
                 move.w  #$620,(CameraXLowerBound).w
                 move.w  #$6A0,(CameraXUpperBound).w
-                bset    #6,(byte_FF8245).w
+                bset    #6,(PlayerRestrictionFlags).w
                 rts
 ; End of function Stage_InitializeStage16
 ; Initializes stage 17 boss with sprites

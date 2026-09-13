@@ -4,7 +4,7 @@ Stage_LateGameStateReturn:                              ; CODE XREF: Stage18_Upd
 ; End of function Stage_LateGameStateReturn
 ; Update Stage 18's initial scroll to camera X $820
 Stage18_UpdateInitialScroll:                            ; DATA XREF: ROM:Stage_LateGameStateHandlerOffsets   o  ; was: sub_E4DE
-                bset    #6,(byte_FF8245).w
+                bset    #6,(PlayerRestrictionFlags).w
                 jsr     (Stage18_UpdateScrollAndRenderTilemap).l
                 bsr.w   Stage18And19_UpdateHorizontalParallax
                 cmpi.w  #$820,(PrimaryCameraXPosition).w

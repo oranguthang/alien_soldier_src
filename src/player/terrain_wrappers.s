@@ -1,21 +1,21 @@
 ; Runs the simple wall check unless terrain collisions are disabled
 Physics_WallCheckWrapper:                               ; CODE XREF: Player_HandleJump   p  ; was: sub_16CC8
                                         ; sub_152CA   p
-                btst    #5,(byte_FF8245).w
+                btst    #5,(PlayerRestrictionFlags).w
                 bne.w   Physics_TerrainCheckWrappers_Return
                 jmp     Physics_EntityWallCheck
 ; End of function Physics_WallCheckWrapper
 ; Runs the extended wall check unless terrain collisions are disabled
 Physics_ExtendedWallCheckWrapper:                       ; CODE XREF: Player_AirCounterForceState+8   p  ; was: sub_16CD8
                                         ; sub_15B8C   p
-                btst    #5,(byte_FF8245).w
+                btst    #5,(PlayerRestrictionFlags).w
                 bne.w   Physics_TerrainCheckWrappers_Return
                 jmp     Physics_EntityExtendedWallCheck
 ; End of function Physics_ExtendedWallCheckWrapper
 ; Checks moving platforms, then probes the entity's lower terrain boundary
 Physics_LowerTerrainCheckWrapper:                       ; CODE XREF: Player_HandleJump+6   p  ; was: sub_16CE8
                                         ; Player_GroundCounterForceState+6   p
-                btst    #5,(byte_FF8245).w
+                btst    #5,(PlayerRestrictionFlags).w
                 bne.w   Physics_TerrainCheckWrappers_Return
                 jsr     (Collision_CheckPlayerPlatforms).l
                 jmp     Physics_CheckLowerTerrain
@@ -23,7 +23,7 @@ Physics_LowerTerrainCheckWrapper:                       ; CODE XREF: Player_Hand
 ; Checks moving platforms, then resolves lower terrain while descending
 Physics_DescendingTerrainCheckWrapper:                  ; CODE XREF: Player_AirCounterForceState+14   p  ; was: sub_16CFE
                                         ; Player_DashKickState+E   p
-                btst    #5,(byte_FF8245).w
+                btst    #5,(PlayerRestrictionFlags).w
                 bne.w   Physics_TerrainCheckWrappers_Return
                 jsr     (Collision_CheckPlayerPlatforms).l
                 jmp     Physics_CheckLowerTerrainWhenDescending
@@ -31,7 +31,7 @@ Physics_DescendingTerrainCheckWrapper:                  ; CODE XREF: Player_AirC
 ; Checks moving platforms, then probes the entity's upper terrain boundary
 Physics_UpperTerrainCheckWrapper:                       ; CODE XREF: Player_CeilingIdleState+6   p  ; was: sub_16D14
                                         ; Player_CeilingCounterForceState+6   p
-                btst    #5,(byte_FF8245).w
+                btst    #5,(PlayerRestrictionFlags).w
                 bne.w   Physics_TerrainCheckWrappers_Return
                 jsr     (Collision_CheckPlayerPlatforms).l
                 jmp     Physics_CheckUpperTerrain
@@ -39,7 +39,7 @@ Physics_UpperTerrainCheckWrapper:                       ; CODE XREF: Player_Ceil
 ; Checks moving platforms, then resolves upper terrain while rising
 Physics_RisingTerrainCheckWrapper:                      ; CODE XREF: Player_AirCounterForceState+28   p  ; was: sub_16D2A
                                         ; Player_HandleFallingState+5A   p
-                btst    #5,(byte_FF8245).w
+                btst    #5,(PlayerRestrictionFlags).w
                 bne.w   Physics_TerrainCheckWrappers_Return
                 jsr     (Collision_CheckPlayerPlatforms).l
                 jmp     Physics_CheckUpperTerrainWhenRising
@@ -47,7 +47,7 @@ Physics_RisingTerrainCheckWrapper:                      ; CODE XREF: Player_AirC
 ; Selects the lower- or upper-boundary terrain probe from entity facing
 Physics_FacingTerrainCheckWrapper:                      ; CODE XREF: Player_PhoenixAttackUpdate+86   p  ; was: sub_16D40
                                         ; sub_159E0:Player_DashAttackState_Finish   p
-                btst    #5,(byte_FF8245).w
+                btst    #5,(PlayerRestrictionFlags).w
                 bne.w   Physics_TerrainCheckWrappers_Return
                 jsr     (Collision_CheckPlayerPlatforms).l
                 btst    #4,$E(a5)
@@ -57,7 +57,7 @@ Physics_FacingTerrainCheckWrapper:                      ; CODE XREF: Player_Phoe
 ; Runs the extended wall check with a facing-selected vertical probe offset
 Physics_FacingExtendedWallCheckWrapper:                 ; CODE XREF: Player_PhoenixAttackUpdate+82   p  ; was: sub_16D60
                                         ; Player_ApplyHorizontalMovement+4   p
-                btst    #5,(byte_FF8245).w
+                btst    #5,(PlayerRestrictionFlags).w
                 bne.w   Physics_TerrainCheckWrappers_Return
                 moveq   #$FFFFFFE8,d6
                 btst    #4,$E(a5)

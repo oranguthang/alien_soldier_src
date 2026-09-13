@@ -317,10 +317,10 @@ Boss_DeepStriderBattleDecisionState:                    ; CODE XREF: Boss_DeepSt
                 bpl.w   Boss_DeepStriderBeginDiveAttack
                 tst.w   $17C(a5)
                 bmi.w   Boss_DeepStriderBeginHoverAndShoot
-                btst    #0,(byte_FF8244).w
+                btst    #0,(PlayerActionStateFlags).w
                 beq.w   Boss_DeepStriderBeginDiveAttack
                 moveq   #7,d0
-                btst    #6,(byte_FF8244).w
+                btst    #6,(PlayerActionStateFlags).w
                 beq.w   Boss_DeepStriderTestDiveRandomSelection
                 moveq   #1,d0
 Boss_DeepStriderTestDiveRandomSelection:                ; CODE XREF: Boss_DeepStriderBeginBattleCycle+134   j  ; was: loc_3E9D0
