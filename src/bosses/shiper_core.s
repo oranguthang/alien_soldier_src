@@ -88,7 +88,7 @@ Boss_ShiperInit:                                        ; DATA XREF: ROM:0003649
                 movea.l #Boss_ShiperInitialAssetDescriptors,a0
                 jsr     (Data_ProcessPointer).l
                 movem.l (sp)+,a5
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$10,d0
                 jmp     Math_CalculateSineCosineTable
 ; ---------------------------------------------------------------------------

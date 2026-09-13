@@ -148,7 +148,7 @@ Effect_WaveUnusedNoOp:                                  ; was: nullsub_59
 
 ; Clears 81 longwords in the wave output buffer at $FFFF9800
 Effect_ClearWaveOutputBuffer:                           ; CODE XREF: Effect_WaveController   p  ; was: sub_26376
-                movea.l #$FFFF9800,a0
+                movea.l #WaveOutputBuffer,a0
                 moveq   #0,d0
                 move.w  #$50,d7                         ; 'P'
 Effect_ClearWaveOutputBuffer_Loop:                      ; CODE XREF: Effect_ClearWaveOutputBuffer+E   j  ; was: loc_26382
@@ -185,7 +185,7 @@ Gfx_GenerateWaveDeformation_FillSineLoop:               ; CODE XREF: Gfx_Generat
                 move.w  (WaveParameterIndex).w,d0
                 movea.l #Effect_WaveStartOffsetTable,a0
                 move.w  (a0,d0.w),d7
-                movea.l #$FFFF9800,a0
+                movea.l #WaveOutputBuffer,a0
                 adda.w  d0,a0
                 movea.l a0,a1
                 move.w  #$1C,d1
@@ -397,7 +397,7 @@ Gfx_LoadTilesLoop:                                      ; CODE XREF: EndingSeque
                 move.w  #1,(a0)
                 move.w  #$20,(dword_FF8040).w           ; ' '
 Gfx_LoadTilesLoop_NextStep:                             ; CODE XREF: Gfx_LoadTilesLoop+48   j  ; was: loc_26686
-                movea.w #(word_FF9800-M68K_RAM),a5
+                movea.w #(TileInterpolationBlockA-M68K_RAM),a5
                 move.l  #$8000,d0
                 divs.w  (dword_FF8040).w,d0
                 andi.l  #$FFFF,d0
@@ -420,7 +420,7 @@ Gfx_LoadTilesLoop_Interpolate:                          ; CODE XREF: Gfx_LoadTil
 ; Decompresses and loads tiles with interpolation into tile buffer
 Gfx_DecompressTilesInterpolated:
                 move.w  #1,(a0)                         ; was: sub_266CA
-                movea.w #(word_FF9800-M68K_RAM),a5
+                movea.w #(TileInterpolationBlockA-M68K_RAM),a5
                 move.l  #$8000,d0
                 divs.w  (dword_FF8040).w,d0
                 andi.l  #$FFFF,d0
@@ -522,7 +522,7 @@ Gfx_TileLoadDispatcher:                                 ; CODE XREF: Gfx_LoadTil
                 bpl.w   Gfx_TileLoadDispatcher_ThreeBlocks
                 cmpi.w  #9,(dword_FF8040).w
                 bpl.w   Gfx_TileLoadDispatcher_TwoBlocks
-                move.w  #$20,(word_FF9800).w            ; ' '
+                move.w  #$20,(TileInterpolationBlockA).w  ; ' '
                 move.w  #$FFFF,2(a0)
                 move.w  #$9800,4(a0)
                 move.w  (word_FF8048).w,6(a0)
@@ -531,40 +531,40 @@ Gfx_TileLoadDispatcher:                                 ; CODE XREF: Gfx_LoadTil
                 bra.w   Gfx_LoadObjectData
 ; ---------------------------------------------------------------------------
 Gfx_TileLoadDispatcher_TwoBlocks:                       ; CODE XREF: Gfx_TileLoadDispatcher+1A   j  ; was: loc_26810
-                move.w  #$40,(word_FF9800).w            ; '@'
+                move.w  #$40,(TileInterpolationBlockA).w  ; '@'
                 move.w  #$FFFF,2(a0)
                 move.w  #$9800,4(a0)
                 move.w  (word_FF8048).w,6(a0)
                 move.w  #$FFFF,8(a0)
                 addi.w  #$40,(word_FF8048).w            ; '@'
                 bsr.w   Gfx_LoadObjectData
-                move.w  #$40,(word_FF9880).w            ; '@'
+                move.w  #$40,(TileInterpolationBlockB).w  ; '@'
                 move.w  #$9880,4(a0)
                 move.w  (word_FF8048).w,6(a0)
                 addi.w  #$40,(word_FF8048).w            ; '@'
                 bra.w   Gfx_LoadObjectData
 ; ---------------------------------------------------------------------------
 Gfx_TileLoadDispatcher_ThreeBlocks:                     ; CODE XREF: Gfx_TileLoadDispatcher+10   j  ; was: loc_26854
-                move.w  #$60,(word_FF9800).w            ; '`'
+                move.w  #$60,(TileInterpolationBlockA).w  ; '`'
                 move.w  #$FFFF,2(a0)
                 move.w  #$9800,4(a0)
                 move.w  (word_FF8048).w,6(a0)
                 move.w  #$FFFF,8(a0)
                 addi.w  #$60,(word_FF8048).w            ; '`'
                 bsr.w   Gfx_LoadObjectData
-                move.w  #$60,(word_FF9880).w            ; '`'
+                move.w  #$60,(TileInterpolationBlockB).w  ; '`'
                 move.w  #$9880,4(a0)
                 move.w  (word_FF8048).w,6(a0)
                 addi.w  #$60,(word_FF8048).w            ; '`'
                 bsr.w   Gfx_LoadObjectData
-                move.w  #$60,(word_FF9900).w            ; '`'
+                move.w  #$60,(TileInterpolationBlockC).w  ; '`'
                 move.w  #$9900,4(a0)
                 move.w  (word_FF8048).w,6(a0)
                 addi.w  #$60,(word_FF8048).w            ; '`'
                 bra.w   Gfx_LoadObjectData
 ; ---------------------------------------------------------------------------
 Gfx_TileLoadDispatcher_LargeBlock:                      ; CODE XREF: Gfx_TileLoadDispatcher+6   j  ; was: loc_268B4
-                move.w  #$200,(word_FF9800).w
+                move.w  #$200,(TileInterpolationBlockA).w
                 move.w  #$FFFF,2(a0)
                 move.w  #$9800,4(a0)
                 move.w  (word_FF8048).w,6(a0)
@@ -582,7 +582,7 @@ Gfx_LoadObjectData:                                     ; CODE XREF: Gfx_TileLoa
 ; Clears 128 longwords in the interpolation tile buffer
 Gfx_ClearInterpolationTileBuffer:                       ; CODE XREF: Gfx_LoadTilesLoop+26   p  ; was: sub_268E8
                                         ; Gfx_DecompressTilesInterpolated+20   p
-                movea.w #(word_FF9800-M68K_RAM),a3
+                movea.w #(TileInterpolationBlockA-M68K_RAM),a3
                 moveq   #0,d6
                 move.w  #$7F,d7
 Gfx_ClearInterpolationTileBuffer_Loop:                  ; CODE XREF: Gfx_ClearInterpolationTileBuffer+C   j  ; was: loc_268F2

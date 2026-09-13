@@ -61,7 +61,7 @@ Boss_ZLeoFinalizePaletteFades:                          ; CODE XREF: Boss_ZLeoMa
 Boss_ZLeoDispatchStateAndClearProjectileFlag:           ; CODE XREF: Boss_ZLeoMain+4   j  ; was: loc_51B6A
                                         ; Boss_ZLeoMain+C   j
                 bsr.s   Boss_ZLeoDispatcher
-                clr.w   (word_FF9500).w
+                clr.w   (ZLeoDropProjectileFlag).w
                 rts
 ; End of function Boss_ZLeoMain
 ; Dispatch the even-valued state through the ROM-ordered state table
@@ -180,7 +180,7 @@ Boss_ZLeoIntroInit:                                     ; DATA XREF: ROM:00051B8
                 and.w   d0,$16(a0)
                 and.w   d0,$1C(a0)
                 and.w   d0,$1E(a0)
-                clr.w   (word_FF9600).w
+                clr.w   (ZLeoTileScrollIndex).w
                 clr.w   (PrimaryCameraXPosition).w
                 move.w  #$100,(PrimaryCameraYPosition).w
                 move.w  #$100,(ZLeoPreviousCameraY).w

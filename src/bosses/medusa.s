@@ -118,7 +118,7 @@ Boss_UpdateMedusaState4:                                ; DATA XREF: ROM:000569F
                 lea     Medusa_State4PoseScript(pc),a1
                 nop
                 bsr.w   Boss_RenderMedusaPose
-                move.b  (dword_FF9410).w,d0
+                move.b  (SharedPatternRow0Long4).w,d0
                 ext.w   d0
                 move.w  d0,$50(a5)
                 rts
@@ -192,7 +192,7 @@ Boss_UpdateMedusaStateA:                                ; DATA XREF: ROM:000569F
                 bclr    #0,(StageTimerPauseFlag).w
                 move.w  #1,(MedusaSpawnSequenceFlag).w
                 move.l  #Medusa_StateASpawnSchedule,$59C(a5)
-                move.w  #$10,(word_FF9800).w
+                move.w  #$10,(MedusaSequenceOffset).w
                 move.w  #$18C,$11E(a5)
                 clr.w   $4DC(a5)
                 bra.w   Boss_EnterMedusaStateC
@@ -613,27 +613,27 @@ Boss_StartMedusaPoseFrame:                              ; CODE XREF: Boss_LoadMe
                 bmi.s   Boss_PrepareMedusaPoseRender
 Boss_AdvanceMedusaPoseInterpolation:                    ; CODE XREF: Boss_UpdateMedusaPoseScript+8   j  ; was: loc_570BE
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #7,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 Boss_PrepareMedusaPoseRender:                           ; CODE XREF: Boss_UpdateMedusaPoseScript+E   j  ; was: loc_570CE
                                         ; Boss_UpdateMedusaPoseScript+34   j
                 move.w  #$1FE,d7
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 rts
 ; End of function Boss_LoadMedusaPoseFrame
 ; Calculate interpolation deltas for the next Medusa pose frame
 Boss_CalculateMedusaPoseInterpolation:                  ; CODE XREF: Boss_LoadMedusaPoseFrame+24   p  ; was: sub_570D8
                 movea.l $2FC(a5),a1
                 moveq   #7,d7
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Boss_CalculateMedusaPoseInterpolation
 ; Load the initial interpolation delays for the Medusa pose channels
 Boss_LoadMedusaPoseFrameDelays:                         ; CODE XREF: Boss_EnterMedusaState4+2E   p  ; was: sub_570EC
                 moveq   #7,d7
-                movea.w #(dword_FF9400-M68K_RAM),a1
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 jmp     Anim_LoadFrameDelays
 ; End of function Boss_LoadMedusaPoseFrameDelays
 ; ---------------------------------------------------------------------------
@@ -718,10 +718,10 @@ Entity_UpdateMedusaScriptedSpawnSequence:               ; CODE XREF: Boss_Update
                 beq.w   Entity_UpdateMedusaSpawnSequenceReturn
                 movea.l $59C(a5),a4
                 moveq   #0,d1
-                move.w  (word_FF9800).w,d1
+                move.w  (MedusaSequenceOffset).w,d1
                 move.w  (a4,d1.w),d2
                 bpl.s   Entity_CheckMedusaSpawnSequenceTrigger
-                clr.w   (word_FF9800).w
+                clr.w   (MedusaSequenceOffset).w
                 clr.w   (MedusaSpawnSequenceFlag).w
                 cmpi.w  #$FFFE,d2
                 bne.s   Entity_AdvanceMedusaSpawnSequenceSegment
@@ -738,7 +738,7 @@ Entity_CheckMedusaSpawnSequenceTrigger:                 ; CODE XREF: Entity_Upda
                 beq.s   Entity_ProcessMedusaSpawnSequenceEntry
                 bpl.s   Entity_UpdateMedusaSpawnSequenceReturn
 Entity_ProcessMedusaSpawnSequenceEntry:                 ; CODE XREF: Entity_UpdateMedusaScriptedSpawnSequence+3E   j  ; was: loc_5724E
-                addq.w  #8,(word_FF9800).w
+                addq.w  #8,(MedusaSequenceOffset).w
                 move.w  2(a4,d1.w),d5
                 beq.w   Entity_ApplyMedusaSpawnSequenceCommand
                 tst.w   (DifficultyMode).w

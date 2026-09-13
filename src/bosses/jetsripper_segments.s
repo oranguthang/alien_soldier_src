@@ -158,7 +158,7 @@ Boss_JetsripperTailFrames:  dc.l    Boss_JetsripperSpriteMapping07  ; DATA XREF:
 ; Fills angle buffer with constant value for segments
 Boss_JetsripperFillAngleBuffer:                         ; CODE XREF: Boss_JetsripperInitBody+B6   j  ; was: sub_35FCA
                                         ; Boss_JetsripperDiveExecute+76   p
-                movea.w #(word_FF9800-M68K_RAM),a0
+                movea.w #(JetsripperAngleHistory-M68K_RAM),a0
                 move.w  #$47,d7                         ; 'G'
 Boss_JetsripperFillAngleBufferNextWord:                 ; CODE XREF: Boss_JetsripperFillAngleBuffer+A   j  ; was: loc_35FD2
                 move.w  d0,(a0)+
@@ -168,7 +168,7 @@ Boss_JetsripperFillAngleBufferNextWord:                 ; CODE XREF: Boss_Jetsri
 ; Fills angle buffer with gradient values for wave motion
 Boss_JetsripperFillAngleGradient:                       ; CODE XREF: Boss_JetsripperSwingAttack+B2   p  ; was: sub_35FDA
                                         ; Boss_JetsripperSwingAttack+C6   p
-                movea.w #(word_FF9800-M68K_RAM),a0
+                movea.w #(JetsripperAngleHistory-M68K_RAM),a0
                 move.w  $56(a5),d0
                 move.w  #$1FE,d2
                 move.w  #$47,d7                         ; 'G'
@@ -287,7 +287,7 @@ Boss_UpdateSegmentChainPositionsNextSegment:            ; CODE XREF: Boss_Update
 ; Updates all segment positions with wave motion
 Boss_JetsripperUpdateSegments:                          ; CODE XREF: Boss_JetsripperRotateState+30   p  ; was: sub_3610E
                                         ; Boss_JetsripperUpdateMovement+8E   p
-                movea.w #(word_FF9800-M68K_RAM),a0
+                movea.w #(JetsripperAngleHistory-M68K_RAM),a0
                 move.w  $56(a5),d0
                 move.w  #$47,d7                         ; 'G'
 Boss_JetsripperShiftAngleBufferNextWord:                ; CODE XREF: Boss_JetsripperUpdateSegments+12   j  ; was: loc_3611A

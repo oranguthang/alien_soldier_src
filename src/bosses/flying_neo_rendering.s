@@ -245,8 +245,8 @@ Boss_FlyingNeoStoreTrackedPartPosition:                 ; CODE XREF: Boss_Flying
                 add.w   $14(a5),d1
                 move.w  d0,$10(a0)
                 move.w  d1,$14(a0)
-                movea.w #(word_FF9800-M68K_RAM),a0
-                movea.w #(word_FF9800-M68K_RAM),a1
+                movea.w #(FlyingNeoAngleHistory-M68K_RAM),a0
+                movea.w #(FlyingNeoAngleHistory-M68K_RAM),a1
                 moveq   #$23,d7                         ; '#'
                 move.w  $23E(a5),d0
 Boss_FlyingNeoShiftAngleHistory:                        ; CODE XREF: Boss_FlyingNeoUpdateLinkedPartOrbits+92   j  ; was: loc_3CAC8
@@ -257,8 +257,8 @@ Boss_FlyingNeoShiftAngleHistory:                        ; CODE XREF: Boss_Flying
                 movea.w #(TwelfthEntityType-M68K_RAM),a0
                 movea.w #(ThirteenthEntityType-M68K_RAM),a1
                 movea.w #(FlyingNeoAngleTapBase-M68K_RAM),a2
-                movea.w #(word_FF9900-M68K_RAM),a3
-                movea.w #(dword_FF9A00-M68K_RAM),a4
+                movea.w #(FlyingNeoSineTable-M68K_RAM),a3
+                movea.w #(FlyingNeoCosineTable-M68K_RAM),a4
                 move.w  $54(a5),d4
                 asl.w   #1,d4
                 move.w  #$3FC,d5
@@ -323,7 +323,7 @@ Boss_FlyingNeoFillNextPartAngle:                        ; CODE XREF: Boss_Flying
                 move.w  d0,$56(a0)
                 lea     $60(a0),a0
                 dbf     d7,Boss_FlyingNeoFillNextPartAngle
-                movea.w #(word_FF9800-M68K_RAM),a0
+                movea.w #(FlyingNeoAngleHistory-M68K_RAM),a0
                 moveq   #$23,d7                         ; '#'
                 moveq   #0,d1
 Boss_FlyingNeoClearNextAngleHistoryWord:                ; CODE XREF: Boss_FlyingNeoFillPartAnglesAndClearHistory+1C   j  ; was: loc_3CB90

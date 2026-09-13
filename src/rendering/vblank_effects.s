@@ -439,7 +439,7 @@ VBlank_InitCRAMWriteEffect:                             ; DATA XREF: VBlank_Disp
 VBlank_InitCRAMWriteEffect_SelectBuffer:                ; CODE XREF: VBlank_InitCRAMWriteEffect+4   j  ; was: loc_1928
                 move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
-                lea     (word_FF9800).w,a6
+                lea     (CRAMWriteEffectBuffer).w,a6
                 rts
 ; End of function VBlank_InitCRAMWriteEffect
 ; ---------------------------------------------------------------------------

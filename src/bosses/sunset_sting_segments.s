@@ -1,7 +1,7 @@
 ; Main segment handler
 Boss_SunsetStingSegmentMain:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4333A
                 lea     (Entity_ObjectPool).w,a3
-                lea     (word_FF9800).w,a4
+                lea     (SunsetStingSharedState).w,a4
                 bsr.s   Boss_SunsetStingSegmentDispatcher
                 cmpi.w  #$C,4(a5)
                 beq.w   Boss_SunsetStingReturn
@@ -161,7 +161,7 @@ Boss_SunsetStingSegmentConvertToDebrisState:            ; DATA XREF: ROM:0004338
 ; Secondary segment handler
 Boss_SunsetStingSecondarySegmentMain:                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_43506
                 lea     (Entity_ObjectPool).w,a3
-                lea     (word_FF9800).w,a4
+                lea     (SunsetStingSharedState).w,a4
                 bsr.s   Boss_SunsetStingSecondarySegmentDispatch
                 cmpi.w  #$E,4(a5)
                 beq.w   Boss_SunsetStingReturn
@@ -457,7 +457,7 @@ Boss_SunsetStingSecondarySegmentDefeatFallState:        ; DATA XREF: ROM:0004358
 ; Visible-core handler used during the defeat sequence
 Boss_SunsetStingDefeatCoreMain:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_43858
                 lea     (Entity_ObjectPool).w,a3
-                lea     (word_FF9800).w,a4
+                lea     (SunsetStingSharedState).w,a4
                 bsr.s   Boss_SunsetStingDefeatCoreDispatch
                 btst    #7,(a4)
                 beq.s   Boss_SunsetStingDefeatCoreAnimate

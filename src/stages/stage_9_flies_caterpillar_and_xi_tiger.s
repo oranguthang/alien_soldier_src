@@ -12,7 +12,7 @@ Stage9_InitializeFlyCorridor:                           ; DATA XREF: ROM:0000C8A
                 move.l  #$FFFEE000,(StageMotionXDelta).w
                 addq.w  #2,(StageStateOffset).w
                 move.w  #1,(MidgameLightningMode).w
-                clr.w   (dword_FF8058).w
+                clr.w   (Stage9RevealColumn).w
                 clr.w   (MidgameVerticalPhase).w
                 move.l  #$180000,(Stage9FlyCorridorY).w
                 clr.w   (CameraXLowerBound).w
@@ -103,14 +103,14 @@ UnreferencedStage9_UpdateCaterpillarScroll:
 ; End of function UnreferencedStage9_UpdateCaterpillarScroll
 ; Reveal one column of the fly-corridor tilemap every eight frames
 Stage9_UpdateFlyCorridorRevealColumns:                  ; CODE XREF: Stage9_UpdateFlyCorridorScroll+24   p  ; was: sub_D1FE
-                cmpi.w  #$20,(dword_FF8058).w           ; ' '
+                cmpi.w  #$20,(Stage9RevealColumn).w     ; ' '
                 bne.s   Stage9_RevealNextFlyCorridorColumn
                 clr.l   (StageMotionXDelta).w
                 rts
 ; ---------------------------------------------------------------------------
 Stage9_RevealNextFlyCorridorColumn:                     ; CODE XREF: Stage9_UpdateFlyCorridorRevealColumns+6   j  ; was: loc_D20C
-                movea.w #(word_FF9600-M68K_RAM),a0
-                move.w  (dword_FF8058).w,d0
+                movea.w #(FlyCorridorTilemap-M68K_RAM),a0
+                move.w  (Stage9RevealColumn).w,d0
                 moveq   #$16,d7
 Stage9_ClearFlyCorridorColumnRows:                      ; CODE XREF: Stage9_UpdateFlyCorridorRevealColumns+22   j  ; was: loc_D216
                 move.b  #0,(a0,d0.w)
@@ -131,7 +131,7 @@ Stage9_UpdateFlyCorridorRevealTimer:                    ; CODE XREF: Stage9_Upda
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Stage9_UpdateFlyCorridorRevealColumns_Return
-                addq.w  #1,(dword_FF8058).w
+                addq.w  #1,(Stage9RevealColumn).w
 Stage9_UpdateFlyCorridorRevealColumns_Return:           ; CODE XREF: Stage9_UpdateFlyCorridorRevealColumns+60   j  ; was: locret_D264
                 rts
 ; End of function Stage9_UpdateFlyCorridorRevealColumns

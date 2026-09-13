@@ -120,7 +120,7 @@ Debug_ValkirieViewerUpdatePoseAndParts:                 ; CODE XREF: Debug_Valki
                 bsr.w   Debug_ValkirieViewerAdvancePoseScript
                 moveq   #$14,d7
                 jsr     (Sprite_SetMetaspriteTraversalPointers).l
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 move.w  #$FFF3,d7
                 tst.w   $54(a5)
                 beq.s   Debug_ValkirieViewerPositionUpperPartPair
@@ -340,13 +340,13 @@ Debug_ValkirieViewerBeginPoseCommandInterpolation:      ; CODE XREF: Debug_Valki
                 bmi.s   Debug_ValkirieViewerStorePoseComponents
 Debug_ValkirieViewerTickPoseInterpolation:              ; CODE XREF: Debug_ValkirieViewerAdvancePoseScript+8   j  ; was: loc_51432
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$10,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 Debug_ValkirieViewerStorePoseComponents:                ; CODE XREF: Debug_ValkirieViewerAdvancePoseScript+E   j  ; was: loc_51442
                                         ; Debug_ValkirieViewerAdvancePoseScript+76   j
                 move.w  #$1FE,d7
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 move.b  (a0),d0
                 asl.w   #1,d0
                 and.w   d7,d0
@@ -418,14 +418,14 @@ Debug_ValkirieViewerBeginPoseInterpolation:             ; CODE XREF: Debug_Valki
                 lea     Debug_ValkirieViewerPoseBaseValues(pc),a1
                 nop
                 moveq   #$10,d7
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Debug_ValkirieViewerBeginPoseInterpolation
 ; Load interpolation durations for the sixteen viewer pose components
 Debug_ValkirieViewerLoadPoseDurations:                  ; was: sub_5152A
                 moveq   #$10,d7
-                movea.w #(dword_FF9400-M68K_RAM),a1
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 jmp     Anim_LoadFrameDelays
 ; End of function Debug_ValkirieViewerLoadPoseDurations
 ; ---------------------------------------------------------------------------

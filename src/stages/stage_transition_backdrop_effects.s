@@ -84,7 +84,7 @@ StageTransition_ApplyBossBackdropPaletteFade:           ; CODE XREF: StageTransi
 StageTransition_BuildBossBackdropRasterBuffers:         ; CODE XREF: StageTransition_UpdateDestroyerProtoBackdropFade+10   p  ; was: sub_FD32
                                         ; StageTransition_UpdatePostDestroyerProtoScroll+8   p
                 bsr.w   StageTransition_BuildBossBackdropLineOffsets
-                movea.w #(dword_FF9A00-M68K_RAM),a0
+                movea.w #(BossBackdropWorkBuffer-M68K_RAM),a0
                 movea.w #(BossBackdropCopySource-M68K_RAM),a1
                 moveq   #6,d7
 StageTransition_CopyBossBackdropWorkspace:              ; CODE XREF: StageTransition_BuildBossBackdropRasterBuffers+1E   j  ; was: loc_FD40

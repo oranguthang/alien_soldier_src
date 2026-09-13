@@ -1,7 +1,7 @@
 ; Handles type-$210 Viblack missiles through their currently inert update path
 Projectile_ViblackMissileMain:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_43930
                 lea     (Entity_ObjectPool).w,a3
-                lea     (word_FF9800).w,a4
+                lea     (SharedSceneDataBuffer).w,a4
                 bsr.s   Projectile_ViblackMissileNoOp
                 rts
 ; End of function Projectile_ViblackMissileMain

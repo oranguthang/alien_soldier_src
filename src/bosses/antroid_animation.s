@@ -47,13 +47,13 @@ Boss_AntroidBeginPoseCommand:                           ; CODE XREF: Boss_Antroi
                 bmi.s   Boss_AntroidApplyPoseAngles
 Boss_AntroidAdvancePoseInterpolation:                   ; CODE XREF: Boss_AntroidUpdatePoseAnimation+8   j  ; was: loc_3819C
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$E,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 Boss_AntroidApplyPoseAngles:                            ; CODE XREF: Boss_AntroidUpdatePoseAnimation+E   j  ; was: loc_381AC
                                         ; Boss_AntroidUpdatePoseAnimation+80   j
                 move.w  #$1FE,d7
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 move.b  (a0),d0
                 asl.w   #1,d0
                 and.w   d7,d0
@@ -67,10 +67,10 @@ Boss_AntroidApplyPoseAngles:                            ; CODE XREF: Boss_Antroi
                 asl.w   #1,d3
                 and.w   d7,d3
                 move.w  d3,$176(a5)
-                movea.w #(dword_FF940C-M68K_RAM),a0
-                movea.w #(dword_FF9418-M68K_RAM),a1
-                movea.w #(dword_FF9424-M68K_RAM),a2
-                movea.w #(dword_FF9430-M68K_RAM),a3
+                movea.w #(SharedPatternRow0Long3-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long6-M68K_RAM),a1
+                movea.w #(SharedPatternRow1Long1-M68K_RAM),a2
+                movea.w #(SharedPatternRow1Long4-M68K_RAM),a3
                 tst.w   6(a5)
                 beq.s   Boss_AntroidApplySidePoseAngles
                 exg     a0,a1
@@ -151,14 +151,14 @@ Boss_AntroidApplySidePoseAngles:                        ; CODE XREF: Boss_Antroi
 ; Begins interpolation from the current channels to the selected pose target
 Boss_AntroidBeginPoseInterpolation:                     ; CODE XREF: Boss_AntroidUpdatePoseAnimation+62   p  ; was: sub_382BC
                 movea.l #Boss_AntroidNeutralPose,a1
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #$E,d7
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Boss_AntroidBeginPoseInterpolation
 ; Initializes all 15 Antroid pose channels from bytes at a0
 Boss_AntroidInitializePoseChannels:
-                movea.w #(dword_FF9400-M68K_RAM),a1     ; was: sub_382D2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a1  ; was: sub_382D2
                 moveq   #$E,d7
                 jmp     Anim_LoadFrameDelays
 ; End of function Boss_AntroidInitializePoseChannels
@@ -179,10 +179,10 @@ Boss_AntroidAdjustBaseYApply:                           ; CODE XREF: Boss_Antroi
 Boss_AntroidSwapPoseSides:                              ; CODE XREF: Boss_AntroidLeapAttackA:Boss_AntroidLeapAttackAFinish   p  ; was: sub_382F8
                                         ; Boss_AntroidLeapAttackA+74   p
                 eori.w  #2,6(a5)
-                movea.w #(dword_FF940C-M68K_RAM),a0
-                movea.w #(dword_FF9418-M68K_RAM),a1
-                movea.w #(dword_FF9424-M68K_RAM),a2
-                movea.w #(dword_FF9430-M68K_RAM),a3
+                movea.w #(SharedPatternRow0Long3-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long6-M68K_RAM),a1
+                movea.w #(SharedPatternRow1Long1-M68K_RAM),a2
+                movea.w #(SharedPatternRow1Long4-M68K_RAM),a3
                 moveq   #2,d7
 ; Swaps one longword in each paired pose-channel group
 Boss_AntroidSwapPoseChannelGroups:                      ; CODE XREF: Boss_AntroidSwapPoseSides+24   j  ; was: loc_38310

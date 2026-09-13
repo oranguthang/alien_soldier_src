@@ -19,7 +19,7 @@ Boss_MissirayUpdateLinkedSegmentPositions:              ; CODE XREF: Boss_Missir
                 move.w  #7,d7
                 lea     $60(a5),a0
                 move.w  $4E(a5),d0
-                tst.w   (dword_FF9404).w
+                tst.w   (SharedPatternRow0Long1).w
                 bne.s   Boss_MissirayUseNegativeSegmentSpacing
                 addq.w  #8,d0
                 bra.s   Boss_MissirayApplySegmentSpacingLoop
@@ -38,7 +38,7 @@ Boss_MissirayUpdateVScrollBuffer:                       ; CODE XREF: Boss_Missir
                 move.w  #3,d7
                 lea     $60(a5),a0
 Boss_MissirayUpdateFirstOffsetGroupLoop:                ; CODE XREF: Boss_MissirayMain+A2   j  ; was: loc_53838
-                move.w  (dword_FF9408).w,d0
+                move.w  (SharedPatternRow0Long2).w,d0
                 sub.w   $14(a0),d0
                 cmpi.w  #$FF40,d0
                 blt.s   Boss_MissirayAdvanceFirstOffsetGroup
@@ -51,7 +51,7 @@ Boss_MissirayAdvanceFirstOffsetGroup:                   ; CODE XREF: Boss_Missir
                 lea     8(a1),a1
                 lea     $60(a0),a0
                 dbf     d7,Boss_MissirayUpdateFirstOffsetGroupLoop
-                move.w  (dword_FF9404+2).w,d0
+                move.w  (SharedPatternRow0Long1+2).w,d0
                 sub.w   $14(a5),d0
                 cmpi.w  #$FF20,d0
                 blt.s   Boss_MissirayBeginSecondOffsetGroup
@@ -66,7 +66,7 @@ Boss_MissirayBeginSecondOffsetGroup:                    ; CODE XREF: Boss_Missir
                 lea     $10(a1),a1
                 move.w  #3,d7
 Boss_MissirayUpdateSecondOffsetGroupLoop:               ; CODE XREF: Boss_MissirayMain+F2   j  ; was: loc_53888
-                move.w  (dword_FF9408).w,d0
+                move.w  (SharedPatternRow0Long2).w,d0
                 sub.w   $14(a0),d0
                 cmpi.w  #$FF40,d0
                 blt.s   Boss_MissirayAdvanceSecondOffsetGroup
@@ -119,10 +119,10 @@ Boss_MissirayInitialize:                                ; DATA XREF: ROM:Boss_Mi
                 move.w  #$3E0,d1
                 jsr     (Object_ClearAllExceptTypes).l
                 move.b  #2,(PlaneBScrollModeFlags).w
-                clr.w   (dword_FF9404).w
-                move.w  #$A0,(dword_FF9404+2).w
-                move.w  #$B8,(dword_FF9408).w
-                move.w  #$80,(dword_FF940C).w
+                clr.w   (SharedPatternRow0Long1).w
+                move.w  #$A0,(SharedPatternRow0Long1+2).w
+                move.w  #$B8,(SharedPatternRow0Long2).w
+                move.w  #$80,(SharedPatternRow0Long3).w
                 move.w  #$13,d7
                 lea     (VScrollPlaneBColumn0).w,a0
                 move.w  #$FF40,d0
@@ -430,15 +430,15 @@ Boss_MissirayWaitForBossMessageReturn:                  ; CODE XREF: Boss_Missir
 ; End of function Boss_MissirayWaitForBossMessage
 ; Initializes the attack substate and attack-sequence selector
 Boss_MissirayInitializeAttackCycle:                     ; DATA XREF: ROM:000538CE   o  ; was: sub_53C9A
-                clr.w   (dword_FF9400).w
+                clr.w   (SharedPatternRow0Long0).w
                 addq.w  #2,4(a5)
-                move.w  #0,(dword_FF9400+2).w
+                move.w  #0,(SharedPatternRow0Long0+2).w
                 rts
 ; End of function Boss_MissirayInitializeAttackCycle
 ; Runs the proximity check and the selected attack-sequence entry
 Boss_MissirayRunSelectedAttack:                         ; DATA XREF: ROM:000538D0   o  ; was: sub_53CAA
                 bsr.w   Boss_MissirayTrySpawnProximityShotPair
-                move.w  (dword_FF9400+2).w,d0
+                move.w  (SharedPatternRow0Long0+2).w,d0
                 lea     Boss_MissirayAttackSequenceTable(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
@@ -457,10 +457,10 @@ Boss_MissirayAttackSequenceTable:   dc.w    Boss_MissirayRunAttackAndCyclePalett
 ; Advances and wraps the attack-sequence selector
 Boss_MissirayAdvanceAttackSequence:                     ; DATA XREF: ROM:000538D2   o  ; was: sub_53CCC
                 subq.w  #2,4(a5)
-                addq.w  #2,(dword_FF9400+2).w
-                cmpi.w  #$12,(dword_FF9400+2).w
+                addq.w  #2,(SharedPatternRow0Long0+2).w
+                cmpi.w  #$12,(SharedPatternRow0Long0+2).w
                 bne.s   Boss_MissirayAdvanceAttackSequenceReturn
-                clr.w   (dword_FF9400+2).w
+                clr.w   (SharedPatternRow0Long0+2).w
 Boss_MissirayAdvanceAttackSequenceReturn:               ; CODE XREF: Boss_MissirayAdvanceAttackSequence+E   j  ; was: locret_53CE0
                 rts
 ; End of function Boss_MissirayAdvanceAttackSequence
@@ -492,9 +492,9 @@ Boss_MissiraySpawnDefeatDebrisAndWait:                  ; DATA XREF: ROM:000538D
                 subq.w  #1,$48(a5)
                 bne.s   Boss_MissirayDefeatDebrisWaitReturn
                 addq.w  #2,4(a5)
-                tst.w   (dword_FF9404).w
+                tst.w   (SharedPatternRow0Long1).w
                 bne.s   Boss_MissirayDefeatDebrisWaitReturn
-                tst.w   (dword_FF9408+2).w
+                tst.w   (SharedPatternRow0Long2+2).w
                 bne.s   Boss_MissirayDefeatDebrisWaitReturn
                 move.l  #$FFFE0000,$1C(a5)
 Boss_MissirayDefeatDebrisWaitReturn:                    ; CODE XREF: Boss_MissiraySpawnDefeatDebrisAndWait+A   j  ; was: locret_53D4E
@@ -600,7 +600,7 @@ Boss_MissirayRemoveAfterDefeat:                         ; DATA XREF: ROM:000538E
 ; Completes an attack and returns control to sequence selection
 Boss_MissirayFinishAttack:                              ; CODE XREF: Boss_MissirayFinishRandomSegmentAttack   j  ; was: sub_53E3C
                                         ; Boss_MissirayFinishPairAttackAfterAllocationFailure   j
-                clr.w   (dword_FF9400).w
+                clr.w   (SharedPatternRow0Long0).w
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_MissirayFinishAttack
@@ -608,7 +608,7 @@ Boss_MissirayFinishAttack:                              ; CODE XREF: Boss_Missir
 Boss_MissirayRunAttackAndCyclePalette:                  ; DATA XREF: ROM:Boss_MissirayAttackSequenceTable   o  ; was: sub_53E46
                                         ; ROM:00053CC4   o
                 bsr.s   Boss_MissirayRandomSegmentAttackDispatcher
-                tst.w   (dword_FF9404).w
+                tst.w   (SharedPatternRow0Long1).w
                 beq.s   Boss_MissirayRunAttackAndCyclePaletteReturn
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0

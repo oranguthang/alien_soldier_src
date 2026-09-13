@@ -79,8 +79,8 @@ Boss_JokerBuildBodyHeightRasterValuesNextPair:          ; CODE XREF: Boss_JokerR
                 sub.l   d5,d4
                 swap    d4
                 dbf     d7,Boss_JokerBuildBodyHeightRasterValuesNextPair
-                movea.w #(word_FF9600-M68K_RAM),a0
-                movea.w #(JokerTileWordGroup-M68K_RAM),a1
+                movea.w #(JokerTileWordGroupA-M68K_RAM),a0
+                movea.w #(JokerTileWordGroupB-M68K_RAM),a1
                 lea     Boss_JokerCyclingTileWords(pc),a2
                 nop
                 move.w  (FrameCounter).w,d0
@@ -247,12 +247,12 @@ Boss_JokerStartPoseInterpolation:                       ; CODE XREF: Boss_JokerU
                 bmi.s   Boss_JokerPublishPoseAngles
 Boss_JokerAdvancePoseInterpolation:                     ; CODE XREF: Boss_JokerUpdatePose+8   j  ; was: loc_3BD36
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #9,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 Boss_JokerPublishPoseAngles:                            ; CODE XREF: Boss_JokerUpdatePose+E   j  ; was: loc_3BD46
                                         ; Boss_JokerUpdatePose+80   j
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #1,d6
                 move.w  #$1FE,d7
                 move.b  (a0),d0
@@ -314,14 +314,14 @@ Boss_JokerPublishPoseAngles:                            ; CODE XREF: Boss_JokerU
 ; Calculates the ten channel deltas toward the selected pose target
 Boss_JokerCalculatePoseDeltas:                          ; CODE XREF: Boss_JokerUpdatePose+62   p  ; was: sub_3BDF4
                 movea.l #Boss_JokerNeutralPose,a1
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #9,d7
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Boss_JokerCalculatePoseDeltas
 ; Initializes the ten fixed-point pose channels from the source record in A0
 Boss_JokerInitializePoseChannels:
-                movea.w #(dword_FF9400-M68K_RAM),a1     ; was: sub_3BE0A
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a1  ; was: sub_3BE0A
                 moveq   #9,d7
                 jmp     Anim_LoadFrameDelays
 ; End of function Boss_JokerInitializePoseChannels

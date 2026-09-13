@@ -269,27 +269,27 @@ Boss_UnidentifiedSevenForceBeginPoseInterpolation:      ; CODE XREF: Boss_Uniden
                 bmi.s   Boss_UnidentifiedSevenForcePreparePartAngleProjection
 Boss_UnidentifiedSevenForceAdvancePoseInterpolation:    ; CODE XREF: Boss_UnidentifiedSevenForceUpdatePose+8   j  ; was: loc_58F86
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$11,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 Boss_UnidentifiedSevenForcePreparePartAngleProjection:  ; CODE XREF: Boss_UnidentifiedSevenForceUpdatePose+E   j  ; was: loc_58F96
                                         ; Boss_UnidentifiedSevenForceUpdatePose+34   j
                 move.w  #$1FE,d7
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 rts
 ; End of function Boss_UnidentifiedSevenForceHandlePoseLoopOrInterpolation
 ; Calculate deltas for the unidentified form's 18-channel pose buffer
 Boss_UnidentifiedSevenForceCalculatePoseDeltas:         ; CODE XREF: Boss_UnidentifiedSevenForceHandlePoseLoopOrInterpolation+24   p  ; was: sub_58FA0
                 movea.l $2FC(a5),a1
                 moveq   #$11,d7
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Boss_UnidentifiedSevenForceCalculatePoseDeltas
 ; Load frame delays for the unidentified form's 18-channel pose buffer
 Boss_UnidentifiedSevenForceLoadFrameDelays:
                 moveq   #$11,d7                         ; was: sub_58FB4
-                movea.w #(dword_FF9400-M68K_RAM),a1
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 jmp     Anim_LoadFrameDelays
 ; End of function Boss_UnidentifiedSevenForceLoadFrameDelays
 ; ---------------------------------------------------------------------------

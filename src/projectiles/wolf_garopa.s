@@ -73,7 +73,7 @@ Boss_WolfGaropaPositionOrbFacingPart:                   ; CODE XREF: Boss_WolfGa
                 add.w   $3BC(a5),d1
                 addi.w  #-$47,d1
                 move.w  d1,$9D4(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 move.b  $3C(a0),d5
                 ext.w   d5
                 move.b  $40(a0),d6
@@ -369,13 +369,13 @@ Boss_WolfGaropaBeginPoseCommandInterpolation:           ; CODE XREF: Boss_WolfGa
                 bmi.s   Boss_WolfGaropaStorePoseAngleGroup1
 Boss_WolfGaropaTickPoseInterpolation:                   ; CODE XREF: Boss_WolfGaropaAdvancePoseScript+8   j  ; was: loc_5064A
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$12,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 Boss_WolfGaropaStorePoseAngleGroup1:                    ; CODE XREF: Boss_WolfGaropaAdvancePoseScript+E   j  ; was: loc_5065A
                                         ; Boss_WolfGaropaAdvancePoseScript+76   j
                 move.w  #$1FE,d7
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 move.l  #Boss_WolfGaropaPoseAngleOutsideRangeMapping,d5
                 move.l  #Boss_WolfGaropaPoseAngleMidRangeMapping,d6
                 move.b  (a0),d0
@@ -505,14 +505,14 @@ Boss_WolfGaropaBeginPoseInterpolation:                  ; CODE XREF: Boss_WolfGa
                 lea     Boss_WolfGaropaPoseTargets(pc),a1
                 nop
                 moveq   #$12,d7
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Boss_WolfGaropaBeginPoseInterpolation
 ; Load the 18 pose-component interpolation durations
 Anim_WolfGaropaLoadPoseDurations:                       ; was: sub_507DC
                 moveq   #$12,d7
-                movea.w #(dword_FF9400-M68K_RAM),a1
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 jmp     Anim_LoadFrameDelays
 ; End of function Anim_WolfGaropaLoadPoseDurations
 ; ---------------------------------------------------------------------------

@@ -412,7 +412,7 @@ Gfx_InitSireneBattleEffect:                             ; CODE XREF: Boss_Update
 ; End of function Gfx_InitSireneBattleEffect
 ; Write the alternating Sirene pattern and queue its VDP transfer
 Gfx_UpdateSireneBattleEffectPattern:                    ; CODE XREF: Boss_UpdateSireneBattleEffect   p  ; was: sub_579F4
-                movea.w #(word_FF9500-M68K_RAM),a0
+                movea.w #(SirenePatternBuffer-M68K_RAM),a0
                 move.l  #$D0D0D0D0,d0
                 move.l  #$DDDDDDDD,d1
                 btst    #0,(FrameCounter+1).w
@@ -427,7 +427,7 @@ Gfx_WriteSireneBattlePattern:                           ; CODE XREF: Gfx_UpdateS
                 move.l  d1,(a0)+
                 move.l  d0,(a0)+
                 move.l  d1,(a0)+
-                movea.w #(word_FF9500-M68K_RAM),a0
+                movea.w #(SirenePatternBuffer-M68K_RAM),a0
                 move.w  #$5FE0,d0
                 move.w  #$8F02,d3
                 move.l  #$94009310,d4
@@ -457,7 +457,7 @@ Boss_RenderSirenePose:                                  ; CODE XREF: Boss_Update
 ; End of function Boss_RenderSirenePose
 ; Distribute the current pose values and offsets across the Sirene metasprite
 Boss_ApplySirenePoseToParts:                            ; CODE XREF: Boss_RenderSirenePose+4   p  ; was: sub_57A82
-                movea.w #(word_FF9800-M68K_RAM),a1
+                movea.w #(SirenePoseHistory-M68K_RAM),a1
                 move.b  (a0),d0
                 asl.w   #1,d0
                 and.w   d7,d0
@@ -637,27 +637,27 @@ Boss_StartSirenePoseFrame:                              ; CODE XREF: Boss_LoadSi
                 bmi.s   Boss_PrepareSirenePoseRender
 Boss_AdvanceSirenePoseInterpolation:                    ; CODE XREF: Boss_UpdateSirenePoseScript+8   j  ; was: loc_57C60
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #9,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 Boss_PrepareSirenePoseRender:                           ; CODE XREF: Boss_UpdateSirenePoseScript+E   j  ; was: loc_57C70
                                         ; Boss_UpdateSirenePoseScript+34   j
                 move.w  #$1FE,d7
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 rts
 ; End of function Boss_LoadSirenePoseFrame
 ; Calculate interpolation deltas for the next Sirene pose frame
 Boss_CalculateSirenePoseInterpolation:                  ; CODE XREF: Boss_LoadSirenePoseFrame+24   p  ; was: sub_57C7A
                 movea.l $2FC(a5),a1
                 moveq   #9,d7
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Boss_CalculateSirenePoseInterpolation
 ; Load the initial interpolation delays for the Sirene pose channels
 Boss_LoadSirenePoseFrameDelays:                         ; CODE XREF: Boss_EnterSireneState4   p  ; was: sub_57C8E
                 moveq   #9,d7
-                movea.w #(dword_FF9400-M68K_RAM),a1
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 jmp     Anim_LoadFrameDelays
 ; End of function Boss_LoadSirenePoseFrameDelays
 ; ---------------------------------------------------------------------------

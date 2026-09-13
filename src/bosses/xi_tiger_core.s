@@ -841,13 +841,13 @@ Boss_XiTigerBeginPoseCommand:                           ; CODE XREF: Boss_XiTige
                 bmi.s   Boss_XiTigerApplyPoseAngles
 Boss_XiTigerAdvancePoseInterpolation:                   ; CODE XREF: Boss_XiTigerUpdatePoseAnimation+8   j  ; was: loc_3E2A2
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$F,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 Boss_XiTigerApplyPoseAngles:                            ; CODE XREF: Boss_XiTigerUpdatePoseAnimation+E   j  ; was: loc_3E2B2
                                         ; Boss_XiTigerUpdatePoseAnimation+84   j
                 move.w  #$1FE,d7
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 move.b  (a0),d0
                 asl.w   #1,d0
                 and.w   d7,d0
@@ -935,14 +935,14 @@ Boss_XiTigerApplyPoseAngles:                            ; CODE XREF: Boss_XiTige
 ; Begins interpolation from the current channels to the selected pose target
 Boss_XiTigerBeginPoseInterpolation:                     ; CODE XREF: Boss_XiTigerUpdatePoseAnimation+62   p  ; was: sub_3E3B0
                 movea.l #Boss_XiTigerNeutralPose,a1
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #$F,d7
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Boss_XiTigerBeginPoseInterpolation
 ; Initializes all 16 Xi-Tiger pose channels from bytes at a0
 Boss_XiTigerInitializePoseChannels:                     ; CODE XREF: Boss_XiTigerSetup+E8   p  ; was: sub_3E3C6
-                movea.w #(dword_FF9400-M68K_RAM),a1
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 moveq   #$F,d7
                 jmp     Anim_LoadFrameDelays
 ; End of function Boss_XiTigerInitializePoseChannels

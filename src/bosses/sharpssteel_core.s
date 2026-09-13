@@ -193,7 +193,7 @@ Boss_SharpssteelFinishBladePartOffsetAdvance:           ; CODE XREF: Boss_Sharps
 Boss_SharpssteelAccelerateBladeAssemblyState:           ; DATA XREF: ROM:00047C6E   o  ; was: sub_47E36
                 subi.l  #$22000,$2FC(a5)
                 bmi.s   Boss_SharpssteelFinishBladeAssemblyAcceleration
-                move.w  (word_FF9600).w,$190(a5)
+                move.w  (SharpssteelTargetTrail).w,$190(a5)
                 bsr.w   Boss_SharpssteelUpdateBladeTargetVelocity
                 lea     Boss_SharpssteelAssemblyDelayPoseCommands(pc),a1
                 nop
@@ -207,7 +207,7 @@ Boss_SharpssteelFinishBladeAssemblyAcceleration:        ; CODE XREF: Boss_Sharps
 Boss_SharpssteelBladeAssemblyDelayState:                ; DATA XREF: ROM:00047C70   o  ; was: loc_47E64
                 subq.w  #1,$11C(a5)
                 bmi.s   Boss_SharpssteelFinishBladeAssemblyDelay
-                move.w  (word_FF9600).w,$190(a5)
+                move.w  (SharpssteelTargetTrail).w,$190(a5)
                 bsr.w   Boss_SharpssteelUpdateBladeTargetVelocity
                 lea     Boss_SharpssteelAssemblyDelayPoseCommands(pc),a1
                 nop
@@ -227,7 +227,7 @@ Boss_SharpssteelWaitForTwoBladeTriggersState:           ; DATA XREF: ROM:00047C7
                 bpl.s   Boss_SharpssteelBeginSevenBladeTriggerWait
 Boss_SharpssteelUpdateBladeAssemblyMotion:              ; CODE XREF: Boss_SharpssteelWaitForTwoBladeTriggersState+30   j
                                         ; Boss_SharpssteelWaitForTwoBladeTriggersState+50   j
-                move.w  (word_FF9600).w,$190(a5)
+                move.w  (SharpssteelTargetTrail).w,$190(a5)
                 bsr.w   Boss_SharpssteelUpdateBladeTargetVelocity
                 lea     Boss_SharpssteelAssemblyTriggerPoseCommands(pc),a1
                 nop
@@ -324,7 +324,7 @@ Boss_SharpssteelUpdateBladeTargetVelocity:              ; CODE XREF: Boss_Sharps
 ; End of function Boss_SharpssteelUpdateBladeTargetVelocity
 ; Fills all six blade-target history samples with the current shared target
 Boss_SharpssteelFillBladeTargetHistory:                 ; CODE XREF: Boss_SharpssteelWaitForTwoBladeTriggersState+66   p  ; was: sub_47FB4
-                movea.w #(word_FF9600-M68K_RAM),a0
+                movea.w #(SharpssteelTargetTrail-M68K_RAM),a0
                 move.w  (Entity57XPos).w,d1
                 addi.w  #$74,d1                         ; 't'
                 moveq   #5,d7
@@ -335,7 +335,7 @@ Boss_SharpssteelFillBladeTargetHistoryLoop:             ; CODE XREF: Boss_Sharps
 ; End of function Boss_SharpssteelFillBladeTargetHistory
 ; Shifts a new shared target through the six-sample blade history
 Boss_SharpssteelShiftBladeTargetHistory:                ; CODE XREF: Boss_SharpssteelMain+2C   p  ; was: sub_47FCA
-                movea.w #(word_FF9600-M68K_RAM),a0
+                movea.w #(SharpssteelTargetTrail-M68K_RAM),a0
                 move.w  (Entity57XPos).w,d1
                 addi.w  #$74,d1                         ; 't'
                 moveq   #5,d7

@@ -28,14 +28,14 @@ Boss_GustheadAfterRootMappingToggle:                    ; CODE XREF: Boss_Gusthe
 Boss_GustheadSelectDebrisDrift:                         ; CODE XREF: Boss_GustheadMain+32   j  ; was: loc_3F1E0
                 cmpi.w  #$50,4(a5)                      ; 'P'
                 bcc.s   Boss_GustheadUseArenaMotionDebrisDrift
-                move.l  (StageMotionXDelta).w,(dword_FF9428).w
+                move.l  (StageMotionXDelta).w,(SharedPatternRow1Long2).w
                 bra.s   Boss_GustheadCheckStageExit
 ; ---------------------------------------------------------------------------
 Boss_GustheadUseArenaMotionDebrisDrift:                 ; CODE XREF: Boss_GustheadMain+42   j  ; was: loc_3F1F0
                 move.l  (GustheadArenaVelocity).w,d0
                 asr.l   #1,d0
                 neg.l   d0
-                move.l  d0,(dword_FF9428).w
+                move.l  d0,(SharedPatternRow1Long2).w
 Boss_GustheadCheckStageExit:                            ; CODE XREF: Boss_GustheadMain+4A   j  ; was: loc_3F1FC
                 btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_GustheadUpdatePaletteAndScreenX
@@ -128,16 +128,16 @@ Boss_GustheadInitBattle:                                ; DATA XREF: ROM:Boss_Gu
 ; Sets up boss parts and tentacles
 Boss_GustheadSetupParts:                                ; DATA XREF: ROM:0003F24E   o  ; was: sub_3F2D0
                 addq.w  #2,4(a5)
-                clr.l   (dword_FF9400).w
-                clr.l   (dword_FF9404).w
-                clr.l   (dword_FF9408).w
-                clr.l   (dword_FF940C).w
-                clr.l   (dword_FF9410).w
-                clr.l   (dword_FF9414).w
-                clr.l   (dword_FF9418).w
-                clr.l   (dword_FF941C).w
-                clr.l   (dword_FF9420).w
-                clr.w   (dword_FF9424).w
+                clr.l   (SharedPatternRow0Long0).w
+                clr.l   (SharedPatternRow0Long1).w
+                clr.l   (SharedPatternRow0Long2).w
+                clr.l   (SharedPatternRow0Long3).w
+                clr.l   (SharedPatternRow0Long4).w
+                clr.l   (SharedPatternRow0Long5).w
+                clr.l   (SharedPatternRow0Long6).w
+                clr.l   (SharedPatternRow0Long7).w
+                clr.l   (SharedPatternRow1Long0).w
+                clr.w   (SharedPatternRow1Long1).w
                 move.b  #4,(PlayerOAMBucketOffset).w
                 move.w  #$120,$10(a5)
                 move.w  #$F0,$14(a5)
@@ -217,10 +217,10 @@ Boss_GustheadIntroRevealCountDown:                      ; CODE XREF: Boss_Gusthe
                 bne.s   Boss_GustheadIntroRevealReturn
                 addq.w  #2,4(a5)
                 move.w  #$40,$48(a5)                    ; '@'
-                move.w  #$10,(dword_FF940C).w
-                move.w  #$40,(dword_FF9400).w           ; '@'
-                move.w  #$80,(dword_FF9404).w
-                move.w  #$180,(dword_FF9408).w
+                move.w  #$10,(SharedPatternRow0Long3).w
+                move.w  #$40,(SharedPatternRow0Long0).w  ; '@'
+                move.w  #$80,(SharedPatternRow0Long1).w
+                move.w  #$180,(SharedPatternRow0Long2).w
                 move.l  #$FFFF0000,$1C(a5)
                 move.l  #$2000,$4C(a5)
                 bsr.w   Boss_GustheadAdvanceJointAngles
@@ -257,7 +257,7 @@ Boss_GustheadStopBattleEntrySpinState:                  ; DATA XREF: ROM:0003F25
                 bsr.w   Boss_GustheadUpdateSegmentPositions
                 bsr.w   Boss_GustheadUpdateVerticalBounce
                 eori.w  #$8000,2(a5)
-                subi.l  #$2000,(dword_FF940C).w
+                subi.l  #$2000,(SharedPatternRow0Long3).w
                 bne.s   Boss_GustheadStopBattleEntrySpinReturn
                 ori.w   #$8000,2(a5)
                 move.b  #$50,$21(a5)                    ; 'P'
@@ -328,31 +328,31 @@ Boss_GustheadBeginOscillationPattern:                   ; CODE XREF: Boss_Gusthe
                 addq.w  #2,4(a5)
                 move.l  #$FFFF0000,$1C(a5)
                 move.l  #$2000,$4C(a5)
-                clr.l   (dword_FF940C).w
-                clr.l   (dword_FF9410).w
-                clr.l   (dword_FF9414).w
-                andi.l  #$1F80000,(dword_FF9400).w
-                andi.l  #$1F80000,(dword_FF9404).w
-                andi.l  #$1F80000,(dword_FF9408).w
+                clr.l   (SharedPatternRow0Long3).w
+                clr.l   (SharedPatternRow0Long4).w
+                clr.l   (SharedPatternRow0Long5).w
+                andi.l  #$1F80000,(SharedPatternRow0Long0).w
+                andi.l  #$1F80000,(SharedPatternRow0Long1).w
+                andi.l  #$1F80000,(SharedPatternRow0Long2).w
                 move.w  #$F0,$52(a5)
 ; Aligns the middle joint before the oscillation cycle
 Boss_GustheadAlignMiddleJointState:                     ; DATA XREF: ROM:0003F260   o  ; was: loc_3F5A2
                 bsr.w   Boss_GustheadAdvanceJointAngles
                 bsr.w   Boss_GustheadUpdateSegmentPositions
                 bsr.w   Boss_GustheadMoveTowardPatternTarget
-                subi.w  #8,(dword_FF9404).w
-                andi.w  #$1F8,(dword_FF9404).w
+                subi.w  #8,(SharedPatternRow0Long1).w
+                andi.w  #$1F8,(SharedPatternRow0Long1).w
                 bne.w   Boss_GustheadUpdateSegmentPositionsReturn
                 addq.w  #2,4(a5)
-                move.l  #$FFFE0000,(dword_FF9410).w
-                move.l  #$1000,(dword_FF941C).w
+                move.l  #$FFFE0000,(SharedPatternRow0Long4).w
+                move.l  #$1000,(SharedPatternRow0Long7).w
                 cmpi.w  #$120,(PlayerXPosition).w
                 bcc.s   Boss_GustheadAccelerateOuterJointPositive
-                move.l  #$FFFFF000,(dword_FF9418).w
+                move.l  #$FFFFF000,(SharedPatternRow0Long6).w
                 bra.s   Boss_GustheadBeginOscillationPatternReturn
 ; ---------------------------------------------------------------------------
 Boss_GustheadAccelerateOuterJointPositive:              ; CODE XREF: Boss_GustheadBeginOscillationPattern+74   j  ; was: loc_3F5E4
-                move.l  #$1000,(dword_FF9418).w
+                move.l  #$1000,(SharedPatternRow0Long6).w
 Boss_GustheadBeginOscillationPatternReturn:             ; CODE XREF: Boss_GustheadBeginOscillationPattern+7E   j  ; was: locret_3F5EC
                 rts
 ; End of function Boss_GustheadBeginOscillationPattern
@@ -364,11 +364,11 @@ Boss_GustheadSweepOuterJointState:                      ; DATA XREF: ROM:0003F26
                 bsr.w   Boss_GustheadSpawnScrollingDebris
                 bsr.w   Boss_GustheadOscillateMiddleJointSpeed
                 bsr.s   Boss_GustheadMoveTowardPatternTarget
-                move.l  (dword_FF9418).w,d0
-                add.l   d0,(dword_FF940C).w
-                cmpi.l  #$C0000,(dword_FF940C).w
+                move.l  (SharedPatternRow0Long6).w,d0
+                add.l   d0,(SharedPatternRow0Long3).w
+                cmpi.l  #$C0000,(SharedPatternRow0Long3).w
                 beq.s   Boss_GustheadFinishOuterJointSweep
-                cmpi.l  #$FFF40000,(dword_FF940C).w
+                cmpi.l  #$FFF40000,(SharedPatternRow0Long3).w
                 bne.s   Boss_GustheadSweepOuterJointReturn
 Boss_GustheadFinishOuterJointSweep:                     ; CODE XREF: Boss_GustheadSweepOuterJointState+26   j  ; was: loc_3F620
                 move.w  #4,$48(a5)
@@ -455,15 +455,15 @@ Boss_GustheadUpdateVerticalBounceReturn:                ; CODE XREF: Boss_Gusthe
 ; Oscillates the middle-joint angular speed between signed limits
 Boss_GustheadOscillateMiddleJointSpeed:                 ; CODE XREF: Boss_GustheadSweepOuterJointState+10   p  ; was: sub_3F6D2
                                         ; Boss_GustheadWaitForMiddleJointZeroState+10   p
-                move.l  (dword_FF941C).w,d0
-                add.l   d0,(dword_FF9410).w
-                move.l  (dword_FF9410).w,d0
+                move.l  (SharedPatternRow0Long7).w,d0
+                add.l   d0,(SharedPatternRow0Long4).w
+                move.l  (SharedPatternRow0Long4).w,d0
                 bpl.s   Boss_GustheadCompareMiddleJointSpeed
                 neg.l   d0
 Boss_GustheadCompareMiddleJointSpeed:                   ; CODE XREF: Boss_GustheadOscillateMiddleJointSpeed+C   j  ; was: loc_3F6E2
                 cmpi.l  #$20000,d0
                 bne.s   Boss_GustheadOscillateMiddleJointSpeedReturn
-                neg.l   (dword_FF941C).w
+                neg.l   (SharedPatternRow0Long7).w
 Boss_GustheadOscillateMiddleJointSpeedReturn:           ; CODE XREF: Boss_GustheadOscillateMiddleJointSpeed+16   j  ; was: locret_3F6EE
                 rts
 ; End of function Boss_GustheadOscillateMiddleJointSpeed
@@ -476,7 +476,7 @@ Boss_GustheadWaitForMiddleJointZeroState:               ; DATA XREF: ROM:0003F26
                 bsr.w   Boss_GustheadOscillateMiddleJointSpeed
                 bsr.w   Boss_GustheadMoveTowardPatternTarget
                 bsr.w   Boss_GustheadSpawnEdgeDebris
-                tst.w   (dword_FF9404).w
+                tst.w   (SharedPatternRow0Long1).w
                 bne.s   Boss_GustheadWaitForMiddleJointZeroReturn
                 addq.w  #2,4(a5)
 Boss_GustheadWaitForMiddleJointZeroReturn:              ; CODE XREF: Boss_GustheadWaitForMiddleJointZeroState+20   j  ; was: locret_3F716
@@ -490,7 +490,7 @@ Boss_GustheadCountMiddleJointCyclesState:               ; DATA XREF: ROM:0003F26
                 bsr.w   Boss_GustheadSpawnScrollingDebris
                 bsr.w   Boss_GustheadOscillateMiddleJointSpeed
                 bsr.w   Boss_GustheadMoveTowardPatternTarget
-                tst.w   (dword_FF9404).w
+                tst.w   (SharedPatternRow0Long1).w
                 beq.s   Boss_GustheadCountMiddleJointCyclesReturn
                 subq.w  #1,$48(a5)
                 beq.s   Boss_GustheadFinishMiddleJointCycles
@@ -510,14 +510,14 @@ Boss_GustheadBrakeOuterJointState:                      ; DATA XREF: ROM:0003F26
                 bsr.w   Boss_GustheadSpawnScrollingDebris
                 bsr.w   Boss_GustheadOscillateMiddleJointSpeed
                 bsr.w   Boss_GustheadMoveTowardPatternTarget
-                move.l  (dword_FF9418).w,d0
-                sub.l   d0,(dword_FF940C).w
+                move.l  (SharedPatternRow0Long6).w,d0
+                sub.l   d0,(SharedPatternRow0Long3).w
                 bne.s   Boss_GustheadBrakeOuterJointReturn
                 addq.w  #2,4(a5)
                 move.b  (RandomNumberState).w,d0
                 andi.w  #1,d0
                 beq.s   Boss_GustheadBrakeOuterJointReturn
-                neg.l   (dword_FF9418).w
+                neg.l   (SharedPatternRow0Long6).w
 Boss_GustheadBrakeOuterJointReturn:                     ; CODE XREF: Boss_GustheadBrakeOuterJointState+20   j  ; was: locret_3F77C
                                         ; Boss_GustheadBrakeOuterJointState+2E   j
                 rts
@@ -538,12 +538,12 @@ Boss_GustheadBeginBouncePattern:                        ; CODE XREF: Boss_Gusthe
                 move.l  #$FFFF0000,$1C(a5)
                 move.l  #$2000,$4C(a5)
                 clr.l   (StageMotionXDelta).w
-                andi.l  #$1F80000,(dword_FF9400).w
-                andi.l  #$1F80000,(dword_FF9404).w
-                andi.l  #$1F80000,(dword_FF9408).w
-                move.l  #$80000,(dword_FF940C).w
-                move.l  #$80000,(dword_FF9410).w
-                move.l  #$80000,(dword_FF9414).w
+                andi.l  #$1F80000,(SharedPatternRow0Long0).w
+                andi.l  #$1F80000,(SharedPatternRow0Long1).w
+                andi.l  #$1F80000,(SharedPatternRow0Long2).w
+                move.l  #$80000,(SharedPatternRow0Long3).w
+                move.l  #$80000,(SharedPatternRow0Long4).w
+                move.l  #$80000,(SharedPatternRow0Long5).w
                 addq.w  #2,4(a5)
 ; Update tentacles and scroll during bounce initialization
 Boss_GustheadAlignJointsForBounceState:                 ; DATA XREF: ROM:0003F26E   o  ; was: loc_3F7E2
@@ -552,27 +552,27 @@ Boss_GustheadAlignJointsForBounceState:                 ; DATA XREF: ROM:0003F26
                 bsr.w   Boss_GustheadUpdateArenaScrollVelocity
                 bsr.w   Boss_GustheadSpawnScrollingDebris
                 bsr.w   Boss_GustheadUpdateVerticalBounce
-                cmpi.w  #$40,(dword_FF9400).w           ; '@'
+                cmpi.w  #$40,(SharedPatternRow0Long0).w  ; '@'
                 bne.s   Boss_GustheadCheckBounceMiddleJoint
-                clr.l   (dword_FF940C).w
+                clr.l   (SharedPatternRow0Long3).w
 Boss_GustheadCheckBounceMiddleJoint:                    ; CODE XREF: Boss_GustheadBeginBouncePattern+62   j  ; was: loc_3F802
-                cmpi.w  #0,(dword_FF9404).w
+                cmpi.w  #0,(SharedPatternRow0Long1).w
                 bne.s   Boss_GustheadCheckBounceInnerJoint
-                clr.l   (dword_FF9410).w
+                clr.l   (SharedPatternRow0Long4).w
 Boss_GustheadCheckBounceInnerJoint:                     ; CODE XREF: Boss_GustheadBeginBouncePattern+6E   j  ; was: loc_3F80E
-                cmpi.w  #$180,(dword_FF9408).w
+                cmpi.w  #$180,(SharedPatternRow0Long2).w
                 bne.s   Boss_GustheadAlignJointsForBounceReturn
-                clr.l   (dword_FF9414).w
-                tst.l   (dword_FF9410).w
+                clr.l   (SharedPatternRow0Long5).w
+                tst.l   (SharedPatternRow0Long4).w
                 bne.s   Boss_GustheadAlignJointsForBounceReturn
-                tst.l   (dword_FF940C).w
+                tst.l   (SharedPatternRow0Long3).w
                 bne.s   Boss_GustheadAlignJointsForBounceReturn
                 addq.w  #2,4(a5)
                 clr.l   $1C(a5)
                 clr.l   $4C(a5)
-                move.l  #0,(dword_FF940C).w
-                move.l  #$100000,(dword_FF9410).w
-                move.l  #$40000,(dword_FF9414).w
+                move.l  #0,(SharedPatternRow0Long3).w
+                move.l  #$100000,(SharedPatternRow0Long4).w
+                move.l  #$40000,(SharedPatternRow0Long5).w
                 clr.w   $56(a5)
                 bsr.w   Boss_GustheadSelectNextBounceTurnAngle
 Boss_GustheadAlignJointsForBounceReturn:                ; CODE XREF: Boss_GustheadBeginBouncePattern+7A   j  ; was: locret_3F852
@@ -587,7 +587,7 @@ Boss_GustheadBouncePatternState:                        ; DATA XREF: ROM:0003F27
                 bsr.w   Boss_GustheadUpdateSegmentPositions
                 bsr.w   Boss_GustheadUpdateArenaScrollVelocity
                 bsr.w   Boss_GustheadSpawnScrollingDebris
-                cmpi.w  #$100,(dword_FF9408).w
+                cmpi.w  #$100,(SharedPatternRow0Long2).w
                 bne.s   Boss_GustheadCheckBounceTurnAngle
                 cmpi.w  #$120,$14(a5)
                 blt.s   Boss_GustheadCheckBounceTurnAngle
@@ -596,9 +596,9 @@ Boss_GustheadBouncePatternState:                        ; DATA XREF: ROM:0003F27
 Boss_GustheadCheckBounceTurnAngle:                      ; CODE XREF: Boss_GustheadBouncePatternState+20   j  ; was: loc_3F886
                                         ; Boss_GustheadBouncePatternState+28   j
                 move.w  $54(a5),d0
-                cmp.w   (dword_FF9408).w,d0
+                cmp.w   (SharedPatternRow0Long2).w,d0
                 bne.s   Boss_GustheadBouncePatternReturn
-                neg.l   (dword_FF9414).w
+                neg.l   (SharedPatternRow0Long5).w
                 bsr.s   Boss_GustheadSelectNextBounceTurnAngle
 Boss_GustheadBouncePatternReturn:                       ; CODE XREF: Boss_GustheadBouncePatternState+3A   j  ; was: locret_3F896
                 rts
@@ -653,17 +653,17 @@ Boss_GustheadFourWayArcVolleyReturn:                    ; CODE XREF: Boss_Gusthe
 ; End of function Boss_GustheadSpawnFourWayArcVolley
 ; Retrieves first tentacle angle value for Gusthead boss
 Boss_GustheadSetVelocityFromOuterJointAngle:            ; was: sub_3F932
-                move.w  (dword_FF9400).w,d0
+                move.w  (SharedPatternRow0Long0).w,d0
                 bra.s   Boss_GustheadSetVelocityFromSelectedJointAngle
 ; End of function Boss_GustheadSetVelocityFromOuterJointAngle
 ; Retrieves second tentacle angle value for Gusthead boss
 Boss_GustheadSetVelocityFromMiddleJointAngle:           ; was: sub_3F938
-                move.w  (dword_FF9404).w,d0
+                move.w  (SharedPatternRow0Long1).w,d0
                 bra.s   Boss_GustheadSetVelocityFromSelectedJointAngle
 ; End of function Boss_GustheadSetVelocityFromMiddleJointAngle
 ; Calculates velocity components from angle for Gusthead boss
 Boss_GustheadSetVelocityFromInnerJointAngle:            ; CODE XREF: Boss_GustheadBouncePatternState+6   p  ; was: sub_3F93E
-                move.w  (dword_FF9408).w,d0
+                move.w  (SharedPatternRow0Long2).w,d0
 Boss_GustheadSetVelocityFromSelectedJointAngle:         ; CODE XREF: Boss_GustheadSetVelocityFromOuterJointAngle+4   j  ; was: loc_3F942
                                         ; Boss_GustheadSetVelocityFromMiddleJointAngle+4   j
                 andi.w  #$1FE,d0
@@ -698,12 +698,12 @@ Boss_GustheadBeginPatternDescentState:                  ; DATA XREF: ROM:0003F27
                 clr.l   $18(a5)
                 move.l  #$10000,$1C(a5)
                 move.l  #$FFFFE000,$4C(a5)
-                andi.l  #$1F80000,(dword_FF9400).w
-                andi.l  #$1F80000,(dword_FF9404).w
-                andi.l  #$1F80000,(dword_FF9408).w
-                move.w  #8,(dword_FF940C).w
-                move.w  #8,(dword_FF9410).w
-                move.w  #8,(dword_FF9414).w
+                andi.l  #$1F80000,(SharedPatternRow0Long0).w
+                andi.l  #$1F80000,(SharedPatternRow0Long1).w
+                andi.l  #$1F80000,(SharedPatternRow0Long2).w
+                move.w  #8,(SharedPatternRow0Long3).w
+                move.w  #8,(SharedPatternRow0Long4).w
+                move.w  #8,(SharedPatternRow0Long5).w
                 addq.w  #2,4(a5)
 Boss_GustheadBeginPatternDescentReturn:                 ; CODE XREF: Boss_GustheadBeginPatternDescentState+16   j  ; was: locret_3F9DC
                 rts
@@ -715,20 +715,20 @@ Boss_GustheadAlignJointsAfterDescentState:              ; DATA XREF: ROM:0003F27
                 bsr.w   Boss_GustheadUpdateArenaScrollVelocity
                 bsr.w   Boss_GustheadSpawnScrollingDebris
                 bsr.w   Boss_GustheadUpdateVerticalBounce
-                cmpi.w  #$40,(dword_FF9400).w           ; '@'
+                cmpi.w  #$40,(SharedPatternRow0Long0).w  ; '@'
                 bne.s   Boss_GustheadCheckDescentMiddleJoint
-                clr.l   (dword_FF940C).w
+                clr.l   (SharedPatternRow0Long3).w
 Boss_GustheadCheckDescentMiddleJoint:                   ; CODE XREF: Boss_GustheadAlignJointsAfterDescentState+1A   j  ; was: loc_3F9FE
-                cmpi.w  #$80,(dword_FF9404).w
+                cmpi.w  #$80,(SharedPatternRow0Long1).w
                 bne.s   Boss_GustheadCheckDescentInnerJoint
-                clr.l   (dword_FF9410).w
+                clr.l   (SharedPatternRow0Long4).w
 Boss_GustheadCheckDescentInnerJoint:                    ; CODE XREF: Boss_GustheadAlignJointsAfterDescentState+26   j  ; was: loc_3FA0A
-                cmpi.w  #$180,(dword_FF9408).w
+                cmpi.w  #$180,(SharedPatternRow0Long2).w
                 bne.s   Boss_GustheadAlignJointsAfterDescentReturn
-                clr.w   (dword_FF9414).w
-                tst.l   (dword_FF940C).w
+                clr.w   (SharedPatternRow0Long5).w
+                tst.l   (SharedPatternRow0Long3).w
                 bne.s   Boss_GustheadAlignJointsAfterDescentReturn
-                tst.l   (dword_FF9410).w
+                tst.l   (SharedPatternRow0Long4).w
                 bne.s   Boss_GustheadAlignJointsAfterDescentReturn
                 move.w  #$10,4(a5)
 Boss_GustheadAlignJointsAfterDescentReturn:             ; CODE XREF: Boss_GustheadAlignJointsAfterDescentState+32   j  ; was: locret_3FA28
@@ -750,8 +750,8 @@ Boss_GustheadAccelerateFragmentPatternSpinState:        ; DATA XREF: ROM:0003F27
                 bsr.w   Boss_GustheadSpawnScrollingDebris
                 bsr.w   Boss_GustheadUpdateVerticalBounce
                 eori.w  #$8000,2(a5)
-                addi.l  #$2000,(dword_FF940C).w
-                cmpi.l  #$100000,(dword_FF940C).w
+                addi.l  #$2000,(SharedPatternRow0Long3).w
+                cmpi.l  #$100000,(SharedPatternRow0Long3).w
                 bne.s   Boss_GustheadAccelerateFragmentPatternSpinReturn
                 addq.w  #2,4(a5)
                 move.w  #$20,$48(a5)                    ; ' '

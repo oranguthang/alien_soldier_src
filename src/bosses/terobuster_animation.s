@@ -36,7 +36,7 @@ Boss_TerobusterBeginPoseCommand:                        ; CODE XREF: Boss_Terobu
                 bmi.s   Boss_TerobusterApplyAngles
 Boss_TerobusterAdvancePoseInterpolation:                ; CODE XREF: Boss_TerobusterInterpolateAnimation+8   j  ; was: loc_3922E
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #5,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 ; End of function Boss_TerobusterInterpolateAnimation
@@ -44,8 +44,8 @@ Boss_TerobusterAdvancePoseInterpolation:                ; CODE XREF: Boss_Terobu
 Boss_TerobusterApplyAngles:                             ; CODE XREF: Boss_TerobusterDecisionState:Boss_TerobusterDecisionAnimate   p  ; was: sub_3923E
                                         ; Boss_TerobusterBeginTileReveal:Boss_TerobusterRenderIntroPose   p
                 move.w  #$1FE,d7
-                movea.w #(dword_FF9400-M68K_RAM),a0
-                movea.w #(dword_FF940C-M68K_RAM),a1
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long3-M68K_RAM),a1
                 tst.w   $A(a5)
                 beq.s   Boss_TerobusterApplyPoseSides
                 exg     a0,a1
@@ -87,7 +87,7 @@ Boss_TerobusterApplyPoseSides:                          ; CODE XREF: Boss_Terobu
 ; Calculates interpolation deltas for smooth animation
 Boss_TerobusterCalculateDeltas:                         ; CODE XREF: Boss_TerobusterInterpolateAnimation+4E   p  ; was: sub_392B0
                 movea.l #Boss_TerobusterNeutralPose,a1
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #5,d7
                 jmp     Anim_CalculateInterpolationDeltas
@@ -95,7 +95,7 @@ Boss_TerobusterCalculateDeltas:                         ; CODE XREF: Boss_Terobu
 ; Expands six packed pose-channel bytes into the interpolation buffer
 Boss_TerobusterInitializePoseChannels:                  ; CODE XREF: Boss_TerobusterSetup+120   p  ; was: sub_392C6
                                         ; Boss_TerobusterIntro+20   p
-                movea.w #(dword_FF9400-M68K_RAM),a1
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 moveq   #5,d7
                 jmp     Anim_LoadFrameDelays
 ; End of function Boss_TerobusterInitializePoseChannels

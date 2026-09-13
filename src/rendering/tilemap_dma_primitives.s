@@ -205,17 +205,17 @@ Tilemap_QueueLongSourceRowLoop:                         ; CODE XREF: Unreference
 ; Stages indexed tile blocks by rows and queues their horizontal DMA transfers
 Tilemap_QueueIndexedRows:                               ; CODE XREF: EndingSequence_FadeOutCredits+3C   p  ; was: sub_10F4E
                                         ; ShipSequence_LoadTileBatch1+6   p
-                move.w  (VDPStagingDataCursor).w,(word_FF805C).w
-                move.l  #$94009300,(dword_FF8058).w
+                move.w  (VDPStagingDataCursor).w,(IndexedStagingStart).w
+                move.l  #$94009300,(IndexedDMACommand).w
                 moveq   #0,d0
                 move.b  4(a0),d0
                 addq.w  #1,d0
                 lsl.w   #2,d0
-                move.b  d0,(dword_FF8058+3).w
+                move.b  d0,(IndexedDMALowByte).w
                 moveq   #0,d0
                 move.b  4(a0),d0
                 addq.w  #1,d0
-                move.w  d0,(dword_FF805E).w
+                move.w  d0,(IndexedGroupStride).w
                 movea.l a0,a1
                 adda.l  #6,a1
                 movea.w (VDPStagingDataCursor).w,a3
@@ -255,17 +255,17 @@ Tilemap_CopyIndexedTilesIntoRowLoop:                    ; CODE XREF: Tilemap_Que
                 move.b  d2,-(a4)
                 move.b  #$96,-(a4)
                 move.l  #$8F02977F,-(a4)
-                move.l  (dword_FF8058).w,-(a4)
+                move.l  (IndexedDMACommand).w,-(a4)
                 move.w  a3,(VDPStagingDataCursor).w
                 addq.w  #8,d1
                 addi.w  #$80,d4
                 dbf     d6,Tilemap_StageIndexedRowLoop
-                adda.w  (dword_FF805E).w,a1
+                adda.w  (IndexedGroupStride).w,a1
                 dbf     d7,Tilemap_QueueIndexedRowGroupLoop
                 move.w  a4,(VDPCommandQueueHead).w
                 btst    #0,1(a0)
                 beq.s   Tilemap_IndexedRowsReturn
-                movea.w (word_FF805C).w,a1
+                movea.w (IndexedStagingStart).w,a1
                 moveq   #0,d6
                 move.b  5(a0),d6
                 addq.w  #1,d6
@@ -276,7 +276,7 @@ Tilemap_CopyIndexedTilesIntoRowLoop:                    ; CODE XREF: Tilemap_Que
                 andi.w  #$1FFE,d0
                 movea.l d0,a2
                 moveq   #0,d5
-                move.b  (dword_FF8058+3).w,d5
+                move.b  (IndexedDMALowByte).w,d5
                 subq.w  #1,d5
 Tilemap_MirrorQueuedRowsLoop:                           ; CODE XREF: Tilemap_QueueIndexedRows+F2   j  ; was: loc_1102E
                 moveq   #0,d0
@@ -303,16 +303,16 @@ VDPQueue_SetCommandHighWordLoop:                        ; CODE XREF: VDPQueue_Se
 ; Stages indexed tile blocks by columns and queues their vertical DMA transfers
 Tilemap_QueueIndexedColumns:                            ; CODE XREF: Stage8_StartFlyingNeoCompositeAndQueueTiles+24   j  ; was: sub_11058
                                         ; Gfx_LoadWolfGaropaTransitionTiles+6   p
-                move.w  (VDPStagingDataCursor).w,(word_FF805C).w
-                move.l  #$94009300,(dword_FF8058).w
+                move.w  (VDPStagingDataCursor).w,(IndexedStagingStart).w
+                move.l  #$94009300,(IndexedDMACommand).w
                 moveq   #0,d0
                 move.b  5(a0),d0
                 addq.w  #1,d0
                 lsl.w   #2,d0
-                move.b  d0,(dword_FF8058+3).w
+                move.b  d0,(IndexedDMALowByte).w
                 moveq   #0,d0
                 move.b  4(a0),d0
-                move.w  d0,(dword_FF805E).w
+                move.w  d0,(IndexedGroupStride).w
                 movea.l a0,a1
                 adda.l  #6,a1
                 movea.w (VDPStagingDataCursor).w,a3
@@ -357,7 +357,7 @@ Tilemap_CopyIndexedTilesIntoColumnLoop:                 ; CODE XREF: Tilemap_Que
                 move.b  d2,-(a4)
                 move.b  #$96,-(a4)
                 move.l  #$8F80977F,-(a4)
-                move.l  (dword_FF8058).w,-(a4)
+                move.l  (IndexedDMACommand).w,-(a4)
                 move.w  a3,(VDPStagingDataCursor).w
                 addq.w  #2,d1
                 addq.w  #2,d4
@@ -367,7 +367,7 @@ Tilemap_CopyIndexedTilesIntoColumnLoop:                 ; CODE XREF: Tilemap_Que
                 move.w  a4,(VDPCommandQueueHead).w
                 btst    #0,1(a0)
                 beq.s   Tilemap_IndexedColumnsReturn
-                movea.w (word_FF805C).w,a1
+                movea.w (IndexedStagingStart).w,a1
                 moveq   #0,d6
                 move.b  4(a0),d6
                 addq.w  #1,d6
@@ -378,7 +378,7 @@ Tilemap_CopyIndexedTilesIntoColumnLoop:                 ; CODE XREF: Tilemap_Que
                 andi.w  #$1FFE,d0
                 movea.l d0,a2
                 moveq   #0,d5
-                move.b  (dword_FF8058+3).w,d5
+                move.b  (IndexedDMALowByte).w,d5
                 subq.w  #1,d5
 Tilemap_MirrorQueuedColumnsLoop:                        ; CODE XREF: Tilemap_QueueIndexedColumns+FC   j  ; was: loc_11142
                 moveq   #0,d0

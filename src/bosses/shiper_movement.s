@@ -458,7 +458,7 @@ Boss_ShiperTentacleSelectSecondFrame:                   ; CODE XREF: Boss_Shiper
                 move.l  d4,$2B0(a5)
                 move.l  d0,$314(a5)
                 move.l  d1,$310(a5)
-                movea.w #(dword_FF9A00-M68K_RAM),a0
+                movea.w #(ShiperRotationHistory-M68K_RAM),a0
                 move.w  $170(a5),d0
                 moveq   #4,d7
 Boss_ShiperTentacleShiftRotationHistory:                ; CODE XREF: Boss_ShiperTentaclePosition+15E   j  ; was: loc_36F28
@@ -479,9 +479,9 @@ Boss_ShiperTentacleShiftRotationHistory:                ; CODE XREF: Boss_Shiper
                 move.l  d0,$10(a0)
                 move.l  d1,$14(a0)
                 movea.w #(EleventhEntityType-M68K_RAM),a1
-                movea.w #(dword_FF9400-M68K_RAM),a2
-                movea.w #(word_FF9500-M68K_RAM),a3
-                movea.w #(dword_FF9A00-M68K_RAM),a4
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
+                movea.w #(ShiperCosineTable-M68K_RAM),a3
+                movea.w #(ShiperRotationHistory-M68K_RAM),a4
                 move.w  #$200,d3
                 moveq   #$B,d0
                 moveq   #1,d5

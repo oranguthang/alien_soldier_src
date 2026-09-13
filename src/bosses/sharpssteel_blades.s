@@ -527,13 +527,13 @@ Boss_SharpssteelBeginBladePoseInterpolation:            ; CODE XREF: Boss_Sharps
                 bmi.s   Boss_SharpssteelUpdateBladeAnglesFromPose
 Boss_SharpssteelApplyBladePoseInterpolationStep:        ; CODE XREF: Boss_SharpssteelRunBladePoseCommands+8   j
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #7,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 Boss_SharpssteelUpdateBladeAnglesFromPose:              ; CODE XREF: Boss_SharpssteelWaitForComplexAlignmentState+E   p
                                         ; Boss_SharpssteelRunBladePoseCommands+E   j
                 move.w  #$1FE,d7
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 move.b  (a0),d0
                 asl.w   #1,d0
                 and.w   d7,d0
@@ -629,14 +629,14 @@ Boss_SharpssteelApplyBladePoseOffsets:                  ; CODE XREF: Boss_Sharps
 ; Calculates interpolation deltas from the current pose to a target pose
 Boss_SharpssteelInitializeBladePoseInterpolation:       ; CODE XREF: Boss_SharpssteelRunBladePoseCommands+5C   p  ; was: sub_48B84
                 movea.l #Boss_SharpssteelNeutralPose,a1
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #7,d7
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Boss_SharpssteelInitializeBladePoseInterpolation
 ; Loads animation frame delays for 8 frames
 Boss_SharpssteelLoadBladePoseFrameDelays:               ; CODE XREF: Boss_SharpssteelInitializeComplexPhase+48   p  ; was: sub_48B9A
-                movea.w #(dword_FF9400-M68K_RAM),a1
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 moveq   #7,d7
                 jmp     Anim_LoadFrameDelays
 ; End of function Boss_SharpssteelLoadBladePoseFrameDelays

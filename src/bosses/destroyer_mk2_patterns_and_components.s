@@ -1,7 +1,7 @@
 ; Projectile-pattern substates selected by the main controller's state $24
 Boss_DestroyerMK2LinkedActivationPatternDispatch:       ; DATA XREF: Boss_DestroyerMK2DispatchProjectilePatternState:Boss_DestroyerMK2PositiveTimerPatternHandlers   o  ; was: sub_4B04C
                                         ; Boss_DestroyerMK2DispatchProjectilePatternState+24   o
-                move.w  (dword_FF941C).w,d0
+                move.w  (SharedPatternRow0Long7).w,d0
                 lea     Boss_DestroyerMK2LinkedActivationPatternHandlers(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
@@ -14,7 +14,7 @@ Boss_DestroyerMK2LinkedActivationPatternHandlers:   dc.w    Boss_DestroyerMK2Act
 
 ; Activate the nearer linked part on the player's side
 Boss_DestroyerMK2ActivateNearLinkedPart:                ; DATA XREF: ROM:Boss_DestroyerMK2LinkedActivationPatternHandlers   o  ; was: sub_4B060
-                addq.w  #2,(dword_FF941C).w
+                addq.w  #2,(SharedPatternRow0Long7).w
                 move.w  (PlayerCenterX).w,d0
                 cmp.w   $10(a5),d0
                 bgt.s   Boss_DestroyerMK2SelectRightNearLinkedPart
@@ -32,7 +32,7 @@ Boss_DestroyerMK2ActivateSelectedNearLinkedPart:        ; CODE XREF: Boss_Destro
 Boss_DestroyerMK2WaitThenActivateFarLinkedPart:         ; DATA XREF: ROM:0004B05A   o  ; was: sub_4B084
                 subq.w  #1,$48(a5)
                 bne.s   Boss_DestroyerMK2FarLinkedActivationReturn
-                addq.w  #2,(dword_FF941C).w
+                addq.w  #2,(SharedPatternRow0Long7).w
                 move.w  (PlayerCenterX).w,d0
                 cmp.w   $10(a5),d0
                 bgt.s   Boss_DestroyerMK2SelectRightFarLinkedPart
@@ -51,7 +51,7 @@ Boss_DestroyerMK2FarLinkedActivationReturn:             ; CODE XREF: Boss_Destro
 Boss_DestroyerMK2WaitThenActivateLinkedPair:            ; DATA XREF: ROM:0004B05C   o  ; was: sub_4B0AE
                 subq.w  #1,$48(a5)
                 bne.s   Boss_DestroyerMK2LinkedPairActivationReturn
-                addq.w  #2,(dword_FF941C).w
+                addq.w  #2,(SharedPatternRow0Long7).w
                 move.w  (PlayerCenterX).w,d0
                 cmp.w   $10(a5),d0
                 bgt.s   Boss_DestroyerMK2SelectRightLinkedPair
@@ -72,7 +72,7 @@ Boss_DestroyerMK2LinkedPairActivationReturn:            ; CODE XREF: Boss_Destro
 ; Short pattern which activates the central linked part, then exits
 Boss_DestroyerMK2SingleLinkedActivationDispatch:        ; DATA XREF: ROM:0004B02A   o  ; was: sub_4B0E6
                                         ; ROM:0004B032   o
-                move.w  (dword_FF941C).w,d0
+                move.w  (SharedPatternRow0Long7).w,d0
                 lea     Boss_DestroyerMK2SingleLinkedActivationHandlers(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
@@ -85,18 +85,18 @@ Boss_DestroyerMK2SingleLinkedActivationHandlers:    dc.w    Boss_DestroyerMK2Act
 ; Activate the central linked part and advance the nested pattern phase
 Boss_DestroyerMK2ActivateCentralLinkedPart:             ; DATA XREF: ROM:Boss_DestroyerMK2SingleLinkedActivationHandlers   o  ; was: sub_4B0F8
                 bsr.w   Boss_DestroyerMK2SelectCentralLinkedPart
-                addq.w  #2,(dword_FF941C).w
+                addq.w  #2,(SharedPatternRow0Long7).w
                 rts
 ; End of function Boss_DestroyerMK2ActivateCentralLinkedPart
 ; Advance the nested projectile-pattern phase
 Boss_DestroyerMK2AdvancePatternPhase:                   ; DATA XREF: ROM:0004B0F4   o  ; was: sub_4B102
-                addq.w  #2,(dword_FF941C).w
+                addq.w  #2,(SharedPatternRow0Long7).w
                 rts
 ; End of function Boss_DestroyerMK2AdvancePatternPhase
 ; Two-state projected-effect sweep selected by the projectile-pattern table
 Boss_DestroyerMK2ProjectedSweepPatternDispatch:         ; DATA XREF: Boss_DestroyerMK2DispatchProjectilePatternState+1C   o  ; was: sub_4B108
                                         ; Boss_DestroyerMK2DispatchProjectilePatternState+1E   o
-                move.w  (dword_FF941C).w,d0
+                move.w  (SharedPatternRow0Long7).w,d0
                 lea     Boss_DestroyerMK2ProjectedSweepPatternHandlers(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
@@ -121,7 +121,7 @@ Boss_DestroyerMK2FinishProjectedSweepSetup:             ; CODE XREF: Boss_Destro
                 move.w  $10(a5),d0
                 add.w   d0,$58(a5)
                 move.w  #5,$5C(a5)
-                addq.w  #2,(dword_FF941C).w
+                addq.w  #2,(SharedPatternRow0Long7).w
                 rts
 ; End of function Boss_DestroyerMK2InitializeProjectedSweep
 ; Project one effect per frame, then play its completion sound and exit
@@ -153,7 +153,7 @@ Boss_DestroyerMK2ProjectedSweepReturn:                  ; CODE XREF: Boss_Destro
 ; Three-state pattern which emits three type-$258 projectiles
 Boss_DestroyerMK2TripleProjectilePatternDispatch:       ; DATA XREF: Boss_DestroyerMK2DispatchProjectilePatternState+20   o  ; was: sub_4B19A
                                         ; Boss_DestroyerMK2DispatchProjectilePatternState+2C   o
-                move.w  (dword_FF941C).w,d0
+                move.w  (SharedPatternRow0Long7).w,d0
                 lea     Boss_DestroyerMK2TripleProjectilePatternHandlers(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
@@ -166,7 +166,7 @@ Boss_DestroyerMK2TripleProjectilePatternHandlers:   dc.w    Boss_DestroyerMK2Ini
 ; Initialize the three-projectile repetition counter
 Boss_DestroyerMK2InitializeTripleProjectilePattern:     ; DATA XREF: ROM:Boss_DestroyerMK2TripleProjectilePatternHandlers   o  ; was: sub_4B1AC
                 move.w  #3,$4A(a5)
-                addq.w  #2,(dword_FF941C).w
+                addq.w  #2,(SharedPatternRow0Long7).w
 ; Allocate and initialize the next type-$258 projectile
 Boss_DestroyerMK2SpawnNextTripleProjectile:             ; DATA XREF: ROM:0004B1A8   o  ; was: loc_4B1B6
                 jsr     (Projectile_FindFreeSlot).l
@@ -189,7 +189,7 @@ Boss_DestroyerMK2SpawnNextTripleProjectile:             ; DATA XREF: ROM:0004B1A
                 move.w  $14(a5),$14(a0)
 Boss_DestroyerMK2FinishTripleProjectileSpawn:           ; CODE XREF: Boss_DestroyerMK2InitializeTripleProjectilePattern+10   j  ; was: loc_4B21E
                 move.w  #$40,$48(a5)                    ; '@'
-                addq.w  #2,(dword_FF941C).w
+                addq.w  #2,(SharedPatternRow0Long7).w
                 rts
 ; End of function Boss_DestroyerMK2InitializeTripleProjectilePattern
 ; Wait before repeating the three-projectile pattern
@@ -198,14 +198,14 @@ Boss_DestroyerMK2WaitBetweenTripleProjectiles:          ; DATA XREF: ROM:0004B1A
                 bne.s   Boss_DestroyerMK2TripleProjectileDelayReturn
                 subq.w  #1,$4A(a5)
                 beq.w   Boss_DestroyerMK2AdvanceMainState
-                subq.w  #2,(dword_FF941C).w
+                subq.w  #2,(SharedPatternRow0Long7).w
 Boss_DestroyerMK2TripleProjectileDelayReturn:           ; CODE XREF: Boss_DestroyerMK2WaitBetweenTripleProjectiles+4   j  ; was: locret_4B23C
                 rts
 ; End of function Boss_DestroyerMK2WaitBetweenTripleProjectiles
 ; Two-state ten-projectile spread pattern
 Boss_DestroyerMK2ProjectileSpreadPatternDispatch:       ; DATA XREF: Boss_DestroyerMK2DispatchProjectilePatternState+26   o  ; was: sub_4B23E
                                         ; Boss_DestroyerMK2DispatchProjectilePatternState+30   o
-                move.w  (dword_FF941C).w,d0
+                move.w  (SharedPatternRow0Long7).w,d0
                 lea     Boss_DestroyerMK2ProjectileSpreadPatternHandlers(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
@@ -242,8 +242,8 @@ Boss_DestroyerMK2ProjectileSpreadSpawnLoop:             ; CODE XREF: Boss_Destro
                 addq.w  #2,d6
 Boss_DestroyerMK2AdvanceProjectileSpreadLoop:           ; CODE XREF: Boss_DestroyerMK2SpawnTenProjectileSpread+C   j  ; was: loc_4B2C0
                 dbf     d7,Boss_DestroyerMK2ProjectileSpreadSpawnLoop
-                clr.w   (dword_FF941C+2).w
-                addq.w  #2,(dword_FF941C).w
+                clr.w   (SharedPatternRow0Long7+2).w
+                addq.w  #2,(SharedPatternRow0Long7).w
                 rts
 ; End of function Boss_DestroyerMK2SpawnTenProjectileSpread
 ; ---------------------------------------------------------------------------

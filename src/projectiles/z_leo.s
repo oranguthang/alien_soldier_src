@@ -403,7 +403,7 @@ Projectile_ZLeoSpawnDropReturn:                         ; CODE XREF: Projectile_
 ; End of function Projectile_ZLeoSpawnDropProjectile
 ; Move upward to Y=$F0, pause, then continue upward until leaving the screen
 Projectile_ZLeoDropProjectileMain:                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_534AC
-                move.w  #1,(word_FF9500).w
+                move.w  #1,(ZLeoDropProjectileFlag).w
                 move.l  $56(a5),d0
                 add.l   d0,$10(a5)
                 move.w  4(a5),d0

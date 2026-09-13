@@ -805,8 +805,8 @@ repeats the resulting four-word group into `HorizontalScrollProfile`.
 | `SharedPosePatternBase` (`BackStringerPoseGroup`, `SevenForcesPatchA` overlays) | `$FFFF9608` | Back Stringer reads four strided pose bytes from this base to derive linked-part angles. The Seven Forces debug-pattern path independently patches the first primary marker here after filling its 64-byte pattern. |
 | `SharedCameraPatternWord` (`ZLeoPreviousCameraY`, `SevenForcesAltPatchB` overlays) | `$FFFF9602` | Z-Leo retains the previous camera Y here to detect threshold crossings for tile-row streaming. The Seven Forces debug-pattern path independently writes its second alternate marker at the same word. |
 | `ZLeoTileDMARecord` | `$FFFF9604` | Z-Leo builds a 12-byte indexed-row descriptor here with VRAM destination, source base, row count, and six tile-chunk indices before calling `Tilemap_QueueIndexedRows`. |
-| `SharedScrollPatternLong` (`SevenForcesMedusaSpeed`, `SevenForcesAltPatchA`, `JokerTileWordGroup` overlays) | `$FFFF9610` | The Seven Forces stage transition treats this as signed 16.16 Medusa camera speed and its debug path patches the first alternate marker here. Joker independently uses the base for its cycling tile-word group. |
-| `SharedPoseTileLong` (`SevenForcesPlaneASpeed` overlay) | `$FFFF9614` | Seven Forces accelerates and clamps this signed 16.16 speed for the primary Sylpheed and Sirene planes. Back Stringer reads its first byte through `BackStringerPoseGroup+12`, while Joker writes both words through `JokerTileWordGroup+4`. |
+| `SharedScrollPatternLong` (`SevenForcesMedusaSpeed`, `SevenForcesAltPatchA`, `JokerTileWordGroupB` overlays) | `$FFFF9610` | The Seven Forces stage transition treats this as signed 16.16 Medusa camera speed and its debug path patches the first alternate marker here. Joker independently uses the second cycling tile-word group from this base. |
+| `SharedPoseTileLong` (`SevenForcesPlaneASpeed` overlay) | `$FFFF9614` | Seven Forces accelerates and clamps this signed 16.16 speed for the primary Sylpheed and Sirene planes. Back Stringer reads its first byte through `BackStringerPoseGroup+12`, while Joker writes both words through `JokerTileWordGroupB+4`. |
 | `SevenForcesPlaneBSpeed` | `$FFFF961C` | Seven Forces accelerates and clamps this signed 16.16 speed for the secondary Sylpheed and Sirene plane motion, clearing it at the corresponding stage-transition entries. |
 | `SevenForcesPatchB-D`, `SevenForcesAltPatchC-D` | `$FFFF961A`, `$FFFF9628`, `$FFFF963A`, `$FFFF9630`, `$FFFF9622` | Frame parity selects one of two marker sets patched into the C-filled 64-byte Seven Forces debug pattern before its queued VDP transfer. The still-shared first two alternate patches remain separately tracked. |
 | `SharedWordWorkspace` (`DestroyerMK2RowSpeeds`, `ShieldViperAngleDelay`, `SevenForcesFadeValue` overlays) | `$FFFF9620` | Destroyer MK2 clears and integrates a word array of scroll-row speeds, Shield Viper shifts a 65-word trailing-angle delay, and an unreferenced Seven Forces palette helper uses the first word as a clamped fade value. |
@@ -1425,6 +1425,104 @@ runtime trace.
 | `SavedSoundDisableFlags` | `$FFFFFF60` | Demo and credits temporarily save the sound-disable options here and restore them on exit. |
 | `DemoRotationIndex` | `$FFFFFF62` | Each completed demo advances this even index modulo eight to select the next stage and input stream. |
 | `SavedControlLayoutFlags` | `$FFFFFF66` | Demo entry saves the control-layout byte here and restores it on exit. |
+
+## Reviewed tile-interpolation block
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `TileInterpolationBlockB` | `$FFFF9880` | The tile interpolator clears the enclosing `$FFFF9800-$FFFF99FF` workspace. Its dispatcher writes a `$40`- or `$60`-byte payload length at this second `$80`-byte block, then passes the same address to the type-one data loader; that loader consumes the word and transfers the following payload to VRAM. |
+
+## Reviewed shared scene overlay at `$FFFF9900`
+
+| Physical symbol | Contextual alias | Static evidence |
+|---|---|---|
+| `SharedSceneOverlayWord` | `TileInterpolationBlockC` | The three-block dispatcher writes a `$60`-byte payload length here and submits the same address as the third interpolated-tile source. |
+| `SharedSceneOverlayWord` | `PasswordPrimaryBuffer` | Password code clears 24 bytes, appends terminator `$FF`, copies the selected text record, and passes this buffer to the wrapped double-height renderer. |
+| `SharedSceneOverlayWord` | `FlyingNeoSineTable` | Flying Neo generates the four-quadrant trigonometric table from this base and reads its longword samples as linked-part vertical offsets. Shiper's separate table also reaches the physical word indirectly from its `$FFFF9400` base. |
+
+## Reviewed shared scene overlay at `$FFFF9500`
+
+| Physical symbol | Contextual alias | Static evidence |
+|---|---|---|
+| `SharedSceneOverlayBase` | `TransitionWorkingBuffer` | Transition modes copy four or seven 32-byte output blocks here; the standard and alternate raster-layout handlers consume those blocks. |
+| `SharedSceneOverlayBase` | `FlyingNeoRasterBuffer` | The Flying Neo raster-layout handler copies one 64-byte block from this base into the active raster buffer. |
+| `SharedSceneOverlayBase` | `ShiperCosineTable` | Shiper reads this quarter-cycle view of the trigonometric table generated from `$FFFF9400` as tentacle X offsets. |
+| `SharedSceneOverlayBase` | `SirenePatternBuffer` | Sirene writes and queues a 32-byte alternating pattern here before applying frame-parity marker patches. |
+| `SharedSceneOverlayBase` | `ZLeoDropProjectileFlag` | Every active Z-Leo drop projectile sets the word; the boss renderer tests it for the rising-return palette branch and the boss core clears it once per update. |
+
+## Reviewed shared scene workspace at `$FFFF9600`
+
+`SharedSceneWorkspace` has no persistent single owner. Direct consumers use
+the following contextual views:
+
+| Contextual alias | Static evidence |
+|---|---|
+| `TransitionVScrollBuffer` | Transition processors write duplicated V-scroll words and the raster-layout handlers copy or repeat those rows into Plane B H-scroll storage. |
+| `BugmaxAngleHistoryRows` | Bugmax initializes and shifts eight rows of four joint-angle words, then publishes delayed samples to linked parts. |
+| `BackStringerPoseBuffer` | Back Stringer loads pose bytes, computes interpolation deltas, advances the interpolation, and publishes selected pose angles from this base. |
+| `SevenForcesPattern` | The debug path fills and queues 64 bytes of C-nibble pattern data before applying its parity-selected marker words. |
+| `JokerTileWordGroupA` | Joker writes the first of two cycling tile-word groups here; the paired group starts at `$FFFF9610`. |
+| `ZLeoTileScrollIndex` | Z-Leo adjusts this even table index when camera Y crosses forward or reverse tile-stream thresholds. |
+| `SharpssteelTargetTrail` | Sharpssteel fills and shifts six blade-target samples and consumes the first or tail sample during blade motion. |
+| `FlyCorridorTilemap` | Stage 9 clears one selected column across 23 rows with a `$20`-byte row stride. |
+| `TileInterpSourceB` | Ending and teleport setup pass this as the second source pattern to the tile interpolator. |
+
+## Reviewed shared geometry workspace at `$FFFF9A00`
+
+| Physical symbol | Contextual alias | Static evidence |
+|---|---|---|
+| `SharedGeometryWorkspace` | `TransitionRasterWork` | Transition modes generate 128-word sine or linear rows here, then sample and copy the resulting raster data. |
+| `SharedGeometryWorkspace` | `GameOverRasterSource` | Game Over copies sixteen 32-byte blocks from this base and the raster-layout copier consumes seven 64-byte blocks from it. |
+| `SharedGeometryWorkspace` | `BossBackdropWorkBuffer` | The encounter-backdrop builder copies seven 32-byte blocks into this destination before constructing its paired band buffers. |
+| `SharedGeometryWorkspace` | `FlyingNeoCosineTable` | Flying Neo reads the quarter-cycle-shifted view of the generated sine table here as linked-part horizontal offsets. |
+| `SharedGeometryWorkspace` | `ShiperRotationHistory` | Shiper shifts five delayed angle words here and uses them to index its generated X/Y trigonometric tables. |
+| `SharedGeometryWorkspace` | `ShieldViperOffsetTable` | The effect updates 96 longword accumulators with progressively negative deltas and copies each high word into Plane B H-scroll rows. |
+
+## Reviewed shared scene data buffer at `$FFFF9800`
+
+`SharedSceneDataBuffer` is an overlay anchor rather than a persistent object.
+The direct contextual views are:
+
+| Alias | Static evidence |
+|---|---|
+| `TileInterpolationBlockA` | The interpolator clears 512 bytes from this base, writes the first block's payload-length word, fills its payload, and submits the address to the VRAM loader. |
+| `TransitionHScrollBuffer` | Transition processors generate one H-scroll word per output row here; layout handlers later copy the paired rows to active H-scroll RAM. |
+| `GameOverRowWorkBuffer` | Game Over initializes 112 pairs of descending row values and updates them while projecting the landscape. |
+| `CaterpillarPhaseTable` | Caterpillar writes its phase ramp and each segment reads an indexed phase to derive wave height. |
+| `FlyingNeoAngleHistory` | Flying Neo shifts and later clears 36 delayed angle words used by its linked-part orbit updates. |
+| `JetsripperAngleHistory` | Jetsripper fills or shifts 72 angle words and reads strided taps for its segment chain. |
+| `PasswordDigitTextBuffer` | Password input writes four digits plus separators and terminator `$FF`, then renders the buffer as double-height text. |
+| `MadamBarbarWorkObject` | Madam Barbar constructs a small object/mapping record here and points its root object at that record; wobble updates its coordinate words. |
+| `MedusaSequenceOffset` | Medusa indexes eight-byte scripted-spawn entries with this word, advances it by eight, and clears it at segment boundaries. |
+| `SunsetStingSharedState` | Sunset Sting core and segment handlers share flags, rotation delta, and motion step fields beginning at this base. |
+| `SirenePoseHistory` | Sirene shifts pose-derived values through three rows of twelve words before publishing delayed values to its parts. |
+| `Stage3ScaleStepTable` | Stage 3 writes 96 longword resampling steps and passes the same address as the resampler destination. |
+| `CRAMWriteEffectBuffer` | The installed HBlank handler advances through words from this base and writes each one to CRAM color index five. |
+| `WaveOutputBuffer` | The wave controller clears 81 longwords here, then fills and samples the buffer while generating the deformation. |
+
+Formation-wave setup and the currently inert Viblack missile handler only load
+the pointer without a reconstructed use, so they deliberately retain the
+neutral physical name.
+
+## Reviewed shared pattern rows at `$FFFF9400-$FFFF943F`
+
+The first two 32-byte rows of the shared scene workspace have neutral physical
+names because results, cutscenes, rendering effects, and many bosses overlay
+the same storage with incompatible layouts. The transition subsystem exposes
+contextual aliases rather than claiming ownership of the physical addresses.
+
+| Physical range | Contextual alias | Static evidence |
+|---|---|---|
+| `SharedPatternRow0Long0` through `SharedPatternRow0Long7` (`$FFFF9400-$FFFF941F`) | `TransitionPatternRow0`; base also exposed as `TransitionPatternBuffer` | `Effect_ApplyTransitionMask` advances across two longwords per iteration for four iterations, consuming exactly eight longwords. Transition initialization and byte-mask helpers build and mutate the larger buffer from the same base. |
+| `SharedPatternRow1Long0` through `SharedPatternRow1Long7` (`$FFFF9420-$FFFF943F`) | `TransitionPatternRow1` | The same four-iteration mask loop consumes the second row in lockstep with rows zero and two, proving its 32-byte extent and element width. |
+
+## Reviewed shared transfer workspace at `$FFFF8058-$FFFF8061`
+
+| Physical symbol | Contextual aliases | Static evidence |
+|---|---|---|
+| `SharedTransferWorkLong0` (`$FFFF8058`) | `TileCoarseLookupOffset`, `TileFineLookupOffset`, `IndexedDMACommand`, `IndexedDMALowByte`, `Stage3ScaleTablePtr`, `Stage7ExitDelay`, `Stage9RevealColumn` | Streaming derives two lookup offsets from camera coordinates; indexed transfers construct and patch a four-byte VDP command. Other scenes independently store a scale-table pointer, exit delay, or revealed-column index. |
+| `SharedTransferWorkWord0` (`$FFFF805C`) | `TilePatternOffset`, `IndexedStagingStart`, `PasswordDifficulty` | Streaming derives a pattern offset, indexed transfers preserve the staging cursor for optional mirroring, and password validation records the matched difficulty. |
+| `SharedTransferWorkLong1` (`$FFFF805E`) | `TilePlaneBufferOffset`, `IndexedGroupStride`, `PasswordStageNumber`, `OptionsSelection`, `OptionsCursorMoving`, `OptionsBGMIndex` | Streaming derives a destination-buffer offset, indexed transfers retain a source stride, password validation records a stage, and options screens overlay selection and animation fields. |
 
 ## Review policy
 

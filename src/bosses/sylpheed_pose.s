@@ -197,27 +197,27 @@ Boss_StartSylpheedPoseFrame:                            ; CODE XREF: Boss_LoadSy
                 bmi.s   Boss_PrepareSylpheedPoseRender
 Boss_AdvanceSylpheedPoseInterpolation:                  ; CODE XREF: Boss_UpdateSylpheedPoseScript+8   j  ; was: loc_59BEC
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$B,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 Boss_PrepareSylpheedPoseRender:                         ; CODE XREF: Boss_UpdateSylpheedPoseScript+E   j  ; was: loc_59BFC
                                         ; Boss_UpdateSylpheedPoseScript+34   j
                 move.w  #$1FE,d7
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 rts
 ; End of function Boss_LoadSylpheedPoseFrame
 ; Calculate interpolation deltas for the 12-channel pose buffer
 Boss_CalculateSylpheedPoseInterpolation:                ; CODE XREF: Boss_LoadSylpheedPoseFrame+24   p  ; was: sub_59C06
                 movea.l $2FC(a5),a1
                 moveq   #$B,d7
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Boss_CalculateSylpheedPoseInterpolation
 ; Load frame-delay values for the 12-channel Sylpheed pose buffer
 Boss_LoadSylpheedPoseFrameDelays:                       ; was: sub_59C1A
                 moveq   #$B,d7
-                movea.w #(dword_FF9400-M68K_RAM),a1
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 jmp     Anim_LoadFrameDelays
 ; End of function Boss_LoadSylpheedPoseFrameDelays
 ; ---------------------------------------------------------------------------

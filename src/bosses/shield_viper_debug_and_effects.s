@@ -50,8 +50,8 @@ Boss_ShieldViperHideOrbitingRecordAndForceFlip:         ; CODE XREF: Boss_Shield
 Debug_ShieldViperMoveSelectedRecordAxesWithDPad:        ; CODE XREF: Debug_ShieldViperApplyManualGeometryControls+8   p  ; was: sub_4F658
                 btst    #5,(ControllerHeldState).w
                 beq.w   Debug_ShieldViperSelectedRecordMoveReturn
-                movea.w (dword_FF9408).w,a0
-                movea.w (dword_FF9408+2).w,a1
+                movea.w (SharedPatternRow0Long2).w,a0
+                movea.w (SharedPatternRow0Long2+2).w,a1
                 btst    #2,(ControllerHeldState).w
                 beq.s   Debug_ShieldViperCheckSelectedRecordMoveRight
                 subi.w  #4,$10(a0)
@@ -75,8 +75,8 @@ Debug_ShieldViperSelectedRecordMoveReturn:              ; CODE XREF: Debug_Shiel
 Debug_ShieldViperAdjustControllerAngleWithDPad:         ; CODE XREF: Debug_ShieldViperApplyManualGeometryControls   p  ; was: sub_4F6A4
                 btst    #4,(ControllerHeldState).w
                 beq.w   Debug_ShieldViperControllerAngleAdjustmentReturn
-                movea.w (dword_FF9408).w,a0
-                movea.w (dword_FF9408+2).w,a1
+                movea.w (SharedPatternRow0Long2).w,a0
+                movea.w (SharedPatternRow0Long2+2).w,a1
                 btst    #2,(ControllerHeldState).w
                 beq.s   Debug_ShieldViperCheckControllerAngleIncrease
                 subq.w  #4,$56(a5)
@@ -92,15 +92,15 @@ Debug_ShieldViperControllerAngleAdjustmentReturn:       ; CODE XREF: Debug_Shiel
 Debug_ShieldViperAdjustBodyBendStepWithDPad:            ; CODE XREF: Debug_ShieldViperApplyManualGeometryControls+4   p  ; was: sub_4F6D0
                 btst    #4,(ControllerHeldState).w
                 beq.w   Debug_ShieldViperBodyBendStepAdjustmentReturn
-                movea.w (dword_FF9408).w,a0
-                movea.w (dword_FF9408+2).w,a1
+                movea.w (SharedPatternRow0Long2).w,a0
+                movea.w (SharedPatternRow0Long2+2).w,a1
                 btst    #0,(ControllerHeldState).w
                 beq.s   Debug_ShieldViperCheckBodyBendStepDecrease
-                addq.w  #1,(dword_FF9404).w
+                addq.w  #1,(SharedPatternRow0Long1).w
 Debug_ShieldViperCheckBodyBendStepDecrease:             ; CODE XREF: Debug_ShieldViperAdjustBodyBendStepWithDPad+18   j  ; was: loc_4F6EE
                 btst    #1,(ControllerHeldState).w
                 beq.s   Debug_ShieldViperBodyBendStepAdjustmentReturn
-                subq.w  #1,(dword_FF9404).w
+                subq.w  #1,(SharedPatternRow0Long1).w
 Debug_ShieldViperBodyBendStepAdjustmentReturn:          ; CODE XREF: Debug_ShieldViperAdjustBodyBendStepWithDPad+6   j  ; was: locret_4F6FA
                                         ; Debug_ShieldViperAdjustBodyBendStepWithDPad+24   j
                 rts
@@ -288,14 +288,14 @@ Boss_ShieldViperTransferPatternBuffer:                  ; CODE XREF: Gfx_ShieldV
 ; End of function Boss_ShieldViperTransferPatternBuffer
 ; Add progressively more-negative deltas to 96 longwords, then copy their high words
 Effect_AccumulateIndexedNegativeOffsets:                ; was: sub_4F89E
-                lea     (dword_FF9A00).w,a0
+                lea     (ShieldViperOffsetTable).w,a0
                 move.w  #$5F,d7                         ; '_'
                 moveq   #0,d0
 Effect_AccumulateNextIndexedNegativeOffset:             ; CODE XREF: Effect_AccumulateIndexedNegativeOffsets+12   j  ; was: loc_4F8A8
                 subi.l  #$3E8,d0
                 add.l   d0,(a0)+
                 dbf     d7,Effect_AccumulateNextIndexedNegativeOffset
-                lea     (dword_FF9A00).w,a0
+                lea     (ShieldViperOffsetTable).w,a0
                 movea.w #(HScrollPlaneBRow128-M68K_RAM),a1
                 move.w  #$5F,d7                         ; '_'
 Effect_CopyNextIndexedOffsetHighWord:                   ; CODE XREF: Effect_AccumulateIndexedNegativeOffsets+2C   j  ; was: loc_4F8C0

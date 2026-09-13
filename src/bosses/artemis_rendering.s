@@ -234,7 +234,7 @@ Boss_StartArtemisPoseFrame:                             ; CODE XREF: Boss_LoadAr
                 bmi.s   Boss_PrepareArtemisPoseRender
 Boss_AdvanceArtemisPoseInterpolation:                   ; CODE XREF: Boss_UpdateArtemisPoseScript+8   j  ; was: loc_58734
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$13,d7
                 tst.b   $3BD(a5)
                 beq.s   Boss_ApplyArtemisPoseInterpolation
@@ -244,7 +244,7 @@ Boss_ApplyArtemisPoseInterpolation:                     ; CODE XREF: Boss_LoadAr
 Boss_PrepareArtemisPoseRender:                          ; CODE XREF: Boss_UpdateArtemisPoseScript+E   j  ; was: loc_5874C
                                         ; Boss_UpdateArtemisPoseScript+34   j
                 move.w  #$1FE,d7
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 rts
 ; End of function Boss_LoadArtemisPoseFrame
 ; Calculate interpolation deltas for the next Artemis pose frame
@@ -255,7 +255,7 @@ Boss_CalculateArtemisPoseInterpolation:                 ; CODE XREF: Boss_LoadAr
                 beq.s   Boss_PrepareArtemisPoseInterpolationBuffer
                 addq.w  #1,d7
 Boss_PrepareArtemisPoseInterpolationBuffer:             ; CODE XREF: Boss_CalculateArtemisPoseInterpolation+A   j  ; was: loc_58764
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Boss_CalculateArtemisPoseInterpolation
@@ -266,7 +266,7 @@ Boss_LoadArtemisPoseFrameDelays:                        ; was: sub_58772
                 beq.s   Boss_LoadArtemisPoseFrameDelayBuffer
                 addq.w  #1,d7
 Boss_LoadArtemisPoseFrameDelayBuffer:                   ; CODE XREF: Boss_LoadArtemisPoseFrameDelays+6   j  ; was: loc_5877C
-                movea.w #(dword_FF9400-M68K_RAM),a1
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 jmp     Anim_LoadFrameDelays
 ; End of function Boss_LoadArtemisPoseFrameDelays
 ; ---------------------------------------------------------------------------

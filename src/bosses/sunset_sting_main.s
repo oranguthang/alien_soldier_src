@@ -1,6 +1,6 @@
 ; Main Sunset Sting boss handler
 Boss_SunsetStingMain:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_42A10
-                lea     (word_FF9800).w,a4
+                lea     (SunsetStingSharedState).w,a4
                 lea     (SecondaryEntityType).w,a3
                 bsr.s   Boss_SunsetStingDispatcher
                 bsr.w   Boss_SunsetStingUpdateWaveScreen

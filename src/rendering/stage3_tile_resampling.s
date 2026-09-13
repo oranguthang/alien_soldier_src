@@ -1,6 +1,6 @@
 ; Reorders and horizontally resamples Stage 3 phase-2 packed-nibble tile data
 Gfx_ResampleStage3Phase2Tiles:                          ; CODE XREF: Gfx_PrepareStage3Phase2ResampledTiles+40   p  ; was: sub_12648
-                movea.l (dword_FF8058).w,a4
+                movea.l (Stage3ScaleTablePtr).w,a4
                 movea.l (dword_FF8040).w,a0
                 movea.l #$FFFF6000,a2
                 moveq   #0,d6

@@ -48,8 +48,8 @@ GameOver_GraphicsLoadDescriptor:    dc.w    7           ; field_0  ; was: stru_2
 
 ; Copies 16 transition-buffer blocks, then dispatches the game-over state
 GameOver_CopyTransitionBufferAndDispatch:               ; DATA XREF: Sys_DispatchGameState+D2   o  ; was: sub_27680
-                movea.w #(dword_FF9A00-M68K_RAM),a0
-                movea.w #(word_FF9800-M68K_RAM),a1
+                movea.w #(GameOverRasterSource-M68K_RAM),a0
+                movea.w #(GameOverRowWorkBuffer-M68K_RAM),a1
                 moveq   #$F,d7
                 bsr.w   Effect_Copy32ByteBlocks
                 bsr.s   GameOver_Update
@@ -139,7 +139,7 @@ GameOver_ResetLandscapeRows:                            ; DATA XREF: ROM:000276A
 ; End of function GameOver_ResetLandscapeRows
 ; Initializes first set of dither patterns for 3D rendering
 GameOver_InitializeDitherPatterns:                      ; CODE XREF: GameOver_InitializeScreen+76   p  ; was: sub_27778
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 move.l  #$1010101,d4
                 move.l  #$10101010,d5
                 bsr.s   GameOver_FillAlternatingPattern
@@ -176,7 +176,7 @@ GameOver_FillAlternatingPattern_Loop:                   ; CODE XREF: GameOver_Fi
 ; End of function GameOver_FillAlternatingPattern
 ; Initializes second set of dither patterns for 3D rendering
 UnreferencedGameOver_InitializeDitherPatterns:          ; was: sub_27806
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #0,d0
                 move.l  #$11000000,d1
                 move.l  #$11110000,d2
@@ -208,7 +208,7 @@ GameOver_WriteDitherSequence_InitialFillLoop:           ; CODE XREF: GameOver_Wr
 ; Initializes the perspective row buffer with descending even values
 GameOver_InitializeRowBuffer:                           ; CODE XREF: GameOver_UpdateInteractiveLandscape:GameOver_UpdateInteractiveLandscape_Render   p  ; was: sub_2785A
                                         ; GameOver_ResetLandscapeRows   j
-                movea.w #(word_FF9800-M68K_RAM),a0
+                movea.w #(GameOverRowWorkBuffer-M68K_RAM),a0
                 moveq   #$FFFFFFFF,d5
                 move.w  #$6F,d7                         ; 'o'
 GameOver_InitializeRowBuffer_Loop:                      ; CODE XREF: GameOver_InitializeRowBuffer+10   j  ; was: loc_27864
@@ -231,7 +231,7 @@ GameOver_BuildPerspectiveBuffers:                       ; CODE XREF: GameOver_Up
                 ext.l   d0
                 addi.l  #GameOver_PerspectiveLookupTable,d0
                 movea.l d0,a0
-                movea.w #(word_FF9800-M68K_RAM),a1
+                movea.w #(GameOverRowWorkBuffer-M68K_RAM),a1
                 movea.w #(GameOverRasterBuffer-M68K_RAM),a2
                 move.w  d4,d1
                 asl.w   #3,d1

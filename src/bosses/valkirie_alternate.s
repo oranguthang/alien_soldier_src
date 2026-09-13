@@ -301,27 +301,27 @@ Boss_ValkirieAlternateBeginPoseInterpolation:           ; CODE XREF: Boss_Valkir
                 bmi.s   Boss_ValkirieAlternatePreparePartAngleProjection
 Boss_ValkirieAlternateAdvancePoseInterpolation:         ; CODE XREF: Boss_ValkirieAlternateUpdatePose+8   j  ; was: loc_59378
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$B,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 Boss_ValkirieAlternatePreparePartAngleProjection:       ; CODE XREF: Boss_ValkirieAlternateUpdatePose+E   j  ; was: loc_59388
                                         ; Boss_ValkirieAlternateUpdatePose+34   j
                 move.w  #$1FE,d7
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 rts
 ; End of function Boss_ValkirieAlternateHandlePoseLoopOrInterpolation
 ; Calculate deltas for the alternate 12-channel pose buffer
 Boss_ValkirieAlternateCalculatePoseDeltas:              ; CODE XREF: Boss_ValkirieAlternateHandlePoseLoopOrInterpolation+24   p  ; was: sub_59392
                 movea.l $2FC(a5),a1
                 moveq   #$B,d7
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Boss_ValkirieAlternateCalculatePoseDeltas
 ; Load frame-delay values for the alternate 12-channel pose buffer
 Boss_ValkirieAlternateLoadFrameDelays:
                 moveq   #$B,d7                          ; was: sub_593A6
-                movea.w #(dword_FF9400-M68K_RAM),a1
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 jmp     Anim_LoadFrameDelays
 ; End of function Boss_ValkirieAlternateLoadFrameDelays
 ; ---------------------------------------------------------------------------

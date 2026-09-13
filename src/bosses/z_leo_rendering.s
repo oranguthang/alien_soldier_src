@@ -40,7 +40,7 @@ Boss_ZLeoCheckRisingReturnComplete:                     ; CODE XREF: Boss_ZLeoBe
 ; ---------------------------------------------------------------------------
 Boss_ZLeoPrepareRisingReturnPose:                       ; CODE XREF: Boss_ZLeoBeginRisingReturn+3E   j  ; was: loc_525A4
                 move.w  #$FFF6,$59C(a5)
-                tst.w   (word_FF9500).w
+                tst.w   (ZLeoDropProjectileFlag).w
                 beq.s   Boss_ZLeoSelectRisingReturnPose
                 bsr.w   Boss_ZLeoRotateAttackPalette
 Boss_ZLeoSelectRisingReturnPose:                        ; CODE XREF: Boss_ZLeoBeginRisingReturn+5E   j  ; was: loc_525B4
@@ -118,7 +118,7 @@ Boss_ZLeoTileUpdate:                                    ; CODE XREF: Boss_ZLeoRu
                 movea.w #(ZLeoTileDMARecord-M68K_RAM),a3
                 lea     Boss_ZLeoTileVramDestinations(pc),a4
                 nop
-                move.w  (word_FF9600).w,d7
+                move.w  (ZLeoTileScrollIndex).w,d7
                 move.w  (PrimaryCameraYPosition).w,d0
                 addi.w  #$20,d0                         ; ' '
                 bmi.w   Boss_ZLeoNoOp
@@ -131,7 +131,7 @@ Boss_ZLeoTileUpdate:                                    ; CODE XREF: Boss_ZLeoRu
                 bpl.s   Boss_ZLeoQueueTileChunkClear
                 cmp.w   2(a0,d7.w),d0
                 bpl.w   Boss_ZLeoNoOp
-                addq.w  #2,(word_FF9600).w
+                addq.w  #2,(ZLeoTileScrollIndex).w
                 move.w  (a4,d7.w),(a3)+
                 move.w  #$2000,(a3)+
                 move.b  #5,(a3)+
@@ -148,7 +148,7 @@ Boss_ZLeoTileUpdate:                                    ; CODE XREF: Boss_ZLeoRu
 Boss_ZLeoQueueTileChunkClear:                           ; CODE XREF: Boss_ZLeoTileUpdate+2E   j  ; was: loc_526E2
                 cmp.w   (a0,d7.w),d0
                 bmi.w   Boss_ZLeoNoOp
-                subq.w  #2,(word_FF9600).w
+                subq.w  #2,(ZLeoTileScrollIndex).w
                 move.w  -2(a4,d7.w),(a3)+
                 move.w  #$2000,(a3)+
                 move.b  #5,(a3)+
@@ -314,7 +314,7 @@ Boss_ZLeoBladeDirectionFrameTable:  dc.l    Boss_ZLeoBladeDirectionMapping0  ; D
 
 ; Update wing sprites
 Boss_ZLeoUpdateWingSprites:                             ; CODE XREF: Boss_ZLeoBeginRisingReturn+10A   p  ; was: sub_528D8
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 move.b  $34(a0),d2
                 ext.w   d2
                 movea.w #(TwentyFirstEntityType-M68K_RAM),a0
@@ -512,14 +512,14 @@ Boss_ZLeoBeginPoseInterpolation:                        ; CODE XREF: Boss_ZLeoUp
                 bmi.s   Boss_ZLeoApplyInterpolatedSegmentPose
 Boss_ZLeoAdvancePoseInterpolation:                      ; CODE XREF: Boss_ZLeoUpdateSegments+8   j  ; was: loc_52AF8
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$D,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 Boss_ZLeoApplyInterpolatedSegmentPose:                  ; CODE XREF: Boss_ZLeoUpdateSegments+E   j  ; was: loc_52B08
                                         ; Boss_ZLeoUpdateSegments+76   j
                 moveq   #7,d6
                 move.w  #$1FE,d7
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 move.b  (a0),d0
                 asl.w   #1,d0
                 and.w   d7,d0
@@ -636,14 +636,14 @@ Boss_ZLeoAnimationCalc:                                 ; CODE XREF: Boss_ZLeoUp
                 lea     Boss_ZLeoPoseKeyframeData(pc),a1
                 nop
                 moveq   #$D,d7
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Boss_ZLeoAnimationCalc
 ; Loads animation frame delay data for Z-Leo using 13 animation channels
 Boss_ZLeoAnimationLoadDelays:
                 moveq   #$D,d7                          ; was: sub_52C4A
-                movea.w #(dword_FF9400-M68K_RAM),a1
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 jmp     Anim_LoadFrameDelays
 ; End of function Boss_ZLeoAnimationLoadDelays
 ; ---------------------------------------------------------------------------

@@ -93,7 +93,7 @@ PasswordMenu_UpdateFrame:                               ; CODE XREF: PasswordMen
                 jsr     (Sprite_InitializePriorityBuckets).l
                 jsr     (Sys_BeginVisibleObjectList).l
                 bsr.w   PasswordMenu_HandleInput
-                movea.w #(word_FF9900-M68K_RAM),a0
+                movea.w #(PasswordPrimaryBuffer-M68K_RAM),a0
                 move.w  #$8300,d0
                 move.w  #$4714,d4
                 jsr     (Text_QueueDoubleHeightStringWrapped).l
@@ -233,7 +233,7 @@ PasswordInput_ClampFourthDigitMaximum:                  ; CODE XREF: PasswordMen
                 moveq   #$A,d3
 PasswordInput_RenderDigits:                             ; CODE XREF: PasswordMenu_HandleInput+132   j  ; was: loc_A686
                 move.b  d3,(a0)+
-                movea.w #(word_FF9800-M68K_RAM),a0
+                movea.w #(PasswordDigitTextBuffer-M68K_RAM),a0
                 move.b  d0,(a0)+
                 move.b  #0,(a0)+
                 move.b  d1,(a0)+
@@ -248,7 +248,7 @@ PasswordInput_RenderDigits:                             ; CODE XREF: PasswordMen
                 move.b  #$F,(a0)+
                 move.b  #$1E,(a0)+
                 move.b  #$FF,(a0)+
-                movea.w #(word_FF9800-M68K_RAM),a0
+                movea.w #(PasswordDigitTextBuffer-M68K_RAM),a0
                 move.w  #$A300,d0
                 move.w  #$451C,d4
                 jmp     (Text_QueueDoubleHeightStringWrapped).l
@@ -306,11 +306,11 @@ PasswordValidation_CheckNextStage:                      ; CODE XREF: PasswordMen
                 bne.s   PasswordValidation_CheckNextStage
 PasswordValidation_HandleMatch:                         ; CODE XREF: PasswordMenu_HandleInput+1FC   j  ; was: loc_A756
                                         ; PasswordMenu_HandleInput+202   j
-                move.w  d3,(word_FF805C).w
-                move.w  d4,(dword_FF805E).w
+                move.w  d3,(PasswordDifficulty).w
+                move.w  d4,(PasswordStageNumber).w
                 lea     PasswordText_EasyStage(pc),a0
                 nop
-                move.w  (word_FF805C).w,d0
+                move.w  (PasswordDifficulty).w,d0
                 beq.s   PasswordValidation_RenderMatch
                 lea     PasswordText_HardStage(pc),a0
                 nop
@@ -319,7 +319,7 @@ PasswordValidation_RenderMatch:                         ; CODE XREF: PasswordMen
                 lea     PasswordText_ConfirmPrompt(pc),a0
                 nop
                 bsr.w   PasswordText_CopyToSecondaryBuffer
-                move.w  (dword_FF805E).w,d0
+                move.w  (PasswordStageNumber).w,d0
                 lea     (Math_PackedBCDLookup).l,a0
                 asl.w   #1,d0
                 move.w  (a0,d0.w),d0
@@ -333,11 +333,11 @@ PasswordValidation_RenderMatch:                         ; CODE XREF: PasswordMen
                 move.b  d1,(PasswordStageTensGlyph).w
                 btst    #5,(ControllerPressedState).w
                 beq.s   PasswordInput_WaitForConfirm
-                move.w  (dword_FF805E).w,d0
+                move.w  (PasswordStageNumber).w,d0
                 subq.w  #1,d0
                 asl.w   #1,d0
                 move.w  d0,(StageTableIndex).w
-                move.w  (word_FF805C).w,(DifficultyMode).w
+                move.w  (PasswordDifficulty).w,(DifficultyMode).w
                 move.b  #$AD,d0
                 jsr     (Sound_QueueRequest).l
                 move.w  #$70,(GameModeIndex).w          ; 'p'
@@ -361,7 +361,7 @@ PasswordValidation_RenderError:                         ; CODE XREF: PasswordMen
 ; Copies the next terminated text record to the primary password row
 PasswordText_CopyToPrimaryBuffer:                       ; CODE XREF: PasswordMenu_HandleInput+72   p  ; was: sub_A7FC
                                         ; PasswordMenu_HandleInput:PasswordValidation_RenderMatch   p
-                movea.w #(word_FF9900-M68K_RAM),a1
+                movea.w #(PasswordPrimaryBuffer-M68K_RAM),a1
                 bra.s   PasswordText_ClearBuffer
 ; End of function PasswordText_CopyToPrimaryBuffer
 ; Copies the next terminated text record to the secondary password row

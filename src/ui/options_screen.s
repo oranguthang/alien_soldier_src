@@ -35,7 +35,7 @@ UI_InitOptionsScreenLoadDisplay:                        ; CODE XREF: UI_InitOpti
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 clr.w   (dword_FF8062+2).w
                 clr.w   (dword_FF8062).w
-                clr.b   (dword_FF805E+3).w
+                clr.b   (OptionsBGMIndex).w
                 clr.b   (dword_FF8066).w
                 clr.b   (dword_FF806A+2).w
                 move.w  #$20,(dword_FF8066+2).w         ; ' '
@@ -130,13 +130,13 @@ UI_UpdateOptionsScreenFrame:                            ; CODE XREF: UI_UpdateOp
 ; Processes directional input and button presses in options menu
 UI_HandleOptionsInput:                                  ; CODE XREF: UI_UpdateOptionsScreen+5E   p  ; was: sub_97EE
                 bsr.w   FrontendCursor_UpdateFlash
-                btst    #0,(dword_FF805E+2).w
+                btst    #0,(OptionsCursorMoving).w
                 bne.w   OptionsCursor_Animate
                 btst    #0,(ControllerPressedState).w
                 beq.s   UI_HandleOptionsInputCheckDown
                 move.b  #$DB,d0
                 jsr     (Sound_QueueRequest).l
-                bset    #0,(dword_FF805E+2).w
+                bset    #0,(OptionsCursorMoving).w
                 move.w  #$10,(dword_FF8062+2).w
                 move.w  #$20,(dword_FF8066+2).w         ; ' '
                 subq.w  #2,(dword_FF8062).w
@@ -148,7 +148,7 @@ UI_HandleOptionsInputCheckDown:                         ; CODE XREF: UI_HandleOp
                 beq.w   UI_HandleOptionsInputUpdateCurrentRow
                 move.b  #$DB,d0
                 jsr     (Sound_QueueRequest).l
-                bset    #0,(dword_FF805E+2).w
+                bset    #0,(OptionsCursorMoving).w
                 move.w  #$10,(dword_FF8062+2).w
                 move.w  #$20,(dword_FF8066+2).w         ; ' '
                 addq.w  #2,(dword_FF8062).w
@@ -220,7 +220,7 @@ UI_UpdateBGMTest:                                       ; CODE XREF: UI_InitOpti
                                         ; DATA XREF: ROM:000098DA   o
                 movea.l #Options_BGMTestEntries,a1
                 moveq   #0,d0
-                move.b  (dword_FF805E+3).w,d0
+                move.b  (OptionsBGMIndex).w,d0
                 asl.w   #5,d0
                 adda.l  d0,a1
                 tst.b   d5
@@ -243,7 +243,7 @@ UI_CopyBGMTestEntryBottomRow:                           ; CODE XREF: UI_UpdateBG
                 addq.w  #1,d0
                 move.w  d0,(a0)+
                 dbf     d7,UI_CopyBGMTestEntryBottomRow
-                move.b  (dword_FF805E+3).w,d0
+                move.b  (OptionsBGMIndex).w,d0
                 btst    #2,(dword_FF806A).w
                 beq.s   UI_CheckIncrementBGMTestSelection
                 move.w  #$A,(dword_FF8062+2).w
@@ -269,7 +269,7 @@ UI_IncrementBGMTestSelection:                           ; CODE XREF: UI_UpdateBG
                 addq.b  #1,d0
 UI_StoreAndRenderBGMTestSelection:                      ; CODE XREF: UI_UpdateBGMTest+5C   j  ; was: loc_9974
                                         ; UI_UpdateBGMTest+60   j
-                move.b  d0,(dword_FF805E+3).w
+                move.b  d0,(OptionsBGMIndex).w
                 move.w  #$4726,d0
                 moveq   #$F,d3
                 bsr.w   Options_QueueStagedTileDMA
@@ -472,7 +472,7 @@ UI_ActivateSecondaryOptionsMenu:                        ; CODE XREF: UI_InitSeco
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 clr.w   (dword_FF8062+2).w
                 clr.w   (dword_FF8062).w
-                clr.w   (dword_FF805E).w
+                clr.w   (OptionsSelection).w
                 move.w  #$20,(dword_FF8066+2).w         ; ' '
                 move.w  #$118,d0
                 move.w  #$CA,d1
@@ -513,12 +513,12 @@ UI_UpdateSecondaryOptionsMenuFrame:                     ; CODE XREF: UI_UpdateSe
 ; Processes D-pad input for options menu cursor
 UI_HandleSecondaryOptionsInput:                         ; CODE XREF: UI_UpdateSecondaryOptionsMenu+52   p  ; was: sub_9EF6
                 bsr.w   FrontendCursor_UpdateFlash
-                btst    #0,(dword_FF805E+2).w
+                btst    #0,(OptionsCursorMoving).w
                 bne.w   SecondaryOptionsCursor_Animate
-                move.w  (dword_FF805E).w,d0
+                move.w  (OptionsSelection).w,d0
                 btst    #0,(ControllerPressedState).w
                 beq.s   UI_HandleSecondaryOptionsInputCheckDown
-                bset    #0,(dword_FF805E+2).w
+                bset    #0,(OptionsCursorMoving).w
                 move.w  #$10,(dword_FF8062+2).w
                 move.w  #$20,(dword_FF8066+2).w         ; ' '
                 subq.w  #2,d0
@@ -527,7 +527,7 @@ UI_HandleSecondaryOptionsInput:                         ; CODE XREF: UI_UpdateSe
 UI_HandleSecondaryOptionsInputCheckDown:                ; CODE XREF: UI_HandleSecondaryOptionsInput+18   j  ; was: loc_9F28
                 btst    #1,(ControllerPressedState).w
                 beq.w   UI_StoreSecondaryOptionsSelection
-                bset    #0,(dword_FF805E+2).w
+                bset    #0,(OptionsCursorMoving).w
                 move.w  #$10,(dword_FF8062+2).w
                 move.w  #$20,(dword_FF8066+2).w         ; ' '
                 addq.w  #2,d0
@@ -544,7 +544,7 @@ UI_PlaySecondaryOptionsMoveSound:                       ; CODE XREF: UI_HandleSe
                 movem.l (sp)+,d0
 UI_StoreSecondaryOptionsSelection:                      ; CODE XREF: UI_HandleSecondaryOptionsInput+38   j  ; was: loc_9F62
                                         ; UI_HandleSecondaryOptionsInput+58   j
-                move.w  d0,(dword_FF805E).w
+                move.w  d0,(OptionsSelection).w
                 move.w  UI_SecondaryOptionsHandlerIndices(pc,d0.w),(dword_FF8062).w
                 move.b  (ControllerPressedState).w,(dword_FF806A).w
                 move.b  (ControllerHeldState).w,(dword_FF806A+1).w
@@ -718,7 +718,7 @@ OptionsCursor_CheckUpwardDelta:                         ; CODE XREF: OptionsCurs
                 bmi.s   OptionsCursor_MoveUpTwoPixels
 OptionsCursor_SnapToTarget:                             ; CODE XREF: OptionsCursor_Animate+1E   j  ; was: loc_A0FE
                 move.w  (a0,d0.w),$14(a1)
-                bclr    #0,(dword_FF805E+2).w
+                bclr    #0,(OptionsCursorMoving).w
                 rts
 ; ---------------------------------------------------------------------------
 ; Decrements cursor Y position by 2 pixels for upward navigation
@@ -735,7 +735,7 @@ SecondaryOptionsCursor_Animate:                         ; CODE XREF: UI_HandleSe
                 lea     SecondaryOptions_CursorYPositions(pc),a0
                 nop
                 movea.w #(Entity_ObjectPool-M68K_RAM),a1
-                move.w  (dword_FF805E).w,d0
+                move.w  (OptionsSelection).w,d0
                 clr.w   d2
                 move.w  (a0,d0.w),d1
                 sub.w   $14(a1),d1
@@ -750,7 +750,7 @@ SecondaryOptionsCursor_CheckUpwardDelta:                ; CODE XREF: SecondaryOp
                 bmi.s   SecondaryOptionsCursor_MoveUpTwoPixels
 SecondaryOptionsCursor_SnapToTarget:                    ; CODE XREF: SecondaryOptionsCursor_Animate+1E   j  ; was: loc_A14A
                 move.w  (a0,d0.w),$14(a1)
-                bclr    #0,(dword_FF805E+2).w
+                bclr    #0,(OptionsCursorMoving).w
                 rts
 ; ---------------------------------------------------------------------------
 SecondaryOptionsCursor_MoveUpTwoPixels:                 ; CODE XREF: SecondaryOptionsCursor_Animate+2A   j  ; was: loc_A158

@@ -44,9 +44,9 @@ Effect_BuildSineScrollBuffer_StoreSample:               ; CODE XREF: Effect_Scro
                 move.w  d0,-(a0)
                 move.w  d0,(a2)+
                 dbf     d7,Effect_BuildSineScrollBuffer_Loop
-                movea.w #(dword_FF9400-M68K_RAM),a0
-                movea.w #(word_FF9800-M68K_RAM),a2
-                movea.w #(word_FF9600-M68K_RAM),a3
+                movea.w #(TransitionPatternBuffer-M68K_RAM),a0
+                movea.w #(TransitionHScrollBuffer-M68K_RAM),a2
+                movea.w #(TransitionVScrollBuffer-M68K_RAM),a3
                 rts
 ; End of function Effect_ScrollSineTable2
 ; Fills scroll buffer starting at offset -6C00 with value from TransitionOriginXY+2, repeating TransitionMaskStep times
@@ -60,9 +60,9 @@ Effect_FillScrollBuffer:                                ; CODE XREF: TransitionE
 Effect_FillScrollBuffer_Loop:                           ; CODE XREF: Effect_FillScrollBuffer+18   j  ; was: loc_26CE0
                 move.w  d1,(a0)+
                 dbf     d7,Effect_FillScrollBuffer_Loop
-                movea.w #(dword_FF9400-M68K_RAM),a0
-                movea.w #(word_FF9800-M68K_RAM),a2
-                movea.w #(word_FF9600-M68K_RAM),a3
+                movea.w #(TransitionPatternBuffer-M68K_RAM),a0
+                movea.w #(TransitionHScrollBuffer-M68K_RAM),a2
+                movea.w #(TransitionVScrollBuffer-M68K_RAM),a3
                 rts
 ; End of function Effect_FillScrollBuffer
 ; Processes vertical scroll values for 127 entries, clamping to 0-160 range and computing scroll offsets
@@ -185,8 +185,8 @@ Effect_ProcessSimpleScroll_Loop:                        ; CODE XREF: Effect_Proc
 ; Copies seven 32-byte blocks from the active output buffer into its working copy
 TransitionEffect_CopyWorkingBuffer:                     ; CODE XREF: TransitionEffect_UpdateMode1Buffers   p  ; was: sub_26DD6
                                         ; TransitionEffect_UpdateMode2Buffers   p
-                movea.w #(word_FF9500-M68K_RAM),a0
-                movea.w #(word_FF9800-M68K_RAM),a1
+                movea.w #(TransitionWorkingBuffer-M68K_RAM),a0
+                movea.w #(TransitionHScrollBuffer-M68K_RAM),a1
                 moveq   #6,d7
 ; End of function TransitionEffect_CopyWorkingBuffer
 ; Copies d7+1 blocks of 32 bytes from a1 to a0
@@ -206,7 +206,7 @@ Effect_Copy32ByteBlocks:                                ; CODE XREF: Effect_Copy
 ; Applies sine wave modulation to scroll buffer using Effect_LinearScrollBaseTable table and Math_QuarterSineTable multiplier data
 Effect_ApplySineWaveScroll:
                 movea.l #Effect_LinearScrollBaseTable,a0  ; was: sub_26DF6
-                movea.w #(dword_FF9A00-M68K_RAM),a1
+                movea.w #(TransitionRasterWork-M68K_RAM),a1
                 movea.l #Math_QuarterSineTable,a2
                 moveq   #$7F,d7
                 move.w  (TransitionOriginXY).w,d1
@@ -225,7 +225,7 @@ Effect_ApplySineWaveScroll_Loop:                        ; CODE XREF: Effect_Appl
 ; Applies linear interpolation to scroll buffer using accumulator from TransitionOriginXY added to Effect_LinearScrollBaseTable base values
 Effect_ApplyLinearScroll:
                 movea.l #Effect_LinearScrollBaseTable,a0  ; was: sub_26E28
-                movea.w #(dword_FF9A00-M68K_RAM),a1
+                movea.w #(TransitionRasterWork-M68K_RAM),a1
                 moveq   #$7F,d7
                 moveq   #0,d0
                 move.l  (TransitionOriginXY).w,d1
@@ -270,9 +270,9 @@ Effect_TransitionPatternRamp:   dc.w    $EEE, $CEE, $AEE, $8EE, $6EE, $4CE, $2AE
                                         ; DATA XREF: Effect_UpdateScrollPosition+34   r
                                         ; Effect_UpdateScrollPosition+3A   r
 
-; Clears 64 longwords of scroll buffer starting at dword_FF9400 to zero
+; Clears 64 longwords of the transition pattern buffer
 Effect_ClearScrollBuffer:                               ; CODE XREF: TransitionEffect_UpdateMode3Buffers:TransitionEffect_UpdateMode3Buffers_Prepare   p  ; was: sub_26EAC
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(TransitionPatternBuffer-M68K_RAM),a0
                 moveq   #0,d0
                 moveq   #$3F,d7                         ; '?'
 Effect_ClearScrollBuffer_Loop:                          ; CODE XREF: Effect_ClearScrollBuffer+A   j  ; was: loc_26EB4
@@ -326,9 +326,9 @@ Effect_GenerateTransitionBuffers_StoreSample:           ; CODE XREF: Effect_Gene
                 move.w  d0,-(a0)
                 move.w  d0,(a2)+
                 dbf     d7,Effect_GenerateTransitionBuffers_EdgeLoop
-                movea.w #(dword_FF9A00-M68K_RAM),a0
-                movea.w #(word_FF9800-M68K_RAM),a2
-                movea.w #(word_FF9600-M68K_RAM),a3
+                movea.w #(TransitionRasterWork-M68K_RAM),a0
+                movea.w #(TransitionHScrollBuffer-M68K_RAM),a2
+                movea.w #(TransitionVScrollBuffer-M68K_RAM),a3
                 move.w  (TransitionOriginXY).w,d4
                 subi.w  #$80,d4
                 move.w  (TransitionOriginXY+2).w,d0
@@ -394,7 +394,7 @@ Effect_GenerateTransitionBuffers_StoreOutput:           ; CODE XREF: Effect_Gene
 Effect_ClearTransitionPatternBuffer:                    ; CODE XREF: AlternateTransition_InitializeObject+16   j  ; was: sub_272A8
                                         ; TransitionEffect_InitializeObject+16   j
                 clr.w   (TransitionMaskStep).w
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(TransitionPatternBuffer-M68K_RAM),a0
                 moveq   #0,d0
                 moveq   #$17,d7
 Effect_ClearTransitionPatternBuffer_Loop:               ; CODE XREF: Effect_ClearTransitionPatternBuffer+E   j  ; was: loc_272B4
@@ -412,7 +412,7 @@ Effect_BuildTransitionPattern:                          ; CODE XREF: TransitionE
                 move.l  d1,d4
                 move.l  d2,d5
 Effect_BuildTransitionPattern_Write:                    ; CODE XREF: Effect_ScrollMaskPattern1+38   j  ; was: loc_272D2
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(TransitionPatternBuffer-M68K_RAM),a0
                 moveq   #3,d7
 Effect_BuildTransitionPattern_PrefixLoop:               ; CODE XREF: Effect_BuildTransitionPattern+1E   j  ; was: loc_272D8
                 move.l  d2,(a0)+
@@ -439,7 +439,7 @@ Effect_BuildTransitionPattern_SuffixLoop:               ; CODE XREF: Effect_Buil
 Effect_InitDefeatScroll:                                ; CODE XREF: AlternateTransition_BuildInitialPattern+C   p  ; was: sub_27302
                 moveq   #0,d0
                 move.l  #$EEEEEEEE,d2
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(TransitionPatternBuffer-M68K_RAM),a0
                 moveq   #7,d7
 Effect_InitDefeatScroll_PrefixLoop:                     ; CODE XREF: Effect_InitDefeatScroll+10   j  ; was: loc_27310
                 move.l  d2,(a0)+
@@ -460,7 +460,7 @@ Effect_InitDefeatScroll_SuffixLoop:                     ; CODE XREF: Effect_Init
 ; End of function Effect_InitDefeatScroll
 ; Masks individual scroll buffer byte based on TransitionMaskStep timer, using lookup table to select byte offset
 Effect_MaskScrollByte:
-                movea.w #(dword_FF9400-M68K_RAM),a0     ; was: sub_27332
+                movea.w #(TransitionPatternBuffer-M68K_RAM),a0  ; was: sub_27332
                 lea     Effect_TransitionMaskByteOffsets(pc),a1
                 nop
                 move.b  #$F,d3
@@ -507,8 +507,8 @@ Effect_ApplyTransitionMask:                             ; CODE XREF: AlternateTr
                 andi.w  #$1C,d2
                 move.l  (a1,d2.w),d0
                 move.l  $20(a1,d2.w),d1
-                movea.w #(dword_FF9400-M68K_RAM),a0
-                movea.w #(dword_FF9420-M68K_RAM),a1
+                movea.w #(TransitionPatternRow0-M68K_RAM),a0
+                movea.w #(TransitionPatternRow1-M68K_RAM),a1
                 movea.w #(TransitionPatternRow2-M68K_RAM),a2
                 moveq   #3,d7
 Effect_ApplyTransitionMask_Loop:                        ; CODE XREF: Effect_ApplyTransitionMask+4A   j  ; was: loc_273E2
@@ -572,8 +572,8 @@ Effect_TransitionMaskPatternsB: dc.l    $FFFFFFFF, $FFFFFFF, $FFF0FFF, $F0F0FFF 
 
 ; Builds the denser transition output used by buffer mode four
 TransitionEffect_UpdateMode4Buffers:                    ; DATA XREF: ROM:00026BA4   o  ; was: sub_274CA
-                movea.w #(word_FF9500-M68K_RAM),a0
-                movea.w #(word_FF9800-M68K_RAM),a1
+                movea.w #(TransitionWorkingBuffer-M68K_RAM),a0
+                movea.w #(TransitionHScrollBuffer-M68K_RAM),a1
                 moveq   #3,d7
                 bsr.w   Effect_Copy32ByteBlocks
                 movea.w #(TransitionEdgeCenter4-M68K_RAM),a0
@@ -614,9 +614,9 @@ TransitionEffect_UpdateMode4Buffers_StoreSample:        ; CODE XREF: TransitionE
                 move.w  d0,-(a0)
                 move.w  d0,(a2)+
                 dbf     d7,TransitionEffect_UpdateMode4Buffers_EdgeLoop
-                movea.w #(dword_FF9A00-M68K_RAM),a0
-                movea.w #(word_FF9800-M68K_RAM),a2
-                movea.w #(word_FF9600-M68K_RAM),a3
+                movea.w #(TransitionRasterWork-M68K_RAM),a0
+                movea.w #(TransitionHScrollBuffer-M68K_RAM),a2
+                movea.w #(TransitionVScrollBuffer-M68K_RAM),a3
                 move.w  (TransitionOriginXY).w,d4
                 subi.w  #$80,d4
                 move.w  (TransitionOriginXY+2).w,d0

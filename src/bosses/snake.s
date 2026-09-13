@@ -19,10 +19,10 @@ Boss_SnakeUpdateBody:                                   ; CODE XREF: Boss_SnakeM
                 add.w   (PrimaryCameraXPosition).w,d0
                 swap    d0
                 move.w  $14(a5),d0
-                lea     (dword_FF9420).w,a0
+                lea     (SharedPatternRow1Long0).w,a0
                 move.w  #$16,d7
 Boss_SnakeShiftTrailRowLoop:                            ; CODE XREF: Boss_SnakeMain+62   j  ; was: loc_407F0
-                move.w  (dword_FF940C+2).w,d6
+                move.w  (SharedPatternRow0Long3+2).w,d6
                 subq.w  #1,d6
 Boss_SnakeShiftTrailSampleLoop:                         ; CODE XREF: Boss_SnakeMain+5E   j  ; was: loc_407F6
                 move.l  (a0),d1
@@ -32,8 +32,8 @@ Boss_SnakeShiftTrailSampleLoop:                         ; CODE XREF: Boss_SnakeM
                 dbf     d7,Boss_SnakeShiftTrailRowLoop
                 move.w  #$16,d7
                 lea     $60(a5),a0
-                lea     (dword_FF9420).w,a1
-                move.w  (dword_FF940C+2).w,d6
+                lea     (SharedPatternRow1Long0).w,a1
+                move.w  (SharedPatternRow0Long3+2).w,d6
                 add.w   d6,d6
                 add.w   d6,d6
 Boss_SnakePlaceSegmentLoop:                             ; CODE XREF: Boss_SnakeMain+92   j  ; was: loc_40818
@@ -68,9 +68,9 @@ Boss_SnakeInit:                                         ; DATA XREF: ROM:Boss_Sn
                 bmi.w   Boss_SnakeInitReturn
                 addq.w  #2,4(a5)
                 move.b  #4,(PlayerOAMBucketOffset).w
-                move.w  #4,(dword_FF940C+2).w
-                move.w  #$10,(dword_FF9408+2).w
-                move.w  #$10,(dword_FF940C).w
+                move.w  #4,(SharedPatternRow0Long3+2).w
+                move.w  #$10,(SharedPatternRow0Long2+2).w
+                move.w  #$10,(SharedPatternRow0Long3).w
                 move.w  #$4000,(BossMaxHealth).w
                 move.w  #$4000,(BossHealth).w
                 move.w  #$E300,$E(a5)
@@ -121,9 +121,9 @@ Boss_SnakeBeginEncounterState:                          ; DATA XREF: ROM:0004084
                 bsr.w   Boss_SnakeSteerTowardTarget
                 clr.b   (BossColorEffectFlags).w
                 clr.w   $4A(a5)
-                move.w  (PrimaryCameraXPosition).w,(dword_FF9404+2).w
-                addi.w  #$120,(dword_FF9404+2).w
-                move.w  #$100,(dword_FF9408).w
+                move.w  (PrimaryCameraXPosition).w,(SharedPatternRow0Long1+2).w
+                addi.w  #$120,(SharedPatternRow0Long1+2).w
+                move.w  #$100,(SharedPatternRow0Long2).w
                 move.w  #$80,$48(a5)
                 addq.w  #2,4(a5)
                 rts
@@ -154,8 +154,8 @@ Boss_SnakeLoadTargetPosition:                           ; CODE XREF: Boss_SnakeS
                 move.w  Boss_SnakeTargetPatternOffsets(pc,d0.w),d1
                 move.w  (PrimaryCameraXPosition).w,d2
                 add.w   Boss_SnakeTargetXOffsets(pc,d1.w),d2
-                move.w  d2,(dword_FF9404+2).w
-                move.w  Boss_SnakeTargetYPositions(pc,d1.w),(dword_FF9408).w
+                move.w  d2,(SharedPatternRow0Long1+2).w
+                move.w  Boss_SnakeTargetYPositions(pc,d1.w),(SharedPatternRow0Long2).w
                 rts
 ; End of function Boss_SnakeSelectTargetPosition
 ; ---------------------------------------------------------------------------
@@ -175,20 +175,20 @@ Boss_SnakeRandomizeMotionAmplitudes:                    ; CODE XREF: Boss_SnakeB
                 andi.w  #$F,d0
                 subq.w  #8,d0
                 addi.w  #$10,d0
-                move.w  d0,(dword_FF9408+2).w
+                move.w  d0,(SharedPatternRow0Long2+2).w
                 move.b  (RandomNumberState+1).w,d0
                 andi.w  #$F,d0
                 subq.w  #8,d0
                 addi.w  #$10,d0
-                move.w  d0,(dword_FF940C).w
+                move.w  d0,(SharedPatternRow0Long3).w
 Boss_SnakeRandomizeMotionAmplitudesReturn:              ; CODE XREF: Boss_SnakeRandomizeMotionAmplitudes+8   j  ; was: locret_40A1E
                 rts
 ; End of function Boss_SnakeRandomizeMotionAmplitudes
 ; Moves through the first timed departure target
 Boss_SnakeDepartureArcState:                            ; DATA XREF: ROM:0004084A   o  ; was: sub_40A20
-                move.w  (PrimaryCameraXPosition).w,(dword_FF9404+2).w
-                addi.w  #$160,(dword_FF9404+2).w
-                move.w  #$140,(dword_FF9408).w
+                move.w  (PrimaryCameraXPosition).w,(SharedPatternRow0Long1+2).w
+                addi.w  #$160,(SharedPatternRow0Long1+2).w
+                move.w  #$140,(SharedPatternRow0Long2).w
                 bsr.w   Boss_SnakeSteerTowardTarget
                 subq.w  #1,$48(a5)
                 bne.s   Boss_SnakeDepartureArcReturn
@@ -198,9 +198,9 @@ Boss_SnakeDepartureArcReturn:                           ; CODE XREF: Boss_SnakeD
                 rts
 ; Moves below the arena, then retires the encounter object
 Boss_SnakeExitDownwardState:                            ; DATA XREF: ROM:0004084C   o  ; was: sub_40A48
-                move.w  (PrimaryCameraXPosition).w,(dword_FF9404+2).w
-                addi.w  #$120,(dword_FF9404+2).w
-                move.w  #$200,(dword_FF9408).w
+                move.w  (PrimaryCameraXPosition).w,(SharedPatternRow0Long1+2).w
+                addi.w  #$120,(SharedPatternRow0Long1+2).w
+                move.w  #$200,(SharedPatternRow0Long2).w
                 bsr.w   Boss_SnakeSteerTowardTarget
                 subq.w  #1,$48(a5)
                 bne.s   Boss_SnakeExitDownwardReturn
@@ -356,13 +356,13 @@ Boss_SnakeSteerTowardTarget:                            ; CODE XREF: Boss_SnakeB
                 move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 bne.s   Boss_SnakeApplyTurnAndVelocity
-                move.w  (dword_FF9404+2).w,d0
+                move.w  (SharedPatternRow0Long1+2).w,d0
                 sub.w   (PrimaryCameraXPosition).w,d0
-                move.w  (dword_FF9408).w,d1
+                move.w  (SharedPatternRow0Long2).w,d1
                 sub.w   $10(a5),d0
                 sub.w   $14(a5),d1
                 jsr     (Math_CalculateDirectionIndex).l
-                move.w  (dword_FF9400).w,d1
+                move.w  (SharedPatternRow0Long0).w,d1
                 addi.w  #$100,d1
                 sub.w   d2,d1
                 andi.w  #$1FF,d1
@@ -370,24 +370,24 @@ Boss_SnakeSteerTowardTarget:                            ; CODE XREF: Boss_SnakeB
                 beq.s   Boss_SnakeApplyTurnAndVelocity
                 cmpi.w  #$100,d1
                 bcs.s   Boss_SnakeUseNegativeTurnSpeed
-                move.w  #8,(dword_FF9400+2).w
+                move.w  #8,(SharedPatternRow0Long0+2).w
                 bra.s   Boss_SnakeApplyTurnAndVelocity
 ; ---------------------------------------------------------------------------
 Boss_SnakeUseNegativeTurnSpeed:                         ; CODE XREF: Boss_SnakeSteerTowardTarget+3C   j  ; was: loc_40C42
-                move.w  #$FFF8,(dword_FF9400+2).w
+                move.w  #$FFF8,(SharedPatternRow0Long0+2).w
 Boss_SnakeApplyTurnAndVelocity:                         ; CODE XREF: Boss_SnakeSteerTowardTarget+8   j  ; was: loc_40C48
                                         ; Boss_SnakeSteerTowardTarget+36   j
-                move.w  (dword_FF9400+2).w,d0
-                add.w   d0,(dword_FF9400).w
-                andi.w  #$1FF,(dword_FF9400).w
-                move.w  (dword_FF9400).w,d0
+                move.w  (SharedPatternRow0Long0+2).w,d0
+                add.w   d0,(SharedPatternRow0Long0).w
+                andi.w  #$1FF,(SharedPatternRow0Long0).w
+                move.w  (SharedPatternRow0Long0).w,d0
                 addi.w  #$100,d0
                 andi.w  #$1FE,d0
                 lea     (Math_SineTable).l,a1
                 move.w  Math_QuarterSineTable-Math_SineTable(a1,d0.w),d1
                 move.w  (a1,d0.w),d0
-                muls.w  (dword_FF9408+2).w,d0
-                muls.w  (dword_FF940C).w,d1
+                muls.w  (SharedPatternRow0Long2+2).w,d0
+                muls.w  (SharedPatternRow0Long3).w,d1
                 move.l  d0,$18(a5)
                 move.l  d1,$1C(a5)
                 rts

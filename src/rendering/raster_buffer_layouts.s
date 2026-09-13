@@ -30,22 +30,22 @@ RasterBuffer_CopyXiTigerOffsets:                        ; DATA XREF: RasterBuffe
 ; End of function RasterBuffer_CopyXiTigerOffsets
 ; Copies and expands the standard transition raster buffers
 RasterBuffer_CopyTransitionLayout:                      ; DATA XREF: ROM:00029E42   o  ; was: sub_29E66
-                movea.w #(word_FF9500-M68K_RAM),a2
+                movea.w #(TransitionWorkingBuffer-M68K_RAM),a2
                 movea.w #(ActiveRasterBuffer-M68K_RAM),a3
                 moveq   #3,d7
                 bsr.w   RasterBuffer_Copy64ByteBlocks
-                movea.w #(word_FF9600-M68K_RAM),a2
+                movea.w #(TransitionVScrollBuffer-M68K_RAM),a2
                 movea.w #(HScrollPlaneBRow2-M68K_RAM),a3
                 moveq   #$D,d7
                 bra.w   RasterBuffer_CopyPairedRows
 ; End of function RasterBuffer_CopyTransitionLayout
 ; Copies and expands the alternate transition raster buffers
 RasterBuffer_CopyAlternateTransitionLayout:             ; DATA XREF: ROM:00029E52   o  ; was: sub_29E82
-                movea.w #(word_FF9500-M68K_RAM),a2
+                movea.w #(TransitionWorkingBuffer-M68K_RAM),a2
                 movea.w #(ActiveRasterBuffer-M68K_RAM),a3
                 moveq   #1,d7
                 bsr.w   RasterBuffer_Copy64ByteBlocks
-                movea.w #(word_FF9600-M68K_RAM),a2
+                movea.w #(TransitionVScrollBuffer-M68K_RAM),a2
                 movea.w #(HScrollPlaneBRow4-M68K_RAM),a3
                 moveq   #$D,d7
                 bra.w   RasterBuffer_CopyRepeatedRows
@@ -78,7 +78,7 @@ RasterBuffer_CopyControlWord:                           ; DATA XREF: ROM:00029E4
 ; End of function RasterBuffer_CopyControlWord
 ; Copies the Flying Neo raster layout
 RasterBuffer_CopyFlyingNeoLayout:                       ; DATA XREF: ROM:00029E4A   o  ; was: sub_29ED0
-                movea.w #(word_FF9500-M68K_RAM),a2
+                movea.w #(FlyingNeoRasterBuffer-M68K_RAM),a2
                 movea.w #(ActiveRasterBuffer-M68K_RAM),a3
                 moveq   #0,d7
                 bra.w   RasterBuffer_Copy64ByteBlocks
@@ -92,7 +92,7 @@ RasterBuffer_CopyBossTransitionWindow:                  ; DATA XREF: ROM:00029E4
 ; End of function RasterBuffer_CopyBossTransitionWindow
 ; Copies and expands the Game Over raster buffers
 RasterBuffer_CopyGameOverLayout:                        ; DATA XREF: ROM:00029E50   o  ; was: sub_29EEC
-                movea.w #(dword_FF9A00-M68K_RAM),a2
+                movea.w #(GameOverRasterSource-M68K_RAM),a2
                 movea.w #(RasterStagingBuffer-M68K_RAM),a3
                 moveq   #6,d7
                 bsr.w   RasterBuffer_Copy64ByteBlocks
@@ -103,11 +103,11 @@ RasterBuffer_CopyGameOverLayout:                        ; DATA XREF: ROM:00029E5
 ; End of function RasterBuffer_CopyGameOverLayout
 ; Copies and expands the shared stage-transition raster buffers
 RasterBuffer_CopyStageTransitionLayout:                 ; DATA XREF: ROM:00029E54   o  ; was: sub_29F08
-                movea.w #(dword_FF9A00-M68K_RAM),a2
+                movea.w #(TransitionRasterWork-M68K_RAM),a2
                 movea.w #(RasterStagingBuffer-M68K_RAM),a3
                 moveq   #3,d7
                 bsr.w   RasterBuffer_Copy64ByteBlocks
-                movea.w #(word_FF9800-M68K_RAM),a2
+                movea.w #(TransitionHScrollBuffer-M68K_RAM),a2
                 movea.w #(HScrollBuffer-M68K_RAM),a3
                 moveq   #$D,d7
                 bra.w   RasterBuffer_CopyPairedRows

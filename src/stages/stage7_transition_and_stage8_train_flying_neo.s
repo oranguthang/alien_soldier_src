@@ -2,13 +2,13 @@ Stage7_WaitForPlayerStage8Trigger:                      ; DATA XREF: ROM:0000C89
                 cmpi.w  #$140,(PlayerXPosition).w
                 bmi.s   Stage7_WaitForPlayerStage8Trigger_Return
                 addq.w  #2,(StageStateOffset).w
-                move.w  #$40,(dword_FF8058).w           ; '@'
+                move.w  #$40,(Stage7ExitDelay).w        ; '@'
 Stage7_WaitForPlayerStage8Trigger_Return:               ; CODE XREF: Stage7_WaitForPlayerStage8Trigger+6   j  ; was: locret_CE0C
                 rts
 ; End of function Stage7_WaitForPlayerStage8Trigger
 ; Wait for the Stage 7 exit delay, then start the Stage 8 transition
 Stage7_StartTransitionToStage8:                         ; DATA XREF: ROM:0000C898   o  ; was: sub_CE0E
-                subq.w  #1,(dword_FF8058).w
+                subq.w  #1,(Stage7ExitDelay).w
                 bmi.s   Stage7_StartTransitionToStage8_CheckReady
 Stage7_StartTransitionToStage8_Return:                  ; CODE XREF: Stage7_StartTransitionToStage8+C   j  ; was: locret_CE14
                 rts

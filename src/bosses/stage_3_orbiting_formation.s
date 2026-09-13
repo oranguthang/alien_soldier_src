@@ -15,11 +15,11 @@ Boss_Stage3OrbitingFormationMain:                       ; DATA XREF: ROM:Entity_
 Boss_Stage3OrbitingFormationUpdateSpinSound:            ; CODE XREF: Boss_Stage3OrbitingFormationMain+8   p  ; was: sub_33F56
                 tst.w   $50(a5)
                 beq.s   Boss_Stage3OrbitingFormationSpinSoundReturn
-                subq.w  #1,(dword_FF9400).w
+                subq.w  #1,(SharedPatternRow0Long0).w
                 bpl.s   Boss_Stage3OrbitingFormationSpinSoundReturn
                 move.w  $50(a5),d0
                 add.w   d0,d0
-                move.w  Boss_Stage3OrbitingFormationSpinSoundDelays(pc,d0.w),(dword_FF9400).w
+                move.w  Boss_Stage3OrbitingFormationSpinSoundDelays(pc,d0.w),(SharedPatternRow0Long0).w
                 move.b  #$54,d0                         ; 'T'
                 jsr     (Sound_PlaySFX).l
 Boss_Stage3OrbitingFormationSpinSoundReturn:            ; CODE XREF: Boss_Stage3OrbitingFormationUpdateSpinSound+4   j  ; was: locret_33F78

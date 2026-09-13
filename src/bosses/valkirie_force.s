@@ -105,13 +105,13 @@ Boss_ValkirieForceBeginPoseInterpolation:               ; CODE XREF: Boss_Valkir
                 bmi.s   Boss_ValkirieForceApplyInterpolatedPartAngles
 Boss_ValkirieForceAdvancePoseInterpolation:             ; CODE XREF: Boss_ValkirieForceAnimUpdate+8   j  ; was: loc_53636
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$12,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 Boss_ValkirieForceApplyInterpolatedPartAngles:          ; CODE XREF: Boss_ValkirieForceAnimUpdate+E   j  ; was: loc_53646
                                         ; Boss_ValkirieForceAnimUpdate+76   j
                 move.w  #$1FE,d7
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 move.b  (a0),d0
                 asl.w   #1,d0
                 and.w   d7,d0
@@ -207,14 +207,14 @@ Boss_ValkirieForceApplyInterpolatedPartAngles:          ; CODE XREF: Boss_Valkir
 Anim_ValkirieForceCalculateDeltas:                      ; CODE XREF: Boss_ValkirieForceAnimUpdate+5C   p  ; was: sub_53758
                 lea     (Boss_ZLeoValkirieForceSharedMetaspriteData).l,a1
                 moveq   #$12,d7
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Anim_ValkirieForceCalculateDeltas
 ; Loads frame delay data for Valkirie Force animations
 Anim_ValkirieForceLoadDelays:
                 moveq   #$12,d7                         ; was: sub_5376E
-                movea.w #(dword_FF9400-M68K_RAM),a1
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 jmp     Anim_LoadFrameDelays
 ; End of function Anim_ValkirieForceLoadDelays
 ; ---------------------------------------------------------------------------

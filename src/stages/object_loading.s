@@ -311,8 +311,8 @@ Stage_LoadTeleportAssets:                               ; CODE XREF: Stage12To13
                 lea     TeleportAssetLoadList(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                movea.w #(dword_FF9400-M68K_RAM),a0
-                movea.w #(word_FF9600-M68K_RAM),a1
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
+                movea.w #(TileInterpSourceB-M68K_RAM),a1
                 move.w  #$6000,(word_FF8048).w
                 move.w  #$F,(word_FF804A).w
                 move.w  #1,(dword_FF8044+2).w

@@ -60,13 +60,13 @@ Boss_ShellshogunStartPoseInterpolation:                 ; CODE XREF: Boss_Shells
                 bmi.s   Boss_ShellshogunPublishPoseAngles
 Boss_ShellshogunAdvancePoseInterpolation:               ; CODE XREF: Boss_ShellshogunUpdatePose+8   j  ; was: loc_3A1D4
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$E,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 Boss_ShellshogunPublishPoseAngles:                      ; CODE XREF: Boss_ShellshogunUpdatePose+E   j  ; was: loc_3A1E4
                                         ; Boss_ShellshogunUpdatePose+60   j
                 move.w  #$1FE,d7
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 move.b  (a0),d0
                 asl.w   #1,d0
                 and.w   d7,d0
@@ -146,7 +146,7 @@ Boss_ShellshogunPublishPoseAngles:                      ; CODE XREF: Boss_Shells
 ; Calculates per-channel deltas toward Shellshogun's neutral pose
 Boss_ShellshogunCalculatePoseDeltas:                    ; CODE XREF: Boss_ShellshogunUpdatePose+4E   p  ; was: sub_3A2CC
                 movea.l #Boss_ShellshogunNeutralPose,a1
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 subq.w  #1,$C(a5)
                 moveq   #$E,d7

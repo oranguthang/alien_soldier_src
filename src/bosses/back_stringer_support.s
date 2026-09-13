@@ -305,13 +305,13 @@ Boss_BackStringerStartPoseInterpolation:                ; CODE XREF: Boss_BackSt
                 bmi.s   Boss_BackStringerPublishPoseAngles
 Boss_BackStringerApplyPoseInterpolation:                ; CODE XREF: Boss_BackStringerAnimatePose+8   j  ; was: loc_452EE
                 subq.w  #1,$C(a5)
-                movea.w #(word_FF9600-M68K_RAM),a0
+                movea.w #(BackStringerPoseBuffer-M68K_RAM),a0
                 moveq   #$13,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 Boss_BackStringerPublishPoseAngles:                     ; CODE XREF: Boss_BackStringerAnimatePose+E   j  ; was: loc_452FE
                                         ; Boss_BackStringerAnimatePose+80   j
                 move.w  #$1FE,d7
-                movea.w #(word_FF9600-M68K_RAM),a0
+                movea.w #(BackStringerPoseBuffer-M68K_RAM),a0
                 move.b  (a0),d0
                 asl.w   #1,d0
                 and.w   d7,d0
@@ -410,14 +410,14 @@ Boss_BackStringerPublishPoseAngles:                     ; CODE XREF: Boss_BackSt
 ; Calculates animation interpolation
 Anim_BackStringerCalcInterpolation:                     ; CODE XREF: Boss_BackStringerAnimatePose+62   p  ; was: sub_45410
                 movea.l #Boss_BackStringerNeutralPose,a1
-                movea.w #(word_FF9600-M68K_RAM),a2
+                movea.w #(BackStringerPoseBuffer-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #$13,d7
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Anim_BackStringerCalcInterpolation
 ; Loads animation frame delay data
 Anim_BackStringerLoadFrameDelays:
-                movea.w #(word_FF9600-M68K_RAM),a1      ; was: sub_45426
+                movea.w #(BackStringerPoseBuffer-M68K_RAM),a1  ; was: sub_45426
                 moveq   #$13,d7
                 jmp     Anim_LoadFrameDelays
 ; End of function Anim_BackStringerLoadFrameDelays

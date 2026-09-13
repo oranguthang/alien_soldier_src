@@ -146,9 +146,25 @@ dword_FF8040            equ     $FFFF8040
 dword_FF8044            equ     $FFFF8044
 word_FF8048             equ     $FFFF8048
 word_FF804A             equ     $FFFF804A
-dword_FF8058            equ     $FFFF8058
-word_FF805C             equ     $FFFF805C
-dword_FF805E            equ     $FFFF805E
+SharedTransferWorkLong0 equ     $FFFF8058               ; was: dword_FF8058
+SharedTransferWorkWord0 equ     $FFFF805C               ; was: word_FF805C
+SharedTransferWorkLong1 equ     $FFFF805E               ; was: dword_FF805E
+TileCoarseLookupOffset  equ     SharedTransferWorkLong0
+TileFineLookupOffset    equ     SharedTransferWorkLong0+2
+TilePatternOffset       equ     SharedTransferWorkWord0
+TilePlaneBufferOffset   equ     SharedTransferWorkLong1
+IndexedDMACommand       equ     SharedTransferWorkLong0
+IndexedDMALowByte       equ     SharedTransferWorkLong0+3
+IndexedStagingStart     equ     SharedTransferWorkWord0
+IndexedGroupStride      equ     SharedTransferWorkLong1
+Stage3ScaleTablePtr     equ     SharedTransferWorkLong0
+Stage7ExitDelay         equ     SharedTransferWorkLong0
+Stage9RevealColumn      equ     SharedTransferWorkLong0
+PasswordDifficulty      equ     SharedTransferWorkWord0
+PasswordStageNumber     equ     SharedTransferWorkLong1
+OptionsSelection        equ     SharedTransferWorkLong1
+OptionsCursorMoving     equ     SharedTransferWorkLong1+2
+OptionsBGMIndex         equ     SharedTransferWorkLong1+3
 dword_FF8062            equ     $FFFF8062
 dword_FF8066            equ     $FFFF8066
 dword_FF806A            equ     $FFFF806A
@@ -389,22 +405,25 @@ LockOnTargetList        equ     $FFFF8E80               ; was: byte_FF8E80
 MovingPlatformList      equ     $FFFF8F00               ; was: byte_FF8F00
 PlayerWeaponList        equ     $FFFF8F80               ; was: byte_FF8F80
 GameOverRasterBuffer    equ     $FFFF9000               ; was: byte_FF9000
-dword_FF9400            equ     $FFFF9400
-dword_FF9404            equ     $FFFF9404
-dword_FF9408            equ     $FFFF9408
-dword_FF940C            equ     $FFFF940C
-dword_FF9410            equ     $FFFF9410
-dword_FF9414            equ     $FFFF9414
-dword_FF9418            equ     $FFFF9418
-dword_FF941C            equ     $FFFF941C
-dword_FF9420            equ     $FFFF9420
-dword_FF9424            equ     $FFFF9424
-dword_FF9428            equ     $FFFF9428
-dword_FF942C            equ     $FFFF942C
-dword_FF9430            equ     $FFFF9430
-dword_FF9434            equ     $FFFF9434
-dword_FF9438            equ     $FFFF9438
-dword_FF943C            equ     $FFFF943C
+SharedPatternRow0Long0  equ     $FFFF9400               ; was: dword_FF9400
+SharedPatternRow0Long1  equ     $FFFF9404               ; was: dword_FF9404
+SharedPatternRow0Long2  equ     $FFFF9408               ; was: dword_FF9408
+SharedPatternRow0Long3  equ     $FFFF940C               ; was: dword_FF940C
+SharedPatternRow0Long4  equ     $FFFF9410               ; was: dword_FF9410
+SharedPatternRow0Long5  equ     $FFFF9414               ; was: dword_FF9414
+SharedPatternRow0Long6  equ     $FFFF9418               ; was: dword_FF9418
+SharedPatternRow0Long7  equ     $FFFF941C               ; was: dword_FF941C
+SharedPatternRow1Long0  equ     $FFFF9420               ; was: dword_FF9420
+SharedPatternRow1Long1  equ     $FFFF9424               ; was: dword_FF9424
+SharedPatternRow1Long2  equ     $FFFF9428               ; was: dword_FF9428
+SharedPatternRow1Long3  equ     $FFFF942C               ; was: dword_FF942C
+SharedPatternRow1Long4  equ     $FFFF9430               ; was: dword_FF9430
+SharedPatternRow1Long5  equ     $FFFF9434               ; was: dword_FF9434
+SharedPatternRow1Long6  equ     $FFFF9438               ; was: dword_FF9438
+SharedPatternRow1Long7  equ     $FFFF943C               ; was: dword_FF943C
+TransitionPatternBuffer equ     SharedPatternRow0Long0
+TransitionPatternRow0   equ     SharedPatternRow0Long0
+TransitionPatternRow1   equ     SharedPatternRow1Long0
 SharedPatternWorkBuffer equ     $FFFF9440               ; was: word_FF9440
 SharedPatternWorkWord1  equ     $FFFF9442               ; was: word_FF9442
 SharedPatternWorkWord2  equ     $FFFF9444               ; was: word_FF9444
@@ -439,7 +458,12 @@ TransitionRampBuffer    equ     SharedProfileBuffer
 Epsilon1AngleHistory    equ     SharedProfileBuffer
 ViblackScrollSamples    equ     SharedProfileBuffer
 ShieldViperTrailAngles  equ     $FFFF94A0               ; was: word_FF94A0
-word_FF9500             equ     $FFFF9500
+SharedSceneOverlayBase  equ     $FFFF9500               ; was: word_FF9500
+TransitionWorkingBuffer equ     SharedSceneOverlayBase
+FlyingNeoRasterBuffer   equ     SharedSceneOverlayBase
+ShiperCosineTable       equ     SharedSceneOverlayBase
+SirenePatternBuffer     equ     SharedSceneOverlayBase
+ZLeoDropProjectileFlag  equ     SharedSceneOverlayBase
 SharedPatternOverlay    equ     $FFFF9502               ; was: word_FF9502
 GustheadMappingCounts   equ     SharedPatternOverlay
 SirenePatternAltB       equ     SharedPatternOverlay
@@ -449,7 +473,16 @@ SirenePatternAltA       equ     $FFFF9510               ; was: word_FF9510
 SirenePatternNormalB    equ     $FFFF951A               ; was: word_FF951A
 BossPerspectiveRows     equ     $FFFF9520               ; was: byte_FF9520
 BugmaxPositionHistory   equ     $FFFF95E0               ; was: word_FF95E0
-word_FF9600             equ     $FFFF9600
+SharedSceneWorkspace    equ     $FFFF9600               ; was: word_FF9600
+TransitionVScrollBuffer equ     SharedSceneWorkspace
+BugmaxAngleHistoryRows  equ     SharedSceneWorkspace
+BackStringerPoseBuffer  equ     SharedSceneWorkspace
+SevenForcesPattern      equ     SharedSceneWorkspace
+JokerTileWordGroupA     equ     SharedSceneWorkspace
+ZLeoTileScrollIndex     equ     SharedSceneWorkspace
+SharpssteelTargetTrail  equ     SharedSceneWorkspace
+FlyCorridorTilemap      equ     SharedSceneWorkspace
+TileInterpSourceB       equ     SharedSceneWorkspace
 SharedCameraPatternWord equ     $FFFF9602               ; was: word_FF9602
 ZLeoPreviousCameraY     equ     SharedCameraPatternWord
 SevenForcesAltPatchB    equ     SharedCameraPatternWord
@@ -461,7 +494,7 @@ SharpssteelTargetTail   equ     $FFFF960A               ; was: word_FF960A
 SharedScrollPatternLong equ     $FFFF9610               ; was: dword_FF9610
 SevenForcesMedusaSpeed  equ     SharedScrollPatternLong
 SevenForcesAltPatchA    equ     SharedScrollPatternLong
-JokerTileWordGroup      equ     SharedScrollPatternLong
+JokerTileWordGroupB     equ     SharedScrollPatternLong
 SharedPoseTileLong      equ     $FFFF9614               ; was: dword_FF9614
 SevenForcesPlaneASpeed  equ     SharedPoseTileLong
 SevenForcesPatchB       equ     $FFFF961A               ; was: word_FF961A
@@ -476,7 +509,21 @@ SevenForcesAltPatchC    equ     $FFFF9630               ; was: word_FF9630
 SevenForcesPatchD       equ     $FFFF963A               ; was: word_FF963A
 BugmaxAuxAngleHistory   equ     $FFFF9680               ; was: word_FF9680
 ShieldViperPoseHistory  equ     $FFFF9700               ; was: dword_FF9700
-word_FF9800             equ     $FFFF9800
+SharedSceneDataBuffer   equ     $FFFF9800               ; was: word_FF9800
+TileInterpolationBlockA equ     SharedSceneDataBuffer
+TransitionHScrollBuffer equ     SharedSceneDataBuffer
+GameOverRowWorkBuffer   equ     SharedSceneDataBuffer
+CaterpillarPhaseTable   equ     SharedSceneDataBuffer
+FlyingNeoAngleHistory   equ     SharedSceneDataBuffer
+JetsripperAngleHistory  equ     SharedSceneDataBuffer
+PasswordDigitTextBuffer equ     SharedSceneDataBuffer
+MadamBarbarWorkObject   equ     SharedSceneDataBuffer
+MedusaSequenceOffset    equ     SharedSceneDataBuffer
+SunsetStingSharedState  equ     SharedSceneDataBuffer
+SirenePoseHistory       equ     SharedSceneDataBuffer
+Stage3ScaleStepTable    equ     SharedSceneDataBuffer
+CRAMWriteEffectBuffer   equ     SharedSceneDataBuffer
+WaveOutputBuffer        equ     SharedSceneDataBuffer
 MedusaSpawnSequenceFlag equ     $FFFF9804               ; was: word_FF9804
 FlyingNeoAngleTapBase   equ     $FFFF9806               ; was: byte_FF9806
 JetsripperAngleTapBase  equ     $FFFF9808               ; was: byte_FF9808
@@ -484,14 +531,23 @@ SunsetStingWaveTable    equ     $FFFF9810               ; was: word_FF9810
 BossBackdropBandBufferA equ     $FFFF981E               ; was: byte_FF981E
 DestroyerMK2ScrollRows  equ     $FFFF9820               ; was: word_FF9820
 ResultsSummaryRowBuffer equ     $FFFF9852               ; was: word_FF9852
-word_FF9880             equ     $FFFF9880
+TileInterpolationBlockB equ     $FFFF9880               ; was: word_FF9880
 DestroyerMK2ScrollTable equ     $FFFF98B0               ; was: word_FF98B0
-word_FF9900             equ     $FFFF9900
+SharedSceneOverlayWord  equ     $FFFF9900               ; was: word_FF9900
+TileInterpolationBlockC equ     SharedSceneOverlayWord
+PasswordPrimaryBuffer   equ     SharedSceneOverlayWord
+FlyingNeoSineTable      equ     SharedSceneOverlayWord
 PasswordStageTensGlyph  equ     $FFFF9906               ; was: byte_FF9906
 PasswordStageOnesGlyph  equ     $FFFF9907               ; was: byte_FF9907
 PasswordSecondaryBuffer equ     $FFFF9980               ; was: byte_FF9980
 SunsetStingWaveTableEnd equ     $FFFF99A0               ; was: dword_FF99A0
-dword_FF9A00            equ     $FFFF9A00
+SharedGeometryWorkspace equ     $FFFF9A00               ; was: dword_FF9A00
+TransitionRasterWork    equ     SharedGeometryWorkspace
+GameOverRasterSource    equ     SharedGeometryWorkspace
+BossBackdropWorkBuffer  equ     SharedGeometryWorkspace
+FlyingNeoCosineTable    equ     SharedGeometryWorkspace
+ShiperRotationHistory   equ     SharedGeometryWorkspace
+ShieldViperOffsetTable  equ     SharedGeometryWorkspace
 TransitionEdgeCenter4   equ     $FFFF9A80               ; was: byte_FF9A80
 SharedTransitionBuffer  equ     $FFFF9B00               ; was: byte_FF9B00
 TransitionEdgeCenter1   equ     SharedTransitionBuffer

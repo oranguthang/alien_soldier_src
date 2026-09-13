@@ -1,6 +1,6 @@
 ; Type-$3B4 formation-wave controller and members
 Enemy_FormationWaveMain:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_32EE0
-                lea     (word_FF9800).w,a4
+                lea     (SharedSceneDataBuffer).w,a4
                 bsr.w   Enemy_FormationWaveDispatchState
                 subq.w  #1,$5A(a5)
                 beq.s   Enemy_FormationWaveFinishUpdate

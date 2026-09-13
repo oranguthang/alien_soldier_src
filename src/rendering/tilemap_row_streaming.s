@@ -31,23 +31,23 @@ Tilemap_QueueRowFromDescriptor:                         ; CODE XREF: Stage_Seven
                 move.w  d1,d2
                 lsr.w   #3,d2
                 andi.w  #$3E0,d2
-                move.w  d2,(dword_FF8058).w
+                move.w  d2,(TileCoarseLookupOffset).w
                 move.w  d1,d2
                 lsr.w   #2,d2
                 andi.w  #$38,d2                         ; '8'
-                move.w  d2,(dword_FF8058+2).w
+                move.w  d2,(TileFineLookupOffset).w
                 move.w  d1,d2
                 andi.w  #$18,d2
-                move.w  d2,(word_FF805C).w
+                move.w  d2,(TilePatternOffset).w
                 moveq   #$FFFFFFFF,d2
                 move.w  d1,d2
                 lsl.w   #4,d2
                 andi.w  #$1F80,d2
-                move.l  d2,(dword_FF805E).w
+                move.l  d2,(TilePlaneBufferOffset).w
 Tilemap_BuildQueuedRowLoop:                             ; CODE XREF: Tilemap_QueuePrimaryCameraRowOffset60+C4   j  ; was: loc_10A14
                 movea.l (a0)+,a1
                 move.w  d0,d2
-                move.w  (dword_FF8058).w,d3
+                move.w  (TileCoarseLookupOffset).w,d3
                 lsr.w   #8,d2
                 add.w   d3,d2
                 moveq   #0,d4
@@ -55,7 +55,7 @@ Tilemap_BuildQueuedRowLoop:                             ; CODE XREF: Tilemap_Que
                 lsl.w   #6,d4
                 movea.l (a0)+,a1
                 move.w  d0,d2
-                move.w  (dword_FF8058+2).w,d3
+                move.w  (TileFineLookupOffset).w,d3
                 lsr.w   #5,d2
                 andi.w  #7,d2
                 add.w   d3,d2
@@ -70,7 +70,7 @@ Tilemap_BuildQueuedRowLoop:                             ; CODE XREF: Tilemap_Que
                 add.w   d2,d3
                 movea.w d3,a2
                 movea.l (a0)+,a1
-                move.w  (word_FF805C).w,d3
+                move.w  (TilePatternOffset).w,d3
                 add.w   d4,d3
                 move.w  (a1,d3.w),(a2)+
                 move.w  2(a1,d3.w),(a2)+
@@ -78,7 +78,7 @@ Tilemap_BuildQueuedRowLoop:                             ; CODE XREF: Tilemap_Que
                 move.w  6(a1,d3.w),(a2)+
                 tst.w   (a0)+
                 beq.w   Tilemap_AdvanceQueuedRowSegment
-                move.l  (dword_FF805E).w,d4
+                move.l  (TilePlaneBufferOffset).w,d4
                 add.w   d4,d2
                 movea.l d2,a2
                 move.w  (a1,d3.w),(a2)+

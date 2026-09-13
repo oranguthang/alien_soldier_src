@@ -91,7 +91,7 @@ Boss_FlyingNeoInit:                                     ; DATA XREF: Boss_Flying
                 move.w  #$154,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
-                movea.w #(word_FF9900-M68K_RAM),a0
+                movea.w #(FlyingNeoSineTable-M68K_RAM),a0
                 moveq   #$C,d0
                 jsr     (Math_CalculateSineCosineTable).l
                 bsr.s   Boss_FlyingNeoClearPaletteHighBits

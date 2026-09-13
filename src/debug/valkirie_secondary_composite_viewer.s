@@ -107,13 +107,13 @@ Debug_ValkirieSecondaryViewerBeginPoseCommandInterpolation:  ; CODE XREF: Debug_
                 bmi.s   Debug_ValkirieSecondaryViewerStorePoseComponents
 Debug_ValkirieSecondaryViewerTickPoseInterpolation:     ; CODE XREF: Debug_ValkirieSecondaryViewerAdvancePoseScript+8   j  ; was: loc_516D0
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$12,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 Debug_ValkirieSecondaryViewerStorePoseComponents:       ; CODE XREF: Debug_ValkirieSecondaryViewerAdvancePoseScript+E   j  ; was: loc_516E0
                                         ; Debug_ValkirieSecondaryViewerAdvancePoseScript+76   j
                 move.w  #$1FE,d7
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 move.b  (a0),d0
                 asl.w   #1,d0
                 and.w   d7,d0
@@ -210,14 +210,14 @@ Debug_ValkirieSecondaryViewerBeginPoseInterpolation:    ; CODE XREF: Debug_Valki
                 lea     Debug_ValkirieSecondaryViewerPoseTargets(pc),a1
                 nop
                 moveq   #$12,d7
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Debug_ValkirieSecondaryViewerBeginPoseInterpolation
 ; Load interpolation durations for the eighteen secondary-viewer components
 Debug_ValkirieSecondaryViewerLoadPoseDurations:         ; was: sub_51808
                 moveq   #$12,d7
-                movea.w #(dword_FF9400-M68K_RAM),a1
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 jmp     Anim_LoadFrameDelays
 ; End of function Debug_ValkirieSecondaryViewerLoadPoseDurations
 ; ---------------------------------------------------------------------------

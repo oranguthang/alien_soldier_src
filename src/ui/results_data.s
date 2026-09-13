@@ -5,9 +5,9 @@ Results_ComputeSummaryData:                             ; CODE XREF: Results_Ini
                 lea     (StageCompletionTimes).w,a3
                 lea     (StageResultVisits).w,a4
                 move.w  #$18,d7
-                clr.w   (dword_FF9434).w
-                clr.w   (dword_FF9438).w
-                clr.w   (dword_FF9434+2).w
+                clr.w   (SharedPatternRow1Long5).w
+                clr.w   (SharedPatternRow1Long6).w
+                clr.w   (SharedPatternRow1Long5+2).w
 Results_AccumulateStageSummaryLoop:                     ; CODE XREF: Results_ComputeSummaryData+82   j  ; was: loc_2026C
                 tst.w   (a2)
                 bpl.s   Results_AccumulateAvailableStage
@@ -22,12 +22,12 @@ Results_AccumulateAvailableStage:                       ; CODE XREF: Results_Com
                 move.w  d0,d3
                 mulu.w  #$3C,d2
                 add.w   d2,d3
-                add.w   d3,(dword_FF9434).w
+                add.w   d3,(SharedPatternRow1Long5).w
                 move.w  (a4),d0
                 addq.w  #1,d0
-                add.w   d0,(dword_FF9438).w
-                move.w  (a1),(dword_FF9410+2).w
-                move.w  (a3),(dword_FF9410).w
+                add.w   d0,(SharedPatternRow1Long6).w
+                move.w  (a1),(SharedPatternRow0Long4+2).w
+                move.w  (a3),(SharedPatternRow0Long4).w
                 bmi.w   Results_AdvanceStageSummaryInput
                 bsr.w   Math_CalculateBCDDifference
                 move.w  d2,d0
@@ -38,7 +38,7 @@ Results_AccumulateAvailableStage:                       ; CODE XREF: Results_Com
                 move.w  d0,d3
                 mulu.w  #$3C,d2
                 add.w   d2,d3
-                add.w   d3,(dword_FF9434+2).w
+                add.w   d3,(SharedPatternRow1Long5+2).w
 Results_AdvanceStageSummaryInput:                       ; CODE XREF: Results_ComputeSummaryData+28   j  ; was: loc_202C4
                                         ; Results_ComputeSummaryData+58   j
                 addq.w  #2,a1
@@ -47,11 +47,11 @@ Results_AdvanceStageSummaryInput:                       ; CODE XREF: Results_Com
                 addq.w  #2,a4
                 dbf     d7,Results_AccumulateStageSummaryLoop
                 lea     (Math_PackedBCDLookup).l,a1
-                lea     (dword_FF9428).w,a0
-                move.w  (dword_FF9434).w,d6
+                lea     (SharedPatternRow1Long2).w,a0
+                move.w  (SharedPatternRow1Long5).w,d6
                 bsr.w   Results_WriteSecondsAsPackedBCDTime
-                lea     (dword_FF9430).w,a0
-                move.w  (dword_FF9438).w,d5
+                lea     (SharedPatternRow1Long4).w,a0
+                move.w  (SharedPatternRow1Long6).w,d5
                 divu.w  #$A,d5
                 move.w  d5,d0
                 add.w   d0,d0
@@ -62,8 +62,8 @@ Results_AdvanceStageSummaryInput:                       ; CODE XREF: Results_Com
                 andi.w  #$F,d0
                 lsl.w   #4,d0
                 move.b  d0,(a0)
-                lea     (dword_FF942C).w,a0
-                move.w  (dword_FF9434+2).w,d6
+                lea     (SharedPatternRow1Long3).w,a0
+                move.w  (SharedPatternRow1Long5+2).w,d6
                 bsr.w   Results_WriteSecondsAsPackedBCDTime
                 bsr.w   Results_BuildSummaryRows
                 rts
@@ -78,7 +78,7 @@ Results_BuildSummaryRows:                               ; CODE XREF: Results_Com
 Results_CopyTotalTimeLabelLoop:                         ; CODE XREF: Results_BuildSummaryRows+14   j  ; was: loc_2032A
                 move.b  (a1)+,(a0)+
                 dbf     d7,Results_CopyTotalTimeLabelLoop
-                lea     (dword_FF9428).w,a1
+                lea     (SharedPatternRow1Long2).w,a1
                 move.b  (a1)+,d0
                 bsr.w   UI_ConvertBCDToDigits
                 move.b  (a1)+,d0
@@ -99,7 +99,7 @@ Results_PadTotalTimeRowLoop:                            ; CODE XREF: Results_Bui
 Results_CopyTotalClearTimeLabelLoop:                    ; CODE XREF: Results_BuildSummaryRows+54   j  ; was: loc_2036A
                 move.b  (a1)+,(a0)+
                 dbf     d7,Results_CopyTotalClearTimeLabelLoop
-                lea     (dword_FF942C).w,a1
+                lea     (SharedPatternRow1Long3).w,a1
                 move.b  (a1)+,d0
                 bsr.w   UI_ConvertBCDToDigits
                 move.b  (a1)+,d0
@@ -120,7 +120,7 @@ Results_PadTotalClearTimeRowLoop:                       ; CODE XREF: Results_Bui
 Results_CopyTotalContinueLabelLoop:                     ; CODE XREF: Results_BuildSummaryRows+94   j  ; was: loc_203AA
                 move.b  (a1)+,(a0)+
                 dbf     d7,Results_CopyTotalContinueLabelLoop
-                lea     (dword_FF9430).w,a1
+                lea     (SharedPatternRow1Long4).w,a1
                 move.b  #0,(a0)+
                 move.b  #0,(a0)+
                 move.b  #0,(a0)+
@@ -187,17 +187,17 @@ Results_UpdateViewport:                                 ; CODE XREF: UI_CheckRes
                 move.w  d1,d4
                 cmpi.w  #9,d1
                 bcs.w   Results_AdvanceViewportWithoutRedraw
-                cmp.w   (dword_FF943C+2).w,d1
+                cmp.w   (SharedPatternRow1Long7+2).w,d1
                 bhi.w   Results_AdvanceViewportWithoutRedraw
                 bra.s   Results_SelectEnteringRow
 ; ---------------------------------------------------------------------------
 Results_AdvanceViewportWithoutRedraw:                   ; CODE XREF: Results_UpdateViewport+14   j  ; was: loc_20450
                                         ; Results_UpdateViewport+1C   j
-                move.w  d1,(dword_FF9414).w
+                move.w  d1,(SharedPatternRow0Long5).w
                 bra.w   Results_ApplyVerticalScrollStep
 ; ---------------------------------------------------------------------------
 Results_SelectEnteringRow:                              ; CODE XREF: Results_UpdateViewport+20   j  ; was: loc_20458
-                tst.w   (dword_FF941C).w
+                tst.w   (SharedPatternRow0Long7).w
                 bmi.s   Results_AdjustEnteringRowForNegativeStep
                 subi.w  #9,d1
                 bra.s   Results_PrepareEnteringRow
@@ -205,19 +205,19 @@ Results_SelectEnteringRow:                              ; CODE XREF: Results_Upd
 Results_AdjustEnteringRowForNegativeStep:               ; CODE XREF: Results_UpdateViewport+2E   j  ; was: loc_20464
                 addq.w  #7,d1
 Results_PrepareEnteringRow:                             ; CODE XREF: Results_UpdateViewport+34   j  ; was: loc_20466
-                move.w  d1,(dword_FF9414).w
+                move.w  d1,(SharedPatternRow0Long5).w
                 move.w  d1,d0
                 mulu.w  #$16,d0
-                move.w  d0,(dword_FF941C+2).w
+                move.w  d0,(SharedPatternRow0Long7+2).w
                 move.w  d1,d0
                 mulu.w  #$26,d1
                 lea     (ResultsStageRowBuffer).w,a0
                 adda.w  d1,a0
-                move.w  a0,(dword_FF9420+2).w
+                move.w  a0,(SharedPatternRow1Long0+2).w
                 subi.w  #9,d4
                 andi.w  #$F,d4
                 mulu.w  #$100,d4
-                move.w  d4,(dword_FF9404).w
+                move.w  d4,(SharedPatternRow0Long1).w
                 addi.w  #$4006,d4
                 move.w  (StageTableIndex).w,d3
                 lsr.w   #1,d3
@@ -231,19 +231,19 @@ Results_PrepareEnteringRow:                             ; CODE XREF: Results_Upd
 Results_SelectAvailableEnteringRowPalette:              ; CODE XREF: Results_UpdateViewport+7A   j  ; was: loc_204B0
                 move.w  #$4300,d0
 Results_CheckEnteringRowHighlight:                      ; CODE XREF: Results_UpdateViewport+80   j  ; was: loc_204B4
-                cmp.w   (dword_FF9418).w,d4
+                cmp.w   (SharedPatternRow0Long6).w,d4
                 bne.s   Results_AdjustEnteringSummaryRow
-                move.w  #$FFFF,(dword_FF9418).w
+                move.w  #$FFFF,(SharedPatternRow0Long6).w
                 bra.s   Results_AdjustEnteringSummaryRow
 ; ---------------------------------------------------------------------------
 Results_SelectCurrentStageEnteringRow:                  ; CODE XREF: Results_UpdateViewport+72   j  ; was: loc_204C2
                 move.w  #$6300,d0
-                move.w  d1,(dword_FF9414+2).w
-                move.w  d4,(dword_FF9418).w
-                move.w  (dword_FF941C+2).w,(dword_FF9420).w
+                move.w  d1,(SharedPatternRow0Long5+2).w
+                move.w  d4,(SharedPatternRow0Long6).w
+                move.w  (SharedPatternRow0Long7+2).w,(SharedPatternRow1Long0).w
 Results_AdjustEnteringSummaryRow:                       ; CODE XREF: Results_UpdateViewport+8A   j  ; was: loc_204D4
                                         ; Results_UpdateViewport+92   j
-                move.w  (dword_FF9414).w,d7
+                move.w  (SharedPatternRow0Long5).w,d7
                 cmpi.w  #$1B,d7
                 bcs.w   Results_RenderEnteringPrimaryLine
                 cmpi.w  #$1D,d7
@@ -253,7 +253,7 @@ Results_AdjustEnteringSummaryRow:                       ; CODE XREF: Results_Upd
 Results_RenderEnteringPrimaryLine:                      ; CODE XREF: Results_UpdateViewport+AE   j  ; was: loc_204F0
                                         ; Results_UpdateViewport+B6   j
                 jsr     (Text_QueueDoubleHeightStringWrapped).l
-                move.w  (dword_FF9414).w,d0
+                move.w  (SharedPatternRow0Long5).w,d0
                 cmpi.w  #$1B,d0
                 bne.s   Results_CheckTotalClearTimeRow
                 lea     Results_TotalTimeLabel(pc),a0
@@ -275,11 +275,11 @@ Results_CheckTotalContinueRow:                          ; CODE XREF: Results_Upd
 Results_RenderEnteringSummaryLabel:                     ; CODE XREF: Results_UpdateViewport+D8   j  ; was: loc_20522
                                         ; Results_UpdateViewport+E6   j
                 move.w  #$300,d0
-                move.w  (dword_FF9404).w,d4
+                move.w  (SharedPatternRow0Long1).w,d4
                 addi.w  #$4006,d4
                 jsr     (Text_QueueDoubleHeightStringWrapped).l
 Results_SelectEnteringDetailLine:                       ; CODE XREF: Results_UpdateViewport+EC   j  ; was: loc_20534
-                movea.w (dword_FF9420+2).w,a0
+                movea.w (SharedPatternRow1Long0+2).w,a0
                 move.b  $B(a0),d0
                 cmpi.b  #$22,d0                         ; missing-BCD glyph
                 bne.s   Results_SelectAvailableEnteringDetailText
@@ -299,16 +299,16 @@ Results_SelectAvailableEnteringDetailText:              ; CODE XREF: Results_Upd
                 move.w  #$6300,d0
                 lea     Results_StageDetailTextTable(pc),a0
                 nop
-                adda.w  (dword_FF941C+2).w,a0
+                adda.w  (SharedPatternRow0Long7+2).w,a0
 Results_RenderEnteringDetailLine:                       ; CODE XREF: Results_UpdateViewport+12C   j  ; was: loc_2056A
-                move.w  (dword_FF9404).w,d4
+                move.w  (SharedPatternRow0Long1).w,d4
                 addi.w  #$4050,d4
                 jsr     (Text_QueueDoubleHeightStringWrapped).l
 Results_ApplyVerticalScrollStep:                        ; CODE XREF: Results_UpdateViewport+26   j  ; was: loc_20578
-                move.w  (dword_FF941C).w,d0
+                move.w  (SharedPatternRow0Long7).w,d0
                 add.w   d0,(PrimaryCameraYPosition).w
                 move.w  (PrimaryCameraYPosition).w,d0
-                cmpi.w  #$A,(dword_FF9400).w
+                cmpi.w  #$A,(SharedPatternRow0Long0).w
                 bne.s   Results_UpdateViewportReturn
                 bsr.w   Results_QueuePeriodicScrollSound
 Results_UpdateViewportReturn:                           ; CODE XREF: Results_UpdateViewport+15C   j  ; was: locret_20590
@@ -329,27 +329,27 @@ Results_PeriodicScrollSoundReturn:                      ; CODE XREF: Results_Que
 ; Redraws the selected row with its alternating highlight attributes
 Results_RenderSelectedRowHighlight:                     ; CODE XREF: UI_CompleteResultsScroll+14   p  ; was: sub_205AE
                                         ; Results_UpdateBrowsingState+8   p
-                tst.b   (dword_FF9418).w
+                tst.b   (SharedPatternRow0Long6).w
                 bmi.s   Results_RenderSelectedRowHighlightReturn
                 btst    #1,(VBlankFrameCounter+1).w
                 beq.s   Results_SelectAlternateHighlightPalette
                 move.w  #$300,d0
-                move.w  d0,(dword_FF9404+2).w
+                move.w  d0,(SharedPatternRow0Long1+2).w
                 bra.s   Results_PrepareSelectedRowHighlight
 ; ---------------------------------------------------------------------------
 Results_SelectAlternateHighlightPalette:                ; CODE XREF: Results_RenderSelectedRowHighlight+C   j  ; was: loc_205C6
                 move.w  #$6300,d0
-                move.w  d0,(dword_FF9404+2).w
+                move.w  d0,(SharedPatternRow0Long1+2).w
 Results_PrepareSelectedRowHighlight:                    ; CODE XREF: Results_RenderSelectedRowHighlight+16   j  ; was: loc_205CE
                 lea     (ResultsStageRowBuffer).w,a0
-                adda.w  (dword_FF9414+2).w,a0
-                move.w  a0,(dword_FF9420+2).w
-                move.w  (dword_FF9418).w,d4
+                adda.w  (SharedPatternRow0Long5+2).w,a0
+                move.w  a0,(SharedPatternRow1Long0+2).w
+                move.w  (SharedPatternRow0Long6).w,d4
                 btst    #$E,d4
                 beq.s   Results_SelectSelectedDetailText
                 jsr     (Text_QueueDoubleHeightStringWrapped).l
 Results_SelectSelectedDetailText:                       ; CODE XREF: Results_RenderSelectedRowHighlight+34   j  ; was: loc_205EA
-                movea.w (dword_FF9420+2).w,a0
+                movea.w (SharedPatternRow1Long0+2).w,a0
                 move.b  $B(a0),d0
                 cmpi.b  #$22,d0                         ; missing-BCD glyph
                 bne.s   Results_SelectAvailableSelectedDetailText
@@ -360,10 +360,10 @@ Results_SelectSelectedDetailText:                       ; CODE XREF: Results_Ren
 Results_SelectAvailableSelectedDetailText:              ; CODE XREF: Results_RenderSelectedRowHighlight+48   j  ; was: loc_20600
                 lea     Results_StageDetailTextTable(pc),a0
                 nop
-                adda.w  (dword_FF9420).w,a0
+                adda.w  (SharedPatternRow1Long0).w,a0
 Results_RenderSelectedDetailHighlight:                  ; CODE XREF: Results_RenderSelectedRowHighlight+50   j  ; was: loc_2060A
-                move.w  (dword_FF9404+2).w,d0
-                move.w  (dword_FF9418).w,d4
+                move.w  (SharedPatternRow0Long1+2).w,d0
+                move.w  (SharedPatternRow0Long6).w,d4
                 addi.w  #$4A,d4
                 btst    #$E,d4
                 beq.s   Results_RenderSelectedRowHighlightReturn
@@ -384,7 +384,7 @@ Results_CheckDirectScrollDown:                          ; CODE XREF: Results_Han
                 btst    #1,(ControllerHeldState).w
                 beq.s   Results_DirectVerticalScrollReturn
                 move.w  (PrimaryCameraYPosition).w,d0
-                cmp.w   (dword_FF943C).w,d0
+                cmp.w   (SharedPatternRow1Long7).w,d0
                 ble.s   Results_DirectVerticalScrollReturn
                 subq.w  #2,(PrimaryCameraYPosition).w
 Results_DirectVerticalScrollReturn:                     ; CODE XREF: Results_HandleDirectVerticalScroll+1A   j  ; was: locret_2064E

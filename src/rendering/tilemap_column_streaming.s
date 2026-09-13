@@ -38,23 +38,23 @@ Tilemap_QueueColumnFromDescriptor:                      ; CODE XREF: Stage9_Upda
                 moveq   #8,d7
                 move.w  d0,d2
                 lsr.w   #8,d2
-                move.w  d2,(dword_FF8058).w
+                move.w  d2,(TileCoarseLookupOffset).w
                 move.w  d0,d2
                 lsr.w   #5,d2
                 andi.w  #7,d2
-                move.w  d2,(dword_FF8058+2).w
+                move.w  d2,(TileFineLookupOffset).w
                 move.w  d0,d2
                 lsr.w   #2,d2
                 andi.w  #6,d2
-                move.w  d2,(word_FF805C).w
+                move.w  d2,(TilePatternOffset).w
                 moveq   #$FFFFFFFF,d2
                 move.w  d0,d2
                 lsr.w   #2,d2
                 andi.w  #$7E,d2                         ; '~'
-                move.l  d2,(dword_FF805E).w
+                move.l  d2,(TilePlaneBufferOffset).w
 Tilemap_BuildColumnRowLoop:                             ; CODE XREF: Tilemap_QueuePrimaryPlaneColumn+17E   j  ; was: loc_10736
                 movea.l (a0)+,a1
-                move.w  (dword_FF8058).w,d2
+                move.w  (TileCoarseLookupOffset).w,d2
                 move.w  d1,d3
                 lsr.w   #3,d3
                 andi.w  #$3E0,d3
@@ -63,7 +63,7 @@ Tilemap_BuildColumnRowLoop:                             ; CODE XREF: Tilemap_Que
                 move.b  (a1,d2.w),d4
                 lsl.w   #6,d4
                 movea.l (a0)+,a1
-                move.w  (dword_FF8058+2).w,d2
+                move.w  (TileFineLookupOffset).w,d2
                 move.w  d1,d3
                 lsr.w   #2,d3
                 andi.w  #$38,d3                         ; '8'
@@ -82,7 +82,7 @@ Tilemap_BuildColumnRowLoop:                             ; CODE XREF: Tilemap_Que
                 add.w   d2,d3
                 movea.w d3,a2
                 movea.l (a0)+,a1
-                move.w  (word_FF805C).w,d3
+                move.w  (TilePatternOffset).w,d3
                 add.w   d4,d3
                 move.w  d1,d2
                 andi.w  #$18,d2
@@ -100,7 +100,7 @@ Tilemap_WritePartialColumnRow:                          ; CODE XREF: Tilemap_Que
                                         ; Tilemap_QueuePrimaryPlaneColumn+9E   j
                 tst.w   (a0)+
                 beq.s   Tilemap_QueueColumnTransfer
-                move.l  (dword_FF805E).w,d2
+                move.l  (TilePlaneBufferOffset).w,d2
                 move.w  d1,d4
                 lsl.w   #4,d4
                 andi.w  #$1E00,d4
@@ -146,7 +146,7 @@ Tilemap_WriteFullColumnRow:                             ; CODE XREF: Tilemap_Que
                 add.w   d2,d3
                 movea.w d3,a2
                 movea.l (a0)+,a1
-                move.w  (word_FF805C).w,d3
+                move.w  (TilePatternOffset).w,d3
                 add.w   d4,d3
                 move.w  (a1,d3.w),(a2)+
                 move.w  8(a1,d3.w),(a2)+
@@ -154,7 +154,7 @@ Tilemap_WriteFullColumnRow:                             ; CODE XREF: Tilemap_Que
                 move.w  $18(a1,d3.w),(a2)+
                 tst.w   (a0)+
                 beq.w   Tilemap_AdvanceColumnRow
-                move.l  (dword_FF805E).w,d2
+                move.l  (TilePlaneBufferOffset).w,d2
                 move.w  d1,d4
                 lsl.w   #4,d4
                 andi.w  #$1E00,d4
@@ -192,23 +192,23 @@ Tilemap_PopulateUnqueuedColumnFromDescriptor:           ; CODE XREF: Stage_Seven
                 moveq   #8,d7
                 move.w  d0,d2
                 lsr.w   #8,d2
-                move.w  d2,(dword_FF8058).w
+                move.w  d2,(TileCoarseLookupOffset).w
                 move.w  d0,d2
                 lsr.w   #5,d2
                 andi.w  #7,d2
-                move.w  d2,(dword_FF8058+2).w
+                move.w  d2,(TileFineLookupOffset).w
                 move.w  d0,d2
                 lsr.w   #2,d2
                 andi.w  #6,d2
-                move.w  d2,(word_FF805C).w
+                move.w  d2,(TilePatternOffset).w
                 moveq   #$FFFFFFFF,d2
                 move.w  d0,d2
                 lsr.w   #2,d2
                 andi.w  #$7E,d2                         ; '~'
-                move.l  d2,(dword_FF805E).w
+                move.l  d2,(TilePlaneBufferOffset).w
 Tilemap_BuildUnqueuedColumnRowLoop:                     ; CODE XREF: Tilemap_PopulateStage18UnqueuedColumn+10E   j  ; was: loc_108DC
                 movea.l (a0)+,a1
-                move.w  (dword_FF8058).w,d2
+                move.w  (TileCoarseLookupOffset).w,d2
                 move.w  d1,d3
                 lsr.w   #3,d3
                 andi.w  #$3E0,d3
@@ -217,7 +217,7 @@ Tilemap_BuildUnqueuedColumnRowLoop:                     ; CODE XREF: Tilemap_Pop
                 move.b  (a1,d2.w),d4
                 lsl.w   #6,d4
                 movea.l (a0)+,a1
-                move.w  (dword_FF8058+2).w,d2
+                move.w  (TileFineLookupOffset).w,d2
                 move.w  d1,d3
                 lsr.w   #2,d3
                 andi.w  #$38,d3                         ; '8'
@@ -236,13 +236,13 @@ Tilemap_BuildUnqueuedColumnRowLoop:                     ; CODE XREF: Tilemap_Pop
                 add.w   d2,d3
                 movea.w d3,a2
                 movea.l (a0)+,a1
-                move.w  (word_FF805C).w,d3
+                move.w  (TilePatternOffset).w,d3
                 add.w   d4,d3
                 move.w  d1,d2
                 andi.w  #$18,d2
                 move.w  d2,d5
                 tst.w   (a0)+
-                move.l  (dword_FF805E).w,d2
+                move.l  (TilePlaneBufferOffset).w,d2
                 move.w  d1,d4
                 lsl.w   #4,d4
                 andi.w  #$1E00,d4
@@ -263,10 +263,10 @@ Tilemap_UnqueuedPartialRowReturn:                       ; CODE XREF: Tilemap_Pop
 ; ---------------------------------------------------------------------------
 Tilemap_WriteFullUnqueuedColumnRow:                     ; CODE XREF: Tilemap_PopulateStage18UnqueuedColumn+7C   j  ; was: loc_10968
                 movea.l (a0)+,a1
-                move.w  (word_FF805C).w,d3
+                move.w  (TilePatternOffset).w,d3
                 add.w   d4,d3
                 tst.w   (a0)+
-                move.l  (dword_FF805E).w,d2
+                move.l  (TilePlaneBufferOffset).w,d2
                 move.w  d1,d4
                 lsl.w   #4,d4
                 andi.w  #$1E00,d4

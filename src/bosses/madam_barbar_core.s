@@ -84,12 +84,12 @@ Boss_MadamBarbarSetupState:                             ; DATA XREF: ROM:0003A4E
                 addq.w  #2,4(a5)
                 move.w  #$118,(a5)
                 move.w  #$CD00,2(a5)
-                movea.w #(word_FF9800-M68K_RAM),a0
+                movea.w #(MadamBarbarWorkObject-M68K_RAM),a0
                 move.l  a0,8(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.b  #$20,$20(a5)                    ; ' '
-                movea.w #(word_FF9800-M68K_RAM),a0
+                movea.w #(MadamBarbarWorkObject-M68K_RAM),a0
                 move.w  #$3A9,(a0)
                 move.w  #$100,2(a0)
                 move.w  #$8BA9,6(a0)
@@ -509,7 +509,7 @@ Boss_MadamBarbarUpdateWobble:                           ; CODE XREF: Boss_MadamB
                 asr.b   #1,d1
                 add.b   d0,(dword_FF8040+1).w
                 sub.b   d1,(dword_FF8040+3).w
-                movea.w #(word_FF9800-M68K_RAM),a0
+                movea.w #(MadamBarbarWorkObject-M68K_RAM),a0
                 move.w  (dword_FF8040).w,4(a0)
                 move.w  (dword_FF8040+2).w,$A(a0)
                 rts
@@ -665,13 +665,13 @@ Boss_MadamBarbarStartPoseInterpolation:                 ; CODE XREF: Boss_MadamB
                 bmi.s   Boss_MadamBarbarPublishPoseAngles
 Boss_MadamBarbarAdvancePoseInterpolation:               ; CODE XREF: Boss_MadamBarbarUpdatePose+8   j  ; was: loc_3AC6A
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$B,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 Boss_MadamBarbarPublishPoseAngles:                      ; CODE XREF: Boss_MadamBarbarUpdatePose+E   j  ; was: loc_3AC7A
                                         ; Boss_MadamBarbarUpdatePose+84   j
                 move.w  #$1FE,d7
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 move.b  (a0),d0
                 asl.w   #1,d0
                 and.w   d7,d0
@@ -769,14 +769,14 @@ Boss_MadamBarbarPublishPoseAngles:                      ; CODE XREF: Boss_MadamB
 ; Calculates the 12 channel deltas toward the selected pose target
 Boss_MadamBarbarCalculatePoseDeltas:                    ; CODE XREF: Boss_MadamBarbarUpdatePose+62   p  ; was: sub_3AD8E
                 lea     (Boss_MadamBarbarNeutralPose).l,a1
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #$B,d7
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Boss_MadamBarbarCalculatePoseDeltas
 ; Initializes the 12 fixed-point pose channels from the first target record
 Boss_MadamBarbarInitializePoseChannels:                 ; CODE XREF: Boss_MadamBarbarSetupState+D0   p  ; was: sub_3ADA4
-                movea.w #(dword_FF9400-M68K_RAM),a1
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 moveq   #$B,d7
                 jmp     Anim_LoadFrameDelays
 ; End of function Boss_MadamBarbarInitializePoseChannels

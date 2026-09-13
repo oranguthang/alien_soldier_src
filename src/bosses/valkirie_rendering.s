@@ -155,27 +155,27 @@ Anim_StartValkiriePoseFrame:                            ; CODE XREF: Anim_Proces
                 bmi.s   Anim_PrepareValkiriePosePartTraversal
 Anim_AdvanceValkiriePoseInterpolation:                  ; CODE XREF: Anim_UpdateValkiriePoseScript+8   j  ; was: loc_5620A
                 subq.w  #1,$C(a5)
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$12,d7
                 jsr     (Anim_ApplyInterpolationStep).l
 Anim_PrepareValkiriePosePartTraversal:                  ; CODE XREF: Anim_UpdateValkiriePoseScript+E   j  ; was: loc_5621A
                                         ; Anim_UpdateValkiriePoseScript+34   j
                 move.w  #$1FE,d7
-                movea.w #(dword_FF9400-M68K_RAM),a0
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 rts
 ; End of function Anim_ProcessValkiriePoseFrame
 ; Calculate interpolation deltas for the next 19-angle pose frame
 Anim_CalculateValkiriePoseDeltas:                       ; CODE XREF: Anim_ProcessValkiriePoseFrame+24   p  ; was: sub_56224
                 movea.l $2FC(a5),a1
                 moveq   #$12,d7
-                movea.w #(dword_FF9400-M68K_RAM),a2
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Anim_CalculateValkiriePoseDeltas
 ; Load 19 pose-frame delay values into the $FF9400 interpolation buffer
 Anim_LoadValkiriePoseFrameDelays:                       ; was: sub_56238
                 moveq   #$12,d7
-                movea.w #(dword_FF9400-M68K_RAM),a1
+                movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 jmp     Anim_LoadFrameDelays
 ; End of function Anim_LoadValkiriePoseFrameDelays
 ; ---------------------------------------------------------------------------

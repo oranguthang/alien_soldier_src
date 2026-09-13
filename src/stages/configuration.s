@@ -399,7 +399,7 @@ Stage_ApplyStage26Configuration:                        ; DATA XREF: ROM:0001229
 ; End of function Stage_ApplyStage26Configuration
 ; Builds the Stage 3 phase-2 resampling steps, transforms its tiles, and uploads them
 Gfx_PrepareStage3Phase2ResampledTiles:                  ; CODE XREF: Stage_LoadStage3Phase2Assets+12   p  ; was: sub_125EE
-                movea.w #(word_FF9800-M68K_RAM),a0
+                movea.w #(Stage3ScaleStepTable-M68K_RAM),a0
                 move.l  #$600000,d0
                 move.w  #$2000,d1
                 move.w  #$1A0,d3
@@ -413,7 +413,7 @@ Gfx_BuildStage3Phase2ScaleStepTable:                    ; CODE XREF: Gfx_Prepare
                 add.w   d3,d1
                 dbf     d7,Gfx_BuildStage3Phase2ScaleStepTable
                 move.l  #Stage3Phase2PackedTileSource,(dword_FF8040).w
-                move.l  #$FFFF9800,(dword_FF8058).w
+                move.l  #Stage3ScaleStepTable,(Stage3ScaleTablePtr).w
                 move.w  #$5F,(word_FF8048).w            ; '_'
                 move.w  #3,(word_FF804A).w
                 bsr.w   Gfx_ResampleStage3Phase2Tiles

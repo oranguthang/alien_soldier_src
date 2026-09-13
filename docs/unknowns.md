@@ -7388,3 +7388,122 @@ The two definitions add provenance mappings and exact-address audit records.
 Provenance rises from 16,017 to 16,019 mappings, the audit registry from
 13,256 to 13,258, and the semantic-review upper bound remains 3,061. The
 enforced address-derived ceiling falls from 34 to 32 RAM equates.
+
+The tile-interpolation block pass resolves `$FFFF9880` from both sides of its
+loader contract. `Gfx_TileLoadDispatcher` writes a payload length of `$40` or
+`$60` at the address and installs that same address as the source of a
+type-one `LoadObjData` descriptor. `Gfx_LoadDataToVRAM` consumes the first
+source word as the byte count and transfers the following payload to VRAM.
+The block sits at the second `$80`-byte boundary of the 512-byte interpolation
+workspace cleared from `$FFFF9800`, so `TileInterpolationBlockB` records the
+proven structure without inventing a scene owner.
+
+The definition adds one provenance mapping and exact-address audit record.
+Provenance rises from 16,019 to 16,020 mappings, the audit registry from
+13,258 to 13,259, and the semantic-review upper bound remains 3,061. The
+enforced address-derived ceiling falls from 32 to 31 RAM equates.
+
+The shared `$FFFF9900` overlay pass separates three proven roles. The
+tile-interpolation dispatcher uses the word as block C's payload-length header
+and submits the same address to the VRAM loader. Password rendering treats the
+address as a 24-byte terminated primary text buffer. Flying Neo initializes a
+generated four-quadrant sine table from the address and reads longword samples
+as linked-part vertical offsets. Shiper's independently generated table also
+reaches the word through its `$FFFF9400` base, so `SharedSceneOverlayWord`
+remains the physical identity while `TileInterpolationBlockC`,
+`PasswordPrimaryBuffer`, and `FlyingNeoSineTable` expose direct consumers.
+
+The definition adds one provenance mapping and exact-address audit record.
+Provenance rises from 16,020 to 16,021 mappings, the audit registry from
+13,259 to 13,260, and the semantic-review upper bound remains 3,061. The
+enforced address-derived ceiling falls from 31 to 30 RAM equates.
+
+The `$FFFF9A00` pass models another mutually exclusive geometry workspace.
+Transition and Game Over paths generate, copy, and expand raster rows from the
+base; the boss-backdrop builder copies seven 32-byte blocks into it. Flying
+Neo reads the address as the quarter-cycle-shifted cosine view of its generated
+trigonometric table. Shiper shifts five delayed rotation words there, while
+the Shield Viper effect updates 96 longword offset accumulators and publishes
+their high words to H-scroll RAM. `SharedGeometryWorkspace` therefore remains
+the physical identity, with six consumer-specific aliases at direct accesses.
+
+The definition adds one provenance mapping and exact-address audit record.
+Provenance rises from 16,021 to 16,022 mappings, the audit registry from
+13,260 to 13,261, and the semantic-review upper bound remains 3,061. The
+enforced address-derived ceiling falls from 30 to 29 RAM equates.
+
+The `$FFFF9500` pass separates another five-way overlay. Transition code copies
+working output blocks to the base and the raster-layout dispatcher consumes
+them for standard, alternate, or Flying Neo layouts. Shiper reads the address
+as the quarter-cycle cosine view of its table generated from `$FFFF9400`.
+Sirene writes and queues a 32-byte alternating pattern there. Z-Leo drop
+projectiles set the same word as a frame-local event flag, which the boss
+renderer tests before the core clears it. `SharedSceneOverlayBase` remains the
+physical identity and each direct consumer now uses a contextual alias.
+
+The definition adds one provenance mapping and exact-address audit record.
+Provenance rises from 16,022 to 16,023 mappings, the audit registry from
+13,261 to 13,262, and the semantic-review upper bound remains 3,061. The
+enforced address-derived ceiling falls from 29 to 28 RAM equates.
+
+The `$FFFF9600` pass resolves a dense shared scene workspace without collapsing
+its incompatible layouts. Transition code emits duplicated V-scroll words;
+Bugmax, Back Stringer, and Sharpssteel use angle, pose, and target histories;
+Seven Forces and Joker build pattern words; Z-Leo maintains a tile-stream
+index; Stage 9 clears a fly-corridor tilemap column. Ending and teleport setup
+also pass the base as the second source pattern to `Gfx_LoadTilesLoop`.
+`SharedSceneWorkspace` remains neutral while nine contextual aliases replace
+every direct raw access. Joker's pre-existing second group alias is clarified
+from `JokerTileWordGroup` to `JokerTileWordGroupB`.
+
+The definition adds one provenance mapping and exact-address audit record.
+Provenance rises from 16,023 to 16,024 mappings, the audit registry from
+13,262 to 13,263, and the semantic-review upper bound remains 3,061. The
+enforced address-derived ceiling falls from 28 to 27 RAM equates.
+
+The `$FFFF9800` pass removes the final isolated raw high-RAM anchor before the
+two dense scratch clusters. Static consumers prove thirteen incompatible
+views: tile-interpolation block A, transition H-scroll output, Game Over row
+work, Caterpillar phases, Flying Neo and Jetsripper angle histories, password
+digit text, a Madam Barbar work object, Medusa's scripted-spawn offset, Sunset
+Sting shared state, Sirene pose history, Stage 3 resampling steps, and the CRAM
+HBlank buffer. The earlier wave-deformation path also clears, fills, and samples
+the base as `WaveOutputBuffer`. Formation-wave setup and the inert Viblack
+handler only load the pointer, so those two sites retain the neutral
+`SharedSceneDataBuffer` name.
+
+The definition adds one provenance mapping and exact-address audit record.
+Provenance rises from 16,024 to 16,025 mappings, the audit registry from
+13,263 to 13,264, and the semantic-review upper bound remains 3,061. The
+enforced address-derived ceiling falls from 27 to 26 RAM equates.
+
+The `$FFFF9400-$FFFF943F` pass replaces sixteen raw longword aliases with two
+explicit eight-element shared pattern rows. `Effect_ApplyTransitionMask`
+advances through two longwords from each row per iteration and repeats four
+times, proving both 32-byte extents without relying on an inferred boss or
+scene owner. Results, cutscenes, rendering effects, and numerous bosses reuse
+the same storage with incompatible layouts, so `SharedPatternRow0Long0`
+through `SharedPatternRow1Long7` remain neutral physical names.
+
+Transition code uses `TransitionPatternBuffer`, `TransitionPatternRow0`, and
+`TransitionPatternRow1` contextual aliases where the buffer role is directly
+proved. The sixteen definitions add sixteen provenance mappings and sixteen
+exact-address audit records. Provenance rises from 16,025 to 16,041 mappings,
+the audit registry from 13,264 to 13,280, and the semantic-review upper bound
+remains 3,061. The enforced address-derived ceiling falls from 26 to 10 RAM
+equates, all in the overloaded `$FFFF8040-$FFFF806A` scratch cluster.
+
+The `$FFFF8058-$FFFF8061` pass resolves the middle three physical definitions
+of that final cluster. Tilemap streaming proves two lookup-offset words, a
+pattern offset, and a plane-buffer offset. Indexed row and column transfers
+overlay the same storage with a VDP DMA command, retained staging cursor, and
+source-group stride. Stage 3, Stage 7, Stage 9, password validation, and both
+options menus add mutually exclusive pointer, timer, index, and selection
+layouts.
+
+`SharedTransferWorkLong0`, `SharedTransferWorkWord0`, and
+`SharedTransferWorkLong1` therefore remain neutral physical identities. The
+direct consumers use sixteen contextual aliases so their code states the
+proved local role. Provenance rises from 16,041 to 16,044 mappings, the audit
+registry from 13,280 to 13,283, and the semantic-review upper bound remains
+3,061. The enforced address-derived ceiling falls from 10 to 7 RAM equates.
