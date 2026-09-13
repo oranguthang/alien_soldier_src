@@ -52,7 +52,7 @@ Stage9_UpdateFlyCorridorScroll:                         ; CODE XREF: Stage9_Upda
                 bsr.w   Stage9_UpdateFlyCorridorRevealColumns
 Stage9_FlyCorridor_AdvanceVerticalPosition:             ; CODE XREF: Stage9_UpdateFlyCorridorScroll+22   j  ; was: loc_D18E
                 addi.l  #$4000,(dword_FFA960+2).w
-                movea.w #(word_FF9C00-M68K_RAM),a0
+                movea.w #(FlyCorridorRasterBuffer-M68K_RAM),a0
                 moveq   #$60,d0                         ; '`'
                 moveq   #$16,d7
 Stage9_FlyCorridor_WriteAlternatingRowOffsets:          ; CODE XREF: Stage9_UpdateFlyCorridorScroll+40   j  ; was: loc_D19E
@@ -65,7 +65,7 @@ Stage9_FlyCorridor_WriteAlternatingRowOffsets:          ; CODE XREF: Stage9_Upda
 Stage9_FlyCorridor_ClearTrailingRowOffsets:             ; CODE XREF: Stage9_UpdateFlyCorridorScroll+4A   j  ; was: loc_D1AC
                 move.w  #0,(a0)+
                 dbf     d7,Stage9_FlyCorridor_ClearTrailingRowOffsets
-                movea.w #(word_FF9C00-M68K_RAM),a0
+                movea.w #(FlyCorridorRasterBuffer-M68K_RAM),a0
                 move.w  (dword_FFA960+2).w,d0
                 move.w  d0,d1
                 addi.w  #$50,d0                         ; 'P'
@@ -188,7 +188,7 @@ Stage9_StreamCaterpillarShipColumn:                     ; CODE XREF: Stage9_Upda
                 add.w   (PrimaryCameraXPosition).w,d5
                 cmpi.w  #$9F0,d5
                 bmi.s   Stage9_CheckCaterpillarShipTransition
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
 Stage9_CheckCaterpillarShipTransition:                  ; CODE XREF: Stage9_UpdateCaterpillarShipTraversal+74   j  ; was: loc_D332
                 cmpi.w  #$A00,d5
                 bmi.s   Stage9_UpdateCaterpillarShipTraversal_Return
@@ -252,7 +252,7 @@ Stage9_UpdateCaterpillarShipExit:                       ; DATA XREF: ROM:0000C8B
 ; ---------------------------------------------------------------------------
 Stage9_SelectXiTigerTransitionRoute:                    ; CODE XREF: Stage9_UpdateCaterpillarShipExit+5C   j  ; was: loc_D412
                 move.w  #0,(SetupTransitionIndex).w
-                move.w  #4,(word_FF8230).w
+                move.w  #4,(GameplayExitMode).w
 Stage9_UpdateCaterpillarShipExit_Return:                ; CODE XREF: Stage9_UpdateCaterpillarShipExit+1A   j  ; was: locret_D41E
                                         ; Stage9_UpdateCaterpillarShipExit+28   j
                 rts
@@ -389,7 +389,7 @@ Stage9_UpdatePostXiTigerTransition:                     ; DATA XREF: ROM:0000C8B
                 bsr.w   Stage9_UpdateCaterpillarCameraAndScroll
                 subq.w  #1,(word_FF806E).w
                 bpl.s   Stage9_UpdatePostXiTigerTransition_Return
-                tst.w   (word_FF8230).w
+                tst.w   (GameplayExitMode).w
                 bne.s   Stage9_UpdatePostXiTigerTransition_Return
                 move.b  #$86,(PendingStageBGMRequest).w
                 move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w

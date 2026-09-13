@@ -44,7 +44,7 @@ Demo_PlaybackSystem_UpdateTimer:                        ; CODE XREF: Demo_Playba
                 beq.w   Demo_PlaybackSystem_Exit
                 cmpi.w  #$80,(DemoFramesRemaining).w
                 bne.s   Demo_PlaybackSystem_ProcessInput
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
 Demo_PlaybackSystem_ProcessInput:                       ; CODE XREF: Demo_PlaybackSystem+AE   j  ; was: loc_23D70
                 bsr.w   Demo_HandlePlaybackInput
                 tst.w   (DemoRecordingMode).w

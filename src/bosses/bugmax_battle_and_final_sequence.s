@@ -839,7 +839,7 @@ Boss_BugmaxUpdateFinalWaveDescentAndCompleteEncounter:  ; DATA XREF: ROM:0004C43
                 move.l  d0,$18(a5)
                 cmpi.w  #$170,$14(a5)
                 blt.s   Boss_BugmaxFinalWaveDescentReturn
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 clr.w   (a5)
                 move.w  #$1000,2(a5)
 Boss_BugmaxFinalWaveDescentReturn:                      ; CODE XREF: Boss_BugmaxUpdateFinalWaveDescentAndCompleteEncounter+14   j  ; was: locret_4D3C2

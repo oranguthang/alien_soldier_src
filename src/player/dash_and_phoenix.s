@@ -83,8 +83,8 @@ Player_InitPhoenixAttack:
                 move.w  #8,$4E(a5)
                 move.b  #$73,(PlayerInputMask).w        ; 's'
                 jsr     (Sys_ClearObjectBlocks16).l
-                move.b  #1,(word_FF8224).w
-                move.b  #1,(word_FF8224+1).w
+                move.b  #1,(PlayerAirDashUsedFlag).w
+                move.b  #1,(PlayerAirShotUsedFlag).w
                 move.w  #$C,$50(a5)
                 clr.w   $12(a5)
                 clr.l   $18(a5)
@@ -129,7 +129,7 @@ Player_PhoenixAttackUpdate_SelectState:                 ; CODE XREF: Player_Phoe
                 beq.s   Player_PhoenixAttackUpdate_TryProjectile
                 move.w  #$24,4(a5)                      ; '$'
 Player_PhoenixAttackUpdate_TryProjectile:               ; CODE XREF: Player_PhoenixAttackUpdate+38   j  ; was: loc_1587A
-                tst.w   (word_FF8304).w
+                tst.w   (PhoenixAttackStatus).w
                 bne.s   Player_PhoenixAttackUpdate_PlayBlockedSound
                 btst    #7,(byte_FF8245).w
                 bne.s   Player_PhoenixAttackUpdate_PlayBlockedSound
@@ -199,8 +199,8 @@ Player_InitiateDashAttack_UseGroundState:               ; CODE XREF: Player_Grou
 Player_InitiateDashAttack_Initialize:                   ; CODE XREF: Player_InitiateDashAttack+6   j  ; was: loc_1593C
                 move.b  #$73,(PlayerInputMask).w        ; 's'
                 jsr     (Sys_ClearObjectBlocks16).l
-                move.b  #1,(word_FF8224).w
-                move.b  #1,(word_FF8224+1).w
+                move.b  #1,(PlayerAirDashUsedFlag).w
+                move.b  #1,(PlayerAirShotUsedFlag).w
                 clr.w   $4E(a5)
                 move.w  #$C,$50(a5)
                 clr.w   $12(a5)
@@ -222,13 +222,13 @@ Player_InitiateDashAttack_FaceRight:                    ; CODE XREF: Player_Init
                 move.l  #$78000,$48(a5)
                 bset    #3,$E(a5)
 Player_InitiateDashAttack_TryProjectile:                ; CODE XREF: Player_InitiateDashAttack+62   j  ; was: loc_159A0
-                tst.w   (word_FF8304).w
+                tst.w   (PhoenixAttackStatus).w
                 bne.s   Player_PlayDashAttackSound
                 btst    #7,(byte_FF8245).w
                 bne.s   Player_PlayDashAttackSound
                 bsr.w   Player_SpawnProjectile
                 move.l  #Player_PhoenixAndTeleportDashSpriteMapping,8(a5)
-                move.w  #$78,(word_FF8304).w            ; 'x'
+                move.w  #$78,(PhoenixAttackStatus).w    ; 'x'
                 moveq   #1,d0
                 rts
 ; ---------------------------------------------------------------------------
@@ -238,7 +238,7 @@ Player_PlayDashAttackSound:                             ; CODE XREF: Player_Init
                 move.b  #$A6,d0
                 jsr     (Sound_PlaySFX).l
                 move.l  #Player_PhoenixDashAttackSpriteMapping,8(a5)
-                move.w  #$78,(word_FF8304).w            ; 'x'
+                move.w  #$78,(PhoenixAttackStatus).w    ; 'x'
                 moveq   #1,d0
                 rts
 ; End of function Player_InitiateDashAttack
@@ -279,7 +279,7 @@ Player_DashAttackState_ExitToFall:                      ; CODE XREF: Player_Dash
                 bra.w   Player_InitAirDashEnd
 ; ---------------------------------------------------------------------------
 Player_DashAttackState_HandleTerrainContact:            ; CODE XREF: Player_DashAttackState+3A   j  ; was: loc_15A46
-                clr.w   (word_FF8224).w
+                clr.w   (PlayerAirMoveUsedFlags).w
                 tst.w   $4E(a5)
                 bne.s   Player_DashAttackState_ResumeAttachedState
                 btst    #4,$E(a5)
@@ -440,7 +440,7 @@ Player_CheckSpecialMoveActivation_InitAirState:         ; CODE XREF: Player_Chec
                 move.w  #$C,$5C(a5)
                 move.w  #5,$48(a5)
                 clr.w   $4A(a5)
-                clr.w   (word_FF8224).w
+                clr.w   (PlayerAirMoveUsedFlags).w
                 clr.w   $52(a5)
                 move.b  #$7F,(PlayerInputMask).w
 Player_CheckSpecialMoveActivation_Return:               ; CODE XREF: Player_CheckSpecialMoveActivation+6   j  ; was: locret_15C1E
@@ -459,7 +459,7 @@ Player_CheckDashInput:                                  ; CODE XREF: Player_Ceil
 ; Initializes player falling state with parameters
 Player_InitFallState:                                   ; CODE XREF: Player_HandleJump+10   j  ; was: sub_15C34
                                         ; Player_HandleAirState+16   j
-                clr.w   (word_FF8224).w
+                clr.w   (PlayerAirMoveUsedFlags).w
                 clr.w   $52(a5)
 Player_InitFallState_Finish:                            ; CODE XREF: Player_DamageLandingRecoveryState+18   j  ; was: loc_15C3C
                                         ; Player_DashAttackState+5E   j

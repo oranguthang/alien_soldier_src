@@ -10,7 +10,7 @@ Boss_MadamBarbarMain:                                   ; DATA XREF: ROM:Entity_
                 bne.s   Boss_MadamBarbarPrepareStateDispatch
                 tst.w   (BossHealth).w
                 bne.s   Boss_MadamBarbarPrepareStateDispatch
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(byte_FF80EC).w
                 jsr     (Sprite_ClearObjectFlags).l
@@ -54,7 +54,7 @@ Boss_MadamBarbarInitializeState:                        ; DATA XREF: Boss_MadamB
                 move.w  #$118,d0
                 move.w  #$12C,d1
                 jsr     (Object_ClearAllExceptTypes).l
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
 Boss_MadamBarbarInitializationReturn:                   ; CODE XREF: Boss_MadamBarbarSetupState+4   j  ; was: locret_3A51A
                 rts
 ; End of function Boss_MadamBarbarInitializeState

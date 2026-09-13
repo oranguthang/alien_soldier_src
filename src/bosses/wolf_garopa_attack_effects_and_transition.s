@@ -31,7 +31,7 @@ Effect_StoreWolfGaropaBoundaryPairParameters:           ; CODE XREF: Effect_Init
 ; End of function Effect_InitializeWolfGaropaBoundaryPair
 ; Forces player to ceiling during Valkirie encounter by adjusting vertical position and checking proximity to boss position
 Effect_WolfGaropaBoundaryMain:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_50D50
-                tst.b   (byte_FF9DBA).w
+                tst.b   (WolfGaropaEffectActive).w
                 beq.s   Effect_RemoveWolfGaropaBoundary
                 btst    #4,$22(a5)
                 beq.s   Effect_UpdateWolfGaropaBoundaryPosition
@@ -205,7 +205,7 @@ Boss_WolfGaropaBeginPostDefeatDelay:                    ; DATA XREF: Boss_WolfGa
 Boss_WolfGaropaUpdatePostDefeatDelay:                   ; DATA XREF: Boss_WolfGaropaUpdate+52   o  ; was: sub_50F54
                 cmpi.w  #$80,$11C(a5)
                 bne.s   Boss_WolfGaropaTickPostDefeatDelay
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
 Boss_WolfGaropaTickPostDefeatDelay:                     ; CODE XREF: Boss_WolfGaropaUpdatePostDefeatDelay+6   j  ; was: loc_50F62
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_WolfGaropaUpdatePostDefeatFade

@@ -610,7 +610,7 @@ Entity_SevenForcesExplosionSequenceCheckTransition:     ; CODE XREF: Entity_Seve
                 bne.s   Entity_SevenForcesSpawnRandomExplosion
                 addq.w  #2,4(a5)
                 move.w  #$200,$48(a5)
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 move.w  #$C0,(word_FF809E).w
 Entity_SevenForcesSpawnRandomExplosion:                 ; CODE XREF: Entity_SevenForcesExplosionSequenceState36+20   j  ; was: loc_55352
                                         ; sub_553CC:Entity_SevenForcesExplosionWaitUpdate   p
@@ -688,7 +688,7 @@ Entity_SevenForcesFinishIntroState3E:                   ; DATA XREF: ROM:00054BD
                 bsr.w   Effect_SpawnSevenForcesTransitionParticle
                 subq.w  #1,$48(a5)
                 bpl.s   Entity_SevenForcesFinishIntroReturn
-                tst.w   (word_FF8230).w
+                tst.w   (GameplayExitMode).w
                 bne.s   Entity_SevenForcesFinishIntroReturn
                 move.b  #$93,(PendingStageBGMRequest).w
                 move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w

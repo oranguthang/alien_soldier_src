@@ -1,5 +1,5 @@
 Stage17_InitializeEpsilon1Transition:                   ; DATA XREF: ROM:0000D9C6   o  ; was: sub_E11C
-                tst.w   (word_FF8230).w
+                tst.w   (GameplayExitMode).w
                 bne.s   Stage17_InitializeEpsilon1Transition_Return
                 move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
                 jsr     (Stage_StartInterstageTransition).l
@@ -119,7 +119,7 @@ Stage17_UpdateEpsilon1Parallax_Active:                  ; CODE XREF: Stage17_Upd
 
 ; Start the post-Epsilon-1 planet transition
 Stage17_StartPlanetTransition:                          ; DATA XREF: ROM:0000D9D0   o  ; was: sub_E256
-                tst.w   (word_FF8230).w
+                tst.w   (GameplayExitMode).w
                 bne.w   Stage17_UpdateEpsilon1Parallax
                 move.w  #$8002,(PaletteFadeMode).w
                 clr.w   (PaletteFadeColorOffset).w
@@ -127,6 +127,6 @@ Stage17_StartPlanetTransition:                          ; DATA XREF: ROM:0000D9D
                 move.b  #$80,(GameplayControlFlags).w
                 bset    #2,(PaletteFadeControlFlags).w
                 move.w  #4,(SetupTransitionIndex).w
-                move.w  #4,(word_FF8230).w
+                move.w  #4,(GameplayExitMode).w
                 rts
 ; End of function Stage17_StartPlanetTransition

@@ -265,7 +265,7 @@ Collision_CheckWeaponProjectilesAgainstEnemies_SubtractFlaggedHealth:  ; CODE XR
                 clr.b   (byte_FF80EC).w
                 clr.w   (BossCombatCounter).w
                 clr.w   (BossCombatCounterMax).w
-                clr.b   (byte_FF8260).w
+                clr.b   (BossCounterMaxFlag).w
                 bsr.w   Results_IncrementDestroyedEnemyCountBCD
                 bra.w   Collision_CheckWeaponProjectilesAgainstEnemies_NextWeaponSlot
 ; ---------------------------------------------------------------------------
@@ -532,7 +532,7 @@ Collision_CheckSpecialAttackTargets_ApplyFlaggedDamage:  ; CODE XREF: Collision_
                 clr.b   (byte_FF80EC).w
                 clr.w   (BossCombatCounter).w
                 clr.w   (BossCombatCounterMax).w
-                clr.b   (byte_FF8260).w
+                clr.b   (BossCounterMaxFlag).w
                 bsr.w   Results_IncrementDestroyedEnemyCountBCD
                 bra.w   Collision_CheckSpecialAttackTargets_NextTarget
 ; ---------------------------------------------------------------------------

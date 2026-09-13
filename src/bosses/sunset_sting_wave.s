@@ -89,7 +89,7 @@ Boss_SunsetStingMergeWaveRowsLoop:                      ; CODE XREF: Boss_Sunset
 Boss_SunsetStingBuildWaveTransitionBuffer:              ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+16   j  ; was: loc_42996
                 swap    d0
                 move.w  d0,(HScrollBuffer).w
-                lea     (word_FF9CE0).w,a0
+                lea     (SunsetStingWaveOffsets).w,a0
                 moveq   #0,d0
                 move.w  #$158,d7
                 sub.w   $14(a3),d7

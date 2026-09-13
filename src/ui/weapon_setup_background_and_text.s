@@ -21,14 +21,14 @@ WeaponSetup_RenderBackgroundPhase:                      ; CODE XREF: WeaponSetup
                 andi.w  #$1E,d0
                 move.w  WeaponSetup_BackgroundPaletteColor1Cycle(pc,d0.w),(PaletteActiveColor62).w
                 move.w  WeaponSetup_BackgroundPaletteColor2Cycle(pc,d0.w),(PaletteActiveColor63).w
-                movea.w #(byte_FF9C1E-M68K_RAM),a0
+                movea.w #(WeaponSetupRasterLines-M68K_RAM),a0
                 moveq   #1,d0
                 move.w  #$60,d7                         ; '`'
 WeaponSetup_InitializeLineOffsetLoop:                   ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+66   j  ; was: loc_1F890
                 move.w  d0,(a0)+
                 subq.w  #2,d0
                 dbf     d7,WeaponSetup_InitializeLineOffsetLoop
-                movea.w #(byte_FF9C80-M68K_RAM),a0
+                movea.w #(WeaponSetupOffsetCenter-M68K_RAM),a0
                 move.l  (WeaponSetupBgPhase).w,d0
                 subi.l  #Z80_RAM,d0
                 move.l  d0,d1

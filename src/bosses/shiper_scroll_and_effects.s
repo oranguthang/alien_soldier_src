@@ -48,7 +48,7 @@ Boss_ShiperScrollUpdateCoordinates:                     ; CODE XREF: Boss_Shiper
                 move.w  d0,$10(a5)
                 moveq   #$17,d0
                 sub.w   $74(a5),d0
-                move.w  d0,(word_FF9E02).w
+                move.w  d0,(ShiperRasterControl).w
                 moveq   #0,d6
                 move.w  $70(a5),d6
                 subi.w  #$A8,d6

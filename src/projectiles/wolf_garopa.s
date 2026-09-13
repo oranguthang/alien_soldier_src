@@ -147,7 +147,7 @@ Boss_WolfGaropaOrbFacingUpdateReturn:                   ; CODE XREF: Boss_WolfGa
 ; End of function Boss_WolfGaropaUpdateOrbFacingFlag
 ; Lazily initialize attack effect A and load its graphics
 Boss_WolfGaropaTryLoadAttackEffectA:                    ; CODE XREF: Boss_WolfGaropaUpdateLaunchMotion+6   p  ; was: sub_503D2
-                tst.b   (byte_FF9DBA).w
+                tst.b   (WolfGaropaEffectActive).w
                 beq.s   Boss_WolfGaropaLoadAttackEffectA
 Boss_WolfGaropaAttackEffectAReturn:                     ; CODE XREF: Boss_WolfGaropaTryLoadAttackEffectA+E   j  ; was: locret_503D8
                 rts
@@ -155,7 +155,7 @@ Boss_WolfGaropaAttackEffectAReturn:                     ; CODE XREF: Boss_WolfGa
 Boss_WolfGaropaLoadAttackEffectA:                       ; CODE XREF: Boss_WolfGaropaTryLoadAttackEffectA+4   j  ; was: loc_503DA
                 cmpi.w  #$10,(PrimaryCameraXPosition).w
                 bpl.s   Boss_WolfGaropaAttackEffectAReturn
-                move.b  #1,(byte_FF9DBA).w
+                move.b  #1,(WolfGaropaEffectActive).w
                 moveq   #0,d0
                 move.w  #$E2,d1
                 bsr.w   Effect_InitializeWolfGaropaBoundaryPair
@@ -176,7 +176,7 @@ Boss_WolfGaropaAttackEffectAIndexedRowDescriptor:   dc.w    $4C50, $4000, $401, 
 
 ; Gate attack-effect-B initialization on its shared loaded flag
 Boss_WolfGaropaTryLoadAttackEffectB:                    ; CODE XREF: Boss_WolfGaropaUpdateUpperType424Sequence+1C   p  ; was: sub_50430
-                tst.b   (byte_FF9DBA).w
+                tst.b   (WolfGaropaEffectActive).w
                 beq.s   Boss_WolfGaropaLoadAttackEffectB
 Boss_WolfGaropaAttackEffectBReturn:                     ; CODE XREF: Boss_WolfGaropaLoadAttackEffectB+6   j  ; was: locret_50436
                 rts
@@ -185,7 +185,7 @@ Boss_WolfGaropaAttackEffectBReturn:                     ; CODE XREF: Boss_WolfGa
 Boss_WolfGaropaLoadAttackEffectB:                       ; CODE XREF: Boss_WolfGaropaTryLoadAttackEffectB+4   j  ; was: sub_50438
                 cmpi.w  #$10,(PrimaryCameraXPosition).w
                 bpl.s   Boss_WolfGaropaAttackEffectBReturn
-                move.b  #1,(byte_FF9DBA).w
+                move.b  #1,(WolfGaropaEffectActive).w
                 moveq   #1,d0
                 move.w  #$DE,d1
                 bsr.w   Effect_InitializeWolfGaropaBoundaryPair
@@ -201,7 +201,7 @@ Boss_WolfGaropaAttackEffectBIndexedRowDescriptor:   dc.w    $4458, $4000, $101, 
 
 ; Unreferenced loader for attack-effect graphics variant C
 Boss_WolfGaropaTryLoadAttackEffectC:                    ; was: sub_50470
-                tst.b   (byte_FF9DBA).w
+                tst.b   (WolfGaropaEffectActive).w
                 beq.s   Boss_WolfGaropaLoadAttackEffectC
 Boss_WolfGaropaAttackEffectCReturn:                     ; CODE XREF: Boss_WolfGaropaTryLoadAttackEffectC+E   j  ; was: locret_50476
                 rts
@@ -209,7 +209,7 @@ Boss_WolfGaropaAttackEffectCReturn:                     ; CODE XREF: Boss_WolfGa
 Boss_WolfGaropaLoadAttackEffectC:                       ; CODE XREF: Boss_WolfGaropaTryLoadAttackEffectC+4   j  ; was: loc_50478
                 cmpi.w  #$10,(PrimaryCameraXPosition).w
                 bpl.s   Boss_WolfGaropaAttackEffectCReturn
-                move.b  #1,(byte_FF9DBA).w
+                move.b  #1,(WolfGaropaEffectActive).w
                 lea     Boss_WolfGaropaAttackEffectCIndexedRowDescriptor(pc),a0
                 nop
                 jmp     Tilemap_QueueIndexedRows

@@ -105,7 +105,7 @@ UnreferencedSevenForcesCameraScrollUpdate:
 ; End of function UnreferencedSevenForcesCameraScrollUpdate
 ; Checks boss defeat and triggers stage transition
 UnreferencedSevenForcesBossTransitionCheck:
-                tst.w   (word_FF8230).w                 ; was: sub_EB7C
+                tst.w   (GameplayExitMode).w            ; was: sub_EB7C
                 bne.w   Stage_LateGameStateReturn
                 tst.w   (ScriptedInputActive).w
                 bne.w   Stage_LateGameStateReturn

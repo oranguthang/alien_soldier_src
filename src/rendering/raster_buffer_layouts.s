@@ -31,7 +31,7 @@ RasterBuffer_CopyXiTigerOffsets:                        ; DATA XREF: RasterBuffe
 ; Copies and expands the standard transition raster buffers
 RasterBuffer_CopyTransitionLayout:                      ; DATA XREF: ROM:00029E42   o  ; was: sub_29E66
                 movea.w #(word_FF9500-M68K_RAM),a2
-                movea.w #(word_FF9E00-M68K_RAM),a3
+                movea.w #(ActiveRasterBuffer-M68K_RAM),a3
                 moveq   #3,d7
                 bsr.w   RasterBuffer_Copy64ByteBlocks
                 movea.w #(word_FF9600-M68K_RAM),a2
@@ -42,7 +42,7 @@ RasterBuffer_CopyTransitionLayout:                      ; DATA XREF: ROM:00029E4
 ; Copies and expands the alternate transition raster buffers
 RasterBuffer_CopyAlternateTransitionLayout:             ; DATA XREF: ROM:00029E52   o  ; was: sub_29E82
                 movea.w #(word_FF9500-M68K_RAM),a2
-                movea.w #(word_FF9E00-M68K_RAM),a3
+                movea.w #(ActiveRasterBuffer-M68K_RAM),a3
                 moveq   #1,d7
                 bsr.w   RasterBuffer_Copy64ByteBlocks
                 movea.w #(word_FF9600-M68K_RAM),a2
@@ -52,48 +52,48 @@ RasterBuffer_CopyAlternateTransitionLayout:             ; DATA XREF: ROM:00029E5
 ; End of function RasterBuffer_CopyAlternateTransitionLayout
 ; Copies the story-transition raster layout
 RasterBuffer_CopyStoryTransitionLayout:                 ; DATA XREF: ROM:00029E4E   o  ; was: sub_29E9E
-                movea.w #(word_FF9C00-M68K_RAM),a2
-                movea.w #(word_FF9E00-M68K_RAM),a3
+                movea.w #(RasterStagingBuffer-M68K_RAM),a2
+                movea.w #(ActiveRasterBuffer-M68K_RAM),a3
                 moveq   #7,d7
                 bra.w   RasterBuffer_Copy64ByteBlocks
 ; End of function RasterBuffer_CopyStoryTransitionLayout
 ; Copies the weapon-setup raster layout
 RasterBuffer_CopyWeaponSetupLayout:                     ; DATA XREF: ROM:00029E44   o  ; was: sub_29EAC
-                movea.w #(word_FF9C00-M68K_RAM),a2
-                movea.w #(word_FF9E00-M68K_RAM),a3
+                movea.w #(RasterStagingBuffer-M68K_RAM),a2
+                movea.w #(ActiveRasterBuffer-M68K_RAM),a3
                 moveq   #3,d7
                 bra.w   RasterBuffer_Copy64ByteBlocks
 ; End of function RasterBuffer_CopyWeaponSetupLayout
 ; Copies the Flies-stage raster layout
 RasterBuffer_CopyFliesLayout:                           ; DATA XREF: ROM:00029E46   o  ; was: sub_29EBA
-                movea.w #(word_FF9C00-M68K_RAM),a2
-                movea.w #(word_FF9E00-M68K_RAM),a3
+                movea.w #(RasterStagingBuffer-M68K_RAM),a2
+                movea.w #(ActiveRasterBuffer-M68K_RAM),a3
                 moveq   #1,d7
                 bra.w   RasterBuffer_Copy64ByteBlocks
 ; End of function RasterBuffer_CopyFliesLayout
 ; Copies one raster control word into its active slot
 RasterBuffer_CopyControlWord:                           ; DATA XREF: ROM:00029E48   o  ; was: sub_29EC8
-                move.w  (word_FF9E02).w,(word_FF9E00).w
+                move.w  (ShiperRasterControl).w,(ActiveRasterBuffer).w
                 rts
 ; End of function RasterBuffer_CopyControlWord
 ; Copies the Flying Neo raster layout
 RasterBuffer_CopyFlyingNeoLayout:                       ; DATA XREF: ROM:00029E4A   o  ; was: sub_29ED0
                 movea.w #(word_FF9500-M68K_RAM),a2
-                movea.w #(word_FF9E00-M68K_RAM),a3
+                movea.w #(ActiveRasterBuffer-M68K_RAM),a3
                 moveq   #0,d7
                 bra.w   RasterBuffer_Copy64ByteBlocks
 ; End of function RasterBuffer_CopyFlyingNeoLayout
 ; Copies the shared boss-transition raster window
 RasterBuffer_CopyBossTransitionWindow:                  ; DATA XREF: ROM:00029E4C   o  ; was: sub_29EDE
                 movea.w #(byte_FF9520-M68K_RAM),a2
-                movea.w #(byte_FF9E1E-M68K_RAM),a3
+                movea.w #(BossTransitionRaster-M68K_RAM),a3
                 moveq   #2,d7
                 bra.w   RasterBuffer_Copy64ByteBlocks
 ; End of function RasterBuffer_CopyBossTransitionWindow
 ; Copies and expands the Game Over raster buffers
 RasterBuffer_CopyGameOverLayout:                        ; DATA XREF: ROM:00029E50   o  ; was: sub_29EEC
                 movea.w #(dword_FF9A00-M68K_RAM),a2
-                movea.w #(word_FF9C00-M68K_RAM),a3
+                movea.w #(RasterStagingBuffer-M68K_RAM),a3
                 moveq   #6,d7
                 bsr.w   RasterBuffer_Copy64ByteBlocks
                 movea.w #(GameOverRasterBuffer-M68K_RAM),a2
@@ -104,7 +104,7 @@ RasterBuffer_CopyGameOverLayout:                        ; DATA XREF: ROM:00029E5
 ; Copies and expands the shared stage-transition raster buffers
 RasterBuffer_CopyStageTransitionLayout:                 ; DATA XREF: ROM:00029E54   o  ; was: sub_29F08
                 movea.w #(dword_FF9A00-M68K_RAM),a2
-                movea.w #(word_FF9C00-M68K_RAM),a3
+                movea.w #(RasterStagingBuffer-M68K_RAM),a3
                 moveq   #3,d7
                 bsr.w   RasterBuffer_Copy64ByteBlocks
                 movea.w #(word_FF9800-M68K_RAM),a2
@@ -114,8 +114,8 @@ RasterBuffer_CopyStageTransitionLayout:                 ; DATA XREF: ROM:00029E5
 ; End of function RasterBuffer_CopyStageTransitionLayout
 ; Copies the Z-Leo raster control block
 RasterBuffer_CopyZLeoControlBlock:                      ; DATA XREF: ROM:00029E56   o  ; was: sub_29F24
-                movea.w #(word_FF9E00-M68K_RAM),a0
-                movea.w #(word_FF9E40-M68K_RAM),a1
+                movea.w #(ZLeoRasterBuildBuffer-M68K_RAM),a0
+                movea.w #(ZLeoRasterCommands-M68K_RAM),a1
                 moveq   #7,d7
 RasterBuffer_CopyZLeoControlBlock_Loop:                 ; CODE XREF: RasterBuffer_CopyZLeoControlBlock+C   j  ; was: loc_29F2E
                 move.l  (a0)+,(a1)+

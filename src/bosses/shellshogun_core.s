@@ -56,7 +56,7 @@ Boss_ShellshogunInitState:                              ; DATA XREF: Boss_Shells
                 jsr     (Object_ClearAllExceptTypes).l
                 clr.w   8(a5)
                 clr.w   $A(a5)
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
 Boss_ShellshogunInitializationWaitReturn:               ; CODE XREF: Boss_ShellshogunSetupPhase+4   j  ; was: locret_39570
                                         ; Boss_ShellshogunSetupPhase+C   j
                 rts
@@ -197,7 +197,7 @@ Boss_ShellshogunWaitForStageReadyReturn:                ; CODE XREF: Boss_Shells
 ; End of function Boss_ShellshogunWaitForStageReadyState
 ; Initializes the defeat launch when shared boss health reaches zero
 Boss_ShellshogunBeginDefeat:                            ; CODE XREF: Boss_ShellshogunMainHandler+24   j  ; was: sub_39778
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(byte_FF80EC).w
                 jsr     (Sprite_ClearObjectFlags).l

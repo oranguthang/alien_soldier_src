@@ -95,7 +95,7 @@ Sys_GameplayMainLoop_RequestExit:                       ; CODE XREF: Sys_Gamepla
 Sys_GameplayMainLoop_HandleTransition:                  ; CODE XREF: Sys_GameplayMainLoop+1B0   j  ; was: loc_1C816
                 bclr    #1,(PaletteFadeMaskStatus).w
                 beq.s   Sys_GameplayMainLoop_UpdateFrameTiming
-                move.w  (word_FF8230).w,d0
+                move.w  (GameplayExitMode).w,d0
                 beq.s   Sys_GameplayMainLoop_RequestExit
                 clr.w   (WeaponIconTransferState).w
                 cmpi.w  #1,d0

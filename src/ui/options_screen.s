@@ -108,7 +108,7 @@ UI_UpdateOptionsScreenActive:                           ; CODE XREF: UI_UpdateOp
                 bne.s   UI_UpdateOptionsScreenFrame
                 btst    #7,(ControllerPressedState).w
                 beq.s   UI_UpdateOptionsScreenFrame
-                move.b  #2,(byte_FF830E).w
+                move.b  #2,(SoundFadeOutDelay).w
                 move.b  #$C4,d0
                 jsr     (Sound_QueueRequest).l
                 move.w  #2,(PaletteFadeMode).w

@@ -83,7 +83,7 @@ Boss_Epsilon1BeginDefeatState:                          ; DATA XREF: ROM:00045D4
                 clr.b   (QuaternaryEntityStatus).w
                 addq.w  #2,4(a5)
                 move.w  #$80,$48(a5)
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 rts
 ; End of function Boss_Epsilon1BeginDefeatState
 ; Waits for both linked parts, then starts their destruction sequences

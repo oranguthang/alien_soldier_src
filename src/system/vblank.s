@@ -20,9 +20,9 @@ Int_VBlank_DebugDelayLoop:                              ; CODE XREF: VBLANK:Int_
 Int_VBlank_RunEffects:                                  ; CODE XREF: VBLANK+36   j  ; was: loc_ABC
                 jsr     (VBlank_DispatchRasterEffect).l
                 bsr.w   Gfx_ApplyHInterruptState
-                tst.b   (byte_FF830E).w
+                tst.b   (SoundFadeOutDelay).w
                 beq.s   Int_VBlank_UpdateFrameDivider
-                subq.b  #1,(byte_FF830E).w
+                subq.b  #1,(SoundFadeOutDelay).w
                 bne.s   Int_VBlank_UpdateFrameDivider
                 move.b  #1,(SoundRequestQueue+3).w
 Int_VBlank_UpdateFrameDivider:                          ; CODE XREF: VBLANK+50   j  ; was: loc_AD8

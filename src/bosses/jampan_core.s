@@ -561,7 +561,7 @@ Boss_JampanMoveToScreenThresholdReturn:                 ; CODE XREF: Boss_Jampan
 Boss_JampanWaitForStageMotionFlagState:                 ; DATA XREF: ROM:000491F2   o  ; was: sub_49898
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 addq.w  #8,(BossCombatCounter).w
-                btst    #0,(byte_FF8260).w
+                btst    #0,(BossCounterMaxFlag).w
                 beq.s   Boss_JampanWaitForStageMotionFlagReturn
                 move.w  #$40,$48(a5)                    ; '@'
                 move.w  #2,(SecondaryEntityWork52).w

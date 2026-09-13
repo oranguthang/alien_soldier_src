@@ -139,7 +139,7 @@ Stage19_UpdatePostJampanMessage_Return:                 ; CODE XREF: Stage19_Upd
 ; Start the post-Jampan interstage transition when both gates clear
 Stage19_StartPostJampanTransition:                      ; DATA XREF: ROM:0000E450   o  ; was: sub_E656
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
-                tst.w   (word_FF8230).w
+                tst.w   (GameplayExitMode).w
                 bne.s   Stage19_StartPostJampanTransition_Return
                 tst.w   (ScriptedInputActive).w
                 bne.s   Stage19_StartPostJampanTransition_Return
@@ -165,7 +165,7 @@ UnreferencedStage20Variant1_InitializeJampanPhase:      ; DATA XREF: ROM:0000E46
                 clr.b   (byte_FFA958).w
                 move.w  #$40,(CameraXLowerBound).w      ; '@'
                 move.w  #$80,(CameraXUpperBound).w
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 lea     (Boss_JampanAssetSet).l,a1
                 jmp     Boss_LoadAssetSet
 ; End of function UnreferencedStage20Variant1_InitializeJampanPhase
@@ -179,7 +179,7 @@ UnreferencedStage20Variant1_UpdateJampanPhase_Camera:   ; CODE XREF: Unreference
 ; End of function UnreferencedStage20Variant1_UpdateJampanPhase
 ; Start the variant 1 transition after both shared gates clear
 UnreferencedStage20Variant1_StartTransition:            ; DATA XREF: ROM:0000E464   o  ; was: sub_E6BA
-                tst.w   (word_FF8230).w
+                tst.w   (GameplayExitMode).w
                 bne.w   Stage_LateGameStateReturn
                 tst.w   (ScriptedInputActive).w
                 bne.w   Stage_LateGameStateReturn
@@ -192,7 +192,7 @@ UnreferencedStage20Variant2_InitializeEntity3ECPhase:   ; DATA XREF: ROM:0000E46
                 clr.b   (byte_FFA958).w
                 move.w  #$40,(CameraXLowerBound).w      ; '@'
                 move.w  #$80,(CameraXUpperBound).w
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 lea     (EntityType3ECAssetSet).l,a1
                 jmp     Boss_LoadAssetSet
 ; End of function UnreferencedStage20Variant2_InitializeEntity3ECPhase
@@ -206,7 +206,7 @@ UnreferencedStage20Variant2_UpdateEntity3ECPhase_Camera:  ; CODE XREF: Unreferen
 ; End of function UnreferencedStage20Variant2_UpdateEntity3ECPhase
 ; Start the variant 2 transition after both shared gates clear
 UnreferencedStage20Variant2_StartTransition:            ; DATA XREF: ROM:0000E46C   o  ; was: sub_E70A
-                tst.w   (word_FF8230).w
+                tst.w   (GameplayExitMode).w
                 bne.w   Stage_LateGameStateReturn
                 tst.w   (ScriptedInputActive).w
                 bne.w   Stage_LateGameStateReturn
@@ -220,7 +220,7 @@ UnreferencedStage20Variant3_InitializeEntity3F0Phase:   ; DATA XREF: ROM:0000E47
                 clr.b   (byte_FFA958).w
                 move.w  #$40,(CameraXLowerBound).w      ; '@'
                 move.w  #$80,(CameraXUpperBound).w
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 lea     (EntityType3F0AssetSet).l,a1
                 jmp     Boss_LoadAssetSet
 ; End of function UnreferencedStage20Variant3_InitializeEntity3F0Phase
@@ -234,7 +234,7 @@ UnreferencedStage20Variant3_UpdateEntity3F0Phase_Camera:  ; CODE XREF: Unreferen
 ; End of function UnreferencedStage20Variant3_UpdateEntity3F0Phase
 ; Start the variant 3 transition after both shared gates clear
 UnreferencedStage20Variant3_StartTransition:            ; DATA XREF: ROM:0000E474   o  ; was: sub_E760
-                tst.w   (word_FF8230).w
+                tst.w   (GameplayExitMode).w
                 bne.w   Stage_LateGameStateReturn
                 tst.w   (ScriptedInputActive).w
                 bne.w   Stage_LateGameStateReturn
@@ -248,7 +248,7 @@ UnreferencedStage20Variant4_InitializeEntity3F4Phase:   ; DATA XREF: ROM:0000E47
                 clr.b   (byte_FFA958).w
                 move.w  #$40,(CameraXLowerBound).w      ; '@'
                 move.w  #$80,(CameraXUpperBound).w
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 lea     (EntityType3F4AssetSet).l,a1
                 jmp     Boss_LoadAssetSet
 ; End of function UnreferencedStage20Variant4_InitializeEntity3F4Phase
@@ -262,7 +262,7 @@ UnreferencedStage20Variant4_UpdateEntity3F4Phase_Camera:  ; CODE XREF: Unreferen
 ; End of function UnreferencedStage20Variant4_UpdateEntity3F4Phase
 ; Start the variant 4 transition after both shared gates clear
 UnreferencedStage20Variant4_StartTransition:            ; DATA XREF: ROM:0000E47C   o  ; was: sub_E7B6
-                tst.w   (word_FF8230).w
+                tst.w   (GameplayExitMode).w
                 bne.w   Stage_LateGameStateReturn
                 tst.w   (ScriptedInputActive).w
                 bne.w   Stage_LateGameStateReturn

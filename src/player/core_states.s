@@ -15,7 +15,7 @@ Player_InitializeStats:                                 ; CODE XREF: Stage_Initi
                 move.b  #$81,$21(a5)
                 move.b  #$10,$23(a5)
                 move.l  #$EC24F60A,$28(a5)
-                move.w  #$78,(word_FF8304).w            ; 'x'
+                move.w  #$78,(PhoenixAttackStatus).w    ; 'x'
                 clr.b   $6B(a5)
                 clr.w   $9E(a5)
                 move.w  #$40,$5E(a5)                    ; '@'
@@ -165,8 +165,8 @@ Player_HandleDeathSequence:                             ; CODE XREF: Player_Upda
                 move.b  #$73,(PlayerInputMask).w        ; 's'
                 move.w  #$8000,(word_FF80E6).w
                 jsr     (Sys_ClearObjectBlocks17).l
-                move.b  #1,(word_FF8224).w
-                move.b  #1,(word_FF8224+1).w
+                move.b  #1,(PlayerAirDashUsedFlag).w
+                move.b  #1,(PlayerAirShotUsedFlag).w
                 move.w  #$36,4(a5)                      ; '6'
                 move.w  #$C100,2(a5)
                 bclr    #4,$E(a5)
@@ -226,8 +226,8 @@ Player_HandleRespawnGravity:                            ; DATA XREF: ROM:0001509
                 bclr    #0,(byte_FF826C).w
                 addi.l  #$3000,$1C(a5)
                 bmi.w   Player_HandleFallingState_UpdateTerrain
-                clr.b   (word_FF8224).w
-                clr.b   (word_FF8224+1).w
+                clr.b   (PlayerAirDashUsedFlag).w
+                clr.b   (PlayerAirShotUsedFlag).w
                 bra.w   Player_HandleFallingState_UpdateTerrain
 ; End of function Player_HandleDeathSequence
 ; Initializes player air movement state
@@ -235,7 +235,7 @@ Player_InitAirState:                                    ; CODE XREF: Player_Grou
                                         ; Player_DamageLandingRecoveryState+10   j
                 move.b  #$7F,(PlayerInputMask).w
                 bclr    #0,(byte_FF826C).w
-                clr.w   (word_FF8224).w
+                clr.w   (PlayerAirMoveUsedFlags).w
                 move.w  #0,4(a5)
                 clr.l   $18(a5)
                 clr.w   $48(a5)
@@ -372,7 +372,7 @@ Player_CheckDamageRecoveryInput:                        ; CODE XREF: Player_Grou
                 beq.s   Player_CheckDamageRecoveryInput_Return
                 move.w  (PlayerHealth).w,d0
                 sub.w   (PlayerMaxHealth).w,d0
-                move.w  d0,(word_FF8304).w
+                move.w  d0,(PhoenixAttackStatus).w
                 moveq   #1,d0
 Player_CheckDamageRecoveryInput_Return:                 ; CODE XREF: Player_CheckDamageRecoveryInput+6   j  ; was: locret_153BA
                                         ; Player_CheckDamageRecoveryInput+E   j
@@ -398,7 +398,7 @@ Player_InitJumpCancelState:                             ; CODE XREF: Player_Hand
 Player_InitJumpCancelCleanup:                           ; CODE XREF: Player_DashAttackState+84   j  ; was: loc_153DA
                                         ; Player_HandleSlideState+34   j
                 bclr    #0,(byte_FF826C).w
-                clr.w   (word_FF8224).w
+                clr.w   (PlayerAirMoveUsedFlags).w
                 move.w  #$E,4(a5)
                 move.w  #$A,$4A(a5)
                 move.w  #$FFFF,$C(a5)
@@ -447,7 +447,7 @@ Player_CheckAirStateTransition:                         ; CODE XREF: Player_Hand
 Player_InitAirJumpState:                                ; CODE XREF: Player_HandleLandingState+6C   j  ; was: sub_1546E
                                         ; Player_CheckWallCollisionJump+3A   j
                 move.b  #$7F,(PlayerInputMask).w
-                clr.w   (word_FF8224).w
+                clr.w   (PlayerAirMoveUsedFlags).w
                 move.w  #$A,4(a5)
                 clr.w   $48(a5)
                 move.w  #4,$5C(a5)
@@ -495,7 +495,7 @@ Player_AirMovement_Return:                              ; CODE XREF: Player_Hand
 Player_InitLandingState:                                ; CODE XREF: Player_AirborneDamageState+1E   j  ; was: sub_15502
                                         ; Player_HandleFallingState+50   j
                 move.b  #$7F,(PlayerInputMask).w
-                clr.w   (word_FF8224).w
+                clr.w   (PlayerAirMoveUsedFlags).w
                 move.w  #$16,4(a5)
                 move.w  #2,$48(a5)
                 move.w  #6,$4A(a5)

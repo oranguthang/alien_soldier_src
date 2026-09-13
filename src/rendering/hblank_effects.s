@@ -130,7 +130,7 @@ VBlank_InitBufferedVDPControlEffect:                    ; DATA XREF: VBlank_Disp
 VBlank_InitBufferedVDPControlEffect_ApplyRegisters:     ; CODE XREF: VBlank_InitBufferedVDPControlEffect+4   j  ; was: loc_1AB2
                 move.w  (VDPReg7Shadow).w,(VDP_CTRL).l
                 move.w  (VDPReg12Shadow).w,(VDP_CTRL).l
-                movea.w #(word_FF9C00-M68K_RAM),a6
+                movea.w #(RasterStagingBuffer-M68K_RAM),a6
                 rts
 ; End of function VBlank_InitBufferedVDPControlEffect
 ; ---------------------------------------------------------------------------
@@ -161,7 +161,7 @@ VBlank_InitDestroyerProtoVScrollEffect:                 ; DATA XREF: VBlank_Disp
 VBlank_InitDestroyerProtoVScrollEffect_SelectBuffer:    ; CODE XREF: VBlank_InitDestroyerProtoVScrollEffect+4   j  ; was: loc_1B0E
                 move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
                 move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
-                lea     (word_FF9C00).w,a6
+                lea     (RasterStagingBuffer).w,a6
                 rts
 ; End of function VBlank_InitDestroyerProtoVScrollEffect
 ; Installs Z-Leo's buffered raster-command handler and selects the command
@@ -179,7 +179,7 @@ VBlank_InitZLeoRasterEffect:                            ; DATA XREF: VBlank_Disp
 VBlank_InitZLeoRasterEffect_UpdateRegisters:            ; CODE XREF: VBlank_InitZLeoRasterEffect+4   j  ; was: loc_1B50
                 move.w  (VDPReg11Shadow).w,(VDP_CTRL).l
                 move.w  (VDPReg2Shadow).w,(VDP_CTRL).l
-                lea     (word_FF9E40).w,a6
+                lea     (ZLeoRasterCommands).w,a6
                 move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 rts
 ; End of function VBlank_InitZLeoRasterEffect

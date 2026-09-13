@@ -3,7 +3,7 @@ StageTransition_UpdateShieldViperVScroll:               ; CODE XREF: StageTransi
                                         ; StageTransition_UpdateShieldViperBackdrop+4   p
                 bsr.w   StageTransition_BuildBossBackdropLineOffsets
                 movea.w #(HScrollPlaneARow96-M68K_RAM),a1
-                movea.w #(word_FF9E00-M68K_RAM),a0
+                movea.w #(ActiveRasterBuffer-M68K_RAM),a0
                 moveq   #$7F,d7
 StageTransition_CopyShieldViperVScrollLoop:             ; CODE XREF: StageTransition_UpdateShieldViperVScroll+12   j  ; was: loc_FC82
                 move.w  (a0)+,(a1)
@@ -51,30 +51,30 @@ StageTransition_FillInterpolatedBackdropLineOffsets:    ; CODE XREF: StageTransi
 StageTransition_FillBackdropTailLineOffsets:            ; CODE XREF: StageTransition_BuildBossBackdropLineOffsets+5C   j  ; was: loc_FCE6
                 move.w  d1,-(a0)
                 dbf     d7,StageTransition_FillBackdropTailLineOffsets
-                move.w  (dword_FF9D96).w,d1
+                move.w  (BackdropLinePhase).w,d1
                 move.w  d1,-(a0)
                 rts
 ; End of function StageTransition_BuildBossBackdropLineOffsets
 ; Updates the shared Destroyer Proto and Shield Viper backdrop palette fade
 StageTransition_UpdateBossBackdropPaletteFade:          ; CODE XREF: StageTransition_InitializeDestroyerProtoBackdrop+12   p  ; was: sub_FCF4
                                         ; StageTransition_UpdateDestroyerProtoBackdropFade+8   p
-                tst.w   (word_FF9DAE).w
+                tst.w   (BossBackdropFadeLevel).w
                 bne.s   StageTransition_AdvanceBossBackdropPaletteFade
                 rts
 ; ---------------------------------------------------------------------------
 StageTransition_AdvanceBossBackdropPaletteFade:         ; CODE XREF: StageTransition_UpdateBossBackdropPaletteFade+4   j  ; was: loc_FCFC
                 btst    #0,(FrameCounter+1).w
                 bne.s   StageTransition_ApplyBossBackdropPaletteFade
-                subq.w  #1,(word_FF9DAE).w
+                subq.w  #1,(BossBackdropFadeLevel).w
 StageTransition_ApplyBossBackdropPaletteFade:           ; CODE XREF: StageTransition_BeginShieldViperFade+38   j  ; was: loc_FD08
                                         ; StageTransition_CompleteShieldViperFade   p
                 movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 move.w  #$E000,d7
-                move.w  (word_FF9DAE).w,d0
+                move.w  (BossBackdropFadeLevel).w,d0
                 moveq   #$3F,d5                         ; '?'
                 jsr     (Gfx_SetFadeParams).l
                 moveq   #0,d0
-                sub.w   (word_FF9DAE).w,d0
+                sub.w   (BossBackdropFadeLevel).w,d0
                 movea.w #(PaletteActiveColor32-M68K_RAM),a0
                 move.w  #$C000,d7
                 moveq   #$F,d5
@@ -97,11 +97,11 @@ StageTransition_CopyBossBackdropWorkspace:              ; CODE XREF: StageTransi
                 move.l  (a1)+,(a0)+
                 move.l  (a1)+,(a0)+
                 dbf     d7,StageTransition_CopyBossBackdropWorkspace
-                move.w  (dword_FF9DAA).w,d0
+                move.w  (BackdropPositionA).w,d0
                 subi.w  #$20,d0                         ; ' '
-                move.w  d0,(word_FF9D94).w
+                move.w  d0,(BackdropBandOffset).w
                 moveq   #$20,d0                         ; ' '
-                move.w  (dword_FF9DAA).w,d1
+                move.w  (BackdropPositionA).w,d1
                 asr.w   #1,d1
                 sub.w   d1,d0
                 move.w  d0,d2
@@ -109,14 +109,14 @@ StageTransition_CopyBossBackdropWorkspace:              ; CODE XREF: StageTransi
                 addi.w  #$20,d2                         ; ' '
                 move.w  #$80,d5
                 moveq   #$60,d6                         ; '`'
-                move.l  (dword_FF9D9E).w,d0
+                move.l  (BackdropVelocityB).w,d0
                 asr.l   #1,d0
-                move.l  (dword_FF9D96).w,d1
+                move.l  (BackdropLinePhase).w,d1
                 add.l   d0,d1
-                move.l  d1,(dword_FF9D96).w
+                move.l  d1,(BackdropLinePhase).w
                 swap    d1
-                movea.w #(byte_FF9B1E-M68K_RAM),a0
-                movea.w #(byte_FF981E-M68K_RAM),a1
+                movea.w #(BossBackdropBandBufferB-M68K_RAM),a0
+                movea.w #(BossBackdropBandBufferA-M68K_RAM),a1
                 moveq   #$17,d7
 StageTransition_FillBossBackdropBandBuffers:            ; CODE XREF: StageTransition_BuildBossBackdropRasterBuffers+82   j  ; was: loc_FD94
                 move.w  d3,d0
@@ -138,9 +138,9 @@ StageTransition_StoreBossBackdropBandValues:            ; CODE XREF: StageTransi
                 addq.w  #8,d2
                 subq.w  #8,d6
                 dbf     d7,StageTransition_FillBossBackdropBandBuffers
-                cmpi.w  #$60,(dword_FF9D90).w           ; '`'
+                cmpi.w  #$60,(BackdropRasterSpan).w     ; '`'
                 bpl.s   StageTransition_CalculateExpandedBackdropStep
-                move.w  (dword_FF9D90).w,d1
+                move.w  (BackdropRasterSpan).w,d1
                 bne.s   StageTransition_CalculateCompressedBackdropStep
                 move.l  #$FFFE0000,d0
                 bra.s   StageTransition_ConfigureBossBackdropRasterFill
@@ -155,7 +155,7 @@ StageTransition_CalculateCompressedBackdropStep:        ; CODE XREF: StageTransi
                 bra.s   StageTransition_ConfigureBossBackdropRasterFill
 ; ---------------------------------------------------------------------------
 StageTransition_CalculateExpandedBackdropStep:          ; CODE XREF: StageTransition_BuildBossBackdropRasterBuffers+8C   j  ; was: loc_FDE2
-                move.l  (dword_FF9D90).w,d0
+                move.l  (BackdropRasterSpan).w,d0
                 divu.w  #$3000,d0
                 subi.w  #$200,d0
                 neg.w   d0
@@ -164,21 +164,21 @@ StageTransition_CalculateExpandedBackdropStep:          ; CODE XREF: StageTransi
 StageTransition_ConfigureBossBackdropRasterFill:        ; CODE XREF: StageTransition_BuildBossBackdropRasterBuffers+9A   j  ; was: loc_FDF4
                                         ; StageTransition_BuildBossBackdropRasterBuffers+AE   j
                 moveq   #0,d1
-                move.w  (word_FF9D94).w,d1
+                move.w  (BackdropBandOffset).w,d1
                 neg.w   d1
                 swap    d1
-                move.w  (word_FF9D94).w,d2
+                move.w  (BackdropBandOffset).w,d2
                 andi.w  #$FFFE,d2
                 addi.w  #$8E,d2
                 addi.w  #-$6500,d2
                 movea.w d2,a0
-                move.w  (word_FF9D94).w,d2
+                move.w  (BackdropBandOffset).w,d2
                 andi.w  #$FFFE,d2
                 addi.w  #$8E,d2
                 addi.w  #-$6800,d2
                 movea.w d2,a2
-                movea.w #(byte_FF9E0E-M68K_RAM),a1
-                move.w  (word_FF9D94).w,d3
+                movea.w #(BossBackdropLeadBands-M68K_RAM),a1
+                move.w  (BackdropBandOffset).w,d3
                 neg.w   d3
                 moveq   #8,d7
 StageTransition_CopyBossBackdropLeadingBands:           ; CODE XREF: StageTransition_BuildBossBackdropRasterBuffers+108   j  ; was: loc_FE2E
@@ -188,8 +188,8 @@ StageTransition_CopyBossBackdropLeadingBands:           ; CODE XREF: StageTransi
                 move.w  (a1)+,d4
                 move.w  d4,(a2)+
                 dbf     d7,StageTransition_CopyBossBackdropLeadingBands
-                movea.w #(word_FF9E40-M68K_RAM),a1
-                move.w  (word_FF9D94).w,d2
+                movea.w #(BossBackdropBandSource-M68K_RAM),a1
+                move.w  (BackdropBandOffset).w,d2
                 neg.w   d2
                 move.w  #$9C00,d6
 StageTransition_FillBossBackdropRemainingBands:         ; CODE XREF: StageTransition_BuildBossBackdropRasterBuffers+132   j  ; was: loc_FE4C
@@ -212,18 +212,18 @@ StageTransition_BossBackdropRasterBuildReturn:          ; CODE XREF: StageTransi
 ; End of function StageTransition_BuildBossBackdropRasterBuffers
 ; Fills and queues the next Shield Viper backdrop tile row
 StageTransition_QueueShieldViperBackdropRow:            ; CODE XREF: StageTransition_UpdateShieldViperBackdrop+8   p  ; was: sub_FE68
-                movea.w #(byte_FF9B80-M68K_RAM),a0
+                movea.w #(ShieldViperBackdropRow-M68K_RAM),a0
                 movea.w a0,a1
                 moveq   #$3F,d7                         ; '?'
-                move.w  (word_FF9DFE).w,d0
+                move.w  (ShieldViperRowIndex).w,d0
                 addi.w  #-$7E2C,d0
 StageTransition_FillShieldViperBackdropRow:             ; CODE XREF: StageTransition_QueueShieldViperBackdropRow+12   j  ; was: loc_FE78
                 move.w  d0,(a1)+
                 dbf     d7,StageTransition_FillShieldViperBackdropRow
-                move.w  (word_FF9DFC).w,d0
+                move.w  (ShieldViperRowVRAMPos).w,d0
                 addi.w  #-$1800,d0
-                addi.w  #$80,(word_FF9DFC).w
-                addq.w  #1,(word_FF9DFE).w
+                addi.w  #$80,(ShieldViperRowVRAMPos).w
+                addq.w  #1,(ShieldViperRowIndex).w
                 move.w  #$8F02,d3
                 move.l  #$94009340,d4
                 jmp     VDP_QueueCommand_Build

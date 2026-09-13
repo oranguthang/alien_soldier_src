@@ -224,7 +224,7 @@ Stage12_UpdateScrollToExit:                             ; DATA XREF: ROM:0000D97
                 addq.w  #2,(StageStateOffset).w
                 move.w  #$80,(word_FF806E).w
                 move.w  #$8000,(word_FF808A).w
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 rts
 ; End of function Stage12_InitializeScroll
 ; Continue Stage 12 to the tile-asset handoff at camera X $15E0
@@ -474,7 +474,7 @@ Stage13_UpdateBugmaxEncounterCamera:                    ; CODE XREF: Stage13_Upd
 Stage13_StartPostBugmaxTransition:                      ; DATA XREF: ROM:0000D99A   o  ; was: sub_DE00
                 bsr.w   Scroll_UpdateSnakeBackground
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
-                tst.w   (word_FF8230).w
+                tst.w   (GameplayExitMode).w
                 bne.w   Stage_MidgameStateReturn
                 tst.w   (ScriptedInputActive).w
                 bne.w   Stage_MidgameStateReturn

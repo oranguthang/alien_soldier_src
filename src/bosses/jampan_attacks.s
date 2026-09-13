@@ -380,7 +380,7 @@ Boss_JampanFinishDefeatOffsetConvergence:               ; CODE XREF: Boss_Jampan
                 clr.l   (dword_FF9414).w
                 ori.w   #$8000,(SeventhEntityFlags).w
                 clr.b   $21(a5)
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 addq.w  #2,4(a5)
 Boss_JampanBeginDefeatReturn:                           ; CODE XREF: Boss_JampanBeginDefeatState+46   j
                 rts

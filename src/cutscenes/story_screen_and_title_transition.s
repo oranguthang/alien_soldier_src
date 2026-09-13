@@ -418,7 +418,7 @@ StoryTitle_CharacterRightAdvanceRow:                    ; was: loc_4E16
                 movea.l a2,a1
                 dbf     d6,StoryTitle_CharacterRightNextRow
 StoryTitle_BuildCenteredScrollOffsets:                  ; was: loc_4E20
-                lea     (word_FF9CE0).w,a0
+                lea     (StoryTitleScrollOffsets).w,a0
                 move.w  #$70,d0                         ; 'p'
                 move.w  #$70,d1                         ; 'p'
 StoryTitle_BuildRightScrollRun:                         ; was: loc_4E2C
@@ -435,7 +435,7 @@ StoryTitle_WriteRightScrollOffset:                      ; was: loc_4E32
                 bra.w   StoryTitle_BuildRightScrollRun
 ; ---------------------------------------------------------------------------
 StoryTitle_BuildLeftScrollOffsets:                      ; was: loc_4E4A
-                lea     (word_FF9CE0).w,a0
+                lea     (StoryTitleScrollOffsets).w,a0
                 move.w  #$6F,d0                         ; 'o'
                 move.w  #$6F,d1                         ; 'o'
 StoryTitle_BuildLeftScrollRun:                          ; was: loc_4E56

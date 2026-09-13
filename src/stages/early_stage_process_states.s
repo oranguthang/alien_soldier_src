@@ -357,7 +357,7 @@ Stage4_UpdateShiperCameraAndRasterRows:                 ; CODE XREF: Stage4_Wait
 ; Checks if stage transition is ready based on enemy and boss state
 Stage4_CheckShiperTransitionReady:                      ; DATA XREF: ROM:0000C876   o  ; was: sub_CB9E
                 bsr.s   Stage4_UpdateShiperCameraAndRasterRows
-                tst.w   (word_FF8230).w
+                tst.w   (GameplayExitMode).w
                 bne.s   Stage4_CheckShiperTransitionReady_Return
                 tst.w   (ScriptedInputActive).w
                 bne.s   Stage4_CheckShiperTransitionReady_Return
@@ -567,7 +567,7 @@ Stage7_UpdatePostTerobusterIntroCamera:                 ; CODE XREF: Stage7_Upda
 Stage7_UpdatePostTerobusterTransition:                  ; DATA XREF: ROM:0000C892   o  ; was: sub_CDBC
                 tst.w   (MessageSequenceState).w
                 bne.s   Stage7_UpdatePostTerobusterTransitionCamera
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 move.w  #4,(PlayerScriptStateOffset).w
                 addq.w  #2,(StageStateOffset).w
                 lea     Stage7_TerobusterIndexedRowCommandF0F1(pc),a0

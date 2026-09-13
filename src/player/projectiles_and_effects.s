@@ -155,9 +155,9 @@ Player_SpawnPhoenixParticles:
                 move.w  #$FFFF,$4A(a5)
                 btst    #4,$69(a5)
                 bne.w   Player_SpawnPhoenixParticles_Return
-                subq.w  #2,(word_FF8304).w
+                subq.w  #2,(PhoenixAttackStatus).w
                 bpl.s   Player_SpawnPhoenixParticles_CheckSoundFrame
-                clr.w   (word_FF8304).w
+                clr.w   (PhoenixAttackStatus).w
 Player_SpawnPhoenixParticles_CheckSoundFrame:           ; CODE XREF: Player_SpawnPhoenixParticles+1C   j  ; was: loc_175DA
                 move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0

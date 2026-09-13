@@ -62,27 +62,27 @@ UnreferencedShiftTransitionVScrollLoop:                 ; CODE XREF: Unreference
 ; Updates the segmented transition backdrop's motion and V-scroll pattern
 StageTransition_UpdateSegmentedBackdropScroll:          ; CODE XREF: StageTransition_InitializeAsteroidField+56   p  ; was: sub_FBA8
                                         ; StageTransition_StartAsteroidFieldScroll+4   p
-                tst.w   (dword_FF9DA2).w
+                tst.w   (BackdropVelocityA).w
                 bpl.s   StageTransition_DampenFirstBackdropVelocity
-                cmpi.l  #$FFFF8080,(dword_FF9DA2).w
+                cmpi.l  #$FFFF8080,(BackdropVelocityA).w
                 bmi.s   StageTransition_CheckSecondBackdropVelocity
 StageTransition_DampenFirstBackdropVelocity:            ; CODE XREF: StageTransition_UpdateSegmentedBackdropScroll+4   j  ; was: loc_FBB8
-                subi.l  #$40,(dword_FF9DA2).w           ; '@'
+                subi.l  #$40,(BackdropVelocityA).w      ; '@'
 StageTransition_CheckSecondBackdropVelocity:            ; CODE XREF: StageTransition_UpdateSegmentedBackdropScroll+E   j  ; was: loc_FBC0
-                tst.w   (dword_FF9D9E).w
+                tst.w   (BackdropVelocityB).w
                 bpl.s   StageTransition_DampenSecondBackdropVelocity
-                cmpi.l  #$FFFF8000,(dword_FF9D9E).w
+                cmpi.l  #$FFFF8000,(BackdropVelocityB).w
                 bmi.s   StageTransition_ApplySegmentedBackdropMotion
 StageTransition_DampenSecondBackdropVelocity:           ; CODE XREF: StageTransition_UpdateSegmentedBackdropScroll+1C   j  ; was: loc_FBD0
-                subi.l  #$40,(dword_FF9D9E).w           ; '@'
+                subi.l  #$40,(BackdropVelocityB).w      ; '@'
 StageTransition_ApplySegmentedBackdropMotion:           ; CODE XREF: StageTransition_UpdateDestroyerProtoBackdropFade+C   p  ; was: loc_FBD8
                                         ; StageTransition_UpdatePostDestroyerProtoScroll+4   p
-                move.l  (dword_FF9DA2).w,d0
-                add.l   d0,(dword_FF9DAA).w
-                add.l   d0,(dword_FF9DB2).w
-                move.l  (dword_FF9DA6).w,d0
-                add.l   (dword_FF9D9E).w,d0
-                move.l  d0,(dword_FF9DA6).w
+                move.l  (BackdropVelocityA).w,d0
+                add.l   d0,(BackdropPositionA).w
+                add.l   d0,(BackdropCameraYPos).w
+                move.l  (BackdropPositionB).w,d0
+                add.l   (BackdropVelocityB).w,d0
+                move.l  d0,(BackdropPositionB).w
                 swap    d0
                 move.w  d0,d1
                 move.w  d0,d2
@@ -96,7 +96,7 @@ StageTransition_ApplySegmentedBackdropMotion:           ; CODE XREF: StageTransi
                 asr.w   #4,d4
                 asr.w   #5,d5
                 asr.w   #6,d6
-                movea.w #(byte_FF9D80-M68K_RAM),a0
+                movea.w #(BackdropScrollPattern-M68K_RAM),a0
                 moveq   #1,d7
 StageTransition_BuildBackdropScrollPattern:             ; CODE XREF: StageTransition_UpdateSegmentedBackdropScroll+70   j  ; was: loc_FC10
                 move.w  d0,(a0)+
@@ -107,7 +107,7 @@ StageTransition_BuildBackdropScrollPattern:             ; CODE XREF: StageTransi
                 move.w  (VScrollPlaneBColumn0).w,d7
                 andi.w  #3,d7
                 asl.w   #1,d7
-                movea.w #(byte_FF9D80-M68K_RAM),a0
+                movea.w #(BackdropScrollPattern-M68K_RAM),a0
                 adda.w  d7,a0
                 move.w  (a0)+,d0
                 move.w  (a0)+,d1
@@ -132,7 +132,7 @@ StageTransition_FillSegmentedBackdropVScroll:           ; CODE XREF: StageTransi
                 move.w  d3,(a0)
                 addq.w  #4,a0
                 dbf     d7,StageTransition_FillSegmentedBackdropVScroll
-                move.l  (dword_FF9DB2).w,d0
+                move.l  (BackdropCameraYPos).w,d0
                 btst    #0,(FrameCounter+1).w
                 bne.s   StageTransition_StoreSegmentedBackdropOutput
                 asr.l   #1,d0

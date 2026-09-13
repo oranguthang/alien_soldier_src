@@ -249,12 +249,14 @@ PaletteEntryLists       equ     $FFFF821A               ; was: dword_FF821A
 MidgameLightningMode    equ     $FFFF821E               ; was: word_FF821E
 PalettePrimaryIndex     equ     $FFFF8220               ; was: word_FF8220
 PaletteSecondaryIndex   equ     $FFFF8222               ; was: word_FF8222
-word_FF8224             equ     $FFFF8224
+PlayerAirMoveUsedFlags  equ     $FFFF8224               ; was: word_FF8224
+PlayerAirDashUsedFlag   equ     PlayerAirMoveUsedFlags
+PlayerAirShotUsedFlag   equ     PlayerAirMoveUsedFlags+1
 DebugMenuStateOffset    equ     $FFFF8226               ; was: word_FF8226
 DebugSoundRequestId     equ     $FFFF8228               ; was: word_FF8228
 DebugResourceRefill     equ     $FFFF822A               ; was: word_FF822A
 ResultsTimeBonusBCD     equ     $FFFF822C               ; was: word_FF822C
-word_FF8230             equ     $FFFF8230
+GameplayExitMode        equ     $FFFF8230               ; was: word_FF8230
 StageNumberBCD          equ     $FFFF8232               ; was: byte_FF8232
 BossCombatCounter       equ     $FFFF8234               ; was: word_FF8234
 BossCombatCounterMax    equ     $FFFF8236               ; was: word_FF8236
@@ -270,7 +272,7 @@ ForcedPositionX         equ     $FFFF8250               ; was: word_FF8250
 ForcedPositionY         equ     $FFFF8252               ; was: word_FF8252
 ForcedPositionFlags     equ     $FFFF825C               ; was: byte_FF825C
 ContactDamageCooldown   equ     $FFFF825D               ; was: byte_FF825D
-byte_FF8260             equ     $FFFF8260
+BossCounterMaxFlag      equ     $FFFF8260               ; was: byte_FF8260
 HealthDeltaDisplayValue equ     $FFFF8262               ; was: word_FF8262
 TransientValueScreenX   equ     $FFFF8264               ; was: word_FF8264
 TransientValueScreenY   equ     $FFFF8266               ; was: word_FF8266
@@ -287,11 +289,11 @@ CirclingEnemyTileAttr   equ     $FFFF827A               ; was: word_FF827A
 SpecialTargetCount      equ     $FFFF829E               ; was: word_FF829E
 StageAssetCommandBuffer equ     $FFFF82A0               ; was: byte_FF82A0
 PlayerKnockbackXVel     equ     $FFFF8300               ; was: dword_FF8300
-word_FF8304             equ     $FFFF8304
+PhoenixAttackStatus     equ     $FFFF8304               ; was: word_FF8304
 LowTimeWarningTimer     equ     $FFFF8306               ; was: word_FF8306
 CombatHitFlags          equ     $FFFF8308               ; was: byte_FF8308
 StageMotionYDelta       equ     $FFFF830A               ; was: dword_FF830A
-byte_FF830E             equ     $FFFF830E
+SoundFadeOutDelay       equ     $FFFF830E               ; was: byte_FF830E
 PlayerInputMask         equ     $FFFF830F               ; was: byte_FF830F
 MessageAdvanceButtons   equ     $FFFF8310               ; was: byte_FF8310
 PlayerDashStopFlag      equ     $FFFF8311               ; was: byte_FF8311
@@ -414,7 +416,7 @@ word_FF9804             equ     $FFFF9804
 byte_FF9806             equ     $FFFF9806
 byte_FF9808             equ     $FFFF9808
 word_FF9810             equ     $FFFF9810
-byte_FF981E             equ     $FFFF981E
+BossBackdropBandBufferA equ     $FFFF981E               ; was: byte_FF981E
 word_FF9820             equ     $FFFF9820
 ResultsSummaryRowBuffer equ     $FFFF9852               ; was: word_FF9852
 word_FF9880             equ     $FFFF9880
@@ -427,33 +429,42 @@ dword_FF99A0            equ     $FFFF99A0
 dword_FF9A00            equ     $FFFF9A00
 byte_FF9A80             equ     $FFFF9A80
 byte_FF9B00             equ     $FFFF9B00
-byte_FF9B1E             equ     $FFFF9B1E
-byte_FF9B80             equ     $FFFF9B80
-word_FF9C00             equ     $FFFF9C00
-byte_FF9C04             equ     $FFFF9C04
-byte_FF9C1E             equ     $FFFF9C1E
-byte_FF9C80             equ     $FFFF9C80
-word_FF9CE0             equ     $FFFF9CE0
-byte_FF9D80             equ     $FFFF9D80
-dword_FF9D90            equ     $FFFF9D90
-word_FF9D94             equ     $FFFF9D94
-dword_FF9D96            equ     $FFFF9D96
-dword_FF9D9E            equ     $FFFF9D9E
-dword_FF9DA2            equ     $FFFF9DA2
-dword_FF9DA6            equ     $FFFF9DA6
-dword_FF9DAA            equ     $FFFF9DAA
-word_FF9DAE             equ     $FFFF9DAE
-word_FF9DB0             equ     $FFFF9DB0
-dword_FF9DB2            equ     $FFFF9DB2
-dword_FF9DB6            equ     $FFFF9DB6
-byte_FF9DBA             equ     $FFFF9DBA
-word_FF9DFC             equ     $FFFF9DFC
-word_FF9DFE             equ     $FFFF9DFE
-word_FF9E00             equ     $FFFF9E00
-word_FF9E02             equ     $FFFF9E02
-byte_FF9E0E             equ     $FFFF9E0E
-byte_FF9E1E             equ     $FFFF9E1E
-word_FF9E40             equ     $FFFF9E40
+BossBackdropBandBufferB equ     $FFFF9B1E               ; was: byte_FF9B1E
+ShieldViperBackdropRow  equ     $FFFF9B80               ; was: byte_FF9B80
+RasterStagingBuffer     equ     $FFFF9C00               ; was: word_FF9C00
+FlyCorridorRasterBuffer equ     RasterStagingBuffer
+ShieldViperXferBuffer   equ     RasterStagingBuffer
+RasterVScrollPairBuffer equ     $FFFF9C04               ; was: byte_FF9C04
+WeaponSetupRasterLines  equ     $FFFF9C1E               ; was: byte_FF9C1E
+WeaponSetupOffsetCenter equ     $FFFF9C80               ; was: byte_FF9C80
+SharedLineOffsetBuffer  equ     $FFFF9CE0               ; was: word_FF9CE0
+StoryTitleScrollOffsets equ     SharedLineOffsetBuffer
+SunsetStingWaveOffsets  equ     SharedLineOffsetBuffer
+SharedPatternBuffer     equ     $FFFF9D80               ; was: byte_FF9D80
+BackdropScrollPattern   equ     SharedPatternBuffer
+ShieldViperEffectBuffer equ     SharedPatternBuffer
+BackdropRasterSpan      equ     $FFFF9D90               ; was: dword_FF9D90
+BackdropBandOffset      equ     $FFFF9D94               ; was: word_FF9D94
+BackdropLinePhase       equ     $FFFF9D96               ; was: dword_FF9D96
+BackdropVelocityB       equ     $FFFF9D9E               ; was: dword_FF9D9E
+BackdropVelocityA       equ     $FFFF9DA2               ; was: dword_FF9DA2
+BackdropPositionB       equ     $FFFF9DA6               ; was: dword_FF9DA6
+BackdropPositionA       equ     $FFFF9DAA               ; was: dword_FF9DAA
+BossBackdropFadeLevel   equ     $FFFF9DAE               ; was: word_FF9DAE
+StageSceneDelayTimer    equ     $FFFF9DB0               ; was: word_FF9DB0
+BackdropCameraYPos      equ     $FFFF9DB2               ; was: dword_FF9DB2
+WolfGaropaBackdropYVel  equ     $FFFF9DB6               ; was: dword_FF9DB6
+WolfGaropaEffectActive  equ     $FFFF9DBA               ; was: byte_FF9DBA
+ShieldViperRowVRAMPos   equ     $FFFF9DFC               ; was: word_FF9DFC
+ShieldViperRowIndex     equ     $FFFF9DFE               ; was: word_FF9DFE
+ActiveRasterBuffer      equ     $FFFF9E00               ; was: word_FF9E00
+ZLeoRasterBuildBuffer   equ     ActiveRasterBuffer
+ShiperRasterControl     equ     $FFFF9E02               ; was: word_FF9E02
+BossBackdropLeadBands   equ     $FFFF9E0E               ; was: byte_FF9E0E
+BossTransitionRaster    equ     $FFFF9E1E               ; was: byte_FF9E1E
+RasterSecondaryBuffer   equ     $FFFF9E40               ; was: word_FF9E40
+ZLeoRasterCommands      equ     RasterSecondaryBuffer
+BossBackdropBandSource  equ     RasterSecondaryBuffer
 SharedRasterSplitPoint  equ     $FFFF9F00               ; was: byte_FF9F00
 BackdropLineOffsetsEnd  equ     SharedRasterSplitPoint
 WaveSineTableCenter     equ     SharedRasterSplitPoint

@@ -245,7 +245,7 @@ Boss_ShieldViperTertiaryPatternReturn:                  ; CODE XREF: Boss_Shield
 ; End of function Boss_ShieldViperUpdatePatternPhaseC
 ; Clears the 96-entry effect-pattern buffer
 Boss_ShieldViperClearPatternBuffer:                     ; CODE XREF: Gfx_ShieldViperPatternEffectMain+A   p  ; was: sub_4F83C
-                movea.w #(byte_FF9D80-M68K_RAM),a1
+                movea.w #(ShieldViperEffectBuffer-M68K_RAM),a1
                 move.w  #$5F,d7                         ; '_'
                 moveq   #0,d0
 Boss_ShieldViperClearNextPatternBufferEntry:            ; CODE XREF: Boss_ShieldViperClearPatternBuffer+C   j  ; was: loc_4F846
@@ -256,7 +256,7 @@ Boss_ShieldViperClearNextPatternBufferEntry:            ; CODE XREF: Boss_Shield
 ; Fills a selected range of the effect-pattern buffer
 Boss_ShieldViperFillPatternRange:                       ; CODE XREF: Boss_ShieldViperUpdatePatternPhaseA+28   j  ; was: sub_4F84E
                                         ; Boss_ShieldViperUpdatePatternPhaseB+38   j
-                movea.w #(byte_FF9D80-M68K_RAM),a1
+                movea.w #(ShieldViperEffectBuffer-M68K_RAM),a1
                 move.w  #$5F,d7                         ; '_'
                 move.l  #$8080808,d3
                 moveq   #0,d4
@@ -280,7 +280,7 @@ Boss_ShieldViperAdvancePatternBufferEntry:              ; CODE XREF: Boss_Shield
 ; End of function Boss_ShieldViperFillPatternRange
 ; Transfers the effect-pattern buffer to the rendering workspace
 Boss_ShieldViperTransferPatternBuffer:                  ; CODE XREF: Gfx_ShieldViperPatternEffectMain+38   p  ; was: sub_4F886
-                lea     (word_FF9C00).w,a0
+                lea     (ShieldViperXferBuffer).w,a0
                 move.w  #$3A80,d0
                 move.w  #$8F02,d3
                 move.l  #$940093C0,d4

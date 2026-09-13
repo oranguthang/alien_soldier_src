@@ -683,7 +683,7 @@ Boss_BackStringerApplyTrackingAngle:                    ; CODE XREF: Boss_BackSt
 ; End of function Boss_BackStringerTrackingAttackState
 ; Initializes defeat flags and emits the detached chain objects
 Boss_BackStringerDefeatInit:                            ; CODE XREF: Boss_BackStringerMain+22   j  ; was: sub_44E6E
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(byte_FF80EC).w
                 move.w  #8,(word_FF808C).w

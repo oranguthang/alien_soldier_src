@@ -19,7 +19,7 @@ Player_SpecialMoveRecoveryState:                        ; CODE XREF: Player_Hand
                 bne.w   Player_InitAirborneDamageKnockback
                 btst    #5,$6A(a5)
                 beq.s   Player_RenderSpecialMoveRecovery
-                tst.b   (word_FF8224).w
+                tst.b   (PlayerAirDashUsedFlag).w
                 bne.s   Player_SpecialMoveRecoveryState_SetFastVerticalVelocity
                 btst    #1,$69(a5)
                 bne.w   Player_InitiateDashAttack_UseGroundState
@@ -239,8 +239,8 @@ Player_KnockbackState:                                  ; DATA XREF: ROM:0001508
                 bpl.s   Player_KnockbackState_ApplyPhysics
                 bsr.w   Player_ClearKnockbackState
                 bsr.w   Player_InitFallState
-                move.b  #1,(word_FF8224).w
-                move.b  #1,(word_FF8224+1).w
+                move.b  #1,(PlayerAirDashUsedFlag).w
+                move.b  #1,(PlayerAirShotUsedFlag).w
                 bra.w   Player_HandleFallingState
 ; ---------------------------------------------------------------------------
 Player_KnockbackState_ApplyPhysics:                     ; CODE XREF: Player_KnockbackState+18   j  ; was: loc_1638C
@@ -281,7 +281,7 @@ Player_InitCeilingIdleState:                            ; CODE XREF: Player_Ceil
                                         ; Player_CeilingDashState+66   j
                 move.b  #$7F,(PlayerInputMask).w
                 bclr    #0,(byte_FF826C).w
-                clr.w   (word_FF8224).w
+                clr.w   (PlayerAirMoveUsedFlags).w
                 move.w  #$18,4(a5)
                 clr.l   $18(a5)
                 clr.w   $48(a5)

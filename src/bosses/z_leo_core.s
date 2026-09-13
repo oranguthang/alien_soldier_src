@@ -453,7 +453,7 @@ Boss_ZLeoBeginDefeatSequence:                           ; CODE XREF: Boss_ZLeoMa
                 move.w  #$FFFF,$C(a5)
                 move.w  #$C0,$11C(a5)
                 bsr.w   Boss_ZLeoLoadPrimaryTiles
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
 ; Run the initial defeat transition
 Boss_ZLeoRunDefeatTransition:                           ; DATA XREF: ROM:00051B88   o  ; was: loc_52096
                 subq.w  #1,$11C(a5)
@@ -546,7 +546,7 @@ Boss_ZLeoRestorePostDefeatUi:                           ; CODE XREF: Boss_ZLeoRu
                 move.w  #$E000,(PaletteFadeMaskStatus).w
                 move.b  #$80,(GameplayControlFlags).w
                 move.w  #2,(SetupTransitionIndex).w
-                move.w  #4,(word_FF8230).w
+                move.w  #4,(GameplayExitMode).w
                 jmp     Results_StoreStageCompletionTime
 ; End of function Boss_ZLeoRunPostDefeatDelay
 ; Inert post-defeat state

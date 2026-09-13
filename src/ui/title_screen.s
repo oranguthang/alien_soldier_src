@@ -111,7 +111,7 @@ TitleScreen_StoreSelection:                             ; CODE XREF: TitleScreen
 TitleScreen_CheckConfirm:                               ; CODE XREF: TitleScreen_Update+54   j  ; was: loc_94DA
                 btst    #7,(ControllerPressedState).w
                 beq.s   TitleScreen_UpdateAndRender
-                move.b  #2,(byte_FF830E).w
+                move.b  #2,(SoundFadeOutDelay).w
                 move.b  #$C4,d0
                 jsr     (Sound_QueueRequest).l
                 clr.w   (GameSubstateIndex).w

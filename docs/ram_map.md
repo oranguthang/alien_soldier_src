@@ -159,6 +159,7 @@ alone does not yet prove the exact player-facing counting convention.
 | `DisplayedBossHealth` | `$FFFF8206` | Stage and Xi-Tiger setup copy or initialize boss health here. The boss HUD approaches `BossHealth` in `$100` steps before rendering it. |
 | `BossCombatCounter` | `$FFFF8234` | Boss setup loads the stage-specific default, boss state machines adjust the current value, and the HUD clamps it against `BossCombatCounterMax`. |
 | `BossCombatCounterMax` | `$FFFF8236` | Setup initializes this from the same table entry as the mutable counter; the HUD retains it as the paired upper bound. |
+| `BossCounterMaxFlag` | `$FFFF8260` | The HUD clears this bit before clamping `BossCombatCounter`, sets it when the counter reaches its maximum, and boss transition states wait for that event. |
 
 These names describe the stable cross-subsystem role of the words, not a
 particular boss or cutscene. The Xi-Tiger transition reuses the same health
@@ -170,6 +171,7 @@ fields to seed its displayed state.
 |---|---:|---|
 | `SetupTransitionIndex` | `$FFFFA29C` | The weapon-setup updater uses even values as offsets into its seven-entry page/state table. The later transition dispatcher reuses values `0`, `2`, and `4` to select Xi-Tiger, the Z-Leo ending scene, or the shared ending sequence. |
 | `XiTigerConfigIndex` | `$FFFF814C` | The Xi-Tiger cutscene initializer writes zero, and stage initialization uses the word as an offset into the adjacent Xi-Tiger configuration table. Only the zero entry and zero writer are currently present in source. |
+| `GameplayExitMode` | `$FFFF8230` | Palette-fade completion maps zero, one, three, and the remaining nonzero values to distinct gameplay exits; stage, defeat, and ending paths publish those values before requesting the fade. |
 
 `SetupTransitionIndex` is deliberately named for both observed lifetimes. A
 narrow weapon-page or cutscene-route name would be false because the same RAM
@@ -645,7 +647,9 @@ loaded tile base with the active palette or orientation bits.
 | `ForcedPositionX` | `$FFFF8250` | Bugmax, Madam Barbar, Deep Strider, and Back Stringer contact paths publish an X coordinate that the player state copies directly. |
 | `ForcedPositionY` | `$FFFF8252` | The same contact paths publish the corresponding object-relative Y coordinate. |
 | `ForcedPositionFlags` | `$FFFF825C` | Bits zero and two request normal or immediate placement; bit one handshakes between the player state and the publishing contact object. |
+| `PlayerAirMoveUsedFlags` (`PlayerAirDashUsedFlag`, `PlayerAirShotUsedFlag`) | `$FFFF8224` | The two byte flags prevent another dash or special shot while the player remains in the same airborne action lifetime; grounded, landing, and reset states clear the pair. |
 | `PlayerKnockbackXVel` | `$FFFF8300` | Hostile collision records the damaging object's horizontal velocity; player knockback consumes it when nonzero and otherwise derives direction from facing. |
+| `PhoenixAttackStatus` | `$FFFF8304` | Full-health checks publish the signed health/max difference here; Phoenix dash paths require zero, then reuse the word as the `$78`-to-zero particle/status countdown. |
 | `CombatHitFlags` | `$FFFF8308` | Successful weapon collision publishes target status bits and a hit bit; Epsilon 1 consumes bits two and zero as forced-state and direction events. |
 | `StageMotionYDelta` | `$FFFF830A` | Stage 12 publishes the paired signed 16.16 vertical motion; shared physics and pickup movement consume it as global compensation. |
 | `HealthDeltaDisplayValue` | `$FFFF8262` | Damage sets bit 15 and pickups leave it clear; renderers consume the sign and lower three decimal digits. |
@@ -653,6 +657,7 @@ loaded tile base with the active palette or orientation bits.
 | `TransientValueScreenY` | `$FFFF8266` | Rendering moves this Y upward every other frame and clamps it at `$A0`. |
 | `HealthDeltaDisplayTimer` | `$FFFF8268` | Damage and pickups load `$30`; it paces HUD health convergence and expires the transient value. |
 | `WeaponSwitchRepeatTimer` | `$FFFF826A` | Player input parks the word at minus one while idle, reloads sixteen on a new weapon-switch press, and requests another switch after the repeat delay. |
+| `SoundFadeOutDelay` | `$FFFF830E` | Scene and boss-transition writers load one or two frames; VBlank decrements the byte and queues sound control request 1, the music fade-out command, when it expires. |
 
 ## Reviewed HUD DMA and debug tile buffers
 
@@ -748,6 +753,34 @@ repeats the resulting four-word group into `HorizontalScrollProfile`.
 | `SharpssteelTargetTail` | `$FFFF960A` | The attack selector loads this sixth blade-target history word into its active target field. |
 | `ResultsSummaryRowBuffer` | `$FFFF9852` | Results appends the three aggregate label/value rows from this exact workspace destination. |
 | `DestroyerMK2ScrollTable` | `$FFFF98B0` | Destroyer MK2 walks this word table while constructing its paired scroll-row effect. |
+| `BossBackdropBandBufferA` | `$FFFF981E` | The transition builder fills 96 words with the current fixed-point backdrop displacement, repeating each of 24 samples four times. |
+| `BossBackdropBandBufferB` | `$FFFF9B1E` | The paired 96-word band workspace receives bounded or fallback line values, likewise repeated four times per sample. |
+| `ShieldViperBackdropRow` | `$FFFF9B80` | The Shield Viper transition fills 64 tile words here and immediately submits this base to the VDP command builder. |
+| `RasterVScrollPairBuffer` | `$FFFF9C04` | The scene-transition VBlank initializer exposes this base to the installed HBlank routine, which consumes one longword as a two-word VSRAM pair per interrupt. |
+| `WeaponSetupRasterLines` | `$FFFF9C1E` | Weapon setup initializes 97 signed line offsets from this base before applying its animated dither displacement. |
+| `WeaponSetupOffsetCenter` | `$FFFF9C80` | Weapon setup uses this point as the signed-index center while building two phase-dependent offset tables inside the line workspace. |
+| `RasterStagingBuffer` (`FlyCorridorRasterBuffer`, `ShieldViperXferBuffer` overlays) | `$FFFF9C00` | Layout and HBlank paths use this common staging base; Stage 9 builds its fly-corridor rows here, while Shield Viper separately submits it as the rendering-transfer source. |
+| `SharedLineOffsetBuffer` (`StoryTitleScrollOffsets`, `SunsetStingWaveOffsets` overlays) | `$FFFF9CE0` | The story-title expansion and Sunset Sting wave transition independently construct line-offset runs from this same base. |
+| `SharedPatternBuffer` (`BackdropScrollPattern`, `ShieldViperEffectBuffer` overlays) | `$FFFF9D80` | The segmented transition uses the first eight words as a divided scroll pattern; Shield Viper separately clears and fills 96 longword effect entries from the same base. |
+| `BackdropRasterSpan` | `$FFFF9D90` | The boss-backdrop raster builder uses the signed 16.16 high word as its compressed/expanded span and derives the per-line interpolation step from the full value. |
+| `BackdropBandOffset` | `$FFFF9D94` | The builder derives this signed word from `BackdropPositionA` and uses it to place and index the active band windows. |
+| `BackdropLinePhase` | `$FFFF9D96` | The transition initializes this 16.16 line phase and advances it by half of `BackdropVelocityB` before emitting repeated band values. |
+| `BackdropVelocityA` | `$FFFF9DA2` | The segmented-transition updater clamps this 16.16 velocity, integrates it into `BackdropPositionA` and `BackdropCameraYPos`, and later decelerates it through zero. |
+| `BackdropVelocityB` | `$FFFF9D9E` | The paired 16.16 velocity is clamped independently and integrated into `BackdropPositionB`, whose high word generates the divided scroll pattern. |
+| `BackdropPositionA` | `$FFFF9DAA` | This 16.16 position drives the band offset and span geometry while the transition states reset or reduce it. |
+| `BackdropPositionB` | `$FFFF9DA6` | This 16.16 position accumulates `BackdropVelocityB`; its high word is successively divided into the segmented scroll pattern. |
+| `BackdropCameraYPos` | `$FFFF9DB2` | The updater integrates `BackdropVelocityA` into this 16.16 output and publishes it to `SecondaryCameraYPos`, with alternate-frame half-speed sampling. |
+| `BossBackdropFadeLevel` | `$FFFF9DAE` | Destroyer Proto and Shield Viper transition states initialize and decrement this word; the shared palette updater applies it with opposite signs to the full and upper palette ranges. |
+| `StageSceneDelayTimer` | `$FFFF9DB0` | Destroyer Proto and Missiray entry states load and count down this shared inter-state delay word. |
+| `WolfGaropaBackdropYVel` | `$FFFF9DB6` | The Wolf Garopa approach initializes this signed 16.16 vertical step, accelerates it upward, and subtracts it from the secondary backdrop camera position. |
+| `WolfGaropaEffectActive` | `$FFFF9DBA` | Wolf Garopa attack-effect loaders set this byte after creating their boundary pair; the boundary, boss states, and transition scroll all gate lifetime or phase changes on it. |
+| `ShieldViperRowVRAMPos` | `$FFFF9DFC` | The Shield Viper transition advances this word by `$80` after each queued 64-word backdrop row and passes the adjusted value as the VDP destination. |
+| `ShieldViperRowIndex` | `$FFFF9DFE` | Each queued Shield Viper row derives its repeated tile word from this index, increments it, and completes the row-build phase after twelve rows. |
+| `ActiveRasterBuffer` (`ZLeoRasterBuildBuffer` overlay) | `$FFFF9E00` | Layout copiers populate this common HBlank stream for several modes; Z-Leo builds its four eight-byte command segments here before they are copied to the secondary buffer. |
+| `ShiperRasterControl` | `$FFFF9E02` | Shiper derives this VScroll control word from its vertical extent, and the selected layout copies it into the first active raster word. |
+| `BossBackdropLeadBands` | `$FFFF9E0E` | The boss-backdrop builder reads the first nine word samples from here into the leading active raster bands. |
+| `BossTransitionRaster` | `$FFFF9E1E` | The raster-layout copier writes three 64-byte blocks from the transition workspace to this contextual destination. |
+| `RasterSecondaryBuffer` (`ZLeoRasterCommands`, `BossBackdropBandSource` overlays) | `$FFFF9E40` | Z-Leo copies and executes a 32-byte raster command stream here; the mutually exclusive boss-backdrop builder reads its remaining band samples from the same base. |
 | `SharedRasterSplitPoint` (`BackdropLineOffsetsEnd`, `WaveSineTableCenter` overlays) | `$FFFF9F00` | The transition backdrop builder writes 96 words backward from this boundary, while the wave generator writes 128 words in each direction around the same point. |
 | `XiTigerVScrollBuffer` | `$FFFF9FC0` | The raster-layout copier moves one 64-byte `CutsceneLineOffsetTable` block here, and the Xi-Tiger VBlank selector exposes this address to the installed HBlank writer. |
 | `Stage10HBlankScrollData` | `$FFFF9FF8` | Stage 10 VBlank writes two vertical-scroll words and one selected horizontal-scroll word here; the installed HBlank routine consumes those three words in order. |

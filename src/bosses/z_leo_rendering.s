@@ -246,7 +246,7 @@ Boss_ZLeoPrimaryTileLoadDescriptor: dc.w    $4820, $2000, $100, $1F20  ; was: wo
 ; Build four HBlank segments of VDP register writes in FF9E00
 Boss_ZLeoBuildHBlankRegisterBuffer:                     ; CODE XREF: Boss_ZLeoInit+50   p  ; was: sub_52806
                                         ; Boss_ZLeoIntroInit   p
-                movea.w #(word_FF9E00-M68K_RAM),a0
+                movea.w #(ZLeoRasterBuildBuffer-M68K_RAM),a0
                 move.w  (PrimaryCameraYPosition).w,d7
                 neg.w   d7
                 move.w  (Entity57YPos).w,d0

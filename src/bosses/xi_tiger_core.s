@@ -14,7 +14,7 @@ Boss_XiTigerMain:                                       ; DATA XREF: ROM:Entity_
                 bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(byte_FF80EC).w
                 jsr     (Sprite_ClearObjectFlags).l
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 move.w  #$FFFF,(MidgameLightningMode).w
                 bra.w   Boss_XiTigerBeginDefeatLeap
 ; ---------------------------------------------------------------------------

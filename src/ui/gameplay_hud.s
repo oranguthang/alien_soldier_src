@@ -72,7 +72,7 @@ UI_UpdateGameplayHUD_StoreStageTimerSeconds:            ; CODE XREF: UI_UpdateGa
                 move.b  d2,(StageTimeRemaining+1).w
 UI_UpdateGameplayHUD_UpdateBossHealthClamp:             ; CODE XREF: UI_UpdateGameplayHUD+74   j  ; was: loc_12C30
                                         ; UI_UpdateGameplayHUD+7C   j
-                bclr    #0,(byte_FF8260).w
+                bclr    #0,(BossCounterMaxFlag).w
                 move.w  (BossCombatCounter).w,d0
                 beq.s   UI_UpdateGameplayHUD_PrepareAlternatingSection
                 bpl.s   UI_UpdateGameplayHUD_CheckBossHealthMaximum
@@ -83,7 +83,7 @@ UI_UpdateGameplayHUD_CheckBossHealthMaximum:            ; CODE XREF: UI_UpdateGa
                 cmp.w   (BossCombatCounterMax).w,d0
                 bmi.s   UI_UpdateGameplayHUD_PrepareAlternatingSection
                 move.w  (BossCombatCounterMax).w,(BossCombatCounter).w
-                bset    #0,(byte_FF8260).w
+                bset    #0,(BossCounterMaxFlag).w
 UI_UpdateGameplayHUD_PrepareAlternatingSection:         ; CODE XREF: UI_UpdateGameplayHUD+D0   j  ; was: loc_12C56
                                         ; UI_UpdateGameplayHUD+D8   j
                 bsr.w   UI_QueuePendingWeaponStateIconTransfer
@@ -158,7 +158,7 @@ UI_UpdateGameplayHUD_FillCriticalHealthRow:             ; CODE XREF: UI_UpdateGa
 ; ---------------------------------------------------------------------------
 UI_UpdateGameplayHUD_CheckPlayerHealthFlash:            ; CODE XREF: UI_UpdateGameplayHUD+186   j  ; was: loc_12D10
                                         ; UI_UpdateGameplayHUD+190   j
-                tst.w   (word_FF8304).w
+                tst.w   (PhoenixAttackStatus).w
                 bne.s   UI_UpdateGameplayHUD_RenderPlayerHealthBar
                 btst    #1,(VBlankFrameCounter+1).w
                 bne.s   UI_UpdateGameplayHUD_RenderPlayerHealthBar

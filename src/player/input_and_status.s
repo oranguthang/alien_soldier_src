@@ -28,7 +28,7 @@ Player_UpdateWeaponSwitchTimer_UpdatePositionDelta:     ; CODE XREF: Player_Upda
                                         ; Player_UpdateWeaponSwitchTimer+14   j
                 move.w  (PlayerHealth).w,d0
                 sub.w   (PlayerMaxHealth).w,d0
-                move.w  d0,(word_FF8304).w
+                move.w  d0,(PhoenixAttackStatus).w
                 rts
 ; End of function Player_UpdateWeaponSwitchTimer
 ; Updates player direction bit from controller state
@@ -140,7 +140,7 @@ Effect_FindDashTrailSlot:                               ; CODE XREF: Effect_Crea
 ; Loads player sprite palette based on state
 Gfx_LoadPlayerPaletteData:                              ; CODE XREF: Player_Update+54   p  ; was: sub_16C6E
                                         ; sub_19DAE   p
-                tst.w   (word_FF8304).w
+                tst.w   (PhoenixAttackStatus).w
                 bne.s   Gfx_LoadPlayerPaletteData_SelectVariantA
                 move.w  (FrameCounter).w,d0
                 btst    #4,d0

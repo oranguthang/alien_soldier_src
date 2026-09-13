@@ -141,7 +141,7 @@ Projectile_SharpssteelCheckFallingShotDeflectionReturn:  ; CODE XREF: Projectile
 ; End of function Projectile_SharpssteelFallingShotMain
 ; Starts defeat presentation and initializes fourteen embedded type-$3BC fragments
 Boss_SharpssteelBeginDefeatFragmentBurst:               ; CODE XREF: Boss_SharpssteelMain+22   j  ; was: sub_48F62
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 clr.w   8(a5)
                 bset    #0,(StageTimerPauseFlag).w
                 move.w  #8,(word_FF808C).w

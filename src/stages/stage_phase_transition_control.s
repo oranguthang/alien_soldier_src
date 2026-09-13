@@ -1,7 +1,7 @@
 ; Starts the fade into the interstage transition
 Stage_StartInterstageTransition:                        ; CODE XREF: Stage_CheckTransitionReady+16   j  ; was: sub_10390
                                         ; Stage7_StartTransitionToStage8+1C   j
-                move.w  #3,(word_FF8230).w
+                move.w  #3,(GameplayExitMode).w
                 move.w  #2,(PaletteFadeMode).w
                 clr.w   (PaletteFadeColorOffset).w
                 move.w  #$E000,(PaletteFadeMaskStatus).w

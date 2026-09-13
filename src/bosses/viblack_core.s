@@ -333,7 +333,7 @@ Boss_ViblackShotAngleSequence:  dc.b    $50, $4C, $48, $44, $40, $3C, $38, $34, 
 
 ; Initializes defeat sequence
 Boss_ViblackDefeatInit:                                 ; CODE XREF: Boss_ViblackMain+3C   j  ; was: sub_43D62
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 move.w  #$C,4(a5)
                 bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(byte_FF80EC).w

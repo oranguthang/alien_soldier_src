@@ -6849,3 +6849,100 @@ Provenance rises from 15,901 to 15,908 mappings and the audit registry from
 13,101 to 13,108. The semantic review upper bound remains 3,100 because every
 new mapping has a matching record. The enforced address-derived ceiling falls
 from 150 to 143, all still confined to RAM equates.
+
+The raster-workspace pass replaces eight direct high-RAM anchors without
+claiming permanent ownership of the overlaid memory. The boss-transition
+builder fills paired 96-word band buffers at `$FFFF981E` and `$FFFF9B1E`, reads
+nine leading samples at `$FFFF9E0E`, and the layout copier installs a separate
+three-block transition window at `$FFFF9E1E`. Shield Viper fills and queues one
+64-word tile row at `$FFFF9B80`. The generic scene-transition HBlank path walks
+two-word VSRAM pairs from `$FFFF9C04`, while weapon setup initializes 97 signed
+line values from `$FFFF9C1E` and indexes around `$FFFF9C80` as the center of
+its two animated offset tables. The contextual names intentionally acknowledge
+that several of these ranges overlap in mutually exclusive display modes.
+
+The eight RAM aliases add provenance and exact-address audit mappings.
+Provenance rises from 15,908 to 15,916 mappings and the audit registry from
+13,108 to 13,116. The semantic review upper bound remains 3,100 because every
+new mapping has a matching record. The enforced address-derived ceiling falls
+from 143 to 135, all still confined to RAM equates.
+
+The transition-control pass names seven values adjacent to those raster
+workspaces. The physical `$FFFF9D80` range is named `SharedPatternBuffer`:
+the segmented backdrop uses its `BackdropScrollPattern` view for an eight-word
+divided pattern, while Shield Viper uses `ShieldViperEffectBuffer` for 96
+longword effect entries. Destroyer Proto and Shield Viper share a palette-fade level,
+while Destroyer Proto and Missiray share a scene-delay timer. The subsequent
+Wolf Garopa approach owns a fixed-point backdrop Y velocity and an activity
+flag shared by its three lazy effect loaders, boundary objects, boss states,
+and exit scroll. Shield Viper's row builder keeps a separate VDP destination
+and twelve-row index. Each name follows its complete static producer/consumer
+chain rather than assigning the entire overlaid `$FFFF9Dxx` region to one boss.
+
+The seven RAM aliases add provenance and exact-address audit mappings.
+Provenance rises from 15,916 to 15,923 mappings and the audit registry from
+13,116 to 13,123. The semantic review upper bound remains 3,100 because every
+new mapping has a matching record. The enforced address-derived ceiling falls
+from 135 to 128, all still confined to RAM equates.
+
+The backdrop-motion pass reconstructs the fixed-point state behind those
+buffers. Two independently clamped velocities integrate into positions A and
+B; velocity A also advances the published backdrop-camera Y position. Position
+A determines band placement, position B generates the progressively divided
+scroll pattern, and a separate line phase advances by half of velocity B. The
+raster span selects compressed or expanded interpolation, while the derived
+band offset places and indexes the active windows. The `A`/`B` suffixes are
+deliberately structural because static evidence proves the paired motion paths
+but not a more specific visual layer identity.
+
+The eight RAM aliases add provenance and exact-address audit mappings.
+Provenance rises from 15,923 to 15,931 mappings and the audit registry from
+13,123 to 13,131. The semantic review upper bound remains 3,100 because every
+new mapping has a matching record. The enforced address-derived ceiling falls
+from 128 to 120, all still confined to RAM equates.
+
+The active-raster pass replaces the final three raw anchors in the `$FFFF9Exx`
+stream without conflating its mutually exclusive modes. `ActiveRasterBuffer`
+is populated by several layout copiers and consumed by their HBlank handlers;
+Z-Leo uses a contextual build view there, then copies four eight-byte command
+segments into `RasterSecondaryBuffer`. The latter is executed through the
+`ZLeoRasterCommands` view, but the boss-transition builder independently reads
+band samples through `BossBackdropBandSource`. Shiper's adjacent staging word
+has its own complete producer and one-word layout consumer.
+
+The three RAM aliases add provenance and exact-address audit mappings.
+Provenance rises from 15,931 to 15,934 mappings and the audit registry from
+13,131 to 13,134. The semantic review upper bound remains 3,100 because every
+new mapping has a matching record. The enforced address-derived ceiling falls
+from 120 to 117, all still confined to RAM equates.
+
+The raster-staging pass replaces two more shared physical anchors. The
+`$FFFF9C00` base is selected by several layout and HBlank paths; Stage 9 builds
+fly-corridor rows there, while Shield Viper separately submits the same base as
+a transfer source. The `$FFFF9CE0` line-offset area is independently rebuilt by
+the story-title expansion and Sunset Sting wave transition. Neutral physical
+names and four contextual aliases preserve all of those proven uses without
+assigning either range to one scene.
+
+The two RAM aliases add provenance and exact-address audit mappings.
+Provenance rises from 15,934 to 15,936 mappings and the audit registry from
+13,134 to 13,136. The semantic review upper bound remains 3,100 because every
+new mapping has a matching record. The enforced address-derived ceiling falls
+from 117 to 115, all still confined to RAM equates.
+
+The gameplay-control pass resolves five low-RAM fields from their producers and
+consumers. `$FFFF8224` is a physical two-byte airborne-action pair, now exposed
+through separate dash-used and shot-used aliases instead of opaque `+1`
+addressing. `$FFFF8230` selects the game mode entered after the gameplay fade,
+and `$FFFF8260` is set by the HUD precisely when the boss combat counter reaches
+its maximum. `$FFFF8304` deliberately keeps the neutral `PhoenixAttackStatus`
+name because it first carries the signed health/max difference and is then
+reused as the Phoenix particle countdown. `$FFFF830E` counts VBlanks before
+submitting sound control request 1, which the driver dispatch proves is music
+fade-out.
+
+The five RAM definitions add provenance and exact-address audit mappings.
+Provenance rises from 15,936 to 15,941 mappings and the audit registry from
+13,136 to 13,141. The semantic review upper bound remains 3,100 because every
+new mapping has a matching record. The enforced address-derived ceiling falls
+from 115 to 110, all still confined to RAM equates.

@@ -7,7 +7,7 @@ Player_EndDashWithVerticalVelocity:                     ; CODE XREF: Player_Chec
 ; Ends dash attack and transitions to air state
 Player_EndDashState:                                    ; CODE XREF: Player_EndDashWithVerticalVelocity   p  ; was: sub_15C72
                                         ; Player_CeilingIdleState+12   j
-                clr.w   (word_FF8224).w
+                clr.w   (PlayerAirMoveUsedFlags).w
                 clr.w   $52(a5)
 ; Initializes end of air dash with gravity and velocity setup
 Player_InitAirDashEnd:                                  ; CODE XREF: Player_DashAttackState+62   j  ; was: loc_15C7A
@@ -30,7 +30,7 @@ Player_InitFallingTransition:                           ; CODE XREF: Player_Chec
                 move.w  #$C,$5C(a5)
                 move.w  #$FFFF,$48(a5)
                 move.w  #4,$4A(a5)
-                clr.w   (word_FF8224).w
+                clr.w   (PlayerAirMoveUsedFlags).w
                 move.b  #$7F,(PlayerInputMask).w
                 rts
 ; End of function Player_InitFallingTransition
@@ -87,12 +87,12 @@ Player_HandleFallingState_ProcessInput:                 ; CODE XREF: Player_Hand
                 beq.s   Player_HandleFallingState_SelectControl
                 btst    #1,$69(a5)
                 bne.s   Player_HandleFallingState_TryDashAttack
-                tst.b   (word_FF8224+1).w
+                tst.b   (PlayerAirShotUsedFlag).w
                 bne.s   Player_HandleFallingState_SelectControl
                 bra.w   Player_InitSpecialAttack
 ; ---------------------------------------------------------------------------
 Player_HandleFallingState_TryDashAttack:                ; CODE XREF: Player_HandleFallingState+94   j  ; was: loc_15D84
-                tst.b   (word_FF8224).w
+                tst.b   (PlayerAirDashUsedFlag).w
                 bne.s   Player_HandleFallingState_SelectControl
                 bra.w   Player_InitiateDashAttack_UseGroundState
 ; ---------------------------------------------------------------------------
@@ -298,7 +298,7 @@ Player_InitSpecialAttack:                               ; CODE XREF: Player_Hand
                 move.w  #$FFFF,$48(a5)
                 clr.w   $4A(a5)
                 move.w  #5,$4C(a5)
-                move.b  #1,(word_FF8224+1).w
+                move.b  #1,(PlayerAirShotUsedFlag).w
                 movea.w #(PlayerEffectObjectPool-M68K_RAM),a0
                 moveq   #7,d7
                 jsr     (Sys_ClearObjectBlocks96).l
@@ -339,7 +339,7 @@ Player_HandleSpecialAttack_ProcessInput:                ; CODE XREF: Player_Hand
                 bne.w   Player_InitAirborneDamageKnockback
                 btst    #5,$6A(a5)
                 beq.s   Player_HandleSpecialAttack_SelectFrame
-                tst.b   (word_FF8224).w
+                tst.b   (PlayerAirDashUsedFlag).w
                 bne.s   Player_HandleSpecialAttack_CancelToFall
                 btst    #1,$69(a5)
                 bne.w   Player_InitiateDashAttack_UseGroundState

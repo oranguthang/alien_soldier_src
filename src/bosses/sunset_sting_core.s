@@ -542,7 +542,7 @@ Boss_SunsetStingLoadTileTableEntry:                     ; CODE XREF: Boss_Sunset
 ; End of function Boss_SunsetStingLoadTileTableEntry
 ; Starts the early form's defeat transition when shared health reaches zero
 Boss_SunsetStingBeginEarlyFormDefeatState:              ; CODE XREF: Boss_SunsetStingUpdateGraphics+18   j  ; was: sub_4133E
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(byte_FF80EC).w
                 jsr     (Sprite_ClearObjectFlags).l

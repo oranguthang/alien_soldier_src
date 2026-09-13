@@ -67,7 +67,7 @@ Collision_PlayerWeaponVsEnemy_ApplyFlaggedDamage:       ; CODE XREF: Collision_P
                 clr.b   (byte_FF80EC).w
                 clr.w   (BossCombatCounter).w
                 clr.w   (BossCombatCounterMax).w
-                clr.b   (byte_FF8260).w
+                clr.b   (BossCounterMaxFlag).w
                 bsr.w   Results_IncrementDestroyedEnemyCountBCD
                 bra.w   Collision_PlayerWeaponVsEnemy_NextTarget
 ; ---------------------------------------------------------------------------

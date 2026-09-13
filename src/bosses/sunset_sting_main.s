@@ -83,7 +83,7 @@ Boss_SunsetStingInit:                                   ; DATA XREF: ROM:off_42A
                 move.w  #$1EC,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 move.w  #$1E0,$10(a5)
                 move.w  #$D8,$14(a5)
                 move.w  #$8D00,2(a5)
@@ -561,14 +561,14 @@ Boss_SunsetStingArenaTransitionSelectOscillationLimit:  ; CODE XREF: Boss_Sunset
                 neg.l   $58(a5)
 Boss_SunsetStingArenaTransitionCheckComplete:           ; CODE XREF: Boss_SunsetStingWaitForArenaTransitionState+52   j  ; was: loc_430F6
                 addq.w  #2,(BossCombatCounter).w
-                btst    #0,(byte_FF8260).w
+                btst    #0,(BossCounterMaxFlag).w
                 beq.w   Boss_SunsetStingReturn
                 move.w  #4,4(a5)
                 rts
 ; End of function Boss_SunsetStingWaitForArenaTransitionState
 ; Starts the defeat sequence and moves both core objects into alignment
 Boss_SunsetStingBeginDefeatState:                       ; DATA XREF: ROM:00042AAE   o  ; was: sub_4310C
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 clr.b   $21(a5)
                 clr.b   $23(a5)
                 jsr     (Gfx_UpdatePaletteFade).l

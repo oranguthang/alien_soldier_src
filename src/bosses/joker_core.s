@@ -362,7 +362,7 @@ Boss_JokerBeginInterruptWaitState:                      ; CODE XREF: Boss_JokerS
                 move.w  #$30,$11C(a5)                   ; '0'
 ; Waits for shared flag bit zero before selecting the next state
 Boss_JokerInterruptWaitState:                           ; DATA XREF: ROM:0003B30C   o  ; was: loc_3B704
-                bclr    #0,(byte_FF8260).w
+                bclr    #0,(BossCounterMaxFlag).w
                 bne.w   Boss_JokerSelectNextState
                 addi.w  #2,(BossCombatCounter).w
                 lea     Boss_JokerInterruptWaitPoseCommands(pc),a1

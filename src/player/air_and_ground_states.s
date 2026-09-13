@@ -5,7 +5,7 @@ Player_UpdateWeaponCharge:
                 beq.s   Player_UpdateWeaponCharge_Return
                 move.w  (PlayerHealth).w,d0
                 sub.w   (PlayerMaxHealth).w,d0
-                move.w  d0,(word_FF8304).w
+                move.w  d0,(PhoenixAttackStatus).w
                 moveq   #1,d0
 Player_UpdateWeaponCharge_Return:                       ; CODE XREF: Player_UpdateWeaponCharge+6   j  ; was: locret_164FA
                                         ; Player_UpdateWeaponCharge+E   j
@@ -72,7 +72,7 @@ Player_CeilingDashState_Render:                         ; CODE XREF: Player_Ceil
 Player_InitCrouchState:                                 ; CODE XREF: Player_CeilingLandingState+68   j  ; was: sub_165A4
                                         ; Player_InitWallKickState+3A   j
                 move.b  #$7F,(PlayerInputMask).w
-                clr.w   (word_FF8224).w
+                clr.w   (PlayerAirMoveUsedFlags).w
                 move.w  #$1E,4(a5)
                 clr.w   $48(a5)
                 move.w  #$10,$5C(a5)
@@ -121,7 +121,7 @@ Player_CeilingState_Return:                             ; CODE XREF: Player_Hand
 Player_InitCeilingLandingState:                         ; CODE XREF: Player_HandleFallingState+66   j  ; was: sub_1663A
                                         ; Player_HandleBounceState+3A   j
                 move.b  #$7F,(PlayerInputMask).w
-                clr.w   (word_FF8224).w
+                clr.w   (PlayerAirMoveUsedFlags).w
                 move.w  #$26,4(a5)                      ; '&'
                 bset    #4,$E(a5)
                 move.w  #2,$48(a5)
@@ -471,7 +471,7 @@ Player_HandleInvulnerabilityTimer:                      ; CODE XREF: Player_Upda
                 bmi.s   Player_HandleInvulnerabilityTimer_Return
                 subq.w  #1,$48(a5)
                 bne.s   Player_HandleInvulnerabilityTimer_SpawnSpark
-                move.w  #1,(word_FF8230).w
+                move.w  #1,(GameplayExitMode).w
                 move.w  #$8002,(PaletteFadeMode).w
                 clr.w   (PaletteFadeColorOffset).w
                 move.w  #$E000,(PaletteFadeMaskStatus).w

@@ -407,7 +407,7 @@ Boss_WolfGaropaConfigureUpperType424Sequence:           ; CODE XREF: Boss_WolfGa
 ; End of function Boss_WolfGaropaBeginUpperType424Sequence
 ; Run the upper type-$424 sequence and lazily initialize attack effect B
 Boss_WolfGaropaUpdateUpperType424Sequence:              ; DATA XREF: Boss_WolfGaropaUpdate+4A   o  ; was: sub_4FDC6
-                tst.b   (byte_FF9DBA).w
+                tst.b   (WolfGaropaEffectActive).w
                 bne.s   Boss_WolfGaropaUpdateUpperSequenceMotion
                 tst.w   $11C(a5)
                 bmi.w   Boss_WolfGaropaFinishUpperType424Sequence
@@ -416,7 +416,7 @@ Boss_WolfGaropaUpdateUpperType424Sequence:              ; DATA XREF: Boss_WolfGa
                 tst.w   (BossHealth).w
                 beq.w   Boss_WolfGaropaFinishUpperType424Sequence
                 bsr.w   Boss_WolfGaropaTryLoadAttackEffectB
-                tst.b   (byte_FF9DBA).w
+                tst.b   (WolfGaropaEffectActive).w
                 beq.s   Boss_WolfGaropaUpdateUpperSequenceMotion
                 subq.w  #1,$11C(a5)
 Boss_WolfGaropaUpdateUpperSequenceMotion:               ; CODE XREF: Boss_WolfGaropaUpdateUpperType424Sequence+4   j  ; was: loc_4FDF0
@@ -727,7 +727,7 @@ Boss_WolfGaropaUpdateLaunchMotion:                      ; DATA XREF: ROM:0004FE8
                 tst.w   $11E(a5)
                 bne.s   Boss_WolfGaropaAdvanceLaunchPose
                 bsr.w   Boss_WolfGaropaTryLoadAttackEffectA
-                tst.b   (byte_FF9DBA).w
+                tst.b   (WolfGaropaEffectActive).w
                 beq.s   Boss_WolfGaropaAdvanceLaunchPose
                 addq.w  #1,$11E(a5)
 Boss_WolfGaropaAdvanceLaunchPose:                       ; CODE XREF: Boss_WolfGaropaUpdateLaunchMotion+4   j  ; was: loc_501BA

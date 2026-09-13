@@ -14,7 +14,7 @@ Stage7_StartTransitionToStage8_Return:                  ; CODE XREF: Stage7_Star
                 rts
 ; ---------------------------------------------------------------------------
 Stage7_StartTransitionToStage8_CheckReady:              ; CODE XREF: Stage7_StartTransitionToStage8+4   j  ; was: loc_CE16
-                tst.w   (word_FF8230).w
+                tst.w   (GameplayExitMode).w
                 bne.s   Stage7_StartTransitionToStage8_Return
                 move.b  #$89,(PendingStageBGMRequest).w
                 move.l  #StageTransitionMessageSequence_TrainAndBugmax,(StageMessageCursor).w
@@ -223,7 +223,7 @@ Stage8_AdvanceFlyingNeoVerticalOscillation:             ; CODE XREF: Stage8_Init
 Stage8_StartPostFlyingNeoTransition:                    ; DATA XREF: ROM:0000C8AA   o  ; was: sub_D08E
                 tst.w   (MessageSequenceState).w
                 bne.w   Stage8_UpdateFlyingNeoEncounter
-                tst.w   (word_FF8230).w
+                tst.w   (GameplayExitMode).w
                 bne.s   Stage8_UpdateFlyingNeoEncounter
                 move.l  #StageTransitionMessageSequence_PostFlyingNeo,(StageMessageCursor).w
                 tst.w   (MessageSequenceState).w

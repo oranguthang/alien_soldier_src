@@ -57,7 +57,7 @@ Boss_TerobusterPartOscillation: dc.w    0, 2, 4, 2      ; DATA XREF: Boss_Terobu
 ; Initializes Terobuster boss clearing sprites and setting flags
 Boss_TerobusterInit:                                    ; DATA XREF: ROM:Boss_TerobusterStateHandlers   o  ; was: sub_385A4
                 addq.w  #2,4(a5)
-                move.b  #1,(byte_FF830E).w
+                move.b  #1,(SoundFadeOutDelay).w
                 move.w  #1,8(a5)
                 move.w  #$B4,d0
                 move.w  #$12C,d1

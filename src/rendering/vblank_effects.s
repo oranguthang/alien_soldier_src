@@ -54,7 +54,7 @@ VBlank_InitLettersVScrollEffect:                        ; DATA XREF: VBlank_Disp
                 move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 ; Branch target that loads buffer address for letters effect after initialization
 VBlank_InitLettersVScrollEffect_SelectBuffer:           ; CODE XREF: VBlank_InitLettersVScrollEffect+4   j  ; was: loc_1412
-                lea     (word_FF9E00).w,a6
+                lea     (ActiveRasterBuffer).w,a6
                 rts
 ; End of function VBlank_InitLettersVScrollEffect
 ; ---------------------------------------------------------------------------
@@ -87,7 +87,7 @@ VBlank_InitStage2DemoVScrollEffect:                     ; DATA XREF: VBlank_Disp
 VBlank_InitStage2DemoVScrollEffect_SelectBuffer:        ; CODE XREF: VBlank_InitStage2DemoVScrollEffect+4   j  ; was: loc_1468
                 move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
                 move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
-                lea     (word_FF9E00).w,a6
+                lea     (ActiveRasterBuffer).w,a6
                 rts
 ; End of function VBlank_InitStage2DemoVScrollEffect
 ; Initializes VBlank effect for flies stage
@@ -102,7 +102,7 @@ VBlank_InitFliesEffect:                                 ; DATA XREF: VBlank_Disp
                 ori.b   #$10,(VDPReg0Shadow+1).w
                 move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 VBlank_InitFliesEffect_SelectBuffer:                    ; CODE XREF: VBlank_InitFliesEffect+4   j  ; was: loc_14B0
-                lea     (word_FF9E00).w,a6
+                lea     (ActiveRasterBuffer).w,a6
                 rts
 ; End of function VBlank_InitFliesEffect
 ; Initializes VBlank effect for Xi-Tiger cutscene
@@ -133,7 +133,7 @@ VBlank_InitVScroll2Effect:                              ; DATA XREF: VBlank_Disp
                 ori.b   #$10,(VDPReg0Shadow+1).w
                 move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 VBlank_InitVScroll2Effect_SelectBuffer:                 ; CODE XREF: VBlank_InitVScroll2Effect+4   j  ; was: loc_1522
-                lea     (word_FF9E00).w,a6
+                lea     (ActiveRasterBuffer).w,a6
                 rts
 ; End of function VBlank_InitVScroll2Effect
 ; ---------------------------------------------------------------------------
@@ -180,7 +180,7 @@ HBlank_WriteSplitVScroll2AndStop_CopyLength:    dc.w    $20  ; DATA XREF: ROM:HB
 ; Writes the split value to VSRAM address two and postpones the next H interrupt
 HBlank_WriteSplitVScroll2AndStop:                       ; was: sub_15A0
                 move.l  #$40020010,(VDP_CTRL).l
-                move.w  (word_FF9E00).w,(VDP_DATA).l
+                move.w  (ActiveRasterBuffer).w,(VDP_DATA).l
                 move.w  #$8AFF,(VDP_CTRL).l
                 rte
 ; End of function HBlank_WriteSplitVScroll2AndStop
@@ -196,7 +196,7 @@ Effect_InitTransitionFade:                              ; DATA XREF: VBlank_Disp
                 ori.b   #$10,(VDPReg0Shadow+1).w
                 move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 Effect_InitTransitionFade_SelectBuffer:                 ; CODE XREF: Effect_InitTransitionFade+4   j  ; was: loc_15EE
-                lea     (word_FF9E00).w,a6
+                lea     (ActiveRasterBuffer).w,a6
                 rts
 ; End of function Effect_InitTransitionFade
 ; Installs the alternate buffered VScroll writer for the fade transition
@@ -211,7 +211,7 @@ VBlank_InitFadeTransition:                              ; DATA XREF: VBlank_Disp
                 ori.b   #$10,(VDPReg0Shadow+1).w
                 move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 VBlank_InitFadeTransition_SelectBuffer:                 ; CODE XREF: VBlank_InitFadeTransition+4   j  ; was: loc_1626
-                lea     (word_FF9E00).w,a6
+                lea     (ActiveRasterBuffer).w,a6
                 rts
 ; End of function VBlank_InitFadeTransition
 ; Initializes VBlank effect for Flying-Neo battle
@@ -227,7 +227,7 @@ VBlank_InitFlyingNeoEffect:                             ; DATA XREF: VBlank_Disp
                 move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 ; Loads buffer address for Flying Neo stage VBlank effect after initialization
 VBlank_InitFlyingNeoEffect_SelectBuffer:                ; CODE XREF: VBlank_InitFlyingNeoEffect+4   j  ; was: loc_165C
-                lea     (word_FF9E00).w,a6
+                lea     (ActiveRasterBuffer).w,a6
                 rts
 ; End of function VBlank_InitFlyingNeoEffect
 ; Initializes Sunset Sting VBlank effect
@@ -242,7 +242,7 @@ VBlank_InitSunsetStingEffect:                           ; DATA XREF: VBlank_Disp
                 ori.b   #$10,(VDPReg0Shadow+1).w
                 move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 VBlank_InitSunsetStingEffect_SelectBuffer:              ; CODE XREF: VBlank_InitSunsetStingEffect+4   j  ; was: loc_1694
-                lea     (word_FF9C00).w,a6
+                lea     (RasterStagingBuffer).w,a6
                 rts
 ; End of function VBlank_InitSunsetStingEffect
 ; Installs the story-screen HBlank plane/scroll update
@@ -299,7 +299,7 @@ VBlank_InitScrollEffect:                                ; DATA XREF: VBlank_Disp
                 ori.b   #$10,(VDPReg0Shadow+1).w
                 move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 VBlank_InitScrollEffect_SelectBuffer:                   ; CODE XREF: VBlank_InitScrollEffect+4   j  ; was: loc_175E
-                movea.w #(byte_FF9C04-M68K_RAM),a6
+                movea.w #(RasterVScrollPairBuffer-M68K_RAM),a6
                 rts
 ; End of function VBlank_InitScrollEffect
 ; ---------------------------------------------------------------------------

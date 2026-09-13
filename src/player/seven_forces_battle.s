@@ -48,7 +48,7 @@ Player_ResetSevenForcesBattleState:                     ; CODE XREF: Player_Seve
                                         ; Player_SevenForcesState2+22   j
                 move.b  #$7F,(PlayerInputMask).w
                 bclr    #0,(byte_FF826C).w
-                clr.w   (word_FF8224).w
+                clr.w   (PlayerAirMoveUsedFlags).w
                 move.w  #0,4(a5)
                 clr.l   $18(a5)
                 clr.w   $48(a5)
@@ -166,7 +166,7 @@ Player_TryStartSevenForcesDash:                         ; CODE XREF: Player_Seve
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.b  #$A6,d0
                 jsr     (Sound_PlaySFX).l
-                move.b  #1,(word_FF8224).w
+                move.b  #1,(PlayerAirDashUsedFlag).w
                 move.w  #$C,$50(a5)
                 clr.w   $12(a5)
                 clr.l   $18(a5)
@@ -187,20 +187,20 @@ Player_StartSevenForcesDashRight:                       ; CODE XREF: Player_TryS
                 move.l  #$78000,$48(a5)
                 bset    #3,$E(a5)
 Player_StartSevenForcesDashProjectile:                  ; CODE XREF: Player_TryStartSevenForcesDash+64   j  ; was: loc_19FE4
-                tst.w   (word_FF8304).w
+                tst.w   (PhoenixAttackStatus).w
                 bne.s   Player_StartSevenForcesDashAlternateProjectile
                 btst    #7,(byte_FF8245).w
                 bne.s   Player_StartSevenForcesDashAlternateProjectile
                 jsr     (Player_SpawnProjectile).l
                 move.l  #Player_PhoenixAndTeleportDashSpriteMapping,8(a5)
-                move.w  #$78,(word_FF8304).w            ; 'x'
+                move.w  #$78,(PhoenixAttackStatus).w    ; 'x'
                 moveq   #1,d0
                 rts
 ; ---------------------------------------------------------------------------
 Player_StartSevenForcesDashAlternateProjectile:         ; CODE XREF: Player_TryStartSevenForcesDash+78   j  ; was: loc_1A00A
                                         ; Player_TryStartSevenForcesDash+80   j
                 move.l  #Player_PhoenixDashAttackSpriteMapping,8(a5)
-                move.w  #$78,(word_FF8304).w            ; 'x'
+                move.w  #$78,(PhoenixAttackStatus).w    ; 'x'
                 moveq   #1,d0
 Player_TryStartSevenForcesDashReturn:                   ; CODE XREF: Player_TryStartSevenForcesDash+6   j  ; was: locret_1A01A
                 rts
@@ -216,7 +216,7 @@ Player_EndSevenForcesDash:                              ; CODE XREF: Player_Seve
                 bclr    #0,(byte_FF826C).w
                 bclr    #6,$21(a5)
                 bclr    #4,$23(a5)
-                clr.w   (word_FF8224).w
+                clr.w   (PlayerAirMoveUsedFlags).w
                 bra.w   Player_ResetSevenForcesBattleState
 ; ---------------------------------------------------------------------------
 Player_UpdateSevenForcesDash:                           ; CODE XREF: Player_SevenForcesDashState6+A   j  ; was: loc_1A046
