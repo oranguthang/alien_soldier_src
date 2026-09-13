@@ -272,32 +272,32 @@ Player_KnockbackPrimarySpriteArtPiece01:        binclude "data/artunc/sprite_F7A
 Player_KnockbackPrimarySpriteArtPiece01_End:            ; was: sprite_F7AF4_End
 Player_KnockbackPrimarySpriteArtPiece00:        binclude "data/artunc/sprite_F7B76.bin"  ; was: sprite_F7B76
 Player_KnockbackPrimarySpriteArtPiece00_End:            ; was: sprite_F7B76_End
-Player_DefeatPrimarySpriteArt00Piece03:         binclude "data/artunc/sprite_F7C78.bin"  ; was: sprite_F7C78
-Player_DefeatPrimarySpriteArt00Piece03_End:             ; was: sprite_F7C78_End
-Player_DefeatPrimarySpriteArt00Piece01:         binclude "data/artunc/sprite_F7D7A.bin"  ; was: sprite_F7D7A
-Player_DefeatPrimarySpriteArt00Piece01_End:             ; was: sprite_F7D7A_End
-Player_DefeatPrimarySpriteArt00Piece02:         binclude "data/artunc/sprite_F7DBC.bin"  ; was: sprite_F7DBC
-Player_DefeatPrimarySpriteArt00Piece02_End:             ; was: sprite_F7DBC_End
-Player_DefeatPrimarySpriteArt00Piece00:         binclude "data/artunc/sprite_F7EBE.bin"  ; was: sprite_F7EBE
-Player_DefeatPrimarySpriteArt00Piece00_End:             ; was: sprite_F7EBE_End
-Player_DefeatPrimarySpriteArt01Piece02:         binclude "data/artunc/sprite_F7F00.bin"  ; was: sprite_F7F00
-Player_DefeatPrimarySpriteArt01Piece02_End:             ; was: sprite_F7F00_End
-Player_DefeatPrimarySpriteArt01Piece01:         binclude "data/artunc/sprite_F8102.bin"  ; was: sprite_F8102
-Player_DefeatPrimarySpriteArt01Piece01_End:             ; was: sprite_F8102_End
-Player_DefeatPrimarySpriteArt01Piece00:         binclude "data/artunc/sprite_F8124.bin"  ; was: sprite_F8124
-Player_DefeatPrimarySpriteArt01Piece00_End:             ; was: sprite_F8124_End
-Player_DefeatPrimarySpriteArt02Piece01:         binclude "data/artunc/sprite_F8166.bin"  ; was: sprite_F8166
-Player_DefeatPrimarySpriteArt02Piece01_End:             ; was: sprite_F8166_End
-Player_DefeatPrimarySpriteArt02Piece00:         binclude "data/artunc/sprite_F8368.bin"  ; was: sprite_F8368
-Player_DefeatPrimarySpriteArt02Piece00_End:             ; was: sprite_F8368_End
-Player_DefeatPrimarySpriteArt03Piece03:         binclude "data/artunc/sprite_F83AA.bin"  ; was: sprite_F83AA
-Player_DefeatPrimarySpriteArt03Piece03_End:             ; was: sprite_F83AA_End
-Player_DefeatPrimarySpriteArt03Piece02:         binclude "data/artunc/sprite_F85AC.bin"  ; was: sprite_F85AC
-Player_DefeatPrimarySpriteArt03Piece02_End:             ; was: sprite_F85AC_End
-Player_DefeatPrimarySpriteArt03Piece01:         binclude "data/artunc/sprite_F85CE.bin"  ; was: sprite_F85CE
-Player_DefeatPrimarySpriteArt03Piece01_End:             ; was: sprite_F85CE_End
-Player_DefeatPrimarySpriteArt03Piece00:         binclude "data/artunc/sprite_F8610.bin"  ; was: sprite_F8610
-Player_DefeatPrimarySpriteArt03Piece00_End:             ; was: sprite_F8610_End
+Player_CounterForcePrimarySpriteArt00Piece03:   binclude "data/artunc/sprite_F7C78.bin"  ; was: sprite_F7C78
+Player_CounterForcePrimarySpriteArt00Piece03_End:       ; was: sprite_F7C78_End
+Player_CounterForcePrimarySpriteArt00Piece01:   binclude "data/artunc/sprite_F7D7A.bin"  ; was: sprite_F7D7A
+Player_CounterForcePrimarySpriteArt00Piece01_End:       ; was: sprite_F7D7A_End
+Player_CounterForcePrimarySpriteArt00Piece02:   binclude "data/artunc/sprite_F7DBC.bin"  ; was: sprite_F7DBC
+Player_CounterForcePrimarySpriteArt00Piece02_End:       ; was: sprite_F7DBC_End
+Player_CounterForcePrimarySpriteArt00Piece00:   binclude "data/artunc/sprite_F7EBE.bin"  ; was: sprite_F7EBE
+Player_CounterForcePrimarySpriteArt00Piece00_End:       ; was: sprite_F7EBE_End
+Player_CounterForcePrimarySpriteArt01Piece02:   binclude "data/artunc/sprite_F7F00.bin"  ; was: sprite_F7F00
+Player_CounterForcePrimarySpriteArt01Piece02_End:       ; was: sprite_F7F00_End
+Player_CounterForcePrimarySpriteArt01Piece01:   binclude "data/artunc/sprite_F8102.bin"  ; was: sprite_F8102
+Player_CounterForcePrimarySpriteArt01Piece01_End:       ; was: sprite_F8102_End
+Player_CounterForcePrimarySpriteArt01Piece00:   binclude "data/artunc/sprite_F8124.bin"  ; was: sprite_F8124
+Player_CounterForcePrimarySpriteArt01Piece00_End:       ; was: sprite_F8124_End
+Player_CounterForcePrimarySpriteArt02Piece01:   binclude "data/artunc/sprite_F8166.bin"  ; was: sprite_F8166
+Player_CounterForcePrimarySpriteArt02Piece01_End:       ; was: sprite_F8166_End
+Player_CounterForcePrimarySpriteArt02Piece00:   binclude "data/artunc/sprite_F8368.bin"  ; was: sprite_F8368
+Player_CounterForcePrimarySpriteArt02Piece00_End:       ; was: sprite_F8368_End
+Player_CounterForcePrimarySpriteArt03Piece03:   binclude "data/artunc/sprite_F83AA.bin"  ; was: sprite_F83AA
+Player_CounterForcePrimarySpriteArt03Piece03_End:       ; was: sprite_F83AA_End
+Player_CounterForcePrimarySpriteArt03Piece02:   binclude "data/artunc/sprite_F85AC.bin"  ; was: sprite_F85AC
+Player_CounterForcePrimarySpriteArt03Piece02_End:       ; was: sprite_F85AC_End
+Player_CounterForcePrimarySpriteArt03Piece01:   binclude "data/artunc/sprite_F85CE.bin"  ; was: sprite_F85CE
+Player_CounterForcePrimarySpriteArt03Piece01_End:       ; was: sprite_F85CE_End
+Player_CounterForcePrimarySpriteArt03Piece00:   binclude "data/artunc/sprite_F8610.bin"  ; was: sprite_F8610
+Player_CounterForcePrimarySpriteArt03Piece00_End:       ; was: sprite_F8610_End
 Player_FastVerticalSecondarySpriteArtPiece04:   binclude "data/artunc/sprite_F8672.bin"  ; was: sprite_F8672
 Player_FastVerticalSecondarySpriteArtPiece04_End:       ; was: sprite_F8672_End
 Player_FastVerticalSecondarySpriteArtPiece03:   binclude "data/artunc/sprite_F86F4.bin"  ; was: sprite_F86F4

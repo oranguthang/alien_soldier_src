@@ -673,7 +673,8 @@ loaded tile base with the active palette or orientation bits.
 | `TransientValueScreenX` | `$FFFF8264` | Transient-value rendering uses this as the first digit X and advances by eight; its source writer is not reconstructed. |
 | `TransientValueScreenY` | `$FFFF8266` | Rendering moves this Y upward every other frame and clamps it at `$A0`. |
 | `HealthDeltaDisplayTimer` | `$FFFF8268` | Damage and pickups load `$30`; it paces HUD health convergence and expires the transient value. |
-| `WeaponSwitchRepeatTimer` | `$FFFF826A` | Player input parks the word at minus one while idle, reloads sixteen on a new weapon-switch press, and requests another switch after the repeat delay. |
+| `CounterForceInputTimer` | `$FFFF826A` | The first B-button press opens a 16-frame window; another press before expiry raises `CounterForceTriggerFlag`. |
+| `CounterForceTriggerFlag` | `$FFFF826C` | Bit zero requests the terrain-specific Counter Force state and is cleared by ordinary player-state resets. |
 | `SoundFadeOutDelay` | `$FFFF830E` | Scene and boss-transition writers load one or two frames; VBlank decrements the byte and queues sound control request 1, the music fade-out command, when it expires. |
 | `ExplosionSoundDelay` | `$FFFF809E` | Defeat and barrage sequences load a delay; shared explosion-projectile helpers count it down before enabling their randomized explosion sound cadence. |
 
@@ -1248,8 +1249,8 @@ record therefore use structural `PrimaryEntity` names rather than a boss name.
 | `WeaponYMotionParameter` | `$FFFF8024` | Weapon setup derives a fixed-point vertical motion term here; impact particles add it to vertical velocity. |
 | `WeaponXMotionParameter` | `$FFFF8028` | The paired fixed-point term is added to horizontal velocity; other weapon modes intentionally reuse its halves as parameters. |
 | `WeaponModeParameter` | `$FFFF802C` | Weapon modes store either a motion-table pointer or a word-sized damage/count value here, so the neutral union name is intentional. |
-| `SpecialMoveSpawnXOffset` | `$FFFF8032` | Special activation initializes this word and the circle-effect spawner adds it to the player's X position. |
-| `SpecialMoveSpawnYOffset` | `$FFFF8034` | Special activation initializes this word and the circle-effect spawner adds it to the player's Y position. |
+| `WeaponMenuSpawnXOffset` | `$FFFF8032` | Weapon-select entry paths initialize this word; the rotating selection marker adds it to the player's X position. |
+| `WeaponMenuSpawnYOffset` | `$FFFF8034` | Weapon-select entry paths initialize this word; the rotating selection marker adds it to the player's Y position. |
 
 These weapon fields are mode-dependent unions. The map records all observed
 roles rather than pretending that one weapon state's interpretation applies to

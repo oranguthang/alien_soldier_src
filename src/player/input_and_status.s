@@ -9,28 +9,28 @@ Input_ReadPlayerInput:                                  ; CODE XREF: Player_Upda
 Input_ReadPlayerInput_Return:                           ; CODE XREF: Input_ReadPlayerInput+4   j  ; was: locret_16B22
                 rts
 ; End of function Input_ReadPlayerInput
-; Updates weapon switch timer and cooldown
-Player_UpdateWeaponSwitchTimer:                         ; CODE XREF: Player_Update:Player_Update_RunState   p  ; was: sub_16B24
+; Detects a second B-button press within the Counter Force input window
+Player_UpdateCounterForceInput:                         ; CODE XREF: Player_Update:Player_Update_RunState   p  ; was: sub_16B24
                                         ; sub_19DAE:Player_UpdateSevenForcesBattleDispatchState   p
-                subq.w  #1,(WeaponSwitchRepeatTimer).w
-                bmi.s   Player_UpdateWeaponSwitchTimer_CheckRestart
+                subq.w  #1,(CounterForceInputTimer).w
+                bmi.s   Player_UpdateCounterForceInput_CheckFirstPress
                 btst    #4,$6A(a5)
-                beq.s   Player_UpdateWeaponSwitchTimer_UpdatePositionDelta
-                bset    #0,(byte_FF826C).w
-                bra.s   Player_UpdateWeaponSwitchTimer_UpdatePositionDelta
+                beq.s   Player_UpdateCounterForceInput_StoreHealthDelta
+                bset    #0,(CounterForceTriggerFlag).w
+                bra.s   Player_UpdateCounterForceInput_StoreHealthDelta
 ; ---------------------------------------------------------------------------
-Player_UpdateWeaponSwitchTimer_CheckRestart:            ; CODE XREF: Player_UpdateWeaponSwitchTimer+4   j  ; was: loc_16B3A
-                move.w  #$FFFF,(WeaponSwitchRepeatTimer).w
+Player_UpdateCounterForceInput_CheckFirstPress:         ; CODE XREF: Player_UpdateCounterForceInput+4   j  ; was: loc_16B3A
+                move.w  #$FFFF,(CounterForceInputTimer).w
                 btst    #4,$6A(a5)
-                beq.s   Player_UpdateWeaponSwitchTimer_UpdatePositionDelta
-                move.w  #$10,(WeaponSwitchRepeatTimer).w
-Player_UpdateWeaponSwitchTimer_UpdatePositionDelta:     ; CODE XREF: Player_UpdateWeaponSwitchTimer+C   j  ; was: loc_16B4E
-                                        ; Player_UpdateWeaponSwitchTimer+14   j
+                beq.s   Player_UpdateCounterForceInput_StoreHealthDelta
+                move.w  #$10,(CounterForceInputTimer).w
+Player_UpdateCounterForceInput_StoreHealthDelta:        ; CODE XREF: Player_UpdateCounterForceInput+C   j  ; was: loc_16B4E
+                                        ; Player_UpdateCounterForceInput+14   j
                 move.w  (PlayerHealth).w,d0
                 sub.w   (PlayerMaxHealth).w,d0
                 move.w  d0,(PhoenixAttackStatus).w
                 rts
-; End of function Player_UpdateWeaponSwitchTimer
+; End of function Player_UpdateCounterForceInput
 ; Updates player direction bit from controller state
 Player_UpdateDirectionBit:                              ; CODE XREF: Player_Update:loc_15038   p  ; was: sub_16B5C
                                         ; sub_19DAE:Player_UpdateSevenForcesBattleFinalizeFrame   p

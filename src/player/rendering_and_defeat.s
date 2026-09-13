@@ -364,38 +364,38 @@ Player_AlternateAnimationLayoutTable:   dc.l    Player_AlternateLayoutSpriteMapp
                 dc.w    $FEFF, $FD00, $FC01, $FD00, $FBFF, $FC00, $FD01, $FC00
                 dc.w    $FB00, $FC00, $FD01, $FC00
 
-; Animates player defeat sprite cycling through death animation frames
-Player_AnimateDefeatSprite:                             ; CODE XREF: Player_GroundedDamageState+2E   j  ; was: sub_17334
-                                        ; Player_DamageLandingRecoveryState+26   j
+; Advances and renders the four-frame Counter Force pose
+Player_UpdateCounterForceAnimation:                     ; CODE XREF: Player_GroundCounterForceState+2E   j  ; was: sub_17334
+                                        ; Player_UnusedCounterForceTerrainState+26   j
                 subq.w  #1,$C(a5)
-                bpl.s   Player_UpdateDefeatAnimation
+                bpl.s   Player_RenderCounterForceFrame
                 move.w  #2,$C(a5)
                 addq.w  #4,$48(a5)
-; Updates player defeat animation frame with timer-based progression
-Player_UpdateDefeatAnimation:                           ; CODE XREF: Player_AnimateDefeatSprite+4   j  ; was: loc_17344
+; Selects and renders the current Counter Force frame
+Player_RenderCounterForceFrame:                         ; CODE XREF: Player_UpdateCounterForceAnimation+4   j  ; was: loc_17344
                 move.w  $48(a5),d0
-                movea.l Player_DefeatPrimaryFrameTable(pc,d0.w),a1
-                movea.l Player_DefeatSecondaryFrameTable(pc,d0.w),a2
+                movea.l Player_CounterForcePrimaryFrameTable(pc,d0.w),a1
+                movea.l Player_CounterForceSecondaryFrameTable(pc,d0.w),a2
                 asr.w   #1,d0
-                move.b  Player_DefeatFrameOffsets(pc,d0.w),d5
-                move.b  Player_DefeatFrameOffsets+1(pc,d0.w),d6
+                move.b  Player_CounterForceFrameOffsets(pc,d0.w),d5
+                move.b  Player_CounterForceFrameOffsets+1(pc,d0.w),d6
                 bra.w   Player_BuildSpritePieces
-; End of function Player_AnimateDefeatSprite
+; End of function Player_UpdateCounterForceAnimation
 ; ---------------------------------------------------------------------------
-Player_DefeatPrimaryFrameTable: dc.l    Player_DefeatPrimarySpriteMapping00  ; DATA XREF: Player_AnimateDefeatSprite+14   r  ; was: off_1735E
-                dc.l    Player_DefeatPrimarySpriteMapping01
-                dc.l    Player_DefeatPrimarySpriteMapping02
-                dc.l    Player_DefeatPrimarySpriteMapping03
-Player_DefeatSecondaryFrameTable:   dc.l    Player_IdleSecondarySpriteMapping  ; DATA XREF: Player_AnimateDefeatSprite+18   r  ; was: off_1736E
+Player_CounterForcePrimaryFrameTable:   dc.l    Player_CounterForcePrimarySpriteMapping00  ; DATA XREF: Player_UpdateCounterForceAnimation+14   r  ; was: off_1735E
+                dc.l    Player_CounterForcePrimarySpriteMapping01
+                dc.l    Player_CounterForcePrimarySpriteMapping02
+                dc.l    Player_CounterForcePrimarySpriteMapping03
+Player_CounterForceSecondaryFrameTable: dc.l    Player_IdleSecondarySpriteMapping  ; DATA XREF: Player_UpdateCounterForceAnimation+18   r  ; was: off_1736E
                 dc.l    Player_CommonMovementSecondarySpriteMapping
                 dc.l    Player_CommonMovementSecondarySpriteMapping
                 dc.l    Player_CommonMovementSecondarySpriteMapping
-Player_DefeatFrameOffsets:  dc.b    0, 0, 0, 5, 0, 5, 4, 5  ; was: byte_1737E
-                                        ; DATA XREF: Player_AnimateDefeatSprite+1E   r
-                                        ; Player_AnimateDefeatSprite+22   r
+Player_CounterForceFrameOffsets:    dc.b    0, 0, 0, 5, 0, 5, 4, 5  ; was: byte_1737E
+                                        ; DATA XREF: Player_UpdateCounterForceAnimation+1E   r
+                                        ; Player_UpdateCounterForceAnimation+22   r
 
-; Creates the fixed-slot impact object used when the player takes damage
-Player_CreateDamageImpactObject:                        ; CODE XREF: Player_SpawnDamageImpactEffect:Player_SpawnDamageImpactEffect_Create   j  ; was: sub_17386
+; Creates the fixed-slot Counter Force visual effect
+Player_CreateCounterForceEffect:                        ; CODE XREF: Player_SpawnCounterForceEffect:Player_SpawnCounterForceEffect_Create   j  ; was: sub_17386
                 move.w  #$E0,(PaletteRGBAdjustLevel).w
                 move.b  #$E0,(PaletteRGBChannelMask).w
                 move.b  #8,(PaletteRGBAdjustStep).w
@@ -404,17 +404,17 @@ Player_CreateDamageImpactObject:                        ; CODE XREF: Player_Spaw
                 move.w  #$E900,2(a0)
                 move.b  #$50,$21(a0)                    ; 'P'
                 move.w  #8,$48(a0)
-                move.l  #SharedCombatSpriteAnimation30,8(a0)
+                move.l  #Player_CounterForceEffectAnimation,8(a0)
                 move.w  $E(a5),d7
                 andi.w  #$8000,d7
                 addi.w  #$480,d7
                 move.w  d7,$E(a0)
                 move.w  #2,$26(a0)
                 btst    #3,$E(a5)
-                beq.s   Player_CreateDamageImpactObject_ApplyPosition
+                beq.s   Player_CreateCounterForceEffect_ApplyPosition
                 neg.w   d0
                 neg.l   d2
-Player_CreateDamageImpactObject_ApplyPosition:          ; CODE XREF: Player_CreateDamageImpactObject+50   j  ; was: loc_173DC
+Player_CreateCounterForceEffect_ApplyPosition:          ; CODE XREF: Player_CreateCounterForceEffect+50   j  ; was: loc_173DC
                 add.w   $10(a5),d0
                 add.w   $14(a5),d1
                 move.w  d0,$10(a0)
@@ -422,4 +422,4 @@ Player_CreateDamageImpactObject_ApplyPosition:          ; CODE XREF: Player_Crea
                 move.l  d2,$18(a0)
                 move.b  #$43,d0                         ; 'C'
                 jmp     (Sound_PlaySFX).l
-; End of function Player_CreateDamageImpactObject
+; End of function Player_CreateCounterForceEffect

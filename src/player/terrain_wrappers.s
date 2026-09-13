@@ -6,7 +6,7 @@ Physics_WallCheckWrapper:                               ; CODE XREF: Player_Hand
                 jmp     Physics_EntityWallCheck
 ; End of function Physics_WallCheckWrapper
 ; Runs the extended wall check unless terrain collisions are disabled
-Physics_ExtendedWallCheckWrapper:                       ; CODE XREF: Player_AirborneDamageState+8   p  ; was: sub_16CD8
+Physics_ExtendedWallCheckWrapper:                       ; CODE XREF: Player_AirCounterForceState+8   p  ; was: sub_16CD8
                                         ; sub_15B8C   p
                 btst    #5,(byte_FF8245).w
                 bne.w   Physics_TerrainCheckWrappers_Return
@@ -14,14 +14,14 @@ Physics_ExtendedWallCheckWrapper:                       ; CODE XREF: Player_Airb
 ; End of function Physics_ExtendedWallCheckWrapper
 ; Checks moving platforms, then probes the entity's lower terrain boundary
 Physics_LowerTerrainCheckWrapper:                       ; CODE XREF: Player_HandleJump+6   p  ; was: sub_16CE8
-                                        ; Player_GroundedDamageState+6   p
+                                        ; Player_GroundCounterForceState+6   p
                 btst    #5,(byte_FF8245).w
                 bne.w   Physics_TerrainCheckWrappers_Return
                 jsr     (Collision_CheckPlayerPlatforms).l
                 jmp     Physics_CheckLowerTerrain
 ; End of function Physics_LowerTerrainCheckWrapper
 ; Checks moving platforms, then resolves lower terrain while descending
-Physics_DescendingTerrainCheckWrapper:                  ; CODE XREF: Player_AirborneDamageState+14   p  ; was: sub_16CFE
+Physics_DescendingTerrainCheckWrapper:                  ; CODE XREF: Player_AirCounterForceState+14   p  ; was: sub_16CFE
                                         ; Player_DashKickState+E   p
                 btst    #5,(byte_FF8245).w
                 bne.w   Physics_TerrainCheckWrappers_Return
@@ -30,14 +30,14 @@ Physics_DescendingTerrainCheckWrapper:                  ; CODE XREF: Player_Airb
 ; End of function Physics_DescendingTerrainCheckWrapper
 ; Checks moving platforms, then probes the entity's upper terrain boundary
 Physics_UpperTerrainCheckWrapper:                       ; CODE XREF: Player_CeilingIdleState+6   p  ; was: sub_16D14
-                                        ; Player_CeilingDamageState+6   p
+                                        ; Player_CeilingCounterForceState+6   p
                 btst    #5,(byte_FF8245).w
                 bne.w   Physics_TerrainCheckWrappers_Return
                 jsr     (Collision_CheckPlayerPlatforms).l
                 jmp     Physics_CheckUpperTerrain
 ; End of function Physics_UpperTerrainCheckWrapper
 ; Checks moving platforms, then resolves upper terrain while rising
-Physics_RisingTerrainCheckWrapper:                      ; CODE XREF: Player_AirborneDamageState+28   p  ; was: sub_16D2A
+Physics_RisingTerrainCheckWrapper:                      ; CODE XREF: Player_AirCounterForceState+28   p  ; was: sub_16D2A
                                         ; Player_HandleFallingState+5A   p
                 btst    #5,(byte_FF8245).w
                 bne.w   Physics_TerrainCheckWrappers_Return
@@ -210,8 +210,8 @@ Player_DecelerateHorizontalVelocityFast:                ; CODE XREF: Player_Hand
                 move.l  #$C000,d1
 ; End of function Player_DecelerateHorizontalVelocityFast
 ; Decelerates horizontal velocity towards zero
-Player_DecelerateHorizontalVelocity:                    ; CODE XREF: Player_GroundedDamageState+2A   p  ; was: sub_16EAA
-                                        ; Player_DamageLandingRecoveryState+22   p
+Player_DecelerateHorizontalVelocity:                    ; CODE XREF: Player_GroundCounterForceState+2A   p  ; was: sub_16EAA
+                                        ; Player_UnusedCounterForceTerrainState+22   p
                 move.l  $18(a5),d0
                 bmi.s   Player_DecelerateHorizontalVelocity_IncreaseNegative
                 sub.l   d1,d0
@@ -232,7 +232,7 @@ Physics_StoreHorizontalVelocity:                        ; CODE XREF: Player_Dece
 ; End of function Player_DecelerateHorizontalVelocity
 ; Renders the player's unarmed idle frame with cycling offsets
 Player_RenderIdleFrame:                                 ; CODE XREF: Player_HandleJump+60   j  ; was: sub_16EC8
-                                        ; Player_HandleGroundedState+1E   j
+                                        ; Player_GroundWeaponSelectState+1E   j
                 move.w  (FrameCounter).w,d0
                 asr.w   #2,d0
                 andi.w  #6,d0

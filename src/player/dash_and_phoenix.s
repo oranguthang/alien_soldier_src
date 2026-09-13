@@ -5,12 +5,12 @@ Player_GroundedMovementState:                           ; DATA XREF: ROM:0001506
                 bsr.w   Physics_LowerTerrainCheckWrapper
                 btst    #0,6(a5)
                 beq.w   Player_InitFallState
-                bsr.w   Player_HandleSpecialMove
+                bsr.w   Player_CheckWeaponSelectInput
                 bne.s   Player_GroundedMovementState_Return
                 bsr.w   Player_CheckSpecialMoveActivation
                 bne.s   Player_GroundedMovementState_Return
-                btst    #0,(byte_FF826C).w
-                bne.w   Player_HandleDamageKnockback
+                btst    #0,(CounterForceTriggerFlag).w
+                bne.w   Player_StartGroundCounterForce
                 btst    #1,$69(a5)
                 bne.w   Player_InitJumpCancelState
                 btst    #4,$69(a5)
@@ -55,7 +55,7 @@ Player_GroundWeaponState:                               ; DATA XREF: ROM:0001506
                 bsr.w   Physics_LowerTerrainCheckWrapper
                 btst    #0,6(a5)
                 beq.w   Player_InitFallState
-                bsr.w   Player_HandleSpecialMove
+                bsr.w   Player_CheckWeaponSelectInput
                 bne.s   Player_GroundWeaponState_Return
                 bsr.w   Player_CheckSpecialMoveActivation
                 bne.s   Player_GroundWeaponState_Return
@@ -193,7 +193,7 @@ Player_InitiateDashAttack:                              ; CODE XREF: Player_Chec
                 move.w  #$24,4(a5)                      ; '$'
                 bra.s   Player_InitiateDashAttack_Initialize
 ; ---------------------------------------------------------------------------
-Player_InitiateDashAttack_UseGroundState:               ; CODE XREF: Player_GroundedDamageState+20   j  ; was: loc_15936
+Player_InitiateDashAttack_UseGroundState:               ; CODE XREF: Player_GroundCounterForceState+20   j  ; was: loc_15936
                                         ; Player_CheckSpecialMoveActivation+1A   j
                 move.w  #$10,4(a5)
 Player_InitiateDashAttack_Initialize:                   ; CODE XREF: Player_InitiateDashAttack+6   j  ; was: loc_1593C
@@ -256,7 +256,7 @@ Player_DashAttackState_Finish:                          ; CODE XREF: Player_Dash
                 bsr.w   Physics_FacingTerrainCheckWrapper
 Player_DashAttackState_Cleanup:                         ; CODE XREF: Player_DashAttackState:Player_DashAttackState_CleanupAfterMovement   j  ; was: loc_159F4
                 clr.w   (PlayerSpecialObjectSlot).w
-                bclr    #0,(byte_FF826C).w
+                bclr    #0,(CounterForceTriggerFlag).w
                 bclr    #6,$21(a5)
                 bclr    #4,$23(a5)
                 moveq   #0,d0
@@ -461,9 +461,9 @@ Player_InitFallState:                                   ; CODE XREF: Player_Hand
                                         ; Player_HandleAirState+16   j
                 clr.w   (PlayerAirMoveUsedFlags).w
                 clr.w   $52(a5)
-Player_InitFallState_Finish:                            ; CODE XREF: Player_DamageLandingRecoveryState+18   j  ; was: loc_15C3C
+Player_InitFallState_Finish:                            ; CODE XREF: Player_UnusedCounterForceTerrainState+18   j  ; was: loc_15C3C
                                         ; Player_DashAttackState+5E   j
-                bclr    #0,(byte_FF826C).w
+                bclr    #0,(CounterForceTriggerFlag).w
                 move.w  #6,4(a5)
                 bclr    #4,$E(a5)
                 move.w  #$C,$5C(a5)

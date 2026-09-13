@@ -11,7 +11,7 @@ Player_EndDashState:                                    ; CODE XREF: Player_EndD
                 clr.w   $52(a5)
 ; Initializes end of air dash with gravity and velocity setup
 Player_InitAirDashEnd:                                  ; CODE XREF: Player_DashAttackState+62   j  ; was: loc_15C7A
-                bclr    #0,(byte_FF826C).w
+                bclr    #0,(CounterForceTriggerFlag).w
                 move.w  #$28,4(a5)                      ; '('
                 bclr    #4,$E(a5)
                 move.w  #$C,$5C(a5)
@@ -23,7 +23,7 @@ Player_InitAirDashEnd:                                  ; CODE XREF: Player_Dash
 ; End of function Player_EndDashState
 ; Initializes a timed transition into the common falling state
 Player_InitFallingTransition:                           ; CODE XREF: Player_CheckSpecialMoveActivation+32   p  ; was: sub_15CAC
-                bclr    #0,(byte_FF826C).w
+                bclr    #0,(CounterForceTriggerFlag).w
                 move.w  #$FFE0,$52(a5)
                 move.w  #$14,4(a5)
                 move.l  #$3A000,$1C(a5)
@@ -81,8 +81,8 @@ Player_HandleFallingState_CheckUpperTerrain:            ; CODE XREF: Player_Hand
                 bne.w   Player_InitHardLanding
 Player_HandleFallingState_ProcessInput:                 ; CODE XREF: Player_HandleFallingState+44   j  ; was: loc_15D60
                                         ; Player_HandleFallingState+54   j
-                btst    #0,(byte_FF826C).w
-                bne.w   Player_InitAirborneDamageKnockback
+                btst    #0,(CounterForceTriggerFlag).w
+                bne.w   Player_StartAirCounterForce
                 btst    #5,$6A(a5)
                 beq.s   Player_HandleFallingState_SelectControl
                 btst    #1,$69(a5)
@@ -287,7 +287,7 @@ Player_ApplyHorizontalVelocity:                         ; CODE XREF: Player_Appl
 ; End of function Player_ApplyAirControl
 ; Initializes special attack state
 Player_InitSpecialAttack:                               ; CODE XREF: Player_HandleFallingState+9C   j  ; was: sub_15F6A
-                bclr    #0,(byte_FF826C).w
+                bclr    #0,(CounterForceTriggerFlag).w
                 move.b  #$7F,(PlayerInputMask).w
                 move.w  #$4E,4(a5)                      ; 'N'
                 move.l  $18(a5),d0
@@ -335,8 +335,8 @@ Player_HandleSpecialAttack_CheckUpperTerrain:           ; CODE XREF: Player_Hand
                 btst    #1,6(a5)
                 bne.w   Player_InitCeilingLandingState
 Player_HandleSpecialAttack_ProcessInput:                ; CODE XREF: Player_HandleSpecialAttack+4A   j  ; was: loc_16022
-                btst    #0,(byte_FF826C).w
-                bne.w   Player_InitAirborneDamageKnockback
+                btst    #0,(CounterForceTriggerFlag).w
+                bne.w   Player_StartAirCounterForce
                 btst    #5,$6A(a5)
                 beq.s   Player_HandleSpecialAttack_SelectFrame
                 tst.b   (PlayerAirDashUsedFlag).w

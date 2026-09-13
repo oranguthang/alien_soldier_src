@@ -288,8 +288,8 @@ Player_UpdateTargetSight:                               ; DATA XREF: ROM:Entity_
                 clr.w   $56(a5)
                 move.w  $10(a0),d5
                 move.w  $14(a0),d6
-                add.w   (SpecialMoveSpawnXOffset).w,d5
-                add.w   (SpecialMoveSpawnYOffset).w,d6
+                add.w   (WeaponMenuSpawnXOffset).w,d5
+                add.w   (WeaponMenuSpawnYOffset).w,d6
                 move.w  (WeaponMenuRadius).w,d0
                 move.w  (WeaponMenuAngle).w,d7
                 add.w   $50(a5),d7

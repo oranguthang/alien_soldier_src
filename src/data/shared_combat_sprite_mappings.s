@@ -638,7 +638,7 @@ SharedCombatSpriteAnimation29:  dc.w    SharedCombatSpriteFrame48-*  ; DATA XREF
                 dc.w    5
                 dc.w    SharedCombatSpriteAnimation29-*
                 dc.w    0
-SharedCombatSpriteAnimation30:  dc.w    SharedCombatSpriteFrame40-*  ; DATA XREF: Player_CreateDamageImpactObject+2C   o  ; was: off_E9800
+Player_CounterForceEffectAnimation: dc.w    SharedCombatSpriteFrame40-*  ; DATA XREF: Player_CreateCounterForceEffect+2C   o  ; was: off_E9800
                 dc.w    1
                 dc.w    SharedCombatSpriteFrame06-*
                 dc.w    1

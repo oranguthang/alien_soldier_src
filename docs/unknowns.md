@@ -6755,12 +6755,13 @@ from 169 to 165, all still confined to RAM equates.
 The midgame-lightning and player-control pass replaces three independent raw
 RAM aliases. `MidgameLightningMode` is selected by Stage 8/9 and Xi-Tiger:
 mode one suppresses the randomized composite, mode two suppresses its sound,
-and a negative value disables the updater. `WeaponSwitchRepeatTimer` is parked
-at minus one while idle and reloaded to sixteen on a new switch press before
-the held-input repeat path raises its request bit. `PlayerDashStopFlag` is
-cleared before player state dispatch and set by the Wolf Garopa boundary after
-it pushes the player and cancels horizontal velocity; normal and Seven Forces
-dash states both terminate on that byte.
+and a negative value disables the updater. The field then called
+`WeaponSwitchRepeatTimer` was known to hold a sixteen-frame input window, but
+the action was still misidentified; the later Counter Force audit below
+corrects it. `PlayerDashStopFlag` is cleared before player state dispatch and
+set by the Wolf Garopa boundary after it pushes the player and cancels
+horizontal velocity; normal and Seven Forces dash states both terminate on
+that byte.
 
 The three RAM aliases add provenance and exact-address audit mappings, and the
 existing weapon-switch updater receives its missing current-name audit record.
@@ -7088,3 +7089,31 @@ Provenance rises from 15,960 to 15,962 mappings and the audit registry from
 13,165 to 13,167. The semantic review upper bound remains 3,095 because both
 new mappings have matching records, while the enforced address-derived ceiling
 falls from 91 to 89 RAM equates.
+
+The Counter Force and weapon-selection audit corrects a connected family of
+generated player names. The [official Sega Alien Soldier manual](https://www.sega.jp/genesismini2/assets/manual/pdf/US_Alien-Soldier.pdf)
+assigns button A to weapon selection, button B to attack, and defines Counter
+Force as pressing B twice. The code independently matches that contract:
+`Input_ReadPlayerInput` places newly pressed buttons in player byte `$6A`, the
+former weapon-switch updater tests bit four, opens a sixteen-frame window on
+the first press, and raises `CounterForceTriggerFlag` on the second. Ground,
+air, ceiling, and Seven Forces paths consume only that flag, enter their
+dedicated recoil states, create the same fixed-slot visual effect, and render
+the same four-frame pose; none is entered from the health-loss dispatcher.
+
+Conversely, the routines previously described as generic special/counter
+activation test bit six, save the current weapon slot, set `WeaponStateIndex`
+to `$12`, and wait in terrain-specific states until `WeaponSelect_Update`
+closes the selector. Their vertical-direction variants directly toggle the
+already proven `ShootingMode` MOVING/FIX word. The two former special-move
+spawn offsets are likewise consumed by the rotating weapon-selection marker
+alongside `WeaponMenuRadius`, `WeaponMenuAngle`, and `WeaponMenuSlotOffset`.
+
+This package corrects 90 source definitions and 328 references, including the
+Counter Force state/effect/frame/art family and the normal, recovery, ceiling,
+and Seven Forces weapon-select paths. Forty-three existing audit records are
+corrected in place and 34 records are added; thirteen `_End` labels remain
+address-sharing aliases of their audited art segments. Provenance rises from
+15,962 to 15,963 mappings, the audit registry from 13,167 to 13,201, and the
+semantic review upper bound falls from 3,095 to 3,062. The enforced
+address-derived ceiling falls from 89 to 88 RAM equates.

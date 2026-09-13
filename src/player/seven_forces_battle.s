@@ -9,7 +9,7 @@ Player_UpdateSevenForcesBattle:                         ; CODE XREF: Player_Upda
                 bra.s   Player_UpdateSevenForcesBattleClampFallVelocity
 ; ---------------------------------------------------------------------------
 Player_UpdateSevenForcesBattleDispatchState:            ; CODE XREF: Player_UpdateSevenForcesBattle+12   j  ; was: loc_19DC8
-                jsr     (Player_UpdateWeaponSwitchTimer).l
+                jsr     (Player_UpdateCounterForceInput).l
                 bsr.w   Player_DispatchSevenForcesBattleState
 Player_UpdateSevenForcesBattleClampFallVelocity:        ; CODE XREF: Player_UpdateSevenForcesBattle+18   j  ; was: loc_19DD2
                 tst.w   $1C(a5)
@@ -37,17 +37,17 @@ Player_DispatchSevenForcesBattleState:                  ; CODE XREF: Player_Upda
 Player_SevenForcesBattleStateOffsets:   dc.w    Player_SevenForcesState0-Player_ResetSevenForcesBattleState  ; was: off_19E16
                                         ; DATA XREF: Player_DispatchSevenForcesBattleState+4   r
                 dc.w    Player_SevenForcesState2-Player_ResetSevenForcesBattleState
-                dc.w    Player_SevenForcesState4-Player_ResetSevenForcesBattleState
+                dc.w    Player_SevenForcesWeaponSelectState-Player_ResetSevenForcesBattleState
                 dc.w    Player_SevenForcesDashState6-Player_ResetSevenForcesBattleState
-                dc.w    Player_SevenForcesDamageState8-Player_ResetSevenForcesBattleState
+                dc.w    Player_SevenForcesCounterForceState-Player_ResetSevenForcesBattleState
                 dc.w    Player_SevenForcesDefeatStateA-Player_ResetSevenForcesBattleState
                 dc.w    Player_ResetSevenForcesBattleState-Player_ResetSevenForcesBattleState
 
 ; Restore the base Seven Forces player state
-Player_ResetSevenForcesBattleState:                     ; CODE XREF: Player_SevenForcesState4+6   j  ; was: sub_19E24
+Player_ResetSevenForcesBattleState:                     ; CODE XREF: Player_SevenForcesWeaponSelectState+6   j  ; was: sub_19E24
                                         ; Player_SevenForcesState2+22   j
                 move.b  #$7F,(PlayerInputMask).w
-                bclr    #0,(byte_FF826C).w
+                bclr    #0,(CounterForceTriggerFlag).w
                 clr.w   (PlayerAirMoveUsedFlags).w
                 move.w  #0,4(a5)
                 clr.l   $18(a5)
@@ -66,12 +66,12 @@ Player_SevenForcesState0:                               ; DATA XREF: ROM:Player_
                 move.w  #$1C,$5C(a5)
                 bsr.w   Player_DampenSevenForcesVelocity
                 jsr     (Effect_SpawnParticle).l
-                bsr.w   Player_CheckSevenForcesSpecialActivation
+                bsr.w   Player_CheckSevenForcesWeaponSelectInput
                 bne.s   Player_SevenForcesState0Return
                 bsr.w   Player_TryStartSevenForcesDash
                 bne.s   Player_SevenForcesState0Return
-                btst    #0,(byte_FF826C).w
-                bne.w   Player_EnterSevenForcesDamageState8
+                btst    #0,(CounterForceTriggerFlag).w
+                bne.w   Player_StartSevenForcesCounterForce
                 btst    #4,$69(a5)
                 beq.s   Player_SevenForcesState0CheckDirectionalInput
                 tst.w   (ShootingMode).w
@@ -83,46 +83,46 @@ Player_SevenForcesState0CheckDirectionalInput:          ; CODE XREF: Player_Seve
 Player_SevenForcesState0Render:                         ; CODE XREF: Player_SevenForcesState0+32   j  ; was: loc_19E96
                 bra.w   Player_RenderSevenForcesBattleFrame
 ; End of function Player_SevenForcesState0
-; Check weapon-toggle and state-4 activation input
-Player_CheckSevenForcesSpecialActivation:               ; CODE XREF: Player_SevenForcesState0+10   p  ; was: sub_19E9A
+; Opens Seven Forces weapon selection with A, or toggles shooting mode with down+A
+Player_CheckSevenForcesWeaponSelectInput:               ; CODE XREF: Player_SevenForcesState0+10   p  ; was: sub_19E9A
                                         ; Player_SevenForcesState2   p
                 btst    #6,$6A(a5)
-                beq.s   Player_CheckSevenForcesSpecialActivationNotActivated
+                beq.s   Player_CheckSevenForcesWeaponSelectInput_NotActivated
                 btst    #1,$69(a5)
-                bne.w   Player_ToggleSevenForcesWeaponMode
+                bne.w   Player_ToggleSevenForcesShootingMode
                 tst.w   (WeaponStateCooldown).w
-                bmi.s   Player_ActivateSevenForcesSpecialState4
-Player_CheckSevenForcesSpecialActivationNotActivated:   ; CODE XREF: Player_CheckSevenForcesSpecialActivation+6   j  ; was: loc_19EB2
+                bmi.s   Player_StartSevenForcesWeaponSelect
+Player_CheckSevenForcesWeaponSelectInput_NotActivated:  ; CODE XREF: Player_CheckSevenForcesWeaponSelectInput+6   j  ; was: loc_19EB2
                 moveq   #0,d0
                 rts
 ; ---------------------------------------------------------------------------
-Player_ActivateSevenForcesSpecialState4:                ; CODE XREF: Player_CheckSevenForcesSpecialActivation+16   j  ; was: loc_19EB6
+Player_StartSevenForcesWeaponSelect:                    ; CODE XREF: Player_CheckSevenForcesWeaponSelectInput+16   j  ; was: loc_19EB6
                 move.w  (WeaponSlotOffset).w,(WeaponSavedSlotOffset).w
                 move.w  #$12,(WeaponStateIndex).w
                 move.b  #$7F,(PlayerInputMask).w
-                move.w  #0,(SpecialMoveSpawnXOffset).w
-                move.w  #$FFEE,(SpecialMoveSpawnYOffset).w
+                move.w  #0,(WeaponMenuSpawnXOffset).w
+                move.w  #$FFEE,(WeaponMenuSpawnYOffset).w
                 move.w  #4,4(a5)
                 move.w  #$1C,$5C(a5)
                 moveq   #1,d0
                 rts
-; End of function Player_CheckSevenForcesSpecialActivation
-; State 4: damp movement until the weapon transition completes
-Player_SevenForcesState4:                               ; DATA XREF: ROM:00019E1A   o  ; was: sub_19EE4
+; End of function Player_CheckSevenForcesWeaponSelectInput
+; State 4: damp movement until weapon selection closes
+Player_SevenForcesWeaponSelectState:                    ; DATA XREF: ROM:00019E1A   o  ; was: sub_19EE4
                 cmpi.w  #$12,(WeaponStateIndex).w
                 bmi.w   Player_ResetSevenForcesBattleState
                 bsr.w   Player_DampenSevenForcesVelocity
-                bra.w   Player_RenderSevenForcesTransitionFrame
-; End of function Player_SevenForcesState4
-; Toggle the selected weapon mode and play its feedback sound
-Player_ToggleSevenForcesWeaponMode:                     ; CODE XREF: Player_CheckSevenForcesSpecialActivation+E   j  ; was: sub_19EF6
+                bra.w   Player_RenderSevenForcesWeaponSelectFrame
+; End of function Player_SevenForcesWeaponSelectState
+; Toggle moving/fixed shooting mode and play its feedback sound
+Player_ToggleSevenForcesShootingMode:                   ; CODE XREF: Player_CheckSevenForcesWeaponSelectInput+E   j  ; was: sub_19EF6
                 move.b  #$7F,(PlayerInputMask).w
                 eori.w  #2,(ShootingMode).w
                 move.b  #$A3,d0
                 jsr     (Sound_PlaySFX).l
                 moveq   #0,d0
                 rts
-; End of function Player_ToggleSevenForcesWeaponMode
+; End of function Player_ToggleSevenForcesShootingMode
 ; Enter directional-movement state 2
 Player_EnterSevenForcesState2:                          ; CODE XREF: Player_SevenForcesState0+3C   j  ; was: sub_19F10
                 move.b  #$7F,(PlayerInputMask).w
@@ -139,12 +139,12 @@ Player_SevenForcesState2Return:                         ; CODE XREF: Player_Seve
 
 ; Directional Seven Forces player movement state
 Player_SevenForcesState2:                               ; DATA XREF: ROM:00019E18   o  ; was: sub_19F36
-                bsr.w   Player_CheckSevenForcesSpecialActivation
+                bsr.w   Player_CheckSevenForcesWeaponSelectInput
                 bne.s   Player_SevenForcesState2Return
                 bsr.w   Player_TryStartSevenForcesDash
                 bne.s   Player_SevenForcesState2Return
-                btst    #0,(byte_FF826C).w
-                bne.w   Player_EnterSevenForcesDamageState8
+                btst    #0,(CounterForceTriggerFlag).w
+                bne.w   Player_StartSevenForcesCounterForce
                 btst    #4,$69(a5)
                 beq.s   Player_SevenForcesState2CheckDirectionalInput
                 tst.w   (ShootingMode).w
@@ -213,7 +213,7 @@ Player_SevenForcesDashState6:                           ; DATA XREF: ROM:00019E1
                 bpl.s   Player_UpdateSevenForcesDash
 Player_EndSevenForcesDash:                              ; CODE XREF: Player_SevenForcesDashState6+4   j  ; was: loc_1A028
                 clr.w   (PlayerSpecialObjectSlot).w
-                bclr    #0,(byte_FF826C).w
+                bclr    #0,(CounterForceTriggerFlag).w
                 bclr    #6,$21(a5)
                 bclr    #4,$23(a5)
                 clr.w   (PlayerAirMoveUsedFlags).w
@@ -236,10 +236,10 @@ Player_ApplySevenForcesDashVelocity:                    ; CODE XREF: Player_Seve
                 add.l   d0,$10(a5)
                 rts
 ; End of function Player_ApplySevenForcesDashVelocity
-; Enter the player damage state with facing-dependent knockback
-Player_EnterSevenForcesDamageState8:                    ; CODE XREF: Player_SevenForcesState0+22   j  ; was: sub_1A074
+; Start Seven Forces Counter Force recoil with facing-dependent velocity
+Player_StartSevenForcesCounterForce:                    ; CODE XREF: Player_SevenForcesState0+22   j  ; was: sub_1A074
                                         ; Player_SevenForcesState2+12   j
-                jsr     (Player_SpawnDamageImpactEffect).l
+                jsr     (Player_SpawnCounterForceEffect).l
                 move.b  #$7F,(PlayerInputMask).w
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.w  #8,4(a5)
@@ -249,17 +249,17 @@ Player_EnterSevenForcesDamageState8:                    ; CODE XREF: Player_Seve
                 move.w  #$1C,$5C(a5)
                 move.l  #$FFFE0000,$18(a5)
                 btst    #3,$E(a5)
-                bne.s   Player_EnterSevenForcesDamageStateReturn
+                bne.s   Player_StartSevenForcesCounterForce_Return
                 neg.l   $18(a5)
-Player_EnterSevenForcesDamageStateReturn:               ; CODE XREF: Player_EnterSevenForcesDamageState8+3E   j  ; was: locret_1A0B8
+Player_StartSevenForcesCounterForce_Return:             ; CODE XREF: Player_StartSevenForcesCounterForce+3E   j  ; was: locret_1A0B8
                 rts
-; End of function Player_EnterSevenForcesDamageState8
-; State 8: animate damage until its timer expires
-Player_SevenForcesDamageState8:                         ; DATA XREF: ROM:00019E1E   o  ; was: sub_1A0BA
+; End of function Player_StartSevenForcesCounterForce
+; State 8: animate Counter Force until its timer expires
+Player_SevenForcesCounterForceState:                    ; DATA XREF: ROM:00019E1E   o  ; was: sub_1A0BA
                 subq.w  #1,$4A(a5)
                 bmi.w   Player_ResetSevenForcesBattleState
-                jmp     Player_AnimateDefeatSprite
-; End of function Player_SevenForcesDamageState8
+                jmp     Player_UpdateCounterForceAnimation
+; End of function Player_SevenForcesCounterForceState
 ; Enter the player defeat state with encounter-dependent knockback
 Player_EnterSevenForcesDefeatStateA:                    ; CODE XREF: Player_UpdateSevenForcesBattle+14   p  ; was: sub_1A0C8
                 move.b  #$19,d0
@@ -384,7 +384,7 @@ Player_SevenForcesDirectionalVelocityAngles:    dc.w    $C0, $4000, $80A0, $6000
 
 ; Halve both player velocity components
 Player_DampenSevenForcesVelocity:                       ; CODE XREF: Player_SevenForcesState0+6   p  ; was: sub_1A1F2
-                                        ; Player_SevenForcesState4+A   p
+                                        ; Player_SevenForcesWeaponSelectState+A   p
                 move.l  $18(a5),d0
                 asr.l   #1,d0
                 move.l  d0,$18(a5)
@@ -416,18 +416,18 @@ Player_RenderSevenForcesBattleWithWeapon:               ; CODE XREF: Player_Rend
                 lea     (Player_AlternateAnimationLayoutTable).l,a0
                 jmp     Player_PrepareSpriteRendering_WithTables
 ; End of function Player_RenderSevenForcesBattleFrame
-; Render the fixed player frame used during state-4 transition
-Player_RenderSevenForcesTransitionFrame:                ; CODE XREF: Player_SevenForcesState4+E   j  ; was: sub_1A250
+; Render the fixed player frame used during Seven Forces weapon selection
+Player_RenderSevenForcesWeaponSelectFrame:              ; CODE XREF: Player_SevenForcesWeaponSelectState+E   j  ; was: sub_1A250
                 movea.l #Player_SpecialAttackSecondarySpriteMappingA,a2
                 btst    #0,(FrameCounter+1).w
-                bne.s   Player_RenderSevenForcesTransitionSelectFrame
+                bne.s   Player_RenderSevenForcesWeaponSelectFrame_SelectSecondary
                 movea.l #Player_SpecialAttackSecondarySpriteMappingB,a2
-Player_RenderSevenForcesTransitionSelectFrame:          ; CODE XREF: Player_RenderSevenForcesTransitionFrame+C   j  ; was: loc_1A264
+Player_RenderSevenForcesWeaponSelectFrame_SelectSecondary:  ; CODE XREF: Player_RenderSevenForcesWeaponSelectFrame+C   j  ; was: loc_1A264
                 movea.l #Player_CommonPrimarySpriteMapping,a1
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFE,d6
                 jmp     Player_BuildSpritePieces
-; End of function Player_RenderSevenForcesTransitionFrame
+; End of function Player_RenderSevenForcesWeaponSelectFrame
 ; Update the Seven Forces battle mode and force the display flag
 Player_UpdateSevenForcesBattleVisible:                  ; CODE XREF: Player_Update+50   j  ; was: sub_1A274
                 bsr.w   Player_UpdateSevenForcesBattle

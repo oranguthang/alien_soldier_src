@@ -39,7 +39,7 @@ Player_CeilingDashState:                                ; DATA XREF: ROM:0001508
                 nop
                 btst    #1,6(a5)
                 beq.w   Player_EndDashState
-                bsr.w   Player_CheckCounterInput
+                bsr.w   Player_CheckCeilingWeaponSelectInput
                 bne.s   Player_CeilingDashState_Return
                 btst    #5,$6A(a5)
                 beq.s   Player_CeilingDashState_UpdateMovement
@@ -48,8 +48,8 @@ Player_CeilingDashState:                                ; DATA XREF: ROM:0001508
                 bra.w   Player_InitiateDashAttack
 ; ---------------------------------------------------------------------------
 Player_CeilingDashState_UpdateMovement:                 ; CODE XREF: Player_CeilingDashState+28   j  ; was: loc_16564
-                btst    #0,(byte_FF826C).w
-                bne.w   Player_InitCeilingDamageKnockback
+                btst    #0,(CounterForceTriggerFlag).w
+                bne.w   Player_StartCeilingCounterForce
                 bsr.w   Player_DecelerateHorizontalVelocityFast
                 subq.w  #1,$48(a5)
                 bpl.s   Player_CeilingDashState_Render
@@ -86,12 +86,12 @@ Player_HandleCrouchState:                               ; DATA XREF: ROM:0001508
                 nop
                 btst    #1,6(a5)
                 beq.w   Player_EndDashState
-                bsr.w   Player_CheckCounterInput
+                bsr.w   Player_CheckCeilingWeaponSelectInput
                 bne.s   Player_CeilingState_Return
                 bsr.w   Player_CheckDashInput
                 bne.s   Player_CeilingState_Return
-                btst    #0,(byte_FF826C).w
-                bne.w   Player_InitCeilingDamageKnockback
+                btst    #0,(CounterForceTriggerFlag).w
+                bne.w   Player_StartCeilingCounterForce
                 btst    #0,$69(a5)
                 bne.w   Player_InitDashState
                 bsr.w   Player_DecelerateHorizontalVelocityFast
@@ -139,12 +139,12 @@ Player_CeilingLandingState:                             ; DATA XREF: ROM:0001508
                 nop
                 btst    #1,6(a5)
                 beq.w   Player_EndDashState
-                bsr.w   Player_CheckCounterInput
+                bsr.w   Player_CheckCeilingWeaponSelectInput
                 bne.s   Player_CeilingState_Return
                 bsr.w   Player_CheckDashInput
                 bne.s   Player_CeilingState_Return
-                btst    #0,(byte_FF826C).w
-                bne.w   Player_InitCeilingDamageKnockback
+                btst    #0,(CounterForceTriggerFlag).w
+                bne.w   Player_StartCeilingCounterForce
                 move.l  #$4000,d1
                 bsr.w   Player_DecelerateHorizontalVelocity
                 subq.w  #1,$4A(a5)
@@ -169,38 +169,38 @@ Player_CeilingLandingState_Render:                      ; CODE XREF: Player_Ceil
                 beq.w   Player_RenderAirborneFrame
                 bra.w   Player_RenderWithWeapon
 ; End of function Player_CeilingLandingState
-; Checks controller input for counter/parry activation
-Player_CheckCounterInput:                               ; CODE XREF: Player_CeilingIdleState+1A   p  ; was: sub_166EA
+; Opens ceiling weapon selection with A, or toggles shooting mode with up+A
+Player_CheckCeilingWeaponSelectInput:                   ; CODE XREF: Player_CeilingIdleState+1A   p  ; was: sub_166EA
                                         ; Player_CeilingDashState+1C   p
                 btst    #6,$6A(a5)
-                beq.s   Player_CheckCounterInput_NotActivated
+                beq.s   Player_CheckCeilingWeaponSelectInput_NotActivated
                 btst    #0,$69(a5)
-                bne.w   Player_ToggleAlternateMode
+                bne.w   Player_ToggleShootingMode
                 tst.w   (WeaponStateCooldown).w
-                bmi.s   Player_CheckCounterInput_Activate
-Player_CheckCounterInput_NotActivated:                  ; CODE XREF: Player_CheckCounterInput+6   j  ; was: loc_16702
+                bmi.s   Player_CheckCeilingWeaponSelectInput_Start
+Player_CheckCeilingWeaponSelectInput_NotActivated:      ; CODE XREF: Player_CheckCeilingWeaponSelectInput+6   j  ; was: loc_16702
                 moveq   #0,d0
                 rts
 ; ---------------------------------------------------------------------------
-Player_CheckCounterInput_Activate:                      ; CODE XREF: Player_CheckCounterInput+16   j  ; was: loc_16706
+Player_CheckCeilingWeaponSelectInput_Start:             ; CODE XREF: Player_CheckCeilingWeaponSelectInput+16   j  ; was: loc_16706
                 move.w  (WeaponSlotOffset).w,(WeaponSavedSlotOffset).w
                 move.w  #$12,(WeaponStateIndex).w
                 move.b  #$7F,(PlayerInputMask).w
-                move.w  #0,(SpecialMoveSpawnXOffset).w
-                move.w  #0,(SpecialMoveSpawnYOffset).w
+                move.w  #0,(WeaponMenuSpawnXOffset).w
+                move.w  #0,(WeaponMenuSpawnYOffset).w
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.w  #$20,4(a5)                      ; ' '
                 move.w  #$10,$5C(a5)
                 btst    #0,$69(a5)
-                beq.s   Player_CheckCounterInput_ReturnActivated
+                beq.s   Player_CheckCeilingWeaponSelectInput_ReturnActivated
                 move.w  #$14,$5C(a5)
-Player_CheckCounterInput_ReturnActivated:               ; CODE XREF: Player_CheckCounterInput+54   j  ; was: loc_16746
+Player_CheckCeilingWeaponSelectInput_ReturnActivated:   ; CODE XREF: Player_CheckCeilingWeaponSelectInput+54   j  ; was: loc_16746
                 moveq   #1,d0
                 rts
-; End of function Player_CheckCounterInput
-; Handles the counter state while upper-terrain contact remains valid
-Player_CounterState:                                    ; DATA XREF: ROM:00015082   o  ; was: sub_1674A
+; End of function Player_CheckCeilingWeaponSelectInput
+; Holds the ceiling player state while the weapon selector is active
+Player_CeilingWeaponSelectState:                        ; DATA XREF: ROM:00015082   o  ; was: sub_1674A
                 cmpi.w  #$12,(WeaponStateIndex).w
                 bmi.w   Player_InitCeilingIdleState
                 jsr     Physics_WallCheckWrapper(pc)    ; (pc)
@@ -210,15 +210,15 @@ Player_CounterState:                                    ; DATA XREF: ROM:0001508
                 btst    #1,6(a5)
                 beq.w   Player_EndDashState
                 bra.w   Player_RenderIdleFrame
-; End of function Player_CounterState
-; Toggles the shared alternate-mode flag and plays its sound
-Player_ToggleAlternateMode:                             ; CODE XREF: Player_CheckCounterInput+E   j  ; was: sub_1676E
+; End of function Player_CeilingWeaponSelectState
+; Toggles moving/fixed shooting mode and plays its sound
+Player_ToggleShootingMode:                              ; CODE XREF: Player_CheckCeilingWeaponSelectInput+E   j  ; was: sub_1676E
                 eori.w  #2,(ShootingMode).w
                 move.b  #$A3,d0
                 jsr     (Sound_PlaySFX).l
                 moveq   #0,d0
                 rts
-; End of function Player_ToggleAlternateMode
+; End of function Player_ToggleShootingMode
 ; Initializes wall kick state from button input
 Player_InitWallKickState:                               ; CODE XREF: Player_CeilingIdleState+4E   j  ; was: sub_16782
                                         ; Player_CeilingIdleState+58   j
@@ -269,12 +269,12 @@ Player_CeilingMovementState:                            ; DATA XREF: ROM:0001507
                 nop
                 btst    #1,6(a5)
                 beq.w   Player_EndDashState
-                bsr.w   Player_CheckCounterInput
+                bsr.w   Player_CheckCeilingWeaponSelectInput
                 bne.s   Player_CeilingMovementState_Return
                 bsr.w   Player_CheckDashInput
                 bne.s   Player_CeilingMovementState_Return
-                btst    #0,(byte_FF826C).w
-                bne.w   Player_InitCeilingDamageKnockback
+                btst    #0,(CounterForceTriggerFlag).w
+                bne.w   Player_StartCeilingCounterForce
                 btst    #0,$69(a5)
                 bne.w   Player_InitDashState
                 btst    #4,$69(a5)
@@ -319,12 +319,12 @@ Player_CeilingAirControlState:                          ; DATA XREF: ROM:0001507
                 nop
                 btst    #1,6(a5)
                 beq.w   Player_EndDashState
-                bsr.w   Player_CheckCounterInput
+                bsr.w   Player_CheckCeilingWeaponSelectInput
                 bne.s   Player_CeilingAirControlState_Return
                 bsr.w   Player_CheckDashInput
                 bne.s   Player_CeilingAirControlState_Return
-                btst    #0,(byte_FF826C).w
-                bne.w   Player_InitCeilingDamageKnockback
+                btst    #0,(CounterForceTriggerFlag).w
+                bne.w   Player_StartCeilingCounterForce
                 btst    #0,$69(a5)
                 bne.w   Player_InitDashState
                 btst    #4,$69(a5)

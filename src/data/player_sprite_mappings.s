@@ -502,44 +502,44 @@ Player_KnockbackPrimarySpriteMapping:   dc.w    $800    ; DATA XREF: Player_Knoc
                 dc.w    $880C
                 dc.l    Player_KnockbackPrimarySpriteArtPiece02+$6000000
                 dc.w    $DBFE
-Player_DefeatPrimarySpriteMapping00:    dc.w    $800    ; DATA XREF: ROM:Player_DefeatPrimaryFrameTable   o  ; was: word_E8BC2
-                dc.l    Player_DefeatPrimarySpriteArt00Piece00+$1000000
+Player_CounterForcePrimarySpriteMapping00:  dc.w    $800  ; DATA XREF: ROM:Player_CounterForcePrimaryFrameTable   o  ; was: word_E8BC2
+                dc.l    Player_CounterForcePrimarySpriteArt00Piece00+$1000000
                 dc.w    $EAE5
                 dc.w    $802
-                dc.l    Player_DefeatPrimarySpriteArt00Piece01+$4000000
+                dc.l    Player_CounterForcePrimarySpriteArt00Piece01+$4000000
                 dc.w    $E90D
                 dc.w    $804
-                dc.l    Player_DefeatPrimarySpriteArt00Piece02+$D000000
+                dc.l    Player_CounterForcePrimarySpriteArt00Piece02+$D000000
                 dc.w    $EAED
                 dc.w    $880C
-                dc.l    Player_DefeatPrimarySpriteArt00Piece03+$D000000
+                dc.l    Player_CounterForcePrimarySpriteArt00Piece03+$D000000
                 dc.w    $DAED
-Player_DefeatPrimarySpriteMapping01:    dc.w    $800    ; DATA XREF: ROM:00017362   o  ; was: word_E8BE2
-                dc.l    Player_DefeatPrimarySpriteArt01Piece00+$1000000
+Player_CounterForcePrimarySpriteMapping01:  dc.w    $800  ; DATA XREF: ROM:00017362   o  ; was: word_E8BE2
+                dc.l    Player_CounterForcePrimarySpriteArt01Piece00+$1000000
                 dc.w    $E2E9
                 dc.w    $802
-                dc.l    Player_DefeatPrimarySpriteArt01Piece01
+                dc.l    Player_CounterForcePrimarySpriteArt01Piece01
                 dc.w    $E511
                 dc.w    $8803
-                dc.l    Player_DefeatPrimarySpriteArt01Piece02+$F000000
+                dc.l    Player_CounterForcePrimarySpriteArt01Piece02+$F000000
                 dc.w    $DAF0
-Player_DefeatPrimarySpriteMapping02:    dc.w    $800    ; DATA XREF: ROM:00017366   o  ; was: word_E8BFA
-                dc.l    Player_DefeatPrimarySpriteArt02Piece00+$1000000
+Player_CounterForcePrimarySpriteMapping02:  dc.w    $800  ; DATA XREF: ROM:00017366   o  ; was: word_E8BFA
+                dc.l    Player_CounterForcePrimarySpriteArt02Piece00+$1000000
                 dc.w    $E2EA
                 dc.w    $8802
-                dc.l    Player_DefeatPrimarySpriteArt02Piece01+$F000000
+                dc.l    Player_CounterForcePrimarySpriteArt02Piece01+$F000000
                 dc.w    $DAF2
-Player_DefeatPrimarySpriteMapping03:    dc.w    $800    ; DATA XREF: ROM:0001736A   o  ; was: word_E8C0A
-                dc.l    Player_DefeatPrimarySpriteArt03Piece00+$8000000
+Player_CounterForcePrimarySpriteMapping03:  dc.w    $800  ; DATA XREF: ROM:0001736A   o  ; was: word_E8C0A
+                dc.l    Player_CounterForcePrimarySpriteArt03Piece00+$8000000
                 dc.w    $EACF
                 dc.w    $803
-                dc.l    Player_DefeatPrimarySpriteArt03Piece01+$1000000
+                dc.l    Player_CounterForcePrimarySpriteArt03Piece01+$1000000
                 dc.w    $E2E7
                 dc.w    $805
-                dc.l    Player_DefeatPrimarySpriteArt03Piece02
+                dc.l    Player_CounterForcePrimarySpriteArt03Piece02
                 dc.w    $DA0F
                 dc.w    $8806
-                dc.l    Player_DefeatPrimarySpriteArt03Piece03+$F000000
+                dc.l    Player_CounterForcePrimarySpriteArt03Piece03+$F000000
                 dc.w    $DAEF
 Player_FastVerticalSecondarySpriteMapping:  dc.w    $800  ; DATA XREF: Player_SelectFallAnimation:Player_SelectFallAnimation_UseFastFrame   o  ; was: word_E8C2A
                 dc.l    Player_FastVerticalSecondarySpriteArtPiece00

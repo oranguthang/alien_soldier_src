@@ -13,10 +13,10 @@ Player_SpecialMoveRecoveryState:                        ; CODE XREF: Player_Hand
                 bsr.w   Physics_RisingTerrainCheckWrapper
                 btst    #1,6(a5)
                 bne.w   Player_InitCeilingLandingState
-                bsr.w   Player_CheckAlternateSpecialActivation
+                bsr.w   Player_CheckRecoveryWeaponSelectInput
                 bne.w   Player_SpecialMoveRecoveryState_Return
-                btst    #0,(byte_FF826C).w
-                bne.w   Player_InitAirborneDamageKnockback
+                btst    #0,(CounterForceTriggerFlag).w
+                bne.w   Player_StartAirCounterForce
                 btst    #5,$6A(a5)
                 beq.s   Player_RenderSpecialMoveRecovery
                 tst.b   (PlayerAirDashUsedFlag).w
@@ -61,37 +61,37 @@ Player_SpecialMoveRecoveryState_Return:                 ; CODE XREF: Player_Spec
                 rts
 ; End of function Player_SpecialMoveRecoveryState_Return
 
-; Checks the input and availability conditions for the alternate special state
-Player_CheckAlternateSpecialActivation:                 ; CODE XREF: Player_SpecialMoveRecoveryState+36   p  ; was: sub_1615C
+; Checks A-button input for weapon selection during special-attack recovery
+Player_CheckRecoveryWeaponSelectInput:                  ; CODE XREF: Player_SpecialMoveRecoveryState+36   p  ; was: sub_1615C
                 btst    #6,$6A(a5)
-                beq.s   Player_CheckAlternateSpecialActivation_NotActivated
+                beq.s   Player_CheckRecoveryWeaponSelectInput_NotActivated
                 btst    #1,$69(a5)
-                beq.s   Player_CheckAlternateSpecialActivation_CheckAvailability
-                bsr.w   Player_ToggleAlternateModeWithInputMask
+                beq.s   Player_CheckRecoveryWeaponSelectInput_CheckAvailable
+                bsr.w   Player_ToggleShootingModeWithInputMask
                 moveq   #0,d0
                 rts
 ; ---------------------------------------------------------------------------
-Player_CheckAlternateSpecialActivation_CheckAvailability:  ; CODE XREF: Player_CheckAlternateSpecialActivation+E   j  ; was: loc_16174
+Player_CheckRecoveryWeaponSelectInput_CheckAvailable:   ; CODE XREF: Player_CheckRecoveryWeaponSelectInput+E   j  ; was: loc_16174
                 tst.w   (WeaponStateCooldown).w
-                bmi.s   Player_InitAlternateSpecialState
-Player_CheckAlternateSpecialActivation_NotActivated:    ; CODE XREF: Player_CheckAlternateSpecialActivation+6   j  ; was: loc_1617A
+                bmi.s   Player_StartRecoveryWeaponSelect
+Player_CheckRecoveryWeaponSelectInput_NotActivated:     ; CODE XREF: Player_CheckRecoveryWeaponSelectInput+6   j  ; was: loc_1617A
                 moveq   #0,d0
                 rts
-; End of function Player_CheckAlternateSpecialActivation
+; End of function Player_CheckRecoveryWeaponSelectInput
 ; ---------------------------------------------------------------------------
-; Initializes state 0x54 after alternate-special activation
-Player_InitAlternateSpecialState:                       ; CODE XREF: Player_CheckAlternateSpecialActivation+1C   j  ; was: loc_1617E
+; Starts the recovery-specific weapon-select state
+Player_StartRecoveryWeaponSelect:                       ; CODE XREF: Player_CheckRecoveryWeaponSelectInput+1C   j  ; was: loc_1617E
                 move.w  (WeaponSlotOffset).w,(WeaponSavedSlotOffset).w
                 move.w  #$12,(WeaponStateIndex).w
                 move.b  #$7F,(PlayerInputMask).w
-                move.w  #0,(SpecialMoveSpawnXOffset).w
-                move.w  #$FFEE,(SpecialMoveSpawnYOffset).w
+                move.w  #0,(WeaponMenuSpawnXOffset).w
+                move.w  #$FFEE,(WeaponMenuSpawnYOffset).w
                 move.w  #$54,4(a5)                      ; 'T'
                 moveq   #1,d0
                 rts
-; End of function Player_InitAlternateSpecialState
-; Handles state 0x54 with terrain checks and an unarmed animation
-Player_AlternateSpecialState:                           ; DATA XREF: ROM:000150B6   o  ; was: sub_161A6
+; End of function Player_StartRecoveryWeaponSelect
+; Holds recovery state 0x54 while the weapon selector is active
+Player_RecoveryWeaponSelectState:                       ; DATA XREF: ROM:000150B6   o  ; was: sub_161A6
                 bset    #0,(byte_FF8244).w
                 bset    #6,(byte_FF8244).w
                 jsr     Physics_ExtendedWallCheckWrapper(pc)  ; (pc)
@@ -105,20 +105,20 @@ Player_AlternateSpecialState:                           ; DATA XREF: ROM:000150B
                 btst    #1,6(a5)
                 bne.w   Player_InitCeilingLandingState
                 cmpi.w  #$12,(WeaponStateIndex).w
-                bpl.s   Player_AlternateSpecialState_Render
+                bpl.s   Player_RecoveryWeaponSelectState_Render
                 move.w  #$46,4(a5)                      ; 'F'
                 bsr.w   Player_AutoFlipDirection
-Player_AlternateSpecialState_Render:                    ; CODE XREF: Player_AlternateSpecialState+3C   j  ; was: loc_161EE
+Player_RecoveryWeaponSelectState_Render:                ; CODE XREF: Player_RecoveryWeaponSelectState+3C   j  ; was: loc_161EE
                 movea.l #Player_SpecialAttackSecondarySpriteMappingA,a2
                 btst    #0,(FrameCounter+1).w
-                bne.s   Player_AlternateSpecialState_SelectFrame
+                bne.s   Player_RecoveryWeaponSelectState_SelectFrame
                 movea.l #Player_SpecialAttackSecondarySpriteMappingB,a2
-Player_AlternateSpecialState_SelectFrame:               ; CODE XREF: Player_AlternateSpecialState+54   j  ; was: loc_16202
+Player_RecoveryWeaponSelectState_SelectFrame:           ; CODE XREF: Player_RecoveryWeaponSelectState+54   j  ; was: loc_16202
                 movea.l #Player_CommonPrimarySpriteMapping,a1
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFE,d6
                 bra.w   Player_BuildSpritePieces
-; End of function Player_AlternateSpecialState
+; End of function Player_RecoveryWeaponSelectState
 ; Enters the forced-position state and clears player motion
 Player_InitForcedPositionState:                         ; CODE XREF: Player_Update+72   p  ; was: sub_16210
                 move.b  #$7F,(PlayerInputMask).w
@@ -277,10 +277,10 @@ Player_UnusedStateReturn:                               ; was: nullsub_41
 ; End of function Player_UnusedStateReturn
 
 ; Initializes the idle state used while attached to upper terrain
-Player_InitCeilingIdleState:                            ; CODE XREF: Player_CeilingDamageState+1A   j  ; was: sub_163D2
+Player_InitCeilingIdleState:                            ; CODE XREF: Player_CeilingCounterForceState+1A   j  ; was: sub_163D2
                                         ; Player_CeilingDashState+66   j
                 move.b  #$7F,(PlayerInputMask).w
-                bclr    #0,(byte_FF826C).w
+                bclr    #0,(CounterForceTriggerFlag).w
                 clr.w   (PlayerAirMoveUsedFlags).w
                 move.w  #$18,4(a5)
                 clr.l   $18(a5)
@@ -303,12 +303,12 @@ Player_CeilingIdleState:                                ; DATA XREF: ROM:0001507
                 btst    #1,6(a5)
                 beq.w   Player_EndDashState
                 bsr.w   Effect_SpawnParticle
-                bsr.w   Player_CheckCounterInput
+                bsr.w   Player_CheckCeilingWeaponSelectInput
                 bne.s   Player_CeilingIdleState_Return
                 bsr.w   Player_CheckDashInput
                 bne.s   Player_CeilingIdleState_Return
-                btst    #0,(byte_FF826C).w
-                bne.w   Player_InitCeilingDamageKnockback
+                btst    #0,(CounterForceTriggerFlag).w
+                bne.w   Player_StartCeilingCounterForce
                 btst    #4,$69(a5)
                 beq.s   Player_CeilingIdleState_CheckDashInput
                 tst.w   (ShootingMode).w
@@ -325,10 +325,10 @@ Player_CeilingIdleState_Render:                         ; CODE XREF: Player_Ceil
                 beq.w   Player_RenderIdleFrame
                 bra.w   Player_UpdateDashSprite
 ; ---------------------------------------------------------------------------
-; Initializes horizontal knockback from the upper-terrain idle state
-Player_InitCeilingDamageKnockback:                      ; CODE XREF: Player_CeilingIdleState+2C   j  ; was: loc_1646C
+; Starts ceiling Counter Force recoil, effect, and animation timing
+Player_StartCeilingCounterForce:                        ; CODE XREF: Player_CeilingIdleState+2C   j  ; was: loc_1646C
                                         ; Player_CeilingDashState+3E   j
-                bsr.w   Player_SpawnDamageImpactEffect
+                bsr.w   Player_SpawnCounterForceEffect
                 move.b  #$7F,(PlayerInputMask).w
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.w  #$3E,4(a5)                      ; '>'
@@ -338,22 +338,22 @@ Player_InitCeilingDamageKnockback:                      ; CODE XREF: Player_Ceil
                 move.w  #$10,$5C(a5)
                 move.l  #$FFFE0000,$18(a5)
                 btst    #3,$E(a5)
-                bne.s   Player_InitCeilingDamageKnockback_Return
+                bne.s   Player_StartCeilingCounterForce_Return
                 neg.l   $18(a5)
-Player_InitCeilingDamageKnockback_Return:               ; CODE XREF: Player_CeilingIdleState+A6   j  ; was: locret_164AE
+Player_StartCeilingCounterForce_Return:                 ; CODE XREF: Player_CeilingIdleState+A6   j  ; was: locret_164AE
                 rts
-; End of function Player_InitCeilingDamageKnockback
-; Handles the upper-terrain phase of player damage knockback
-Player_CeilingDamageState:                              ; DATA XREF: ROM:000150A0   o  ; was: sub_164B0
+; End of function Player_StartCeilingCounterForce
+; Updates the ceiling Counter Force recoil and animation
+Player_CeilingCounterForceState:                        ; DATA XREF: ROM:000150A0   o  ; was: sub_164B0
                 jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
                 jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
-                beq.w   Player_SetAirborneDamageState
+                beq.w   Player_SetAirCounterForceState
                 subq.w  #1,$4A(a5)
                 bmi.w   Player_InitCeilingIdleState
                 move.l  #$2000,d1
                 bsr.w   Player_DecelerateHorizontalVelocity
-                bra.w   Player_AnimateDefeatSprite
-; End of function Player_CeilingDamageState
+                bra.w   Player_UpdateCounterForceAnimation
+; End of function Player_CeilingCounterForceState

@@ -136,8 +136,8 @@ WeaponYMotionParameter  equ     $FFFF8024               ; was: dword_FF8024
 WeaponXMotionParameter  equ     $FFFF8028               ; was: dword_FF8028
 WeaponModeParameter     equ     $FFFF802C               ; was: dword_FF802C
 WeaponMenuRadius        equ     $FFFF8030               ; was: word_FF8030
-SpecialMoveSpawnXOffset equ     $FFFF8032               ; was: word_FF8032
-SpecialMoveSpawnYOffset equ     $FFFF8034               ; was: word_FF8034
+WeaponMenuSpawnXOffset  equ     $FFFF8032               ; was: word_FF8032
+WeaponMenuSpawnYOffset  equ     $FFFF8034               ; was: word_FF8034
 WeaponMenuAngle         equ     $FFFF8036               ; was: word_FF8036
 WeaponStateCooldown     equ     $FFFF8038               ; was: word_FF8038
 WeaponMenuAngularStep   equ     $FFFF803A               ; was: word_FF803A
@@ -283,8 +283,8 @@ HealthDeltaDisplayValue equ     $FFFF8262               ; was: word_FF8262
 TransientValueScreenX   equ     $FFFF8264               ; was: word_FF8264
 TransientValueScreenY   equ     $FFFF8266               ; was: word_FF8266
 HealthDeltaDisplayTimer equ     $FFFF8268               ; was: word_FF8268
-WeaponSwitchRepeatTimer equ     $FFFF826A               ; was: word_FF826A
-byte_FF826C             equ     $FFFF826C
+CounterForceInputTimer  equ     $FFFF826A               ; was: word_FF826A
+CounterForceTriggerFlag equ     $FFFF826C               ; was: byte_FF826C
 SpawnedEnemyTileAttr    equ     $FFFF826E               ; was: word_FF826E
 StandardEnemyTileAttr   equ     $FFFF8270               ; was: word_FF8270
 EnemyProjectileTileAttr equ     $FFFF8272               ; was: word_FF8272
