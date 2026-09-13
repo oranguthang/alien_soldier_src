@@ -2,7 +2,7 @@
 StageTransition_UpdateShieldViperVScroll:               ; CODE XREF: StageTransition_LoadShieldViperAssets+4   p  ; was: sub_FC74
                                         ; StageTransition_UpdateShieldViperBackdrop+4   p
                 bsr.w   StageTransition_BuildBossBackdropLineOffsets
-                movea.w #(byte_FFE580-M68K_RAM),a1
+                movea.w #(HScrollPlaneARow96-M68K_RAM),a1
                 movea.w #(word_FF9E00-M68K_RAM),a0
                 moveq   #$7F,d7
 StageTransition_CopyShieldViperVScrollLoop:             ; CODE XREF: StageTransition_UpdateShieldViperVScroll+12   j  ; was: loc_FC82
@@ -75,7 +75,7 @@ StageTransition_ApplyBossBackdropPaletteFade:           ; CODE XREF: StageTransi
                 jsr     (Gfx_SetFadeParams).l
                 moveq   #0,d0
                 sub.w   (word_FF9DAE).w,d0
-                movea.w #(word_FFE340-M68K_RAM),a0
+                movea.w #(PaletteActiveColor32-M68K_RAM),a0
                 move.w  #$C000,d7
                 moveq   #$F,d5
                 jmp     (Gfx_ApplyPaletteFade).l

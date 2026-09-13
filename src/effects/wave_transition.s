@@ -1,6 +1,6 @@
 ; Builds and uploads one wave-distorted tilemap frame; no source caller is known
 UnreferencedWave_RenderTilemapToVRAM:                   ; was: sub_261D8
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bne.w   UnreferencedWave_RenderTilemapToVRAM_Return
                 bsr.w   Gfx_InitializeWaveParameters
 UnreferencedWave_RenderTilemapToVRAM_BuildTileLoop:     ; CODE XREF: UnreferencedWave_RenderTilemapToVRAM+3A   j  ; was: loc_261E4
@@ -49,7 +49,7 @@ Effect_InitWaveScroll:
                 move.w  #2,(word_FF8100).w              ; was: sub_2626C
                 move.w  #0,(WaveParameterIndex).w
                 move.w  #0,(WaveStateOffset).w
-                move.w  #$70,(word_FFEC02).w            ; 'p'
+                move.w  #$70,(VScrollPlaneBColumn0).w   ; 'p'
                 rts
 ; End of function Effect_InitWaveScroll
 ; Stops scrolling effect by resetting state variables and counters
@@ -57,7 +57,7 @@ Stage_StopScrollEffect:
                 move.b  #4,(VDPReg0Shadow+1).w          ; was: sub_26286
                 move.b  #$30,(VDPReg2Shadow+1).w        ; '0'
                 move.w  #0,(word_FF8100).w
-                move.w  #0,(word_FFEC02).w
+                move.w  #0,(VScrollPlaneBColumn0).w
                 rts
 ; End of function Stage_StopScrollEffect
 ; Main controller for wave/distortion effect, dispatches to state handlers

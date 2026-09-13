@@ -45,7 +45,7 @@ Boss_WolfGaropaStateTable:  dc.w    Boss_WolfGaropaInitialize-Boss_WolfGaropaIni
 ; Build the composite boss object and initialize its auxiliary orb records
 Boss_WolfGaropaInitialize:                              ; DATA XREF: Boss_WolfGaropaUpdate+38   o  ; was: sub_4F956
                                         ; sub_4F8F0:Boss_WolfGaropaStateTable   o
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.w   Boss_WolfGaropaReturn
                 move.b  #$18,(byte_FFA420).w
                 move.w  #1,8(a5)

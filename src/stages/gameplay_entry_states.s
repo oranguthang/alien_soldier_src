@@ -1,6 +1,6 @@
 ; Initialize a normal stage, stream its two tilemap planes, and enter gameplay
 Stage_UpdateGameplayEntry:                              ; DATA XREF: Sys_DispatchGameState+62   o  ; was: sub_1C3FA
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Stage_UpdateGameplayEntry_Return
                 cmpi.w  #4,(GameSubstateIndex).w
                 beq.w   Stage_StreamGameplayEntrySecondaryPlane
@@ -100,7 +100,7 @@ Stage_EntrySecondaryPlaneVRAMParameterPointers:
 
 ; Initialize the Xi-Tiger stage path, stream both tilemap planes, and enter gameplay
 XiTigerStage_UpdateGameplayEntry:                       ; DATA XREF: Sys_DispatchGameState+D6   o  ; was: sub_1C546
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   XiTigerStage_UpdateGameplayEntry_Return
                 cmpi.w  #4,(GameSubstateIndex).w
                 beq.w   XiTigerStage_StreamSecondaryPlane

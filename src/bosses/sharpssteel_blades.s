@@ -419,7 +419,7 @@ Boss_SharpssteelUpdateFlashingPaletteColors:
                 bne.s   Boss_SharpssteelSelectFlashingPaletteTriplet
                 moveq   #0,d0
 Boss_SharpssteelSelectFlashingPaletteTriplet:           ; CODE XREF: Boss_SharpssteelUpdateFlashingPaletteColors+8   j
-                movea.w #(word_FFE366-M68K_RAM),a0
+                movea.w #(PaletteActiveColor51-M68K_RAM),a0
                 move.w  Boss_SharpssteelFlashingPaletteTriplets(pc,d0.w),(a0)+
                 move.w  Boss_SharpssteelFlashingPaletteTriplets+2(pc,d0.w),(a0)+
                 move.w  Boss_SharpssteelFlashingPaletteTriplets+4(pc,d0.w),(a0)+
@@ -475,7 +475,7 @@ Boss_SharpssteelFinishBackgroundFade:                   ; CODE XREF: Boss_Sharps
                 clr.w   $3BE(a5)
 Boss_SharpssteelApplyBackgroundPalette:                 ; CODE XREF: Boss_SharpssteelUpdateBackgroundPaletteFade+32   j
                                         ; Boss_SharpssteelUpdateBackgroundPaletteFade+38   j
-                movea.w #(word_FFE364-M68K_RAM),a0
+                movea.w #(PaletteActiveColor50-M68K_RAM),a0
                 moveq   #$D,d5
                 move.w  #$E000,d7
                 jmp     (Gfx_ApplyPaletteFade).l

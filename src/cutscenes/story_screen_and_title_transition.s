@@ -58,7 +58,7 @@ StoryScreen_MainLoop:                                   ; DATA XREF: Sys_Dispatc
                 beq.s   StoryScreen_RunFrame
                 tst.w   (ScenePaletteFadeOffset).l
                 bne.s   StoryScreen_RunFrame
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   StoryScreen_RunFrame
                 btst    #7,(ControllerPressedState).w
                 bne.w   StoryScreen_StartExitFade
@@ -131,7 +131,7 @@ StoryScreen_FadeOutAndLoadTitleAssets:                  ; DATA XREF: ROM:0000497
                 bne.w   Cutscene_Return
                 subq.w  #2,(ScenePaletteFadeOffset).l
                 move.w  (ScenePaletteFadeOffset).l,d0
-                lea     (word_FFE302).w,a0
+                lea     (PaletteActiveColor01).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -145,11 +145,11 @@ StoryScreen_FadeOutAndLoadTitleAssets:                  ; DATA XREF: ROM:0000497
 ; Fades to target palette and sets up scrolling data
 StoryScreen_FadeInAndStartScroll:                       ; DATA XREF: ROM:00004978   o  ; was: sub_4A16
                 move.w  #$FFF2,d0
-                lea     (word_FFE302).w,a0
+                lea     (PaletteActiveColor01).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.w   Cutscene_Return
                 move.l  #Gfx_ScrollVRAMTransferParameters,(TilemapTransferBase).w
                 move.w  #0,(TilemapRowXOrFillWord).w
@@ -163,7 +163,7 @@ StoryScreen_FadeInAndStartScroll:                       ; DATA XREF: ROM:0000497
 ; Waits for fade completion then loads tile data via DMA
 StoryScreen_WaitForScrollAndLoadPalette:                ; DATA XREF: ROM:0000497A   o  ; was: sub_4A5C
                 move.w  #$FFF2,d0
-                lea     (word_FFE302).w,a0
+                lea     (PaletteActiveColor01).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -177,7 +177,7 @@ StoryScreen_WaitForScrollAndLoadPalette:                ; DATA XREF: ROM:0000497
                 jsr     (Gfx_LoadMultiplePalettes).l
                 move.w  #$FFF2,(ScenePaletteFadeOffset).l
                 move.w  (ScenePaletteFadeOffset).l,d0
-                lea     (word_FFE302).w,a0
+                lea     (PaletteActiveColor01).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -193,7 +193,7 @@ StoryScreen_FadeInTitleScene:                           ; DATA XREF: ROM:0000497
                 bne.w   Cutscene_Return
                 addq.w  #2,(ScenePaletteFadeOffset).l
                 move.w  (ScenePaletteFadeOffset).l,d0
-                lea     (word_FFE302).w,a0
+                lea     (PaletteActiveColor01).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -281,7 +281,7 @@ StoryTitle_MirrorInitialGlyphNibbles:                   ; was: loc_4C26
                 or.b    d2,d1
                 move.b  d1,(a1)+
                 dbf     d0,StoryTitle_MirrorInitialGlyphNibbles
-                lea     (word_FFE382).w,a0
+                lea     (PaletteShadowColor01).w,a0
                 move.w  #2,(a0)+
                 move.w  #$A,d1
                 move.w  d1,(a0)+
@@ -330,7 +330,7 @@ StoryTitle_LogoRevealCharacters:    dc.b    $B, $16, $13, $F, $18, $1D, $19, $16
 
 ; Applies the current logo-reveal palette step to five active colors
 StoryTitle_UpdateRevealPalette:                         ; was: sub_4D02
-                lea     (word_FFE302).w,a0
+                lea     (PaletteActiveColor01).w,a0
                 move.w  (CutscenePaletteStep).l,d0
                 move.w  StoryTitle_FirstPaletteColorRamp(pc,d0.w),(a0)+
                 move.w  StoryTitle_RepeatedPaletteColorRamp(pc,d0.w),d1

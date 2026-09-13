@@ -189,7 +189,7 @@ Gfx_BugmaxTimedBattleTileLoadReturn:                    ; CODE XREF: Gfx_BugmaxL
 ; End of function Gfx_BugmaxLoadTimedBattleTileSet
 ; Load the second battle tile set after the graphics queue is ready
 Gfx_BugmaxLoadQueuedBattleTileSet:                      ; DATA XREF: ROM:0004C3F8   o  ; was: sub_4CC2A
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Gfx_BugmaxQueuedBattleTileLoadReturn
                 addq.w  #2,4(a5)
                 lea     Gfx_BugmaxQueuedBattleTileSetDescriptor(pc),a0

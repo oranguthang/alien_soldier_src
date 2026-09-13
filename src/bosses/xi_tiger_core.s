@@ -72,7 +72,7 @@ Boss_XiTigerInitReturn:                                 ; CODE XREF: Boss_XiTige
 ; End of function Boss_XiTigerInit
 ; Complex setup with metasprite initialization
 Boss_XiTigerSetup:                                      ; DATA XREF: ROM:0003D88A   o  ; was: sub_3D8CE
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   Boss_XiTigerInitReturn
                 movea.w a5,a4
                 move.w  #$8280,(dword_FF8040).w

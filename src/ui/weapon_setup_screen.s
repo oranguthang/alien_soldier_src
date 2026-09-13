@@ -553,8 +553,8 @@ WeaponSetup_AdvanceHighlightPaletteCycle:               ; CODE XREF: WeaponSetup
 WeaponSetup_WriteHighlightPaletteColors:                ; CODE XREF: WeaponSetup_UpdateHighlightPalette+C   j  ; was: loc_1F7D4
                                         ; WeaponSetup_UpdateHighlightPalette+10   j
                 andi.w  #$E,d0
-                move.w  WeaponSetup_HighlightPaletteColor1Cycle(pc,d0.w),(word_FFE362).w
-                move.w  WeaponSetup_HighlightPaletteColor2Cycle(pc,d0.w),(word_FFE364).w
+                move.w  WeaponSetup_HighlightPaletteColor1Cycle(pc,d0.w),(PaletteActiveColor49).w
+                move.w  WeaponSetup_HighlightPaletteColor2Cycle(pc,d0.w),(PaletteActiveColor50).w
                 rts
 ; End of function WeaponSetup_UpdateHighlightPalette
 ; ---------------------------------------------------------------------------

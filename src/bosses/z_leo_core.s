@@ -22,7 +22,7 @@ Boss_ZLeoDecreaseFirstPaletteFade:                      ; CODE XREF: Boss_ZLeoMa
                 subq.w  #1,d0
 Boss_ZLeoApplyFirstPaletteFade:                         ; CODE XREF: Boss_ZLeoMain+32   j  ; was: loc_51B0C
                 move.w  d0,$4DC(a5)
-                movea.w #(word_FFE302-M68K_RAM),a0
+                movea.w #(PaletteActiveColor01-M68K_RAM),a0
                 moveq   #$E,d5
                 move.w  $4DE(a5),d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -37,7 +37,7 @@ Boss_ZLeoDecreaseSecondPaletteFade:                     ; CODE XREF: Boss_ZLeoMa
                 subq.w  #1,d0
 Boss_ZLeoApplySecondPaletteFade:                        ; CODE XREF: Boss_ZLeoMain+54   j  ; was: loc_51B2E
                 move.w  d0,$53C(a5)
-                movea.w #(byte_FFE322-M68K_RAM),a0
+                movea.w #(PaletteActiveColor17Hi-M68K_RAM),a0
                 moveq   #$1E,d5
                 move.w  $53E(a5),d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -52,7 +52,7 @@ Boss_ZLeoDecreaseThirdPaletteFade:                      ; CODE XREF: Boss_ZLeoMa
                 subq.w  #1,d0
 Boss_ZLeoApplyThirdPaletteFade:                         ; CODE XREF: Boss_ZLeoMain+76   j  ; was: loc_51B50
                 move.w  d0,$59C(a5)
-                movea.w #(word_FFE362-M68K_RAM),a0
+                movea.w #(PaletteActiveColor49-M68K_RAM),a0
                 moveq   #$E,d5
                 move.w  $59E(a5),d7
                 jsr     (Gfx_ApplyPaletteFade).l

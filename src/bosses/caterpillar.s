@@ -401,7 +401,7 @@ Boss_CaterpillarShipStateOffsets:   dc.w    Boss_CaterpillarShipInit-*  ; DATA X
 
 ; Initializes caterpillar ship with body parts
 Boss_CaterpillarShipInit:                               ; DATA XREF: ROM:Boss_CaterpillarShipStateOffsets   o  ; was: sub_3D562
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.w   Boss_CaterpillarShipInitReturn
                 addq.w  #2,4(a5)
                 move.w  #6,(dword_FF940C+2).w

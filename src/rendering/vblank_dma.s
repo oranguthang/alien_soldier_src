@@ -41,7 +41,7 @@ Gfx_RunVBlankTransfers_UploadPalette:                   ; CODE XREF: Gfx_RunVBla
                 move.w  (VDPCommand).w,(a0)
                 move.w  (VDPCommand+2).w,(a0)
 Gfx_RunVBlankTransfers_FlushCommandQueue:               ; CODE XREF: Gfx_RunVBlankTransfers+68   j  ; was: loc_DA4
-                lea     (word_FFF400).w,a2
+                lea     (VDPQueueStagingBoundary).w,a2
                 movea.w (VDPCommandQueueHead).w,a3
                 cmpa.w  a2,a3
                 beq.w   Gfx_RunVBlankTransfers_UploadHorizontalScroll

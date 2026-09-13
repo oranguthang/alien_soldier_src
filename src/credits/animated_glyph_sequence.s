@@ -14,8 +14,8 @@ CreditsGlyphSequence_StateOffsets:  dc.w    CreditsGlyphSequence_Initialize-*  ;
 
 ; Initializes the animated credits-glyph record sequence
 CreditsGlyphSequence_Initialize:                        ; DATA XREF: ROM:CreditsGlyphSequence_StateOffsets   o  ; was: sub_21A74
-                move.w  #$222,(word_FFE302).w
-                move.w  #$EEE,(word_FFE304).w
+                move.w  #$222,(PaletteActiveColor01).w
+                move.w  #$EEE,(PaletteActiveColor02).w
                 move.l  #CreditsGlyphSequenceData,(SharedSequenceCursor).l
                 addq.w  #2,(SharedSequenceState).l
 ; Parses and spawns the next two-row credits-glyph record
@@ -248,7 +248,7 @@ UnreferencedCreditsGlyph_UpdatePaletteRamp:             ; was: sub_22060
                 move.w  $48(a5),d0
                 lsr.w   #4,d0
                 add.w   d0,d0
-                move.w  CreditsGlyph_PaletteRamp(pc,d0.w),(word_FFE302).w
+                move.w  CreditsGlyph_PaletteRamp(pc,d0.w),(PaletteActiveColor01).w
 UnreferencedCreditsGlyph_UpdatePaletteRampReturn:       ; CODE XREF: UnreferencedCreditsGlyph_UpdatePaletteRamp+4   j  ; was: locret_22074
                 rts
 ; End of function UnreferencedCreditsGlyph_UpdatePaletteRamp

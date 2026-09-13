@@ -10,7 +10,7 @@ Boss_BackStringerUpdatePalette:                         ; CODE XREF: Boss_BackSt
                 move.w  (FrameCounter).w,d0
                 asr.w   #2,d0
                 andi.w  #$E,d0
-                movea.w #(byte_FFE374-M68K_RAM),a0
+                movea.w #(PaletteActiveColor58Hi-M68K_RAM),a0
                 move.w  Boss_BackStringerPaletteCycleColor0(pc,d0.w),$80(a0)
                 move.w  Boss_BackStringerPaletteCycleColor0(pc,d0.w),(a0)+
                 move.w  Boss_BackStringerPaletteCycleColor1(pc,d0.w),$80(a0)
@@ -74,13 +74,13 @@ Boss_BackStringerPartAngleFrameTable:   dc.l    Boss_BackStringerPartAngleMappin
 
 ; Copies the base colors and applies the timed transformation highlights
 Boss_BackStringerUpdateTransformationPalette:           ; CODE XREF: Boss_BackStringerTransformationState   p  ; was: sub_45032
-                movea.w #(byte_FFE322-M68K_RAM),a0
-                movea.w #(dword_FFE3A0+2-M68K_RAM),a1
+                movea.w #(PaletteActiveColor17Hi-M68K_RAM),a0
+                movea.w #(PaletteShadowPair16+2-M68K_RAM),a1
                 moveq   #$B,d7
 Boss_BackStringerCopyTransformationPaletteLoop:         ; CODE XREF: Boss_BackStringerUpdateTransformationPalette+C   j  ; was: loc_4503C
                 move.w  (a1)+,(a0)+
                 dbf     d7,Boss_BackStringerCopyTransformationPaletteLoop
-                movea.w #(byte_FFE322-M68K_RAM),a0
+                movea.w #(PaletteActiveColor17Hi-M68K_RAM),a0
                 move.w  $4DC(a5),d0
                 andi.w  #$FFFE,d0
                 cmpi.w  #2,d0

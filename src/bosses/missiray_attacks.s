@@ -451,7 +451,7 @@ Boss_MissirayInitializePrimaryModeTransition:           ; DATA XREF: ROM:Boss_Mi
 ; Waits for the previous transfer before starting direct tile set 00
 Boss_MissirayWaitThenLoadPrimaryTransferSet:            ; DATA XREF: ROM:000542DC   o  ; was: sub_5430A
                 bsr.w   Boss_MissirayAdvancePaletteWaveIndex
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Boss_MissirayPrimaryTransferSetWaitReturn
                 addq.w  #2,(dword_FF9400).w
                 bra.w   Boss_MissirayLoadTileTransferSet00
@@ -462,7 +462,7 @@ Boss_MissirayPrimaryTransferSetWaitReturn:              ; CODE XREF: Boss_Missir
 ; Waits for the direct transfer before queuing indexed-row set 00
 Boss_MissirayWaitThenQueuePrimaryIndexedRowSet:         ; DATA XREF: ROM:000542DE   o  ; was: sub_5431E
                 bsr.w   Boss_MissirayAdvancePaletteWaveIndex
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Boss_MissirayPrimaryIndexedRowSetWaitReturn
                 addq.w  #2,(dword_FF9400).w
                 bra.w   Boss_MissirayQueueIndexedRowSet00
@@ -473,7 +473,7 @@ Boss_MissirayPrimaryIndexedRowSetWaitReturn:            ; CODE XREF: Boss_Missir
 ; Waits for that transfer before queuing final indexed-row set 03
 Boss_MissirayWaitThenQueuePrimaryFinalIndexedRowSet:    ; DATA XREF: ROM:000542E0   o  ; was: sub_54332
                 bsr.w   Boss_MissirayAdvancePaletteWaveIndex
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Boss_MissirayPrimaryFinalIndexedRowSetWaitReturn
                 addq.w  #2,(dword_FF9400).w
                 bsr.w   Boss_MissirayQueueIndexedRowSet03
@@ -517,7 +517,7 @@ Boss_MissirayInitializeAlternateModeTransition:         ; DATA XREF: ROM:Boss_Mi
 ; Waits for the previous transfer before starting direct tile set 01
 Boss_MissirayWaitThenLoadAlternateTransferSet:          ; DATA XREF: ROM:0005436A   o  ; was: sub_54394
                 bsr.w   Boss_MissirayAdvancePaletteWaveIndex
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Boss_MissirayAlternateTransferSetWaitReturn
                 addq.w  #2,(dword_FF9400).w
                 bra.w   Boss_MissirayLoadTileTransferSet01
@@ -528,7 +528,7 @@ Boss_MissirayAlternateTransferSetWaitReturn:            ; CODE XREF: Boss_Missir
 ; Waits for the direct transfer before queuing indexed-row set 01
 Boss_MissirayWaitThenQueueAlternateIndexedRowSet:       ; DATA XREF: ROM:0005436C   o  ; was: sub_543A8
                 bsr.w   Boss_MissirayAdvancePaletteWaveIndex
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Boss_MissirayAlternateIndexedRowSetWaitReturn
                 addq.w  #2,(dword_FF9400).w
                 bra.w   Boss_MissirayQueueIndexedRowSet01
@@ -539,7 +539,7 @@ Boss_MissirayAlternateIndexedRowSetWaitReturn:          ; CODE XREF: Boss_Missir
 ; Waits for that transfer before queuing final indexed-row set 04
 Boss_MissirayWaitThenQueueAlternateFinalIndexedRowSet:  ; DATA XREF: ROM:0005436E   o  ; was: sub_543BC
                 bsr.w   Boss_MissirayAdvancePaletteWaveIndex
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Boss_MissirayAlternateFinalIndexedRowSetWaitReturn
                 addq.w  #2,(dword_FF9400).w
                 bsr.w   Boss_MissirayQueueIndexedRowSet04

@@ -235,7 +235,7 @@ Boss_WolfGaropaDecreaseOrbPalettePulse:                 ; CODE XREF: Boss_WolfGa
                 subq.w  #1,d0
 Boss_WolfGaropaApplyOrbPalettePulse:                    ; CODE XREF: Boss_WolfGaropaUpdateOrbPalettePulse+C   j  ; was: loc_50F92
                 move.w  d0,$5FE(a5)
-                movea.w #(word_FFE362-M68K_RAM),a0
+                movea.w #(PaletteActiveColor49-M68K_RAM),a0
                 moveq   #$D,d5
                 move.w  $65C(a5),d7
                 jmp     (Gfx_ApplyPaletteFade).l

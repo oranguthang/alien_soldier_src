@@ -70,8 +70,8 @@ Boss_DestroyerProtoCycleArenaEffect:                    ; CODE XREF: Boss_Destro
                 clr.w   d0
 Boss_DestroyerProtoStoreArenaEffectPhase:               ; CODE XREF: Boss_DestroyerProtoCycleArenaEffect+16   j  ; was: loc_3155A
                 move.w  d0,(dword_FF9400).w
-                move.w  Boss_DestroyerProtoArenaEffectValueATable(pc,d0.w),(word_FFE366).w
-                move.w  Boss_DestroyerProtoArenaEffectValueBTable(pc,d0.w),(word_FFE368).w
+                move.w  Boss_DestroyerProtoArenaEffectValueATable(pc,d0.w),(PaletteActiveColor51).w
+                move.w  Boss_DestroyerProtoArenaEffectValueBTable(pc,d0.w),(PaletteActiveColor52).w
                 rts
 ; End of function Boss_DestroyerProtoCycleArenaEffect
 ; ---------------------------------------------------------------------------
@@ -86,7 +86,7 @@ Boss_DestroyerProtoIntroInit:                           ; DATA XREF: ROM:Boss_De
                 move.w  #$E0,$14(a5)
                 move.w  #$200,$10(a5)
                 bsr.w   Boss_DestroyerProtoUpdateViewportOffset
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.w   Entity_UpdateReturn
                 move.b  #4,(byte_FFA95A).w
                 move.b  #$50,$21(a5)                    ; 'P'

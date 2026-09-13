@@ -65,7 +65,7 @@ Boss_ShellshogunInitializationWaitReturn:               ; CODE XREF: Boss_Shells
 Boss_ShellshogunSetupPhase:                             ; DATA XREF: ROM:00039524   o  ; was: sub_39572
                 subq.w  #1,$48(a5)
                 bmi.w   Boss_ShellshogunInitializationWaitReturn
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   Boss_ShellshogunInitializationWaitReturn
                 clr.w   $48(a5)
                 addq.w  #2,4(a5)

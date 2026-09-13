@@ -109,7 +109,7 @@ Boss_Epsilon1CyclePaletteColor:                         ; CODE XREF: Boss_Epsilo
                 bne.s   Boss_Epsilon1CyclePaletteColorReturn
                 move.w  $52(a5),d0
                 add.w   d0,d0
-                move.w  Boss_Epsilon1PaletteColorCycle(pc,d0.w),(word_FFE37C).w
+                move.w  Boss_Epsilon1PaletteColorCycle(pc,d0.w),(PaletteActiveColor62).w
                 addq.w  #1,$52(a5)
                 cmpi.w  #$E,$52(a5)
                 bne.s   Boss_Epsilon1CyclePaletteColorReturn
@@ -223,7 +223,7 @@ Boss_Epsilon1StoreRotatingShapeRowSample:               ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1BuildScrollProfile
 ; Streams or clears four tile bands from their screen-space visibility
 Boss_Epsilon1UpdateVisibleTileBands:                    ; CODE XREF: Boss_Epsilon1Main+B4   p  ; was: sub_47A0E
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.w   Boss_Epsilon1TileStreamingReturn
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0

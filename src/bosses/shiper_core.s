@@ -1,6 +1,6 @@
 ; Runs Shiper's encounter state machine and shared visual state
 Boss_ShiperMainHandler:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3641A
-                move.w  (word_FFEC02).w,(word_FFEC04).w
+                move.w  (VScrollPlaneBColumn0).w,(VScrollPlaneAColumn1).w
                 tst.w   4(a5)
                 beq.s   Boss_ShiperDispatchState
                 tst.w   6(a5)
@@ -107,7 +107,7 @@ Boss_ShiperInitialAssetDescriptors: dc.w    7           ; field_0  ; was: stru_3
 
 ; Waits for system ready then loads boss graphics via DMA transfer
 Boss_ShiperLoadGraphics:                                ; DATA XREF: ROM:0003649E   o  ; was: sub_36544
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   Boss_ShiperLoadGraphicsReturn
                 addq.w  #2,4(a5)
                 movea.l #Boss_ShiperTileDmaDescriptor,a0

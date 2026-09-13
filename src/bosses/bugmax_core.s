@@ -478,7 +478,7 @@ Boss_BugmaxMainStateHandlers:   dc.w    Boss_BugmaxInitializeEncounterState-*  ;
 
 ; Initialize the controller, six linked parts, and smoothing buffers
 Boss_BugmaxInitializeEncounterState:                    ; DATA XREF: ROM:Boss_BugmaxMainStateHandlers   o  ; was: sub_4C43C
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.w   Boss_BugmaxInitializeEncounterReturn
                 addq.w  #2,4(a5)
                 move.b  #4,(byte_FFA420).w

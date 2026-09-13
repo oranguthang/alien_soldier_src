@@ -60,7 +60,7 @@ Boss_JokerInitializationReturn:                         ; CODE XREF: Boss_JokerS
 ; End of function Boss_JokerInit
 ; Stages tilemap rendering, then initializes Joker's metasprite and objects
 Boss_JokerSetup:                                        ; DATA XREF: ROM:0003B2E8   o  ; was: sub_3B330
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   Boss_JokerInitializationReturn
                 subq.w  #1,$4A(a5)
                 bmi.s   Boss_JokerInitializeMetasprite

@@ -83,8 +83,8 @@ Gfx_LoadAndDecompTiles:                                 ; DATA XREF: ROM:0000265
                 move.w  (a1)+,d3
                 moveq   #8,d2
                 ror.w   d2,d3
-                move.w  d2,(dword_FFF730).w
-                move.w  d3,(dword_FFF730+2).w
+                move.w  d2,(DataLoaderCodecState).w
+                move.w  d3,(DataLoaderCodecState+2).w
                 bsr.w   TileCodec_ClearDecodeBuffer
 Gfx_LoadAndDecompTiles_Loop:                            ; CODE XREF: Gfx_LoadAndDecompTiles+26   j  ; was: loc_26F2
                 bsr.w   TileCodec_DecodeTile
@@ -103,8 +103,8 @@ Gfx_LoadCompressedGfx:                                  ; DATA XREF: ROM:0000265
                 move.w  (a1)+,d3
                 moveq   #8,d2
                 ror.w   d2,d3
-                move.w  d2,(dword_FFF730).w
-                move.w  d3,(dword_FFF730+2).w
+                move.w  d2,(DataLoaderCodecState).w
+                move.w  d3,(DataLoaderCodecState+2).w
                 bsr.w   TileCodec_ClearDecodeBuffer
 ; Loop that repeatedly calls decompression functions to process graphics data tiles
 Gfx_DecompLoop:                                         ; CODE XREF: Gfx_LoadCompressedGfx+26   j  ; was: loc_271E
@@ -193,14 +193,14 @@ Data_ProcessPointer:                                    ; CODE XREF: Sys_Dispatc
                 move.w  (a0)+,d0
                 bmi.w   Data_ProcessPointer_Return
                 bset    #$F,d0
-                move.w  d0,(word_FFF720).w
+                move.w  d0,(DataLoaderControl).w
                 movea.l (a0)+,a1
                 btst    #0,d0
                 bne.w   Data_ProcessPointer_ReadWordLength
                 moveq   #$FFFFFFFF,d1
                 move.w  (a0)+,d1
-                move.l  d1,(dword_FFF72C).w
-                move.l  a0,(dword_FFF724).w
+                move.l  d1,(DataLoaderDestination).w
+                move.l  a0,(DataLoaderRecordPtr).w
                 btst    #1,d0
                 beq.w   Data_ProcessPointer_StoreRawLength
                 btst    #2,d0
@@ -209,20 +209,20 @@ Data_ProcessPointer_ReadCompressedHeader:               ; CODE XREF: Data_Proces
                 moveq   #0,d1
                 move.b  (a1),d1
                 addq.w  #1,d1
-                move.w  d1,(word_FFF722).w
+                move.w  d1,(DataLoaderLength).w
                 move.w  #8,d2
-                move.w  d2,(dword_FFF730).w
+                move.w  d2,(DataLoaderCodecState).w
                 move.w  (a1)+,d3
                 ror.w   d2,d3
-                move.w  d3,(dword_FFF730+2).w
-                move.l  a1,(dword_FFF728).w
+                move.w  d3,(DataLoaderCodecState+2).w
+                move.l  a1,(DataLoaderSourcePtr).w
                 bra.w   TileCodec_ClearDecodeBuffer
 ; ---------------------------------------------------------------------------
 Data_ProcessPointer_ReadWordLength:                     ; CODE XREF: Data_ProcessPointer+14   j  ; was: loc_282E
                 moveq   #0,d1
                 move.w  (a0)+,d1
-                move.l  d1,(dword_FFF72C).w
-                move.l  a0,(dword_FFF724).w
+                move.l  d1,(DataLoaderDestination).w
+                move.l  a0,(DataLoaderRecordPtr).w
                 btst    #1,d0
                 beq.w   Data_ProcessPointer_StoreRawLength
                 btst    #2,d0
@@ -231,25 +231,25 @@ Data_ProcessPointer_ReadWordLength:                     ; CODE XREF: Data_Proces
 ; ---------------------------------------------------------------------------
 Data_ProcessPointer_StoreRawLength:                     ; CODE XREF: Data_ProcessPointer+28   j  ; was: loc_284C
                                         ; Data_ProcessPointer+66   j
-                move.w  (a1)+,(word_FFF722).w
-                move.l  a1,(dword_FFF728).w
+                move.w  (a1)+,(DataLoaderLength).w
+                move.l  a1,(DataLoaderSourcePtr).w
                 rts
 ; ---------------------------------------------------------------------------
 Data_ProcessPointer_StoreEndPointer:                    ; CODE XREF: Data_ProcessPointer+30   j  ; was: loc_2856
                                         ; Data_ProcessPointer+70   j
                 moveq   #0,d1
                 move.w  (a1)+,d1
-                move.l  a1,(dword_FFF728).w
+                move.l  a1,(DataLoaderSourcePtr).w
                 adda.l  d1,a1
-                move.l  a1,(dword_FFF730).w
+                move.l  a1,(DataLoaderCodecState).w
 Data_ProcessPointer_Return:                             ; CODE XREF: Data_ProcessPointer+2   j  ; was: locret_2864
                 rts
 ; End of function Data_ProcessPointer
 ; Dispatches data loading operations by calling function pointers from jump table until $FFFF terminator
 Sys_DispatchDataLoader:                                 ; CODE XREF: Reset+266   p  ; was: sub_2866
-                move.w  (word_FFF720).w,d0
+                move.w  (DataLoaderControl).w,d0
                 beq.w   Sys_DispatchDataLoader_Return
-                movea.l (dword_FFF724).w,a0
+                movea.l (DataLoaderRecordPtr).w,a0
 Sys_DispatchDataLoader_Loop:                            ; CODE XREF: Sys_DispatchDataLoader+1E   j  ; was: loc_2872
                 add.w   d0,d0
                 add.w   d0,d0
@@ -258,7 +258,7 @@ Sys_DispatchDataLoader_Loop:                            ; CODE XREF: Sys_Dispatc
                 bsr.w   Data_ProcessPointer
                 cmpi.w  #$FFFF,d0
                 bne.s   Sys_DispatchDataLoader_Loop
-                clr.w   (word_FFF720).w
+                clr.w   (DataLoaderControl).w
 Sys_DispatchDataLoader_Return:                          ; CODE XREF: Sys_DispatchDataLoader+4   j  ; was: locret_288A
                 rts
 ; End of function Sys_DispatchDataLoader
@@ -275,9 +275,9 @@ Sys_DataLoaderHandlers: dc.l    Data_CopyToRAM          ; was: off_288C
 ; Copies data from source to destination in RAM
 Data_CopyToRAM:                                         ; DATA XREF: ROM:Sys_DataLoaderHandlers   o  ; was: sub_28AC
                                         ; ROM:0000289C   o
-                movea.l (dword_FFF728).w,a1
-                movea.l (dword_FFF72C).w,a2
-                move.w  (word_FFF722).w,d1
+                movea.l (DataLoaderSourcePtr).w,a1
+                movea.l (DataLoaderDestination).w,a2
+                move.w  (DataLoaderLength).w,d1
 Data_CopyToRAM_Loop:                                    ; CODE XREF: Data_CopyToRAM+12   j  ; was: loc_28B8
                 move.l  (a1)+,(a2)+
                 move.l  (a1)+,(a2)+
@@ -288,9 +288,9 @@ Data_CopyToRAM_Loop:                                    ; CODE XREF: Data_CopyTo
 ; Performs DMA transfer with VBlank wait loop
 Gfx_DMATransferWithWait:                                ; DATA XREF: ROM:00002890   o  ; was: sub_28C2
                                         ; ROM:000028A0   o
-                movea.l (dword_FFF728).w,a2
-                movea.w (dword_FFF72C).w,a3
-                move.w  (word_FFF722).w,d0
+                movea.l (DataLoaderSourcePtr).w,a2
+                movea.w (DataLoaderDestination).w,a3
+                move.w  (DataLoaderLength).w,d0
 Gfx_DMATransferWithWait_BatchLoop:                      ; CODE XREF: Gfx_DMATransferWithWait+24   j  ; was: loc_28CE
                 move.w  #$200,d1
                 cmp.w   d1,d0
@@ -307,9 +307,9 @@ Gfx_DMATransferWithWait_Wait:                           ; CODE XREF: Gfx_DMATran
 ; End of function Gfx_DMATransferWithWait
 ; Decompresses tiles to RAM buffer
 Gfx_DecompTilesToRAM:                                   ; DATA XREF: ROM:00002894   o  ; was: sub_28EA
-                movea.l (dword_FFF728).w,a1
-                movea.l (dword_FFF72C).w,a2
-                move.w  (word_FFF722).w,d0
+                movea.l (DataLoaderSourcePtr).w,a1
+                movea.l (DataLoaderDestination).w,a2
+                move.w  (DataLoaderLength).w,d0
                 subq.w  #1,d0
 Gfx_DecompTilesToRAM_Loop:                              ; CODE XREF: Gfx_DecompTilesToRAM+16   j  ; was: loc_28F8
                 bsr.w   TileCodec_DecodeTile
@@ -319,9 +319,9 @@ Gfx_DecompTilesToRAM_Loop:                              ; CODE XREF: Gfx_DecompT
 ; End of function Gfx_DecompTilesToRAM
 ; Decompresses tiles to VRAM in batched DMA transfers
 Gfx_DecompTilesToVRAMBatched:                           ; DATA XREF: ROM:00002898   o  ; was: sub_2906
-                movea.l (dword_FFF728).w,a1
-                movea.l (dword_FFF72C).w,a3
-                move.w  (word_FFF722).w,d0
+                movea.l (DataLoaderSourcePtr).w,a1
+                movea.l (DataLoaderDestination).w,a3
+                move.w  (DataLoaderLength).w,d0
 Gfx_DecompTilesToVRAMBatched_BatchLoop:                 ; CODE XREF: Gfx_DecompTilesToVRAMBatched+44   j  ; was: loc_2912
                 lea     (TileDMABatchBuffer).w,a2
                 move.w  #$10,d2
@@ -356,9 +356,9 @@ Gfx_DecompTilesToVRAMBatched_WaitFinal:                 ; CODE XREF: Gfx_DecompT
 ; End of function Gfx_DecompTilesToVRAMBatched
 ; Decompresses LZSS blocks directly to the configured memory destination
 Data_DecompressLZSSDirect:                              ; DATA XREF: ROM:000028A4   o  ; was: sub_295C
-                movea.l (dword_FFF728).w,a1
-                movea.l (dword_FFF72C).w,a2
-                movea.l (dword_FFF730).w,a4
+                movea.l (DataLoaderSourcePtr).w,a1
+                movea.l (DataLoaderDestination).w,a2
+                movea.l (DataLoaderCodecState).w,a4
 ; Repeats direct LZSS decompression until the source end is reached
 Data_DecompressLZSSDirect_BlockLoop:                    ; CODE XREF: Data_DecompressLZSSDirect+12   j  ; was: loc_2968
                 bsr.w   LZSSDecomp
@@ -368,9 +368,9 @@ Data_DecompressLZSSDirect_BlockLoop:                    ; CODE XREF: Data_Decomp
 ; End of function Data_DecompressLZSSDirect
 ; Decompresses LZSS through a RAM staging buffer and DMA-transfers it to VRAM
 Gfx_DecompressLZSSToVRAMBatched:                        ; DATA XREF: ROM:000028A8   o  ; was: sub_2972
-                movea.l (dword_FFF728).w,a1
-                movea.l (dword_FFF72C).w,a3
-                movea.l (dword_FFF730).w,a4
+                movea.l (DataLoaderSourcePtr).w,a1
+                movea.l (DataLoaderDestination).w,a3
+                movea.l (DataLoaderCodecState).w,a4
 Gfx_DecompressLZSSToVRAMBatched_BlockLoop:              ; CODE XREF: Gfx_DecompressLZSSToVRAMBatched+2C   j  ; was: loc_297E
                 lea     (GraphicsStagingBuffer).w,a2
                 bsr.w   LZSSDecomp

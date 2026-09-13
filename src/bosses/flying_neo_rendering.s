@@ -377,7 +377,7 @@ Boss_FlyingNeoWriteNextBossVerticalScrollValue:         ; CODE XREF: Boss_Flying
                 move.w  d0,(a0)+
                 dbf     d7,Boss_FlyingNeoWriteNextBossVerticalScrollValue
 Boss_FlyingNeoBuildHorizontalScrollTable:               ; CODE XREF: Boss_FlyingNeoBuildLineScrollTables+50   j  ; was: loc_3CC02
-                movea.w #(byte_FFE40A-M68K_RAM),a0
+                movea.w #(HScrollPlaneBRow2-M68K_RAM),a0
                 move.w  (PrimaryCameraYPosition).w,d7
                 subi.w  #$60,d7                         ; '`'
                 bpl.s   Boss_FlyingNeoSelectBossHorizontalScrollValue

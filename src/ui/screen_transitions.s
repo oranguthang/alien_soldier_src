@@ -41,7 +41,7 @@ Frontend_RevealSegaScreenPattern:                       ; was: sub_1D188
 Frontend_InitializeTitleTransition:                     ; was: sub_1D1AA
                 addq.w  #2,(GameSubstateIndex).w
                 movea.l #FrontendTitleTransitionPalette,a0
-                movea.w #(word_FFE340-M68K_RAM),a1
+                movea.w #(PaletteActiveColor32-M68K_RAM),a1
                 moveq   #7,d7
 Frontend_InitializeTitleTransition_CopyPalette:         ; was: loc_1D1BA
                 move.l  (a0)+,(a1)+

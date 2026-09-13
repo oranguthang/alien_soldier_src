@@ -242,7 +242,7 @@ Effect_ApplyLinearScroll_Loop:                          ; CODE XREF: Effect_Appl
 ; Updates scroll position for effect
 Effect_UpdateScrollPosition:                            ; CODE XREF: AlternateTransition_Update   p  ; was: sub_26E4C
                                         ; TransitionEffect_Update   p
-                movea.w #(word_FFE37C-M68K_RAM),a1
+                movea.w #(PaletteActiveColor62-M68K_RAM),a1
                 move.w  (word_FF807C).w,d0
                 subi.w  #$40,d0                         ; '@'
                 bpl.s   Effect_UpdateScrollPosition_SelectPattern

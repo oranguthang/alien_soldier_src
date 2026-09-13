@@ -32,7 +32,7 @@ PasswordMenu_Activate:                                  ; CODE XREF: PasswordMen
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     PasswordMenu_PaletteOverrides(pc),a0
                 nop
-                movea.w #(byte_FFE322-M68K_RAM),a1
+                movea.w #(PaletteActiveColor17Hi-M68K_RAM),a1
                 move.w  (a0),(a1)+
                 move.w  (a0)+,(a2)+
                 move.w  (a0),(a1)+

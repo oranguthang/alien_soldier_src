@@ -378,7 +378,7 @@ ShipSequence_FadeOutPattern:                            ; DATA XREF: ROM:0000882
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
-                lea     (word_FFE320).w,a0
+                lea     (PaletteActiveColor16).w,a0
                 move.w  (ShipAccentFadeStep).l,d0
                 move.w  #$F,d5
                 move.w  #$E000,d7
@@ -444,16 +444,16 @@ ShipSequence_ApplyPatternPalette:                       ; CODE XREF: ShipSequenc
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
-                lea     (word_FFE320).w,a0
+                lea     (PaletteActiveColor16).w,a0
                 move.w  #$E,d0
                 move.w  #$F,d5
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
-                move.w  #$222,(word_FFE376).w
-                move.w  #$444,(word_FFE378).w
-                move.w  #$666,(word_FFE37A).w
-                move.w  #$888,(word_FFE37C).w
-                move.w  #$AAA,(word_FFE37E).w
+                move.w  #$222,(PaletteActiveColor59).w
+                move.w  #$444,(PaletteActiveColor60).w
+                move.w  #$666,(PaletteActiveColor61).w
+                move.w  #$888,(PaletteActiveColor62).w
+                move.w  #$AAA,(PaletteActiveColor63).w
                 rts
 ; End of function ShipSequence_ApplyPatternPalette
 ; Integrates signed 16.16 vertical position and publishes it to V-scroll bands
@@ -474,7 +474,7 @@ ShipSequence_WriteMainVScroll:                          ; CODE XREF: ShipSequenc
                 dbf     d7,ShipSequence_WriteMainVScroll
                 cmpi.w  #$18,(ShipSequenceState).l
                 bcs.w   Cutscene_Return
-                lea     (word_FFEC22).w,a0
+                lea     (VScrollPlaneBColumn8).w,a0
                 move.w  #4,d7
 ShipSequence_WriteLowerVScroll:                         ; CODE XREF: ShipSequence_UpdateVerticalScroll+4E   j  ; was: loc_8D56
                 move.w  d0,(a0)

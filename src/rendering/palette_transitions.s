@@ -128,13 +128,13 @@ Gfx_ProcessPaletteDual_ColorLoop:                       ; CODE XREF: Gfx_Process
 Gfx_UpdatePaletteFade:                                  ; CODE XREF: Boss_DestroyerProtoEmitDefeatParticle   p  ; was: sub_3ABA
                                         ; sub_35DDC   p
                 bsr.s   Gfx_CalculateFadeParams
-                move.w  (word_FFE3EC).w,(dword_FF8040).w
-                move.w  (word_FFE36C).w,(dword_FF8040+2).w
-                movea.w #(word_FFE362-M68K_RAM),a0
+                move.w  (PaletteShadowColor54).w,(dword_FF8040).w
+                move.w  (PaletteActiveColor54).w,(dword_FF8040+2).w
+                movea.w #(PaletteActiveColor49-M68K_RAM),a0
                 moveq   #$E,d5
                 bsr.s   Gfx_ApplyPaletteFade
-                move.w  (dword_FF8040).w,(word_FFE3EC).w
-                move.w  (dword_FF8040+2).w,(word_FFE36C).w
+                move.w  (dword_FF8040).w,(PaletteShadowColor54).w
+                move.w  (dword_FF8040+2).w,(PaletteActiveColor54).w
                 rts
 ; End of function Gfx_UpdatePaletteFade
 ; Computes randomized channel deltas, then applies them to a counted palette-entry list

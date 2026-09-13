@@ -45,9 +45,9 @@ Sys_ProcessVisibleObjects_Clear:                        ; CODE XREF: Sys_Process
 ; ---------------------------------------------------------------------------
 Sys_ProcessVisibleObjects_Queue:                        ; CODE XREF: Sys_ProcessVisibleObjects+24   j  ; was: loc_1A2E4
                                         ; Sys_ProcessVisibleObjects+40   j
-                movea.w (word_FFF758).w,a0
+                movea.w (VisibleObjectListCursor).w,a0
                 move.w  a5,(a0)+
-                move.w  a0,(word_FFF758).w
+                move.w  a0,(VisibleObjectListCursor).w
 ; Advances object array pointer to next slot in processing loop
 Sys_AdvanceObjectPointer:                               ; CODE XREF: Sys_ProcessVisibleObjects+6   j  ; was: loc_1A2EE
                                         ; Sys_ProcessVisibleObjects+46   j

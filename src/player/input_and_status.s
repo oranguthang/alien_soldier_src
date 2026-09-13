@@ -162,8 +162,8 @@ Gfx_LoadPlayerPaletteData_SelectVariantA:               ; CODE XREF: Gfx_LoadPla
 ; Copies 8 bytes of player palette data to two RAM locations
 Gfx_CopyPlayerPaletteWords:                             ; CODE XREF: Gfx_LoadPlayerPaletteData+1C   j  ; was: loc_16C9E
                                         ; Gfx_LoadPlayerPaletteData+28   j
-                movea.w #(byte_FFE352-M68K_RAM),a1
-                movea.w #(dword_FFE3D2-M68K_RAM),a2
+                movea.w #(PaletteActiveColor41Hi-M68K_RAM),a1
+                movea.w #(PaletteShadowPair41-M68K_RAM),a2
                 move.l  (a0),(a1)+
                 move.l  (a0)+,(a2)+
                 move.l  (a0),(a1)+

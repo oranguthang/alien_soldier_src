@@ -669,12 +669,12 @@ StageTransition_UpdateMissirayParallax:                 ; CODE XREF: StageTransi
                 asr.w   #1,d1
                 asr.w   #2,d2
                 move.w  d0,(VScrollBuffer).w
-                move.w  d0,(word_FFEC04).w
-                move.w  d0,(word_FFEC48).w
-                move.w  d0,(word_FFEC4C).w
-                move.w  d1,(word_FFEC08).w
-                move.w  d1,(word_FFEC44).w
-                movea.w #(word_FFEC0C-M68K_RAM),a0
+                move.w  d0,(VScrollPlaneAColumn1).w
+                move.w  d0,(VScrollPlaneAColumn18).w
+                move.w  d0,(VScrollPlaneAColumn19).w
+                move.w  d1,(VScrollPlaneAColumn2).w
+                move.w  d1,(VScrollPlaneAColumn17).w
+                movea.w #(VScrollPlaneAColumn3-M68K_RAM),a0
                 moveq   #$D,d7
 StageTransition_FillMissirayQuarterSpeedVScroll:        ; CODE XREF: StageTransition_UpdateMissirayParallax+36   j  ; was: loc_F946
                 move.w  d2,(a0)

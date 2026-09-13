@@ -155,8 +155,8 @@ XiTigerCutscene_InitializeReveal:                       ; DATA XREF: ROM:0001E91
                 move.b  #$82,d0
                 jsr     (Sound_QueueBGMRequest).l
                 addq.w  #2,(dword_FF8128).w
-                clr.w   (word_FFE3BA).w
-                clr.w   (word_FFE3BC).w
+                clr.w   (PaletteShadowColor29).w
+                clr.w   (PaletteShadowColor30).w
                 clr.w   (dword_FF8128+2).w
                 move.l  #$1820000,(dword_FF812C).w
                 clr.w   (dword_FF8130).w
@@ -199,8 +199,8 @@ XiTigerCutscene_AdvanceRevealTimer:                     ; CODE XREF: XiTigerCuts
                 move.b  #$11,d0
                 jsr     (Sound_PlaySFX).l
                 addq.w  #2,(dword_FF8128).w
-                move.w  #$48,(word_FFE3BA).w            ; 'H'
-                move.w  #$2AE,(word_FFE3BC).w
+                move.w  #$48,(PaletteShadowColor29).w   ; 'H'
+                move.w  #$2AE,(PaletteShadowColor30).w
                 move.w  #$C,(dword_FF8130+2).w
                 bra.s   XiTigerCutscene_AnimateFlash
 ; ---------------------------------------------------------------------------
@@ -223,7 +223,7 @@ XiTigerCutscene_UpdateFlash:                            ; CODE XREF: XiTigerCuts
                 bpl.s   XiTigerCutscene_ApplyFlashPalette
                 clr.w   (dword_FF8130+2).w
 XiTigerCutscene_ApplyFlashPalette:                      ; CODE XREF: XiTigerCutscene_UpdateFlash+6   j  ; was: loc_1EB16
-                movea.w #(byte_FFE322-M68K_RAM),a0
+                movea.w #(PaletteActiveColor17Hi-M68K_RAM),a0
                 move.w  #$8000,d7
                 moveq   #$E,d5
                 bsr.w   XiTigerCutscene_ApplySelectedPaletteFade
@@ -334,7 +334,7 @@ XiTigerCutscene_ApplySelectedPaletteFade:               ; CODE XREF: XiTigerCuts
 ; Writes the sine-wave raster table and updates the cutscene layer positions
 XiTigerCutscene_UpdateWaveAndLayerPositions:            ; CODE XREF: XiTigerCutscene_AnimateReveal:XiTigerCutscene_ContinueReveal   p  ; was: sub_1EC34
                                         ; XiTigerCutscene_AnimateFlash+2A   p
-                movea.w #(word_FFE402-M68K_RAM),a0
+                movea.w #(HScrollPlaneBRow0-M68K_RAM),a0
                 lea     (Math_QuarterSineTable).l,a1
                 moveq   #0,d0
                 addi.w  #$108,(dword_FF8134).w
@@ -377,37 +377,37 @@ XiTigerCutscene_UpdateLayerPositions:                   ; CODE XREF: XiTigerCuts
                 move.l  d1,d2
                 swap    d2
                 sub.w   d7,d2
-                move.w  d2,(word_FFEC18).w
-                move.w  d2,(word_FFEC34).w
+                move.w  d2,(VScrollPlaneAColumn6).w
+                move.w  d2,(VScrollPlaneAColumn13).w
                 sub.l   d0,d1
                 swap    d1
                 sub.w   d7,d1
-                move.w  d1,(word_FFEC14).w
-                move.w  d1,(word_FFEC10).w
-                move.w  d1,(word_FFEC0C).w
-                move.w  d1,(word_FFEC08).w
-                move.w  d1,(word_FFEC38).w
-                move.w  d1,(word_FFEC3C).w
-                move.w  d1,(word_FFEC40).w
-                move.w  d1,(word_FFEC44).w
+                move.w  d1,(VScrollPlaneAColumn5).w
+                move.w  d1,(VScrollPlaneAColumn4).w
+                move.w  d1,(VScrollPlaneAColumn3).w
+                move.w  d1,(VScrollPlaneAColumn2).w
+                move.w  d1,(VScrollPlaneAColumn14).w
+                move.w  d1,(VScrollPlaneAColumn15).w
+                move.w  d1,(VScrollPlaneAColumn16).w
+                move.w  d1,(VScrollPlaneAColumn17).w
                 moveq   #$FFFFFFF6,d1
                 sub.w   d7,d1
-                move.w  d1,(word_FFEC1C).w
-                move.w  d1,(word_FFEC30).w
+                move.w  d1,(VScrollPlaneAColumn7).w
+                move.w  d1,(VScrollPlaneAColumn12).w
                 moveq   #$FFFFFFF4,d1
                 swap    d0
                 add.w   d0,d1
                 sub.w   d7,d1
-                move.w  d1,(word_FFEC20).w
-                move.w  d1,(word_FFEC24).w
-                move.w  d1,(word_FFEC28).w
-                move.w  d1,(word_FFEC2C).w
+                move.w  d1,(VScrollPlaneAColumn8).w
+                move.w  d1,(VScrollPlaneAColumn9).w
+                move.w  d1,(VScrollPlaneAColumn10).w
+                move.w  d1,(VScrollPlaneAColumn11).w
                 move.w  (FrameCounter).w,d0
                 andi.w  #2,d0
                 asl.w   #2,d0
-                move.w  XiTigerCutscene_AlternatingPaletteFrames(pc,d0.w),(word_FFE326).w
-                move.w  XiTigerCutscene_AlternatingPaletteFrames+2(pc,d0.w),(word_FFE328).w
-                move.w  XiTigerCutscene_AlternatingPaletteFrames+4(pc,d0.w),(word_FFE324).w
+                move.w  XiTigerCutscene_AlternatingPaletteFrames(pc,d0.w),(PaletteActiveColor19).w
+                move.w  XiTigerCutscene_AlternatingPaletteFrames+2(pc,d0.w),(PaletteActiveColor20).w
+                move.w  XiTigerCutscene_AlternatingPaletteFrames+4(pc,d0.w),(PaletteActiveColor18).w
                 rts
 ; End of function XiTigerCutscene_UpdateWaveAndLayerPositions
 ; ---------------------------------------------------------------------------

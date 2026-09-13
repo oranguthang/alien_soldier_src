@@ -114,7 +114,7 @@ Boss_JampanStateHandlers:   dc.w    Boss_JampanWaitForEncounterActivationState-*
 
 ; Waits for the stage controller to activate the encounter
 Boss_JampanWaitForEncounterActivationState:             ; DATA XREF: ROM:Boss_JampanStateHandlers   o  ; was: sub_49240
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   Boss_JampanWaitForEncounterActivationReturn
                 addq.w  #2,4(a5)
                 move.w  #$218,d0

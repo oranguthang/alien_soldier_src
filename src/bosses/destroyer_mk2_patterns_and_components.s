@@ -450,7 +450,7 @@ Object_DestroyerMK2ComponentIdle:                       ; DATA XREF: ROM:Object_
 
 ; Activate after the referenced linked part becomes idle
 Object_DestroyerMK2ActivateFromLinkedState:             ; DATA XREF: ROM:0004B49E   o  ; was: sub_4B4B2
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.w   Object_DestroyerMK2StageGateReturn
                 move.w  $4E(a5),d0
                 movea.w Object_DestroyerMK2LinkedObjectAddressTable(pc,d0.w),a0
@@ -498,7 +498,7 @@ Object_DestroyerMK2LinkedObjectAddressTable:    dc.w    $C800, $C7A0, $C8C0, $C8
 
 ; Initialize a component's mapping and projectile delay
 Object_DestroyerMK2InitializeProjectile:                ; DATA XREF: ROM:0004B4A0   o  ; was: sub_4B524
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.w   Object_DestroyerMK2StageGateReturn
                 move.l  #Boss_DestroyerMK2ProjectileMapping,8(a5)
                 move.w  #4,$48(a5)
@@ -584,11 +584,11 @@ Object_DestroyerMK2UpdateMovement:                      ; DATA XREF: ROM:0004B4A
                 move.w  $58(a5),d0
                 cmpi.w  #4,$4E(a5)
                 bcc.s   Object_DestroyerMK2SelectLowerScrollLayerGroup
-                lea     (word_FFE52C).w,a0
+                lea     (HScrollPlaneARow75).w,a0
                 bra.s   Object_DestroyerMK2ApplyMovementToScrollLayers
 ; ---------------------------------------------------------------------------
 Object_DestroyerMK2SelectLowerScrollLayerGroup:         ; CODE XREF: Object_DestroyerMK2UpdateMovement+1A   j  ; was: loc_4B674
-                lea     (word_FFE720).w,a0
+                lea     (HScrollPlaneARow200).w,a0
 Object_DestroyerMK2ApplyMovementToScrollLayers:         ; CODE XREF: Object_DestroyerMK2UpdateMovement+20   j  ; was: loc_4B678
                 bsr.s   Gfx_UpdateMultipleScrollLayers
                 tst.l   $58(a5)

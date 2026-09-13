@@ -21,7 +21,7 @@ EndingSequence_Initialize:                              ; CODE XREF: EndingSeque
                 jsr     (Gfx_LoadMultiplePalettes).l
                 move.w  #$FFF2,(CutscenePaletteStep).l
                 move.w  (CutscenePaletteStep).l,d0
-                lea     (word_FFE302).w,a0
+                lea     (PaletteActiveColor01).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -90,7 +90,7 @@ EndingSequence_FadeInCredits:                           ; DATA XREF: ROM:EndingS
                 bne.w   Cutscene_Return
                 addq.w  #2,(CutscenePaletteStep).l
                 move.w  (CutscenePaletteStep).l,d0
-                lea     (word_FFE302).w,a0
+                lea     (PaletteActiveColor01).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -112,7 +112,7 @@ EndingSequence_HoldCredits:                             ; DATA XREF: ROM:00007C3
 ; Alternates three accent palette words used throughout the ending sequence
 EndingSequence_AnimateAccentColors:                     ; CODE XREF: EndingSequence_HoldCredits   p  ; was: sub_7CAC
                                         ; EndingStarfield_Initialize:EndingStarfield_UpdateAndHold   p
-                lea     (word_FFE366).w,a1
+                lea     (PaletteActiveColor51).w,a1
                 move.w  (VBlankFrameCounter).w,d0
                 andi.w  #1,d0
                 bne.s   EndingSequence_UseOddAccentColors
@@ -140,7 +140,7 @@ EndingSequence_FadeOutCredits:                          ; DATA XREF: ROM:00007C3
                 bne.w   Cutscene_Return
                 addq.w  #2,(CutscenePaletteStep).l
                 move.w  (CutscenePaletteStep).l,d0
-                lea     (word_FFE302).w,a0
+                lea     (PaletteActiveColor01).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l

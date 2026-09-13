@@ -17,7 +17,7 @@ Boss_MadamBarbarDecreasePaletteStep:                    ; CODE XREF: Boss_MadamB
 Boss_MadamBarbarApplyPaletteStep:                       ; CODE XREF: Boss_MadamBarbarUpdatePaletteCycle+10   j  ; was: loc_3A10E
                                         ; Boss_MadamBarbarUpdatePaletteCycle+16   j
                 move.w  d0,8(a5)
-                movea.w #(word_FFE318-M68K_RAM),a0
+                movea.w #(PaletteActiveColor12-M68K_RAM),a0
                 moveq   #3,d5
                 move.w  #$E000,d7
                 jmp     (Gfx_ApplyPaletteFade).l

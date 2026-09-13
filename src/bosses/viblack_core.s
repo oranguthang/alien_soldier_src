@@ -470,8 +470,8 @@ Boss_ViblackWriteTransitionOffsetPairs:                 ; CODE XREF: Boss_Viblac
                 neg.w   d2
                 asl.w   #4,d2
                 moveq   #9,d7
-                movea.w #(word_FFEC24-M68K_RAM),a0
-                movea.w #(word_FFEC28-M68K_RAM),a1
+                movea.w #(VScrollPlaneAColumn9-M68K_RAM),a0
+                movea.w #(VScrollPlaneAColumn10-M68K_RAM),a1
 Boss_ViblackWriteTransitionOffsetPairsLoop:             ; CODE XREF: Boss_ViblackTransitionOscillationState+A6   j  ; was: loc_43ED8
                 move.w  d2,d3
                 ext.l   d3

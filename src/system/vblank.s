@@ -33,7 +33,7 @@ Int_VBlank_UpdateFrameDivider:                          ; CODE XREF: VBLANK+50  
                 sub.w   (word_FFFF3E).w,d0
                 move.w  d0,(word_FF8096).w
 Int_VBlank_CheckExtendedHandler:                        ; CODE XREF: VBLANK+62   j  ; was: loc_AEA
-                tst.b   (byte_FFF704).w
+                tst.b   (VBlankUpdateReady).w
                 bne.s   Sys_VBlankHandler
 Int_VBlank_AcquireZ80BusForExit:                        ; CODE XREF: VBLANK+7E   j  ; was: loc_AF0
                                         ; Sys_VBlankHandler+12   j
@@ -59,7 +59,7 @@ Sys_VBlankHandler:                                      ; CODE XREF: VBLANK+74  
                 beq.s   Int_VBlank_AcquireZ80BusForExit
 Sys_VBlankHandler_RunUpdate:                            ; CODE XREF: Sys_VBlankHandler+4   j  ; was: loc_B2E
                                         ; Sys_VBlankHandler+A   j
-                clr.b   (byte_FFF704).w
+                clr.b   (VBlankUpdateReady).w
                 bsr.w   Sound_AcquireZ80Bus
                 bsr.w   Gfx_RunVBlankTransfers
                 bsr.w   Gfx_ApplyVDPRegisterShadows
@@ -76,7 +76,7 @@ Sys_VBlankHandler_ReleaseZ80BusForExit:                 ; CODE XREF: Sys_VBlankH
                 bsr.w   Input_HandleControllerState
                 jsr     (RandomNumber).l
                 bsr.w   Sys_UpdateTimers
-                move.b  #1,(byte_FFF704).w
+                move.b  #1,(VBlankUpdateReady).w
                 movem.l (sp)+,d0-d7/a0-a5
                 rte
 ; End of function Sys_VBlankHandler
@@ -114,25 +114,25 @@ Input_HandleControllerState_Return:                     ; CODE XREF: Input_Handl
 ; Handles timed events and callbacks during VBlank
 Sys_VBlankEventHandler:                                 ; CODE XREF: VBLANK+96   p  ; was: sub_BD4
                                         ; Sys_VBlankHandler+4A   p
-                move.w  (word_FFF762).w,d0
+                move.w  (VBlankSoundRequestDelay).w,d0
                 beq.w   Sys_VBlankEventHandler_CheckInput
                 subq.w  #1,d0
-                move.w  d0,(word_FFF762).w
+                move.w  d0,(VBlankSoundRequestDelay).w
                 bra.w   Sys_VBlankEventHandler_UpdateSound
 ; ---------------------------------------------------------------------------
 Sys_VBlankEventHandler_CheckInput:                      ; CODE XREF: Sys_VBlankEventHandler+4   j  ; was: loc_BE6
-                move.b  (byte_FFF764).w,d0
+                move.b  (VBlankPendingSound).w,d0
                 beq.w   Sys_VBlankEventHandler_UpdateSound
                 jsr     (Sound_QueueRequest).l
                 beq.w   Sys_VBlankEventHandler_UpdateSound
-                clr.b   (byte_FFF764).w
+                clr.b   (VBlankPendingSound).w
 Sys_VBlankEventHandler_UpdateSound:                     ; CODE XREF: Sys_VBlankEventHandler+E   j  ; was: loc_BFC
                                         ; Sys_VBlankEventHandler+16   j
-                tst.b   (byte_FFF745).w
+                tst.b   (SoundUpdateBusy).w
                 bne.w   Sys_VBlankEventHandler_Return
-                move.b  #1,(byte_FFF745).w
+                move.b  #1,(SoundUpdateBusy).w
                 jsr     (Sound_UpdateThunk).l
-                clr.b   (byte_FFF745).w
+                clr.b   (SoundUpdateBusy).w
 Sys_VBlankEventHandler_Return:                          ; CODE XREF: Sys_VBlankEventHandler+2C   j  ; was: locret_C14
                 rts
 ; End of function Sys_VBlankEventHandler
@@ -160,7 +160,7 @@ Sys_DispatchGameState:
                 clr.b   (PaletteDMAHIntEnabled).w
                 move.b  #4,(dword_FFF80A).w
                 clr.b   (byte_FFF807).w
-                clr.w   (word_FFF720).w
+                clr.w   (DataLoaderControl).w
                 clr.w   (GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
                 rts

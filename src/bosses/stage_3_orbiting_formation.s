@@ -262,7 +262,7 @@ Boss_Stage3OrbitingFormationRemove:                     ; DATA XREF: ROM:0003418
 ; End of function Boss_Stage3OrbitingFormationRemove
 ; Waits for the Stage 3 activation signal, then starts arena entry motion
 Boss_Stage3OrbitingFormationWaitForActivationSignal:    ; DATA XREF: ROM:00034188   o  ; was: sub_34274
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.w   Boss_Stage3OrbitingFormationReturn
                 move.w  #$C0,$54(a5)
                 move.l  #$40000,$50(a5)

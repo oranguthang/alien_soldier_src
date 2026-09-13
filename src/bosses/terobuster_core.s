@@ -69,7 +69,7 @@ Boss_TerobusterSetupReturn:                             ; CODE XREF: Boss_Terobu
 ; End of function Boss_TerobusterInit
 ; Sets up Terobuster boss with complex metasprite initialization
 Boss_TerobusterSetup:                                   ; DATA XREF: ROM:00038578   o  ; was: sub_385CA
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Boss_TerobusterSetupReturn
                 subq.w  #1,$48(a5)
                 bpl.s   Boss_TerobusterSetupReturn

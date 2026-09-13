@@ -37,9 +37,9 @@ Credits_InitXiTiger_ClearTilemapBufferLoop:             ; CODE XREF: Credits_Ini
                 jsr     (Tilemap_TransferFullMapDirectToVRAM).l
                 lea     (CreditsAndPlanetPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
-                move.w  #$EA8,(word_FFE3A8).w
-                move.w  #$E86,(word_FFE3AA).w
-                move.w  #$E64,(word_FFE3AC).w
+                move.w  #$EA8,(PaletteShadowColor20).w
+                move.w  #$E86,(PaletteShadowColor21).w
+                move.w  #$E64,(PaletteShadowColor22).w
                 move.b  #6,(VDPReg11Shadow+1).w
                 move.b  #3,(byte_FFA95A).w
                 move.b  #3,(byte_FFA95B).w
@@ -77,8 +77,8 @@ Credits_InitXiTiger_InitVerticalScrollLoop:             ; CODE XREF: Credits_Ini
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.b  #$60,$20(a5)                    ; '`'
-                clr.w   (word_FFE306).w
-                clr.w   (word_FFE386).w
+                clr.w   (PaletteActiveColor03).w
+                clr.w   (PaletteShadowColor03).w
                 move.w  #$FFF2,(ScenePaletteFadeOffset).l
                 move.w  (ScenePaletteFadeOffset).l,d0
                 lea     (PaletteActiveBuffer).w,a0
@@ -192,7 +192,7 @@ Credits_ScrollWithColorCycle:                           ; DATA XREF: ROM:00020BC
                 bne.w   Credits_StateReturn
                 addq.w  #2,(ScenePaletteFadeOffset).l
                 move.w  (ScenePaletteFadeOffset).l,d0
-                lea     (word_FFE360).w,a0
+                lea     (PaletteActiveColor48).w,a0
                 move.w  #$F,d5
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -217,9 +217,9 @@ Credits_WaitForTimerEnd:                                ; DATA XREF: ROM:00020BC
 ; Cycles RGB color values in palette entries with XOR operation
 Credits_CyclePaletteColors:                             ; CODE XREF: Credits_ScrollWithColorCycle+10   p  ; was: sub_20CB6
                                         ; Credits_WaitForTimerEnd+10   p
-                eori.w  #$22E,(word_FFE328).w
-                eori.w  #$2E2,(word_FFE32A).w
-                eori.w  #$226,(word_FFE32C).w
+                eori.w  #$22E,(PaletteActiveColor20).w
+                eori.w  #$2E2,(PaletteActiveColor21).w
+                eori.w  #$226,(PaletteActiveColor22).w
                 rts
 ; End of function Credits_CyclePaletteColors
 ; Updates horizontal scroll tables with 3D rotation effect
@@ -233,7 +233,7 @@ Credits_UpdateScrollTables:                             ; CODE XREF: Credits_Fad
                 move.l  d1,d0
                 asr.l   #1,d0
                 neg.l   d0
-                lea     (word_FFE5C2).w,a0
+                lea     (HScrollPlaneBRow112).w,a0
                 move.w  #$D,d7
 Credits_UpdateScrollTables_UpperForwardLoop:            ; CODE XREF: Credits_UpdateScrollTables+32   j  ; was: loc_20CEE
                 move.l  d0,d2
@@ -246,7 +246,7 @@ Credits_UpdateScrollTables_UpperForwardLoop:            ; CODE XREF: Credits_Upd
                 move.l  (EndingScrollPhase).l,d1
                 move.l  d1,d0
                 asr.l   #1,d0
-                lea     (word_FFE5A2).w,a0
+                lea     (HScrollPlaneBRow104).w,a0
                 move.w  #$D,d7
 Credits_UpdateScrollTables_UpperReverseLoop:            ; CODE XREF: Credits_UpdateScrollTables+56   j  ; was: loc_20D12
                 move.l  d0,d2
@@ -262,7 +262,7 @@ Credits_UpdateScrollTables_UpperReverseLoop:            ; CODE XREF: Credits_Upd
                 move.l  d1,d0
                 neg.l   d0
                 asl.l   #1,d1
-                lea     (word_FFEC2A).w,a0
+                lea     (VScrollPlaneBColumn10).w,a0
                 move.w  #9,d7
 Credits_UpdateScrollTables_LowerForwardLoop:            ; CODE XREF: Credits_UpdateScrollTables+80   j  ; was: loc_20D3C
                 move.l  d0,d2
@@ -275,7 +275,7 @@ Credits_UpdateScrollTables_LowerForwardLoop:            ; CODE XREF: Credits_Upd
                 move.l  (EndingScrollPhase).l,d1
                 move.l  d1,d0
                 asl.l   #1,d1
-                lea     (word_FFEC26).w,a0
+                lea     (VScrollPlaneBColumn9).w,a0
                 move.w  #9,d7
 Credits_UpdateScrollTables_LowerReverseLoop:            ; CODE XREF: Credits_UpdateScrollTables+A4   j  ; was: loc_20D60
                 move.l  d0,d2
@@ -297,7 +297,7 @@ Credits_FadeOutAndClearVRAM:                            ; DATA XREF: ROM:00020BC
                 bne.w   Credits_StateReturn
                 subq.w  #2,(ScenePaletteFadeOffset).l
                 move.w  (ScenePaletteFadeOffset).l,d0
-                lea     (word_FFE320).w,a0
+                lea     (PaletteActiveColor16).w,a0
                 move.w  #$2F,d5                         ; '/'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -337,7 +337,7 @@ Credits_FadeInFromBlack:                                ; DATA XREF: ROM:00020BC
                 bne.w   Credits_StateReturn
                 addq.w  #2,(ScenePaletteFadeOffset).l
                 move.w  (ScenePaletteFadeOffset).l,d0
-                lea     (word_FFE320).w,a0
+                lea     (PaletteActiveColor16).w,a0
                 move.w  #$2F,d5                         ; '/'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -424,7 +424,7 @@ Credits_InitializeSceneSequence:                        ; DATA XREF: ROM:Credits
                 jsr     (Data_ProcessPointer).l
                 lea     Credits_InitialPalette(pc),a0
                 nop
-                lea     (word_FFE340).w,a1
+                lea     (PaletteActiveColor32).w,a1
                 bsr.w   Data_Copy32Bytes
                 lea     (SecondaryEntityType).w,a5
                 move.w  #$CC00,SecondaryEntityFlags-SecondaryEntityType(a5)
@@ -446,7 +446,7 @@ Credits_InitializeSceneSequence:                        ; DATA XREF: ROM:Credits
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.b  #$60,$20(a5)                    ; '`'
-                clr.w   (word_FFE306).w
+                clr.w   (PaletteActiveColor03).w
                 move.b  #3,(VDPReg11Shadow+1).w
                 move.b  #1,(byte_FFA95A).w
                 move.b  #1,(byte_FFA95B).w
@@ -479,7 +479,7 @@ Credits_LoadNextScene:                                  ; DATA XREF: ROM:00020F1
 ; Wait for timer and check player input to advance
 Credits_WaitForSceneActivation:                         ; DATA XREF: ROM:00020F12   o  ; was: sub_21036
                 subq.w  #1,(CreditsSceneTimer).l
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.w   Credits_StateReturn
                 clr.w   (CreditsPaletteFadeIndex).l
                 addq.w  #2,(CreditsSceneState).l
@@ -543,8 +543,8 @@ Credits_PrepareSpecialScenePalette:                     ; DATA XREF: ROM:00020F1
                 bne.w   Credits_StateReturn
                 move.w  #$160,(CreditsSceneTimer).l
                 move.w  #0,(ScenePaletteFadeOffset).l
-                lea     (word_FFE320).w,a0
-                lea     (dword_FFE3A0).w,a1
+                lea     (PaletteActiveColor16).w,a0
+                lea     (PaletteShadowPair16).w,a1
                 bsr.w   Data_Copy32Bytes
                 bsr.w   Data_Copy32Bytes
                 bsr.w   Data_Copy32Bytes
@@ -559,7 +559,7 @@ Credits_LoadTreasureScene:                              ; DATA XREF: ROM:00020F1
                 bne.w   Credits_StateReturn
                 subq.w  #2,(ScenePaletteFadeOffset).l
                 move.w  (ScenePaletteFadeOffset).l,d0
-                lea     (word_FFE320).w,a0
+                lea     (PaletteActiveColor16).w,a0
                 move.w  #$2F,d5                         ; '/'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -574,7 +574,7 @@ Credits_LoadTreasureScene:                              ; DATA XREF: ROM:00020F1
                 move.b  #4,(byte_FFA95B).w
                 lea     Credits_TreasurePaletteData(pc),a0
                 nop
-                lea     (dword_FFE3A0).w,a1
+                lea     (PaletteShadowPair16).w,a1
                 bsr.w   Data_Copy32Bytes
                 bsr.w   Data_Copy32Bytes
                 bsr.w   Data_Copy32Bytes
@@ -589,7 +589,7 @@ Credits_LoadTreasureScene:                              ; DATA XREF: ROM:00020F1
 Credits_WaitForSpecialSceneActivation:                  ; DATA XREF: ROM:00020F1A   o  ; was: sub_2139A
                                         ; ROM:00020F22   o
                 subq.w  #1,(CreditsSceneTimer).l
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.w   Credits_StateReturn
                 addq.w  #2,(CreditsSceneState).l
                 rts
@@ -603,7 +603,7 @@ Credits_FadeInSpecialScene:                             ; DATA XREF: ROM:00020F1
                 bne.w   Credits_StateReturn
                 addq.w  #2,(ScenePaletteFadeOffset).l
                 move.w  (ScenePaletteFadeOffset).l,d0
-                lea     (word_FFE320).w,a0
+                lea     (PaletteActiveColor16).w,a0
                 move.w  #$2F,d5                         ; '/'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -620,7 +620,7 @@ Credits_LoadSegaScene:                                  ; DATA XREF: ROM:00020F2
                 bne.w   Credits_StateReturn
                 subq.w  #2,(ScenePaletteFadeOffset).l
                 move.w  (ScenePaletteFadeOffset).l,d0
-                lea     (word_FFE320).w,a0
+                lea     (PaletteActiveColor16).w,a0
                 move.w  #$2F,d5                         ; '/'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -650,7 +650,7 @@ Credits_LoadSegaScene_ClearPlaneBLoop:                  ; CODE XREF: Credits_Loa
                 move    (sp)+,sr
                 lea     Credits_SegaPalette(pc),a0
                 nop
-                lea     ((dword_FFE3DE+2)).w,a1
+                lea     ((PaletteShadowPair47+2)).w,a1
                 bsr.w   Data_Copy32Bytes
                 lea     Credits_SegaAssetLoadList(pc),a0
                 nop

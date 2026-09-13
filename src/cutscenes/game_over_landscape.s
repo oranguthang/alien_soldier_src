@@ -23,8 +23,8 @@ GameOver_InitializeScreen_Activate:                     ; CODE XREF: GameOver_In
                 jsr     (LoadObjData).l
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
-                move.w  #$2C,(word_FFE302).w            ; ','
-                move.w  #0,(word_FFE304).w
+                move.w  #$2C,(PaletteActiveColor01).w   ; ','
+                move.w  #0,(PaletteActiveColor02).w
                 bsr.w   GameOver_InitializeDitherPatterns
                 movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$80,-(a1)

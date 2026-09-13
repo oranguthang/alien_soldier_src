@@ -105,7 +105,7 @@ Stage17_UpdateEpsilon1Parallax_Active:                  ; CODE XREF: Stage17_Upd
                 asl.l   #8,d1
                 swap    d0
                 swap    d1
-                movea.w #(word_FFEC02-M68K_RAM),a0
+                movea.w #(VScrollPlaneBColumn0-M68K_RAM),a0
                 move.w  d0,(a0)
                 move.w  d1,4(a0)
                 move.w  d1,8(a0)

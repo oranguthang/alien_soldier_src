@@ -13,8 +13,8 @@ TileCodec_ClearDecodeBuffer_Loop:                       ; CODE XREF: TileCodec_C
 TileCodec_DecodeTile:                                   ; CODE XREF: Gfx_LoadAndDecompTiles:Gfx_LoadAndDecompTiles_Loop   p  ; was: sub_2A68
                                         ; sub_2700:loc_271E   p
                 movem.l d2-d7/a4-a5,-(sp)
-                move.w  (dword_FFF730).w,d2
-                move.w  (dword_FFF730+2).w,d3
+                move.w  (DataLoaderCodecState).w,d2
+                move.w  (DataLoaderCodecState+2).w,d3
                 lea     (GraphicsStagingBuffer).w,a5
                 lea     TileDecodeBufferEnd-GraphicsStagingBuffer(a5),a4
 TileCodec_DecodeTile_ReadToken:                         ; CODE XREF: TileCodec_DecodeTile+162   j  ; was: loc_2A7C
@@ -192,8 +192,8 @@ TileCodec_DecodeTile_StorePixel:                        ; CODE XREF: TileCodec_D
 TileCodec_DecodeTile_CheckComplete:                     ; CODE XREF: TileCodec_DecodeTile+14C   j  ; was: loc_2BC8
                 cmpa.l  a4,a5
                 bcs.w   TileCodec_DecodeTile_ReadToken
-                move.w  d2,(dword_FFF730).w
-                move.w  d3,(dword_FFF730+2).w
+                move.w  d2,(DataLoaderCodecState).w
+                move.w  d3,(DataLoaderCodecState+2).w
                 movem.l (sp)+,d2-d7/a4-a5
                 rts
 ; End of function TileCodec_DecodeTile

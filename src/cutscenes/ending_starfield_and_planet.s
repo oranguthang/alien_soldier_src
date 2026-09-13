@@ -5,7 +5,7 @@ EndingStarfield_Initialize:                             ; DATA XREF: ROM:00007C3
                 bne.w   Cutscene_Return
                 subq.w  #2,(CutscenePaletteStep).l
                 move.w  (CutscenePaletteStep).l,d0
-                lea     (word_FFE302).w,a0
+                lea     (PaletteActiveColor01).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -129,7 +129,7 @@ EndingStarfield_FadeOutAndPreparePlanet:                ; DATA XREF: ROM:00007C4
                 bne.w   Cutscene_Return
                 subq.w  #2,(CutscenePaletteStep).l
                 move.w  (CutscenePaletteStep).l,d0
-                lea     (word_FFE302).w,a0
+                lea     (PaletteActiveColor01).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -255,7 +255,7 @@ EndingPlanet_UpdateFadeIn:                              ; CODE XREF: EndingPlane
                 addq.w  #2,(CutscenePaletteStep).l
 EndingPlanet_ApplyFadeStep:                             ; CODE XREF: EndingPlanet_StartFadeIn+8   j  ; was: loc_8156
                 move.w  (CutscenePaletteStep).l,d0
-                lea     (word_FFE302).w,a0
+                lea     (PaletteActiveColor01).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jmp     (Gfx_ApplyPaletteFade).l
@@ -496,7 +496,7 @@ EndingPlanet_UpdateZoomPalette:                         ; CODE XREF: EndingPlane
                 bne.w   Cutscene_Return
                 subq.w  #2,(CutscenePaletteStep).l
                 move.w  (CutscenePaletteStep).l,d0
-                lea     (word_FFE302).w,a0
+                lea     (PaletteActiveColor01).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jmp     (Gfx_ApplyPaletteFade).l
@@ -562,7 +562,7 @@ EndingPlanet_UpdatePerspectiveScroll:                   ; CODE XREF: EndingPlane
                 move.l  d1,d0
                 asr.l   #1,d0
                 neg.l   d0
-                lea     (word_FFE5C0).w,a0
+                lea     (HScrollPlaneARow112).w,a0
                 move.w  #$D,d7
 EndingPlanet_WriteForwardHScroll:                       ; CODE XREF: EndingPlanet_UpdatePerspectiveScroll+3C   j  ; was: loc_8538
                 move.l  d0,d2
@@ -575,7 +575,7 @@ EndingPlanet_WriteForwardHScroll:                       ; CODE XREF: EndingPlane
                 move.l  (EndingScrollPhase).l,d1
                 move.l  d1,d0
                 asr.l   #1,d0
-                lea     (word_FFE5A0).w,a0
+                lea     (HScrollPlaneARow104).w,a0
                 move.w  #$D,d7
 EndingPlanet_WriteReverseHScroll:                       ; CODE XREF: EndingPlanet_UpdatePerspectiveScroll+60   j  ; was: loc_855C
                 move.l  d0,d2
@@ -591,7 +591,7 @@ EndingPlanet_WriteReverseHScroll:                       ; CODE XREF: EndingPlane
                 move.l  d1,d0
                 neg.l   d0
                 asl.l   #1,d1
-                lea     (word_FFEC28).w,a0
+                lea     (VScrollPlaneAColumn10).w,a0
                 move.w  #9,d7
 EndingPlanet_WriteForwardVScroll:                       ; CODE XREF: EndingPlanet_UpdatePerspectiveScroll+8A   j  ; was: loc_8586
                 move.l  d0,d2
@@ -604,7 +604,7 @@ EndingPlanet_WriteForwardVScroll:                       ; CODE XREF: EndingPlane
                 move.l  (EndingScrollPhase).l,d1
                 move.l  d1,d0
                 asl.l   #1,d1
-                lea     (word_FFEC24).w,a0
+                lea     (VScrollPlaneAColumn9).w,a0
                 move.w  #9,d7
 EndingPlanet_WriteReverseVScroll:                       ; CODE XREF: EndingPlanet_UpdatePerspectiveScroll+AE   j  ; was: loc_85AA
                 move.l  d0,d2
@@ -630,7 +630,7 @@ EndingPlanet_FadeOutZoom:                               ; DATA XREF: ROM:00007C4
                 bne.w   Cutscene_Return
                 subq.w  #2,(CutscenePaletteStep).l
                 move.w  (CutscenePaletteStep).l,d0
-                lea     (word_FFE302).w,a0
+                lea     (PaletteActiveColor01).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l

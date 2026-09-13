@@ -232,7 +232,7 @@ Boss_ShieldViperStateHandlerOffsets:    dc.w    Boss_ShieldViperInitialize-*  ; 
 
 ; Initialize the controller, 24 body records, and two auxiliary records
 Boss_ShieldViperInitialize:                             ; DATA XREF: ROM:Boss_ShieldViperStateHandlerOffsets   o  ; was: sub_4E060
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.w   Boss_ShieldViperInitializationReturn
                 addq.w  #2,4(a5)
                 move.w  #$34C,d0

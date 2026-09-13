@@ -269,7 +269,7 @@ Boss_Epsilon1ApplyTimedPaletteFade:                     ; CODE XREF: Boss_Epsilo
 ; Clears non-Epsilon objects after the fade completion gate opens
 Boss_Epsilon1ClearObjectsAfterDefeatFadeState:          ; DATA XREF: ROM:00045D62   o  ; was: sub_46AD8
                 bsr.s   Boss_Epsilon1ApplyTimedPaletteFade
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Boss_Epsilon1ClearObjectsAfterDefeatFadeReturn
                 move.w  #$264,d0
                 moveq   #0,d1
@@ -294,7 +294,7 @@ Boss_Epsilon1FinalDefeatFadeCountdownReturn:            ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1FinalDefeatFadeCountdownState
 ; Waits for the first post-battle stage gate
 Boss_Epsilon1WaitForFirstPostBattleGateState:           ; DATA XREF: ROM:00045D66   o  ; was: sub_46B12
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Boss_Epsilon1WaitForFirstPostBattleGateReturn
                 addq.w  #2,4(a5)
 Boss_Epsilon1WaitForFirstPostBattleGateReturn:          ; CODE XREF: Boss_Epsilon1WaitForFirstPostBattleGateState+4   j  ; was: locret_46B1C
@@ -302,7 +302,7 @@ Boss_Epsilon1WaitForFirstPostBattleGateReturn:          ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1WaitForFirstPostBattleGateState
 ; Repeats the post-battle stage-gate wait in the following state
 Boss_Epsilon1WaitForSecondPostBattleGateState:          ; DATA XREF: ROM:00045D68   o  ; was: sub_46B1E
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Boss_Epsilon1WaitForSecondPostBattleGateReturn
                 addq.w  #2,4(a5)
 Boss_Epsilon1WaitForSecondPostBattleGateReturn:         ; CODE XREF: Boss_Epsilon1WaitForSecondPostBattleGateState+4   j  ; was: locret_46B28

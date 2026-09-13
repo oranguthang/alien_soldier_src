@@ -136,8 +136,8 @@ Boss_TerobusterUpdateSharedOscillation:                 ; CODE XREF: Boss_Terobu
                 asr.w   #2,d0
                 andi.w  #$E,d0
                 move.w  Boss_TerobusterOscillationValues(pc,d0.w),d0
-                move.w  d0,(word_FFE37E).w
-                move.w  d0,(word_FFE3FE).w
+                move.w  d0,(PaletteActiveColor63).w
+                move.w  d0,(PaletteShadowColor63).w
                 rts
 ; End of function Boss_TerobusterUpdateSharedOscillation
 ; ---------------------------------------------------------------------------

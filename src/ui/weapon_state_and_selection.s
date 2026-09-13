@@ -499,8 +499,8 @@ Weapon_UpdateState10GaugePalette:                       ; CODE XREF: Weapon_Conf
                 move.w  (FrameCounter).w,d0
                 asl.w   #1,d0
                 andi.w  #6,d0
-                move.w  Weapon_State10GaugePaletteCycle(pc,d0.w),(word_FFE36C).w
-                move.w  Weapon_State10GaugePaletteCycle(pc,d0.w),(word_FFE3EC).w
+                move.w  Weapon_State10GaugePaletteCycle(pc,d0.w),(PaletteActiveColor54).w
+                move.w  Weapon_State10GaugePaletteCycle(pc,d0.w),(PaletteShadowColor54).w
                 rts
 ; End of function Weapon_ConfigureState10Gauge
 ; ---------------------------------------------------------------------------
@@ -526,8 +526,8 @@ Weapon_State12AdvanceIconFrame:                         ; CODE XREF: Weapon_Upda
                 addi.w  #$20,d0                         ; ' '
 ; Selects the state-twelve palette/frame and queues its DMA transfer
 Weapon_LoadState12IconFrame:                            ; CODE XREF: Weapon_UpdateState12Icon+1E   j  ; was: loc_17E6A
-                move.w  Weapon_State12IconPaletteRamp(pc,d0.w),(word_FFE36C).w
-                move.w  Weapon_State12IconPaletteRamp(pc,d0.w),(word_FFE3EC).w
+                move.w  Weapon_State12IconPaletteRamp(pc,d0.w),(PaletteActiveColor54).w
+                move.w  Weapon_State12IconPaletteRamp(pc,d0.w),(PaletteShadowColor54).w
                 lsr.w   #1,d0
                 andi.w  #$E,d0
                 movea.l (dword_FF8020).w,a0

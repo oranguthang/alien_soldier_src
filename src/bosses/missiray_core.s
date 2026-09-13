@@ -111,7 +111,7 @@ Boss_MissirayStateTable:    dc.w    Boss_MissirayInitialize-*  ; DATA XREF: Boss
 
 ; Initializes the boss, eight linked segment objects, and their shared V-scroll data
 Boss_MissirayInitialize:                                ; DATA XREF: ROM:Boss_MissirayStateTable   o  ; was: sub_538E6
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.w   Boss_MissirayInitializeReturn
                 addq.w  #2,4(a5)
                 move.b  #4,(byte_FFA420).w
@@ -124,7 +124,7 @@ Boss_MissirayInitialize:                                ; DATA XREF: ROM:Boss_Mi
                 move.w  #$B8,(dword_FF9408).w
                 move.w  #$80,(dword_FF940C).w
                 move.w  #$13,d7
-                lea     (word_FFEC02).w,a0
+                lea     (VScrollPlaneBColumn0).w,a0
                 move.w  #$FF40,d0
                 move.w  d0,(a0)
                 move.w  d0,4(a0)
@@ -159,7 +159,7 @@ Boss_MissirayInitialize:                                ; DATA XREF: ROM:Boss_Mi
                 move.w  #7,d7
                 moveq   #0,d6
                 lea     $60(a5),a0
-                lea     (word_FFEC02).w,a1
+                lea     (VScrollPlaneBColumn0).w,a1
 Boss_MissirayInitializeSegmentsLoop:                    ; CODE XREF: Boss_MissirayInitialize+12E   j  ; was: loc_539CA
                 move.w  #$3D4,(a0)
                 move.w  #$C80,2(a0)
@@ -217,7 +217,7 @@ Boss_MissirayTileTransferSet02Descriptor:   dc.w    $6020, $2000, $102, 0, 0, 0 
 
 ; Waits for the previous transfer, then queues indexed-row set 00
 Boss_MissirayWaitForTransferAndQueueIndexedRowSet00:    ; DATA XREF: ROM:000538BC   o  ; was: sub_53A82
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Boss_MissirayIndexedRowSet00WaitReturn
                 addq.w  #2,4(a5)
                 bsr.s   Boss_MissirayQueueIndexedRowSet00
@@ -260,7 +260,7 @@ Boss_MissirayIndexedRowSet02Descriptor: dc.w    $6200, $2000, $301, 0, 0, 0, 0  
 
 ; Waits for the previous transfer, then queues indexed-row set 03
 Boss_MissirayWaitForTransferAndQueueIndexedRowSet03:    ; DATA XREF: ROM:000538BE   o  ; was: sub_53ADE
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Boss_MissirayIndexedRowSet03WaitReturn
                 addq.w  #2,4(a5)
                 bsr.s   Boss_MissirayQueueIndexedRowSet03
@@ -300,7 +300,7 @@ Boss_MissirayIndexedRowSet05Descriptor: dc.w    $6230, $2000, $301, 0, 0, 0, 0  
 
 ; Waits for the previous transfer, then loads direct tile set 03
 Boss_MissirayWaitForTransferAndLoadTileSet03:           ; DATA XREF: ROM:000538C0   o  ; was: sub_53B3A
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Boss_MissirayWaitForTileSet03Return
                 addq.w  #2,4(a5)
                 lea     Boss_MissirayTileTransferSet03Descriptor(pc),a0
@@ -559,7 +559,7 @@ Boss_MissirayWaitAndLoadDefeatTileSet00Return:          ; CODE XREF: Boss_Missir
 ; Waits for transfer completion, then starts the second defeat tile replacement
 Boss_MissirayWaitAndLoadDefeatTileSet01:                ; DATA XREF: ROM:000538DE   o  ; was: sub_53DE8
                 bsr.w   Boss_MissirayApplyDefeatPaletteFade
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Boss_MissirayWaitAndLoadDefeatTileSet01Return
                 bsr.w   Boss_MissirayQueueIndexedRowSet02
                 addq.w  #2,4(a5)
@@ -569,7 +569,7 @@ Boss_MissirayWaitAndLoadDefeatTileSet01Return:          ; CODE XREF: Boss_Missir
 ; Waits for transfer completion, then starts the third defeat tile replacement
 Boss_MissirayWaitAndLoadDefeatTileSet02:                ; DATA XREF: ROM:000538E0   o  ; was: sub_53DFC
                 bsr.w   Boss_MissirayApplyDefeatPaletteFade
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Boss_MissirayWaitAndLoadDefeatTileSet02Return
                 bsr.w   Boss_MissirayQueueIndexedRowSet05
                 addq.w  #2,4(a5)
@@ -613,7 +613,7 @@ Boss_MissirayRunAttackAndCyclePalette:                  ; DATA XREF: ROM:Boss_Mi
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 add.w   d0,d0
-                move.w  Boss_MissirayAttackPaletteCycleColors(pc,d0.w),(word_FFE37E).w
+                move.w  Boss_MissirayAttackPaletteCycleColors(pc,d0.w),(PaletteActiveColor63).w
 Boss_MissirayRunAttackAndCyclePaletteReturn:            ; CODE XREF: Boss_MissirayRunAttackAndCyclePalette+6   j  ; was: locret_53E5E
                 rts
 ; End of function Boss_MissirayRunAttackAndCyclePalette

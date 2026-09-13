@@ -253,9 +253,9 @@ Projectile_ProcessVisiblePool_Clear:                    ; CODE XREF: Projectile_
 ; ---------------------------------------------------------------------------
 Projectile_ProcessVisiblePool_Queue:                    ; CODE XREF: Projectile_ProcessVisiblePool+26   j  ; was: loc_199DE
                                         ; Projectile_ProcessVisiblePool+42   j
-                movea.w (word_FFF758).w,a0
+                movea.w (VisibleObjectListCursor).w,a0
                 move.w  a5,(a0)+
-                move.w  a0,(word_FFF758).w
+                move.w  a0,(VisibleObjectListCursor).w
 ; Advances projectile array pointer to next slot in loop
 Projectile_AdvancePoolPointer:                          ; CODE XREF: Projectile_ProcessVisiblePool+E   j  ; was: loc_199E8
                                         ; Projectile_ProcessVisiblePool+4A   j

@@ -118,7 +118,7 @@ Boss_GustheadStates:    dc.w    Boss_GustheadInitBattle-*  ; DATA XREF: Boss_Gus
 
 ; Initializes Gusthead battle
 Boss_GustheadInitBattle:                                ; DATA XREF: ROM:Boss_GustheadStates   o  ; was: sub_3F2B8
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.w   Boss_GustheadUpdateSegmentPositionsReturn
                 addq.w  #2,4(a5)
                 move.w  #$1B0,d0

@@ -30,7 +30,7 @@ UnreferencedStageTransition_PrepareGraphics:            ; was: sub_1E27A
 StageTransition_ResumeSetup:                            ; CODE XREF: StageTransition_Initialize+4   j  ; was: sub_1E2A6
                 cmpi.w  #4,(GameSubstateIndex).w
                 beq.s   StageTransition_ResumeSetup_ActivateMessageScreen
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.w   StageTransition_LoadOrSetupReturn
                 jsr     (Gfx_QueueNextFontTileDMA).l
                 bpl.w   StageTransition_LoadOrSetupReturn
@@ -75,7 +75,7 @@ StageTransitionPaletteBlock:    dc.l    0, $CAA0A88, $8660644, 0  ; was: dword_1
 
 ; Advances interstage message text, confirmation, and palette fades
 StageTransition_UpdateMessageScreen:                    ; DATA XREF: Sys_DispatchGameState+8E   o  ; was: sub_1E364
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.w   StageTransition_UpdateMessageScreen_Return
                 tst.w   (GameSubstateIndex).w
                 beq.s   StageTransition_UpdateMessageScreen_RenderText

@@ -1,6 +1,6 @@
 ; Add d0 to seven consecutive scroll-layer values at a0
 Gfx_UpdateMultipleScrollLayers:                         ; CODE XREF: Object_DestroyerMK2UpdateMovement:Object_DestroyerMK2ApplyMovementToScrollLayers   p  ; was: sub_4B68C
-                add.w   (word_FFE6E0).w,d0
+                add.w   (HScrollPlaneARow184).w,d0
                 move.w  #6,d7
 Gfx_UpdateMultipleScrollLayerBlocksLoop:                ; CODE XREF: Gfx_UpdateMultipleScrollLayers+1A   j  ; was: loc_4B694
                 move.w  d0,(a0)
@@ -31,7 +31,7 @@ Object_DestroyerMK2WaitThenAdvanceReturn:               ; CODE XREF: Object_Dest
 ; End of function Object_DestroyerMK2WaitThenAdvanceState
 ; Deactivate the component after the stage gate and apply its scroll preset
 Object_DestroyerMK2DeactivateAndApplyScrollPreset:      ; DATA XREF: ROM:0004B4AC   o  ; was: sub_4B6D2
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.w   Object_DestroyerMK2StageGateReturn
                 addq.w  #2,4(a5)
                 andi.w  #$7FFF,2(a5)
@@ -72,7 +72,7 @@ Object_DestroyerMK2ApplyDeactivationScrollPresetD:      ; DATA XREF: ROM:0004B6F
 ; End of function Object_DestroyerMK2ApplyDeactivationScrollPresetD
 ; Reset the component for reuse after the stage gate
 Object_DestroyerMK2ResetAfterStageGate:                 ; DATA XREF: ROM:0004B4AE   o  ; was: sub_4B730
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   Object_DestroyerMK2StageGateResetReturn
                 clr.w   4(a5)
 Object_DestroyerMK2StageGateResetReturn:                ; CODE XREF: Object_DestroyerMK2ResetAfterStageGate+4   j  ; was: locret_4B73A
@@ -551,8 +551,8 @@ Gfx_DestroyerMK2CyclePaletteWords:                      ; CODE XREF: Boss_Destro
                 andi.w  #3,d0
                 bne.s   Gfx_DestroyerMK2PaletteCycleReturn
                 move.w  (dword_FF9418).w,d0
-                move.w  Gfx_DestroyerMK2PrimaryPaletteCycleTable(pc,d0.w),(word_FFE366).w
-                move.w  Gfx_DestroyerMK2SecondaryPaletteCycleTable(pc,d0.w),(word_FFE368).w
+                move.w  Gfx_DestroyerMK2PrimaryPaletteCycleTable(pc,d0.w),(PaletteActiveColor51).w
+                move.w  Gfx_DestroyerMK2SecondaryPaletteCycleTable(pc,d0.w),(PaletteActiveColor52).w
                 addq.w  #2,(dword_FF9418).w
                 cmpi.w  #$14,(dword_FF9418).w
                 bne.s   Gfx_DestroyerMK2PaletteCycleReturn
@@ -588,11 +588,11 @@ Boss_DestroyerMK2UpdateLinkedObjectGeometry:            ; CODE XREF: Boss_Destro
 Boss_DestroyerMK2UpdateLinkedComponentLoop:             ; CODE XREF: Boss_DestroyerMK2UpdateLinkedObjectGeometry+7E   j  ; was: loc_4BC8C
                 cmpi.w  #4,$4E(a0)
                 bcc.s   Boss_DestroyerMK2SelectLowerComponentScrollGroup
-                lea     (word_FFE52C).w,a1
+                lea     (HScrollPlaneARow75).w,a1
                 bra.s   Boss_DestroyerMK2UpdateLinkedComponentPosition
 ; ---------------------------------------------------------------------------
 Boss_DestroyerMK2SelectLowerComponentScrollGroup:       ; CODE XREF: Boss_DestroyerMK2UpdateLinkedObjectGeometry+4E   j  ; was: loc_4BC9A
-                lea     (word_FFE720).w,a1
+                lea     (HScrollPlaneARow200).w,a1
 Boss_DestroyerMK2UpdateLinkedComponentPosition:         ; CODE XREF: Boss_DestroyerMK2UpdateLinkedObjectGeometry+54   j  ; was: loc_4BC9E
                 move.w  (a1),d0
                 addi.w  #$C0,d0
@@ -708,7 +708,7 @@ Boss_DestroyerMK2LinkedPartFlagActivationReturn:        ; CODE XREF: Boss_Destro
 ; End of function Boss_DestroyerMK2ActivateLinkedPartsFromFlags
 ; Fills 40 foreground-scroll rows with the negated stage scroll position
 Gfx_DestroyerMK2UpdateForegroundScrollRows:             ; CODE XREF: Boss_DestroyerMK2Main+8   p  ; was: sub_4BDFE
-                lea     (word_FFE480).w,a0
+                lea     (HScrollPlaneARow32).w,a0
                 move.w  (PrimaryCameraXPosition).w,d0
                 neg.w   d0
                 move.w  #$27,d7                         ; '''

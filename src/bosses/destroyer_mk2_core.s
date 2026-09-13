@@ -33,7 +33,7 @@ Boss_DestroyerMK2UpdateEncounterEffects:                ; CODE XREF: Boss_Destro
                 move.w  #$C70,d0
                 sub.w   (PrimaryCameraXPosition).w,d0
                 addi.w  #-$80,d0
-                lea     (word_FFE520).w,a0
+                lea     (HScrollPlaneARow72).w,a0
                 lea     (word_FF98B0).w,a1
                 move.w  #$B6,d7
 Boss_DestroyerMK2WriteScrollRowsLoop:                   ; CODE XREF: Boss_DestroyerMK2Main+88   j  ; was: loc_4A8CE
@@ -43,7 +43,7 @@ Boss_DestroyerMK2WriteScrollRowsLoop:                   ; CODE XREF: Boss_Destro
                 addq.w  #4,a0
                 dbf     d7,Boss_DestroyerMK2WriteScrollRowsLoop
 Boss_DestroyerMK2AnchorToScrollPosition:                ; CODE XREF: Boss_DestroyerMK2Main+66   j  ; was: loc_4A8DA
-                lea     (word_FFE6E0).w,a0
+                lea     (HScrollPlaneARow184).w,a0
                 move.w  (a0),d0
                 addi.w  #$C0,d0
                 move.w  d0,$10(a5)
@@ -88,7 +88,7 @@ Boss_DestroyerMK2MainStateHandlers: dc.w    Boss_DestroyerMK2InitializeEncounter
 
 ; Initializes encounter buffers, controller fields, and linked object records
 Boss_DestroyerMK2InitializeEncounterState:              ; DATA XREF: ROM:Boss_DestroyerMK2MainStateHandlers   o  ; was: sub_4A938
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.w   Boss_DestroyerMK2InitializeEncounterReturn
                 addq.w  #2,4(a5)
                 moveq   #0,d0
@@ -114,7 +114,7 @@ Boss_DestroyerMK2ClearScrollBuffersLoop:                ; CODE XREF: Boss_Destro
                 move.w  #$118,$14(a5)
                 move.b  #4,(byte_FFA95B).w
                 move.b  #1,(byte_FFA95A).w
-                lea     (word_FFE520).w,a0
+                lea     (HScrollPlaneARow72).w,a0
                 move.w  #$FF80,d0
                 move.w  #$B7,d7
 Boss_DestroyerMK2InitializeScrollRowsLoop:              ; CODE XREF: Boss_DestroyerMK2InitializeEncounterState+7A   j  ; was: loc_4A9AE
@@ -219,7 +219,7 @@ Boss_DestroyerMK2EncounterTileLoadDescriptor:   dc.w    $4480, $2000, $304, $969
 
 ; Waits for the intro gate, then initializes scroll-deformation state
 Boss_DestroyerMK2InitializeScrollDeformationState:      ; DATA XREF: ROM:0004A906   o  ; was: sub_4AB70
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Boss_DestroyerMK2InitializeScrollDeformationReturn
                 move.w  #8,(dword_FF940C).w
                 bsr.w   Boss_DestroyerMK2UpdateLinkedObjectGeometry
@@ -453,7 +453,7 @@ Gfx_DestroyerMK2ApplyPaletteFade:                       ; CODE XREF: Boss_Destro
                 move.w  #$7000,d7
 Gfx_DestroyerMK2ApplyPaletteFadeWithBase:               ; CODE XREF: Boss_DestroyerMK2AnimateScrollWaveState+14   p  ; was: loc_4ADD0
                                         ; Boss_DestroyerMK2WriteScrollWaveState+14   p
-                movea.w #(word_FFE360-M68K_RAM),a0
+                movea.w #(PaletteActiveColor48-M68K_RAM),a0
                 move.w  #$F,d5
                 jsr     (Gfx_ApplyPaletteFade).l
                 rts

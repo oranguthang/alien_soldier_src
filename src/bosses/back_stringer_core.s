@@ -58,7 +58,7 @@ Boss_BackStringerStates:    dc.w    Boss_BackStringerWaitForActivationState-Boss
 Boss_BackStringerWaitForActivationState:                ; DATA XREF: Boss_BackStringerMain+5C   o  ; was: sub_44740
                                         ; ROM:Boss_BackStringerStates   o
                 clr.w   8(a5)
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   Boss_BackStringerWaitForActivationReturn
                 addq.w  #2,4(a5)
                 move.b  #$8C,d0

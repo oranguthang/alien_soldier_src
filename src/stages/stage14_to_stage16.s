@@ -161,7 +161,7 @@ Stage16_UpdatePostViblackCameraAndPalette:              ; DATA XREF: ROM:0000D9B
 Stage16_UpdatePostViblackCameraAndPalette_ApplyFade:    ; CODE XREF: Stage16_UpdatePostViblackCameraAndPalette+1E   j  ; was: loc_E028
                                         ; Stage16_UpdatePostViblackCameraAndPalette+2C   j
                 move.w  (dword_FF806A).w,d0
-                movea.w #(byte_FFE322-M68K_RAM),a0
+                movea.w #(PaletteActiveColor17Hi-M68K_RAM),a0
                 moveq   #$E,d5
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -211,8 +211,8 @@ Stage16_UpdatePostViblackPaletteTransition:             ; DATA XREF: ROM:0000D9C
 ; ---------------------------------------------------------------------------
 Stage16_UpdatePostViblackPaletteTransition_BeginStep:   ; CODE XREF: Stage16_UpdatePostViblackPaletteTransition+4   j  ; was: loc_E0AA
                 bsr.w   Stage16_DeceleratePostViblackVerticalScroll
-                movea.w #(byte_FFE322-M68K_RAM),a0
-                movea.w #(dword_FFE3A0+2-M68K_RAM),a1
+                movea.w #(PaletteActiveColor17Hi-M68K_RAM),a0
+                movea.w #(PaletteShadowPair16+2-M68K_RAM),a1
                 move.w  (dword_FF806A).w,d0
                 asr.w   #1,d0
                 andi.w  #$1E,d0

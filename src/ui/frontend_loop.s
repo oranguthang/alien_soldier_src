@@ -43,7 +43,7 @@ FrontendSegaSequenceAssetLoadList:  dc.w    7           ; field_0  ; was: stru_1
 
 ; Main game loop update with object processing
 Frontend_UpdateOpeningSequence:                         ; DATA XREF: Sys_DispatchGameState+5E   o  ; was: sub_1CF16
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   Frontend_UpdateOpeningSequence_RunFrame
                 cmpi.w  #4,(GameSubstateIndex).w
                 bcs.s   Frontend_UpdateOpeningSequence_RunFrame
@@ -132,7 +132,7 @@ Frontend_InitializeSegaScreen_ClearSpriteGridScratch:   ; was: loc_1D006
                 move.w  #$E000,(PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
                 movea.l #SegaScreenPalette,a0
-                movea.w #(byte_FFE3C0-M68K_RAM),a1
+                movea.w #(PaletteShadowColor32Hi-M68K_RAM),a1
                 moveq   #7,d7
 Frontend_InitializeSegaScreen_CopyPalette:              ; was: loc_1D09E
                 move.l  (a0)+,(a1)+
@@ -166,10 +166,10 @@ Frontend_InitializeSegaScreen_CopyPalette:              ; was: loc_1D09E
                 rts
 ; End of function Frontend_InitializeSegaScreen
 Frontend_CopyPaletteLines:                              ; was: sub_1D120
-                lea     (word_FFE362).w,a0
-                lea     (word_FFE302).w,a1
-                lea     (word_FFE3E2).w,a2
-                lea     (word_FFE382).w,a3
+                lea     (PaletteActiveColor49).w,a0
+                lea     (PaletteActiveColor01).w,a1
+                lea     (PaletteShadowColor49).w,a2
+                lea     (PaletteShadowColor01).w,a3
                 move.w  #$E,d0
 Frontend_CopyPaletteLines_NextColor:                    ; was: loc_1D134
                 move.w  (a0)+,(a1)+

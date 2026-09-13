@@ -11,10 +11,10 @@ Sprite_RenderObjectList_Begin:                          ; CODE XREF: Sprite_Rend
                 movea.w (SpriteOAMWritePointer).w,a3
                 lea     (PlayerObjectType).w,a5
                 bsr.w   Sprite_RenderDynamicObject
-                move.w  (word_FFF75A).w,d2
+                move.w  (VisibleObjectCount).w,d2
                 beq.w   Sprite_RenderObjectList_Finalize
                 subq.w  #1,d2
-                lea     (word_FFED00).w,a2
+                lea     (VisibleObjectList).w,a2
 Sprite_RenderObjectList_ObjectLoop:                     ; CODE XREF: Sprite_RenderObjectList:Sprite_RenderObjectList_NextObject   j  ; was: loc_2046
                 movea.w (a2)+,a5
                 move.b  2(a5),d7

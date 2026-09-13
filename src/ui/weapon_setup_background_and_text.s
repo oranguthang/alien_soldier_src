@@ -19,8 +19,8 @@ WeaponSetup_RenderBackgroundPhase:                      ; CODE XREF: WeaponSetup
                 asr.w   #3,d0
                 subi.w  #$16,d0
                 andi.w  #$1E,d0
-                move.w  WeaponSetup_BackgroundPaletteColor1Cycle(pc,d0.w),(word_FFE37C).w
-                move.w  WeaponSetup_BackgroundPaletteColor2Cycle(pc,d0.w),(word_FFE37E).w
+                move.w  WeaponSetup_BackgroundPaletteColor1Cycle(pc,d0.w),(PaletteActiveColor62).w
+                move.w  WeaponSetup_BackgroundPaletteColor2Cycle(pc,d0.w),(PaletteActiveColor63).w
                 movea.w #(byte_FF9C1E-M68K_RAM),a0
                 moveq   #1,d0
                 move.w  #$60,d7                         ; '`'

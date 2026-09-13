@@ -35,7 +35,7 @@ Demo_PlaybackSystem_Return:                             ; CODE XREF: Demo_Playba
                 rts
 ; ---------------------------------------------------------------------------
 Demo_PlaybackSystem_Update:                             ; CODE XREF: Demo_PlaybackSystem+12   j  ; was: loc_23D48
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.w   Demo_PlaybackSystem_UpdateTimer
                 btst    #7,(ControllerPressedState).w
                 bne.w   Demo_PlaybackSystem_Exit

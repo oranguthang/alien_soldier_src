@@ -64,7 +64,7 @@ Boss_SnakeStates:   dc.w    Boss_SnakeInit-*            ; DATA XREF: Boss_SnakeM
 
 ; Initializes Snake boss with 23 segments
 Boss_SnakeInit:                                         ; DATA XREF: ROM:Boss_SnakeStates   o  ; was: sub_40854
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.w   Boss_SnakeInitReturn
                 addq.w  #2,4(a5)
                 move.b  #4,(byte_FFA420).w

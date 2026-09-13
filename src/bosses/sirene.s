@@ -355,7 +355,7 @@ Boss_ClampSireneEffectSecondaryXMaximum:                ; CODE XREF: Boss_Update
                 move.l  $65C(a5),d3
                 move.l  $6BC(a5),d5
 Boss_SelectSireneEffectAlternatePhase:                  ; CODE XREF: Boss_UpdateSireneBattleEffect+114   j  ; was: loc_5795A
-                movea.w #(byte_FFE602-M68K_RAM),a0
+                movea.w #(HScrollPlaneBRow128-M68K_RAM),a0
                 movea.w a0,a1
                 moveq   #$B,d7
                 moveq   #0,d1
@@ -377,7 +377,7 @@ Gfx_WriteSireneWideDistortionOffsetsLoop:               ; CODE XREF: Boss_Update
                 add.l   d3,d1
                 lea     $20(a0),a0
                 dbf     d7,Gfx_WriteSireneWideDistortionOffsetsLoop
-                movea.w #(word_FFEC2A-M68K_RAM),a0
+                movea.w #(VScrollPlaneBColumn10-M68K_RAM),a0
                 movea.w a0,a1
                 moveq   #9,d7
                 moveq   #0,d1
@@ -406,8 +406,8 @@ Gfx_InitSireneBattleEffect:                             ; CODE XREF: Boss_Update
                 move.b  #6,(VDPReg11Shadow+1).w
                 move.b  #$C,(byte_FFA95A).w
                 move.b  #3,(byte_FFA95B).w
-                move.w  #0,(word_FFE320).w
-                move.w  #$400,(word_FFE33A).w
+                move.w  #0,(PaletteActiveColor16).w
+                move.w  #$400,(PaletteActiveColor29).w
                 rts
 ; End of function Gfx_InitSireneBattleEffect
 ; Write the alternating Sirene pattern and queue its VDP transfer
@@ -436,15 +436,15 @@ Gfx_WriteSireneBattlePattern:                           ; CODE XREF: Gfx_UpdateS
                 bne.s   Gfx_UseSireneAlternateBattlePattern
                 move.w  #$F000,(word_FF9508).w
                 move.w  #$E000,(word_FF951A).w
-                move.w  #$820,(word_FFE33C).w
-                move.w  #$E20,(word_FFE33E).w
+                move.w  #$820,(PaletteActiveColor30).w
+                move.w  #$E20,(PaletteActiveColor31).w
                 rts
 ; ---------------------------------------------------------------------------
 Gfx_UseSireneAlternateBattlePattern:                    ; CODE XREF: Gfx_UpdateSireneBattleEffectPattern+48   j  ; was: loc_57A58
                 move.w  #$E0,(word_FF9510).w
                 move.w  #$F0,(word_FF9502).w
-                move.w  #$E00,(word_FFE33C).w
-                move.w  #$A00,(word_FFE33E).w
+                move.w  #$E00,(PaletteActiveColor30).w
+                move.w  #$A00,(PaletteActiveColor31).w
                 rts
 ; End of function Gfx_UpdateSireneBattleEffectPattern
 ; Advance the Sirene pose, apply it to 28 parts, and begin shared traversal

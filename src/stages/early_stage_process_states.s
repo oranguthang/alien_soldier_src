@@ -242,7 +242,7 @@ Stage3_PostShellshogunRowSourceData:    dc.l    $FFFF7000, $FFFF6800, $FFFF2000,
 
 ; Locks camera to fixed position
 Stage3_WaitForPostShellshogunRows:                      ; DATA XREF: ROM:0000C868   o  ; was: sub_CA9A
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   Stage3_WaitForPostShellshogunRows_UpdateCamera
                 tst.w   (TilemapRowCountdown).w
                 bmi.s   Stage3_StartPostShellshogunBanner
@@ -461,7 +461,7 @@ Stage6_StartPostJokerTransition:                        ; DATA XREF: ROM:0000C88
 ; End of function Stage6_StartPostJokerTransition
 ; Initializes Stage 7 with scroll setup and palette loading
 Stage7_InitializeScrollState:                           ; DATA XREF: ROM:0000C88A   o  ; was: sub_CCA2
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   Stage7_UpdateScrollToTerobuster
                 bsr.w   Stage7_InitializeTerobusterIntroProjectiles
                 addq.w  #2,(StageStateOffset).w

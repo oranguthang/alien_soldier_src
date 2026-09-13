@@ -13,14 +13,14 @@ StoryText_States:   dc.w    StoryText_Initialize-*      ; DATA XREF: StoryText_D
 
 ; Seeds the two 34-byte row streams, tilemap destination, and update cadence
 StoryText_Initialize:                                   ; DATA XREF: ROM:StoryText_States   o  ; was: sub_58A8
-                move.w  #$200,(word_FFE342).w
-                move.w  #2,(word_FFE362).w
-                move.w  #$EEE,(word_FFE344).w
-                move.w  #$EE,(word_FFE364).w
-                move.w  #$200,(dword_FFE3C2).w
-                move.w  #2,(word_FFE3E2).w
-                move.w  #$EEE,(dword_FFE3C2+2).w
-                move.w  #$EE,(word_FFE3E4).w
+                move.w  #$200,(PaletteActiveColor33).w
+                move.w  #2,(PaletteActiveColor49).w
+                move.w  #$EEE,(PaletteActiveColor34).w
+                move.w  #$EE,(PaletteActiveColor50).w
+                move.w  #$200,(PaletteShadowPair33).w
+                move.w  #2,(PaletteShadowColor49).w
+                move.w  #$EEE,(PaletteShadowPair33+2).w
+                move.w  #$EE,(PaletteShadowColor50).w
                 move.l  #StoryText_PrimaryRows,(SharedSequenceCursor).l
                 move.l  #StoryText_AccentRows,(StoryTextAccentCursor).l
                 move.w  #$4C88,(StoryTextVRAMAddress).l
@@ -30,18 +30,18 @@ StoryText_Initialize:                                   ; DATA XREF: ROM:StoryTe
 ; End of function StoryText_Initialize
 ; Alternates the accent-layer palette words on successive frames
 StoryText_AnimateAccentColors:                          ; CODE XREF: StoryText_UpdateScroll   p  ; was: sub_5904
-                move.w  #$200,(word_FFE342).w
-                move.w  #2,(word_FFE362).w
+                move.w  #$200,(PaletteActiveColor33).w
+                move.w  #2,(PaletteActiveColor49).w
                 move.w  (VBlankFrameCounter).w,d0
                 andi.w  #1,d0
                 bne.s   StoryText_UseAlternateAccentColors
-                move.w  #$EEE,(word_FFE344).w
-                move.w  #$EE,(word_FFE364).w
+                move.w  #$EEE,(PaletteActiveColor34).w
+                move.w  #$EE,(PaletteActiveColor50).w
                 rts
 ; ---------------------------------------------------------------------------
 StoryText_UseAlternateAccentColors:                     ; CODE XREF: StoryText_AnimateAccentColors+14   j  ; was: loc_5928
-                move.w  #$EEA,(word_FFE344).w
-                move.w  #$EA,(word_FFE364).w
+                move.w  #$EEA,(PaletteActiveColor34).w
+                move.w  #$EA,(PaletteActiveColor50).w
                 rts
 ; End of function StoryText_AnimateAccentColors
 ; Scrolls every fourth frame and streams a row pair every twenty-four ticks

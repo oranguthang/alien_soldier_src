@@ -96,7 +96,7 @@ Results_InitializeFinalSummary_Return:                  ; was: locret_1DD88
                 rts
 ; ---------------------------------------------------------------------------
 Results_InitializeFinalSummary_Activate:                ; was: loc_1DD8A
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   Results_InitializeFinalSummary_Return
                 addq.w  #4,(GameModeIndex).w
                 move.w  #2,(GameSubstateIndex).w

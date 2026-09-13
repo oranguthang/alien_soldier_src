@@ -1,7 +1,7 @@
 Results_InitializePostStageFlow:                        ; was: sub_1D628
                 tst.w   (GameSubstateIndex).w
                 bne.s   Results_InitializePostStageFlow_Activate
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bpl.s   Results_InitializePostStageFlow_LoadAssets
                 rts
 ; ---------------------------------------------------------------------------
@@ -207,8 +207,8 @@ Results_BuildParallaxHScroll_NextRowPair:               ; was: loc_1D8D0
 
 ; Fades the four selected post-stage palette ranges
 Results_FadeSelectedPaletteRanges:                      ; was: sub_1D8EA
-                movea.w #(word_FFE386-M68K_RAM),a1
-                movea.w #(word_FFE306-M68K_RAM),a2
+                movea.w #(PaletteShadowColor03-M68K_RAM),a1
+                movea.w #(PaletteActiveColor03-M68K_RAM),a2
                 moveq   #3,d5
 Results_FadeSelectedPaletteRanges_NextFirstColor:       ; was: loc_1D8F4
                 move.w  (a1)+,d6
@@ -218,16 +218,16 @@ Results_FadeSelectedPaletteRanges_NextFirstColor:       ; was: loc_1D8F4
                 jsr     (Gfx_AdjustSelectedColorChannels).l
                 move.w  d6,(a2)+
                 dbf     d5,Results_FadeSelectedPaletteRanges_NextFirstColor
-                movea.w #(dword_FFE3A0+2-M68K_RAM),a1
-                movea.w #(byte_FFE322-M68K_RAM),a2
+                movea.w #(PaletteShadowPair16+2-M68K_RAM),a1
+                movea.w #(PaletteActiveColor17Hi-M68K_RAM),a2
                 moveq   #4,d5
                 bsr.s   Results_FadePaletteRange
-                movea.w #(dword_FFE3C2-M68K_RAM),a1
-                movea.w #(word_FFE342-M68K_RAM),a2
+                movea.w #(PaletteShadowPair33-M68K_RAM),a1
+                movea.w #(PaletteActiveColor33-M68K_RAM),a2
                 moveq   #4,d5
                 bsr.s   Results_FadePaletteRange
-                movea.w #(word_FFE3E2-M68K_RAM),a1
-                movea.w #(word_FFE362-M68K_RAM),a2
+                movea.w #(PaletteShadowColor49-M68K_RAM),a1
+                movea.w #(PaletteActiveColor49-M68K_RAM),a2
                 moveq   #4,d5
 ; End of function Results_FadeSelectedPaletteRanges
 

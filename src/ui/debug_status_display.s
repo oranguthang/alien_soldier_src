@@ -65,7 +65,7 @@ DebugMenuStateOffsets:  dc.w    DebugMenu_Return-DebugMenu_Initialize  ; was: of
                 dc.w    DebugMenu_UpdateActive-DebugMenu_Initialize
 
 DebugMenu_Initialize:                                   ; was: sub_1352A
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   DebugMenu_Return
                 clr.w   (DebugMenuPageOffset).w
                 clr.w   (DebugPaletteEntryOffset).w

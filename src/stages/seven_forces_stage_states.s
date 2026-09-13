@@ -99,7 +99,7 @@ Stage_SevenForcesBeginArtemisTransition:                ; DATA XREF: ROM:0000E4B
                 bsr.w   Stage_SevenForcesDampenHorizontalVelocity
                 subq.w  #1,(dword_FFA960).w
                 bpl.s   Stage_SevenForcesBeginArtemisTransitionReturn
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   Stage_SevenForcesBeginArtemisTransitionReturn
                 addq.w  #2,(StageStateOffset).w
                 clr.l   (dword_FF8240).w

@@ -75,7 +75,7 @@ Boss_SunsetStingSecondFormInitializeState:              ; DATA XREF: ROM:Boss_Su
 ; End of function Boss_SunsetStingSecondFormInitializeState
 ; Loads boss graphics tiles, palettes, and body parts
 Boss_SunsetStingSecondFormLoadGraphicsState:            ; DATA XREF: ROM:00041948   o  ; was: sub_419B8
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.w   Boss_SunsetStingSecondFormLoadGraphicsReturn
                 addq.w  #2,4(a5)
                 movea.l #Boss_SunsetStingSecondFormObjectInitTable,a1

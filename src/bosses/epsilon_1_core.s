@@ -232,7 +232,7 @@ Boss_Epsilon1States:    dc.w    Boss_Epsilon1WaitForBattleStartState-*  ; DATA X
 
 ; Waits for the stage gate, then starts the battle-entry delay and sound
 Boss_Epsilon1WaitForBattleStartState:                   ; DATA XREF: ROM:Boss_Epsilon1States   o  ; was: sub_45D70
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.w   Boss_Epsilon1WaitForBattleStartReturn
                 addq.w  #2,4(a5)
                 move.w  #$80,$48(a5)
@@ -394,7 +394,7 @@ Boss_Epsilon1ApplyPaletteFade:                          ; CODE XREF: Boss_Epsilo
 ; Applies the opening fade while alternating initial tile-load groups
 Boss_Epsilon1InitialTileLoadState:                      ; DATA XREF: ROM:00045CF6   o  ; was: sub_46032
                 bsr.w   Boss_Epsilon1ApplyPaletteFade
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   Boss_Epsilon1InitialTileLoadReturn
                 subq.w  #1,$48(a5)
                 bmi.s   Boss_Epsilon1AdvanceFromInitialTileLoad
@@ -409,7 +409,7 @@ Boss_Epsilon1InitialTileLoadGroups: dc.w    Gfx_LoadEpsilon1FourTileBands-*  ; D
                 dc.w    Gfx_LoadEpsilon1WideTileBands-*
 ; ---------------------------------------------------------------------------
 Boss_Epsilon1AdvanceFromInitialTileLoad:                ; CODE XREF: Boss_Epsilon1InitialTileLoadState+E   j  ; was: loc_46056
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   Boss_Epsilon1InitialTileLoadReturn
                 addq.w  #2,4(a5)
 Boss_Epsilon1InitialTileLoadReturn:                     ; CODE XREF: Boss_Epsilon1InitialTileLoadState+8   j  ; was: locret_46060

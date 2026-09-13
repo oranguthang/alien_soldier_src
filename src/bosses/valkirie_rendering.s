@@ -427,15 +427,15 @@ Gfx_UpdateSevenForcesBattlePalette:                     ; CODE XREF: Entity_Upda
                                         ; Boss_UpdateMedusa+3A   p
                 btst    #0,(FrameCounter+1).w
                 bne.s   Gfx_ApplySevenForcesBattleFlashPalette
-                move.w  (word_FFE3FA).w,(word_FFE37A).w
-                move.w  (word_FFE3FC).w,(word_FFE37C).w
-                move.w  (word_FFE3FE).w,(word_FFE37E).w
+                move.w  (PaletteShadowColor61).w,(PaletteActiveColor61).w
+                move.w  (PaletteShadowColor62).w,(PaletteActiveColor62).w
+                move.w  (PaletteShadowColor63).w,(PaletteActiveColor63).w
                 rts
 ; ---------------------------------------------------------------------------
 Gfx_ApplySevenForcesBattleFlashPalette:                 ; CODE XREF: Gfx_UpdateSevenForcesBattlePalette+6   j  ; was: loc_5695E
-                move.w  SevenForces_BattleFlashPaletteColors(pc,d0.w),(word_FFE37A).w
-                move.w  SevenForces_BattleFlashPaletteColors+2(pc,d0.w),(word_FFE37C).w
-                move.w  SevenForces_BattleFlashPaletteColors+4(pc,d0.w),(word_FFE37E).w
+                move.w  SevenForces_BattleFlashPaletteColors(pc,d0.w),(PaletteActiveColor61).w
+                move.w  SevenForces_BattleFlashPaletteColors+2(pc,d0.w),(PaletteActiveColor62).w
+                move.w  SevenForces_BattleFlashPaletteColors+4(pc,d0.w),(PaletteActiveColor63).w
                 rts
 ; End of function Gfx_UpdateSevenForcesBattlePalette
 ; ---------------------------------------------------------------------------

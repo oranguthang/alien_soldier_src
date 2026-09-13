@@ -23,7 +23,7 @@ Debug_ValkirieViewerIdle:                               ; CODE XREF: Debug_Valki
 
 ; Initialize the interactive Valkirie composite-sprite viewer
 Debug_ValkirieViewerInitialize:                         ; DATA XREF: ROM:Debug_ValkirieViewerStateTable   o  ; was: sub_50FD0
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.w   Debug_ValkirieViewerIdle
                 move.w  #1,8(a5)
                 movea.w a5,a4

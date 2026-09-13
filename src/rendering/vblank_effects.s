@@ -164,7 +164,7 @@ VBlank_InitSplitVScrollEffect:                          ; DATA XREF: VBlank_Disp
                 move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 VBlank_InitSplitVScrollEffect_Update:                   ; CODE XREF: VBlank_InitSplitVScrollEffect+4   j  ; was: loc_1572
                 move.l  #$40020010,(VDP_CTRL).l
-                move.w  (word_FFEC04).w,(VDP_DATA).l
+                move.w  (VScrollPlaneAColumn1).w,(VDP_DATA).l
                 move.b  (PrimaryEntityWork4B).w,(VDPReg10Shadow+1).w
                 move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 rts
@@ -334,16 +334,16 @@ VBlank_InitStage10Effect_UpdateRegisters:               ; CODE XREF: VBlank_Init
                 move.w  (VDPReg4Shadow).w,(VDP_CTRL).l
                 move.w  (VDPReg7Shadow).w,(VDP_CTRL).l
                 move.l  #$70020003,(VDP_CTRL).l
-                move.w  (word_FFE402).w,(VDP_DATA).l
+                move.w  (HScrollPlaneBRow0).w,(VDP_DATA).l
                 move.l  #$70000003,(VDP_CTRL).l
                 move.w  (HScrollBuffer).w,(VDP_DATA).l
                 move.l  #$40020010,(VDP_CTRL).l
-                move.w  (word_FFEC02).w,(VDP_DATA).l
+                move.w  (VScrollPlaneBColumn0).w,(VDP_DATA).l
                 move.l  #$40000010,(VDP_CTRL).l
                 move.w  (VScrollBuffer).w,(VDP_DATA).l
                 movea.w #(byte_FF9FF8-M68K_RAM),a0
                 move.w  (VScrollBuffer).w,(a0)+
-                move.w  (word_FFEC02).w,(a0)+
+                move.w  (VScrollPlaneBColumn0).w,(a0)+
                 move.w  (PreviousCameraXPosition).w,d0
                 neg.w   d0
                 cmpi.w  #$30,(RasterEffectIndex).w      ; '0'

@@ -80,10 +80,10 @@ Stage26PaletteOffsetList:               dc.w    $798, 0  ; DATA XREF: ROM:Stage2
 ; Loads a palette command while preserving the shared color at palette slot $36
 Gfx_LoadPalettePreservingSharedColor:                   ; CODE XREF: Boss_LoadAssetSet+6C   p  ; was: sub_B9EA
                                         ; Stage_LoadStage17Palettes+12   j
-                move.w  (word_FFE3EC).w,(dword_FF8040).w
+                move.w  (PaletteShadowColor54).w,(dword_FF8040).w
                 bsr.s   Gfx_LoadPaletteCommand
-                move.w  (dword_FF8040).w,(word_FFE36C).w
-                move.w  (dword_FF8040).w,(word_FFE3EC).w
+                move.w  (dword_FF8040).w,(PaletteActiveColor54).w
+                move.w  (dword_FF8040).w,(PaletteShadowColor54).w
                 rts
 ; End of function Gfx_LoadPalettePreservingSharedColor
 ; Command header: destination byte, inclusive word count, then CRAM words

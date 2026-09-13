@@ -35,7 +35,7 @@ RasterBuffer_CopyTransitionLayout:                      ; DATA XREF: ROM:00029E4
                 moveq   #3,d7
                 bsr.w   RasterBuffer_Copy64ByteBlocks
                 movea.w #(word_FF9600-M68K_RAM),a2
-                movea.w #(byte_FFE40A-M68K_RAM),a3
+                movea.w #(HScrollPlaneBRow2-M68K_RAM),a3
                 moveq   #$D,d7
                 bra.w   RasterBuffer_CopyPairedRows
 ; End of function RasterBuffer_CopyTransitionLayout
@@ -46,7 +46,7 @@ RasterBuffer_CopyAlternateTransitionLayout:             ; DATA XREF: ROM:00029E5
                 moveq   #1,d7
                 bsr.w   RasterBuffer_Copy64ByteBlocks
                 movea.w #(word_FF9600-M68K_RAM),a2
-                movea.w #(byte_FFE412-M68K_RAM),a3
+                movea.w #(HScrollPlaneBRow4-M68K_RAM),a3
                 moveq   #$D,d7
                 bra.w   RasterBuffer_CopyRepeatedRows
 ; End of function RasterBuffer_CopyAlternateTransitionLayout

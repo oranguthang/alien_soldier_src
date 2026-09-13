@@ -180,7 +180,7 @@ Debug_SevenForcesScrollTableTestAccumulateOffsets:      ; CODE XREF: Debug_Seven
                 move.l  (dword_FF943C).w,d6
 Debug_SevenForcesScrollTableTestBuildTables:            ; CODE XREF: Debug_SevenForcesScrollTableTest+16E   j  ; was: loc_54E02
                 movea.w #(HScrollBuffer-M68K_RAM),a0
-                movea.w #(byte_FFE800-M68K_RAM),a1
+                movea.w #(HScrollAuxBuffer-M68K_RAM),a1
                 moveq   #$F,d7
                 moveq   #0,d1
                 moveq   #0,d2
@@ -203,7 +203,7 @@ Debug_SevenForcesScrollTableTestBuildPrimaryLoop:       ; CODE XREF: Debug_Seven
                 lea     $20(a0),a0
                 dbf     d7,Debug_SevenForcesScrollTableTestBuildPrimaryLoop
                 movea.w #(VScrollBuffer-M68K_RAM),a0
-                movea.w #(byte_FFEC50-M68K_RAM),a1
+                movea.w #(VScrollAuxBuffer-M68K_RAM),a1
                 moveq   #9,d7
                 moveq   #0,d1
                 moveq   #0,d2
@@ -247,17 +247,17 @@ Debug_SevenForcesScrollTableTestBuildSecondaryLoop:     ; CODE XREF: Debug_Seven
                 move.w  #$8F02,d3
                 move.l  #$94009320,d4
                 jsr     (VDP_QueueCommand_Build).l
-                move.w  #0,(word_FFE318).w
+                move.w  #0,(PaletteActiveColor12).w
                 btst    #0,(FrameCounter+1).w
                 bne.s   Debug_SevenForcesScrollTableTestWriteAlternateMarkers
                 move.w  #$FCCC,(word_FF9608).w
                 move.w  #$ECCC,(word_FF961A).w
                 move.w  #$2CCC,(word_FF9628).w
                 move.w  #$1CCC,(word_FF963A).w
-                move.w  #$E0,(word_FFE31C).w
-                move.w  #$E0,(word_FFE31E).w
-                move.w  #$E0,(word_FFE302).w
-                move.w  #$E0,(word_FFE304).w
+                move.w  #$E0,(PaletteActiveColor14).w
+                move.w  #$E0,(PaletteActiveColor15).w
+                move.w  #$E0,(PaletteActiveColor01).w
+                move.w  #$E0,(PaletteActiveColor02).w
                 rts
 ; ---------------------------------------------------------------------------
 Debug_SevenForcesScrollTableTestWriteAlternateMarkers:  ; CODE XREF: Debug_SevenForcesScrollTableTest+23C   j  ; was: loc_54EF2
@@ -265,10 +265,10 @@ Debug_SevenForcesScrollTableTestWriteAlternateMarkers:  ; CODE XREF: Debug_Seven
                 move.w  #$CCFC,(word_FF9602).w
                 move.w  #$CC2C,(word_FF9630).w
                 move.w  #$CC1C,(word_FF9622).w
-                move.w  #$E0,(word_FFE31C).w
-                move.w  #$E0,(word_FFE31E).w
-                move.w  #$E0,(word_FFE302).w
-                move.w  #$E0,(word_FFE304).w
+                move.w  #$E0,(PaletteActiveColor14).w
+                move.w  #$E0,(PaletteActiveColor15).w
+                move.w  #$E0,(PaletteActiveColor01).w
+                move.w  #$E0,(PaletteActiveColor02).w
                 rts
 ; End of function Debug_SevenForcesScrollTableTest
 ; Finish state 4 after its timer and advance the stage entrance phase
@@ -706,26 +706,26 @@ Gfx_UpdateSevenForcesValkiriePaletteFade:               ; CODE XREF: Entity_Seve
                 moveq   #$3F,d5                         ; '?'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
-                move.w  #$EEE,(word_FFE364).w
+                move.w  #$EEE,(PaletteActiveColor50).w
                 rts
 ; End of function Gfx_UpdateSevenForcesValkiriePaletteFade
 ; Apply the shared three-range Seven Forces palette fade
 Gfx_UpdateSevenForcesMultiRangePaletteFade:             ; CODE XREF: Entity_SevenForcesStartMedusaEntranceState10:Entity_SevenForcesUpdateMedusaEntrancePalette   j  ; was: sub_5547C
                                         ; sub_5505A:Entity_SevenForcesMedusaHoldApplyPalette   j
-                movea.w #(word_FFE320-M68K_RAM),a0
+                movea.w #(PaletteActiveColor16-M68K_RAM),a0
                 moveq   #$F,d5
                 move.w  $5E(a5),d0
                 neg.w   d0
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
                 move.w  $5E(a5),d0
-                movea.w #(word_FFE342-M68K_RAM),a0
+                movea.w #(PaletteActiveColor33-M68K_RAM),a0
                 moveq   #$1B,d5
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
-                move.w  #$EEE,(word_FFE364).w
+                move.w  #$EEE,(PaletteActiveColor50).w
                 move.w  $5E(a5),d0
-                movea.w #(word_FFE302-M68K_RAM),a0
+                movea.w #(PaletteActiveColor01-M68K_RAM),a0
                 moveq   #$E,d5
                 move.w  #$E000,d7
                 jmp     (Gfx_ApplyPaletteFade).l
@@ -734,24 +734,24 @@ Gfx_UpdateSevenForcesMultiRangePaletteFade:             ; CODE XREF: Entity_Seve
 Gfx_UpdateSevenForcesArtemisPaletteFade:                ; CODE XREF: Entity_SevenForcesArtemisFadeOutState28+A   j  ; was: sub_554C0
                                         ; sub_551F6:Entity_SevenForcesArtemisFadeOutApplyPalette   j
                 move.w  $5E(a5),d0
-                movea.w #(word_FFE302-M68K_RAM),a0
+                movea.w #(PaletteActiveColor01-M68K_RAM),a0
                 moveq   #$E,d5
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
                 move.w  $5E(a5),d0
-                movea.w #(word_FFE32A-M68K_RAM),a0
+                movea.w #(PaletteActiveColor21-M68K_RAM),a0
                 moveq   #7,d5
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
                 move.w  $5E(a5),d0
                 neg.w   d0
-                movea.w #(word_FFE320-M68K_RAM),a0
+                movea.w #(PaletteActiveColor16-M68K_RAM),a0
                 moveq   #4,d5
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
-                move.w  #$EEE,(word_FFE364).w
+                move.w  #$EEE,(PaletteActiveColor50).w
                 move.w  $5E(a5),d0
-                movea.w #(word_FFE342-M68K_RAM),a0
+                movea.w #(PaletteActiveColor33-M68K_RAM),a0
                 moveq   #$1B,d5
                 move.w  #$E000,d7
                 jmp     (Gfx_ApplyPaletteFade).l

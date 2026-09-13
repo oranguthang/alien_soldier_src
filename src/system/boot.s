@@ -157,7 +157,7 @@ Reset_ClearZ80RAMLoop:                                  ; CODE XREF: Reset+242  
                 jsr     (Sound_InitDriverThunk).l
                 move.b  #4,(dword_FFF80A).w
                 jsr     (Sound_UpdateThunk).l
-                move.b  #1,(byte_FFF704).w
+                move.b  #1,(VBlankUpdateReady).w
                 move    #$2300,sr
 ; Infinite loop that calls sound update and main game routine at the core of the game execution
 Sys_MainGameLoop:                                       ; CODE XREF: Reset+26C   j  ; was: loc_462

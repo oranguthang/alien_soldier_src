@@ -93,13 +93,13 @@ Boss_MissirayStorePaletteWaveIndex:                     ; CODE XREF: Boss_Missir
                 move.w  (dword_FF9410).w,d0
                 move.w  Boss_MissirayPaletteWaveIndices(pc,d0.w),(dword_FF940C+2).w
 ; End of function Boss_MissirayAdvancePaletteWaveIndex
-; Applies one Missiray palette step to the 15-color range at word_FFE360
+; Applies one Missiray palette step to the 15-color range at PaletteActiveColor48
 Boss_MissirayApplyPaletteFadeStep:                      ; CODE XREF: Boss_MissirayInitializeSequentialSegmentAttack:loc_54158   p  ; was: sub_54528
                                         ; Boss_MissirayFadePrimaryModePalette   p
                 move.w  (dword_FF940C+2).w,d0
                 andi.w  #$E,d0
                 move.w  #$F,d5
-                lea     (word_FFE360).w,a0
+                lea     (PaletteActiveColor48).w,a0
                 move.w  (dword_FF9410+2).w,d7
                 jmp     (Gfx_ApplyPaletteFade).l
 ; End of function Boss_MissirayApplyPaletteFadeStep

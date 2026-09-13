@@ -29,7 +29,7 @@ Boss_ShiperSpawnDebrisReturn:                           ; CODE XREF: Boss_Shiper
 ; Rebuilds Shiper's line-scroll spans and derives its screen position
 Boss_ShiperScrollUpdate:                                ; CODE XREF: Boss_ShiperSetupState+140   j  ; was: sub_37048
                                         ; Boss_ShiperUpdateMain   p
-                movea.w #(byte_FFE482-M68K_RAM),a0
+                movea.w #(HScrollPlaneBRow32-M68K_RAM),a0
                 moveq   #$FFFFFF80,d0
                 move.w  #$BF,d7
 Boss_ShiperScrollInitializeLineOffsets:                 ; CODE XREF: Boss_ShiperScrollUpdate+E   j  ; was: loc_37052
@@ -85,7 +85,7 @@ Boss_ShiperScrollInterpolateSpan:                       ; CODE XREF: Boss_Shiper
                 moveq   #$FFFFFFD0,d1
                 move.w  $14(a5),d0
                 sub.w   d0,d1
-                move.w  d1,(word_FFEC02).w
+                move.w  d1,(VScrollPlaneBColumn0).w
                 subi.w  #$80,d0
                 move.w  d0,$4A(a5)
                 move.w  $10(a5),d6

@@ -169,7 +169,7 @@ Sys_BeginVisibleObjectList:                             ; CODE XREF: StoryScreen
                                         ; UI_UpdateOptionsScreen+52   p
                 tst.b   (FrameControlFlags).w
                 bmi.w   Sys_BeginVisibleObjectList_Return
-                move.w  #$ED00,(word_FFF758).w
+                move.w  #$ED00,(VisibleObjectListCursor).w
 Sys_BeginVisibleObjectList_Return:                      ; CODE XREF: Sys_BeginVisibleObjectList+4   j  ; was: locret_1C900
                 rts
 ; End of function Sys_BeginVisibleObjectList
@@ -178,10 +178,10 @@ Sys_UpdateObjectCount:                                  ; CODE XREF: StoryScreen
                                         ; UI_UpdateOptionsScreen+62   p
                 tst.b   (FrameControlFlags).w
                 bmi.w   Sys_UpdateObjectCount_Return
-                move.w  (word_FFF758).w,d0
+                move.w  (VisibleObjectListCursor).w,d0
                 subi.w  #$ED00,d0
                 lsr.w   #1,d0
-                move.w  d0,(word_FFF75A).w
+                move.w  d0,(VisibleObjectCount).w
 Sys_UpdateObjectCount_Return:                           ; CODE XREF: Sys_UpdateObjectCount+4   j  ; was: locret_1C918
                 rts
 ; End of function Sys_UpdateObjectCount
@@ -262,10 +262,10 @@ Object_ApplyCameraMotion_WithCameraDelta:               ; CODE XREF: Object_Appl
                 bsr.w   Physics_ApplyPositionOffset
                 bsr.w   Object_ClampToPlayfield
 Object_ApplyCameraMotion_ScanVisible:                   ; CODE XREF: Object_ApplyCameraMotion+74   j  ; was: loc_1C9FC
-                move.w  (word_FFF75A).w,d4
+                move.w  (VisibleObjectCount).w,d4
                 beq.s   Object_ApplyCameraMotion_ReturnWithDelta
                 subq.w  #1,d4
-                lea     (word_FFED00).w,a4
+                lea     (VisibleObjectList).w,a4
 Object_ApplyCameraMotion_VisibleLoop:                   ; CODE XREF: Object_ApplyCameraMotion:Object_ApplyCameraMotion_NextVisible   j  ; was: loc_1CA08
                 movea.w (a4)+,a5
                 move.b  2(a5),d2
@@ -299,10 +299,10 @@ Object_ApplyCameraMotion_WithoutCameraDelta:            ; CODE XREF: Object_Appl
                 bsr.w   Physics_ApplyVelocityWithBounds
                 bsr.w   Object_ClampToPlayfield
 Object_ApplyCameraMotion_ScanStationary:                ; CODE XREF: Object_ApplyCameraMotion+D0   j  ; was: loc_1CA54
-                move.w  (word_FFF75A).w,d4
+                move.w  (VisibleObjectCount).w,d4
                 beq.s   Object_ApplyCameraMotion_Return
                 subq.w  #1,d4
-                lea     (word_FFED00).w,a4
+                lea     (VisibleObjectList).w,a4
 Object_ApplyCameraMotion_StationaryLoop:                ; CODE XREF: Object_ApplyCameraMotion:Object_ApplyCameraMotion_NextStationary   j  ; was: loc_1CA60
                 movea.w (a4)+,a5
                 move.b  2(a5),d2

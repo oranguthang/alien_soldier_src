@@ -334,7 +334,7 @@ Boss_JetsripperUpdateSegmentsNextSegment:               ; CODE XREF: Boss_Jetsri
 ; End of function Boss_JetsripperUpdateSegments
 ; Updates palette colors for glow effect
 Boss_JetsripperUpdatePalette:                           ; CODE XREF: Boss_JetsripperUpdateState:Boss_JetsripperUpdateActiveState   p  ; was: sub_3619C
-                movea.w #(word_FFE37A-M68K_RAM),a0
+                movea.w #(PaletteActiveColor61-M68K_RAM),a0
                 moveq   #0,d0
                 btst    #1,(FrameCounter+1).w
                 bne.s   Boss_JetsripperUpdatePaletteSelectFlash

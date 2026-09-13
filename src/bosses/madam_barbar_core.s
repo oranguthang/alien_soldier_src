@@ -60,7 +60,7 @@ Boss_MadamBarbarInitializationReturn:                   ; CODE XREF: Boss_MadamB
 ; End of function Boss_MadamBarbarInitializeState
 ; Sets up Madam Barbar boss metasprites tiles and animation
 Boss_MadamBarbarSetupState:                             ; DATA XREF: ROM:0003A4E6   o  ; was: sub_3A51C
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   Boss_MadamBarbarInitializationReturn
                 addq.w  #1,8(a5)
                 movea.w a5,a4

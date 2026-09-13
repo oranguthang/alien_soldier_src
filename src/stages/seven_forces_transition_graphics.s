@@ -149,7 +149,7 @@ Gfx_UpdateSevenForcesParallaxRows:                      ; CODE XREF: Stage_Seven
                 asr.w   #1,d0
                 move.w  d0,d1
                 asr.w   #1,d1
-                movea.w #(byte_FFE482-M68K_RAM),a0
+                movea.w #(HScrollPlaneBRow32-M68K_RAM),a0
                 moveq   #$20,d6                         ; ' '
                 moveq   #6,d7
 Gfx_WriteSevenForcesPrimaryParallaxRowsA:               ; CODE XREF: Stage_SevenForcesUpdateMedusaCameraAndParallax+80   j  ; was: loc_EC1A
@@ -391,7 +391,7 @@ Gfx_ArtemisInitialAssetTransfers:   dc.w    7           ; field_0 ; was: stru_EE
 
 ; Initializes the Artemis tilemap transfer
 Gfx_ArtemisInitializeTilemap:                           ; CODE XREF: Stage_SevenForcesBeginArtemisTransition   p  ; was: sub_EED8
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   Gfx_ArtemisTilemapInitReturn
                 movea.l #$FFFF4020,a0
                 move.w  #0,d0
@@ -464,7 +464,7 @@ Gfx_SevenForcesCutsceneAssetTransfers:  dc.w    7       ; field_0 ; was: stru_EF
 
 ; Initializes tilemap update with scroll parameters
 Gfx_InitializeSevenForcesCutsceneTilemap:               ; CODE XREF: Cutscene_SevenForcesVictoryState3+C   p  ; was: sub_EFAC
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.s   Gfx_SevenForcesCutsceneTilemapInitReturn
                 movea.l #$FFFF4020,a0
                 move.w  #0,d0

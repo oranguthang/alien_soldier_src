@@ -14,7 +14,7 @@ Scroll_PreparePlaneBufferValues:                        ; CODE XREF: Scroll_Prep
                 andi.w  #4,d4
                 move.b  (byte_FFA95A).w,d5
                 movea.w #(HScrollBuffer-M68K_RAM),a0
-                movea.w #(word_FFE480-M68K_RAM),a1
+                movea.w #(HScrollPlaneARow32-M68K_RAM),a1
                 adda.w  (ScrollPlaneBufferOffset).w,a0
                 adda.w  (ScrollPlaneBufferOffset).w,a1
                 move.w  (PrimaryCameraXPosition).w,d0
@@ -28,15 +28,15 @@ Scroll_PreparePlaneBufferValues:                        ; CODE XREF: Scroll_Prep
                 add.w   (PlaneAShakeOffset).w,d0
                 bsr.w   Scroll_WriteVerticalPlaneBuffer
                 move.b  (byte_FFA95B).w,d5
-                movea.w #(word_FFE402-M68K_RAM),a0
-                movea.w #(byte_FFE482-M68K_RAM),a1
+                movea.w #(HScrollPlaneBRow0-M68K_RAM),a0
+                movea.w #(HScrollPlaneBRow32-M68K_RAM),a1
                 suba.w  (ScrollPlaneBufferOffset).w,a0
                 suba.w  (ScrollPlaneBufferOffset).w,a1
                 move.w  (SecondaryCameraXPos).w,d0
                 neg.w   d0
                 move.w  (PlaneBShakeOffset).w,d1
                 bsr.w   Scroll_WriteHorizontalPlaneBuffer
-                movea.w #(word_FFEC02-M68K_RAM),a0
+                movea.w #(VScrollPlaneBColumn0-M68K_RAM),a0
                 suba.w  (ScrollPlaneBufferOffset).w,a0
                 move.w  (SecondaryCameraYPos).w,d0
                 neg.w   d0

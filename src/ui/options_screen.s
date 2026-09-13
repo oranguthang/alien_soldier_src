@@ -770,7 +770,7 @@ FrontendCursor_UpdateFlash:                             ; CODE XREF: UI_HandleOp
                 move.w  d0,(dword_FF8062+2).w
 FrontendCursor_ApplyFlashColor:                         ; CODE XREF: FrontendCursor_UpdateFlash+4   j  ; was: loc_A174
                 andi.w  #$E,d0
-                move.w  FrontendCursor_FlashColors(pc,d0.w),(word_FFE35C).w
+                move.w  FrontendCursor_FlashColors(pc,d0.w),(PaletteActiveColor46).w
                 rts
 ; End of function FrontendCursor_UpdateFlash
 ; ---------------------------------------------------------------------------
@@ -783,10 +783,10 @@ Frontend_AnimateMenuPalette:                            ; CODE XREF: TitleScreen
                 asl.w   #1,d1
                 andi.w  #2,d1
                 move.w  Frontend_MenuPaletteCycleColors(pc,d1.w),d0
-                move.w  d0,(word_FFE376).w
+                move.w  d0,(PaletteActiveColor59).w
                 addq.w  #4,d1
                 move.w  Frontend_MenuPaletteCycleColors(pc,d1.w),d0
-                move.w  d0,(word_FFE37E).w
+                move.w  d0,(PaletteActiveColor63).w
                 rts
 ; End of function Frontend_AnimateMenuPalette
 ; ---------------------------------------------------------------------------

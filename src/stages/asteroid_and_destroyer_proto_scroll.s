@@ -40,7 +40,7 @@ StageTransition_FillAsteroidFieldVScroll:               ; CODE XREF: StageTransi
                 add.l   (dword_FF8062).w,d0
                 move.l  d0,(dword_FF8066).w
                 swap    d0
-                movea.w #(word_FFE480-M68K_RAM),a0
+                movea.w #(HScrollPlaneARow32-M68K_RAM),a0
                 move.w  #$BF,d7
 StageTransition_FillAsteroidFieldVScrollLoop:           ; CODE XREF: StageTransition_FillAsteroidFieldVScroll+1A   j  ; was: loc_FB88
                 move.w  d0,(a0)
@@ -51,7 +51,7 @@ StageTransition_FillAsteroidFieldVScrollLoop:           ; CODE XREF: StageTransi
 ; Unreferenced entry that updates and shifts the segmented V-scroll buffer
 UnreferencedUpdateAndShiftTransitionVScroll:
                 bsr.w   StageTransition_UpdateSegmentedBackdropScroll  ; was: sub_FB92
-                movea.w #(word_FFE480-M68K_RAM),a0
+                movea.w #(HScrollPlaneARow32-M68K_RAM),a0
                 moveq   #$5F,d7                         ; '_'
 UnreferencedShiftTransitionVScrollLoop:                 ; CODE XREF: UnreferencedUpdateAndShiftTransitionVScroll+10   j  ; was: loc_FB9C
                 move.w  2(a0),(a0)
@@ -104,7 +104,7 @@ StageTransition_BuildBackdropScrollPattern:             ; CODE XREF: StageTransi
                 move.w  d2,(a0)+
                 move.w  d3,(a0)+
                 dbf     d7,StageTransition_BuildBackdropScrollPattern
-                move.w  (word_FFEC02).w,d7
+                move.w  (VScrollPlaneBColumn0).w,d7
                 andi.w  #3,d7
                 asl.w   #1,d7
                 movea.w #(byte_FF9D80-M68K_RAM),a0
@@ -120,7 +120,7 @@ StageTransition_BuildBackdropScrollPattern:             ; CODE XREF: StageTransi
                 asr.w   #1,d2
                 asr.w   #1,d3
 StageTransition_CheckBackdropScrollParity:              ; CODE XREF: StageTransition_UpdateSegmentedBackdropScroll+92   j  ; was: loc_FC44
-                movea.w #(byte_FFE482-M68K_RAM),a0
+                movea.w #(HScrollPlaneBRow32-M68K_RAM),a0
                 move.w  #$2F,d7                         ; '/'
 StageTransition_FillSegmentedBackdropVScroll:           ; CODE XREF: StageTransition_UpdateSegmentedBackdropScroll+B4   j  ; was: loc_FC4C
                 move.w  d0,(a0)

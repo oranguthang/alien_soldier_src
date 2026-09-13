@@ -96,7 +96,7 @@ Boss_DestroyerProtoRotateArenaEffectEntries:            ; CODE XREF: Boss_Destro
                 bcc.w   Entity_UpdateReturn
                 andi.w  #1,d0
                 bne.w   Entity_UpdateReturn
-                lea     (word_FFE480).w,a0
+                lea     (HScrollPlaneARow32).w,a0
                 lea     Boss_DestroyerProtoArenaEffectRotationTable(pc),a1
                 nop
                 clr.w   d1
@@ -134,7 +134,7 @@ Boss_DestroyerProtoApplyPaletteFade:                    ; CODE XREF: Boss_Destro
                 move.w  $4A(a5),d0
                 andi.w  #$E,d0
                 move.w  #$F,d5
-                lea     (word_FFE360).w,a0
+                lea     (PaletteActiveColor48).w,a0
                 jmp     (Gfx_ApplyPaletteFade).l
 ; End of function Boss_DestroyerProtoApplyPaletteFade
 ; Applies the short defeat palette fade

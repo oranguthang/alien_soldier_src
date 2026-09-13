@@ -3,9 +3,9 @@ Boss_ZLeoRotateAttackPalette:                           ; CODE XREF: Boss_ZLeoRu
                 move.w  (FrameCounter).w,d0
                 asl.w   #3,d0
                 andi.w  #$18,d0
-                move.w  Boss_ZLeoAttackPaletteCycleTable(pc,d0.w),(word_FFE364).w
-                move.w  Boss_ZLeoAttackPaletteCycleTable+2(pc,d0.w),(word_FFE37C).w
-                move.w  Boss_ZLeoAttackPaletteCycleTable+4(pc,d0.w),(word_FFE37E).w
+                move.w  Boss_ZLeoAttackPaletteCycleTable(pc,d0.w),(PaletteActiveColor50).w
+                move.w  Boss_ZLeoAttackPaletteCycleTable+2(pc,d0.w),(PaletteActiveColor62).w
+                move.w  Boss_ZLeoAttackPaletteCycleTable+4(pc,d0.w),(PaletteActiveColor63).w
                 rts
 ; End of function Boss_ZLeoRotateAttackPalette
 ; ---------------------------------------------------------------------------
@@ -105,11 +105,11 @@ Boss_ZLeoRenderCompositeFrame:                          ; CODE XREF: Boss_ZLeoPr
                 bsr.w   Boss_ZLeoBuildHBlankRegisterBuffer
                 btst    #1,(FrameCounter+1).w
                 bne.s   Boss_ZLeoUseAlternateFlashColor
-                move.w  #$8C,(word_FFE37E).w
+                move.w  #$8C,(PaletteActiveColor63).w
                 rts
 ; ---------------------------------------------------------------------------
 Boss_ZLeoUseAlternateFlashColor:                        ; CODE XREF: Boss_ZLeoBeginRisingReturn+120   j  ; was: loc_5267A
-                move.w  #$2EE,(word_FFE37E).w
+                move.w  #$2EE,(PaletteActiveColor63).w
                 rts
 ; End of function Boss_ZLeoBeginRisingReturn
 ; Tile update handler
@@ -399,12 +399,12 @@ Boss_ZLeoFadeoutPalette:                                ; CODE XREF: Boss_ZLeoBe
                 bmi.s   Boss_ZLeoApplyDefeatPaletteFade
                 moveq   #$E,d0
 Boss_ZLeoApplyDefeatPaletteFade:                        ; CODE XREF: Boss_ZLeoFadeoutPalette+16   j  ; was: loc_529AA
-                movea.w #(word_FFE302-M68K_RAM),a0
+                movea.w #(PaletteActiveColor01-M68K_RAM),a0
                 moveq   #$F,d5
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
                 move.w  $11C(a5),d0
-                movea.w #(word_FFE342-M68K_RAM),a0
+                movea.w #(PaletteActiveColor33-M68K_RAM),a0
                 moveq   #$1E,d5
                 move.w  #$E000,d7
                 jmp     (Gfx_ApplyPaletteFade).l

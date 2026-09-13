@@ -78,7 +78,7 @@ Boss_SunsetStingTileLoadCommandC:
 
 ; Initializes Sunset Sting boss with 16 segments
 Boss_SunsetStingInit:                                   ; DATA XREF: ROM:off_42A9C   o  ; was: sub_42ADE
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.w   Boss_SunsetStingReturn
                 move.w  #$1EC,d0
                 moveq   #0,d1

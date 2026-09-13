@@ -56,7 +56,7 @@ Boss_VictorInit:                                        ; DATA XREF: ROM:Boss_Vi
                 move.w  #$100,$14(a5)
                 move.w  #$200,$10(a5)
                 bsr.w   Boss_VictorUpdateViewportOffset
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.w   Entity_UpdateReturn
                 move.l  #Boss_VictorAnimationTimingScript,(dword_FF9400).w
                 move.w  #1,(dword_FF9404).w

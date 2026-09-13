@@ -235,7 +235,7 @@ Stage17_Write02FFToFourWordRanges:                      ; CODE XREF: Stage_Initi
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
                 move.w  #$40,(RasterEffectIndex).w      ; '@'
                 clr.w   (RasterEffectInitState).w
-                movea.w #(byte_FFEC12-M68K_RAM),a0
+                movea.w #(VScrollPlaneBColumn4-M68K_RAM),a0
                 moveq   #$FFFFFFF0,d0
                 moveq   #$B,d7
 Stage17_WriteMinus16ToStridedEntityWords:               ; CODE XREF: Stage_InitializeStage17Boss+78   j  ; was: loc_12452

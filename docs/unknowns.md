@@ -6379,3 +6379,85 @@ Provenance rises from 15,567 to 15,586 mappings and the audit registry from
 12,717 to 12,736. The semantic review upper bound remains 3,150 because every
 new mapping has a matching audit record. The enforced address-derived ceiling
 falls from 484 to 465, all still confined to RAM equates.
+
+The active-palette alias pass replaces thirty-eight raw equates inside the
+already established 128-byte `PaletteActiveBuffer`. The new names identify
+their zero-padded decimal CRAM color indices rather than a transient screen or
+boss owner; four byte aliases explicitly retain a high-byte suffix. This is
+stable buffer-layout evidence shared by fades, cutscenes, frontend screens,
+and bosses, not an inferred visual-color description.
+
+All thirty-eight aliases receive exact-address audit records, while the RAM
+map documents both the full-word and byte-view conventions. Provenance rises
+from 15,586 to 15,624 mappings and the audit registry from 12,736 to 12,774.
+The semantic review upper bound remains 3,150 because every new mapping has a
+matching audit record. The enforced address-derived ceiling falls from 465 to
+427, all still confined to RAM equates.
+
+The shadow-palette alias pass replaces the remaining eighteen raw equates in
+the established 128-byte `PaletteShadowBuffer`. Word aliases use the same
+zero-padded decimal color-index convention as the active image. Longword
+aliases are named as two-color pairs, and the sole byte alias retains an
+explicit high-byte suffix, so their access widths are not overstated.
+
+All eighteen aliases receive exact-address audit records and compact RAM-map
+coverage. Provenance rises from 15,624 to 15,642 mappings and the audit
+registry from 12,774 to 12,792. The semantic review upper bound remains 3,150
+because every new mapping has a matching audit record. The enforced
+address-derived ceiling falls from 427 to 409, all still confined to RAM
+equates.
+
+The H-scroll workspace pass replaces sixteen raw equates. Fifteen are exact
+Plane A or Plane B row anchors in the interleaved four-byte-per-scanline table;
+their row numbers are decimal. Static word writes also disprove four inherited
+`byte_*` types. The final alias marks the second half of the 2,048-byte
+workspace as auxiliary because the Seven Forces diagnostic builds a table
+there while normal H-scroll DMA begins at the primary buffer.
+
+All sixteen aliases receive exact-address audit records and RAM-map coverage.
+Provenance rises from 15,642 to 15,658 mappings and the audit registry from
+12,792 to 12,808. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 409 to 393, all still confined to RAM equates.
+
+The V-scroll workspace pass replaces twenty-five raw equates. The first
+twenty-four aliases identify Plane A or Plane B words in the Mega Drive VSRAM
+column layout, using decimal screen-column numbers and the proven four-byte
+pair stride. Static word writes disprove the inherited `byte_FFEC12` type.
+`VScrollAuxBuffer` names the second half of the 160-byte workspace without
+claiming that the diagnostic mirror is the normal DMA source.
+
+All twenty-five aliases receive exact-address audit records and RAM-map
+coverage. Provenance rises from 15,658 to 15,683 mappings and the audit
+registry from 12,808 to 12,833. The semantic review upper bound remains 3,150
+because every new mapping has a matching audit record. The enforced
+address-derived ceiling falls from 393 to 368, all still confined to RAM
+equates.
+
+The visible-object and data-loader pass replaces ten raw equates. Three fields
+close the producer/consumer chain for the `$FFED00` visible-object pointer
+list: its cursor begins at `$ED00`, advances by one word per accepted object,
+and yields the count used by rendering and camera-motion passes. The VDP queue
+and staging cursors share `$FFF400` as their proven opposing-growth boundary.
+The remaining six fields expose the descriptor-driven data loader's control,
+length, record cursor, source, destination, and codec-state union without
+inventing a single compression-specific meaning for shared storage.
+
+All ten fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,683 to 15,693 mappings and the audit registry from
+12,833 to 12,843. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 368 to 358, all still confined to RAM equates.
+
+The VBlank gate and sound-scheduling pass replaces four raw equates. Reset and
+the extended VBlank path prove the update-ready byte as a guard around transfer,
+input, and timer work. The event handler independently proves a sound-update
+busy guard, a request-delay word, and the pending request byte that is cleared
+only after `Sound_QueueRequest` accepts it. No unobserved producer semantics are
+invented for the delay or pending value.
+
+All four fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,693 to 15,697 mappings and the audit registry from
+12,843 to 12,847. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 358 to 354, all still confined to RAM equates.

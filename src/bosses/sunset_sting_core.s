@@ -47,7 +47,7 @@ Boss_SunsetStingSetupArena:                             ; DATA XREF: ROM:Boss_Su
 ; End of function Boss_SunsetStingSetupArena
 ; Loads boss sprites, palette, tiles and initializes position/velocity
 Boss_SunsetStingLoadGraphics:                           ; DATA XREF: ROM:00040D04   o  ; was: sub_40D56
-                tst.w   (word_FFF720).w
+                tst.w   (DataLoaderControl).w
                 bmi.w   Boss_SunsetStingLoadGraphicsReturn
                 addq.w  #2,4(a5)
                 movea.l #Boss_SunsetStingObjectInitTable,a1

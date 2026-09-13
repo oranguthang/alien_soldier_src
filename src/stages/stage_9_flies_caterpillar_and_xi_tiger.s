@@ -157,7 +157,7 @@ Stage9_InitializeCaterpillarEncounter:                  ; CODE XREF: Stage9_Init
 Stage9_UpdateCaterpillarShipTraversal:                  ; DATA XREF: ROM:0000C8B4   o  ; was: sub_D2B6
                 move.b  #6,(VDPReg11Shadow+1).w
 Stage9_UpdateCaterpillarShipTraversal_Camera:           ; CODE XREF: Stage9_InitializeCaterpillarEncounter+2E   j  ; was: loc_D2BC
-                tst.b   (word_FFF720).w
+                tst.b   (DataLoaderControl).w
                 bmi.s   Stage9_UpdateCaterpillarShipTraversal_Position
                 cmpi.w  #$20,(HUDDynamicStripYOffset).w  ; ' '
                 bpl.s   Stage9_UpdateCaterpillarShipTraversal_Position
@@ -346,7 +346,7 @@ Stage9_ClampCaterpillarVerticalOffset:                  ; CODE XREF: Stage9_Upda
 ; Write either sparse or dense Stage 9 vertical raster offsets
 Stage9_WriteVerticalRasterOffsets:                      ; CODE XREF: Stage9_UpdateFlyCorridorScroll+14   p  ; was: sub_D538
                                         ; Stage9_UpdateCaterpillarOscillationAndRasterRows+40   j
-                movea.w #(word_FFE480-M68K_RAM),a0
+                movea.w #(HScrollPlaneARow32-M68K_RAM),a0
                 addi.l  #$8000,(Stage9RasterScrollPhase).w
                 move.l  (SecondaryCameraXPos).w,d0
                 add.l   (Stage9RasterScrollPhase).w,d0

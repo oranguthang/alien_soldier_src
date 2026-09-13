@@ -213,6 +213,40 @@ their runtime reachability remain unproven.
 | `HScrollDMASource` | `$FFFFF710` | Initialization points this longword at `HScrollBuffer`; the horizontal-scroll DMA builder encodes it as the transfer source. |
 | `VScrollDMASource` | `$FFFFF714` | Initialization points this longword at `VScrollBuffer`; the vertical-scroll DMA builder encodes it as the transfer source. |
 | `FrameTimingDebugFlag` | `$FFFFF746` | A debug controller chord toggles its sign bit; the gameplay loop then emits VDP timing markers between subsystem updates and runs the debug backdrop helpers. |
+
+The active palette aliases use zero-padded decimal CRAM indices. Full-word
+aliases name a 12-bit Genesis color; byte aliases explicitly name only the
+high-byte view used by byte-oriented code.
+
+| Symbols | Buffer positions | Static evidence |
+|---|---|---|
+| `PaletteActiveColorNN` for indices 01, 02, 03, 06, 08, 10, 11, 12, 14--16, 18--22, 29--34, 46, 48--52, 54, and 59--63 | Corresponding word indices in `$FFFFE300-$FFFFE37F` | Their addresses are aligned entries inside the 64-word active palette image; palette fades, frontend code, cutscenes, and bosses read or write them as Genesis colors. |
+| `PaletteActiveColor17Hi`, `PaletteActiveColor41Hi`, `PaletteActiveColor56Hi`, `PaletteActiveColor58Hi` | High bytes of active colors 17, 41, 56, and 58 | These aliases expose only one byte of the corresponding active CRAM word and therefore do not claim a full-color access. |
+| `PaletteShadowColorNN` for indices 01, 03, 20--22, 29, 30, 49, 50, 54, and 61--63 | Corresponding word indices in `$FFFFE380-$FFFFE3FF` | These aligned entries belong to the stable shadow palette image used as a fade source and mirrored color store. |
+| `PaletteShadowPair16`, `PaletteShadowPair33`, `PaletteShadowPair41`, `PaletteShadowPair47`, and `PaletteShadowColor32Hi` | Two-color pairs beginning at indices 16, 33, 41, and 47, plus the high byte of color 32 | The access widths are retained explicitly: longword users span two adjacent CRAM colors, while the byte alias exposes only one component byte. |
+
+The visible H-scroll table stores one Plane A word followed by one Plane B word
+per scanline. Row numbers in the aliases below are decimal. Several imported
+`byte_*` names are intentionally replaced by word-row names because every live
+consumer uses the even address as a word-aligned destination.
+
+| Symbols | Workspace positions | Static evidence |
+|---|---|---|
+| `HScrollPlaneBRow0`, `HScrollPlaneBRow2`, `HScrollPlaneBRow4`, `HScrollPlaneBRow32`, `HScrollPlaneBRow104`, `HScrollPlaneBRow112`, `HScrollPlaneBRow128` | Plane B word of the stated visible-table row | Scroll writers advance by four bytes per row; VBlank and effect code consume the interleaved Plane A/Plane B layout. |
+| `HScrollPlaneARow32`, `HScrollPlaneARow72`, `HScrollPlaneARow75`, `HScrollPlaneARow96`, `HScrollPlaneARow104`, `HScrollPlaneARow112`, `HScrollPlaneARow184`, `HScrollPlaneARow200` | Plane A word of the stated visible-table row | Stage, cutscene, and boss raster builders use these aligned row anchors and preserve the four-byte row stride. |
+| `HScrollAuxBuffer` | `$FFFFE800`, second half of the 2,048-byte H-scroll workspace | The Seven Forces diagnostic builds a second scroll table here; the normal 448-word H-scroll DMA begins at `HScrollBuffer`, so this name does not claim that the auxiliary half is directly displayed. |
+
+The first half of `VScrollBuffer` mirrors the Mega Drive VSRAM column-scroll
+layout: twenty screen columns, each containing a Plane A word followed by a
+Plane B word. Column numbers below are decimal. Imported byte aliases at
+columns 4 and at the auxiliary-half boundary are replaced according to the
+word accesses made by their live consumers.
+
+| Symbols | Workspace positions | Static evidence |
+|---|---|---|
+| `VScrollPlaneAColumn1`--`VScrollPlaneAColumn19`, for the represented columns | Plane A word of the stated VSRAM column | Cutscene, transition, and boss writers address same-plane values with a four-byte column stride. |
+| `VScrollPlaneBColumn0`, `VScrollPlaneBColumn4`, `VScrollPlaneBColumn8`, `VScrollPlaneBColumn9`, `VScrollPlaneBColumn10` | Plane B word of the stated VSRAM column | VBlank and scroll writers address these words two bytes after their corresponding Plane A position. |
+| `VScrollAuxBuffer` | `$FFFFEC50`, second half of the 160-byte V-scroll workspace | The Seven Forces diagnostic constructs a mirrored secondary table here; normal V-scroll DMA begins at `VScrollBuffer`. |
 | `PaletteFadeStep` | `$FFFFF75C` | The full-screen fade engine adds this signed word to `PaletteFadeProgress`; zero means no active fade. |
 | `PaletteFadeProgress` | `$FFFFF75E` | Its high byte supplies the per-channel delta, and the fade engine clamps the word at zero or `$1000`. |
 | `VDPReg1Shadow` | `$FFFFF7D2` | The VDP settings loader writes this `$81xx` command word; display helpers clear or restore register 1 display-enable bit 6. |
@@ -316,6 +350,8 @@ their runtime reachability remain unproven.
 | Symbol | Address | Static evidence |
 |---|---:|---|
 | `SpriteOAMBuffer` | `$FFFFE000` | Sprite renderers build eight-byte hardware entries here and cap the list at 80; VBlank uploads the complete 640-byte table to VRAM `$F400`. |
+| `VBlankUpdateReady` | `$FFFFF704` | Reset sets this byte before enabling interrupts; the extended VBlank path requires it, clears it around transfers/input/timer work, and restores it before returning. |
+| `VDPQueueStagingBoundary` | `$FFFFF400` | Initialization resets both VDP queue cursors to this pivot; 16-byte command records grow downward, staged payload grows upward, and VBlank finishes traversal back at this address. |
 | `VDPCommandQueueHead` | `$FFFFF70C` | Command producers prepend 16-byte records below the `$F400` pivot; VBlank traverses from this address back to the pivot. |
 | `VDPStagingDataCursor` | `$FFFFF70E` | Graphics producers allocate payload bytes upward from `$F400`, encode this cursor as the DMA source, and advance it by the payload size. |
 | `VDPTransferPending` | `$FFFFF754` | Transfer setup sets this byte, synchronous callers wait on it, and the VBlank transfer tail clears it after issuing the queued work. |
@@ -334,6 +370,26 @@ their runtime reachability remain unproven.
 | `VDPReg17Shadow` | `$FFFFF7F2` | The initialization loop stores the `$91xx` register command here and the per-frame writer sends it to the VDP. |
 | `VDPReg18Shadow` | `$FFFFF7F4` | The initialization loop stores the `$92xx` register command here and the per-frame writer sends it to the VDP. |
 
+## Reviewed visible-object list
+
+The list at `$FFFFED00` contains 16-bit low-address pointers to active object
+records. Producers append one pointer at a time; rendering and camera-motion
+passes consume the resulting count.
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `VisibleObjectList` | `$FFFFED00` | Object and projectile scanners append 16-bit record pointers here; sprite rendering and camera-relative motion iterate the same base. |
+| `VisibleObjectListCursor` | `$FFFFF758` | The begin routine initializes this word to `$ED00`; each accepted object advances it by two before the count is derived. |
+| `VisibleObjectCount` | `$FFFFF75A` | The finalizer computes `(cursor - $ED00) / 2`; rendering and camera-motion loops use the result as their entry count. |
+
+## Reviewed VBlank sound scheduling
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `SoundUpdateBusy` | `$FFFFF745` | The VBlank event handler skips a nested sound update while this byte is nonzero and brackets `Sound_UpdateThunk` by setting and clearing it. |
+| `VBlankSoundRequestDelay` | `$FFFFF762` | While nonzero, the VBlank event handler decrements this word and defers processing the pending sound-request byte. |
+| `VBlankPendingSound` | `$FFFFF764` | When the delay is zero, VBlank passes this byte to `Sound_QueueRequest` and clears it only after the request is accepted. |
+
 ## Reviewed raster-effect control fields
 
 | Symbol | Address | Static evidence |
@@ -349,6 +405,17 @@ their runtime reachability remain unproven.
 | `GraphicsStagingBuffer` | `$FFFFB400` | Initialization clears the full 1 KiB region. The tile codec uses its first 128 bytes as word-sized pixel output, while LZSS-to-VRAM loading uses it as a `$400`-byte staging block. |
 | `TileDecodeBufferEnd` | `$FFFFB480` | The tile decoder stops at this address, exactly 64 word-sized pixels after `GraphicsStagingBuffer`. |
 | `TileDMABatchBuffer` | `$FFFFB600` | The batched tile path packs at most 16 32-byte tiles into this 512-byte half-buffer before queuing its DMA transfer. |
+
+## Reviewed data-loader state
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `DataLoaderControl` | `$FFFFF720` | Descriptor setup stores the handler selector with bit 15 set; the dispatcher selects a loader from it, clears it at the terminator, and clients test its sign bit as the busy state. |
+| `DataLoaderLength` | `$FFFFF722` | Descriptor parsing stores the transfer or decode length here; copy, DMA, and decompression handlers consume it as their remaining word or block count. |
+| `DataLoaderRecordPtr` | `$FFFFF724` | Descriptor setup saves the cursor for the next record; the dispatcher reloads it before processing subsequent work. |
+| `DataLoaderSourcePtr` | `$FFFFF728` | Descriptor parsing stores the source pointer here and every copy or decompression handler reloads it as the source. |
+| `DataLoaderDestination` | `$FFFFF72C` | Descriptor parsing stores the target address here; RAM-copy, DMA, and decompression handlers reload it as their destination. |
+| `DataLoaderCodecState` | `$FFFFF730` | Tile decoding uses the two halves as bit count and bit buffer, while LZSS loading stores its source-end pointer in the same longword; the union name avoids claiming one incompatible role. |
 
 ## Reviewed palette-transition and results fields
 

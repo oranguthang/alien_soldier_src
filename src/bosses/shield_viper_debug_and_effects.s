@@ -131,7 +131,7 @@ Gfx_ShieldViperSelectRandomPatternColor:                ; CODE XREF: Gfx_ShieldV
                 move.w  (RandomNumberState).w,d0
                 andi.w  #$EEE,d0
 Gfx_ShieldViperStorePatternPaletteColor:                ; CODE XREF: Gfx_ShieldViperPatternEffectMain+28   j  ; was: loc_4F73E
-                move.w  d0,(word_FFE310).w
+                move.w  d0,(PaletteActiveColor08).w
                 bsr.s   Gfx_ShieldViperDispatchPatternEffectState
                 bsr.w   Boss_ShieldViperTransferPatternBuffer
 Gfx_ShieldViperPatternEffectReturn:                     ; CODE XREF: Gfx_ShieldViperPatternEffectMain+6   j  ; was: locret_4F748
@@ -296,7 +296,7 @@ Effect_AccumulateNextIndexedNegativeOffset:             ; CODE XREF: Effect_Accu
                 add.l   d0,(a0)+
                 dbf     d7,Effect_AccumulateNextIndexedNegativeOffset
                 lea     (dword_FF9A00).w,a0
-                movea.w #(byte_FFE602-M68K_RAM),a1
+                movea.w #(HScrollPlaneBRow128-M68K_RAM),a1
                 move.w  #$5F,d7                         ; '_'
 Effect_CopyNextIndexedOffsetHighWord:                   ; CODE XREF: Effect_AccumulateIndexedNegativeOffsets+2C   j  ; was: loc_4F8C0
                 move.w  (a0),(a1)
@@ -307,7 +307,7 @@ Effect_CopyNextIndexedOffsetHighWord:                   ; CODE XREF: Effect_Accu
 ; End of function Effect_AccumulateIndexedNegativeOffsets
 ; Increment or decrement four consecutive counters according to frame parity
 Effect_OscillateFourCountersByFrameParity:              ; was: sub_4F8D0
-                movea.w #(byte_FFE370-M68K_RAM),a0
+                movea.w #(PaletteActiveColor56Hi-M68K_RAM),a0
                 btst    #0,(FrameCounter+1).w
                 bne.s   Effect_DecrementFourOscillatingCounters
                 addq.w  #1,(a0)+

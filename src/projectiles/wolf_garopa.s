@@ -120,8 +120,8 @@ Boss_WolfGaropaAdvanceOrbPalettePhase:                  ; CODE XREF: Boss_WolfGa
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_WolfGaropaUpdateOrbFrameAndTiles
-                addi.w  #$20,(word_FFE37E).w            ; ' '
-                andi.w  #$EE,(word_FFE37E).w
+                addi.w  #$20,(PaletteActiveColor63).w   ; ' '
+                andi.w  #$EE,(PaletteActiveColor63).w
 Boss_WolfGaropaUpdateOrbFrameAndTiles:                  ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+16C   j  ; was: loc_503A4
                                         ; Boss_WolfGaropaUpdateMetaspriteAndOrb+176   j
                 bsr.w   Boss_WolfGaropaUpdateOrbPositionAndFrame
