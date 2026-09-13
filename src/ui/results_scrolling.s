@@ -50,7 +50,7 @@ Results_ConfigureInitialViewport:                       ; CODE XREF: Results_Ini
                 move.w  #$F0,(PrimaryCameraYPosition).w
                 clr.w   (PrimaryCameraXPosition).w
                 move.w  #$18,d7
-                lea     ((dword_FF944E+2)).w,a0
+                lea     (ResultsStageRowBuffer).w,a0
                 lea     (StageTimeLimitTable).l,a1
                 lea     (StagePhaseSplitTimes).w,a2
                 lea     (StageCompletionTimes).w,a3
@@ -175,7 +175,7 @@ Results_ClearBlankRowLoop:                              ; CODE XREF: Results_Ini
 ; End of function Results_InitializeDataDisplay
 ; Renders a single row of results screen data with time/percentage display
 UI_RenderResultsDataRow:                                ; DATA XREF: ROM:0001FC1C   o  ; was: sub_1FDEC
-                lea     ((dword_FF944E+2)).w,a0
+                lea     (ResultsStageRowBuffer).w,a0
                 adda.w  (dword_FF9404+2).w,a0
                 move.w  a0,(dword_FF9420+2).w
                 move.w  #$4006,d4
@@ -269,7 +269,7 @@ UI_RenderResultsRowWithScroll:                          ; DATA XREF: ROM:0001FC2
                 beq.s   Results_RenderScrolledRow
                 subq.w  #2,(PrimaryCameraYPosition).w
 Results_RenderScrolledRow:                              ; CODE XREF: UI_RenderResultsRowWithScroll+C   j  ; was: loc_1FEF4
-                lea     ((dword_FF944E+2)).w,a0
+                lea     (ResultsStageRowBuffer).w,a0
                 adda.w  (dword_FF9404+2).w,a0
                 move.w  a0,(dword_FF9420+2).w
                 move.w  #$4006,d4

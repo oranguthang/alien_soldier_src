@@ -70,8 +70,8 @@ Results_AdvanceStageSummaryInput:                       ; CODE XREF: Results_Com
 ; End of function Results_ComputeSummaryData
 ; Builds the three total rows appended after the per-stage result rows
 Results_BuildSummaryRows:                               ; CODE XREF: Results_ComputeSummaryData+C8   p  ; was: sub_20318
-                lea     ((dword_FF944E+2)).w,a0
-                adda.w  #(ResultsSummaryRowBuffer-(dword_FF944E+2)),a0
+                lea     (ResultsStageRowBuffer).w,a0
+                adda.w  #(ResultsSummaryRowBuffer-ResultsStageRowBuffer),a0
                 lea     Results_TotalTimeLabel(pc),a1
                 nop
                 move.w  #$15,d7
@@ -211,7 +211,7 @@ Results_PrepareEnteringRow:                             ; CODE XREF: Results_Upd
                 move.w  d0,(dword_FF941C+2).w
                 move.w  d1,d0
                 mulu.w  #$26,d1
-                lea     ((dword_FF944E+2)).w,a0
+                lea     (ResultsStageRowBuffer).w,a0
                 adda.w  d1,a0
                 move.w  a0,(dword_FF9420+2).w
                 subi.w  #9,d4
@@ -341,7 +341,7 @@ Results_SelectAlternateHighlightPalette:                ; CODE XREF: Results_Ren
                 move.w  #$6300,d0
                 move.w  d0,(dword_FF9404+2).w
 Results_PrepareSelectedRowHighlight:                    ; CODE XREF: Results_RenderSelectedRowHighlight+16   j  ; was: loc_205CE
-                lea     ((dword_FF944E+2)).w,a0
+                lea     (ResultsStageRowBuffer).w,a0
                 adda.w  (dword_FF9414+2).w,a0
                 move.w  a0,(dword_FF9420+2).w
                 move.w  (dword_FF9418).w,d4

@@ -85,7 +85,7 @@ RasterBuffer_CopyFlyingNeoLayout:                       ; DATA XREF: ROM:00029E4
 ; End of function RasterBuffer_CopyFlyingNeoLayout
 ; Copies the shared boss-transition raster window
 RasterBuffer_CopyBossTransitionWindow:                  ; DATA XREF: ROM:00029E4C   o  ; was: sub_29EDE
-                movea.w #(byte_FF9520-M68K_RAM),a2
+                movea.w #(BossPerspectiveRows-M68K_RAM),a2
                 movea.w #(BossTransitionRaster-M68K_RAM),a3
                 moveq   #2,d7
                 bra.w   RasterBuffer_Copy64ByteBlocks

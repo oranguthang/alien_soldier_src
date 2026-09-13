@@ -97,7 +97,7 @@ PasswordMenu_UpdateFrame:                               ; CODE XREF: PasswordMen
                 move.w  #$8300,d0
                 move.w  #$4714,d4
                 jsr     (Text_QueueDoubleHeightStringWrapped).l
-                movea.w #(byte_FF9980-M68K_RAM),a0
+                movea.w #(PasswordSecondaryBuffer-M68K_RAM),a0
                 move.w  #$8300,d0
                 move.w  #$4814,d4
                 jsr     (Text_QueueDoubleHeightStringWrapped).l
@@ -367,7 +367,7 @@ PasswordText_CopyToPrimaryBuffer:                       ; CODE XREF: PasswordMen
 ; Copies the next terminated text record to the secondary password row
 PasswordText_CopyToSecondaryBuffer:                     ; CODE XREF: PasswordMenu_HandleInput+76   p  ; was: sub_A802
                                         ; PasswordMenu_HandleInput+22A   p
-                movea.w #(byte_FF9980-M68K_RAM),a1
+                movea.w #(PasswordSecondaryBuffer-M68K_RAM),a1
 PasswordText_ClearBuffer:                               ; CODE XREF: PasswordText_CopyToPrimaryBuffer+4   j  ; was: loc_A806
                 movea.w a1,a2
                 moveq   #0,d0

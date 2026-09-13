@@ -97,11 +97,11 @@ Continue_RenderPassword:                                ; was: sub_1DA44
                 asl.w   #1,d1
                 add.l   d1,d0
                 movea.l d0,a0
-                movea.w #(byte_FF9980-M68K_RAM),a1
+                movea.w #(PasswordSecondaryBuffer-M68K_RAM),a1
                 move.l  (a0),(a1)+
                 move.l  (a0),(PasswordDigits).w
                 move.b  #$FF,(a1)
-                movea.w #(byte_FF9980-M68K_RAM),a0
+                movea.w #(PasswordSecondaryBuffer-M68K_RAM),a0
                 move.w  #$4300,d0
                 move.w  #$6B44,d4
                 jmp     (Text_QueueDoubleHeightStringWrapped).l

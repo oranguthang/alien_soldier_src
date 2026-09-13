@@ -288,8 +288,8 @@ Effect_TransitionSineTable_End:                         ; was: word_26FBC_End
 
 ; Generates the transition edge and scroll output buffers in RAM
 Effect_GenerateTransitionBuffers:                       ; CODE XREF: TransitionEffect_UpdateMode1Buffers+4   j  ; was: sub_271BC
-                movea.w #(byte_FF9B00-M68K_RAM),a0
-                movea.w #(byte_FF9B00-M68K_RAM),a2
+                movea.w #(TransitionEdgeCenter1-M68K_RAM),a0
+                movea.w #(TransitionEdgeCenter1-M68K_RAM),a2
                 movea.l #Effect_TransitionSineTable,a1
                 move.w  #$FF00,d5
                 moveq   #$FFFFFFFE,d6
@@ -576,8 +576,8 @@ TransitionEffect_UpdateMode4Buffers:                    ; DATA XREF: ROM:00026BA
                 movea.w #(word_FF9800-M68K_RAM),a1
                 moveq   #3,d7
                 bsr.w   Effect_Copy32ByteBlocks
-                movea.w #(byte_FF9A80-M68K_RAM),a0
-                movea.w #(byte_FF9A80-M68K_RAM),a2
+                movea.w #(TransitionEdgeCenter4-M68K_RAM),a0
+                movea.w #(TransitionEdgeCenter4-M68K_RAM),a2
                 movea.l #Effect_TransitionSineTable,a1
                 move.w  #$FF00,d5
                 moveq   #$FFFFFFFE,d6

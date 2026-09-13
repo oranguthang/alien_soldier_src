@@ -118,6 +118,7 @@ alone does not yet prove the exact player-facing counting convention.
 | `PasswordDigits` | `$FFFFFF3A` | Boot initializes the four bytes to one. The title-menu editor changes and clamps each byte from one through `$0A`, validates the longword against `Password_StageCodeTable`, and the Continue display stores the selected stage code back into the same field. |
 | `PasswordStageTensGlyph` | `$FFFF9906` | A successful validation writes the one-based stage number's high packed-BCD digit into this primary confirmation-row position. |
 | `PasswordStageOnesGlyph` | `$FFFF9907` | The corresponding low packed-BCD digit occupies the following confirmation-row byte. |
+| `PasswordSecondaryBuffer` | `$FFFF9980` | The password menu clears and fills this terminated buffer for its secondary text row; the continue screen reuses it for the selected four-character password before rendering. |
 
 ## Reviewed demo-playback fields
 
@@ -789,22 +790,31 @@ repeats the resulting four-word group into `HorizontalScrollProfile`.
 | `SharedPatternWorkBuffer` (`TransitionPatternRow2`, `ShieldViperBranchParity` overlays) | `$FFFF9440` | Transition masking treats this address as the third 32-byte pattern row; Shield Viper separately toggles its first word between zero and one to alternate the optional post-tracking branch. |
 | `SharedPatternWorkWord1` (`ResultsLayoutModeCopy` overlay) | `$FFFF9442` | Results copies and clears `ResultsExtendedLayout` here, then uses the copy for skip-button eligibility and extended scroll bounds; transition masking reuses the same bytes inside its third pattern row. |
 | `SharedPatternWorkWord2` (`Epsilon1TileBandIndex` overlay) | `$FFFF9444` | Epsilon 1 seeds this word with zero, two, or four and advances it while submitting paired animated tile bands; transition masking reuses the same bytes inside its third pattern row. |
+| `SharedPatternStateLong0-2` (`Epsilon1RingPhaseTable`, `ResultsStageRowBuffer`, `ShieldViperEffectStepA-C` overlays) | `$FFFF944E-$FFFF9459` | Epsilon 1 addresses a twelve-word ring phase table from the first longword; Results begins its variable-length stage rows at base plus two; Shield Viper advances three overlapping 16.16 effect steps at offsets `+$02`, `+$06`, and `+$0A`. |
+| `SharedPatternStateWord0-2` (`ShieldViperEffectPhaseA-C` overlays) | `$FFFF945C-$FFFF9461` | Shield Viper accumulates and wraps three pattern range phases at `$30`; Epsilon 1 independently reaches these words through later indices of its ring phase table, while Results uses them inside its stage-row records. |
+| `SharedPatternStateLong3-5` (`Epsilon1RowOffsetTable` overlay) | `$FFFF9466-$FFFF9471` | Epsilon 1 treats these three longwords as six row-offset words used by scroll-profile construction and ring-object defeat motion; Results independently overlaps the range with stage-row data. |
 | `MedusaSpawnSequenceFlag` | `$FFFF9804` | The Seven Forces transition and Medusa state A set this word to one; the scripted-spawn handler runs only while it is nonzero and clears it when the current schedule terminates. |
 | `Epsilon1ProximityTimer` | `$FFFF9472` | Epsilon 1 increments this word while the player remains within twelve pixels and the proximity flag is clear; difficulty selects a `$40` or `$80` threshold. |
 | `Epsilon1ProximityFlag` | `$FFFF9474` | The proximity threshold sets this word; it changes attack selection and terminates ring repetitions until battle-center recovery clears it. |
 | `Epsilon1VerticalAccel` | `$FFFF9478` | Epsilon 1 attack states load signed acceleration values here, and the shared motion helper adds the longword to the boss vertical velocity. |
 | `SharedProfileBuffer` (`TransitionRampBuffer`, `Epsilon1AngleHistory`, `ViblackScrollSamples` overlays) | `$FFFF9480` | Transition code builds a 63-pair symmetric ramp here, Epsilon 1 shifts and samples angle history, and Viblack builds then copies its scroll samples; the modes are mutually exclusive. |
+| `BossPerspectiveRows` | `$FFFF9520` | Joker and Bugmax initialize 96 descending perspective-row words here and update them for their boss-specific projections; the raster-layout copier transfers exactly three 64-byte blocks from this base. |
 | `BugmaxPositionHistory` | `$FFFF95E0` | Bugmax seeds eight packed position samples, shifts a new boss X/Y pair through the history, and reads delayed endpoints for linked-chain projection. |
 | `BugmaxAuxAngleHistory` | `$FFFF9680` | Bugmax shifts eight rows of eight auxiliary-chain angle samples and copies delayed row values into the secondary linked-part records. |
 | `ShieldViperTrailAngles` | `$FFFF94A0` | Shield Viper initializes and shifts angle-history words from this base, then applies or interpolates them across linked body records. |
 | `ShieldViperPoseHistory` | `$FFFF9700` | Shield Viper shifts 24 packed X/Y longwords in parallel with its trail angles and applies the delayed coordinates to the 24 linked body records. |
 | `Epsilon1TileDMARecord` | `$FFFF9446` | The animated-tile helper builds one four-word destination/source/count/frame record here before submitting it to the indexed-column loader. |
 | `FlyingNeoVScrollRamp` | `$FFFF9506` | Flying Neo's line-scroll builder writes its descending vertical ramp and camera-relative tail from this address. |
+| `FlyingNeoAngleTapBase` | `$FFFF9806` | Flying Neo starts eight stride-eight word reads here; each sample supplies a delayed angular step for one linked part before sine/cosine position lookup. |
+| `JetsripperAngleTapBase` | `$FFFF9808` | Jetsripper starts seventeen stride-eight word reads here; each delayed angle is combined with the segment phase before sine/cosine placement. |
+| `SunsetStingWaveTable` / `SunsetStingWaveTableEnd` | `$FFFF9810-$FFFF99A0` | The wave generator writes 400 bytes backward from the exclusive end to the base; the following 25-row merge reads sixteen bytes per row across exactly the same range. |
 | `SharpssteelTargetTail` | `$FFFF960A` | The attack selector loads this sixth blade-target history word into its active target field. |
 | `ResultsSummaryRowBuffer` | `$FFFF9852` | Results appends the three aggregate label/value rows from this exact workspace destination. |
 | `DestroyerMK2ScrollTable` | `$FFFF98B0` | Destroyer MK2 walks this word table while constructing its paired scroll-row effect. |
 | `BossBackdropBandBufferA` | `$FFFF981E` | The transition builder fills 96 words with the current fixed-point backdrop displacement, repeating each of 24 samples four times. |
 | `BossBackdropBandBufferB` | `$FFFF9B1E` | The paired 96-word band workspace receives bounded or fallback line values, likewise repeated four times per sample. |
+| `TransitionEdgeCenter4` | `$FFFF9A80` | Mode four writes 63 mirrored sample pairs around this center, producing the contiguous transition edge range `$FFFF9A02-$FFFF9AFC`. |
+| `SharedTransitionBuffer` (`TransitionEdgeCenter1`, `BossBackdropCopySource` overlays) | `$FFFF9B00` | Mode one writes 127 mirrored sample pairs around this center across `$FFFF9A02-$FFFF9BFC`; encounter-backdrop code separately copies 224 bytes forward from the same address. |
 | `ShieldViperBackdropRow` | `$FFFF9B80` | The Shield Viper transition fills 64 tile words here and immediately submits this base to the VDP command builder. |
 | `RasterVScrollPairBuffer` | `$FFFF9C04` | The scene-transition VBlank initializer exposes this base to the installed HBlank routine, which consumes one longword as a two-word VSRAM pair per interrupt. |
 | `WeaponSetupRasterLines` | `$FFFF9C1E` | Weapon setup initializes 97 signed line offsets from this base before applying its animated dither displacement. |

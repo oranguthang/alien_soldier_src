@@ -41,7 +41,7 @@ Boss_JokerUseScreenRelativeHorizontalOffset:            ; CODE XREF: Boss_JokerR
 Boss_JokerInitializeDescendingWordRamp:                 ; CODE XREF: Boss_JokerRenderBody+7A   j  ; was: loc_3BAA2
                 move.w  #$80,d0
                 move.w  #$5F,d7                         ; '_'
-                movea.w #(byte_FF9520-M68K_RAM),a0
+                movea.w #(BossPerspectiveRows-M68K_RAM),a0
 Boss_JokerInitializeDescendingWordRampNextWord:         ; CODE XREF: Boss_JokerRenderBody+98   j  ; was: loc_3BAAE
                 move.w  d0,(a0)+
                 subq.w  #2,d0

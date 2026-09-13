@@ -413,15 +413,24 @@ ShieldViperBranchParity equ     SharedPatternWorkBuffer
 ResultsLayoutModeCopy   equ     SharedPatternWorkWord1
 Epsilon1TileBandIndex   equ     SharedPatternWorkWord2
 Epsilon1TileDMARecord   equ     $FFFF9446               ; was: word_FF9446
-dword_FF944E            equ     $FFFF944E
-dword_FF9452            equ     $FFFF9452
-dword_FF9456            equ     $FFFF9456
-word_FF945C             equ     $FFFF945C
-word_FF945E             equ     $FFFF945E
-word_FF9460             equ     $FFFF9460
-dword_FF9466            equ     $FFFF9466
-dword_FF946A            equ     $FFFF946A
-dword_FF946E            equ     $FFFF946E
+SharedPatternStateLong0 equ     $FFFF944E               ; was: dword_FF944E
+SharedPatternStateLong1 equ     $FFFF9452               ; was: dword_FF9452
+SharedPatternStateLong2 equ     $FFFF9456               ; was: dword_FF9456
+SharedPatternStateWord0 equ     $FFFF945C               ; was: word_FF945C
+SharedPatternStateWord1 equ     $FFFF945E               ; was: word_FF945E
+SharedPatternStateWord2 equ     $FFFF9460               ; was: word_FF9460
+SharedPatternStateLong3 equ     $FFFF9466               ; was: dword_FF9466
+SharedPatternStateLong4 equ     $FFFF946A               ; was: dword_FF946A
+SharedPatternStateLong5 equ     $FFFF946E               ; was: dword_FF946E
+Epsilon1RingPhaseTable  equ     SharedPatternStateLong0
+ResultsStageRowBuffer   equ     SharedPatternStateLong0+2
+ShieldViperEffectStepA  equ     SharedPatternStateLong0+2
+ShieldViperEffectStepB  equ     SharedPatternStateLong1+2
+ShieldViperEffectStepC  equ     SharedPatternStateLong2+2
+ShieldViperEffectPhaseA equ     SharedPatternStateWord0
+ShieldViperEffectPhaseB equ     SharedPatternStateWord1
+ShieldViperEffectPhaseC equ     SharedPatternStateWord2
+Epsilon1RowOffsetTable  equ     SharedPatternStateLong3
 Epsilon1ProximityTimer  equ     $FFFF9472               ; was: word_FF9472
 Epsilon1ProximityFlag   equ     $FFFF9474               ; was: word_FF9474
 Epsilon1VerticalAccel   equ     $FFFF9478               ; was: dword_FF9478
@@ -436,7 +445,7 @@ FlyingNeoVScrollRamp    equ     $FFFF9506               ; was: byte_FF9506
 word_FF9508             equ     $FFFF9508
 word_FF9510             equ     $FFFF9510
 word_FF951A             equ     $FFFF951A
-byte_FF9520             equ     $FFFF9520
+BossPerspectiveRows     equ     $FFFF9520               ; was: byte_FF9520
 BugmaxPositionHistory   equ     $FFFF95E0               ; was: word_FF95E0
 word_FF9600             equ     $FFFF9600
 word_FF9602             equ     $FFFF9602
@@ -456,9 +465,9 @@ BugmaxAuxAngleHistory   equ     $FFFF9680               ; was: word_FF9680
 ShieldViperPoseHistory  equ     $FFFF9700               ; was: dword_FF9700
 word_FF9800             equ     $FFFF9800
 MedusaSpawnSequenceFlag equ     $FFFF9804               ; was: word_FF9804
-byte_FF9806             equ     $FFFF9806
-byte_FF9808             equ     $FFFF9808
-word_FF9810             equ     $FFFF9810
+FlyingNeoAngleTapBase   equ     $FFFF9806               ; was: byte_FF9806
+JetsripperAngleTapBase  equ     $FFFF9808               ; was: byte_FF9808
+SunsetStingWaveTable    equ     $FFFF9810               ; was: word_FF9810
 BossBackdropBandBufferA equ     $FFFF981E               ; was: byte_FF981E
 word_FF9820             equ     $FFFF9820
 ResultsSummaryRowBuffer equ     $FFFF9852               ; was: word_FF9852
@@ -467,11 +476,13 @@ DestroyerMK2ScrollTable equ     $FFFF98B0               ; was: word_FF98B0
 word_FF9900             equ     $FFFF9900
 PasswordStageTensGlyph  equ     $FFFF9906               ; was: byte_FF9906
 PasswordStageOnesGlyph  equ     $FFFF9907               ; was: byte_FF9907
-byte_FF9980             equ     $FFFF9980
-dword_FF99A0            equ     $FFFF99A0
+PasswordSecondaryBuffer equ     $FFFF9980               ; was: byte_FF9980
+SunsetStingWaveTableEnd equ     $FFFF99A0               ; was: dword_FF99A0
 dword_FF9A00            equ     $FFFF9A00
-byte_FF9A80             equ     $FFFF9A80
-byte_FF9B00             equ     $FFFF9B00
+TransitionEdgeCenter4   equ     $FFFF9A80               ; was: byte_FF9A80
+SharedTransitionBuffer  equ     $FFFF9B00               ; was: byte_FF9B00
+TransitionEdgeCenter1   equ     SharedTransitionBuffer
+BossBackdropCopySource  equ     SharedTransitionBuffer
 BossBackdropBandBufferB equ     $FFFF9B1E               ; was: byte_FF9B1E
 ShieldViperBackdropRow  equ     $FFFF9B80               ; was: byte_FF9B80
 RasterStagingBuffer     equ     $FFFF9C00               ; was: word_FF9C00

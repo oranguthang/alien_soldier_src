@@ -121,7 +121,7 @@ Gfx_ShieldViperPatternEffectMain:                       ; DATA XREF: ROM:Entity_
                 bsr.w   Boss_ShieldViperUpdatePatternPhaseA
                 btst    #6,(PrimaryEntityStatus).w
                 beq.s   Gfx_ShieldViperSelectRandomPatternColor
-                move.w  (word_FF945C).w,d0
+                move.w  (ShieldViperEffectPhaseA).w,d0
                 add.w   d0,d0
                 andi.w  #$EE0,d0
                 addi.w  #$660,d0
@@ -180,15 +180,15 @@ Gfx_ShieldViperUpdateSecondaryAndTertiaryPatterns:      ; DATA XREF: ROM:0004F75
 ; End of function Gfx_ShieldViperUpdateSecondaryAndTertiaryPatterns
 ; Advances the first effect-pattern phase
 Boss_ShieldViperUpdatePatternPhaseA:                    ; CODE XREF: Gfx_ShieldViperPatternEffectMain+E   p  ; was: sub_4F794
-                addi.l  #$2000,(dword_FF944E+2).w
-                move.w  (dword_FF944E+2).w,d0
-                add.w   d0,(word_FF945C).w
-                move.w  (word_FF945C).w,d0
+                addi.l  #$2000,(ShieldViperEffectStepA).w
+                move.w  (ShieldViperEffectStepA).w,d0
+                add.w   d0,(ShieldViperEffectPhaseA).w
+                move.w  (ShieldViperEffectPhaseA).w,d0
                 cmpi.w  #$30,d0                         ; '0'
                 blt.s   Boss_ShieldViperFillPrimaryPatternRange
                 moveq   #0,d0
-                move.l  d0,(dword_FF944E+2).w
-                move.w  d0,(word_FF945C).w
+                move.l  d0,(ShieldViperEffectStepA).w
+                move.w  d0,(ShieldViperEffectPhaseA).w
 Boss_ShieldViperFillPrimaryPatternRange:                ; CODE XREF: Boss_ShieldViperUpdatePatternPhaseA+18   j  ; was: loc_4F7B8
                 move.w  d0,d1
                 add.w   d0,d0
@@ -197,15 +197,15 @@ Boss_ShieldViperFillPrimaryPatternRange:                ; CODE XREF: Boss_Shield
 ; Advances the second effect-pattern phase while the boss remains active
 Boss_ShieldViperUpdatePatternPhaseB:                    ; CODE XREF: Gfx_ShieldViperUpdateSecondaryPatternForDuration   p  ; was: sub_4F7C0
                                         ; sub_4F78A   p
-                addi.l  #$2000,(dword_FF9452+2).w
-                move.w  (dword_FF9452+2).w,d0
-                add.w   d0,(word_FF945E).w
-                move.w  (word_FF945E).w,d0
+                addi.l  #$2000,(ShieldViperEffectStepB).w
+                move.w  (ShieldViperEffectStepB).w,d0
+                add.w   d0,(ShieldViperEffectPhaseB).w
+                move.w  (ShieldViperEffectPhaseB).w,d0
                 cmpi.w  #$30,d0                         ; '0'
                 blt.s   Boss_ShieldViperCheckSecondaryPatternEnabled
                 moveq   #0,d0
-                move.l  d0,(dword_FF9452+2).w
-                move.w  d0,(word_FF945E).w
+                move.l  d0,(ShieldViperEffectStepB).w
+                move.w  d0,(ShieldViperEffectPhaseB).w
 Boss_ShieldViperCheckSecondaryPatternEnabled:           ; CODE XREF: Boss_ShieldViperUpdatePatternPhaseB+18   j  ; was: loc_4F7E4
                 btst    #6,(PrimaryEntityStatus).w
                 bne.s   Boss_ShieldViperSecondaryPatternReturn
@@ -221,15 +221,15 @@ Boss_ShieldViperSecondaryPatternReturn:                 ; CODE XREF: Boss_Shield
 ; End of function Boss_ShieldViperUpdatePatternPhaseB
 ; Advances the third effect-pattern phase while the boss remains active
 Boss_ShieldViperUpdatePatternPhaseC:                    ; CODE XREF: Gfx_ShieldViperUpdateSecondaryAndTertiaryPatterns+4   p  ; was: sub_4F7FE
-                addi.l  #$2000,(dword_FF9456+2).w
-                move.w  (dword_FF9456+2).w,d0
-                add.w   d0,(word_FF9460).w
-                move.w  (word_FF9460).w,d0
+                addi.l  #$2000,(ShieldViperEffectStepC).w
+                move.w  (ShieldViperEffectStepC).w,d0
+                add.w   d0,(ShieldViperEffectPhaseC).w
+                move.w  (ShieldViperEffectPhaseC).w,d0
                 cmpi.w  #$30,d0                         ; '0'
                 blt.s   Boss_ShieldViperCheckTertiaryPatternEnabled
                 moveq   #0,d0
-                move.l  d0,(dword_FF9456+2).w
-                move.w  d0,(word_FF9460).w
+                move.l  d0,(ShieldViperEffectStepC).w
+                move.w  d0,(ShieldViperEffectPhaseC).w
 Boss_ShieldViperCheckTertiaryPatternEnabled:            ; CODE XREF: Boss_ShieldViperUpdatePatternPhaseC+18   j  ; was: loc_4F822
                 btst    #6,(PrimaryEntityStatus).w
                 bne.s   Boss_ShieldViperTertiaryPatternReturn

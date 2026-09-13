@@ -7229,3 +7229,81 @@ The field adds one provenance mapping and exact-address audit record.
 Provenance rises from 15,982 to 15,983 mappings, the audit registry from
 13,221 to 13,222, and the semantic-review upper bound remains 3,061. The
 enforced address-derived ceiling falls from 69 to 68 RAM equates.
+
+The secondary password-buffer pass resolves `$FFFF9980`. The password screen
+renders this address as its second double-height text row and its copy helper
+selects it as the secondary destination. The continue screen reuses the same
+buffer for the selected four-character password, appends a terminator, and
+passes it to the same text renderer.
+
+The field adds one provenance mapping and exact-address audit record.
+Provenance rises from 15,983 to 15,984 mappings, the audit registry from
+13,222 to 13,223, and the semantic-review upper bound remains 3,061. The
+enforced address-derived ceiling falls from 68 to 67 RAM equates.
+
+The linked-boss angle-tap pass resolves `$FFFF9806` and `$FFFF9808` while
+correcting the imported `byte_` type implication. Flying Neo reads eight
+words from the first address at an eight-byte stride, applying each delayed
+angular step before sine/cosine placement of one linked part. Jetsripper reads
+seventeen words from the second address at the same stride and combines each
+with the segment phase before its sine/cosine placement.
+
+The two fields add provenance and exact-address audit records. Provenance
+rises from 15,984 to 15,986 mappings, the audit registry from 13,223 to
+13,225, and the semantic-review upper bound remains 3,061. The enforced
+address-derived ceiling falls from 67 to 65 RAM equates.
+
+The transition-edge buffer pass resolves `$FFFF9A80` and `$FFFF9B00` while
+correcting both imported `byte_` type implications. Mode four emits 63
+predecrement/postincrement word pairs around `TransitionEdgeCenter4`, covering
+`$FFFF9A02-$FFFF9AFC`. Mode one emits 127 pairs around the second address,
+covering `$FFFF9A02-$FFFF9BFC`; encounter-backdrop code separately copies 224
+bytes forward from that same address. `SharedTransitionBuffer` therefore owns
+the physical location while `TransitionEdgeCenter1` and
+`BossBackdropCopySource` expose the two proven lifetimes.
+
+The two fields add provenance and exact-address audit records. Provenance
+rises from 15,986 to 15,988 mappings, the audit registry from 13,225 to
+13,227, and the semantic-review upper bound remains 3,061. The enforced
+address-derived ceiling falls from 65 to 63 RAM equates.
+
+The Sunset Sting wave-table pass resolves `$FFFF9810` and `$FFFF99A0` as the
+two boundaries of one 400-byte workspace. The generator starts with a
+predecrement pointer at `SunsetStingWaveTableEnd`, writes eleven groups of four
+longwords followed by twenty-eight groups of two, and therefore finishes
+exactly at `SunsetStingWaveTable`. The merge loop then consumes 25 rows at a
+sixteen-byte stride across the same range.
+
+The two boundaries add provenance and exact-address audit records. Provenance
+rises from 15,988 to 15,990 mappings, the audit registry from 13,227 to
+13,229, and the semantic-review upper bound remains 3,061. The enforced
+address-derived ceiling falls from 63 to 61 RAM equates.
+
+The shared pattern-state pass resolves nine imported definitions across
+`$FFFF944E-$FFFF9471` without assigning one permanent scene owner. Epsilon 1
+uses `SharedPatternStateLong0` as the base of a twelve-word ring phase table
+and `SharedPatternStateLong3` as the base of six row-offset words. Results
+starts its variable-length stage records at `$FFFF9450`. Shield Viper advances
+three overlapping 16.16 effect steps at `$FFFF9450/$FFFF9454/$FFFF9458` and
+accumulates their integer deltas into three `$30`-wrapping phases at
+`$FFFF945C/$FFFF945E/$FFFF9460`. Transition masking additionally covers the
+lower portion as part of its third 32-byte pattern row.
+
+Nine neutral physical anchors preserve those overlapping layouts; contextual
+aliases make every executable use state its actual lifetime. The definitions
+add nine provenance and exact-address audit records. Provenance rises from
+15,990 to 15,999 mappings, the audit registry from 13,229 to 13,238, and the
+semantic-review upper bound remains 3,061. The enforced address-derived
+ceiling falls from 61 to 52 RAM equates.
+
+The shared boss-perspective pass resolves `$FFFF9520` and corrects its imported
+`byte_` type implication. Joker and Bugmax each initialize 96 consecutive
+words from this base as a descending row ramp and then update the values for
+their boss-specific perspective projections. The raster-layout copier moves
+exactly three 64-byte blocks from the same address into the active raster
+workspace.
+
+The buffer adds one provenance mapping and exact-address audit record.
+Provenance rises from 15,999 to 16,000 mappings, the audit registry from
+13,238 to 13,239, and the semantic-review upper bound remains 3,061. The
+enforced address-derived ceiling falls from 52 to 51 RAM equates.

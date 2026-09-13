@@ -484,7 +484,7 @@ Boss_Epsilon1ClearRingObjectPhaseValue:                 ; CODE XREF: Boss_Epsilo
 ; Stores this ring object's value in the shared phase table
 Boss_Epsilon1StoreRingObjectPhaseValue:                 ; CODE XREF: Boss_Epsilon1WaitForRingAngleThresholdState+20   p  ; was: sub_4765C
                                         ; Boss_Epsilon1UpdateReleasedRingObjectState+C   p
-                lea     (dword_FF944E).w,a1
+                lea     (Epsilon1RingPhaseTable).w,a1
                 move.w  $4A(a5),d1
                 add.w   d1,d1
                 move.w  d0,(a1,d1.w)
@@ -583,7 +583,7 @@ Boss_Epsilon1AdvanceRingObjectDefeatPosition:           ; CODE XREF: Boss_Epsilo
                 bcs.s   Boss_Epsilon1SelectRingObjectDefeatOffsetSlot
                 subi.w  #$C,d0
 Boss_Epsilon1SelectRingObjectDefeatOffsetSlot:          ; CODE XREF: Boss_Epsilon1AdvanceRingObjectDefeatPosition+38   j
-                lea     (dword_FF9466).w,a1
+                lea     (Epsilon1RowOffsetTable).w,a1
                 addi.w  #-2,(a1,d0.w)
                 rts
 ; End of function Boss_Epsilon1AdvanceRingObjectDefeatPosition
@@ -592,7 +592,7 @@ Boss_Epsilon1ExplodeRingObjectState:                    ; DATA XREF: ROM:0004750
                 jsr     (Effect_SpawnExplosionA).l
                 move.w  $4A(a5),d0
                 add.w   d0,d0
-                lea     (dword_FF9466).w,a1
+                lea     (Epsilon1RowOffsetTable).w,a1
                 move.w  #$FF00,(a1,d0.w)
                 addq.w  #2,4(a5)
                 move.l  #SharedCombatSpriteAnimation00,8(a5)

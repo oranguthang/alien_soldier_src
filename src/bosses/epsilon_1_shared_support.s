@@ -134,7 +134,7 @@ Boss_Epsilon1InitializeScrollProfileLoop:               ; CODE XREF: Boss_Epsilo
                 lea     (VerticalScrollProfile).w,a1
                 lea     (Math_SineTable).l,a2
                 lea     (dword_FF942C).w,a3
-                lea     (dword_FF9466).w,a4
+                lea     (Epsilon1RowOffsetTable).w,a4
                 move.w  (SecondaryEntityXPos).w,d6
                 subi.w  #$40,d6                         ; '@'
                 move.w  #7,d7
@@ -331,7 +331,7 @@ Boss_Epsilon1QueueAnimatedTileTransfer:                 ; CODE XREF: Boss_Epsilo
                 move.w  d1,(a0)
                 move.w  #$2000,2(a0)
                 move.w  #1,4(a0)
-                lea     (dword_FF944E).w,a1
+                lea     (Epsilon1RingPhaseTable).w,a1
                 move.w  (a1,d0.w),d1
                 bne.s   Boss_Epsilon1SelectAnimatedTileFrame
                 cmpi.w  #$C,d0

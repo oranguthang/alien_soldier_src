@@ -265,12 +265,12 @@ Boss_Epsilon1InitializeBattleObjectsState:              ; DATA XREF: ROM:00045CF
                 clr.l   (dword_FF9400).w
                 clr.l   (dword_FF9404).w
                 clr.l   (dword_FF9408).w
-                clr.l   (dword_FF944E).w
-                clr.l   (dword_FF9452).w
-                clr.l   (dword_FF9456).w
-                clr.l   (dword_FF9466).w
-                clr.l   (dword_FF946A).w
-                clr.l   (dword_FF946E).w
+                clr.l   (Epsilon1RingPhaseTable).w
+                clr.l   (Epsilon1RingPhaseTable+4).w
+                clr.l   (Epsilon1RingPhaseTable+8).w
+                clr.l   (Epsilon1RowOffsetTable).w
+                clr.l   (Epsilon1RowOffsetTable+4).w
+                clr.l   (Epsilon1RowOffsetTable+8).w
                 clr.l   (Epsilon1VerticalAccel).w
                 moveq   #0,d0
                 lea     (Epsilon1AngleHistory).w,a0

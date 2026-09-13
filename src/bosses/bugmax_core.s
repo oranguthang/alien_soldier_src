@@ -190,7 +190,7 @@ Boss_BugmaxUpdatePerspectiveAndLinkedGeometry:          ; DATA XREF: ROM:0004BEE
                 move.w  d0,(SecondaryCameraXPos).w
                 move.w  #$60,d0                         ; '`'
                 move.w  #$5F,d7                         ; '_'
-                movea.w #(byte_FF9520-M68K_RAM),a0
+                movea.w #(BossPerspectiveRows-M68K_RAM),a0
 Boss_BugmaxInitializePerspectiveRowsLoop:               ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+1C   j  ; was: loc_4C114
                 move.w  d0,(a0)+
                 subq.w  #2,d0
@@ -210,7 +210,7 @@ Boss_BugmaxInitializePerspectiveRowsLoop:               ; CODE XREF: Boss_Bugmax
                 clr.w   d2
                 lsr.l   #4,d2
                 subi.l  #$10000,d2
-                movea.w #(byte_FF9520-M68K_RAM),a0
+                movea.w #(BossPerspectiveRows-M68K_RAM),a0
                 movea.w a0,a1
                 move.w  $14(a5),d0
                 subi.w  #8,d0
@@ -242,7 +242,7 @@ Boss_BugmaxInitializeNegativePerspectiveSlope:          ; CODE XREF: Boss_Bugmax
                 clr.w   d2
                 lsr.l   #4,d2
                 subi.l  #$10000,d2
-                movea.w #(byte_FF9520-M68K_RAM),a0
+                movea.w #(BossPerspectiveRows-M68K_RAM),a0
                 movea.w a0,a1
                 adda.w  #$C0,a1
                 move.w  $14(a5),d0

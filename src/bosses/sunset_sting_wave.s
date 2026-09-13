@@ -32,7 +32,7 @@ Boss_SunsetStingUpdateWaveEffect:                       ; CODE XREF: Boss_Sunset
                 move.l  $10(a3),d0
                 btst    #0,(a4)
                 beq.w   Boss_SunsetStingBuildWaveTransitionBuffer
-                lea     (dword_FF99A0).w,a0
+                lea     (SunsetStingWaveTableEnd).w,a0
                 moveq   #$A,d7
 Boss_SunsetStingFillWaveLeadBufferLoop:                 ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+28   j  ; was: loc_42900
                 move.l  d0,-(a0)
@@ -70,7 +70,7 @@ Boss_SunsetStingFillWaveControllerRowsLoop:             ; CODE XREF: Boss_Sunset
                 move.w  d0,$C(a0)
                 lea     $10(a0),a0
                 dbf     d7,Boss_SunsetStingFillWaveControllerRowsLoop
-                lea     (word_FF9810).w,a1
+                lea     (SunsetStingWaveTable).w,a1
                 moveq   #$18,d7
 Boss_SunsetStingMergeWaveRowsLoop:                      ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+B0   j  ; was: loc_42966
                 move.w  d0,(a0)

@@ -299,7 +299,7 @@ Boss_JetsripperShiftAngleBufferNextWord:                ; CODE XREF: Boss_Jetsri
                 bclr    #0,2(a0)
                 clr.w   $58(a0)
                 movea.w #(SecondaryEntityType-M68K_RAM),a1
-                movea.w #(byte_FF9808-M68K_RAM),a2
+                movea.w #(JetsripperAngleTapBase-M68K_RAM),a2
                 movea.l #Math_SineTable,a3
                 move.w  $5A(a5),d1
                 move.w  #$1FE,d2

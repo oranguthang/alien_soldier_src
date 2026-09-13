@@ -256,7 +256,7 @@ Boss_FlyingNeoShiftAngleHistory:                        ; CODE XREF: Boss_Flying
                 dbf     d7,Boss_FlyingNeoShiftAngleHistory
                 movea.w #(TwelfthEntityType-M68K_RAM),a0
                 movea.w #(ThirteenthEntityType-M68K_RAM),a1
-                movea.w #(byte_FF9806-M68K_RAM),a2
+                movea.w #(FlyingNeoAngleTapBase-M68K_RAM),a2
                 movea.w #(word_FF9900-M68K_RAM),a3
                 movea.w #(dword_FF9A00-M68K_RAM),a4
                 move.w  $54(a5),d4
