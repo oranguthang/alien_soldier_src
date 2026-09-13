@@ -13,8 +13,8 @@ CutsceneProjection_Initialize:                          ; CODE XREF: Cutscene_In
 CutsceneProjection_BuildFrame:                          ; CODE XREF: Cutscene_UpdateFrameSelectionFromInput+4E   j  ; was: sub_260CE
                                         ; XiTigerCutscene_WaitBeforeReveal+44   j
                 movea.l #$FFFF0400,a0
-                move.w  #$9400,(dword_FF8040).w
-                move.w  #$C400,(dword_FF8040+2).w
+                move.w  #$9400,(CutsceneRowSource).w
+                move.w  #$C400,(CutsceneRowVRAM).w
                 move.l  (CutsceneScaleStep).w,d0
                 move.l  d0,(CutsceneScaleSnapshot).w
                 bra.w   *+4
@@ -24,8 +24,8 @@ CutsceneProjection_BuildFrame_InitializeCopy:           ; CODE XREF: CutscenePro
                 moveq   #0,d4
                 moveq   #$13,d6
 CutsceneProjection_BuildFrame_CopyColumnPairLoop:       ; CODE XREF: CutsceneProjection_BuildFrame+64   j  ; was: loc_260F2
-                movea.w (dword_FF8040).w,a1
-                movea.w (dword_FF8040).w,a2
+                movea.w (CutsceneRowSource).w,a1
+                movea.w (CutsceneRowSource).w,a2
                 lea     $26(a1),a1
                 lea     $28(a2),a2
                 suba.w  d3,a1
@@ -49,7 +49,7 @@ CutsceneProjection_BuildFrame_CopyColumnWordsLoop:      ; CODE XREF: CutscenePro
                 addq.w  #2,d3
                 dbf     d6,CutsceneProjection_BuildFrame_CopyColumnPairLoop
                 movea.w (VDPCommandQueueHead).w,a4
-                move.w  (dword_FF8040+2).w,d0
+                move.w  (CutsceneRowVRAM).w,d0
                 move.w  (CutsceneRowLoopLimit).w,d7
 CutsceneProjection_BuildFrame_QueueTransferLoop:        ; CODE XREF: CutsceneProjection_BuildFrame+B2   j  ; was: loc_26142
                 move.w  #$83,-(a4)
@@ -57,8 +57,8 @@ CutsceneProjection_BuildFrame_QueueTransferLoop:        ; CODE XREF: CutscenePro
                 andi.w  #$3FFE,d4
                 ori.w   #$4000,d4
                 move.w  d4,-(a4)
-                move.b  (dword_FF8040).w,d4
-                move.b  (dword_FF8040+1).w,d5
+                move.b  (CutsceneRowSource).w,d4
+                move.b  (CutsceneRowSource+1).w,d5
                 asr.b   #1,d4
                 roxr.b  #1,d5
                 move.b  d5,-(a4)
@@ -68,7 +68,7 @@ CutsceneProjection_BuildFrame_QueueTransferLoop:        ; CODE XREF: CutscenePro
                 move.l  #$8F02977F,-(a4)
                 move.l  #$94009328,-(a4)
                 addi.w  #$80,d0
-                addi.w  #$80,(dword_FF8040).w
+                addi.w  #$80,(CutsceneRowSource).w
                 dbf     d7,CutsceneProjection_BuildFrame_QueueTransferLoop
                 move.w  a4,(VDPCommandQueueHead).w
                 moveq   #$F,d0

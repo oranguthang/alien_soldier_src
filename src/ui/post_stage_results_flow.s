@@ -16,8 +16,8 @@ Results_InitializePostStageFlow_LoadAssets:             ; was: loc_1D636
                 jsr     (Gfx_FadePaletteTransition).l
                 bset    #1,(StageRouteFlags).w
                 movea.w #(PostStageEntryCountBCD+2-M68K_RAM),a0
-                movea.w #(word_FF804A-M68K_RAM),a1
-                move.w  #1,(word_FF8048).w
+                movea.w #(BCDIncrementEnd-M68K_RAM),a1
+                move.w  #1,(BCDIncrementScratch).w
                 sub.w   d1,d1
                 abcd    -(a1),-(a0)
                 abcd    -(a1),-(a0)
@@ -99,7 +99,7 @@ Results_InitializeSecondaryOptionsReturn_Activate:      ; was: loc_1D778
                 move.w  #$FF00,(SecondaryCameraYPos).w
                 move.w  #0,(SecondaryCameraXPos).w
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
-                move.w  #2,(dword_FF8066+2).w
+                move.w  #2,(TitleMenuSelection).w
                 bra.w   Results_FinalizePostStageSetup
 ; End of function Results_InitializeSecondaryOptionsReturn
 

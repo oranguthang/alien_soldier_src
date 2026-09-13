@@ -114,9 +114,9 @@ Message_QueueFontBasePatternDMA:                        ; CODE XREF: Message_Que
                 move.w  #$83,-(a1)
                 move.w  d7,-(a1)
                 lsr.l   #1,d0
-                move.l  d0,(dword_FF8040).w
-                move.b  (dword_FF8040+2).w,d1
-                move.b  (dword_FF8040+1).w,d2
+                move.l  d0,(DMASourceEncoding).w
+                move.b  (DMASourceEncoding+2).w,d1
+                move.b  (DMASourceEncoding+1).w,d2
                 move.b  d0,-(a1)
                 move.b  #$95,-(a1)
                 move.b  d1,-(a1)
@@ -266,9 +266,9 @@ Message_QueuePatternFillDMA:                            ; CODE XREF: Message_Que
                 move.w  d0,-(a1)
                 move.l  #MessageDisplay_FontPatternFillSource,d0
                 lsr.l   #1,d0
-                move.l  d0,(dword_FF8040).w
-                move.b  (dword_FF8040+2).w,d1
-                move.b  (dword_FF8040+1).w,d2
+                move.l  d0,(DMASourceEncoding).w
+                move.b  (DMASourceEncoding+2).w,d1
+                move.b  (DMASourceEncoding+1).w,d2
                 move.b  d0,-(a1)
                 move.b  #$95,-(a1)
                 move.b  d1,-(a1)
@@ -299,9 +299,9 @@ Message_QueueFontPatternFillDMA:                        ; CODE XREF: Message_Que
                 move.w  d0,-(a1)
                 move.l  #MessageDisplay_FontPatternFillSource,d0
                 lsr.l   #1,d0
-                move.l  d0,(dword_FF8040).w
-                move.b  (dword_FF8040+2).w,d1
-                move.b  (dword_FF8040+1).w,d2
+                move.l  d0,(DMASourceEncoding).w
+                move.b  (DMASourceEncoding+2).w,d1
+                move.b  (DMASourceEncoding+1).w,d2
                 move.b  d0,-(a1)
                 move.b  #$95,-(a1)
                 move.b  d1,-(a1)
@@ -331,37 +331,37 @@ MessageScript_DrawGlyph:                                ; CODE XREF: MessageScri
                 moveq   #$F,d7
 MessageScript_CopyGlyphRowLoop:                         ; CODE XREF: MessageScript_RenderGlyph+90   j  ; was: loc_AC98
                 move.l  (a0)+,d2
-                move.l  d2,(dword_FF8040).w
-                move.l  d2,(dword_FF8044).w
-                andi.b  #$F0,(dword_FF8040).w
+                move.l  d2,(MessagePackedDigitsA).w
+                move.l  d2,(MessagePackedDigitsB).w
+                andi.b  #$F0,(MessagePackedDigitsA).w
                 bne.s   MessageScript_CheckGlyphNibble2
                 bset    #$1C,d2
 MessageScript_CheckGlyphNibble2:                        ; CODE XREF: MessageScript_RenderGlyph+34   j  ; was: loc_ACAE
-                andi.b  #$F,(dword_FF8044).w
+                andi.b  #$F,(MessagePackedDigitsB).w
                 bne.s   MessageScript_CheckGlyphNibble3
                 bset    #$18,d2
 MessageScript_CheckGlyphNibble3:                        ; CODE XREF: MessageScript_RenderGlyph+40   j  ; was: loc_ACBA
-                andi.b  #$F0,(dword_FF8040+1).w
+                andi.b  #$F0,(MessagePackedDigitsA+1).w
                 bne.s   MessageScript_CheckGlyphNibble4
                 bset    #$14,d2
 MessageScript_CheckGlyphNibble4:                        ; CODE XREF: MessageScript_RenderGlyph+4C   j  ; was: loc_ACC6
-                andi.b  #$F,(dword_FF8044+1).w
+                andi.b  #$F,(MessagePackedDigitsB+1).w
                 bne.s   MessageScript_CheckGlyphNibble5
                 bset    #$10,d2
 MessageScript_CheckGlyphNibble5:                        ; CODE XREF: MessageScript_RenderGlyph+58   j  ; was: loc_ACD2
-                andi.b  #$F0,(dword_FF8040+2).w
+                andi.b  #$F0,(MessagePackedDigitsA+2).w
                 bne.s   MessageScript_CheckGlyphNibble6
                 bset    #$C,d2
 MessageScript_CheckGlyphNibble6:                        ; CODE XREF: MessageScript_RenderGlyph+64   j  ; was: loc_ACDE
-                andi.b  #$F,(dword_FF8044+2).w
+                andi.b  #$F,(MessagePackedDigitsB+2).w
                 bne.s   MessageScript_CheckGlyphNibble7
                 bset    #8,d2
 MessageScript_CheckGlyphNibble7:                        ; CODE XREF: MessageScript_RenderGlyph+70   j  ; was: loc_ACEA
-                andi.b  #$F0,(dword_FF8040+3).w
+                andi.b  #$F0,(MessagePackedDigitsA+3).w
                 bne.s   MessageScript_CheckGlyphNibble8
                 bset    #4,d2
 MessageScript_CheckGlyphNibble8:                        ; CODE XREF: MessageScript_RenderGlyph+7C   j  ; was: loc_ACF6
-                andi.b  #$F,(dword_FF8044+3).w
+                andi.b  #$F,(MessagePackedDigitsB+3).w
                 bne.s   MessageScript_StoreGlyphRow
                 bset    #0,d2
 MessageScript_StoreGlyphRow:                            ; CODE XREF: MessageScript_RenderGlyph+88   j  ; was: loc_AD02
@@ -434,9 +434,9 @@ MessageScript_QueueTilemapDMA:                          ; CODE XREF: MessageScri
                 move.w  #$83,-(a5)
                 move.w  #$5E00,-(a5)
                 lsr.l   #1,d0
-                move.l  d0,(dword_FF8040).w
-                move.b  (dword_FF8040+2).w,d1
-                move.b  (dword_FF8040+1).w,d2
+                move.l  d0,(DMASourceEncoding).w
+                move.b  (DMASourceEncoding+2).w,d1
+                move.b  (DMASourceEncoding+1).w,d2
                 move.b  d0,-(a5)
                 move.b  #$95,-(a5)
                 move.b  d1,-(a5)

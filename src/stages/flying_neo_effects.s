@@ -54,13 +54,13 @@ Midgame_UpdateRandomLightningEffect:                    ; CODE XREF: Stage8_Upda
                 bne.w   Midgame_UpdateRandomLightningEffect_Return
                 tst.w   (PaletteSecondaryIndex).w
                 bne.w   Midgame_UpdateRandomLightningEffect_Return
-                addq.w  #1,(dword_FF8062).w
-                cmpi.w  #$42,(dword_FF8062).w           ; 'B'
+                addq.w  #1,(LightningEffectTimer).w
+                cmpi.w  #$42,(LightningEffectTimer).w   ; 'B'
                 bne.w   Midgame_UpdateRandomLightningEffect_Return
                 move.w  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 addq.w  #1,d0
-                move.w  d0,(dword_FF8062).w
+                move.w  d0,(LightningEffectTimer).w
                 move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 beq.s   Midgame_RandomLightningUseSecondaryPalette

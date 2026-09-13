@@ -7507,3 +7507,34 @@ direct consumers use sixteen contextual aliases so their code states the
 proved local role. Provenance rises from 16,041 to 16,044 mappings, the audit
 registry from 13,280 to 13,283, and the semantic-review upper bound remains
 3,061. The enforced address-derived ceiling falls from 10 to 7 RAM equates.
+
+The `$FFFF8040-$FFFF804B` pass resolves the four most heavily reused fields in
+the final low-RAM cluster. Static consumers expose DMA source encoding, pose
+command duration, metasprite initialization and traversal, circle-attack
+offsets, BCD increment scratch, cutscene row transfer state, wave timing, tile
+interpolation, Stage 3 resampling, packed message digits, palette swapping,
+hitbox mirroring, and several short-lived gameplay calculations. No single
+subsystem owns this mutually exclusive storage.
+
+The physical definitions therefore become `SharedRuntimeWorkLong0`,
+`SharedRuntimeWorkLong1`, `SharedRuntimeWorkWord0`, and
+`SharedRuntimeWorkWord1`. Forty-four contextual aliases replace all 294 direct
+references in executable source. Provenance rises from 16,044 to 16,048
+mappings, the audit registry from 13,283 to 13,287, and the semantic-review
+upper bound remains 3,061. The enforced address-derived ceiling falls from 7
+to 3 RAM equates, all in the adjacent `$FFFF8062-$FFFF806D` overlay.
+
+The `$FFFF8062-$FFFF806D` pass completes the live address-derived-name
+burn-down. The twelve-byte scratch region is shared by asteroid and boss
+transitions, Stage 7 through Stage 16 sequences, palette effects, and the
+title, continue, options, password, and results screens. Its fields are used
+at byte, word, and longword widths under mutually exclusive scene lifetimes,
+so assigning one global subsystem meaning would be false.
+
+`SharedControlWorkLong0` through `SharedControlWorkLong2` therefore name the
+three physical longwords without inventing ownership. Thirty-three contextual
+aliases replace all 190 executable references and expose the proved local
+roles. The three definitions add provenance and exact-address audit records:
+provenance rises from 16,048 to 16,051 mappings, the registry from 13,287 to
+13,290, and the semantic-review upper bound remains 3,061. The enforced live
+address-derived-definition ceiling reaches zero.

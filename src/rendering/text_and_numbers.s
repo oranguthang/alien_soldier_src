@@ -5,7 +5,7 @@ Text_QueueTrimmedPackedBCDDigits:                       ; CODE XREF: Continue_Re
                                         ; Continue_RenderCountdownDigit+10   p
                 movea.w (VDPStagingDataCursor).w,a0
                 moveq   #0,d5
-                move.l  d0,(dword_FF8040).w
+                move.l  d0,(DMASourceEncoding).w
                 move.w  d7,d2
                 subq.w  #1,d2
                 beq.w   Text_TrimmedBCD_EmitOnes
@@ -21,7 +21,7 @@ Text_QueueTrimmedPackedBCDDigits:                       ; CODE XREF: Continue_Re
                 beq.w   Text_TrimmedBCD_ScanHundredThousands
                 subq.w  #1,d2
                 beq.w   Text_TrimmedBCD_ScanMillions
-                move.b  (dword_FF8040).w,d2
+                move.b  (DMASourceEncoding).w,d2
                 asr.b   #4,d2
                 andi.w  #$F,d2
                 bne.s   Text_TrimmedBCD_EmitTenMillions
@@ -36,7 +36,7 @@ Text_TrimmedBCD_EmitTenMillions:                        ; CODE XREF: Text_QueueT
                 move.w  d2,(a0)+
 Text_TrimmedBCD_ScanMillions:                           ; CODE XREF: Text_QueueTrimmedPackedBCDDigits+32   j  ; was: loc_43D6
                                         ; Text_QueueTrimmedPackedBCDDigits+46   j
-                move.b  (dword_FF8040).w,d2
+                move.b  (DMASourceEncoding).w,d2
                 andi.w  #$F,d2
                 bne.s   Text_TrimmedBCD_EmitMillions
                 tst.w   d5
@@ -53,7 +53,7 @@ Text_TrimmedBCD_EmitMillions:                           ; CODE XREF: Text_QueueT
                 move.w  d2,(a0)+
 Text_TrimmedBCD_ScanHundredThousands:                   ; CODE XREF: Text_QueueTrimmedPackedBCDDigits+2C   j  ; was: loc_43F2
                                         ; Text_QueueTrimmedPackedBCDDigits+62   j
-                move.b  (dword_FF8040+1).w,d2
+                move.b  (DMASourceEncoding+1).w,d2
                 asr.b   #4,d2
                 andi.w  #$F,d2
                 bne.s   Text_TrimmedBCD_EmitHundredThousands
@@ -71,7 +71,7 @@ Text_TrimmedBCD_EmitHundredThousands:                   ; CODE XREF: Text_QueueT
                 move.w  d2,(a0)+
 Text_TrimmedBCD_ScanTenThousands:                       ; CODE XREF: Text_QueueTrimmedPackedBCDDigits+26   j  ; was: loc_4410
                                         ; Text_QueueTrimmedPackedBCDDigits+80   j
-                move.b  (dword_FF8040+1).w,d2
+                move.b  (DMASourceEncoding+1).w,d2
                 andi.w  #$F,d2
                 bne.s   Text_TrimmedBCD_EmitTenThousands
                 tst.w   d5
@@ -88,7 +88,7 @@ Text_TrimmedBCD_EmitTenThousands:                       ; CODE XREF: Text_QueueT
                 move.w  d2,(a0)+
 Text_TrimmedBCD_ScanThousands:                          ; CODE XREF: Text_QueueTrimmedPackedBCDDigits+20   j  ; was: loc_442C
                                         ; Text_QueueTrimmedPackedBCDDigits+9C   j
-                move.b  (dword_FF8040+2).w,d2
+                move.b  (DMASourceEncoding+2).w,d2
                 asr.b   #4,d2
                 andi.w  #$F,d2
                 bne.s   Text_TrimmedBCD_EmitThousands
@@ -106,7 +106,7 @@ Text_TrimmedBCD_EmitThousands:                          ; CODE XREF: Text_QueueT
                 move.w  d2,(a0)+
 Text_TrimmedBCD_ScanHundreds:                           ; CODE XREF: Text_QueueTrimmedPackedBCDDigits+1A   j  ; was: loc_444A
                                         ; Text_QueueTrimmedPackedBCDDigits+BA   j
-                move.b  (dword_FF8040+2).w,d2
+                move.b  (DMASourceEncoding+2).w,d2
                 andi.w  #$F,d2
                 bne.s   Text_TrimmedBCD_EmitHundreds
                 tst.w   d5
@@ -123,7 +123,7 @@ Text_TrimmedBCD_EmitHundreds:                           ; CODE XREF: Text_QueueT
                 move.w  d2,(a0)+
 Text_TrimmedBCD_ScanTens:                               ; CODE XREF: Text_QueueTrimmedPackedBCDDigits+14   j  ; was: loc_4466
                                         ; Text_QueueTrimmedPackedBCDDigits+D6   j
-                move.b  (dword_FF8040+3).w,d2
+                move.b  (DMASourceEncoding+3).w,d2
                 asr.b   #4,d2
                 andi.w  #$F,d2
                 bne.s   Text_TrimmedBCD_EmitTens
@@ -141,7 +141,7 @@ Text_TrimmedBCD_EmitTens:                               ; CODE XREF: Text_QueueT
                 move.w  d2,(a0)+
 Text_TrimmedBCD_EmitOnes:                               ; CODE XREF: Text_QueueTrimmedPackedBCDDigits+E   j  ; was: loc_4484
                                         ; Text_QueueTrimmedPackedBCDDigits+F4   j
-                move.b  (dword_FF8040+3).w,d2
+                move.b  (DMASourceEncoding+3).w,d2
                 andi.w  #$F,d2
                 asl.w   #1,d2
                 add.w   d1,d2
@@ -171,7 +171,7 @@ Text_QueueFixedPackedBCDDigits:
                 move.w  d7,d2
                 asl.w   #1,d2
                 adda.w  d2,a1
-                move.l  d0,(dword_FF8040).w
+                move.l  d0,(DMASourceEncoding).w
                 move.w  d7,d2
                 subq.w  #1,d2
                 beq.w   Text_FixedBCD_EmitOnes
@@ -187,7 +187,7 @@ Text_QueueFixedPackedBCDDigits:
                 beq.s   Text_FixedBCD_EmitHundredThousands
                 subq.w  #1,d2
                 beq.s   Text_FixedBCD_EmitMillions
-                move.b  (dword_FF8040).w,d2
+                move.b  (DMASourceEncoding).w,d2
                 asr.b   #4,d2
                 andi.w  #$F,d2
                 asl.w   #1,d2
@@ -196,7 +196,7 @@ Text_QueueFixedPackedBCDDigits:
                 addq.w  #1,d2
                 move.w  d2,(a1)+
 Text_FixedBCD_EmitMillions:                             ; CODE XREF: Text_QueueFixedPackedBCDDigits+32   j  ; was: loc_4504
-                move.b  (dword_FF8040).w,d2
+                move.b  (DMASourceEncoding).w,d2
                 andi.w  #$F,d2
                 asl.w   #1,d2
                 add.w   d1,d2
@@ -204,7 +204,7 @@ Text_FixedBCD_EmitMillions:                             ; CODE XREF: Text_QueueF
                 addq.w  #1,d2
                 move.w  d2,(a1)+
 Text_FixedBCD_EmitHundredThousands:                     ; CODE XREF: Text_QueueFixedPackedBCDDigits+2E   j  ; was: loc_4516
-                move.b  (dword_FF8040+1).w,d2
+                move.b  (DMASourceEncoding+1).w,d2
                 asr.b   #4,d2
                 andi.w  #$F,d2
                 asl.w   #1,d2
@@ -213,7 +213,7 @@ Text_FixedBCD_EmitHundredThousands:                     ; CODE XREF: Text_QueueF
                 addq.w  #1,d2
                 move.w  d2,(a1)+
 Text_FixedBCD_EmitTenThousands:                         ; CODE XREF: Text_QueueFixedPackedBCDDigits+2A   j  ; was: loc_452A
-                move.b  (dword_FF8040+1).w,d2
+                move.b  (DMASourceEncoding+1).w,d2
                 andi.w  #$F,d2
                 asl.w   #1,d2
                 add.w   d1,d2
@@ -221,7 +221,7 @@ Text_FixedBCD_EmitTenThousands:                         ; CODE XREF: Text_QueueF
                 addq.w  #1,d2
                 move.w  d2,(a1)+
 Text_FixedBCD_EmitThousands:                            ; CODE XREF: Text_QueueFixedPackedBCDDigits+26   j  ; was: loc_453C
-                move.b  (dword_FF8040+2).w,d2
+                move.b  (DMASourceEncoding+2).w,d2
                 asr.b   #4,d2
                 andi.w  #$F,d2
                 asl.w   #1,d2
@@ -230,7 +230,7 @@ Text_FixedBCD_EmitThousands:                            ; CODE XREF: Text_QueueF
                 addq.w  #1,d2
                 move.w  d2,(a1)+
 Text_FixedBCD_EmitHundreds:                             ; CODE XREF: Text_QueueFixedPackedBCDDigits+22   j  ; was: loc_4550
-                move.b  (dword_FF8040+2).w,d2
+                move.b  (DMASourceEncoding+2).w,d2
                 andi.w  #$F,d2
                 asl.w   #1,d2
                 add.w   d1,d2
@@ -238,7 +238,7 @@ Text_FixedBCD_EmitHundreds:                             ; CODE XREF: Text_QueueF
                 addq.w  #1,d2
                 move.w  d2,(a1)+
 Text_FixedBCD_EmitTens:                                 ; CODE XREF: Text_QueueFixedPackedBCDDigits+1C   j  ; was: loc_4562
-                move.b  (dword_FF8040+3).w,d2
+                move.b  (DMASourceEncoding+3).w,d2
                 asr.b   #4,d2
                 andi.w  #$F,d2
                 asl.w   #1,d2
@@ -247,7 +247,7 @@ Text_FixedBCD_EmitTens:                                 ; CODE XREF: Text_QueueF
                 addq.w  #1,d2
                 move.w  d2,(a1)+
 Text_FixedBCD_EmitOnes:                                 ; CODE XREF: Text_QueueFixedPackedBCDDigits+16   j  ; was: loc_4576
-                move.b  (dword_FF8040+3).w,d2
+                move.b  (DMASourceEncoding+3).w,d2
                 andi.w  #$F,d2
                 asl.w   #1,d2
                 add.w   d1,d2

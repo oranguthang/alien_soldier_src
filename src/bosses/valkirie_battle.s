@@ -56,7 +56,7 @@ Entity_InitValkirieBattleState0:                        ; DATA XREF: Entity_Upda
                                         ; ROM:Entity_ValkirieBattleStateOffsets   o
                 move.w  #1,8(a5)
                 movea.w a5,a4
-                move.w  #$300,(dword_FF8040).w
+                move.w  #$300,(MetaspriteBaseTileWord).w
                 moveq   #$19,d7
                 movea.l #Boss_ValkirieMetaspritePartDescriptors,a0
                 movea.l #Boss_ValkirieMetaspriteInitialAngles,a1

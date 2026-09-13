@@ -64,7 +64,7 @@ Boss_MadamBarbarSetupState:                             ; DATA XREF: ROM:0003A4E
                 bmi.s   Boss_MadamBarbarInitializationReturn
                 addq.w  #1,8(a5)
                 movea.w a5,a4
-                move.w  #$300,(dword_FF8040).w
+                move.w  #$300,(MetaspriteBaseTileWord).w
                 moveq   #$1C,d7
                 movea.l #Boss_MadamBarbarMetaspriteDescriptors,a0
                 movea.l #Boss_MadamBarbarPartRadii,a1
@@ -501,17 +501,17 @@ Boss_MadamBarbarUpdateWobble:                           ; CODE XREF: Boss_MadamB
                 addq.w  #8,d7
                 andi.w  #$F,d7
                 move.b  Boss_MadamBarbarWobbleOffsets(pc,d7.w),d1
-                move.w  #$24EA,(dword_FF8040).w
-                move.w  #$240E,(dword_FF8040+2).w
-                sub.b   d0,(dword_FF8040).w
-                sub.b   d1,(dword_FF8040+2).w
+                move.w  #$24EA,(MadamWobbleX).w
+                move.w  #$240E,(MadamWobbleY).w
+                sub.b   d0,(MadamWobbleX).w
+                sub.b   d1,(MadamWobbleY).w
                 asr.b   #1,d0
                 asr.b   #1,d1
-                add.b   d0,(dword_FF8040+1).w
-                sub.b   d1,(dword_FF8040+3).w
+                add.b   d0,(MadamWobbleX+1).w
+                sub.b   d1,(MadamWobbleX+3).w
                 movea.w #(MadamBarbarWorkObject-M68K_RAM),a0
-                move.w  (dword_FF8040).w,4(a0)
-                move.w  (dword_FF8040+2).w,$A(a0)
+                move.w  (MadamWobbleX).w,4(a0)
+                move.w  (MadamWobbleY).w,$A(a0)
                 rts
 ; End of function Boss_MadamBarbarUpdateWobble
 ; ---------------------------------------------------------------------------
@@ -647,14 +647,14 @@ Boss_MadamBarbarCheckPoseLoopCommand:                   ; CODE XREF: Boss_MadamB
                 bra.s   Boss_MadamBarbarReadNextPoseCommand
 ; ---------------------------------------------------------------------------
 Boss_MadamBarbarStartPoseInterpolation:                 ; CODE XREF: Boss_MadamBarbarUpdatePose+40   j  ; was: loc_3AC30
-                move.w  d3,(dword_FF8040).w
+                move.w  d3,(PoseCommandWord).w
                 andi.w  #$FF,d3
                 move.w  2(a1,d0.w),d0
                 ext.l   d0
                 addi.l  #Boss_MadamBarbarPoseTargets,d0
                 movea.l d0,a0
                 bsr.w   Boss_MadamBarbarCalculatePoseDeltas
-                move.b  (dword_FF8040).w,d1
+                move.b  (PoseDurationByte).w,d1
                 ext.w   d1
                 add.w   d1,$C(a5)
                 addq.w  #4,$58(a5)

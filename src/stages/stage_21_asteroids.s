@@ -9,7 +9,7 @@ Stage21_AsteroidFieldControllerMain:                    ; DATA XREF: ROM:Entity_
 ; ---------------------------------------------------------------------------
 Stage21_AsteroidFieldUpdateDirection:                   ; CODE XREF: Stage21_AsteroidFieldControllerMain+4   j  ; was: loc_330BC
                                         ; Stage21_AsteroidFieldControllerMain+C   j
-                btst    #7,(dword_FF8062).w
+                btst    #7,(AsteroidVScrollSpeed).w
                 beq.s   Stage21_AsteroidFieldSelectAlternateSide
                 btst    #7,(AsteroidFieldVelocity).w
                 beq.s   Stage21_AsteroidFieldSelectAlternateSide
@@ -48,7 +48,7 @@ Stage21_AsteroidFieldInit:                              ; DATA XREF: ROM:Stage21
 Stage21_AsteroidFieldWaitForScroll:                     ; DATA XREF: ROM:000330EC   o  ; was: sub_33124
                 btst    #0,(SharedPatternRow0Long4).w
                 bne.s   Stage21_AsteroidFieldReturn
-                cmpi.w  #$FFFC,(dword_FF8062).w
+                cmpi.w  #$FFFC,(AsteroidVScrollSpeed).w
                 bgt.s   Stage21_AsteroidFieldReturn
                 addq.w  #2,4(a5)
 Stage21_AsteroidFieldReturn:                            ; CODE XREF: Stage21_AsteroidFieldWaitForScroll+6   j  ; was: locret_33138
@@ -97,7 +97,7 @@ Stage21_AsteroidVariantSchedule:    dc.w    1, 0, 0, 0, 1, 0, 0, 0  ; was: word_
 
 ; Derives the next asteroid spawn interval from horizontal scroll speed
 Stage21_AsteroidFieldUpdateSpawnInterval:               ; CODE XREF: Stage21_AsteroidFieldSpawnRock+C   p  ; was: sub_3322E
-                move.l  (dword_FF8062).w,d0
+                move.l  (AsteroidVScrollSpeed).w,d0
                 bpl.s   Stage21_AsteroidFieldSelectSpawnInterval
                 neg.l   d0
 Stage21_AsteroidFieldSelectSpawnInterval:               ; CODE XREF: Stage21_AsteroidFieldUpdateSpawnInterval+4   j  ; was: loc_33236
@@ -287,7 +287,7 @@ Stage21_AsteroidDestructionReturn:                      ; CODE XREF: Stage21_Ast
 ; End of function Stage21_AsteroidSpawnDestructionResult
 ; Moves an ambient rock at half the current stage scroll velocity
 Stage21_AmbientRockFollowScroll:                        ; CODE XREF: Stage21_AsteroidMain+6   j  ; was: sub_334B2
-                move.l  (dword_FF8062).w,d0
+                move.l  (AsteroidVScrollSpeed).w,d0
                 move.l  (AsteroidFieldVelocity).w,d1
                 asr.l   #1,d0
                 asr.l   #1,d1

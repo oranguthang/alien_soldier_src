@@ -131,7 +131,7 @@ Stage_SevenForcesScrollArtemisBackground:               ; DATA XREF: ROM:0000E4B
                 bne.s   Stage_SevenForcesScrollArtemisBackgroundReturn
                 addq.w  #2,(StageStateOffset).w
                 clr.b   (SceneSequenceFlags).w
-                clr.w   (dword_FF8066).w
+                clr.w   (ArtemisForegroundState).w
 Stage_SevenForcesScrollArtemisBackgroundReturn:         ; CODE XREF: Stage_SevenForcesScrollArtemisBackground+A   j ; was: locret_E92E
                 rts
 ; End of function Stage_SevenForcesScrollArtemisBackground

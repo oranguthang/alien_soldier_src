@@ -70,7 +70,7 @@ Boss_BackStringerWaitForActivationReturn:               ; CODE XREF: Boss_BackSt
 Boss_BackStringerInitializeState:                       ; DATA XREF: ROM:00044714   o  ; was: sub_4475A
                 addq.w  #1,8(a5)
                 movea.w a5,a4
-                move.w  #$8300,(dword_FF8040).w
+                move.w  #$8300,(MetaspriteBaseTileWord).w
                 moveq   #$14,d7
                 movea.l #Boss_BackStringerMetaspriteDescriptors,a0
                 movea.l #Boss_BackStringerPartRadii,a1

@@ -142,10 +142,54 @@ WeaponMenuAngle         equ     $FFFF8036               ; was: word_FF8036
 WeaponStateCooldown     equ     $FFFF8038               ; was: word_FF8038
 WeaponMenuAngularStep   equ     $FFFF803A               ; was: word_FF803A
 WeaponMenuSlotOffset    equ     $FFFF803C               ; was: word_FF803C
-dword_FF8040            equ     $FFFF8040
-dword_FF8044            equ     $FFFF8044
-word_FF8048             equ     $FFFF8048
-word_FF804A             equ     $FFFF804A
+SharedRuntimeWorkLong0  equ     $FFFF8040               ; was: dword_FF8040
+SharedRuntimeWorkLong1  equ     $FFFF8044               ; was: dword_FF8044
+SharedRuntimeWorkWord0  equ     $FFFF8048               ; was: word_FF8048
+SharedRuntimeWorkWord1  equ     $FFFF804A               ; was: word_FF804A
+DMASourceEncoding       equ     SharedRuntimeWorkLong0
+PoseCommandWord         equ     SharedRuntimeWorkLong0
+PoseDurationByte        equ     SharedRuntimeWorkLong0
+MetaspriteBaseTileWord  equ     SharedRuntimeWorkLong0
+MetaspriteParentPtr     equ     SharedRuntimeWorkLong0+2
+MetaspritePartCountM1   equ     SharedRuntimeWorkLong0
+MetaspriteSineScratch   equ     SharedRuntimeWorkWord0
+MetaspriteCosScratch    equ     SharedRuntimeWorkWord1
+CircleAttackOffsetX     equ     SharedRuntimeWorkLong0
+CircleAttackOffsetY     equ     SharedRuntimeWorkLong1
+CircleAttackTargetDX    equ     SharedRuntimeWorkWord0
+CircleAttackTargetDY    equ     SharedRuntimeWorkWord1
+BCDIncrementScratch     equ     SharedRuntimeWorkWord0
+BCDIncrementEnd         equ     SharedRuntimeWorkWord1
+CutsceneRowSource       equ     SharedRuntimeWorkLong0
+CutsceneRowVRAM         equ     SharedRuntimeWorkLong0+2
+WaveStateTimer          equ     SharedRuntimeWorkLong0
+TileInterpSpan          equ     SharedRuntimeWorkLong0
+TileInterpReadBaseA     equ     SharedRuntimeWorkLong0+2
+TileInterpReadBaseB     equ     SharedRuntimeWorkLong1
+TileInterpSpanStep      equ     SharedRuntimeWorkLong1+2
+TileInterpVRAM          equ     SharedRuntimeWorkWord0
+TileInterpStepsLeft     equ     SharedRuntimeWorkWord1
+Stage3PackedTilePtr     equ     SharedRuntimeWorkLong0
+Stage3ResampleGroupsM1  equ     SharedRuntimeWorkWord0
+Stage3ResamplePassesM1  equ     SharedRuntimeWorkWord1
+MessagePackedDigitsA    equ     SharedRuntimeWorkLong0
+MessagePackedDigitsB    equ     SharedRuntimeWorkLong1
+PaletteColorPair        equ     SharedRuntimeWorkLong0
+BossHealthPairScratch   equ     SharedRuntimeWorkLong0
+BossAssetPointerScratch equ     SharedRuntimeWorkLong0
+WeaponSetupCursorOffset equ     SharedRuntimeWorkLong0
+HUDGlyphWordScratch     equ     SharedRuntimeWorkLong0
+SeekingAngleScratch     equ     SharedRuntimeWorkLong0
+EnemySpawnSearchPass    equ     SharedRuntimeWorkLong0
+TrigSavedObjectPtr      equ     SharedRuntimeWorkLong0
+HitboxMirrorScratchA    equ     SharedRuntimeWorkLong0
+HitboxMirrorScratchB    equ     SharedRuntimeWorkLong1
+Stage9CameraXSnapshot   equ     SharedRuntimeWorkLong0
+Stage9SecondaryXCopy    equ     SharedRuntimeWorkWord0
+AntroidPoseOffsetTemp   equ     SharedRuntimeWorkLong0
+AntroidPoseTimerTemp    equ     SharedRuntimeWorkLong0+2
+MadamWobbleX            equ     SharedRuntimeWorkLong0
+MadamWobbleY            equ     SharedRuntimeWorkLong0+2
 SharedTransferWorkLong0 equ     $FFFF8058               ; was: dword_FF8058
 SharedTransferWorkWord0 equ     $FFFF805C               ; was: word_FF805C
 SharedTransferWorkLong1 equ     $FFFF805E               ; was: dword_FF805E
@@ -165,9 +209,42 @@ PasswordStageNumber     equ     SharedTransferWorkLong1
 OptionsSelection        equ     SharedTransferWorkLong1
 OptionsCursorMoving     equ     SharedTransferWorkLong1+2
 OptionsBGMIndex         equ     SharedTransferWorkLong1+3
-dword_FF8062            equ     $FFFF8062
-dword_FF8066            equ     $FFFF8066
-dword_FF806A            equ     $FFFF806A
+SharedControlWorkLong0  equ     $FFFF8062               ; was: dword_FF8062
+SharedControlWorkLong1  equ     $FFFF8066               ; was: dword_FF8066
+SharedControlWorkLong2  equ     $FFFF806A               ; was: dword_FF806A
+AsteroidVScrollSpeed    equ     SharedControlWorkLong0
+AsteroidVScrollPos      equ     SharedControlWorkLong1
+BackdropLineSpeed       equ     SharedControlWorkLong0
+BackdropLinePosition    equ     SharedControlWorkLong1
+BackdropTailPosition    equ     SharedControlWorkLong2
+WolfGaropaScrollSpeed   equ     SharedControlWorkLong0
+Stage24VScrollSpeed     equ     SharedControlWorkLong1+2
+ArtemisForegroundState  equ     SharedControlWorkLong1
+TerobusterIntroTimer    equ     SharedControlWorkLong0
+TerobusterProjectileY   equ     SharedControlWorkLong0+2
+TerobusterTileRowIndex  equ     SharedControlWorkLong1
+LightningEffectTimer    equ     SharedControlWorkLong0
+XiTigerEntranceTimer    equ     SharedControlWorkLong0
+Stage12TeleportFade     equ     SharedControlWorkLong2+2
+TeleportSnakeScrollVel  equ     SharedControlWorkLong1+2
+MidgameFadeLevel        equ     SharedControlWorkLong1+2
+Stage16CameraSnapshot   equ     SharedControlWorkLong2+2
+PostViblackVScrollVel   equ     SharedControlWorkLong0+2
+PostViblackPalettePos   equ     SharedControlWorkLong2
+PostViblackPaletteDelay equ     SharedControlWorkLong1+2
+ContinueCountdownValue  equ     SharedControlWorkLong1+2
+TitleMenuSelection      equ     SharedControlWorkLong1+2
+OptionsHandlerOffset    equ     SharedControlWorkLong0
+OptionsCursorFlashTimer equ     SharedControlWorkLong0+2
+OptionsSFXIndex         equ     SharedControlWorkLong1
+OptionsRepeatTimer      equ     SharedControlWorkLong1+2
+OptionsPressedCopy      equ     SharedControlWorkLong2
+OptionsHeldCopy         equ     SharedControlWorkLong2+1
+OptionsVoiceIndex       equ     SharedControlWorkLong2+2
+PasswordCursorFlash     equ     SharedControlWorkLong0+2
+PasswordCursorOffset    equ     SharedControlWorkLong1+2
+PasswordHeldNibble      equ     SharedControlWorkLong2
+PasswordRepeatTimer     equ     SharedControlWorkLong2+2
 SharedSceneControl      equ     $FFFF806E               ; was: word_FF806E
 PasswordCursorMoveFlag  equ     SharedSceneControl
 StageEventTimer         equ     SharedSceneControl

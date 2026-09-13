@@ -164,10 +164,10 @@ Stage9_UpdateCaterpillarShipTraversal_Camera:           ; CODE XREF: Stage9_Init
                 addq.w  #2,(HUDDynamicStripYOffset).w
 Stage9_UpdateCaterpillarShipTraversal_Position:         ; CODE XREF: Stage9_UpdateCaterpillarShipTraversal+A   j  ; was: loc_D2CE
                                         ; Stage9_UpdateCaterpillarShipTraversal+12   j
-                move.l  (PrimaryCameraXPosition).w,(dword_FF8040).w
+                move.l  (PrimaryCameraXPosition).w,(Stage9CameraXSnapshot).w
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 move.l  (PrimaryCameraXPosition).w,d7
-                sub.l   (dword_FF8040).w,d7
+                sub.l   (Stage9CameraXSnapshot).w,d7
                 addi.l  #$12000,d7
                 add.l   d7,(SecondaryCameraXPos).w
                 move.w  (SecondaryCameraXPos).w,d0
@@ -181,9 +181,9 @@ Stage9_StreamCaterpillarShipColumn:                     ; CODE XREF: Stage9_Upda
                 lea     Stage9_CaterpillarShipColumnTransferDescriptor(pc),a0
                 nop
                 jsr     (Tilemap_QueueColumnFromDescriptor).l
-                move.w  (SecondaryCameraXPos).w,(word_FF8048).w
+                move.w  (SecondaryCameraXPos).w,(Stage9SecondaryXCopy).w
                 bsr.w   Stage9_UpdateCaterpillarOscillationAndRasterRows
-                move.w  (word_FF8048).w,(SecondaryCameraXPos).w
+                move.w  (Stage9SecondaryXCopy).w,(SecondaryCameraXPos).w
                 move.w  (SecondaryCameraXPos).w,d5
                 add.w   (PrimaryCameraXPosition).w,d5
                 cmpi.w  #$9F0,d5
@@ -274,7 +274,7 @@ Stage9_InitializeXiTigerEncounter:                      ; DATA XREF: ROM:0000C8C
                 move.w  #$40,(ScriptedInputStepTimer).w  ; '@'
 Stage9_LoadXiTigerEncounterAssets:                      ; CODE XREF: Stage9_UpdateCaterpillarShipExit+68   j  ; was: loc_D450
                 move.w  #$70,(StageStateOffset).w       ; 'p'
-                move.w  #$10,(dword_FF8062).w
+                move.w  #$10,(XiTigerEntranceTimer).w
                 lea     (Boss_XiTigerAssetSet).l,a1
                 jmp     Boss_LoadAssetSet
 ; End of function Stage9_InitializeXiTigerEncounter
@@ -283,7 +283,7 @@ Stage9_UpdateXiTigerEntranceDelay:                      ; DATA XREF: ROM:0000C8B
                 move.w  #$8004,(PaletteFadeMode).w
                 move.w  #$10,(PaletteFadeColorOffset).w
                 move.w  #$E000,(PaletteFadeMaskStatus).w
-                subq.w  #1,(dword_FF8062).w
+                subq.w  #1,(XiTigerEntranceTimer).w
                 bpl.w   Stage9_XiTigerEntranceDelay_Return
                 move.b  #$41,(GameplayControlFlags).w   ; 'A'
                 addq.w  #2,(StageStateOffset).w

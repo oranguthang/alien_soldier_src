@@ -76,9 +76,9 @@ Gfx_QueueNextFontTileDMA:                               ; CODE XREF: StageTransi
                 move.w  (FontTileDMASourceOffset).w,d0
                 addi.l  #tiles_font,d0
                 lsr.l   #1,d0
-                move.l  d0,(dword_FF8040).w
-                move.b  (dword_FF8040+2).w,d2
-                move.b  (dword_FF8040+1).w,d3
+                move.l  d0,(DMASourceEncoding).w
+                move.b  (DMASourceEncoding+2).w,d2
+                move.b  (DMASourceEncoding+1).w,d3
                 andi.w  #$7F,d3
                 move.b  d0,-(a1)
                 move.b  #$95,-(a1)
@@ -132,9 +132,9 @@ Gfx_BuildQueuedFontDMA:                                 ; CODE XREF: Gfx_QueueLa
                                         ; Gfx_QueueSmallFontDMA+12   j
                 move.l  #tiles_font,d0
                 lsr.l   #1,d0
-                move.l  d0,(dword_FF8040).w
-                move.b  (dword_FF8040+2).w,d2
-                move.b  (dword_FF8040+1).w,d3
+                move.l  d0,(DMASourceEncoding).w
+                move.b  (DMASourceEncoding+2).w,d2
+                move.b  (DMASourceEncoding+1).w,d3
                 andi.w  #$7F,d3
                 move.b  d0,-(a1)
                 move.b  #$95,-(a1)

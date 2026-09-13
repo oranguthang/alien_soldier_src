@@ -234,12 +234,12 @@ Stage_SevenForcesRenderArtemisBackgroundPlane:          ; CODE XREF: Stage_Seven
 ; End of function Stage_SevenForcesUpdateArtemisBackgroundPlane
 ; Advances the Artemis foreground motion
 Stage_SevenForcesUpdateArtemisForegroundMotion:         ; CODE XREF: Stage_SevenForcesScrollArtemisForeground   p  ; was: sub_ECF4
-                tst.w   (dword_FF8066).w
+                tst.w   (ArtemisForegroundState).w
                 bne.s   Stage_SevenForcesAdvanceArtemisForegroundMotion
                 subi.l  #$E00,(PrimaryCameraYPosition).w
                 cmpi.w  #$E1F8,(PrimaryCameraYPosition).w
                 bpl.s   Stage_SevenForcesArtemisForegroundMotionReturn
-                move.w  #2,(dword_FF8066).w
+                move.w  #2,(ArtemisForegroundState).w
 Stage_SevenForcesArtemisForegroundMotionReturn:         ; CODE XREF: Stage_SevenForcesUpdateArtemisForegroundMotion+14   j  ; was: locret_ED10
                                         ; Stage_SevenForcesUpdateArtemisForegroundMotion+36   j
                 rts
@@ -251,7 +251,7 @@ Stage_SevenForcesCheckArtemisForegroundLimit:           ; CODE XREF: Stage_Seven
                 addi.l  #$E00,(PrimaryCameraYPosition).w
                 cmpi.w  #$E206,(PrimaryCameraYPosition).w
                 bmi.s   Stage_SevenForcesArtemisForegroundMotionReturn
-                clr.w   (dword_FF8066).w
+                clr.w   (ArtemisForegroundState).w
                 rts
 ; End of function Stage_SevenForcesUpdateArtemisForegroundMotion
 ; Advances and renders the Sirene primary plane

@@ -52,15 +52,15 @@ Player_SetHitbox:                                       ; CODE XREF: Player_Upda
                 move.l  Player_HitboxBoundsTable(pc,d0.w),d0
                 btst    #4,$E(a5)
                 beq.s   Player_SetHitbox_StoreBounds
-                move.l  d0,(dword_FF8040).w
-                move.l  d0,(dword_FF8044).w
-                move.b  (dword_FF8044).w,d1
+                move.l  d0,(HitboxMirrorScratchA).w
+                move.l  d0,(HitboxMirrorScratchB).w
+                move.b  (HitboxMirrorScratchB).w,d1
                 neg.b   d1
-                move.b  d1,(dword_FF8040+1).w
-                move.b  (dword_FF8044+1).w,d1
+                move.b  d1,(HitboxMirrorScratchA+1).w
+                move.b  (HitboxMirrorScratchB+1).w,d1
                 neg.b   d1
-                move.b  d1,(dword_FF8040).w
-                move.l  (dword_FF8040).w,d0
+                move.b  d1,(HitboxMirrorScratchA).w
+                move.l  (HitboxMirrorScratchA).w,d0
 ; Stores the selected or mirrored hitbox boundary bytes
 Player_SetHitbox_StoreBounds:                           ; CODE XREF: Player_SetHitbox+16   j  ; was: loc_16BAC
                 move.l  d0,$28(a5)

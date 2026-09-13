@@ -54,10 +54,10 @@ PasswordMenu_Activate:                                  ; CODE XREF: PasswordMen
                 move.w  #$DA,d1
                 move.l  #Password_CharacterCursorSpriteMapping,d2
                 bsr.w   FrontendCursor_Initialize
-                clr.w   (dword_FF8062+2).w
-                clr.w   (dword_FF8066+2).w
-                move.b  #$F,(dword_FF806A).w
-                move.w  #$18,(dword_FF806A+2).w
+                clr.w   (PasswordCursorFlash).w
+                clr.w   (PasswordCursorOffset).w
+                move.b  #$F,(PasswordHeldNibble).w
+                move.w  #$18,(PasswordRepeatTimer).w
                 clr.w   (PasswordCursorMoveFlag).w
                 lea     (Text_PressStartToExit).l,a0
                 move.w  #$A300,d0
@@ -111,12 +111,12 @@ PasswordMenu_UpdateFrame:                               ; CODE XREF: PasswordMen
 PasswordMenu_HandleInput:                               ; CODE XREF: PasswordMenu_Update+54   p  ; was: sub_A550
                 tst.w   (PasswordCursorMoveFlag).w
                 bne.w   PasswordCursor_AnimateToSelection
-                move.w  (dword_FF8066+2).w,d0
+                move.w  (PasswordCursorOffset).w,d0
                 moveq   #0,d1
                 btst    #2,(ControllerPressedState).w
                 beq.s   PasswordInput_CheckMoveRight
                 moveq   #2,d1
-                move.w  #$10,(dword_FF8062+2).w
+                move.w  #$10,(PasswordCursorFlash).w
                 subq.w  #2,d0
                 bpl.s   PasswordInput_PlayMoveSound
                 moveq   #0,d0
@@ -126,7 +126,7 @@ PasswordInput_CheckMoveRight:                           ; CODE XREF: PasswordMen
                 btst    #3,(ControllerPressedState).w
                 beq.s   PasswordInput_StoreSelection
                 moveq   #2,d1
-                move.w  #$10,(dword_FF8062+2).w
+                move.w  #$10,(PasswordCursorFlash).w
                 addq.w  #2,d0
                 cmpi.w  #$A,d0
                 bmi.s   PasswordInput_PlayMoveSound
@@ -141,7 +141,7 @@ PasswordInput_PlayMoveSound:                            ; CODE XREF: PasswordMen
                 movem.l (sp)+,d0-d1
 PasswordInput_StoreSelection:                           ; CODE XREF: PasswordMenu_HandleInput+24   j  ; was: loc_A5A4
                                         ; PasswordMenu_HandleInput+2C   j
-                move.w  d0,(dword_FF8066+2).w
+                move.w  d0,(PasswordCursorOffset).w
                 move.w  d1,(PasswordCursorMoveFlag).w
                 move.l  #Password_CharacterCursorSpriteMapping,(PrimaryEntityMapping).w
                 cmpi.w  #8,d0
@@ -152,20 +152,20 @@ PasswordInput_StoreSelection:                           ; CODE XREF: PasswordMen
                 bsr.w   PasswordText_CopyToSecondaryBuffer
                 move.b  (ControllerHeldState).w,d0
                 andi.b  #$F,d0
-                cmp.b   (dword_FF806A).w,d0
+                cmp.b   (PasswordHeldNibble).w,d0
                 bne.s   PasswordInput_ResetRepeatDelay
-                subq.w  #1,(dword_FF806A+2).w
+                subq.w  #1,(PasswordRepeatTimer).w
                 bra.s   PasswordInput_SelectRepeatSource
 ; ---------------------------------------------------------------------------
 PasswordInput_ResetRepeatDelay:                         ; CODE XREF: PasswordMenu_HandleInput+86   j  ; was: loc_A5DE
-                move.b  d0,(dword_FF806A).w
-                move.w  #$18,(dword_FF806A+2).w
+                move.b  d0,(PasswordHeldNibble).w
+                move.w  #$18,(PasswordRepeatTimer).w
 PasswordInput_SelectRepeatSource:                       ; CODE XREF: PasswordMenu_HandleInput+8C   j  ; was: loc_A5E8
                 moveq   #0,d0
                 movea.w #(ControllerPressedState-M68K_RAM),a1
-                tst.w   (dword_FF806A+2).w
+                tst.w   (PasswordRepeatTimer).w
                 bpl.s   PasswordInput_CheckDecrease
-                move.w  #$FFFF,(dword_FF806A+2).w
+                move.w  #$FFFF,(PasswordRepeatTimer).w
                 movea.w #(ControllerHeldState-M68K_RAM),a1
                 btst    #0,(VBlankFrameCounter+1).w
                 beq.s   PasswordInput_ApplyDigitDelta
@@ -175,7 +175,7 @@ PasswordInput_CheckDecrease:                            ; CODE XREF: PasswordMen
                 moveq   #$FFFFFFFF,d0
                 cmpa.w  #$F708,a1
                 bne.s   PasswordInput_ApplyDigitDelta
-                move.w  #$A,(dword_FF8062+2).w
+                move.w  #$A,(PasswordCursorFlash).w
                 bra.s   PasswordInput_ApplyDigitDelta
 ; ---------------------------------------------------------------------------
 PasswordInput_CheckIncrease:                            ; CODE XREF: PasswordMenu_HandleInput+BA   j  ; was: loc_A61C
@@ -184,10 +184,10 @@ PasswordInput_CheckIncrease:                            ; CODE XREF: PasswordMen
                 moveq   #1,d0
                 cmpa.w  #$F708,a1
                 bne.s   PasswordInput_ApplyDigitDelta
-                move.w  #$A,(dword_FF8062+2).w
+                move.w  #$A,(PasswordCursorFlash).w
 PasswordInput_ApplyDigitDelta:                          ; CODE XREF: PasswordMenu_HandleInput+B4   j  ; was: loc_A630
                                         ; PasswordMenu_HandleInput+C2   j
-                move.w  (dword_FF8066+2).w,d4
+                move.w  (PasswordCursorOffset).w,d4
                 movea.w #(SoundDisableFlags+1-M68K_RAM),a0
 PasswordInput_SelectDigitAddress:                       ; CODE XREF: PasswordMenu_HandleInput+EC   j  ; was: loc_A638
                 addq.w  #1,a0
@@ -256,7 +256,7 @@ PasswordInput_RenderDigits:                             ; CODE XREF: PasswordMen
 PasswordCursor_AnimateToSelection:                      ; CODE XREF: PasswordMenu_HandleInput+4   j  ; was: loc_A6CE
                 movea.l #PasswordCursor_TargetXPositions,a0
                 movea.w #(Entity_ObjectPool-M68K_RAM),a1
-                move.w  (dword_FF8066+2).w,d0
+                move.w  (PasswordCursorOffset).w,d0
                 clr.w   d2
                 move.w  (a0,d0.w),d1
                 sub.w   $10(a1),d1
@@ -284,8 +284,8 @@ PasswordCursor_TargetXPositions:    dc.w    $F4, $104, $114, $124, $14C  ; was: 
 ; ---------------------------------------------------------------------------
 PasswordInput_HandleConfirmField:                       ; CODE XREF: PasswordMenu_HandleInput+68   j  ; was: loc_A716
                 move.l  #Password_ConfirmCursorSpriteMapping,(PrimaryEntityMapping).w
-                move.b  #$F,(dword_FF806A).w
-                move.w  #$18,(dword_FF806A+2).w
+                move.b  #$F,(PasswordHeldNibble).w
+                move.w  #$18,(PasswordRepeatTimer).w
                 tst.w   (PasswordCursorMoveFlag).w
                 bne.s   PasswordInput_Return
                 move.l  (PasswordDigits).w,d0

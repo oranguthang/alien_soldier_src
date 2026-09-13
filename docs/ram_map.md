@@ -1524,6 +1524,30 @@ contextual aliases rather than claiming ownership of the physical addresses.
 | `SharedTransferWorkWord0` (`$FFFF805C`) | `TilePatternOffset`, `IndexedStagingStart`, `PasswordDifficulty` | Streaming derives a pattern offset, indexed transfers preserve the staging cursor for optional mirroring, and password validation records the matched difficulty. |
 | `SharedTransferWorkLong1` (`$FFFF805E`) | `TilePlaneBufferOffset`, `IndexedGroupStride`, `PasswordStageNumber`, `OptionsSelection`, `OptionsCursorMoving`, `OptionsBGMIndex` | Streaming derives a destination-buffer offset, indexed transfers retain a source stride, password validation records a stage, and options screens overlay selection and animation fields. |
 
+## Reviewed shared runtime workspace at `$FFFF8040-$FFFF804B`
+
+These four physical fields have no single semantic owner. Forty-four
+contextual aliases make the local protocol visible at every executable use.
+
+| Physical symbol | Representative contextual views | Static evidence |
+|---|---|---|
+| `SharedRuntimeWorkLong0` (`$FFFF8040`) | `DMASourceEncoding`, `PoseCommandWord`, `PoseDurationByte`, `MetaspriteBaseTileWord`, `MetaspriteParentPtr`, `MetaspritePartCountM1`, `CutsceneRowSource`, `CutsceneRowVRAM`, `WaveStateTimer`, `TileInterpSpan`, `TileInterpReadBaseA`, `Stage3PackedTilePtr`, `MessagePackedDigitsA`, `PaletteColorPair`, `HitboxMirrorScratchA` | Independent code paths use the bytes as a DMA source encoding, command word, two-word pair, pointer, counter, packed digits, or mirrored hitbox. |
+| `SharedRuntimeWorkLong1` (`$FFFF8044`) | `CircleAttackOffsetY`, `TileInterpReadBaseB`, `TileInterpSpanStep`, `MessagePackedDigitsB`, `HitboxMirrorScratchB` | Fixed-point attack offset, interpolation read base/step, packed digits, and hitbox bytes occupy incompatible layouts. |
+| `SharedRuntimeWorkWord0` (`$FFFF8048`) | `MetaspriteSineScratch`, `CircleAttackTargetDX`, `BCDIncrementScratch`, `TileInterpVRAM`, `Stage3ResampleGroupsM1`, `Stage9SecondaryXCopy` | Consumers store a trigonometric sample, signed delta, packed BCD one, VRAM cursor, loop count, or camera snapshot. |
+| `SharedRuntimeWorkWord1` (`$FFFF804A`) | `MetaspriteCosScratch`, `CircleAttackTargetDY`, `BCDIncrementEnd`, `TileInterpStepsLeft`, `Stage3ResamplePassesM1` | Consumers store a second trigonometric sample or delta, use the address as a BCD exclusive end, or retain independent loop state. |
+
+## Reviewed shared control workspace at `$FFFF8062-$FFFF806D`
+
+The final raw RAM cluster is a twelve-byte overlay whose meaning follows the
+active scene. Neutral physical longwords preserve that allocation; all 190
+executable references use one of 33 contextual views.
+
+| Physical symbol | Representative contextual views | Static evidence |
+|---|---|---|
+| `SharedControlWorkLong0` (`$FFFF8062`) | `AsteroidVScrollSpeed`, `BackdropLineSpeed`, `WolfGaropaScrollSpeed`, `TerobusterIntroTimer`, `TerobusterProjectileY`, `LightningEffectTimer`, `XiTigerEntranceTimer`, `PostViblackVScrollVel`, `OptionsHandlerOffset`, `OptionsCursorFlashTimer`, `PasswordCursorFlash` | Separate scene paths treat the longword as signed fixed-point scroll speed or split it into independent timer, coordinate, handler-offset, and flash words. |
+| `SharedControlWorkLong1` (`$FFFF8066`) | `AsteroidVScrollPos`, `BackdropLinePosition`, `ArtemisForegroundState`, `TerobusterTileRowIndex`, `TeleportSnakeScrollVel`, `MidgameFadeLevel`, `ContinueCountdownValue`, `TitleMenuSelection`, `OptionsSFXIndex`, `OptionsRepeatTimer`, `PasswordCursorOffset` | The same bytes hold integrated positions, motion state, row progress, a fixed-point countdown or velocity, and mutually exclusive front-end fields. |
+| `SharedControlWorkLong2` (`$FFFF806A`) | `BackdropTailPosition`, `Stage12TeleportFade`, `Stage16CameraSnapshot`, `PostViblackPalettePos`, `OptionsPressedCopy`, `OptionsHeldCopy`, `OptionsVoiceIndex`, `PasswordHeldNibble`, `PasswordRepeatTimer` | Transition and Stage 16 code use overlapping word and longword state, while front-end paths address individual controller bytes, selection bytes, and repeat timers. |
+
 ## Review policy
 
 - `byte_`, `word_`, and `dword_` state observed access width, not purpose.

@@ -70,7 +70,7 @@ Boss_SharpssteelWaitForPlayerReadyReturn:               ; CODE XREF: Boss_Sharps
 Boss_SharpssteelInitializeState:                        ; DATA XREF: ROM:00047C5E   o  ; was: sub_47CA6
                 addq.w  #1,8(a5)
                 movea.w a5,a4
-                move.w  #$8300,(dword_FF8040).w
+                move.w  #$8300,(MetaspriteBaseTileWord).w
                 moveq   #$11,d7
                 movea.l #Boss_SharpssteelMetaspriteDescriptors,a0
                 movea.l #Boss_SharpssteelPartRadii,a1

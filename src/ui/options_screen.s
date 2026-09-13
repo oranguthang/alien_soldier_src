@@ -33,12 +33,12 @@ UI_InitOptionsScreenLoadDisplay:                        ; CODE XREF: UI_InitOpti
                 clr.w   (PrimaryCameraYPosition).w
                 clr.w   (PrimaryCameraXPosition).w
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
-                clr.w   (dword_FF8062+2).w
-                clr.w   (dword_FF8062).w
+                clr.w   (OptionsCursorFlashTimer).w
+                clr.w   (OptionsHandlerOffset).w
                 clr.b   (OptionsBGMIndex).w
-                clr.b   (dword_FF8066).w
-                clr.b   (dword_FF806A+2).w
-                move.w  #$20,(dword_FF8066+2).w         ; ' '
+                clr.b   (OptionsSFXIndex).w
+                clr.b   (OptionsVoiceIndex).w
+                move.w  #$20,(OptionsRepeatTimer).w     ; ' '
                 lea     (Text_Options).l,a0
                 move.w  #$8300,d0
                 move.w  #$4122,d4
@@ -79,8 +79,8 @@ UI_ActivateOptionsScreen:                               ; CODE XREF: UI_InitOpti
                 move.w  #$B3,d1
                 move.l  #FrontendCursor_SpriteMappings,d2
                 jsr     (FrontendCursor_Initialize).l
-                clr.b   (dword_FF806A).w
-                clr.b   (dword_FF806A+1).w
+                clr.b   (OptionsPressedCopy).w
+                clr.b   (OptionsHeldCopy).w
                 clr.b   d5
                 bsr.w   UI_UpdateDifficultyOption
                 clr.b   d5
@@ -137,11 +137,11 @@ UI_HandleOptionsInput:                                  ; CODE XREF: UI_UpdateOp
                 move.b  #$DB,d0
                 jsr     (Sound_QueueRequest).l
                 bset    #0,(OptionsCursorMoving).w
-                move.w  #$10,(dword_FF8062+2).w
-                move.w  #$20,(dword_FF8066+2).w         ; ' '
-                subq.w  #2,(dword_FF8062).w
+                move.w  #$10,(OptionsCursorFlashTimer).w
+                move.w  #$20,(OptionsRepeatTimer).w     ; ' '
+                subq.w  #2,(OptionsHandlerOffset).w
                 bpl.s   UI_HandleOptionsInputCheckDown
-                move.w  #$A,(dword_FF8062).w
+                move.w  #$A,(OptionsHandlerOffset).w
 UI_HandleOptionsInputCheckDown:                         ; CODE XREF: UI_HandleOptionsInput+14   j  ; was: loc_982C
                                         ; UI_HandleOptionsInput+36   j
                 btst    #1,(ControllerPressedState).w
@@ -149,22 +149,22 @@ UI_HandleOptionsInputCheckDown:                         ; CODE XREF: UI_HandleOp
                 move.b  #$DB,d0
                 jsr     (Sound_QueueRequest).l
                 bset    #0,(OptionsCursorMoving).w
-                move.w  #$10,(dword_FF8062+2).w
-                move.w  #$20,(dword_FF8066+2).w         ; ' '
-                addq.w  #2,(dword_FF8062).w
-                cmpi.w  #$C,(dword_FF8062).w
+                move.w  #$10,(OptionsCursorFlashTimer).w
+                move.w  #$20,(OptionsRepeatTimer).w     ; ' '
+                addq.w  #2,(OptionsHandlerOffset).w
+                cmpi.w  #$C,(OptionsHandlerOffset).w
                 bmi.s   UI_HandleOptionsInputReturn
-                clr.w   (dword_FF8062).w
+                clr.w   (OptionsHandlerOffset).w
 UI_HandleOptionsInputReturn:                            ; CODE XREF: UI_HandleOptionsInput+6E   j  ; was: locret_9862
                 rts
 ; ---------------------------------------------------------------------------
 UI_HandleOptionsInputUpdateCurrentRow:                  ; CODE XREF: UI_HandleOptionsInput+44   j  ; was: loc_9864
-                move.b  (ControllerPressedState).w,(dword_FF806A).w
-                move.b  (ControllerHeldState).w,(dword_FF806A+1).w
+                move.b  (ControllerPressedState).w,(OptionsPressedCopy).w
+                move.b  (ControllerHeldState).w,(OptionsHeldCopy).w
                 move.b  (ControllerPressedState).w,d5
                 btst    #4,d5
                 beq.s   UI_HandleOptionsInputCheckHorizontal
-                move.w  #$20,(dword_FF8066+2).w         ; ' '
+                move.w  #$20,(OptionsRepeatTimer).w     ; ' '
                 move.b  #4,d0
                 jmp     (Sound_QueueRequest).l
 ; ---------------------------------------------------------------------------
@@ -181,17 +181,17 @@ UI_UpdateSelectedOptionRepeatDelay:                     ; CODE XREF: UI_HandleOp
                 bne.s   UI_DecrementSelectedOptionRepeatDelay
                 btst    #3,(ControllerHeldState).w
                 bne.s   UI_DecrementSelectedOptionRepeatDelay
-                move.w  #$20,(dword_FF8066+2).w         ; ' '
+                move.w  #$20,(OptionsRepeatTimer).w     ; ' '
                 bra.s   UI_DispatchSelectedOption
 ; ---------------------------------------------------------------------------
 UI_DecrementSelectedOptionRepeatDelay:                  ; CODE XREF: UI_HandleOptionsInput+BA   j  ; was: loc_98BA
                                         ; UI_HandleOptionsInput+C2   j
-                tst.w   (dword_FF8066+2).w
+                tst.w   (OptionsRepeatTimer).w
                 beq.s   UI_DispatchSelectedOption
-                subq.w  #1,(dword_FF8066+2).w
+                subq.w  #1,(OptionsRepeatTimer).w
 UI_DispatchSelectedOption:                              ; CODE XREF: UI_HandleOptionsInput+CA   j  ; was: loc_98C4
                                         ; UI_HandleOptionsInput+D0   j
-                move.w  (dword_FF8062).w,d0
+                move.w  (OptionsHandlerOffset).w,d0
                 movea.w UI_OptionHandlerOffsets(pc,d0.w),a0
                 adda.l  #UI_UpdateDifficultyOption,a0
                 jmp     (a0)
@@ -225,7 +225,7 @@ UI_UpdateBGMTest:                                       ; CODE XREF: UI_InitOpti
                 adda.l  d0,a1
                 tst.b   d5
                 beq.s   UI_RenderBGMTestEntry
-                move.w  #$20,(dword_FF8066+2).w         ; ' '
+                move.w  #$20,(OptionsRepeatTimer).w     ; ' '
                 move.b  (a1),d0
                 jmp     (Sound_QueueRequest).l
 ; ---------------------------------------------------------------------------
@@ -244,9 +244,9 @@ UI_CopyBGMTestEntryBottomRow:                           ; CODE XREF: UI_UpdateBG
                 move.w  d0,(a0)+
                 dbf     d7,UI_CopyBGMTestEntryBottomRow
                 move.b  (OptionsBGMIndex).w,d0
-                btst    #2,(dword_FF806A).w
+                btst    #2,(OptionsPressedCopy).w
                 beq.s   UI_CheckIncrementBGMTestSelection
-                move.w  #$A,(dword_FF8062+2).w
+                move.w  #$A,(OptionsCursorFlashTimer).w
                 tst.b   d0
                 bne.s   UI_DecrementBGMTestSelection
                 move.b  #$14,d0
@@ -257,9 +257,9 @@ UI_DecrementBGMTestSelection:                           ; CODE XREF: UI_UpdateBG
                 bra.s   UI_StoreAndRenderBGMTestSelection
 ; ---------------------------------------------------------------------------
 UI_CheckIncrementBGMTestSelection:                      ; CODE XREF: UI_UpdateBGMTest+4C   j  ; was: loc_995A
-                btst    #3,(dword_FF806A).w
+                btst    #3,(OptionsPressedCopy).w
                 beq.s   UI_StoreAndRenderBGMTestSelection
-                move.w  #$A,(dword_FF8062+2).w
+                move.w  #$A,(OptionsCursorFlashTimer).w
                 cmpi.b  #$14,d0
                 bne.s   UI_IncrementBGMTestSelection
                 clr.b   d0
@@ -284,7 +284,7 @@ Options_BGMTestEntries_End:                             ; was: word_998C_End
 ; Update the SFX test index and queue the selected low- or high-range SFX ID
 UI_UpdateSFXTest:                                       ; CODE XREF: UI_InitOptionsScreen+19E   p  ; was: sub_9C4C
                                         ; DATA XREF: ROM:000098DC   o
-                move.b  (dword_FF8066).w,d0
+                move.b  (OptionsSFXIndex).w,d0
                 tst.b   d5
                 beq.s   UI_UpdateSFXTestSelection
                 lea     Options_SFXTestLowRequestIDs(pc),a0
@@ -294,20 +294,20 @@ UI_UpdateSFXTest:                                       ; CODE XREF: UI_InitOpti
 ; ---------------------------------------------------------------------------
 UI_UpdateSFXTestSelection:                              ; CODE XREF: UI_UpdateSFXTest+6   j  ; was: loc_9C64
                 moveq   #1,d1
-                tst.w   (dword_FF8066+2).w
+                tst.w   (OptionsRepeatTimer).w
                 bne.s   UI_CheckSFXTestPrimaryInput
                 btst    #0,(VBlankFrameCounter+1).w
                 bne.s   UI_StoreAndRenderSFXTestSelection
-                btst    #2,(dword_FF806A+1).w
+                btst    #2,(OptionsHeldCopy).w
                 bne.s   UI_SelectPreviousSFXTestID
-                btst    #3,(dword_FF806A+1).w
+                btst    #3,(OptionsHeldCopy).w
                 bne.s   UI_SelectNextSFXTestID
                 bra.s   UI_StoreAndRenderSFXTestSelection
 ; ---------------------------------------------------------------------------
 UI_CheckSFXTestPrimaryInput:                            ; CODE XREF: UI_UpdateSFXTest+1E   j  ; was: loc_9C86
-                btst    #2,(dword_FF806A).w
+                btst    #2,(OptionsPressedCopy).w
                 beq.s   UI_CheckNextSFXTestID
-                move.w  #6,(dword_FF8062+2).w
+                move.w  #6,(OptionsCursorFlashTimer).w
 UI_SelectPreviousSFXTestID:                             ; CODE XREF: UI_UpdateSFXTest+2E   j  ; was: loc_9C94
                 movem.l d0,-(sp)
                 move.b  #4,d0
@@ -323,9 +323,9 @@ UI_DecrementSFXTestSelection:                           ; CODE XREF: UI_UpdateSF
                 bra.s   UI_StoreAndRenderSFXTestSelection
 ; ---------------------------------------------------------------------------
 UI_CheckNextSFXTestID:                                  ; CODE XREF: UI_UpdateSFXTest+40   j  ; was: loc_9CB4
-                btst    #3,(dword_FF806A).w
+                btst    #3,(OptionsPressedCopy).w
                 beq.s   UI_StoreAndRenderSFXTestSelection
-                move.w  #6,(dword_FF8062+2).w
+                move.w  #6,(OptionsCursorFlashTimer).w
 UI_SelectNextSFXTestID:                                 ; CODE XREF: UI_UpdateSFXTest+36   j  ; was: loc_9CC2
                 movem.l d0,-(sp)
                 move.b  #4,d0
@@ -340,7 +340,7 @@ UI_IncrementSFXTestSelection:                           ; CODE XREF: UI_UpdateSF
                 addq.b  #1,d0
 UI_StoreAndRenderSFXTestSelection:                      ; CODE XREF: UI_UpdateSFXTest+26   j  ; was: loc_9CE0
                                         ; UI_UpdateSFXTest+38   j
-                move.b  d0,(dword_FF8066).w
+                move.b  d0,(OptionsSFXIndex).w
                 lea     (Math_PackedBCDLookup).l,a0
                 asl.w   #1,d0
                 andi.w  #$1FE,d0
@@ -351,7 +351,7 @@ UI_StoreAndRenderSFXTestSelection:                      ; CODE XREF: UI_UpdateSF
 ; Update the voice test index and queue the selected voice-DAC request ID
 UI_UpdateVoiceTest:                                     ; CODE XREF: UI_InitOptionsScreen+1A4   p  ; was: sub_9CFC
                                         ; DATA XREF: ROM:000098DE   o
-                move.b  (dword_FF806A+2).w,d0
+                move.b  (OptionsVoiceIndex).w,d0
                 tst.b   d5
                 beq.s   UI_UpdateVoiceTestSelection
                 lea     Options_VoiceTestRequestIDs(pc),a0
@@ -361,20 +361,20 @@ UI_UpdateVoiceTest:                                     ; CODE XREF: UI_InitOpti
 ; ---------------------------------------------------------------------------
 UI_UpdateVoiceTestSelection:                            ; CODE XREF: UI_UpdateVoiceTest+6   j  ; was: loc_9D14
                 moveq   #1,d1
-                tst.w   (dword_FF8066+2).w
+                tst.w   (OptionsRepeatTimer).w
                 bne.s   UI_CheckVoiceTestPrimaryInput
                 btst    #0,(VBlankFrameCounter+1).w
                 bne.s   UI_StoreAndRenderVoiceTestSelection
-                btst    #2,(dword_FF806A+1).w
+                btst    #2,(OptionsHeldCopy).w
                 bne.s   UI_SelectPreviousVoiceTestID
-                btst    #3,(dword_FF806A+1).w
+                btst    #3,(OptionsHeldCopy).w
                 bne.s   UI_SelectNextVoiceTestID
                 bra.s   UI_StoreAndRenderVoiceTestSelection
 ; ---------------------------------------------------------------------------
 UI_CheckVoiceTestPrimaryInput:                          ; CODE XREF: UI_UpdateVoiceTest+1E   j  ; was: loc_9D36
-                btst    #2,(dword_FF806A).w
+                btst    #2,(OptionsPressedCopy).w
                 beq.s   UI_CheckNextVoiceTestID
-                move.w  #6,(dword_FF8062+2).w
+                move.w  #6,(OptionsCursorFlashTimer).w
 UI_SelectPreviousVoiceTestID:                           ; CODE XREF: UI_UpdateVoiceTest+2E   j  ; was: loc_9D44
                 tst.b   d0
                 bne.s   UI_DecrementVoiceTestSelection
@@ -386,9 +386,9 @@ UI_DecrementVoiceTestSelection:                         ; CODE XREF: UI_UpdateVo
                 bra.s   UI_StoreAndRenderVoiceTestSelection
 ; ---------------------------------------------------------------------------
 UI_CheckNextVoiceTestID:                                ; CODE XREF: UI_UpdateVoiceTest+40   j  ; was: loc_9D52
-                btst    #3,(dword_FF806A).w
+                btst    #3,(OptionsPressedCopy).w
                 beq.s   UI_StoreAndRenderVoiceTestSelection
-                move.w  #6,(dword_FF8062+2).w
+                move.w  #6,(OptionsCursorFlashTimer).w
 UI_SelectNextVoiceTestID:                               ; CODE XREF: UI_UpdateVoiceTest+36   j  ; was: loc_9D60
                 cmpi.b  #$25,d0                         ; '%'
                 bne.s   UI_IncrementVoiceTestSelection
@@ -399,7 +399,7 @@ UI_IncrementVoiceTestSelection:                         ; CODE XREF: UI_UpdateVo
                 addq.w  #1,d0
 UI_StoreAndRenderVoiceTestSelection:                    ; CODE XREF: UI_UpdateVoiceTest+26   j  ; was: loc_9D6C
                                         ; UI_UpdateVoiceTest+38   j
-                move.b  d0,(dword_FF806A+2).w
+                move.b  d0,(OptionsVoiceIndex).w
                 lea     (Math_PackedBCDLookup).l,a0
                 asl.w   #1,d0
                 andi.w  #$1FE,d0
@@ -470,16 +470,16 @@ UI_ActivateSecondaryOptionsMenu:                        ; CODE XREF: UI_InitSeco
                 move.w  #$FFF0,(PrimaryCameraYPosition).w
                 clr.w   (PrimaryCameraXPosition).w
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
-                clr.w   (dword_FF8062+2).w
-                clr.w   (dword_FF8062).w
+                clr.w   (OptionsCursorFlashTimer).w
+                clr.w   (OptionsHandlerOffset).w
                 clr.w   (OptionsSelection).w
-                move.w  #$20,(dword_FF8066+2).w         ; ' '
+                move.w  #$20,(OptionsRepeatTimer).w     ; ' '
                 move.w  #$118,d0
                 move.w  #$CA,d1
                 move.l  #FrontendCursor_SpriteMappings,d2
                 jsr     (FrontendCursor_Initialize).l
-                clr.b   (dword_FF806A).w
-                clr.b   (dword_FF806A+1).w
+                clr.b   (OptionsPressedCopy).w
+                clr.b   (OptionsHeldCopy).w
 ; End of function UI_InitSecondaryOptionsMenu
 ; Update the secondary options path and its shared sound-test handlers
 UI_UpdateSecondaryOptionsMenu:                          ; DATA XREF: Sys_DispatchGameState+A6   o  ; was: sub_9E88
@@ -519,8 +519,8 @@ UI_HandleSecondaryOptionsInput:                         ; CODE XREF: UI_UpdateSe
                 btst    #0,(ControllerPressedState).w
                 beq.s   UI_HandleSecondaryOptionsInputCheckDown
                 bset    #0,(OptionsCursorMoving).w
-                move.w  #$10,(dword_FF8062+2).w
-                move.w  #$20,(dword_FF8066+2).w         ; ' '
+                move.w  #$10,(OptionsCursorFlashTimer).w
+                move.w  #$20,(OptionsRepeatTimer).w     ; ' '
                 subq.w  #2,d0
                 bpl.s   UI_PlaySecondaryOptionsMoveSound
                 moveq   #0,d0
@@ -528,8 +528,8 @@ UI_HandleSecondaryOptionsInputCheckDown:                ; CODE XREF: UI_HandleSe
                 btst    #1,(ControllerPressedState).w
                 beq.w   UI_StoreSecondaryOptionsSelection
                 bset    #0,(OptionsCursorMoving).w
-                move.w  #$10,(dword_FF8062+2).w
-                move.w  #$20,(dword_FF8066+2).w         ; ' '
+                move.w  #$10,(OptionsCursorFlashTimer).w
+                move.w  #$20,(OptionsRepeatTimer).w     ; ' '
                 addq.w  #2,d0
                 cmpi.w  #6,d0
                 bmi.s   UI_PlaySecondaryOptionsMoveSound
@@ -545,9 +545,9 @@ UI_PlaySecondaryOptionsMoveSound:                       ; CODE XREF: UI_HandleSe
 UI_StoreSecondaryOptionsSelection:                      ; CODE XREF: UI_HandleSecondaryOptionsInput+38   j  ; was: loc_9F62
                                         ; UI_HandleSecondaryOptionsInput+58   j
                 move.w  d0,(OptionsSelection).w
-                move.w  UI_SecondaryOptionsHandlerIndices(pc,d0.w),(dword_FF8062).w
-                move.b  (ControllerPressedState).w,(dword_FF806A).w
-                move.b  (ControllerHeldState).w,(dword_FF806A+1).w
+                move.w  UI_SecondaryOptionsHandlerIndices(pc,d0.w),(OptionsHandlerOffset).w
+                move.b  (ControllerPressedState).w,(OptionsPressedCopy).w
+                move.b  (ControllerHeldState).w,(OptionsHeldCopy).w
                 move.b  (ControllerPressedState).w,d5
                 andi.b  #$60,d5                         ; '`'
                 bra.w   UI_ProcessSelectedOptionInput
@@ -643,17 +643,17 @@ Options_UpdateBit1Toggle:                               ; CODE XREF: UI_UpdateDi
                                         ; UI_UpdateBGMOption+14   j
                 moveq   #1,d5
 Options_ApplyToggleAndQueueLabels:                      ; CODE XREF: Options_UpdateBit2Toggle+2   j  ; was: loc_A052
-                btst    #2,(dword_FF806A).w
+                btst    #2,(OptionsPressedCopy).w
                 beq.s   Options_CheckToggleRight
                 bclr    d5,1(a4)
                 bra.s   Options_ResetToggleRepeatDelay
 ; ---------------------------------------------------------------------------
 Options_CheckToggleRight:                               ; CODE XREF: Options_UpdateBit2Toggle+C   j  ; was: loc_A060
-                btst    #3,(dword_FF806A).w
+                btst    #3,(OptionsPressedCopy).w
                 beq.s   Options_SelectToggleAttributes
                 bset    d5,1(a4)
 Options_ResetToggleRepeatDelay:                         ; CODE XREF: Options_UpdateBit2Toggle+12   j  ; was: loc_A06C
-                move.w  #$A,(dword_FF8062+2).w
+                move.w  #$A,(OptionsCursorFlashTimer).w
 Options_SelectToggleAttributes:                         ; CODE XREF: Options_UpdateBit2Toggle+1A   j  ; was: loc_A072
                 move.w  #$2000,d1
                 move.w  #$4000,d2
@@ -703,7 +703,7 @@ Options_CopyToggleBottomRow:                            ; CODE XREF: Options_Upd
 OptionsCursor_Animate:                                  ; CODE XREF: UI_HandleOptionsInput+A   j  ; was: sub_A0D2
                 movea.l #Options_CursorYPositions,a0
                 movea.w #(Entity_ObjectPool-M68K_RAM),a1
-                move.w  (dword_FF8062).w,d0
+                move.w  (OptionsHandlerOffset).w,d0
                 clr.w   d2
                 move.w  (a0,d0.w),d1
                 sub.w   $14(a1),d1
@@ -764,10 +764,10 @@ SecondaryOptions_CursorYPositions:  dc.w    $CA, $DA, $EA, $FA, $10A  ; was: wor
 ; Advances the shared frontend cursor flash and writes its palette color
 FrontendCursor_UpdateFlash:                             ; CODE XREF: UI_HandleOptionsInput   p  ; was: sub_A168
                                         ; sub_9EF6   p
-                move.w  (dword_FF8062+2).w,d0
+                move.w  (OptionsCursorFlashTimer).w,d0
                 beq.s   FrontendCursor_ApplyFlashColor
                 subq.w  #2,d0
-                move.w  d0,(dword_FF8062+2).w
+                move.w  d0,(OptionsCursorFlashTimer).w
 FrontendCursor_ApplyFlashColor:                         ; CODE XREF: FrontendCursor_UpdateFlash+4   j  ; was: loc_A174
                 andi.w  #$E,d0
                 move.w  FrontendCursor_FlashColors(pc,d0.w),(PaletteActiveColor46).w

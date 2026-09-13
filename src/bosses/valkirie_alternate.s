@@ -36,7 +36,7 @@ Boss_ValkirieAlternateInit:                             ; DATA XREF: Boss_Valkir
                                         ; ROM:Boss_ValkirieAlternateStateOffsets   o
                 move.w  #1,8(a5)
                 movea.w a5,a4
-                move.w  #$8300,(dword_FF8040).w
+                move.w  #$8300,(MetaspriteBaseTileWord).w
                 moveq   #$17,d7
                 movea.l #Boss_ValkirieAlternateMetaspritePartDescriptors,a0
                 movea.l #Boss_ValkirieAlternateMetaspriteInitialAngles,a1
@@ -285,7 +285,7 @@ Boss_ValkirieAlternateHandlePoseLoopOrInterpolation:    ; CODE XREF: Boss_Valkir
                 bra.s   Boss_ValkirieAlternateReadPoseCommand
 ; ---------------------------------------------------------------------------
 Boss_ValkirieAlternateBeginPoseInterpolation:           ; CODE XREF: Boss_ValkirieAlternateHandlePoseLoopOrInterpolation+4   j  ; was: loc_59348
-                move.w  d3,(dword_FF8040).w
+                move.w  d3,(PoseCommandWord).w
                 andi.w  #$FF,d3
                 move.w  2(a1,d0.w),d0
                 ext.l   d0
@@ -293,7 +293,7 @@ Boss_ValkirieAlternateBeginPoseInterpolation:           ; CODE XREF: Boss_Valkir
                 movea.l d0,a0
                 bsr.w   Boss_ValkirieAlternateCalculatePoseDeltas
                 moveq   #0,d0
-                move.b  (dword_FF8040).w,d0
+                move.b  (PoseDurationByte).w,d0
                 move.w  d0,$C(a5)
                 addq.w  #4,$58(a5)
                 addq.w  #1,$29C(a5)

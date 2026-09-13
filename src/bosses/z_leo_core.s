@@ -144,7 +144,7 @@ Boss_ZLeoIntroInit:                                     ; DATA XREF: ROM:00051B8
                 bpl.w   Boss_ZLeoNoOp
                 move.w  #1,8(a5)
                 movea.w a5,a4
-                move.w  #$380,(dword_FF8040).w
+                move.w  #$380,(MetaspriteBaseTileWord).w
                 moveq   #$F,d7
                 movea.l #Boss_ZLeoValkirieForceSharedMetaspriteData,a0
                 movea.l #Boss_ZLeoPartRadii,a1

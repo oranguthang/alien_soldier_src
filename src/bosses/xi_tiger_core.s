@@ -75,7 +75,7 @@ Boss_XiTigerSetup:                                      ; DATA XREF: ROM:0003D88
                 tst.w   (DataLoaderControl).w
                 bmi.s   Boss_XiTigerInitReturn
                 movea.w a5,a4
-                move.w  #$8280,(dword_FF8040).w
+                move.w  #$8280,(MetaspriteBaseTileWord).w
                 moveq   #$18,d7
                 movea.l #Boss_XiTigerMetaspriteDescriptors,a0
                 movea.l #Boss_XiTigerPartRadii,a1
@@ -823,14 +823,14 @@ Boss_XiTigerCheckPoseLoopCommand:                       ; CODE XREF: Boss_XiTige
                 bra.s   Boss_XiTigerReadPoseCommand
 ; ---------------------------------------------------------------------------
 Boss_XiTigerBeginPoseCommand:                           ; CODE XREF: Boss_XiTigerUpdatePoseAnimation+40   j  ; was: loc_3E268
-                move.w  d3,(dword_FF8040).w
+                move.w  d3,(PoseCommandWord).w
                 andi.w  #$FF,d3
                 move.w  2(a1,d0.w),d0
                 ext.l   d0
                 addi.l  #Boss_XiTigerPoseTargets,d0
                 movea.l d0,a0
                 bsr.w   Boss_XiTigerBeginPoseInterpolation
-                move.b  (dword_FF8040).w,d1
+                move.b  (PoseDurationByte).w,d1
                 ext.w   d1
                 add.w   d1,$C(a5)
                 addq.w  #4,$58(a5)

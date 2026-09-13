@@ -142,12 +142,12 @@ Frontend_InitializeSegaScreen_CopyPalette:              ; was: loc_1D09E
                 move.w  #$6000,-(a0)
                 move.l  #sega_tiles,d0
                 lsr.l   #1,d0
-                move.l  d0,(dword_FF8040).w
-                move.b  (dword_FF8040+3).w,-(a0)
+                move.l  d0,(DMASourceEncoding).w
+                move.b  (DMASourceEncoding+3).w,-(a0)
                 move.b  #$95,-(a0)
-                move.b  (dword_FF8040+2).w,-(a0)
+                move.b  (DMASourceEncoding+2).w,-(a0)
                 move.b  #$96,-(a0)
-                move.b  (dword_FF8040+1).w,-(a0)
+                move.b  (DMASourceEncoding+1).w,-(a0)
                 move.b  #$97,-(a0)
                 move.w  #$8F02,-(a0)
                 move.l  #$94039300,-(a0)

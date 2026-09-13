@@ -40,7 +40,7 @@ Math_CalculateSineCosineTable:                          ; CODE XREF: Boss_Shiper
                 adda.w  #$400,a3
                 movea.w a3,a4
                 addq.w  #4,a3
-                move.w  a5,(dword_FF8040).w
+                move.w  a5,(TrigSavedObjectPtr).w
                 movea.l #Math_QuarterSineTable,a5
                 asl.w   #2,d0
                 move.w  #$3F,d7                         ; '?'
@@ -60,7 +60,7 @@ Math_PopulateTrigTable:                                 ; CODE XREF: Math_Calcul
                 move.l  d1,(a0)+
                 neg.l   d1
                 move.l  d1,(a2)+
-                movea.w (dword_FF8040).w,a5
+                movea.w (TrigSavedObjectPtr).w,a5
                 rts
 ; End of function Math_CalculateSineCosineTable
 ; ---------------------------------------------------------------------------
@@ -153,9 +153,9 @@ VDP_QueueCommand_Build:                                 ; CODE XREF: StageTransi
                 move.w  d1,-(a1)
                 move.l  a0,d0
                 lsr.l   #1,d0
-                move.l  d0,(dword_FF8040).w
-                move.b  (dword_FF8040+2).w,d1
-                move.b  (dword_FF8040+1).w,d2
+                move.l  d0,(DMASourceEncoding).w
+                move.b  (DMASourceEncoding+2).w,d1
+                move.b  (DMASourceEncoding+1).w,d2
                 andi.b  #$7F,d2
                 move.b  d0,-(a1)
                 move.b  #$95,-(a1)
@@ -184,9 +184,9 @@ Stage22_GraphicsUpdate2_RequestZ80Bus:                  ; CODE XREF: Stage22_Gra
                 move.l  d4,(a4)
                 move.l  a0,d0
                 lsr.l   #1,d0
-                move.l  d0,(dword_FF8040).w
-                move.b  (dword_FF8040+2).w,d1
-                move.b  (dword_FF8040+1).w,d2
+                move.l  d0,(DMASourceEncoding).w
+                move.b  (DMASourceEncoding+2).w,d1
+                move.b  (DMASourceEncoding+1).w,d2
                 andi.w  #$FF,d0
                 andi.w  #$FF,d1
                 andi.w  #$7F,d2

@@ -191,7 +191,7 @@ Boss_FlyingNeoUpdateMetasprite:                         ; CODE XREF: Boss_Flying
                 movea.w #(TertiaryEntityType-M68K_RAM),a4
                 movea.w a5,a3
                 moveq   #7,d7
-                move.w  #8,(dword_FF8040).w
+                move.w  #8,(MetaspritePartCountM1).w
                 jsr     (Sprite_UpdateMetaspriteEightFrameRotation).l
                 bsr.w   Boss_FlyingNeoBuildLineScrollTables
                 bsr.w   Boss_FlyingNeoUpdateOrbitAngularImpulse

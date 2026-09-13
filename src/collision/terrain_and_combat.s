@@ -274,8 +274,8 @@ Results_IncrementDestroyedEnemyCountBCD:                ; was: sub_144A6
                                         ; Collision_CheckWeaponProjectilesAgainstEnemies+196   p
                 movem.l d1/a3-a4,-(sp)
                 movea.w #(DestroyedEnemyCountBCD+2-M68K_RAM),a3
-                movea.w #(word_FF804A-M68K_RAM),a4
-                move.w  #1,(word_FF8048).w
+                movea.w #(BCDIncrementEnd-M68K_RAM),a4
+                move.w  #1,(BCDIncrementScratch).w
                 sub.w   d1,d1
                 abcd    -(a4),-(a3)
                 abcd    -(a4),-(a3)

@@ -50,7 +50,7 @@ Boss_InitArtemisState0:                                 ; DATA XREF: Boss_Update
                                         ; ROM:Boss_ArtemisStateOffsets   o
                 move.w  #1,8(a5)
                 movea.w a5,a4
-                move.w  #$300,(dword_FF8040).w
+                move.w  #$300,(MetaspriteBaseTileWord).w
                 moveq   #$1D,d7
                 movea.l #Boss_ArtemisMetaspritePartDescriptors,a0
                 movea.l #Boss_ArtemisMetaspriteInitialAngles,a1
@@ -292,7 +292,7 @@ Boss_EnterArtemisState10:                               ; CODE XREF: Boss_Update
                 move.w  a5,d0
                 move.w  a5,d1
                 jsr     (Entity_SelectValkirieActivePartPair).l
-                move.w  #$8000,(dword_FF8066).w
+                move.w  #$8000,(ArtemisForegroundState).w
                 lea     Artemis_State10PartMotionCommands(pc),a0
                 nop
                 jsr     (Entity_ApplyValkiriePartMotionCommands).l

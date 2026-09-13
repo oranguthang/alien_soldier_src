@@ -64,7 +64,7 @@ Boss_DeepStriderClearStageObjects:                      ; CODE XREF: Boss_DeepSt
 Boss_DeepStriderIntroRise:                              ; DATA XREF: ROM:0003E5CC   o  ; was: sub_3E60A
                 addq.w  #1,8(a5)
                 movea.w a5,a4
-                move.w  #$300,(dword_FF8040).w
+                move.w  #$300,(MetaspriteBaseTileWord).w
                 moveq   #$D,d7
                 movea.l #Boss_DeepStriderMetaspriteDescriptors,a0
                 movea.l #Boss_DeepStriderPartRadii,a1

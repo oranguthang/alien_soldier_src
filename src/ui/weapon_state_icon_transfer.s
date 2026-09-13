@@ -12,9 +12,9 @@ UI_QueuePendingWeaponStateIconTransfer:                 ; was: sub_133D4
                 subq.w  #4,d0
                 move.l  (a0,d0.w),d0
                 lsr.l   #1,d0
-                move.l  d0,(dword_FF8040).w
-                move.b  (dword_FF8040+2).w,d1
-                move.b  (dword_FF8040+1).w,d2
+                move.l  d0,(DMASourceEncoding).w
+                move.b  (DMASourceEncoding+2).w,d1
+                move.b  (DMASourceEncoding+1).w,d2
                 move.b  d0,-(a5)
                 move.b  #$95,-(a5)
                 move.b  d1,-(a5)
@@ -42,9 +42,9 @@ UI_QueueWeaponStateIconTransferFromSource:              ; was: sub_1344A
                 move.w  #$82,-(a0)
                 move.w  #$7400,-(a0)
                 lsr.l   #1,d0
-                move.l  d0,(dword_FF8040).w
-                move.b  (dword_FF8040+2).w,d2
-                move.b  (dword_FF8040+1).w,d3
+                move.l  d0,(DMASourceEncoding).w
+                move.b  (DMASourceEncoding+2).w,d2
+                move.b  (DMASourceEncoding+1).w,d3
                 andi.w  #$7F,d3
                 move.b  d0,-(a0)
                 move.b  #$95,-(a0)

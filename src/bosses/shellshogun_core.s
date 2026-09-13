@@ -76,7 +76,7 @@ Boss_ShellshogunSetupPhase:                             ; DATA XREF: ROM:0003952
                 clr.w   $29C(a5)
                 addq.w  #1,$26(a5)
                 movea.w a5,a4
-                move.w  #$300,(dword_FF8040).w
+                move.w  #$300,(MetaspriteBaseTileWord).w
                 moveq   #$15,d7
                 moveq   #$17,d7
                 movea.l #Boss_ShellshogunMetaspriteDescriptors,a0

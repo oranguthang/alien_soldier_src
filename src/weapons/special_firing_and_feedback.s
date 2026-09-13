@@ -37,14 +37,14 @@ Weapon_CircleAttack_SetupProjectiles:                   ; CODE XREF: Player_Spaw
                 move.w  (a0,d5.w),d4
                 muls.w  #$27,d3                         ; '''
                 muls.w  #$27,d4                         ; '''
-                move.l  d3,(dword_FF8040).w
-                move.l  d4,(dword_FF8044).w
+                move.l  d3,(CircleAttackOffsetX).w
+                move.l  d4,(CircleAttackOffsetY).w
                 move.w  d1,d3
                 move.w  d2,d4
                 sub.w   $10(a5),d3
                 sub.w   $14(a5),d4
-                move.w  d3,(word_FF8048).w
-                move.w  d4,(word_FF804A).w
+                move.w  d3,(CircleAttackTargetDX).w
+                move.w  d4,(CircleAttackTargetDY).w
                 movea.l #Weapon_DirectionVectorsSpeed10,a0
                 move.l  (a0,d7.w),d3
                 move.l  $20(a0,d7.w),d4
@@ -63,12 +63,12 @@ Weapon_CircleAttack_SpawnLoop:                          ; CODE XREF: Player_Spaw
                 move.w  #$8E80,2(a0)
                 move.w  d1,$10(a0)
                 move.w  d2,$14(a0)
-                move.w  (word_FF8048).w,$58(a0)
-                move.w  (word_FF804A).w,$5A(a0)
+                move.w  (CircleAttackTargetDX).w,$58(a0)
+                move.w  (CircleAttackTargetDY).w,$5A(a0)
                 move.l  d3,$1C(a0)
                 move.l  d4,$18(a0)
-                move.l  (dword_FF8040).w,$48(a0)
-                move.l  (dword_FF8044).w,$4C(a0)
+                move.l  (CircleAttackOffsetX).w,$48(a0)
+                move.l  (CircleAttackOffsetY).w,$4C(a0)
                 clr.l   $50(a0)
                 clr.l   $54(a0)
                 move.w  (a2,d6.w),$E(a0)

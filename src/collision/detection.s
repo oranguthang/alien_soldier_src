@@ -405,8 +405,8 @@ Collision_CheckPlayerAgainstHostiles_Return:            ; CODE XREF: Collision_C
 Collision_CheckPlayerAgainstHostiles_ApplyDamage:       ; CODE XREF: Collision_CheckPlayerAgainstHostiles+C0   j  ; was: loc_13F9C
                                         ; Collision_CheckPlayerAgainstHostiles+C6   j
                 movea.w #(PlayerDamageBCD+2-M68K_RAM),a3
-                movea.w #(word_FF804A-M68K_RAM),a4
-                move.w  #1,(word_FF8048).w
+                movea.w #(BCDIncrementEnd-M68K_RAM),a4
+                move.w  #1,(BCDIncrementScratch).w
                 sub.w   d1,d1
                 abcd    -(a4),-(a3)
                 abcd    -(a4),-(a3)

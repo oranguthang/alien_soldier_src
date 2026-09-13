@@ -73,7 +73,7 @@ Boss_JokerSetup:                                        ; DATA XREF: ROM:0003B2E
 Boss_JokerInitializeMetasprite:                         ; CODE XREF: Boss_JokerSetup+A   j  ; was: loc_3B354
                 addq.w  #1,8(a5)
                 movea.w a5,a4
-                move.w  #$300,(dword_FF8040).w
+                move.w  #$300,(MetaspriteBaseTileWord).w
                 moveq   #$12,d7
                 movea.l #Boss_JokerMetaspriteDescriptors,a0
                 movea.l #Boss_JokerPartRadii,a1

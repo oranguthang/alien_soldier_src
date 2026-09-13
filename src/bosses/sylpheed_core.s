@@ -57,7 +57,7 @@ Boss_InitSylpheed:                                      ; DATA XREF: Boss_Update
                                         ; ROM:Boss_SylpheedStateOffsets   o
                 move.w  #1,8(a5)
                 movea.w a5,a4
-                move.w  #$300,(dword_FF8040).w
+                move.w  #$300,(MetaspriteBaseTileWord).w
                 moveq   #$1A,d7
                 movea.l #Boss_SylpheedMetaspritePartDescriptors,a0
                 movea.l #Boss_SylpheedMetaspriteInitialAngles,a1

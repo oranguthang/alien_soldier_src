@@ -34,8 +34,8 @@ EnemySpawn_UpdateDirectorTimer:                         ; DATA XREF: ROM:0002C35
                 bne.w   EnemySpawn_DirectorReturn
                 bsr.w   EnemySpawn_SelectSearchOriginY
                 move.w  #$158,d1
-                move.w  (RandomNumberState).w,(dword_FF8040).w
-                andi.w  #1,(dword_FF8040).w
+                move.w  (RandomNumberState).w,(EnemySpawnSearchPass).w
+                andi.w  #1,(EnemySpawnSearchPass).w
                 bsr.w   EnemySpawn_FindTerrainPosition
                 bne.w   EnemySpawn_DirectorReturn
                 move.w  #$1C,(a0)
@@ -130,7 +130,7 @@ EnemySpawn_FindTerrainPosition_CheckRun:                ; CODE XREF: EnemySpawn_
                 addq.w  #1,d6
                 cmpi.w  #7,d6
                 bmi.s   EnemySpawn_FindTerrainPosition_NextRow
-                subq.w  #1,(dword_FF8040).w
+                subq.w  #1,(EnemySpawnSearchPass).w
                 bmi.s   EnemySpawn_FindTerrainPosition_Found
                 moveq   #$FFFFFFFF,d6
 EnemySpawn_FindTerrainPosition_NextRow:                 ; CODE XREF: EnemySpawn_FindTerrainPosition+52   j  ; was: loc_2C484

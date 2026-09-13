@@ -50,7 +50,7 @@ Boss_WolfGaropaInitialize:                              ; DATA XREF: Boss_WolfGa
                 move.b  #$18,(PlayerOAMBucketOffset).w
                 move.w  #1,8(a5)
                 movea.w a5,a4
-                move.w  #$288,(dword_FF8040).w
+                move.w  #$288,(MetaspriteBaseTileWord).w
                 moveq   #$18,d7
                 movea.l #Boss_WolfGaropaMetaspriteDescriptors,a0
                 movea.l #Boss_WolfGaropaPartRadii,a1

@@ -185,9 +185,9 @@ Tilemap_QueueLongSourceRowLoop:                         ; CODE XREF: Unreference
                 move.w  d1,-(a0)
                 move.l  d0,d2
                 lsr.l   #1,d2
-                move.l  d2,(dword_FF8040).w
-                move.b  (dword_FF8040+2).w,d3
-                move.b  (dword_FF8040+1).w,d4
+                move.l  d2,(DMASourceEncoding).w
+                move.b  (DMASourceEncoding+2).w,d3
+                move.b  (DMASourceEncoding+1).w,d4
                 move.b  d2,-(a0)
                 move.b  #$95,-(a0)
                 move.b  d3,-(a0)

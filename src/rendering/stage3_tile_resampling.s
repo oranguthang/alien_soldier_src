@@ -1,12 +1,12 @@
 ; Reorders and horizontally resamples Stage 3 phase-2 packed-nibble tile data
 Gfx_ResampleStage3Phase2Tiles:                          ; CODE XREF: Gfx_PrepareStage3Phase2ResampledTiles+40   p  ; was: sub_12648
                 movea.l (Stage3ScaleTablePtr).w,a4
-                movea.l (dword_FF8040).w,a0
+                movea.l (Stage3PackedTilePtr).w,a0
                 movea.l #$FFFF6000,a2
                 moveq   #0,d6
-                move.w  (word_FF8048).w,d7
+                move.w  (Stage3ResampleGroupsM1).w,d7
 Gfx_Stage3ResampleNextSourceGroup:                      ; CODE XREF: Gfx_ResampleStage3Phase2Tiles+5E   j  ; was: loc_1265C
-                move.w  (word_FF804A).w,d5
+                move.w  (Stage3ResamplePassesM1).w,d5
                 move.w  d5,d4
                 addq.w  #1,d4
                 asl.w   #5,d4
@@ -15,7 +15,7 @@ Gfx_Stage3GatherSourceColumns:                          ; CODE XREF: Gfx_Resampl
                 addi.w  #$20,d6                         ; ' '
                 dbf     d5,Gfx_Stage3GatherSourceColumns
                 movea.l a2,a3
-                move.w  (word_FF804A).w,d5
+                move.w  (Stage3ResamplePassesM1).w,d5
                 addq.w  #1,d5
                 asl.w   #2,d5
                 subq.w  #1,d5
@@ -36,14 +36,14 @@ Gfx_Stage3ReversePackedNibbles:                         ; CODE XREF: Gfx_Resampl
                 add.w   d4,d6
                 subi.w  #$20,d6                         ; ' '
 Gfx_Stage3AdvanceSourceGroup:                           ; CODE XREF: Gfx_ResampleStage3Phase2Tiles+52   j  ; was: loc_126A2
-                move.w  (word_FF804A).w,d5
+                move.w  (Stage3ResamplePassesM1).w,d5
                 dbf     d7,Gfx_Stage3ResampleNextSourceGroup
                 movea.l #$FFFF6000,a2
                 movea.l #$FFFF0000,a0
-                move.w  (word_FF8048).w,d7
+                move.w  (Stage3ResampleGroupsM1).w,d7
                 asr.w   #3,d7
                 moveq   #0,d5
-                move.w  (word_FF804A).w,d5
+                move.w  (Stage3ResamplePassesM1).w,d5
                 addq.w  #1,d5
                 asl.w   #3,d5
                 swap    d5

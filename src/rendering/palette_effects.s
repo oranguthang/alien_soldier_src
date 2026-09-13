@@ -260,12 +260,12 @@ Palette_UpdateMidgameAdjustedColors:                    ; DATA XREF: ROM:0000433
 Palette_UpdateMidgameFadeAndColors:                     ; DATA XREF: ROM:00004334   o  ; was: sub_4368
                 btst    #0,(FrameCounter+1).w
                 bne.s   Palette_UpdateMidgameFadeAndColors_Apply
-                addq.w  #1,(dword_FF8066+2).w
+                addq.w  #1,(MidgameFadeLevel).w
                 bne.s   Palette_UpdateMidgameFadeAndColors_Apply
                 clr.w   (PaletteSecondaryIndex).w
 Palette_UpdateMidgameFadeAndColors_Apply:               ; CODE XREF: Palette_UpdateMidgameFadeAndColors+6   j  ; was: loc_437A
                                         ; Palette_UpdateMidgameFadeAndColors+C   j
-                move.w  (dword_FF8066+2).w,d0
+                move.w  (MidgameFadeLevel).w,d0
                 jsr     Gfx_SetFadeParams(pc)           ; (pc)
                 bra.w   Palette_UpdateMidgameColors
 ; End of function Palette_UpdateMidgameFadeAndColors

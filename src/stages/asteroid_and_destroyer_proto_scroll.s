@@ -36,9 +36,9 @@ UnreferencedTransitionInputCheckReturn:                 ; CODE XREF: Unreference
 ; Integrates asteroid-field velocity and fills its vertical-scroll buffer
 StageTransition_FillAsteroidFieldVScroll:               ; CODE XREF: StageTransition_InitializeAsteroidField:StageTransition_UpdateAsteroidFieldEntry   p  ; was: sub_FB72
                                         ; StageTransition_StartAsteroidFieldScroll   p
-                move.l  (dword_FF8066).w,d0
-                add.l   (dword_FF8062).w,d0
-                move.l  d0,(dword_FF8066).w
+                move.l  (AsteroidVScrollPos).w,d0
+                add.l   (AsteroidVScrollSpeed).w,d0
+                move.l  d0,(AsteroidVScrollPos).w
                 swap    d0
                 movea.w #(HScrollPlaneARow32-M68K_RAM),a0
                 move.w  #$BF,d7

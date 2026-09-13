@@ -511,7 +511,7 @@ Boss_SharpssteelHandleBladePoseLoopCommand:             ; CODE XREF: Boss_Sharps
                 bra.s   Boss_SharpssteelParseBladePoseCommandLoop
 ; ---------------------------------------------------------------------------
 Boss_SharpssteelBeginBladePoseInterpolation:            ; CODE XREF: Boss_SharpssteelRunBladePoseCommands+3A   j
-                move.w  d3,(dword_FF8040).w
+                move.w  d3,(PoseCommandWord).w
                 andi.w  #$FF,d3
                 move.w  2(a1,d0.w),d0
                 ext.l   d0
@@ -519,7 +519,7 @@ Boss_SharpssteelBeginBladePoseInterpolation:            ; CODE XREF: Boss_Sharps
                 movea.l d0,a0
                 bsr.w   Boss_SharpssteelInitializeBladePoseInterpolation
                 moveq   #0,d0
-                move.b  (dword_FF8040).w,d0
+                move.b  (PoseDurationByte).w,d0
                 move.w  d0,$C(a5)
                 addq.w  #4,$58(a5)
                 addq.w  #1,$29C(a5)

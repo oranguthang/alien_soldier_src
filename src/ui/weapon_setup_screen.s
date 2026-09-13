@@ -175,18 +175,18 @@ WeaponSetup_UpdateSlotFade:                             ; DATA XREF: ROM:0001F14
 ; Renders the control-test instructions and loads their palette
 WeaponSetup_LoadControlTestText:                        ; DATA XREF: ROM:0001F148   o  ; was: sub_1F3E6
                 addq.w  #2,(SetupTransitionIndex).w
-                clr.w   (dword_FF8040).w
+                clr.w   (WeaponSetupCursorOffset).w
 ; Renders the eight control-test instruction rows
 WeaponSetup_RenderControlTestTextLoop:                  ; CODE XREF: WeaponSetup_LoadControlTestText+30   j  ; was: loc_1F3EE
                 lea     WeaponSetup_ControlTestTextLayout(pc),a1
                 nop
-                move.w  (dword_FF8040).w,d1
+                move.w  (WeaponSetupCursorOffset).w,d1
                 move.w  (a1,d1.w),d0
                 move.w  2(a1,d1.w),d4
                 movea.l 4(a1,d1.w),a0
                 jsr     (Text_QueueDoubleHeightStringWrapped).l
-                addi.w  #8,(dword_FF8040).w
-                cmpi.w  #$40,(dword_FF8040).w           ; '@'
+                addi.w  #8,(WeaponSetupCursorOffset).w
+                cmpi.w  #$40,(WeaponSetupCursorOffset).w  ; '@'
                 bne.s   WeaponSetup_RenderControlTestTextLoop
                 lea     (WeaponSetupControlTestPaletteOffsetList).l,a4
                 jmp     Gfx_LoadMultiplePalettes
@@ -321,9 +321,9 @@ WeaponSetup_CommitForceSelection:                       ; CODE XREF: WeaponSetup
                 adda.w  #(WeaponSlotConfig0-M68K_RAM),a0
                 move.w  (WeaponSetupForceIndex).w,d0
                 move.w  d0,(a0)
-                move.w  d2,(dword_FF8040).w
+                move.w  d2,(WeaponSetupCursorOffset).w
                 jsr     (UI_QueueSelectedWeaponIconTransfer).l
-                move.w  (dword_FF8040).w,d2
+                move.w  (WeaponSetupCursorOffset).w,d2
                 tst.w   d2
                 beq.s   WeaponSetup_RenderLoadout
                 move.b  #$DB,d0
@@ -332,9 +332,9 @@ WeaponSetup_CommitForceSelection:                       ; CODE XREF: WeaponSetup
                 jsr     (Weapon_AdvanceCurrentState).l
 WeaponSetup_RenderLoadout:                              ; CODE XREF: WeaponSetup_HandleShootingModeInput+8   j  ; was: loc_1F5AE
                                         ; WeaponSetup_HandleLoadoutInput+80   j
-                clr.w   (dword_FF8040).w
+                clr.w   (WeaponSetupCursorOffset).w
 WeaponSetup_RenderForceNameLoop:                        ; CODE XREF: WeaponSetup_HandleLoadoutInput+154   j  ; was: loc_1F5B2
-                move.w  (dword_FF8040).w,d1
+                move.w  (WeaponSetupCursorOffset).w,d1
                 move.w  #$8100,d0
                 tst.w   (SetupTransitionIndex).w
                 bne.s   WeaponSetup_RenderForceName
@@ -350,8 +350,8 @@ WeaponSetup_RenderForceName:                            ; CODE XREF: WeaponSetup
                 asl.w   #1,d1
                 movea.l $C(a1,d1.w),a0
                 jsr     (Text_QueueDoubleHeightStringWrapped).l
-                addq.w  #2,(dword_FF8040).w
-                cmpi.w  #$C,(dword_FF8040).w
+                addq.w  #2,(WeaponSetupCursorOffset).w
+                cmpi.w  #$C,(WeaponSetupCursorOffset).w
                 bne.s   WeaponSetup_RenderForceNameLoop
                 rts
 ; End of function WeaponSetup_HandleLoadoutInput

@@ -299,7 +299,7 @@ Stage12_StartTeleportTransitionToStage13:               ; DATA XREF: ROM:0000D98
                 clr.w   (StatusDisplayModeOffset).w
                 addq.w  #2,(StageTableIndex).w
                 clr.b   (StageRouteFlags).w
-                clr.w   (dword_FF806A+2).w
+                clr.w   (Stage12TeleportFade).w
                 move.b  #$CA,d0
                 jmp     (Sound_PlaySFX).l
 ; End of function Stage12_StartTeleportTransitionToStage13
@@ -309,14 +309,14 @@ Stage12To13_UpdateTeleportFadeIn:                       ; DATA XREF: ROM:0000D98
                 beq.s   Stage12To13_AdvanceTeleportFadeDelay
                 bpl.s   Stage12To13_ApplyTeleportFadeLevel
 Stage12To13_AdvanceTeleportFadeDelay:                   ; CODE XREF: Stage12To13_UpdateTeleportFadeIn+4   j  ; was: loc_DBFC
-                addq.w  #1,(dword_FF806A+2).w
-                cmpi.w  #$3C,(dword_FF806A+2).w         ; '<'
+                addq.w  #1,(Stage12TeleportFade).w
+                cmpi.w  #$3C,(Stage12TeleportFade).w    ; '<'
                 bne.s   Stage12To13_ApplyTeleportFadeLevel
                 addq.w  #2,(StageStateOffset).w
                 move.w  #$FCE0,(PrimaryCameraXPosition).w
                 clr.w   (PrimaryCameraYPosition).w
-                move.w  #$1C,(dword_FF806A+2).w
-                move.l  #$C0000,(dword_FF8066+2).w
+                move.w  #$1C,(Stage12TeleportFade).w
+                move.l  #$C0000,(TeleportSnakeScrollVel).w
                 clr.b   (PlaneAScrollModeFlags).w
                 moveq   #0,d0
                 moveq   #0,d1
@@ -331,7 +331,7 @@ Stage12To13_AdvanceTeleportFadeDelay:                   ; CODE XREF: Stage12To13
                 jsr     (Stage_LoadTeleportAssets).l
 Stage12To13_ApplyTeleportFadeLevel:                     ; CODE XREF: Stage12To13_UpdateTeleportFadeIn+6   j  ; was: loc_DC5E
                                         ; Stage12To13_UpdateTeleportFadeIn+12   j
-                move.w  (dword_FF806A+2).w,d0
+                move.w  (Stage12TeleportFade).w,d0
                 cmpi.w  #$1C,d0
                 bmi.s   Stage12To13_ClampAndApplyTeleportFadeLevel
                 moveq   #$1C,d0
@@ -340,10 +340,10 @@ Stage12To13_ClampAndApplyTeleportFadeLevel:             ; CODE XREF: Stage12To13
 ; End of function Stage12To13_UpdateTeleportFadeIn
 ; Decrease the teleport fade level while advancing the transition scroll
 Stage12To13_UpdateTeleportFadeOut:                      ; DATA XREF: ROM:0000D984   o  ; was: sub_DC70
-                move.w  (dword_FF806A+2).w,d0
+                move.w  (Stage12TeleportFade).w,d0
                 jsr     (Gfx_SetFadeParams).l
                 addq.w  #6,(PrimaryCameraXPosition).w
-                subq.w  #1,(dword_FF806A+2).w
+                subq.w  #1,(Stage12TeleportFade).w
                 bpl.s   Stage12To13_UpdateTeleportScroll
                 addq.w  #2,(StageStateOffset).w
 ; Continue the teleport scroll until its signed position crosses zero
@@ -351,7 +351,7 @@ Stage12To13_AdvanceTeleportScroll:                      ; DATA XREF: ROM:0000D98
                 addq.w  #6,(PrimaryCameraXPosition).w
                 bmi.s   Stage12To13_UpdateTeleportScroll
                 addq.w  #2,(StageStateOffset).w
-                move.w  #$60,(dword_FF806A+2).w         ; '`'
+                move.w  #$60,(Stage12TeleportFade).w    ; '`'
                 clr.w   (PrimaryCameraXPosition).w
                 bclr    #6,(CameraMotionLockFlags).w
                 move.w  #1,(PlayerStateWorkHighWord).w
@@ -369,12 +369,12 @@ Stage12To13_QueueTeleportColumn:                        ; CODE XREF: Stage12To13
 ; End of function Stage12To13_UpdateTeleportFadeOut
 ; Finish the Stage 13 Snake-intro scroll and enter its configured state offset
 Stage13_UpdateSnakeIntroTransition:                     ; DATA XREF: ROM:0000D988   o  ; was: sub_DCC0
-                subi.l  #$4000,(dword_FF8066+2).w
+                subi.l  #$4000,(TeleportSnakeScrollVel).w
                 bpl.s   Stage13_UpdateSnakeIntroTransition_Scroll
-                clr.l   (dword_FF8066+2).w
+                clr.l   (TeleportSnakeScrollVel).w
 Stage13_UpdateSnakeIntroTransition_Scroll:              ; CODE XREF: Stage13_UpdateSnakeIntroTransition+8   j  ; was: loc_DCCE
                 bsr.w   Stage12To13_UpdateTeleportAndSnakeScroll
-                subq.w  #1,(dword_FF806A+2).w
+                subq.w  #1,(Stage12TeleportFade).w
                 bpl.w   Stage_MidgameStateReturn
 Stage13_BeginSnakeSequence:
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
@@ -386,7 +386,7 @@ Stage13_BeginSnakeSequence:
 Stage12To13_UpdateTeleportAndSnakeScroll:               ; CODE XREF: Stage12To13_UpdateTeleportFadeOut:Stage12To13_UpdateTeleportScroll   p  ; was: sub_DCEE
                                         ; Stage13_UpdateSnakeIntroTransition:Stage13_UpdateSnakeIntroTransition_Scroll   p
                 bsr.w   Scroll_UpdateSnakeBackground
-                move.l  (dword_FF8066+2).w,d0
+                move.l  (TeleportSnakeScrollVel).w,d0
                 add.l   d0,(SecondaryCameraXPos).w
                 rts
 ; End of function Stage12To13_UpdateTeleportAndSnakeScroll
@@ -415,11 +415,11 @@ Stage13_UpdateSnakeEncounterTransition:                 ; DATA XREF: ROM:0000D99
                 bsr.w   Camera_UpdateBossApproachAndRenderTilemap
                 cmpi.w  #$3E0,(PrimaryCameraXPosition).w
                 bmi.w   Stage_MidgameStateReturn
-                move.w  (BossHealth).w,(dword_FF8040).w
-                move.w  (BossMaxHealth).w,(dword_FF8040+2).w
+                move.w  (BossHealth).w,(BossHealthPairScratch).w
+                move.w  (BossMaxHealth).w,(BossHealthPairScratch+2).w
                 bsr.w   Stage_TransitionToNextPhase
-                move.w  (dword_FF8040).w,(BossHealth).w
-                move.w  (dword_FF8040+2).w,(BossMaxHealth).w
+                move.w  (BossHealthPairScratch).w,(BossHealth).w
+                move.w  (BossHealthPairScratch+2).w,(BossMaxHealth).w
                 rts
 ; End of function Stage13_UpdateSnakeEncounterTransition
 ; Clamp the Stage 13 camera and prepare the Bugmax approach rows and timer

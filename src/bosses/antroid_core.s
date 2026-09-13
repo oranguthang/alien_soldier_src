@@ -67,7 +67,7 @@ Boss_AntroidInitState:                                  ; DATA XREF: Boss_Antroi
 Boss_AntroidInitPhase:                                  ; DATA XREF: ROM:00037510   o  ; was: sub_37558
                 addq.w  #1,8(a5)
                 movea.w a5,a4
-                move.w  #$8300,(dword_FF8040).w
+                move.w  #$8300,(MetaspriteBaseTileWord).w
                 moveq   #$E,d7
                 movea.l #Boss_AntroidPrimaryMetaspriteDescriptors,a0
                 movea.l #Boss_AntroidPrimaryPartRadii,a1
@@ -138,12 +138,12 @@ Boss_AntroidIdleState:                                  ; DATA XREF: ROM:0003753
 ; End of function Boss_AntroidIdleState
 ; Restores Antroid's neutral pose and resumes attack selection
 Boss_AntroidReturnToNeutral:                            ; CODE XREF: Boss_AntroidPrepareJumpAttack+CA   j  ; was: sub_37656
-                move.w  $58(a5),(dword_FF8040).w
-                move.w  $C(a5),(dword_FF8040+2).w
+                move.w  $58(a5),(AntroidPoseOffsetTemp).w
+                move.w  $C(a5),(AntroidPoseTimerTemp).w
                 moveq   #4,d0
                 bsr.w   Boss_AntroidEnterStateWithFirstPartSlot
-                move.w  (dword_FF8040).w,$58(a5)
-                move.w  (dword_FF8040+2).w,$C(a5)
+                move.w  (AntroidPoseOffsetTemp).w,$58(a5)
+                move.w  (AntroidPoseTimerTemp).w,$C(a5)
                 bra.s   Boss_AntroidReturnToNeutralClearPhase
 ; ---------------------------------------------------------------------------
 Boss_AntroidReturnToNeutralLoadAnimation:               ; CODE XREF: Boss_AntroidHealthRecoveryState+4   j  ; was: loc_37676

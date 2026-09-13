@@ -138,7 +138,7 @@ Boss_FlyingNeoWaitForScrollingBackground:               ; DATA XREF: ROM:0003C0A
 ; Complex setup with metasprite and palette initialization
 Boss_FlyingNeoSetup:                                    ; DATA XREF: ROM:0003C0AC   o  ; was: sub_3C168
                 movea.w #(SecondaryEntityType-M68K_RAM),a4
-                move.w  #$300,(dword_FF8040).w
+                move.w  #$300,(MetaspriteBaseTileWord).w
                 moveq   #8,d7
                 movea.l #Boss_FlyingNeoMetaspriteDescriptors,a0
                 movea.l #Boss_FlyingNeoPartRadii,a1

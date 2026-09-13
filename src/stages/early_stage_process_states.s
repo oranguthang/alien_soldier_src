@@ -492,7 +492,7 @@ Stage7_BeginTerobusterApproach:                         ; CODE XREF: Stage7_Upda
                 move.w  #$6000,(TilemapTransferBase).w
                 move.w  #$1F,(TilemapRowCountdown).w
                 move.w  #0,(TilemapRowXOrFillWord).w
-                move.w  #$C0,(dword_FF8062).w
+                move.w  #$C0,(TerobusterIntroTimer).w
                 bra.w   Stage_TransitionToNextPhase
 ; ---------------------------------------------------------------------------
 Stage7_UpdateScrollToTerobuster_Return:                 ; CODE XREF: Stage7_UpdateScrollToTerobuster+3C   j  ; was: locret_CCFE
@@ -507,7 +507,7 @@ Stage7_CheckIntroProjectileTrigger:                     ; CODE XREF: Stage7_Upda
 ; Initializes Terobuster boss with scroll and graphics loading
 Stage7_InitializeTerobusterEncounter:                   ; DATA XREF: ROM:0000C88E   o  ; was: sub_CD0A
                 bsr.w   Stage7_SpawnTerobusterIntroProjectile
-                subq.w  #1,(dword_FF8062).w
+                subq.w  #1,(TerobusterIntroTimer).w
                 bsr.w   Stage7_UpdateTerobusterIntroFade
                 bsr.w   Stage7_UpdateTerobusterIntroTileRows
                 jsr     (Tilemap_QueueNextConstantRow).l
@@ -520,7 +520,7 @@ Stage7_InitializeTerobusterEncounter:                   ; DATA XREF: ROM:0000C88
                 move.w  d0,(PrimaryCameraXPosition).w
                 move.w  d0,(CameraXLowerBound).w
                 move.w  d0,(CameraXUpperBound).w
-                tst.w   (dword_FF8062).w
+                tst.w   (TerobusterIntroTimer).w
                 bpl.s   Stage7_UpdateScrollToTerobuster_Return
                 addq.w  #2,(StageStateOffset).w
                 move.w  #$8000,(GlobalSpritePriorityBit).w
@@ -529,7 +529,7 @@ Stage7_InitializeTerobusterEncounter:                   ; DATA XREF: ROM:0000C88
 ; End of function Stage7_InitializeTerobusterEncounter
 ; Updates stage scroll offset with directional calculation
 Stage7_UpdateTerobusterIntroFade:                       ; CODE XREF: Stage7_InitializeTerobusterEncounter+8   p  ; was: sub_CD66
-                move.w  (dword_FF8062).w,d0
+                move.w  (TerobusterIntroTimer).w,d0
                 bmi.s   Stage7_UpdateScrollToTerobuster_Return
                 bne.s   Stage7_CalculateTerobusterFadeParameters
                 moveq   #0,d2

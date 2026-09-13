@@ -22,7 +22,7 @@ Boss_BackStringerUpdateSegmentChainAndLoadCount:        ; CODE XREF: Boss_BackSt
 ; Creates a contiguous child-object group from mapping, angle, and link tables
 Sprite_InitMetaspriteComplex:                           ; CODE XREF: Boss_AntroidInitPhase+20   p  ; was: sub_343EE
                                         ; Boss_TerobusterSetup+28   p
-                move.w  a5,(dword_FF8040+2).w
+                move.w  a5,(MetaspriteParentPtr).w
 ; Alternate entry for a second group that reuses the saved parent address
 Sprite_InitAdditionalMetaspriteGroup:                   ; CODE XREF: Boss_AntroidInitPhase+3A   p  ; was: loc_343F2
                 moveq   #0,d0
@@ -43,14 +43,14 @@ Sprite_InitMetaspriteComplexNextPart:                   ; CODE XREF: Sprite_Init
                 bclr    #$16,d4
                 beq.s   Sprite_InitMetaspriteComplexUseRotationFrames
                 move.w  #$C000,2(a4)
-                move.w  (dword_FF8040).w,$E(a4)
+                move.w  (MetaspriteBaseTileWord).w,$E(a4)
                 move.l  d4,8(a4)
                 clr.l   $4C(a4)
                 bra.s   Sprite_InitMetaspriteComplexTransform
 ; ---------------------------------------------------------------------------
 Sprite_InitMetaspriteComplexUseRotationFrames:          ; CODE XREF: Sprite_InitMetaspriteComplex+36   j  ; was: loc_3443C
                 move.w  #$C000,2(a4)
-                move.w  (dword_FF8040).w,$E(a4)
+                move.w  (MetaspriteBaseTileWord).w,$E(a4)
                 move.l  d4,$4C(a4)
                 rol.l   #8,d5
                 rol.w   #1,d5
@@ -68,7 +68,7 @@ Sprite_InitMetaspriteComplexUseInlineDescriptor:        ; CODE XREF: Sprite_Init
                 move.w  (a3),$A(a4)
                 movem.l (sp)+,a3
                 clr.l   $4C(a4)
-                move.w  (dword_FF8040).w,d4
+                move.w  (MetaspriteBaseTileWord).w,d4
                 andi.w  #$8000,d4
                 or.w    d4,$E(a4)
 Sprite_InitMetaspriteComplexTransform:                  ; CODE XREF: Sprite_InitMetaspriteComplex+10   j  ; was: loc_34486
@@ -87,9 +87,9 @@ Sprite_InitMetaspriteComplexPositionLink:               ; CODE XREF: Sprite_Init
                 move.w  (a2,d2.w),d4
                 move.w  d4,d5
                 andi.w  #$3FE0,d4
-                add.w   (dword_FF8040+2).w,d4
+                add.w   (MetaspriteParentPtr).w,d4
                 move.w  d4,$4A(a4)
-                move.w  (dword_FF8040+2).w,$48(a4)
+                move.w  (MetaspriteParentPtr).w,$48(a4)
                 move.w  d5,d4
                 andi.w  #$C000,d4
                 andi.w  #$1F,d5
@@ -117,7 +117,7 @@ Sprite_SetMetaspriteTraversalPointers:                  ; CODE XREF: Sprite_Begi
                 movea.w a5,a4
                 movea.w a4,a3
                 lea     $60(a4),a4
-                move.w  d7,(dword_FF8040).w
+                move.w  d7,(MetaspritePartCountM1).w
 ; End of function Sprite_SetMetaspriteTraversalPointers
 ; Selects one of eight directional frames and positions each child by sine/cosine
 Sprite_ApplyMetaspriteEightFrameRotation:               ; CODE XREF: Sprite_UpdateMetaspriteEightFrameRotation   p  ; was: sub_3450E
@@ -180,7 +180,7 @@ Sprite_ApplyMetaspriteEightFrameRotationCalculatePosition:  ; CODE XREF: Sprite_
 ; Rotates Valkirie's parts, then aligns the entire group between two anchors
 Boss_ValkirieUpdateAnchoredMetasprite:                  ; CODE XREF: Entity_UpdateValkirieAuxiliaryAnchors+2   j  ; was: sub_345B2
                 movea.w a5,a4
-                move.w  d7,(dword_FF8040).w
+                move.w  d7,(MetaspritePartCountM1).w
                 lea     $60(a4),a4
                 lea     (Math_SineTable).l,a2
                 move.w  $56(a5),d4
@@ -236,7 +236,7 @@ Boss_ValkirieUpdateAnchoredMetaspriteCalculatePosition:  ; CODE XREF: Boss_Valki
                 lea     $60(a4),a4
                 dbf     d7,Boss_ValkirieUpdateAnchoredMetaspriteNextPart
                 movea.w a5,a4
-                move.w  (dword_FF8040).w,d7
+                move.w  (MetaspritePartCountM1).w,d7
                 addq.w  #1,d7
                 movea.w $48(a5),a0
                 movea.w $4A(a5),a1
@@ -260,7 +260,7 @@ Sprite_ApplyMetaspriteFourFrameRotation:                ; CODE XREF: Sprite_Upda
                 movea.w a5,a4
                 movea.w a4,a3
                 lea     $60(a4),a4
-                move.w  d7,(dword_FF8040).w
+                move.w  d7,(MetaspritePartCountM1).w
                 lea     (Math_SineTable).l,a2
                 move.w  $54(a5),d3
                 move.w  $56(a5),d4
@@ -322,7 +322,7 @@ Boss_BackStringerApplySegmentChain:                     ; CODE XREF: Boss_BackSt
                 movea.w a5,a4
                 movea.w a4,a3
                 lea     $60(a4),a4
-                move.w  d7,(dword_FF8040).w
+                move.w  d7,(MetaspritePartCountM1).w
                 lea     (Math_SineTable).l,a2
                 move.w  $54(a5),d3
                 move.w  $56(a5),d4
@@ -370,10 +370,10 @@ Boss_BackStringerApplySegmentChainSelectAnchor:         ; CODE XREF: Boss_BackSt
                 bne.s   Boss_BackStringerApplySegmentChainPrimaryPosition
                 addq.w  #8,a0
 Boss_BackStringerApplySegmentChainPrimaryPosition:      ; CODE XREF: Boss_BackStringerApplySegmentChain+8E   j  ; was: loc_347DA
-                move.w  -$80(a2,d0.w),(word_FF8048).w
-                move.w  (a2,d1.w),(word_FF804A).w
-                move.w  (word_FF8048).w,d0
-                move.w  (word_FF804A).w,d1
+                move.w  -$80(a2,d0.w),(MetaspriteSineScratch).w
+                move.w  (a2,d1.w),(MetaspriteCosScratch).w
+                move.w  (MetaspriteSineScratch).w,d0
+                move.w  (MetaspriteCosScratch).w,d1
                 asl.w   #2,d2
                 muls.w  d2,d0
                 muls.w  d2,d1
@@ -386,8 +386,8 @@ Boss_BackStringerApplySegmentChainPrimaryPosition:      ; CODE XREF: Boss_BackSt
                 move.w  d2,d0
                 asr.w   #1,d0
                 add.w   d0,d2
-                move.w  (word_FF8048).w,d0
-                move.w  (word_FF804A).w,d1
+                move.w  (MetaspriteSineScratch).w,d0
+                move.w  (MetaspriteCosScratch).w,d1
                 muls.w  d2,d0
                 muls.w  d2,d1
                 add.l   $3C(a0),d0
@@ -402,7 +402,7 @@ Boss_BackStringerApplySegmentChainAdvance:              ; CODE XREF: Boss_BackSt
 ; Restores count-minus-one from scratch RAM and converts it to an actual count
 Sprite_LoadMetaspritePartCount:                         ; CODE XREF: Sprite_BeginMetaspritePartTraversal+4   j  ; was: sub_34838
                                         ; Sprite_UpdateMetaspriteEightFrameRotation+4   j
-                move.w  (dword_FF8040).w,d7
+                move.w  (MetaspritePartCountM1).w,d7
                 addq.w  #1,d7
 ; End of function Sprite_LoadMetaspritePartCount
 ; Applies the offset between two anchor objects to each traversed child

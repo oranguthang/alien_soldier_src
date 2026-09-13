@@ -42,7 +42,7 @@ TitleScreen_FinalizeInitialization:                     ; CODE XREF: TitleScreen
                 move.w  d1,(SecondaryCameraYPos).w
                 jsr     (Tilemap_TransferFullMapDirectToVRAM).l
                 move.b  #0,(VDPReg18Shadow+1).w
-                move.w  #2,(dword_FF8066+2).w
+                move.w  #2,(TitleMenuSelection).w
                 move.b  #$91,d0
                 jsr     (Sound_QueueRequest).l
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
@@ -82,7 +82,7 @@ TitleScreen_Update:                                     ; DATA XREF: Sys_Dispatc
                 move.b  #$DB,d0
                 jsr     (Sound_QueueRequest).l
 TitleScreen_ReadSelection:                              ; CODE XREF: TitleScreen_Update+10   j  ; was: loc_9494
-                move.w  (dword_FF8066+2).w,d0
+                move.w  (TitleMenuSelection).w,d0
                 btst    #2,(ControllerPressedState).w
                 beq.s   TitleScreen_CheckMoveDown
                 subq.w  #2,d0
@@ -98,7 +98,7 @@ TitleScreen_CheckMoveDown:                              ; CODE XREF: TitleScreen
 TitleScreen_StoreSelection:                             ; CODE XREF: TitleScreen_Update+2A   j  ; was: loc_94B8
                                         ; TitleScreen_Update+34   j
                 andi.w  #6,d0
-                move.w  d0,(dword_FF8066+2).w
+                move.w  d0,(TitleMenuSelection).w
                 ; The first comparison has no consumer; the following one
                 ; controls the preserved attract-demo trigger at frame $700
                 cmpi.w  #$780,(FrameCounter).w
@@ -123,7 +123,7 @@ TitleScreen_CheckConfirm:                               ; CODE XREF: TitleScreen
                 rts
 ; ---------------------------------------------------------------------------
 TitleScreen_DispatchSelection:                          ; CODE XREF: TitleScreen_Update+82   j  ; was: loc_9510
-                move.w  (dword_FF8066+2).w,d0
+                move.w  (TitleMenuSelection).w,d0
                 beq.s   TitleScreen_OpenPassword
                 ; Duplicate zero test is unreachable but byte-significant
                 beq.s   TitleScreen_UpdateAndRender
@@ -149,19 +149,19 @@ TitleScreen_UpdateAndRender:                            ; CODE XREF: TitleScreen
                 jsr     (Sound_QueueRequest).l
 TitleScreen_RenderMenu:                                 ; CODE XREF: TitleScreen_Update+CA   j  ; was: loc_954E
                 move.w  #$A300,d0
-                cmpi.w  #2,(dword_FF8066+2).w
+                cmpi.w  #2,(TitleMenuSelection).w
                 beq.s   TitleScreen_DrawGameStart
                 move.w  #$C300,d0
 TitleScreen_DrawGameStart:                              ; CODE XREF: TitleScreen_Update+E0   j  ; was: loc_955E
                 bsr.w   TitleScreen_QueueGameStart
                 move.w  #$A300,d0
-                cmpi.w  #4,(dword_FF8066+2).w
+                cmpi.w  #4,(TitleMenuSelection).w
                 beq.s   TitleScreen_DrawOptions
                 move.w  #$C300,d0
 TitleScreen_DrawOptions:                                ; CODE XREF: TitleScreen_Update+F4   j  ; was: loc_9572
                 bsr.w   TitleScreen_QueueOptions
                 move.w  #$A300,d0
-                tst.w   (dword_FF8066+2).w
+                tst.w   (TitleMenuSelection).w
                 beq.s   TitleScreen_DrawPassword
                 move.w  #$C300,d0
 TitleScreen_DrawPassword:                               ; CODE XREF: TitleScreen_Update+106   j  ; was: loc_9584

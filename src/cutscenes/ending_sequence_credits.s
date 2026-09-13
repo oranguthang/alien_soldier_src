@@ -8,9 +8,9 @@ EndingSequence_Initialize:                              ; CODE XREF: EndingSeque
                 jsr     (LoadObjData).l
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 movea.w #(TileInterpSourceB-M68K_RAM),a1
-                move.w  #$20,(word_FF8048).w            ; ' '
-                move.w  #$1F,(word_FF804A).w
-                move.w  #1,(dword_FF8044+2).w
+                move.w  #$20,(TileInterpVRAM).w         ; ' '
+                move.w  #$1F,(TileInterpStepsLeft).w
+                move.w  #1,(TileInterpSpanStep).w
                 jsr     (Gfx_LoadTilesLoop).l
                 jsr     (Sys_ClearEntityObjectPool).l
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0

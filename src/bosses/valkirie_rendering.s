@@ -139,7 +139,7 @@ Anim_ProcessValkiriePoseFrame:                          ; CODE XREF: Anim_Update
                 bra.s   Anim_ReadValkiriePoseCommand
 ; ---------------------------------------------------------------------------
 Anim_StartValkiriePoseFrame:                            ; CODE XREF: Anim_ProcessValkiriePoseFrame+4   j  ; was: loc_561DA
-                move.w  d3,(dword_FF8040).w
+                move.w  d3,(PoseCommandWord).w
                 andi.w  #$FF,d3
                 move.w  2(a1,d0.w),d0
                 ext.l   d0
@@ -147,7 +147,7 @@ Anim_StartValkiriePoseFrame:                            ; CODE XREF: Anim_Proces
                 movea.l d0,a0
                 bsr.w   Anim_CalculateValkiriePoseDeltas
                 moveq   #0,d0
-                move.b  (dword_FF8040).w,d0
+                move.b  (PoseDurationByte).w,d0
                 move.w  d0,$C(a5)
                 addq.w  #4,$58(a5)
                 addq.w  #1,$29C(a5)
@@ -226,7 +226,7 @@ Entity_ClearValkirieAuxiliaryGroupLoop:                 ; CODE XREF: Entity_Init
                 dbf     d7,Entity_ClearValkirieAuxiliaryGroupLoop
                 movea.w #(TwentySeventhEntityType-M68K_RAM),a5
                 movea.w a5,a4
-                move.w  #$300,(dword_FF8040).w
+                move.w  #$300,(MetaspriteBaseTileWord).w
                 moveq   #5,d7
                 movea.l #Boss_ValkirieAuxiliaryMetaspritePartDescriptors,a0
                 movea.l #Boss_ValkirieAuxiliaryMetaspriteInitialAngles,a1

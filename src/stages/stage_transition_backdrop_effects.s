@@ -14,10 +14,10 @@ StageTransition_CopyShieldViperVScrollLoop:             ; CODE XREF: StageTransi
 ; Builds per-line offsets shared by the three encounter-transition backdrops
 StageTransition_BuildBossBackdropLineOffsets:           ; CODE XREF: StageTransition_UpdateShieldViperVScroll   p  ; was: sub_FC8C
                                         ; sub_FD32   p
-                move.l  #$FFF88000,(dword_FF8062).w
-                move.l  (dword_FF8062).w,d0
-                add.l   d0,(dword_FF8066).w
-                move.w  (dword_FF8066).w,d0
+                move.l  #$FFF88000,(BackdropLineSpeed).w
+                move.l  (BackdropLineSpeed).w,d0
+                add.l   d0,(BackdropLinePosition).w
+                move.w  (BackdropLinePosition).w,d0
                 bpl.s   StageTransition_AdjustPositiveBackdropLineOffset
                 addi.w  #$40,d0                         ; '@'
                 bmi.s   StageTransition_StoreAdjustedBackdropLineOffset
@@ -27,15 +27,15 @@ StageTransition_AdjustPositiveBackdropLineOffset:       ; CODE XREF: StageTransi
                 subi.w  #$40,d0                         ; '@'
                 bmi.s   StageTransition_BuildInterpolatedBackdropLineOffsets
 StageTransition_StoreAdjustedBackdropLineOffset:        ; CODE XREF: StageTransition_BuildBossBackdropLineOffsets+1A   j  ; was: loc_FCB0
-                move.w  d0,(dword_FF8066).w
+                move.w  d0,(BackdropLinePosition).w
 StageTransition_BuildInterpolatedBackdropLineOffsets:   ; CODE XREF: StageTransition_BuildBossBackdropLineOffsets+1C   j  ; was: loc_FCB4
                                         ; StageTransition_BuildBossBackdropLineOffsets+22   j
-                move.l  (dword_FF8066).w,d0
+                move.l  (BackdropLinePosition).w,d0
                 divs.w  #$7000,d0
                 ext.l   d0
                 asl.l   #8,d0
                 movea.w #(BackdropLineOffsetsEnd-M68K_RAM),a0
-                move.l  (dword_FF8066).w,d1
+                move.l  (BackdropLinePosition).w,d1
                 moveq   #$5F,d7                         ; '_'
 StageTransition_FillInterpolatedBackdropLineOffsets:    ; CODE XREF: StageTransition_BuildBossBackdropLineOffsets+46   j  ; was: loc_FCCA
                 swap    d1
@@ -43,9 +43,9 @@ StageTransition_FillInterpolatedBackdropLineOffsets:    ; CODE XREF: StageTransi
                 swap    d1
                 sub.l   d0,d1
                 dbf     d7,StageTransition_FillInterpolatedBackdropLineOffsets
-                move.l  (dword_FF8062).w,d0
-                add.l   d0,(dword_FF806A).w
-                move.w  (dword_FF806A).w,d1
+                move.l  (BackdropLineSpeed).w,d0
+                add.l   d0,(BackdropTailPosition).w
+                move.w  (BackdropTailPosition).w,d1
                 asr.w   #4,d1
                 moveq   #$17,d7
 StageTransition_FillBackdropTailLineOffsets:            ; CODE XREF: StageTransition_BuildBossBackdropLineOffsets+5C   j  ; was: loc_FCE6

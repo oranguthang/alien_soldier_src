@@ -53,7 +53,7 @@ Stage15_UpdateSunsetStingApproach:                      ; DATA XREF: ROM:0000D9A
                 cmpi.w  #$E3E8,(PrimaryCameraYPosition).w
                 bmi.w   Stage_MidgameStateReturn
                 bclr    #0,(PaletteFadeControlFlags).w
-                move.w  #$FFE4,(dword_FF8066+2).w
+                move.w  #$FFE4,(MidgameFadeLevel).w
                 move.w  #6,(PaletteSecondaryIndex).w
                 bra.w   Stage_TransitionToNextPhase
 ; End of function Stage15_UpdateSunsetStingApproach
@@ -90,10 +90,10 @@ Stage15_StartPostSunsetStingTransition:                 ; DATA XREF: ROM:0000D9A
 Stage16_UpdateScrollToViblack:                          ; DATA XREF: ROM:0000D9B0   o  ; was: sub_DF3C
                 cmpi.w  #$E440,(PrimaryCameraYPosition).w
                 bpl.s   Stage16_BeginViblackEncounter
-                move.l  (PrimaryCameraXPosition).w,(dword_FF806A+2).w
+                move.l  (PrimaryCameraXPosition).w,(Stage16CameraSnapshot).w
                 move.w  #$660,(PrimaryCameraXPosition).w
                 bsr.w   Scroll_AdvanceVerticalAndRenderSylpheedBackdrop
-                move.l  (dword_FF806A+2).w,(PrimaryCameraXPosition).w
+                move.l  (Stage16CameraSnapshot).w,(PrimaryCameraXPosition).w
                 bra.w   Camera_FollowPlayerFromFixedHorizontalAnchor
 ; End of function Stage16_UpdateScrollToViblack
 ; Start Viblack's BGM and fall through to object creation
@@ -106,8 +106,8 @@ Stage16_CreateViblackEncounter:                         ; DATA XREF: ROM:0000D9B
                 addq.w  #2,(StageStateOffset).w
                 move.w  #$2B8,(Entity_ObjectPool).w
                 clr.w   (PrimaryEntityState).w
-                clr.l   (dword_FF8062+2).w
-                clr.w   (dword_FF806A).w
+                clr.l   (PostViblackVScrollVel).w
+                clr.w   (PostViblackPalettePos).w
                 move.b  #$80,(CameraMotionLockFlags).w
                 move.w  #$2E,(PlayerScriptStateOffset).w  ; '.'
 ; End of function Stage16_BeginViblackEncounter
@@ -118,16 +118,16 @@ Stage16_UpdateViblackEncounterCamera:                   ; DATA XREF: ROM:0000D9B
 ; End of function Stage16_UpdateViblackEncounterCamera
 ; Accelerate the Stage 16 vertical scroll after Viblack
 Stage16_StartPostViblackTransition:                     ; DATA XREF: ROM:0000D9B6   o  ; was: sub_DF92
-                cmpi.w  #5,(dword_FF8062+2).w
+                cmpi.w  #5,(PostViblackVScrollVel).w
                 bpl.s   Stage16_StartPostViblackTransition_ApplyVerticalVelocity
-                addi.l  #$C00,(dword_FF8062+2).w
+                addi.l  #$C00,(PostViblackVScrollVel).w
 Stage16_StartPostViblackTransition_ApplyVerticalVelocity:  ; CODE XREF: Stage16_StartPostViblackTransition+6   j  ; was: loc_DFA2
-                move.l  (dword_FF8062+2).w,d0
+                move.l  (PostViblackVScrollVel).w,d0
                 add.l   d0,(PrimaryCameraYPosition).w
-                move.l  (PrimaryCameraXPosition).w,(dword_FF806A+2).w
+                move.l  (PrimaryCameraXPosition).w,(Stage16CameraSnapshot).w
                 move.w  #$660,(PrimaryCameraXPosition).w
                 bsr.w   Tilemap_QueuePrimaryCameraRowOffset60
-                move.l  (dword_FF806A+2).w,(PrimaryCameraXPosition).w
+                move.l  (Stage16CameraSnapshot).w,(PrimaryCameraXPosition).w
                 bsr.w   Camera_FollowPlayerFromFixedHorizontalAnchor
                 cmpi.w  #$E620,(PrimaryCameraYPosition).w
                 bmi.s   Stage16_StartPostViblackTransition_Return
@@ -137,20 +137,20 @@ Stage16_StartPostViblackTransition_Return:              ; CODE XREF: Stage16_Sta
 ; End of function Stage16_StartPostViblackTransition
 ; Continue the Stage 16 vertical scroll after Viblack
 Stage16_ContinuePostViblackVerticalScroll:              ; DATA XREF: ROM:0000D9B8   o  ; was: sub_DFD2
-                move.l  (dword_FF8062+2).w,d0
+                move.l  (PostViblackVScrollVel).w,d0
                 add.l   d0,(PrimaryCameraYPosition).w
                 bra.w   Camera_FollowPlayerFromFixedHorizontalAnchor
 ; End of function Stage16_ContinuePostViblackVerticalScroll
 ; Center the Stage 16 camera while advancing the post-Viblack palette effect
 Stage16_UpdatePostViblackCameraAndPalette:              ; DATA XREF: ROM:0000D9BA   o  ; was: sub_DFDE
                 bset    #1,(PaletteFadeControlFlags).w
-                move.l  (dword_FF8062+2).w,d0
+                move.l  (PostViblackVScrollVel).w,d0
                 add.l   d0,(PrimaryCameraYPosition).w
                 move.w  #5,(PaletteEffectControl).w
-                subq.w  #1,(dword_FF806A).w
-                cmpi.w  #$FFF2,(dword_FF806A).w
+                subq.w  #1,(PostViblackPalettePos).w
+                cmpi.w  #$FFF2,(PostViblackPalettePos).w
                 bpl.s   Stage16_UpdatePostViblackCameraAndPalette_ApplyFade
-                move.w  #$FFF2,(dword_FF806A).w
+                move.w  #$FFF2,(PostViblackPalettePos).w
                 cmpi.w  #$660,(PrimaryCameraXPosition).w
                 bne.s   Stage16_UpdatePostViblackCameraAndPalette_ApplyFade
                 addq.w  #2,(StageStateOffset).w
@@ -160,7 +160,7 @@ Stage16_UpdatePostViblackCameraAndPalette:              ; DATA XREF: ROM:0000D9B
                 jsr     (Gfx_LoadPaletteCommand).l
 Stage16_UpdatePostViblackCameraAndPalette_ApplyFade:    ; CODE XREF: Stage16_UpdatePostViblackCameraAndPalette+1E   j  ; was: loc_E028
                                         ; Stage16_UpdatePostViblackCameraAndPalette+2C   j
-                move.w  (dword_FF806A).w,d0
+                move.w  (PostViblackPalettePos).w,d0
                 movea.w #(PaletteActiveColor17Hi-M68K_RAM),a0
                 moveq   #$E,d5
                 move.w  #$E000,d7
@@ -194,18 +194,18 @@ Stage16_UpdatePostViblackTilemapStreaming:              ; DATA XREF: ROM:0000D9B
                 tst.w   (TilemapRowCountdown).w
                 bpl.s   Stage16_UpdatePostViblackTilemapStreaming_Return
                 addq.w  #2,(StageStateOffset).w
-                clr.w   (dword_FF806A).w
+                clr.w   (PostViblackPalettePos).w
 Stage16_UpdatePostViblackTilemapStreaming_Return:       ; CODE XREF: Stage16_InitializePostViblackTilemapStreaming+38   j  ; was: locret_E098
                 rts
 ; End of function Stage16_InitializePostViblackTilemapStreaming
 ; Hold the post-Viblack vertical offset at 20
 Stage16_HoldPostViblackVerticalOffset:                  ; DATA XREF: ROM:0000D9C0   o  ; was: sub_E09A
-                move.w  #$14,(dword_FF8066+2).w
+                move.w  #$14,(PostViblackPaletteDelay).w
                 rts
 ; End of function Stage16_HoldPostViblackVerticalOffset
 ; Step the post-Viblack palette toward its target after the delay expires
 Stage16_UpdatePostViblackPaletteTransition:             ; DATA XREF: ROM:0000D9C2   o  ; was: sub_E0A2
-                subq.w  #1,(dword_FF8066+2).w
+                subq.w  #1,(PostViblackPaletteDelay).w
                 bmi.s   Stage16_UpdatePostViblackPaletteTransition_BeginStep
                 rts
 ; ---------------------------------------------------------------------------
@@ -213,12 +213,12 @@ Stage16_UpdatePostViblackPaletteTransition_BeginStep:   ; CODE XREF: Stage16_Upd
                 bsr.w   Stage16_DeceleratePostViblackVerticalScroll
                 movea.w #(PaletteActiveColor17Hi-M68K_RAM),a0
                 movea.w #(PaletteShadowPair16+2-M68K_RAM),a1
-                move.w  (dword_FF806A).w,d0
+                move.w  (PostViblackPalettePos).w,d0
                 asr.w   #1,d0
                 andi.w  #$1E,d0
                 cmpi.w  #$1E,d0
                 beq.s   Stage16_UpdatePostViblackPaletteTransition_UpdateWords
-                addq.w  #2,(dword_FF806A).w
+                addq.w  #2,(PostViblackPalettePos).w
                 move.w  #$4000,(a0,d0.w)
 Stage16_UpdatePostViblackPaletteTransition_UpdateWords:  ; CODE XREF: Stage16_UpdatePostViblackPaletteTransition+22   j  ; was: loc_E0D0
                 moveq   #0,d5

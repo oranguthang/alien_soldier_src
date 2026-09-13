@@ -44,7 +44,7 @@ Continue_RenderPrompt:                                  ; was: sub_1D9A0
 ; Renders the integer digit of the fixed-point continue countdown
 Continue_RenderCountdownDigit:                          ; was: sub_1D9B4
                 moveq   #0,d0
-                move.w  (dword_FF8066+2).w,d0
+                move.w  (ContinueCountdownValue).w,d0
                 move.w  #$4302,d1
                 move.w  #$66B0,d4
                 moveq   #1,d7
@@ -122,8 +122,8 @@ Continue_InitializeScreen:                              ; was: sub_1DA90
 ; ---------------------------------------------------------------------------
 Continue_InitializeScreen_BuildScreen:                  ; was: loc_1DABC
                 addq.w  #2,(GameSubstateIndex).w
-                move.l  #$A0000,(dword_FF8066+2).w
-                subi.l  #$200,(dword_FF8066+2).w
+                move.l  #$A0000,(ContinueCountdownValue).w
+                subi.l  #$200,(ContinueCountdownValue).w
                 lea     (ContinueScreenPaletteOffsetLists).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 bsr.w   Continue_RenderPrompt
@@ -170,13 +170,13 @@ Continue_UpdateCountdownAndInput:                       ; was: sub_1DB5C
                 beq.s   Continue_UpdateCountdownAndInput_AdvanceCountdown
                 move.b  #$A2,d0
                 jsr     (Sound_QueueRequest).l
-                subq.w  #1,(dword_FF8066+2).w
+                subq.w  #1,(ContinueCountdownValue).w
                 bmi.s   Continue_UpdateCountdownAndInput_StartTimeoutFade
                 bra.s   Continue_UpdateCountdownAndInput_CheckConfirm
 ; ---------------------------------------------------------------------------
 Continue_UpdateCountdownAndInput_AdvanceCountdown:      ; was: loc_1DB80
-                move.w  (dword_FF8066+2).w,d0
-                subi.l  #$200,(dword_FF8066+2).w
+                move.w  (ContinueCountdownValue).w,d0
+                subi.l  #$200,(ContinueCountdownValue).w
                 bpl.s   Continue_UpdateCountdownAndInput_CheckCountdownTick
 Continue_UpdateCountdownAndInput_StartTimeoutFade:      ; was: loc_1DB8E
                 addq.w  #4,(GameSubstateIndex).w
@@ -188,7 +188,7 @@ Continue_UpdateCountdownAndInput_StartTimeoutFade:      ; was: loc_1DB8E
                 bra.w   Continue_UpdateFrame
 ; ---------------------------------------------------------------------------
 Continue_UpdateCountdownAndInput_CheckCountdownTick:    ; was: loc_1DBB0
-                cmp.w   (dword_FF8066+2).w,d0
+                cmp.w   (ContinueCountdownValue).w,d0
                 beq.s   Continue_UpdateCountdownAndInput_CheckConfirm
                 move.b  #$A2,d0
                 jsr     (Sound_QueueRequest).l

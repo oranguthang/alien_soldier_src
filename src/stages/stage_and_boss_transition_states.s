@@ -93,7 +93,7 @@ StageTransition_InitializeAsteroidField:                ; DATA XREF: Stage_Dispa
                 clr.l   (AsteroidFieldPosition).w
                 clr.w   (AsteroidBoundaryPhase).w
                 clr.b   (AsteroidBoundaryFlag).w
-                move.l  #$10000,(dword_FF8062).w
+                move.l  #$10000,(AsteroidVScrollSpeed).w
                 move.l  #$10000,(AsteroidFieldVelocity).w
                 move.l  #$7000,(BackdropVelocityB).w
                 move.l  #$C000,(BackdropVelocityA).w
@@ -106,7 +106,7 @@ StageTransition_InitializeAsteroidField:                ; DATA XREF: Stage_Dispa
 StageTransition_UpdateAsteroidFieldEntry:               ; DATA XREF: ROM:0000F0FE   o  ; was: loc_F1EC
                 bsr.w   StageTransition_FillAsteroidFieldVScroll
                 bsr.w   StageTransition_UpdateSegmentedBackdropScroll
-                subi.l  #$100,(dword_FF8062).w
+                subi.l  #$100,(AsteroidVScrollSpeed).w
                 subi.l  #$80,(AsteroidFieldVelocity).w
                 cmpi.w  #$FFFC,(AsteroidFieldVelocity).w
                 bpl.w   StageTransition_UpdateAsteroidFieldScroll
@@ -327,7 +327,7 @@ StageTransition_CompleteShieldViperVramTransfer:        ; CODE XREF: StageTransi
                 move.w  #$50,(RasterEffectIndex).w      ; 'P'
                 clr.w   (RasterEffectInitState).w
                 move.w  #$16,(RasterLayoutOffset).w
-                clr.l   (dword_FF8066).w
+                clr.l   (BackdropLinePosition).w
                 move.l  #$600000,(BackdropRasterSpan).w
                 clr.l   (BackdropPositionA).w
                 clr.w   (SecondaryCameraXPos).w
@@ -396,7 +396,7 @@ StageTransition_CheckWolfGaropaBackdropPosition:        ; CODE XREF: StageTransi
 ; End of function StageTransition_UpdateWolfGaropaBackdropApproach
 ; Renders the Wolf Garopa transition backdrop
 StageTransition_RenderWolfGaropaBackdrop:               ; DATA XREF: ROM:0000F11E   o  ; was: sub_F5EE
-                move.l  (dword_FF8062).w,d0
+                move.l  (WolfGaropaScrollSpeed).w,d0
                 sub.l   d0,(SecondaryCameraXPos).w
                 move.w  (SecondaryCameraXPos).w,(PrimaryCameraXPosition).w
                 move.w  (SecondaryCameraYPos).w,(PrimaryCameraYPosition).w
@@ -431,7 +431,7 @@ StageTransition_WolfGaropaBackdropFinalizeReturn:       ; CODE XREF: StageTransi
 ; Restarts Wolf Garopa backdrop finalization
 StageTransition_RestartWolfGaropaBackdropFinalize:      ; DATA XREF: ROM:0000F12A   o  ; was: sub_F662
                 move.w  #$24,(StageStateOffset).w       ; '$'
-                move.l  #$FFF88000,(dword_FF8062).w
+                move.l  #$FFF88000,(WolfGaropaScrollSpeed).w
                 bsr.w   StageTransition_InitializeWolfGaropaArenaBoundaries
                 bset    #0,(StageRouteFlags).w
                 rts
@@ -492,17 +492,17 @@ StageTransition_DecelerateWolfGaropaScroll:             ; CODE XREF: StageTransi
                 beq.s   StageTransition_UpdateWolfGaropaCameraPosition
                 subi.l  #$800,(StageMotionXDelta).w
 StageTransition_UpdateWolfGaropaCameraPosition:         ; CODE XREF: StageTransition_DecelerateWolfGaropaScroll+8   j  ; was: loc_F70C
-                move.l  (dword_FF8062).w,d0
+                move.l  (WolfGaropaScrollSpeed).w,d0
                 cmpi.l  #$FFF60000,d0
                 bmi.s   StageTransition_UpdateWolfGaropaHorizontalScroll
                 beq.s   StageTransition_UpdateWolfGaropaHorizontalScroll
                 subi.l  #$800,d0
-                move.l  d0,(dword_FF8062).w
+                move.l  d0,(WolfGaropaScrollSpeed).w
 ; End of function StageTransition_DecelerateWolfGaropaScroll
 ; Updates the Wolf Garopa horizontal transition scroll
 StageTransition_UpdateWolfGaropaHorizontalScroll:       ; CODE XREF: StageTransition_FinalizeWolfGaropaBackdrop   p  ; was: sub_F724
                                         ; StageTransition_AdvanceAfterWolfGaropaBackdrop   p
-                move.l  (dword_FF8062).w,d0
+                move.l  (WolfGaropaScrollSpeed).w,d0
                 sub.l   d0,(PrimaryCameraXPosition).w
                 tst.b   (WolfGaropaEffectActive).w
                 beq.s   StageTransition_ClampWolfGaropaHorizontalScroll
@@ -542,7 +542,7 @@ StageTransition_UpdateWolfGaropaBackdropCoordinates:    ; CODE XREF: StageTransi
                                         ; StageTransition_UpdateWolfGaropaBackdropApproach   p
                 move.l  (WolfGaropaBackdropYVel).w,d0
                 sub.l   d0,(SecondaryCameraYPos).w
-                move.l  (dword_FF8062).w,d0
+                move.l  (WolfGaropaScrollSpeed).w,d0
                 sub.l   d0,(SecondaryCameraXPos).w
                 moveq   #0,d0
                 move.w  (SecondaryCameraYPos).w,d1
@@ -731,17 +731,17 @@ StageTransition_InitializeStage24SceneObjects:          ; DATA XREF: ROM:0000F14
                 move.l  #Stage24SceneObjectSpriteMapping,8(a0)
                 move.w  #0,(CameraXLowerBound).w
                 move.w  #$C0,(CameraXUpperBound).w
-                clr.l   (dword_FF8066+2).w
+                clr.l   (Stage24VScrollSpeed).w
                 move.b  #$C9,d0
                 jsr     (Sound_PlaySFX).l
 ; End of function StageTransition_InitializeStage24SceneObjects
 ; Accelerates the Stage 24 vertical scroll until coordinate $C0
 StageTransition_AccelerateStage24VerticalScroll:        ; DATA XREF: ROM:0000F14C   o  ; was: sub_FA0E
-                cmpi.w  #2,(dword_FF8066+2).w
+                cmpi.w  #2,(Stage24VScrollSpeed).w
                 bpl.s   StageTransition_ApplyStage24VerticalScroll
-                addi.l  #$1000,(dword_FF8066+2).w
+                addi.l  #$1000,(Stage24VScrollSpeed).w
 StageTransition_ApplyStage24VerticalScroll:             ; CODE XREF: StageTransition_AccelerateStage24VerticalScroll+6   j  ; was: loc_FA1E
-                move.l  (dword_FF8066+2).w,d0
+                move.l  (Stage24VScrollSpeed).w,d0
                 add.l   d0,(PrimaryCameraXPosition).w
                 cmpi.w  #$C0,(PrimaryCameraXPosition).w
                 bmi.s   StageTransition_Stage24VerticalScrollReturn

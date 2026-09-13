@@ -46,14 +46,14 @@ Boss_ShellshogunStartPoseInterpolation:                 ; CODE XREF: Boss_Shells
                 addq.w  #4,$58(a5)
                 subq.w  #1,$11E(a5)
                 addq.w  #1,$17C(a5)
-                move.w  d3,(dword_FF8040).w
+                move.w  d3,(PoseCommandWord).w
                 andi.w  #$FF,d3
                 move.w  2(a1,d0.w),d0
                 ext.l   d0
                 addi.l  #Boss_ShellshogunPoseTargets,d0
                 movea.l d0,a0
                 bsr.w   Boss_ShellshogunCalculatePoseDeltas
-                move.b  (dword_FF8040).w,d1
+                move.b  (PoseDurationByte).w,d1
                 ext.w   d1
                 add.w   d1,$C(a5)
                 tst.w   $C(a5)

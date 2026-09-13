@@ -1,7 +1,7 @@
 ; Initialize the Stage 7 boundary-projectile cursor and progressive tile row
 Stage7_InitializeTerobusterIntroProjectiles:            ; CODE XREF: Stage7_InitializeScrollState+6   p  ; was: sub_D5BC
-                move.w  #$CC,(dword_FF8062+2).w
-                clr.w   (dword_FF8066).w
+                move.w  #$CC,(TerobusterProjectileY).w
+                clr.w   (TerobusterTileRowIndex).w
                 rts
 ; End of function Stage7_InitializeTerobusterIntroProjectiles
 ; Spawn one type-$178 boundary projectile on alternate frames
@@ -21,11 +21,11 @@ Stage7_SpawnTerobusterIntroProjectile:                  ; CODE XREF: Stage7_Chec
                 move.w  #8,$48(a0)
                 move.b  #$60,$20(a0)                    ; '`'
                 clr.w   $10(a0)
-                move.w  (dword_FF8062+2).w,$14(a0)
-                addi.w  #$11,(dword_FF8062+2).w
-                cmpi.w  #$13C,(dword_FF8062+2).w
+                move.w  (TerobusterProjectileY).w,$14(a0)
+                addi.w  #$11,(TerobusterProjectileY).w
+                cmpi.w  #$13C,(TerobusterProjectileY).w
                 bmi.s   Stage7_SpawnTerobusterIntroProjectile_Return
-                move.w  #$CC,(dword_FF8062+2).w
+                move.w  #$CC,(TerobusterProjectileY).w
 Stage7_SpawnTerobusterIntroProjectile_Return:           ; CODE XREF: Stage7_SpawnTerobusterIntroProjectile+6   j  ; was: locret_D622
                                         ; Stage7_SpawnTerobusterIntroProjectile+12   j
                 rts
@@ -52,7 +52,7 @@ Projectile_TerobusterIntroBoundary_Return:              ; CODE XREF: Projectile_
 ; final two rows every eight frames
 Stage7_UpdateTerobusterIntroTileRows:                   ; CODE XREF: Stage7_InitializeTerobusterEncounter+C   p  ; was: sub_D654
                                         ; Stage7_UpdatePostTerobusterIntro+4   p
-                move.w  (dword_FF8066).w,d0
+                move.w  (TerobusterTileRowIndex).w,d0
                 cmpi.w  #$14,d0
                 bmi.s   Stage7_AdvanceTerobusterIntroTileRows
                 lea     Stage7_TerobusterIndexedRowCommandF8F9(pc),a0
@@ -72,7 +72,7 @@ Stage7_AdvanceTerobusterIntroTileRows:                  ; CODE XREF: Stage7_Upda
                 andi.w  #7,d1
                 bne.s   Stage7_UpdateTerobusterIntroTileRows_Return
                 movea.l Stage7_TerobusterIntroIndexedRowCommandPointers(pc,d0.w),a0
-                addq.w  #4,(dword_FF8066).w
+                addq.w  #4,(TerobusterTileRowIndex).w
                 jmp     Tilemap_QueueIndexedRows
 ; End of function Stage7_UpdateTerobusterIntroTileRows
 ; ---------------------------------------------------------------------------

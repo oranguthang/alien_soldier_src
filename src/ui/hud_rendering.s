@@ -20,15 +20,15 @@ UI_RenderWeaponStatusHUD_SelectLayout:                  ; CODE XREF: UI_RenderWe
                 move.w  #$C7B4,d5
                 move.w  (a2),d0
                 asl.w   #1,d0
-                move.w  (a4,d0.w),(dword_FF8040).w
-                movea.w #(dword_FF8040-M68K_RAM),a1
+                move.w  (a4,d0.w),(HUDGlyphWordScratch).w
+                movea.w #(HUDGlyphWordScratch-M68K_RAM),a1
                 moveq   #1,d7
                 bsr.w   UI_RenderPackedBCDDigits
                 move.w  #$C7E0,(a0)+
                 move.w  8(a2),d0
                 asl.w   #1,d0
-                move.w  (a4,d0.w),(dword_FF8040).w
-                movea.w #(dword_FF8040-M68K_RAM),a1
+                move.w  (a4,d0.w),(HUDGlyphWordScratch).w
+                movea.w #(HUDGlyphWordScratch-M68K_RAM),a1
                 moveq   #1,d7
                 bsr.w   UI_RenderPackedBCDDigits
                 bra.s   UI_RenderWeaponStatusHUD_UpdateCombatPercentTimer
@@ -205,16 +205,16 @@ UI_RenderStageTimerAndBossHealth_SelectBossHealthPresentation:  ; CODE XREF: UI_
                 move.w  (DisplayedBossHealth).w,d0
                 asr.w   #2,d0
                 andi.w  #$FFFE,d0
-                move.w  (a4,d0.w),(dword_FF8040).w
-                movea.w #(dword_FF8040-M68K_RAM),a1
+                move.w  (a4,d0.w),(HUDGlyphWordScratch).w
+                movea.w #(HUDGlyphWordScratch-M68K_RAM),a1
                 moveq   #1,d7
                 bsr.w   UI_RenderPackedBCDDigits
                 move.w  #$C7E0,(a0)+
                 move.w  (BossMaxHealth).w,d0
                 asr.w   #2,d0
                 andi.w  #$FFFE,d0
-                move.w  (a4,d0.w),(dword_FF8040).w
-                movea.w #(dword_FF8040-M68K_RAM),a1
+                move.w  (a4,d0.w),(HUDGlyphWordScratch).w
+                movea.w #(HUDGlyphWordScratch-M68K_RAM),a1
                 moveq   #1,d7
                 bsr.w   UI_RenderPackedBCDDigits
                 moveq   #$12,d7
@@ -273,8 +273,8 @@ UI_RenderSpecialBossStatus:                             ; CODE XREF: UI_RenderSt
                 move.w  #$C7B4,d5
                 move.w  (SpecialTargetCount).w,d0
                 asl.w   #1,d0
-                move.w  (a4,d0.w),(dword_FF8040).w
-                movea.w #(dword_FF8040-M68K_RAM),a1
+                move.w  (a4,d0.w),(HUDGlyphWordScratch).w
+                movea.w #(HUDGlyphWordScratch-M68K_RAM),a1
                 moveq   #1,d7
                 bsr.w   UI_RenderPackedBCDDigits
                 moveq   #$16,d7
@@ -287,14 +287,14 @@ UI_RenderSpecialBossStatus_FillPadding:                 ; CODE XREF: UI_RenderSp
 ; End of function UI_RenderSpecialBossStatus
 UI_QueueAllWeaponIconTransfers:                         ; CODE XREF: MessageSequence_FinishScript+C   j  ; was: sub_13178
                                         ; Stage_InitializeXiTigerState+34   p
-                move.w  (WeaponSlotOffset).w,(dword_FF8040).w
+                move.w  (WeaponSlotOffset).w,(HUDGlyphWordScratch).w
                 clr.w   (WeaponSlotOffset).w
                 moveq   #3,d7
 UI_QueueAllWeaponIconTransfers_NextSlot:                ; CODE XREF: UI_QueueAllWeaponIconTransfers+12   j  ; was: loc_13184
                 bsr.s   UI_QueueSelectedWeaponIconTransfer
                 addq.w  #2,(WeaponSlotOffset).w
                 dbf     d7,UI_QueueAllWeaponIconTransfers_NextSlot
-                move.w  (dword_FF8040).w,(WeaponSlotOffset).w
+                move.w  (HUDGlyphWordScratch).w,(WeaponSlotOffset).w
                 rts
 ; End of function UI_QueueAllWeaponIconTransfers
 ; ---------------------------------------------------------------------------

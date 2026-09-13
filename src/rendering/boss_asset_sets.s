@@ -418,7 +418,7 @@ Boss_LoadAssetSetAtObject:                              ; CODE XREF: Boss_Viblac
                 move.l  d0,(a0)+
                 move.w  (a1)+,-$60(a0)
                 movea.l (a1)+,a0
-                move.l  (a1)+,(dword_FF8040).w
+                move.l  (a1)+,(BossAssetPointerScratch).w
                 move.b  #6,(BossColorEffectFlags).w
                 bset    #7,(StageObjectSpawnCursor).w
                 clr.w   (EnemySpawnDirectorState).w
@@ -427,9 +427,9 @@ Boss_LoadAssetSetAtObject:                              ; CODE XREF: Boss_Viblac
                 beq.s   Boss_LoadAssetSet_LoadPalette
                 jsr     (Data_ProcessPointer).l
 Boss_LoadAssetSet_LoadPalette:                          ; CODE XREF: Boss_LoadAssetSet+58   j  ; was: loc_11708
-                move.l  (dword_FF8040).w,(dword_FF8040).w
+                move.l  (BossAssetPointerScratch).w,(BossAssetPointerScratch).w
                 beq.s   Boss_LoadAssetSet_Return
-                movea.l (dword_FF8040).w,a0
+                movea.l (BossAssetPointerScratch).w,a0
                 jsr     (Gfx_LoadPalettePreservingSharedColor).l
                 jmp     (Gfx_ResetDefaultColorFadeState).l
 ; ---------------------------------------------------------------------------

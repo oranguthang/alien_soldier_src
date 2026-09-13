@@ -313,9 +313,9 @@ Stage_LoadTeleportAssets:                               ; CODE XREF: Stage12To13
                 jsr     (LoadObjData).l
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 movea.w #(TileInterpSourceB-M68K_RAM),a1
-                move.w  #$6000,(word_FF8048).w
-                move.w  #$F,(word_FF804A).w
-                move.w  #1,(dword_FF8044+2).w
+                move.w  #$6000,(TileInterpVRAM).w
+                move.w  #$F,(TileInterpStepsLeft).w
+                move.w  #1,(TileInterpSpanStep).w
                 jmp     Gfx_LoadTilesLoop
 ; End of function Stage_LoadTeleportAssets
 ; ---------------------------------------------------------------------------

@@ -176,16 +176,16 @@ UI_UpdateGameplayHUD_RenderPlayerHealthBar:             ; CODE XREF: UI_UpdateGa
                 move.w  (DisplayedPlayerHealth).w,d0
                 asl.w   #1,d0
                 andi.w  #$FFFE,d0
-                move.w  (a4,d0.w),(dword_FF8040).w
-                movea.w #(dword_FF8040-M68K_RAM),a1
+                move.w  (a4,d0.w),(HUDGlyphWordScratch).w
+                movea.w #(HUDGlyphWordScratch-M68K_RAM),a1
                 moveq   #1,d7
                 bsr.w   UI_RenderPackedBCDDigits
                 move.w  #$C7E0,(a0)+
                 move.w  (PlayerMaxHealth).w,d0
                 asl.w   #1,d0
                 andi.w  #$FFFE,d0
-                move.w  (a4,d0.w),(dword_FF8040).w
-                movea.w #(dword_FF8040-M68K_RAM),a1
+                move.w  (a4,d0.w),(HUDGlyphWordScratch).w
+                movea.w #(HUDGlyphWordScratch-M68K_RAM),a1
                 moveq   #1,d7
                 bsr.w   UI_RenderPackedBCDDigits
                 move.w  #$C7F8,(a0)+

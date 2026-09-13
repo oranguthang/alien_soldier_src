@@ -277,8 +277,8 @@ Weapon_UpdateSeekingMissile_ComputeTargetAngle:         ; CODE XREF: Weapon_Upda
                 sub.w   $14(a5),d1
                 jsr     (Math_Arctan2Lookup).l
                 asr.w   #1,d2
-                move.w  d2,(dword_FF8040).w
-                move.b  (dword_FF8040).w,d2
+                move.w  d2,(SeekingAngleScratch).w
+                move.b  (SeekingAngleScratch).w,d2
 Weapon_UpdateSeekingMissile_AdjustHeading:              ; CODE XREF: Weapon_UpdateSeekingMissile+68   j  ; was: loc_18DEE
                 andi.w  #$7C,d2                         ; '|'
                 move.w  (RandomNumberState).w,d0
