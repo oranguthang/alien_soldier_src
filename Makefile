@@ -53,7 +53,7 @@ BIN_DIR = bin
 DATA_ADDRS = $(DATA_DIR)/data_addrs.txt
 
 # Default target
-.PHONY: all build verify check-assets update-asset-manifest verify-toolchain verify-layout format lint test runtime runtime-capture runtime-validate release-audit release-check source-inventory
+.PHONY: all build verify check-assets update-asset-manifest verify-toolchain verify-layout format lint test runtime runtime-capture runtime-validate release-audit release-check source-inventory semantic-audit
 all: build
 
 # Initialize project from original ROM
@@ -163,6 +163,9 @@ source-inventory: $(LISTING)
 		--layout $(ROM_LAYOUT) \
 		--listing $(LISTING) \
 		--output build/source_inventory.json
+
+semantic-audit:
+	@$(PYTHON) $(SCRIPTS_DIR)/semantic_audit_queue.py
 
 runtime: verify
 	@$(MAKE) --no-print-directory runtime-capture

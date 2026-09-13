@@ -20,6 +20,13 @@ preserves the exact missing-name check while avoiding one whole-source regular
 expression scan per audit record; at 9,818 records the local test time fell from
 about 271 seconds to less than one second.
 
+`make semantic-audit` is the module-aware, read-only queue for the remaining
+Sonnet-name review. It joins provenance-owning current definitions against the
+exact current names in `config/name_audit.json`, reports the backlog by source
+module, and separates binary-backed `_End` aliases from ordinary end labels
+that still need semantic review. It never rewrites source and does not require
+a listing, ROM build, trace, or emulator.
+
 `make trace` passes an inert screenshot interval to the pinned emulator. This
 is required because that emulator currently evaluates its maximum-frame and
 movie-finished termination checks only while screenshot automation is enabled.

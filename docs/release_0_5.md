@@ -46,10 +46,12 @@ definitions remain in executable, preserved-ROM, or RAM source. The exact-
 address audit registry contains 13,290 records. A further 3,061 provenance-mapped
 current names do not yet appear as dedicated current-name records; this is an
 upper-bound semantic review queue because aliases that share an address must
-be folded into one record. It includes 486 reviewed asset `_End` aliases that
-share the following segment's address and do not represent separate semantic
-review work. Promote or correct other names only with recorded static or
-runtime evidence.
+be folded into one record. `make semantic-audit` identifies 508 binary-backed
+`_End` aliases that immediately follow their `binclude` payload and therefore
+do not represent separate semantic review work. The resulting actionable
+upper bound is 2,553 names, including five non-binary `_End` labels that remain
+subject to ordinary review. Promote or correct names only with recorded static
+or runtime evidence.
 The older source-mutating analysis workflows are also outside the release
 interface until made module-aware; see `docs/tooling_status.md`.
 
