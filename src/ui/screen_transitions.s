@@ -16,13 +16,13 @@ Frontend_EraseSegaScreenPattern:                        ; was: sub_1D152
                 jsr     (Cutscene_ErasePlanetPatternStep).l
                 cmpi.w  #$40,(PatternDissolveStep).l    ; '@'
                 bne.w   FrontendTransition_Return
-                move.w  #$40,(word_FF8100).w            ; '@'
+                move.w  #$40,(FrontendHoldTimer).w      ; '@'
                 addq.w  #2,(SharedSequenceState).l
                 rts
 ; End of function Frontend_EraseSegaScreenPattern
 ; Waits for the Sega-screen erase hold timer
 Frontend_WaitAfterSegaPatternErase:                     ; was: sub_1D178
-                subq.w  #1,(word_FF8100).w
+                subq.w  #1,(FrontendHoldTimer).w
                 bne.w   FrontendTransition_Return
                 addq.w  #2,(SharedSequenceState).l
                 rts
@@ -33,7 +33,7 @@ Frontend_RevealSegaScreenPattern:                       ; was: sub_1D188
                 jsr     (Cutscene_RevealPlanetPatternStep).l
                 tst.w   (PatternDissolveStep).l
                 bpl.w   FrontendTransition_Return
-                move.w  #$80,(word_FF8100).w
+                move.w  #$80,(FrontendHoldTimer).w
                 addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Frontend_RevealSegaScreenPattern
@@ -102,13 +102,13 @@ Frontend_EraseTitleTransitionPattern:                   ; was: sub_1D29A
                 jsr     (Cutscene_ErasePlanetPatternStep).l
                 cmpi.w  #$40,(PatternDissolveStep).l    ; '@'
                 bne.w   FrontendTransition_Return
-                move.w  #$40,(word_FF8100).w            ; '@'
+                move.w  #$40,(FrontendHoldTimer).w      ; '@'
                 addq.w  #2,(SharedSequenceState).l
                 rts
 ; End of function Frontend_EraseTitleTransitionPattern
 ; Waits after erasing the first title-transition pattern
 Frontend_WaitAfterFirstTitlePatternErase:               ; was: sub_1D2C0
-                subq.w  #1,(word_FF8100).w
+                subq.w  #1,(FrontendHoldTimer).w
                 bne.w   FrontendTransition_Return
                 addq.w  #2,(SharedSequenceState).l
                 rts
@@ -143,7 +143,7 @@ Frontend_RevealTitlePatternAndSetupNextGrid:            ; was: sub_1D2D0
 ; End of function Frontend_RevealTitlePatternAndSetupNextGrid
 ; Waits after erasing the second title-transition pattern
 Frontend_WaitAfterSecondTitlePatternErase:              ; was: sub_1D36E
-                subq.w  #1,(word_FF8100).w
+                subq.w  #1,(FrontendHoldTimer).w
                 bne.w   FrontendTransition_Return
                 addq.w  #2,(SharedSequenceState).l
                 rts

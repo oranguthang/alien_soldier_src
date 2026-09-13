@@ -152,17 +152,17 @@ Boss_ZLeoIntroInit:                                     ; DATA XREF: ROM:00051B8
                 jsr     (Sprite_InitMetaspriteComplex).l
                 move.w  #$3F8,(a5)
                 move.w  #$C00,2(a5)
-                movea.l #$FFFF2020,a0
+                movea.l #SharedTilemapWorkspace,a0
                 move.w  #$6000,d0
                 move.w  #$280,d1
                 moveq   #$1F,d7
                 jsr     (Gfx_UpdateTilemapIndices).l
-                movea.l #$FFFF2080,a0
+                movea.l #ZLeoPriorityFirstRow,a0
                 move.w  #$E000,d0
                 moveq   #3,d7
                 jsr     (Gfx_AdjustTileIndexRows).l
                 move.w  #$7FFF,d0
-                lea     (byte_FF2080).l,a0
+                lea     (ZLeoPriorityFirstRow).l,a0
                 and.w   d0,(a0)
                 and.w   d0,2(a0)
                 and.w   d0,8(a0)
@@ -171,8 +171,8 @@ Boss_ZLeoIntroInit:                                     ; DATA XREF: ROM:00051B8
                 and.w   d0,$12(a0)
                 and.w   d0,$18(a0)
                 and.w   d0,$1A(a0)
-                lea     (word_FF20E0).l,a0
-                and.w   d0,word_FF20E4-word_FF20E0(a0)
+                lea     (ZLeoPriorityLastRow).l,a0
+                and.w   d0,ZLeoPriorityLastCol2-ZLeoPriorityLastRow(a0)
                 and.w   d0,6(a0)
                 and.w   d0,$C(a0)
                 and.w   d0,$E(a0)
@@ -493,7 +493,7 @@ Boss_ZLeoBeginDefeatWhiteout:                           ; CODE XREF: Boss_ZLeoBe
                 clr.w   4(a0)
                 move.w  #$120,$10(a0)
                 move.w  #$F0,$14(a0)
-                movea.l #$FFFF2080,a0
+                movea.l #ZLeoPriorityFirstRow,a0
                 move.w  #$6000,d0
                 moveq   #3,d7
                 jsr     (Gfx_AdjustTileIndexRows).l

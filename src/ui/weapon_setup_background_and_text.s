@@ -2,20 +2,20 @@
 WeaponSetup_UpdateBackgroundEffect:                     ; CODE XREF: WeaponSetup_UpdateAndDispatchState   p  ; was: sub_1F82E
                 cmpi.w  #$A,(SetupTransitionIndex).w
                 bpl.s   WeaponSetup_IncreaseBackgroundPhase
-                subi.l  #$18000,(dword_FF8130).w
-                cmpi.l  #$B00000,(dword_FF8130).w
+                subi.l  #$18000,(WeaponSetupBgPhase).w
+                cmpi.l  #$B00000,(WeaponSetupBgPhase).w
                 bpl.s   WeaponSetup_RenderBackgroundPhase
-                move.l  #$1500000,(dword_FF8130).w
+                move.l  #$1500000,(WeaponSetupBgPhase).w
                 bra.s   WeaponSetup_RenderBackgroundPhase
 ; ---------------------------------------------------------------------------
 WeaponSetup_IncreaseBackgroundPhase:                    ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+6   j  ; was: loc_1F852
-                addi.l  #$18000,(dword_FF8130).w
-                cmpi.l  #$1500000,(dword_FF8130).w
+                addi.l  #$18000,(WeaponSetupBgPhase).w
+                cmpi.l  #$1500000,(WeaponSetupBgPhase).w
                 bmi.s   WeaponSetup_RenderBackgroundPhase
-                move.l  #$B00000,(dword_FF8130).w
+                move.l  #$B00000,(WeaponSetupBgPhase).w
 WeaponSetup_RenderBackgroundPhase:                      ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+18   j  ; was: loc_1F86C
                                         ; WeaponSetup_UpdateBackgroundEffect+22   j
-                move.w  (dword_FF8130).w,d0
+                move.w  (WeaponSetupBgPhase).w,d0
                 asr.w   #3,d0
                 subi.w  #$16,d0
                 andi.w  #$1E,d0
@@ -29,7 +29,7 @@ WeaponSetup_InitializeLineOffsetLoop:                   ; CODE XREF: WeaponSetup
                 subq.w  #2,d0
                 dbf     d7,WeaponSetup_InitializeLineOffsetLoop
                 movea.w #(byte_FF9C80-M68K_RAM),a0
-                move.l  (dword_FF8130).w,d0
+                move.l  (WeaponSetupBgPhase).w,d0
                 subi.l  #Z80_RAM,d0
                 move.l  d0,d1
                 move.l  d0,d2
@@ -54,7 +54,7 @@ WeaponSetup_BuildFirstOffsetTableLoop:                  ; CODE XREF: WeaponSetup
                 add.l   d1,d0
                 cmpi.l  #$600000,d0
                 bmi.s   WeaponSetup_BuildFirstOffsetTableLoop
-                move.l  (dword_FF8130).w,d0
+                move.l  (WeaponSetupBgPhase).w,d0
                 move.l  d0,d1
                 move.l  d0,d2
                 lsr.l   #1,d2
@@ -93,7 +93,7 @@ WeaponSetup_ClearBackgroundTileLoop:                    ; CODE XREF: WeaponSetup
                 move.l  d2,(a0)+
                 move.l  d2,(a0)+
                 dbf     d7,WeaponSetup_ClearBackgroundTileLoop
-                move.l  (dword_FF8130).w,d0
+                move.l  (WeaponSetupBgPhase).w,d0
                 subi.l  #Z80_RAM,d0
                 move.l  d0,d1
                 move.l  d0,d2
@@ -116,7 +116,7 @@ WeaponSetup_DrawFirstDitherBandColumn:                  ; CODE XREF: WeaponSetup
                 add.l   d1,d0
                 cmpi.l  #Z80_RAM,d0
                 bmi.s   WeaponSetup_DrawFirstDitherBandLoop
-                move.l  (dword_FF8130).w,d0
+                move.l  (WeaponSetupBgPhase).w,d0
                 move.l  d0,d1
                 move.l  d0,d2
                 lsr.l   #1,d2

@@ -34,7 +34,7 @@ StageTransition_BuildInterpolatedBackdropLineOffsets:   ; CODE XREF: StageTransi
                 divs.w  #$7000,d0
                 ext.l   d0
                 asl.l   #8,d0
-                movea.w #(byte_FF9F00-M68K_RAM),a0
+                movea.w #(BackdropLineOffsetsEnd-M68K_RAM),a0
                 move.l  (dword_FF8066).w,d1
                 moveq   #$5F,d7                         ; '_'
 StageTransition_FillInterpolatedBackdropLineOffsets:    ; CODE XREF: StageTransition_BuildBossBackdropLineOffsets+46   j  ; was: loc_FCCA

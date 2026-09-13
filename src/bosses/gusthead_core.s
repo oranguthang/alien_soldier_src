@@ -138,7 +138,7 @@ Boss_GustheadSetupParts:                                ; DATA XREF: ROM:0003F24
                 clr.l   (dword_FF941C).w
                 clr.l   (dword_FF9420).w
                 clr.w   (dword_FF9424).w
-                move.b  #4,(byte_FFA420).w
+                move.b  #4,(PlayerOAMBucketOffset).w
                 move.w  #$120,$10(a5)
                 move.w  #$F0,$14(a5)
                 move.b  #$40,$20(a5)                    ; '@'

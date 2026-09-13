@@ -243,7 +243,7 @@ Stage_SevenForcesInitializeVictoryTransition:           ; DATA XREF: ROM:0000E4C
                 clr.b   (byte_FFA958).w
                 move.w  #$40,(dword_FFA960+2).w         ; '@'
                 clr.w   (SecondaryCameraXPos).w
-                movea.l #$FFFF2020,a0
+                movea.l #SharedTilemapWorkspace,a0
                 move.w  #$A000,d0
                 move.w  #0,d1
                 moveq   #$7E,d7                         ; '~'

@@ -294,7 +294,7 @@ Boss_SharpssteelInitializeFallingShotCycle:             ; CODE XREF: Boss_Sharps
                 move.w  #$C7A0,$4A(a5)
                 move.w  #$120,$194(a5)
                 move.w  #$120,$190(a5)
-                move.b  #$10,(byte_FFA420).w
+                move.b  #$10,(PlayerOAMBucketOffset).w
                 move.l  #$E00000,$2FC(a5)
                 bsr.w   Boss_SharpssteelDisableCoreSegmentCollision
                 move.w  #$FFD8,$35E(a5)

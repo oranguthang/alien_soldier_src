@@ -132,7 +132,7 @@ PlayerScript_WaitForRunDelayState08_Return:             ; CODE XREF: PlayerScrip
 ; End of function PlayerScript_WaitForRunDelayState08
 ; Hold Right until world-space player X passes the configured target
 PlayerScript_MoveRightPastTargetState0A:                ; DATA XREF: ROM:00019A3E   o  ; was: sub_19B40
-                btst    #1,(byte_FFA407).w
+                btst    #1,(PlayerWallContactFlags).w
                 beq.s   PlayerScript_MoveRightPastTargetState0A_MoveRight
                 move.w  #$10,(PlayerScriptStateOffset).w
                 move.b  #$20,$6A(a5)                    ; ' '
@@ -193,7 +193,7 @@ PlayerScript_WaitForStatusThenResumeRunState10_Return:  ; CODE XREF: PlayerScrip
 ; End of function PlayerScript_WaitForStatusThenResumeRunState10
 ; Post-Bugmax variant: hold Right until world X passes $0690
 PlayerScript_MoveRightPastPostBugmaxTargetState28:      ; DATA XREF: ROM:00019A5C   o  ; was: sub_19BF6
-                btst    #1,(byte_FFA407).w
+                btst    #1,(PlayerWallContactFlags).w
                 beq.s   PlayerScript_MoveRightPastPostBugmaxTargetState28_MoveRight
                 move.w  #$2C,(PlayerScriptStateOffset).w  ; ','
                 move.b  #$20,$6A(a5)                    ; ' '

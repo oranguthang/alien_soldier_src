@@ -51,7 +51,7 @@ Weapon_AppendTargetingReticleForObject:                 ; CODE XREF: Weapon_Conf
                 add.w   d3,d2
                 add.w   $10(a0),d2
                 move.w  d2,d3
-                movea.w #(dword_FFA100-M68K_RAM),a1
+                movea.w #(SharedSpriteScratch-M68K_RAM),a1
                 move.w  (FrameCounter).w,d4
                 andi.w  #7,d4
                 asl.w   #1,d4
@@ -83,7 +83,7 @@ Weapon_AppendTargetingReticleForObject:                 ; CODE XREF: Weapon_Conf
                 move.w  #$D6FC,(a1)+
                 move.w  d3,(a1)+
                 move.w  #$FFFF,(a1)+
-                movea.w #(dword_FFA100-M68K_RAM),a0
+                movea.w #(SharedSpriteScratch-M68K_RAM),a0
                 jmp     (Sprite_AppendOAMEntries).l
 ; End of function Weapon_UpdateTargetingReticle
 ; ---------------------------------------------------------------------------

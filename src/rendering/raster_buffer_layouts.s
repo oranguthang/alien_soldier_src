@@ -24,7 +24,7 @@ RasterBuffer_LayoutOffsets: dc.w    RasterBuffer_Return-RasterBuffer_CopyXiTiger
 RasterBuffer_CopyXiTigerOffsets:                        ; DATA XREF: RasterBuffer_CopySelectedLayout+8   o  ; was: sub_29E58
                                         ; ROM:RasterBuffer_LayoutOffsets   o
                 movea.w #(CutsceneLineOffsetTable-M68K_RAM),a2
-                movea.w #(word_FF9FC0-M68K_RAM),a3
+                movea.w #(XiTigerVScrollBuffer-M68K_RAM),a3
                 moveq   #0,d7
                 bra.w   RasterBuffer_Copy64ByteBlocks
 ; End of function RasterBuffer_CopyXiTigerOffsets

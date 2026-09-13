@@ -94,10 +94,13 @@ StoryTitleRightOrigin   equ     $FFFF1500               ; was: word_FF1500
 EndingStarDepthValues   equ     $FFFF1800               ; was: dword_FF1800
 EndingStarXVelocities   equ     $FFFF1C00               ; was: dword_FF1C00
 EndingStarYVelocities   equ     $FFFF2000               ; was: dword_FF2000
-ShipArrivalTilemap      equ     $FFFF2020               ; was: word_FF2020
-byte_FF2080             equ     $FFFF2080
-word_FF20E0             equ     $FFFF20E0
-word_FF20E4             equ     $FFFF20E4
+SharedTilemapWorkspace  equ     $FFFF2020               ; was: word_FF2020
+ShipArrivalTilemap      equ     SharedTilemapWorkspace
+SharedGraphicsOverlay   equ     $FFFF2080               ; was: byte_FF2080
+StoryTitleLogoPixels    equ     SharedGraphicsOverlay
+ZLeoPriorityFirstRow    equ     SharedGraphicsOverlay
+ZLeoPriorityLastRow     equ     $FFFF20E0               ; was: word_FF20E0
+ZLeoPriorityLastCol2    equ     $FFFF20E4               ; was: word_FF20E4
 StoryTitleMirroredGlyph equ     $FFFF2380               ; was: byte_FF2380
 StoryTitleGlyphReadBase equ     $FFFF2384               ; was: byte_FF2384
 LargeTilemapBuffer      equ     $FFFF4000               ; was: dword_FF4000
@@ -185,7 +188,9 @@ PaletteFadeMode         equ     $FFFF80F2               ; was: word_FF80F2
 PaletteFadeMaskStatus   equ     $FFFF80F4               ; was: word_FF80F4
 PaletteFadeControlFlags equ     $FFFF80F8               ; was: byte_FF80F8
 AlternateTimeBonusSound equ     $FFFF80FA               ; was: byte_FF80FA
-word_FF8100             equ     $FFFF8100
+SharedTransitionControl equ     $FFFF8100               ; was: word_FF8100
+FrontendHoldTimer       equ     SharedTransitionControl
+WaveControlWord         equ     SharedTransitionControl
 WaveParameterIndex      equ     $FFFF8102               ; was: word_FF8102
 WaveStateOffset         equ     $FFFF8104               ; was: word_FF8104
 HUDDynamicStripTileAttr equ     $FFFF8110               ; was: word_FF8110
@@ -196,10 +201,30 @@ EnemySpawnClearedLongA  equ     $FFFF811A               ; was: dword_FF811A
 EnemySpawnClearedLongB  equ     $FFFF811E               ; was: dword_FF811E
 EnemySpawnClearedLongC  equ     $FFFF8122               ; was: dword_FF8122
 ActivePickupCountMinus1 equ     $FFFF8126               ; was: word_FF8126
-dword_FF8128            equ     $FFFF8128
-dword_FF812C            equ     $FFFF812C
-dword_FF8130            equ     $FFFF8130
-dword_FF8134            equ     $FFFF8134
+SceneScratchLong0       equ     $FFFF8128               ; was: dword_FF8128
+WeaponSetupForceIndex   equ     SceneScratchLong0
+StageTransitionTimer    equ     SceneScratchLong0
+Epsilon1TransitionY     equ     SceneScratchLong0
+XiTigerStateOffset      equ     SceneScratchLong0
+EndingSequenceComplete  equ     SceneScratchLong0
+GameOverLandscapeIndex  equ     SceneScratchLong0
+WeaponSetupScrollTarget equ     SceneScratchLong0+2
+XiTigerPhaseCounter     equ     SceneScratchLong0+2
+EndingSequenceState     equ     SceneScratchLong0+2
+SceneScratchLong1       equ     $FFFF812C               ; was: dword_FF812C
+WeaponSetupControlIndex equ     SceneScratchLong1
+Epsilon1ParallaxPos     equ     SceneScratchLong1
+XiTigerMotionStep       equ     SceneScratchLong1
+SceneScratchLong2       equ     $FFFF8130               ; was: dword_FF8130
+WeaponSetupBgPhase      equ     SceneScratchLong2
+Epsilon1ParallaxStep    equ     SceneScratchLong2
+XiTigerStateCounter     equ     SceneScratchLong2
+XiTigerPaletteLevel     equ     SceneScratchLong2+2
+SceneScratchLong3       equ     $FFFF8134               ; was: dword_FF8134
+WeaponSetupHighlight    equ     SceneScratchLong3
+Epsilon1VScrollValue    equ     SceneScratchLong3
+XiTigerWavePhase        equ     SceneScratchLong3
+XiTigerSpriteXOffset    equ     SceneScratchLong3+2
 ScriptedInputActive     equ     $FFFF8138               ; was: word_FF8138
 ScriptedInputTimeout    equ     $FFFF813A               ; was: word_FF813A
 FrameFreezeTimer        equ     $FFFF813C               ; was: word_FF813C
@@ -429,15 +454,17 @@ word_FF9E02             equ     $FFFF9E02
 byte_FF9E0E             equ     $FFFF9E0E
 byte_FF9E1E             equ     $FFFF9E1E
 word_FF9E40             equ     $FFFF9E40
-byte_FF9F00             equ     $FFFF9F00
+SharedRasterSplitPoint  equ     $FFFF9F00               ; was: byte_FF9F00
+BackdropLineOffsetsEnd  equ     SharedRasterSplitPoint
+WaveSineTableCenter     equ     SharedRasterSplitPoint
 CutsceneScaleStep       equ     $FFFF9F08               ; was: dword_FF9F08
 CutsceneScaleSnapshot   equ     $FFFF9F0C               ; was: dword_FF9F0C
 CutsceneOffsetCenter    equ     $FFFF9F10               ; was: word_FF9F10
 CutsceneRowLoopLimit    equ     $FFFF9F12               ; was: word_FF9F12
 CutsceneVerticalOffset  equ     $FFFF9F14               ; was: word_FF9F14
 CutsceneLineOffsetTable equ     $FFFF9F80               ; was: byte_FF9F80
-word_FF9FC0             equ     $FFFF9FC0
-byte_FF9FF8             equ     $FFFF9FF8
+XiTigerVScrollBuffer    equ     $FFFF9FC0               ; was: word_FF9FC0
+Stage10HBlankScrollData equ     $FFFF9FF8               ; was: byte_FF9FF8
 FrameCounter            equ     $FFFFA000               ; was: word_FFA000
 ScoreAddendPrefixByte   equ     $FFFFA005               ; was: byte_FFA005
 ScoreAddendBCD          equ     $FFFFA006               ; was: dword_FFA006
@@ -449,16 +476,16 @@ PlaneAShakeOffset       equ     $FFFFA012               ; was: word_FFA012
 PlaneBShakeLevel        equ     $FFFFA014               ; was: word_FFA014
 PlaneBShakeOffset       equ     $FFFFA016               ; was: word_FFA016
 PlayerScriptStateOffset equ     $FFFFA02A               ; was: word_FFA02A
-dword_FFA100            equ     $FFFFA100
-byte_FFA104             equ     $FFFFA104
-byte_FFA108             equ     $FFFFA108
-byte_FFA120             equ     $FFFFA120
-byte_FFA126             equ     $FFFFA126
-byte_FFA128             equ     $FFFFA128
-byte_FFA12E             equ     $FFFFA12E
-byte_FFA150             equ     $FFFFA150
-byte_FFA156             equ     $FFFFA156
-byte_FFA17C             equ     $FFFFA17C
+SharedSpriteScratch     equ     $FFFFA100               ; was: dword_FFA100
+SpriteScratchTileWord0  equ     $FFFFA104               ; was: byte_FFA104
+SpriteScratchEntry1     equ     $FFFFA108               ; was: byte_FFA108
+RadialSpriteYBackward   equ     $FFFFA120               ; was: byte_FFA120
+RadialSpriteXBackward   equ     $FFFFA126               ; was: byte_FFA126
+RadialSpriteYForward    equ     $FFFFA128               ; was: byte_FFA128
+RadialSpriteXForward    equ     $FFFFA12E               ; was: byte_FFA12E
+LinearSpriteYStart      equ     $FFFFA150               ; was: byte_FFA150
+LinearSpriteXStart      equ     $FFFFA156               ; was: byte_FFA156
+TimeDigitTileWordStart  equ     $FFFFA17C               ; was: byte_FFA17C
 GameplayStateBlock      equ     $FFFFA200               ; was: dword_FFA200
 StageTableIndex         equ     $FFFFA204               ; was: word_FFA204
 StageProcessTableOffset equ     $FFFFA206               ; was: word_FFA206
@@ -500,7 +527,7 @@ SnakeScrollAccumulators equ     $FFFFA3E0               ; was: byte_FFA3E0
 PlayerObjectType        equ     $FFFFA400               ; was: word_FFA400
 PlayerObjectFlags       equ     $FFFFA402               ; was: word_FFA402
 PlayerStateOffset       equ     $FFFFA404               ; was: word_FFA404
-byte_FFA407             equ     $FFFFA407
+PlayerWallContactFlags  equ     $FFFFA407               ; was: byte_FFA407
 PlayerSpriteMapping     equ     $FFFFA408               ; was: dword_FFA408
 PlayerAnimationTimer    equ     $FFFFA40C               ; was: word_FFA40C
 PlayerSpriteAttributes  equ     $FFFFA40E               ; was: word_FFA40E
@@ -508,8 +535,8 @@ PlayerXPosition         equ     $FFFFA410               ; was: dword_FFA410
 PlayerYPosition         equ     $FFFFA414               ; was: dword_FFA414
 PlayerXVelocity         equ     $FFFFA418               ; was: dword_FFA418
 PlayerYVelocity         equ     $FFFFA41C               ; was: dword_FFA41C
-byte_FFA420             equ     $FFFFA420
-word_FFA448             equ     $FFFFA448
+PlayerOAMBucketOffset   equ     $FFFFA420               ; was: byte_FFA420
+PlayerStateWorkHighWord equ     $FFFFA448               ; was: word_FFA448
 PlayerInvulnTimer       equ     $FFFFA45E               ; was: word_FFA45E
 PlayerPressedInput      equ     $FFFFA46A               ; was: byte_FFA46A
 ObjectBufferSecondHalf  equ     $FFFFA600               ; was: dword_FFA600
@@ -534,7 +561,7 @@ Stage9RasterScrollPhase equ     $FFFFA918               ; was: dword_FFA918
 StageCameraYVelocity    equ     $FFFFA91C               ; was: dword_FFA91C
 PreviousCameraXPosition equ     $FFFFA928               ; was: word_FFA928
 PreviousCameraYPosition equ     $FFFFA92C               ; was: word_FFA92C
-dword_FFA930            equ     $FFFFA930
+CameraDeltaLowerLimit   equ     $FFFFA930               ; was: dword_FFA930
 PhysicsXVelocityLimit   equ     $FFFFA938               ; was: dword_FFA938
 PhysicsYVelocityLimit   equ     $FFFFA93C               ; was: dword_FFA93C
 TilemapTransferBase     equ     $FFFFA940               ; was: dword_FFA940

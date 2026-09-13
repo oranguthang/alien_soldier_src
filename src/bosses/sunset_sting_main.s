@@ -93,7 +93,7 @@ Boss_SunsetStingInit:                                   ; DATA XREF: ROM:off_42A
                 move.w  #$95,$26(a5)
                 move.l  #$F010F010,$28(a5)
                 move.l  #$F20EF20E,$2C(a5)
-                move.b  #$40,(byte_FFA420).w            ; '@'
+                move.b  #$40,(PlayerOAMBucketOffset).w  ; '@'
                 lea     $60(a5),a0
                 move.w  #$20C,(a0)
                 move.b  #$40,$21(a0)                    ; '@'

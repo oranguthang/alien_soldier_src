@@ -282,7 +282,7 @@ Boss_Epsilon1ClearAngleHistoryRowLoop:                  ; CODE XREF: Boss_Epsilo
                 dbf     d6,Boss_Epsilon1ClearAngleHistoryRowLoop
                 dbf     d7,Boss_Epsilon1ClearAngleHistoryRowsLoop
                 clr.w   (dword_FF9418+2).w
-                move.b  #4,(byte_FFA420).w
+                move.b  #4,(PlayerOAMBucketOffset).w
                 move.w  #$264,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l

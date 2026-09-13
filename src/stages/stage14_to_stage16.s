@@ -247,7 +247,7 @@ Stage16_UpdatePostViblackPaletteTransition_NextWord:    ; CODE XREF: Stage16_Upd
                 cmpi.w  #$C,d6
                 bmi.s   Stage16_UpdatePostViblackPaletteTransition_Return
                 addq.w  #2,(StageStateOffset).w
-                move.b  #$18,(byte_FFA420).w
+                move.b  #$18,(PlayerOAMBucketOffset).w
 Stage16_UpdatePostViblackPaletteTransition_Return:      ; CODE XREF: Stage16_UpdatePostViblackPaletteTransition+60   j  ; was: locret_E10E
                 rts
 ; End of function Stage16_UpdatePostViblackPaletteTransition

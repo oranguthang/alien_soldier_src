@@ -481,7 +481,7 @@ Boss_BugmaxInitializeEncounterState:                    ; DATA XREF: ROM:Boss_Bu
                 tst.b   (DataLoaderControl).w
                 bmi.w   Boss_BugmaxInitializeEncounterReturn
                 addq.w  #2,4(a5)
-                move.b  #4,(byte_FFA420).w
+                move.b  #4,(PlayerOAMBucketOffset).w
                 move.w  #$300,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l

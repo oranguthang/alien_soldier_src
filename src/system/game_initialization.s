@@ -7,7 +7,7 @@ Sys_InitFullGame:                                       ; CODE XREF: RegionRestr
                 bsr.w   Gfx_InitVideoMode
                 bsr.w   Sys_ClearGameBuffers
                 bsr.w   Sys_ClearGameplayStateBlock
-                bsr.w   Sys_ClearSpriteBuffers
+                bsr.w   Sys_ClearFrameAndSpriteScratch
                 bsr.w   Sys_ClearObjectRAM
                 bra.w   Sys_ClearObjectBuffer
 ; End of function Sys_InitFullGame
@@ -21,7 +21,7 @@ Sys_InitGameMode:                                       ; CODE XREF: EndingSeque
                 bsr.w   Sys_ClearPaletteBuffers
                 bsr.w   Gfx_InitVideoMode
                 bsr.w   Sys_ClearGameBuffers
-                bsr.w   Sys_ClearSpriteBuffers
+                bsr.w   Sys_ClearFrameAndSpriteScratch
                 bsr.w   Sys_ClearObjectRAM
                 bra.w   Sys_ClearObjectBuffer
 ; End of function Sys_InitGameMode

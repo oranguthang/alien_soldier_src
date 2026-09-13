@@ -49,29 +49,29 @@ Sys_ClearObjectRAM_Loop:                                ; CODE XREF: Sys_ClearOb
                 dbf     d1,Sys_ClearObjectRAM_Loop
                 rts
 ; End of function Sys_ClearObjectRAM
-; Clears sprite buffer areas
-Sys_ClearSpriteBuffers:                                 ; CODE XREF: Sys_InitFullGame+20   p  ; was: sub_2F08
+; Clears the 256-byte frame-state block and 256-byte shared sprite scratch
+Sys_ClearFrameAndSpriteScratch:                         ; CODE XREF: Sys_InitFullGame+20   p  ; was: sub_2F08
                                         ; Sys_InitGameMode+1C   p
                 lea     (FrameCounter).w,a0
                 moveq   #0,d0
                 move.w  #$F,d1
-Sys_ClearSpriteBuffers_FirstLoop:                       ; CODE XREF: Sys_ClearSpriteBuffers+12   j  ; was: loc_2F12
+Sys_ClearFrameStateBlockLoop:                           ; CODE XREF: Sys_ClearFrameAndSpriteScratch+12   j  ; was: loc_2F12
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearSpriteBuffers_FirstLoop
-                lea     (dword_FFA100).w,a0
+                dbf     d1,Sys_ClearFrameStateBlockLoop
+                lea     (SharedSpriteScratch).w,a0
                 moveq   #0,d0
                 move.w  #$F,d1
-Sys_ClearSpriteBuffers_SecondLoop:                      ; CODE XREF: Sys_ClearSpriteBuffers+28   j  ; was: loc_2F28
+Sys_ClearSharedSpriteScratchLoop:                       ; CODE XREF: Sys_ClearFrameAndSpriteScratch+28   j  ; was: loc_2F28
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearSpriteBuffers_SecondLoop
+                dbf     d1,Sys_ClearSharedSpriteScratchLoop
                 rts
-; End of function Sys_ClearSpriteBuffers
+; End of function Sys_ClearFrameAndSpriteScratch
 ; Clears the 128-byte global gameplay-state block
 Sys_ClearGameplayStateBlock:                            ; CODE XREF: Sys_InitFullGame+1C   p  ; was: sub_2F36
                 lea     (GameplayStateBlock).w,a0

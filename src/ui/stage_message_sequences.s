@@ -40,7 +40,7 @@ StageIntro_RenderStageNumberBanner:                     ; CODE XREF: StageIntro_
                 lea     StageIntro_StageNumberSpriteTileLayout(pc),a0
                 nop
                 bsr.w   Message_LoadSpriteTileIndices
-                movea.w #(dword_FFA100-M68K_RAM),a0
+                movea.w #(SharedSpriteScratch-M68K_RAM),a0
                 move.w  #$EC,d0
                 move.b  (StageNumberBCD).w,d2
                 move.w  d2,d3
@@ -69,7 +69,7 @@ StageIntro_WriteStageLabelSprites:                      ; CODE XREF: StageIntro_
                 move.w  d0,(a0)
                 move.w  d1,6(a0)
                 move.w  d2,4(a0)
-                lea     (dword_FFA100).w,a0
+                lea     (SharedSpriteScratch).w,a0
                 jmp     (Sprite_AppendOAMEntries).l
 ; End of function StageIntro_UpdateStageNumberBanner
 ; Initializes the flashing EMERGENCY banner
@@ -106,7 +106,7 @@ StageIntro_CheckEmergencyFlashFrame:                    ; CODE XREF: StageIntro_
                 lea     StageIntro_EmergencySpriteTileLayout(pc),a0
                 nop
                 bsr.w   Message_LoadSpriteTileIndices
-                movea.w #(dword_FFA100-M68K_RAM),a0
+                movea.w #(SharedSpriteScratch-M68K_RAM),a0
                 move.w  #$EC,d0
                 move.w  (word_FF80C6).w,d1
                 moveq   #8,d7
@@ -117,7 +117,7 @@ StageIntro_WriteEmergencySprites:                       ; CODE XREF: StageIntro_
                 addi.w  #$C,d1
                 addq.w  #8,a0
                 dbf     d7,StageIntro_WriteEmergencySprites
-                lea     (dword_FFA100).w,a0
+                lea     (SharedSpriteScratch).w,a0
                 jmp     (Sprite_AppendOAMEntries).l
 ; End of function StageIntro_UpdateEmergencyFlash
 ; Initializes pause timer before text exit
@@ -302,7 +302,7 @@ Results_RenderSpinningTimeBonus:                        ; CODE XREF: Results_Spi
                 nop
                 bsr.w   Message_LoadSpriteTileIndices
                 bsr.w   Results_PositionTimeBonusSprites
-                lea     (dword_FFA100).w,a0
+                lea     (SharedSpriteScratch).w,a0
                 jmp     (Sprite_AppendOAMEntries).l
 ; End of function Results_RenderSpinningTimeBonus
 ; Renders the linear form of the remaining-time bonus
@@ -313,7 +313,7 @@ Results_RenderLinearTimeBonus:                          ; CODE XREF: Results_Ani
                 bsr.w   Message_LoadSpriteTileIndices
                 bsr.w   Results_ApplyTimeDigitTileOffsets
                 bsr.w   Results_PositionTimeBonusSprites
-                lea     (dword_FFA100).w,a0
+                lea     (SharedSpriteScratch).w,a0
                 jmp     (Sprite_AppendOAMEntries).l
 ; End of function Results_RenderLinearTimeBonus
 ; Renders the generic radial-text sprite arrangement
@@ -323,7 +323,7 @@ Message_RenderRadialText:                               ; CODE XREF: Message_Fad
                 nop
                 bsr.w   Message_LoadSpriteTileIndices
                 bsr.w   Message_PositionRadialTextSprites
-                lea     (dword_FFA100).w,a0
+                lea     (SharedSpriteScratch).w,a0
                 jmp     (Sprite_AppendOAMEntries).l
 ; End of function Message_RenderRadialText
 ; Writes the remaining-time bonus sprite positions
@@ -358,10 +358,10 @@ Message_WriteRadialTextSpritePositions:                 ; CODE XREF: Message_Pos
 ; Calculates symmetric sine/cosine coordinates and the linear sprite row
 Message_CalculateRadialSpriteCoords:                    ; CODE XREF: Results_PositionTimeBonusSprites   p  ; was: sub_B268
                                         ; sub_B24A   p
-                movea.w #(byte_FFA120-M68K_RAM),a0
-                movea.w #(byte_FFA126-M68K_RAM),a1
-                movea.w #(byte_FFA128-M68K_RAM),a2
-                movea.w #(byte_FFA12E-M68K_RAM),a3
+                movea.w #(RadialSpriteYBackward-M68K_RAM),a0
+                movea.w #(RadialSpriteXBackward-M68K_RAM),a1
+                movea.w #(RadialSpriteYForward-M68K_RAM),a2
+                movea.w #(RadialSpriteXForward-M68K_RAM),a3
                 movea.l #Math_SineTable,a4
                 move.w  (word_FF80C6).w,d0
                 move.w  (dword_FF80CE).w,d1
@@ -393,8 +393,8 @@ Message_CalculateRadialSpritePairLoop:                  ; CODE XREF: Message_Cal
                 addq.w  #8,a3
                 add.w   d1,d4
                 dbf     d7,Message_CalculateRadialSpritePairLoop
-                movea.w #(byte_FFA150-M68K_RAM),a0
-                movea.w #(byte_FFA156-M68K_RAM),a1
+                movea.w #(LinearSpriteYStart-M68K_RAM),a0
+                movea.w #(LinearSpriteXStart-M68K_RAM),a1
                 move.w  (word_FF80C4).w,d1
                 moveq   #4,d7
 Message_WriteLinearSpritePositions:                     ; CODE XREF: Message_CalculateRadialSpriteCoords+7C   j  ; was: loc_B2D6
@@ -408,7 +408,7 @@ Message_WriteLinearSpritePositions:                     ; CODE XREF: Message_Cal
 ; End of function Message_CalculateRadialSpriteCoords
 ; Applies four packed-BCD timer digits to the bonus sprite tile words
 Results_ApplyTimeDigitTileOffsets:                      ; CODE XREF: Results_RenderLinearTimeBonus+A   p  ; was: sub_B2EA
-                movea.w #(byte_FFA17C-M68K_RAM),a0
+                movea.w #(TimeDigitTileWordStart-M68K_RAM),a0
                 move.b  (ResultsTimeBonusBCD).w,d0
                 move.b  d0,d1
                 asr.w   #4,d1
@@ -432,7 +432,7 @@ Results_ApplyTimeDigitTileOffsets:                      ; CODE XREF: Results_Ren
 ; Expands byte tile indices into sprite tile words
 Message_LoadSpriteTileIndices:                          ; CODE XREF: StageIntro_UpdateStageNumberBanner+3A   p  ; was: sub_B326
                                         ; StageIntro_UpdateEmergencyFlash+2A   p
-                movea.w #(byte_FFA104-M68K_RAM),a1
+                movea.w #(SpriteScratchTileWord0-M68K_RAM),a1
                 move.w  #$100,d1
 Message_LoadNextSpriteTileIndex:                        ; CODE XREF: Message_LoadSpriteTileIndices+24   j  ; was: loc_B32E
                 moveq   #0,d0
@@ -511,7 +511,7 @@ Message_RenderLine:                                     ; CODE XREF: BattleBanne
                 moveq   #0,d6
 Message_RenderLineWithCurrentOffsets:                   ; CODE XREF: Message_RenderLineWithOffsets+8   j  ; was: loc_B3FC
                 bsr.s   Message_WriteSpriteLine
-                lea     (dword_FFA100).w,a0
+                lea     (SharedSpriteScratch).w,a0
                 jsr     (Sprite_AppendOAMEntries).l
 Message_RenderLineReturn:                               ; CODE XREF: Message_RenderLine+6   j  ; was: locret_B408
                 rts
@@ -528,7 +528,7 @@ Message_WriteSpriteLine:                                ; CODE XREF: Message_Ren
                 move.b  (a0)+,d3
                 add.w   d5,d3
                 move.w  #$100,d4
-                movea.w #(dword_FFA100-M68K_RAM),a1
+                movea.w #(SharedSpriteScratch-M68K_RAM),a1
                 move.w  (a0)+,d7
 ; Writes each sprite entry in the compact message line
 Message_WriteSpriteLineLoop:                            ; CODE XREF: Message_WriteSpriteLine+2A   j  ; was: loc_B428

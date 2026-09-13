@@ -239,7 +239,7 @@ Boss_ShieldViperInitialize:                             ; DATA XREF: ROM:Boss_Sh
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
                 clr.w   (dword_FF9404).w
-                move.b  #4,(byte_FFA420).w
+                move.b  #4,(PlayerOAMBucketOffset).w
                 move.w  #$50,(dword_FF9418).w           ; 'P'
                 move.w  #$14,(dword_FF941C).w
                 move.w  a5,(dword_FF9408).w

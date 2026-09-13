@@ -208,7 +208,7 @@ Stage9_CheckCaterpillarShipTransition:                  ; CODE XREF: Stage9_Upda
                 jsr     (Data_ProcessPointer).l
                 move.w  #$460,(Entity_ObjectPool).w
                 clr.w   (PrimaryEntityState).w
-                move.w  #$60,(dword_FF8128).w           ; '`'
+                move.w  #$60,(StageTransitionTimer).w   ; '`'
 Stage9_UpdateCaterpillarShipTraversal_Return:           ; CODE XREF: Stage9_UpdateCaterpillarShipTraversal+80   j  ; was: locret_D38A
                 rts
 ; End of function Stage9_UpdateCaterpillarShipTraversal
@@ -235,7 +235,7 @@ Stage9_UpdateCaterpillarShipExit:                       ; DATA XREF: ROM:0000C8B
                 bne.s   Stage9_UpdateCaterpillarShipExit_Return
                 tst.w   (TilemapRowCountdown).w
                 bpl.s   Stage9_UpdateCaterpillarShipExit_Return
-                subq.w  #1,(dword_FF8128).w
+                subq.w  #1,(StageTransitionTimer).w
                 bpl.s   Stage9_UpdateCaterpillarShipExit_Return
                 addq.w  #2,(StageStateOffset).w
                 clr.w   (CameraXLowerBound).w

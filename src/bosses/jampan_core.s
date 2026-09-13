@@ -145,7 +145,7 @@ Boss_JampanInitializeEncounterState:                    ; DATA XREF: ROM:000491D
                 clr.w   (dword_FF9428+2).w
                 clr.w   (dword_FF942C).w
                 bsr.w   Boss_JampanLoadEncounterTiles
-                move.b  #4,(byte_FFA420).w
+                move.b  #4,(PlayerOAMBucketOffset).w
                 move.w  #$1E8,$10(a5)
                 move.w  #$F0,$14(a5)
                 move.w  #$100,(dword_FF9404).w

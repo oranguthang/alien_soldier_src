@@ -233,7 +233,7 @@ Boss_EnterSylpheedAttackLaunchState1A:                  ; CODE XREF: Boss_Update
                 clr.w   (PlayerScriptStateOffset).w
                 bset    #0,(PlayerModeFlags).w
                 clr.w   (PlayerStateOffset).w
-                move.b  #$20,(byte_FFA420).w            ; ' '
+                move.b  #$20,(PlayerOAMBucketOffset).w  ; ' '
                 move.l  #$FFFF0000,$18(a5)
                 move.l  #$28000,$1C(a5)
 ; Accelerate through attack launch state $1A

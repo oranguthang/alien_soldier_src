@@ -428,7 +428,7 @@ Stage12_TeddyBearBeginBoardingJump:                     ; CODE XREF: Stage12_Ted
                 move.w  #$10,4(a5)
                 move.l  #Stage12_TeddyBearBoardingPilotLoopAnimation,8(a5)
                 clr.w   $C(a5)
-                move.b  (byte_FFA420).w,$20(a5)
+                move.b  (PlayerOAMBucketOffset).w,$20(a5)
                 move.l  #$FFFF5000,$18(a5)
                 move.l  #$FFFA0000,$1C(a5)
 ; Applies the teddy bear's boarding-jump arc
@@ -470,7 +470,7 @@ Stage12_TeddyBearPilotStart:                            ; DATA XREF: ROM:0002F93
 ; End of function Stage12_TeddyBearPilotStart
 ; Copies the current stage palette selector while attached to the yacht
 Stage12_TeddyBearPilotUpdatePalette:                    ; DATA XREF: ROM:0002F934   o  ; was: sub_2FB4A
-                move.b  (byte_FFA420).w,$20(a5)
+                move.b  (PlayerOAMBucketOffset).w,$20(a5)
                 bra.w   Stage12_TeddyBearAttachToYacht
 ; End of function Stage12_TeddyBearPilotUpdatePalette
 ; Selects the attached firing animation

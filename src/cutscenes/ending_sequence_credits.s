@@ -35,7 +35,7 @@ EndingSequence_Initialize:                              ; CODE XREF: EndingSeque
                 clr.w   (SecondaryCameraYPos).w
                 clr.w   (SecondaryCameraXPos).w
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
-                clr.w   (dword_FF8128+2).w
+                clr.w   (EndingSequenceState).w
                 rts
 ; End of function EndingSequence_Initialize
 ; ---------------------------------------------------------------------------
@@ -63,7 +63,7 @@ EndingSequence_AssetLoads:  dc.w    7                   ; field_0  ; was: stru_7
 ; Runs the palette effect and dispatches the complete credits-to-planet sequence
 EndingSequence_Dispatch:                                ; CODE XREF: EndingSequence_UpdateFromTransition+8   j  ; was: sub_7C24
                 jsr     (TransitionEffect_UpdateBuffers).l
-                move.w  (dword_FF8128+2).w,d0
+                move.w  (EndingSequenceState).w,d0
                 lea     EndingSequence_States(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
@@ -97,7 +97,7 @@ EndingSequence_FadeInCredits:                           ; DATA XREF: ROM:EndingS
                 tst.w   (CutscenePaletteStep).l
                 bne.w   Cutscene_Return
                 move.w  #$80,(CutsceneTimer).l
-                addq.w  #2,(dword_FF8128+2).w
+                addq.w  #2,(EndingSequenceState).w
                 rts
 ; End of function EndingSequence_FadeInCredits
 ; Holds the credits screen for $80 frames while animating its accent colors
@@ -106,7 +106,7 @@ EndingSequence_HoldCredits:                             ; DATA XREF: ROM:00007C3
                 subq.w  #1,(CutsceneTimer).l
                 bne.w   Cutscene_Return
                 clr.w   (CutscenePaletteStep).l
-                addq.w  #2,(dword_FF8128+2).w
+                addq.w  #2,(EndingSequenceState).w
                 rts
 ; End of function EndingSequence_HoldCredits
 ; Alternates three accent palette words used throughout the ending sequence
@@ -154,7 +154,7 @@ EndingSequence_FadeOutCredits:                          ; DATA XREF: ROM:00007C3
                 jsr     (TransitionEffect_ReplaceOwnerAndClearObjects).l
                 move.w  #$2C8,(a5)
                 move.w  #$10,(CutsceneTimer).l
-                addq.w  #2,(dword_FF8128+2).w
+                addq.w  #2,(EndingSequenceState).w
                 rts
 ; End of function EndingSequence_FadeOutCredits
 ; ---------------------------------------------------------------------------
@@ -165,6 +165,6 @@ EndingSequence_StarfieldTileLoad:   dc.b    $44, $20, $40, 0, 2, 2, $80, $84, $8
 EndingSequence_WaitStarfieldDelay:                      ; DATA XREF: ROM:00007C3C   o  ; was: sub_7D58
                 subq.w  #1,(CutsceneTimer).l
                 bne.w   Cutscene_Return
-                addq.w  #2,(dword_FF8128+2).w
+                addq.w  #2,(EndingSequenceState).w
                 rts
 ; End of function EndingSequence_WaitStarfieldDelay

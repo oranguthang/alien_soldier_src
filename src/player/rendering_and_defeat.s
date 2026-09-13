@@ -279,7 +279,7 @@ Player_AnimationFrameTable: dc.l    Player_StateAnimationSpriteMapping00  ; DATA
 
 ; Renders multiple death particle sprites during player death sequence
 Player_RenderDeathParticles:                            ; CODE XREF: Player_HandleDeathSequence:Player_HandleDeathSequence_RenderParticles   j  ; was: sub_1720C
-                movea.w #(dword_FFA100-M68K_RAM),a0
+                movea.w #(SharedSpriteScratch-M68K_RAM),a0
                 movea.w a0,a1
                 move.w  $48(a5),d0
                 move.w  $10(a5),d1

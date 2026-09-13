@@ -18,10 +18,10 @@ StageTransition_BeginSelectedRoute:                     ; CODE XREF: Sys_Transit
                 clr.w   (GameSubstateIndex).w
                 bset    #0,(StageRouteFlags).w
                 moveq   #0,d0
-                move.l  d0,(dword_FF8128).w
-                move.l  d0,(dword_FF812C).w
-                move.l  d0,(dword_FF8130).w
-                move.l  d0,(dword_FF8134).w
+                move.l  d0,(SceneScratchLong0).w
+                move.l  d0,(SceneScratchLong1).w
+                move.l  d0,(SceneScratchLong2).w
+                move.l  d0,(SceneScratchLong3).w
                 bsr.w   StageTransition_DispatchInitialize
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w

@@ -24,7 +24,7 @@ TitleScreen_FinalizeInitialization:                     ; CODE XREF: TitleScreen
                 move.w  #$C180,d0
                 moveq   #$26,d7                         ; '&'
                 jsr     (Gfx_AdjustTileIndexRows).l
-                movea.l #$FFFF2020,a0
+                movea.l #SharedTilemapWorkspace,a0
                 move.w  #$6000,d0
                 move.w  #$FF00,d1
                 move.w  #$BF,d7

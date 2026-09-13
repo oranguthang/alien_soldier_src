@@ -40,8 +40,8 @@ UnreferencedCycleStatusDisplayMode_Return:              ; was: locret_134E0
 ; End of function UnreferencedCycleStatusDisplayMode
 DebugMenu_UpdateAndDispatch:                            ; CODE XREF: Debug_HandleDormantSoundAndMenuInput+52   j  ; was: sub_134E2
                 bsr.w   UI_QueuePendingWeaponStateIconTransfer
-                movea.w #(byte_FFA108-M68K_RAM),a0
-                movea.w #(dword_FFA100-M68K_RAM),a1
+                movea.w #(SpriteScratchEntry1-M68K_RAM),a0
+                movea.w #(SharedSpriteScratch-M68K_RAM),a1
                 bsr.w   UI_AppendHUDSpriteList
                 move.b  (ControllerPressedState).w,d0
                 andi.b  #$4F,d0                         ; 'O'

@@ -67,7 +67,7 @@ Boss_SnakeInit:                                         ; DATA XREF: ROM:Boss_Sn
                 tst.b   (DataLoaderControl).w
                 bmi.w   Boss_SnakeInitReturn
                 addq.w  #2,4(a5)
-                move.b  #4,(byte_FFA420).w
+                move.b  #4,(PlayerOAMBucketOffset).w
                 move.w  #4,(dword_FF940C+2).w
                 move.w  #$10,(dword_FF9408+2).w
                 move.w  #$10,(dword_FF940C).w

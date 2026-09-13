@@ -298,7 +298,7 @@ UI_RenderTransientValue_BuildSprites:                   ; CODE XREF: UI_RenderTr
                 bpl.s   UI_RenderTransientValue_UseClampedY
                 move.w  #$A0,d6
 UI_RenderTransientValue_UseClampedY:                    ; CODE XREF: UI_RenderTransientValue+76   j  ; was: loc_1777E
-                movea.w #(dword_FFA100-M68K_RAM),a0
+                movea.w #(SharedSpriteScratch-M68K_RAM),a0
                 move.w  d6,(a0)+
                 move.w  d4,(a0)+
                 move.w  d0,(a0)+
@@ -319,7 +319,7 @@ UI_RenderTransientValue_UseClampedY:                    ; CODE XREF: UI_RenderTr
                 move.w  d3,(a0)+
                 move.w  d5,(a0)+
                 move.w  #$FFFF,(a0)
-                movea.w #(dword_FFA100-M68K_RAM),a0
+                movea.w #(SharedSpriteScratch-M68K_RAM),a0
                 jmp     (Sprite_AppendOAMEntries).l
 ; End of function UI_RenderTransientValue
 ; Creates visual dash trail effect behind player

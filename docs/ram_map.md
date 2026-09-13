@@ -572,6 +572,7 @@ by their verified byte order rather than receiving invented codec meanings.
 
 | Symbol | Address | Static evidence |
 |---|---:|---|
+| `SharedTransitionControl` (`FrontendHoldTimer`, `WaveControlWord` overlays) | `$FFFF8100` | Frontend transition states load and count down hold durations here; the separate wave initializer and stop helper write mode values two and zero without a reconstructed reader, so neither use owns the physical word. |
 | `WaveParameterIndex` | `$FFFF8102` | Wave routines use this even word to index parameter, step, and start-offset tables and move it in two-byte increments. |
 | `WaveStateOffset` | `$FFFF8104` | The wave controller uses this byte offset to select a longword handler; states move it by four bytes. |
 | `HUDDynamicStripTileAttr` | `$FFFF8110` | The HUD builder emits this word as the tile attribute of all six entries in the optional dynamic strip. |
@@ -725,6 +726,9 @@ repeats the resulting four-word group into `HorizontalScrollProfile`.
 | `Epsilon1ProximityFlag` | `$FFFF9474` | The proximity threshold sets this word; it changes attack selection and terminates ring repetitions until battle-center recovery clears it. |
 | `Epsilon1VerticalAccel` | `$FFFF9478` | Epsilon 1 attack states load signed acceleration values here, and the shared motion helper adds the longword to the boss vertical velocity. |
 | `ShieldViperTrailAngles` | `$FFFF94A0` | Shield Viper initializes and shifts angle-history words from this base, then applies or interpolates them across linked body records. |
+| `SharedRasterSplitPoint` (`BackdropLineOffsetsEnd`, `WaveSineTableCenter` overlays) | `$FFFF9F00` | The transition backdrop builder writes 96 words backward from this boundary, while the wave generator writes 128 words in each direction around the same point. |
+| `XiTigerVScrollBuffer` | `$FFFF9FC0` | The raster-layout copier moves one 64-byte `CutsceneLineOffsetTable` block here, and the Xi-Tiger VBlank selector exposes this address to the installed HBlank writer. |
+| `Stage10HBlankScrollData` | `$FFFF9FF8` | Stage 10 VBlank writes two vertical-scroll words and one selected horizontal-scroll word here; the installed HBlank routine consumes those three words in order. |
 
 ## Reviewed screen-shake and player-script fields
 
@@ -742,6 +746,23 @@ aligned with the shaken plane.
 | `PlaneBShakeLevel` | `$FFFFA014` | Impact and explosion paths load a small level; the shake updater decrements it every eight frames and publishes it as the Plane B offset. |
 | `PlaneBShakeOffset` | `$FFFFA016` | The updater derives this offset from the Plane B level; Plane B horizontal and vertical scroll consumers apply it. |
 | `PlayerScriptStateOffset` | `$FFFFA02A` | The player scripted-input dispatcher uses this even word as its handler-table offset; cutscene states select offsets and completion paths clear it. |
+
+## Reviewed shared sprite scratch overlays
+
+Initialization clears `$FFFFA100–A1FF`. Most consumers build temporary
+eight-byte sprite entries here; spread-shot and Viblack allocation briefly
+reuse the beginning as an object-pointer list, so the base is intentionally
+named as shared scratch rather than as a persistent OAM buffer.
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `SharedSpriteScratch` | `$FFFFA100` | Base of the 256-byte cleared scratch region used for temporary sprite lists and short-lived object-pointer lists. |
+| `SpriteScratchTileWord0` | `$FFFFA104` | `Message_LoadSpriteTileIndices` writes the first entry's tile word here and advances in eight-byte entry strides. |
+| `SpriteScratchEntry1` | `$FFFFA108` | The debug-menu HUD path submits the list from this second-entry boundary. |
+| `RadialSpriteYBackward` / `RadialSpriteXBackward` | `$FFFFA120` / `$FFFFA126` | First radial-pair cursors, stepped backward by eight bytes for five entries. |
+| `RadialSpriteYForward` / `RadialSpriteXForward` | `$FFFFA128` / `$FFFFA12E` | Opposite radial-pair cursors, stepped forward by eight bytes for five entries. |
+| `LinearSpriteYStart` / `LinearSpriteXStart` | `$FFFFA150` / `$FFFFA156` | Start of the five-entry linear sprite row written after radial positioning. |
+| `TimeDigitTileWordStart` | `$FFFFA17C` | Start of four tile words adjusted from the packed-BCD remaining-time bonus. |
 
 ## Reviewed global gameplay and stage-route fields
 
@@ -802,6 +823,7 @@ object update and rendering machinery.
 | `PlayerObjectType` | `$FFFFA400` | Player initialization writes type `$0008`; disabling player processing clears this word and the adjacent flags. |
 | `PlayerObjectFlags` | `$FFFFA402` | Initialized to `$4D00`; update, renderer, camera, and cutscene paths manipulate individual control/display bits. |
 | `PlayerStateOffset` | `$FFFFA404` | Even values select the player state dispatcher; initialization clears it and transitions install later states. |
+| `PlayerWallContactFlags` | `$FFFFA407` | The low byte of object offset six: left/right wall resolution sets bits zero/one and direct wall probes set bits two/three. |
 | `PlayerSpriteMapping` | `$FFFFA408` | Player rendering consumes the pointer, the secondary-object copier preserves it, and the motion-projectile path compares it with the teleport-dash mapping. |
 | `PlayerAnimationTimer` | `$FFFFA40C` | Animation paths count it down and reload frame delays; state setup commonly primes it with `$FFFF`. |
 | `PlayerSpriteAttributes` | `$FFFFA40E` | Initialized to `$4DC0`; facing, rendering, and cutscene paths manipulate its attribute bits. |
@@ -809,11 +831,9 @@ object update and rendering machinery.
 | `PlayerYPosition` | `$FFFFA414` | Signed 16.16 world Y coordinate consumed by camera, targeting, bosses, and projectile placement. |
 | `PlayerXVelocity` | `$FFFFA418` | Signed 16.16 horizontal velocity integrated into the X position by shared physics. |
 | `PlayerYVelocity` | `$FFFFA41C` | Signed 16.16 vertical velocity integrated into the Y position by shared physics. |
+| `PlayerOAMBucketOffset` | `$FFFFA420` | Renderers mask this byte with `$FC` and use it as a four-byte-aligned offset into the 64 OAM priority buckets. |
+| `PlayerStateWorkHighWord` | `$FFFFA448` | High word of state-dependent work at object offset `$48`; states reuse it for dash velocity, timers, and direction, while the motion-effect path consumes only its sign. |
 | `PlayerInvulnTimer` | `$FFFFA45E` | Counted down by the player invulnerability/flash updater; initialization and damage/death transitions install positive durations. |
-
-The overlapping byte at `$FFFFA407` and the following field at `$FFFFA420`
-remain address-derived. Their references establish control bits and propagated
-values, but not yet a stable shared meaning.
 
 ## Reviewed controller-input fields
 
@@ -838,6 +858,7 @@ values, but not yet a stable shared meaning.
 | `StageCameraYVelocity` | `$FFFFA91C` | Signed 16.16 velocity integrated into primary-camera Y by the Caterpillar bounce path; Xi-Tiger landing paths load its initial upward impulse. |
 | `PreviousCameraXPosition` | `$FFFFA928` | Previous high word of `PrimaryCameraXPosition`, refreshed after deriving `CameraXDelta`. |
 | `PreviousCameraYPosition` | `$FFFFA92C` | Previous high word of `PrimaryCameraYPosition`, refreshed after deriving `CameraYDelta`. |
+| `CameraDeltaLowerLimit` | `$FFFFA930` | An unreferenced player-state camera helper clamps computed signed 16.16 horizontal deltas against this lower limit; no reconstructed writer exists. |
 | `PhysicsXVelocityLimit` | `$FFFFA938` | Symmetric horizontal velocity clamp used before object X integration; player initialization loads `$74000`. |
 | `PhysicsYVelocityLimit` | `$FFFFA93C` | Symmetric vertical velocity clamp used before object Y integration; player initialization loads `$74000`. |
 
@@ -1214,9 +1235,25 @@ ownership beyond the observed shared plane-map storage is implied.
 | `EndingStarDepthValues` | `$FFFF1800` | Starfield initialization creates 256 depth/frame accumulators and update selects one of four banks. |
 | `EndingStarXVelocities` | `$FFFF1C00` | Starfield initialization stores the fixed-point horizontal velocity paired with each X position. |
 | `EndingStarYVelocities` | `$FFFF2000` | Starfield initialization stores the fixed-point vertical velocity paired with each Y position. |
-| `ShipArrivalTilemap` | `$FFFF2020` | Ship arrival toggles priority on exactly `$160` consecutive staged tile words before requeueing the map. |
+| `SharedTilemapWorkspace` (`ShipArrivalTilemap` overlay) | `$FFFF2020` | Title, frontend, results, Seven Forces, Wolf Garopa, Z-Leo, and ship-arrival paths all transform staged tile words from this base; the ship overlay toggles priority on exactly `$160` words. |
+| `SharedGraphicsOverlay` (`StoryTitleLogoPixels`, `ZLeoPriorityFirstRow`) | `$FFFF2080` | Story-title completion writes thirteen 128-byte mirrored glyphs here, while Z-Leo treats the same address as the first of four adjusted tilemap rows and clears priority on selected first-row columns. |
+| `ZLeoPriorityLastRow` | `$FFFF20E0` | This address is three 32-byte tilemap rows after `ZLeoPriorityFirstRow`; Z-Leo clears priority on the complementary column pairs in that fourth row. |
+| `ZLeoPriorityLastCol2` | `$FFFF20E4` | The first explicit Z-Leo priority clear in the fourth row targets column two at this address. |
 | `StoryTitleMirroredGlyph` | `$FFFF2380` | Glyph setup writes 128 bytes of mirrored source nibbles beginning here. |
 | `StoryTitleGlyphReadBase` | `$FFFF2384` | Both title-expansion paths begin their reverse source traversal relative to this interior glyph-buffer anchor. |
+
+## Reviewed shared scene scratch
+
+Stage-transition initialization clears four consecutive longwords at
+`$FFFF8128-$FFFF8137`. They are not one persistent structure: mutually
+exclusive game modes overlay different state on the same physical storage.
+
+| Physical symbol | Address | Proven contextual overlays |
+|---|---:|---|
+| `SceneScratchLong0` | `$FFFF8128` | Weapon force index/scroll target, Xi-Tiger state/phase, ending completion/state, Game Over landscape index, stage-transition timer, and Epsilon 1 transition Y. |
+| `SceneScratchLong1` | `$FFFF812C` | Weapon controller-layout index, Xi-Tiger motion step, and Epsilon 1 parallax position. |
+| `SceneScratchLong2` | `$FFFF8130` | Weapon background phase, Xi-Tiger state counter/palette level, and Epsilon 1 parallax step. |
+| `SceneScratchLong3` | `$FFFF8134` | Weapon highlight phase, Xi-Tiger wave phase/sprite X offset, and Epsilon 1 V-scroll value. |
 
 ## Reviewed frame, input, and system-state boundaries
 

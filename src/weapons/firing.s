@@ -229,7 +229,7 @@ Weapon_FireMultipleShots:                               ; DATA XREF: ROM:00017F2
                 tst.w   (WeaponFireCooldown).w
                 bpl.w   Weapon_InitSpreadShot_Return
                 movea.w #(SharedEffectObjectPool-M68K_RAM),a0
-                movea.w #(dword_FFA100-M68K_RAM),a1
+                movea.w #(SharedSpriteScratch-M68K_RAM),a1
                 moveq   #0,d3
                 moveq   #7,d7
 Weapon_FireMultipleShots_ScanSlots:                     ; CODE XREF: Weapon_FireMultipleShots+28   j  ; was: loc_181DA
@@ -244,7 +244,7 @@ Weapon_FireMultipleShots_NextSlot:                      ; CODE XREF: Weapon_Fire
                 beq.w   Weapon_InitSpreadShot_Return
                 move.b  #$BF,d0
                 jsr     (Sound_PlaySFX).l
-                movea.w #(dword_FFA100-M68K_RAM),a3
+                movea.w #(SharedSpriteScratch-M68K_RAM),a3
                 lea     Weapon_DirectionTableOffsets(pc),a1
                 nop
                 lea     Weapon_DirectionVectorsSpeed10(pc),a2

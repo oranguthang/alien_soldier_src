@@ -47,7 +47,7 @@ Boss_WolfGaropaInitialize:                              ; DATA XREF: Boss_WolfGa
                                         ; sub_4F8F0:Boss_WolfGaropaStateTable   o
                 tst.w   (DataLoaderControl).w
                 bmi.w   Boss_WolfGaropaReturn
-                move.b  #$18,(byte_FFA420).w
+                move.b  #$18,(PlayerOAMBucketOffset).w
                 move.w  #1,8(a5)
                 movea.w a5,a4
                 move.w  #$288,(dword_FF8040).w
@@ -102,7 +102,7 @@ Boss_WolfGaropaInitialize:                              ; DATA XREF: Boss_WolfGa
                 move.w  #$500,$B48(a5)
                 movea.l #Boss_WolfGaropaObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l
-                movea.l #$FFFF2020,a0
+                movea.l #SharedTilemapWorkspace,a0
                 move.w  #$E000,d0
                 move.w  #$1E0,d1
                 moveq   #$10,d7

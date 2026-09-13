@@ -66,7 +66,7 @@ Boss_InitArtemisState0:                                 ; DATA XREF: Boss_Update
                 move.w  $14(a0),$14(a5)
                 move.w  $18(a0),$18(a5)
                 move.w  $1C(a0),$1C(a5)
-                move.b  #$10,(byte_FFA420).w
+                move.b  #$10,(PlayerOAMBucketOffset).w
                 move.w  #2,$1DE(a5)
                 bra.w   Boss_EnterArtemisState4
 ; End of function Boss_InitArtemisState0

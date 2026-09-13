@@ -16,7 +16,7 @@ Frontend_InitializeSegaSequence:                        ; DATA XREF: Sys_Dispatc
 Frontend_ActivateSegaSequence:                          ; was: loc_1CEB6
                 move.w  #8,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
-                move.w  #$F0,(word_FF8100).w
+                move.w  #$F0,(FrontendHoldTimer).w
                 move.w  #0,d0
                 move.w  #0,d1
                 jsr     (Tilemap_DirectTransferWithAlternateDescriptor).l
@@ -86,7 +86,7 @@ Frontend_InitializeSegaScreen:                          ; was: sub_1CF82
                 jsr     (Gfx_LoadPaletteCommand).l
                 movea.l #Frontend_TitleAssetLoadDescriptors,a0
                 jsr     (LoadObjData).l
-                movea.l #$FFFF2020,a0
+                movea.l #SharedTilemapWorkspace,a0
                 move.w  #$8000,d0
                 move.w  #$FF00,d1
                 move.w  #$BF,d7

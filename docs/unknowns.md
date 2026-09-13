@@ -6647,3 +6647,107 @@ audit entries. Provenance rises from 15,849 to 15,861 mappings, the audit
 registry from 13,014 to 13,040, and the semantic review upper bound falls from
 3,135 to 3,121. The enforced address-derived ceiling falls from 202 to 190,
 all still confined to RAM equates.
+
+The player-contact, OAM-bucket, state-work, and camera-limit pass replaces four
+raw aliases. Player object byte `$FFFFA407` carries four wall-contact bits set
+by the left/right resolution and direct-probe paths. Byte `$FFFFA420`, masked
+with `$FC` by every world-sprite renderer, is a four-byte-aligned offset into
+the 64 OAM priority buckets and is propagated to player-created effects. The
+word at `$FFFFA448` is deliberately named as state work because its containing
+longword is reused as dash velocity while other states use the word as a timer
+or direction. The unreferenced camera helper proves `$FFFFA930` only as a
+signed-delta lower limit; no writer is reconstructed.
+
+The four RAM aliases add provenance and audit mappings. Confirming the existing
+left-wall resolver and player-motion effect handler adds two further unique
+audit records. Provenance rises from 15,861 to 15,865 mappings, the audit
+registry from 13,040 to 13,046, and the semantic review upper bound falls from
+3,121 to 3,119. The enforced address-derived ceiling falls from 190 to 186,
+all still confined to RAM equates.
+
+The shared-sprite-scratch pass replaces ten raw aliases and corrects three
+sprite-only clear labels. Initialization clears 256 bytes at `$FFFFA100`.
+Most users construct temporary eight-byte sprite lists and submit them to the
+OAM appender, while spread-shot allocation and Viblack chain setup briefly
+reuse the beginning as object-pointer storage; `SharedSpriteScratch` therefore
+does not overstate one persistent layout. Nine overlay aliases identify the
+first tile word, the second-entry boundary, paired forward/backward radial
+coordinate cursors, a five-entry linear row, and four time-digit tile words.
+The clear routine's first loop actually owns the separate `$FFFFA000` through
+`$FFFFA0FF` frame-state block, so its former sprite-only name was incomplete.
+
+The ten RAM aliases add provenance mappings, and all thirteen changed
+definitions receive unique audit records. Provenance rises from 15,865 to
+15,875 mappings, the audit registry from 13,046 to 13,059, and the semantic
+review upper bound falls from 3,119 to 3,116. The enforced address-derived
+ceiling falls from 186 to 176, all still confined to RAM equates.
+
+The shared cutscene-graphics overlay pass replaces the final three raw aliases
+below `$FFFF4000` and corrects the overly narrow `ShipArrivalTilemap` physical
+name. The `$FFFF2020` base is transformed by title, Sega frontend, results,
+Seven Forces, Wolf Garopa, Z-Leo, and ship-arrival paths, so it is now the
+`SharedTilemapWorkspace`; the old ship name remains only as a contextual
+overlay for its two priority passes. At `$FFFF2080`, story-title completion
+writes thirteen 128-byte mirrored glyph images, whereas Z-Leo adjusts four
+16-word tilemap rows from the same address. Separate `StoryTitleLogoPixels` and
+`ZLeoPriorityFirstRow` overlays expose those incompatible layouts without
+pretending that either owns the physical RAM. Z-Leo's `$FFFF20E0/$FFFF20E4`
+aliases identify the fourth row and its first explicitly selected column.
+
+The three raw aliases add provenance and unique audit records; the existing
+`$FFFF2020` audit record is corrected in place. Provenance rises from 15,875 to
+15,878 mappings and the audit registry from 13,059 to 13,062. The semantic
+review upper bound remains 3,116 because every new mapping has a matching
+record and the corrected workspace name replaces an already audited name. The
+enforced address-derived ceiling falls from 176 to 173, all still confined to
+RAM equates.
+
+The shared transition-control pass replaces `$FFFF8100` without assigning its
+two incompatible uses to one subsystem. Frontend transition states load and
+decrement the word as a hold timer, while the wave initializer and stop helper
+only write mode values two and zero; no reconstructed wave reader proves a
+narrower meaning. `SharedTransitionControl` is therefore the physical name,
+with `FrontendHoldTimer` and `WaveControlWord` as context-specific overlays.
+The two wave helper names are retained after checking their complete writes,
+and their displaced provenance comments are moved back onto the definitions.
+
+The RAM rename adds one provenance and audit mapping, while the two confirmed
+wave helpers add two more audit records. Provenance rises from 15,878 to 15,879
+mappings, the audit registry from 13,062 to 13,065, and the semantic review
+upper bound falls from 3,116 to 3,114. The enforced address-derived ceiling
+falls from 173 to 172, all still confined to RAM equates.
+
+The upper-raster-boundary pass replaces three raw aliases and records another
+intentional overlay. The boss-transition backdrop builder writes 96 words
+backward from `$FFFF9F00`, while the wave generator writes 128 sine words in
+each direction around that same address. `SharedRasterSplitPoint` therefore
+owns the physical boundary, with `BackdropLineOffsetsEnd` and
+`WaveSineTableCenter` exposing the two contexts. The `$FFFF9FC0` buffer receives
+one 64-byte Xi-Tiger line-offset block and is selected by its VBlank handler;
+the `$FFFF9FF8` block holds exactly three Stage 10 HBlank scroll words. The
+Xi-Tiger VBlank initializer, Stage 10 VBlank initializer, and wave-deformation
+builder are also confirmed from their complete producer/consumer chains.
+
+The three RAM aliases add provenance and audit mappings, and the three
+confirmed procedures add three more audit records. Provenance rises from
+15,879 to 15,882 mappings, the audit registry from 13,065 to 13,071, and the
+semantic review upper bound falls from 3,114 to 3,111. The enforced
+address-derived ceiling falls from 172 to 169, all still confined to RAM
+equates.
+
+The shared scene-scratch pass replaces four consecutive raw longword aliases
+at `$FFFF8128-$FFFF8137`. Stage-transition initialization clears the whole
+block, after which mutually exclusive modes overlay unrelated state. Weapon
+setup uses force selection, horizontal target, controller-layout, background,
+and highlight fields; Xi-Tiger uses state, phase, motion, palette, wave, and
+sprite-offset fields; the ending sequence uses state and completion fields;
+Game Over and stage transitions use independent indices or timers; Epsilon 1
+uses transition Y and parallax/V-scroll state. `SceneScratchLong0` through
+`SceneScratchLong3` therefore remain honest physical names, while contextual
+aliases expose each proven use at call sites.
+
+The four RAM aliases add provenance and exact-address audit mappings.
+Provenance rises from 15,882 to 15,886 mappings and the audit registry from
+13,071 to 13,075. The semantic review upper bound remains 3,111 because every
+new mapping has a matching record. The enforced address-derived ceiling falls
+from 169 to 165, all still confined to RAM equates.

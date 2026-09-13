@@ -626,7 +626,7 @@ Effect_InitPlayerMotionProjectile_ApplyFacing:          ; CODE XREF: Effect_Init
                 add.w   $14(a5),d1
                 move.w  d1,$14(a0)
                 move.w  $10(a5),$10(a0)
-                tst.w   (word_FFA448).w
+                tst.w   (PlayerStateWorkHighWord).w
                 bmi.s   Effect_InitPlayerMotionProjectile_MoveRight
                 move.l  #$FFF60000,$18(a0)
                 rts

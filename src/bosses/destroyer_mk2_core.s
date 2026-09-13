@@ -103,7 +103,7 @@ Boss_DestroyerMK2ClearScrollBuffersLoop:                ; CODE XREF: Boss_Destro
                 move.l  d0,(a0)+
                 move.l  d0,(a1)+
                 dbf     d7,Boss_DestroyerMK2ClearScrollBuffersLoop
-                move.b  #4,(byte_FFA420).w
+                move.b  #4,(PlayerOAMBucketOffset).w
                 bset    #3,$4C(a5)
                 move.w  #$240,d0
                 move.w  #$3DC,d1

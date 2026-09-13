@@ -1,8 +1,8 @@
 ; Builds the shared HUD sprite list and optional diagnostic markers
 UI_BuildHUDSpriteList:                                  ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_BuildHUDSprites   p  ; was: sub_13278
                                         ; sub_1E8F6   p
-                movea.w #(dword_FFA100-M68K_RAM),a0
-                movea.w #(dword_FFA100-M68K_RAM),a1
+                movea.w #(SharedSpriteScratch-M68K_RAM),a0
+                movea.w #(SharedSpriteScratch-M68K_RAM),a1
 UI_AppendHUDSpriteList:                                 ; CODE XREF: DebugMenu_UpdateAndDispatch+C   p  ; was: loc_13280
                 tst.b   (GameplayControlFlags).w
                 bpl.w   UI_AppendHUDSpriteList_AppendBaseIndicator

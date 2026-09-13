@@ -15,7 +15,7 @@ Stage18_RenderLockedTilemap:                            ; CODE XREF: Stage18_Upd
 Stage18_UpdateDestroyerMk2Scroll:                       ; CODE XREF: Stage18_InitializeDestroyerMk2Encounter   p  ; was: sub_10044
                 cmpi.w  #$91,(PlayerXPosition).w
                 bpl.s   Stage18_AdvanceDestroyerMk2Scroll
-                btst    #1,(byte_FFA407).w
+                btst    #1,(PlayerWallContactFlags).w
                 beq.s   Stage18_AdvanceDestroyerMk2Scroll
                 rts
 ; ---------------------------------------------------------------------------
@@ -35,7 +35,7 @@ Camera_UpdateBossApproachAndRenderTilemap:              ; CODE XREF: Stage_InitB
                                         ; sub_C944   p
                 cmpi.w  #$91,(PlayerXPosition).w
                 bpl.s   Camera_AdvanceBossApproachScroll
-                btst    #1,(byte_FFA407).w
+                btst    #1,(PlayerWallContactFlags).w
                 beq.s   Camera_AdvanceBossApproachScroll
                 rts
 ; ---------------------------------------------------------------------------
@@ -259,9 +259,9 @@ UnreferencedCameraCheckPrimaryStateAnchor:              ; CODE XREF: Unreference
                 swap    d0
                 asr.l   #3,d0
 UnreferencedCameraClampPlayerStateDelta:                ; CODE XREF: UnreferencedCameraAdjustForPlayerState+4E   j  ; was: loc_10264
-                cmp.l   (dword_FFA930).w,d0
+                cmp.l   (CameraDeltaLowerLimit).w,d0
                 bpl.s   UnreferencedCameraApplyPlayerStateDelta
-                move.l  (dword_FFA930).w,d0
+                move.l  (CameraDeltaLowerLimit).w,d0
 UnreferencedCameraApplyPlayerStateDelta:                ; CODE XREF: UnreferencedCameraAdjustForPlayerState+32   j  ; was: loc_1026E
                 add.l   d0,(PrimaryCameraXPosition).w
 UnreferencedCameraPlayerStateReturn:                    ; CODE XREF: UnreferencedCameraAdjustForPlayerState+C   j  ; was: locret_10272

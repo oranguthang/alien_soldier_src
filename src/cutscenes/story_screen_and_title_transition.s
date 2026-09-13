@@ -499,7 +499,7 @@ StoryTitle_MirrorNextGlyphNibbles:                      ; was: loc_4EEE
                 rts
 ; ---------------------------------------------------------------------------
 StoryTitle_BuildCompletedLogo:                          ; was: loc_4F10
-                lea     (byte_FF2080).l,a1
+                lea     (StoryTitleLogoPixels).l,a1
                 movea.l #StoryTitle_CompletedLogoCharacters,a2
                 move.w  #$C,d3
 StoryTitle_CompletedLogoNextCharacter:                  ; was: loc_4F20

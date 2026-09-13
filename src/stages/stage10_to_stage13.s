@@ -4,7 +4,7 @@ Stage_DispatchMidgameState:                             ; DATA XREF: ROM:0000FF3
                 bpl.s   Stage_DispatchMidgameState_Handler
                 btst    #0,(FrameCounter+1).w
                 bne.s   Stage_DispatchMidgameState_Handler
-                movea.w #(dword_FFA100-M68K_RAM),a0
+                movea.w #(SharedSpriteScratch-M68K_RAM),a0
                 movea.w a0,a1
                 move.w  #$148,(a1)+
                 move.w  #$300,(a1)+
@@ -212,7 +212,7 @@ Stage11_ApplyExitScrollVelocity:                        ; CODE XREF: Stage11_Upd
 ; End of function Stage11_ApplyExitScrollVelocity
 ; Initialize Stage 12 raster state and continue into its first scroll state
 Stage12_InitializeScroll:                               ; DATA XREF: ROM:0000D970   o  ; was: sub_DAF4
-                move.b  #$40,(byte_FFA420).w            ; '@'
+                move.b  #$40,(PlayerOAMBucketOffset).w  ; '@'
                 move.w  #$30,(RasterEffectIndex).w      ; '0'
                 clr.w   (RasterEffectInitState).w
 ; Scroll Stage 12 to the first exit threshold at camera X $1580
@@ -354,7 +354,7 @@ Stage12To13_AdvanceTeleportScroll:                      ; DATA XREF: ROM:0000D98
                 move.w  #$60,(dword_FF806A+2).w         ; '`'
                 clr.w   (PrimaryCameraXPosition).w
                 bclr    #6,(CameraMotionLockFlags).w
-                move.w  #1,(word_FFA448).w
+                move.w  #1,(PlayerStateWorkHighWord).w
 Stage12To13_UpdateTeleportScroll:                       ; CODE XREF: Stage12To13_UpdateTeleportFadeOut+12   j  ; was: loc_DCA8
                                         ; Stage12To13_UpdateTeleportFadeOut+1C   j
                 bsr.w   Stage12To13_UpdateTeleportAndSnakeScroll

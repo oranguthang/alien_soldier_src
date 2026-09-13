@@ -202,7 +202,7 @@ UI_DisplayPauseGraphics_Return:                         ; CODE XREF: UI_DisplayP
                 rts
 ; ---------------------------------------------------------------------------
 UI_DisplayPauseGraphics_Render:                         ; CODE XREF: UI_DisplayPauseGraphics+26   j  ; was: loc_1C946
-                lea     (dword_FFA100).w,a0
+                lea     (SharedSpriteScratch).w,a0
                 movea.w a0,a1
                 move.l  #PauseMenuZ80SpriteData,(a1)+
                 move.w  #$C7EB,(a1)+

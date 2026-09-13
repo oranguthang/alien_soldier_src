@@ -11,7 +11,7 @@ Boss_ViblackSpawnChain:                                 ; CODE XREF: Boss_Viblac
 Boss_ViblackAllocateChainObjects:                       ; CODE XREF: Boss_ViblackSpawnChain+10   j  ; was: loc_443C0
                 move.b  #$CE,d0
                 jsr     (Sound_PlaySFX).l
-                movea.w #(dword_FFA100-M68K_RAM),a1
+                movea.w #(SharedSpriteScratch-M68K_RAM),a1
                 move.w  a0,(a1)+
                 moveq   #9,d6
 Boss_ViblackAllocateChainObjectLoop:                    ; CODE XREF: Boss_ViblackSpawnChain+44   j  ; was: loc_443D2
@@ -21,7 +21,7 @@ Boss_ViblackAllocateChainObjectLoop:                    ; CODE XREF: Boss_Viblac
                 bset    #4,2(a0)
                 move.w  a0,(a1)+
                 dbf     d6,Boss_ViblackAllocateChainObjectLoop
-                movea.w #(dword_FFA100-M68K_RAM),a3
+                movea.w #(SharedSpriteScratch-M68K_RAM),a3
                 movea.w (a3)+,a0
                 move.w  #$2EC,(a0)
                 move.w  #$8D00,2(a0)

@@ -296,7 +296,7 @@ StageTransition_CompleteShieldViperFade:                ; DATA XREF: ROM:0000F11
                 tst.w   (TilemapRowCountdown).w
                 bpl.w   StageTransition_SharedReturn
                 addq.w  #2,(StageStateOffset).w
-                move.w  #$20,(dword_FF8128).w           ; ' '
+                move.w  #$20,(StageTransitionTimer).w   ; ' '
                 move.l  #Gfx_ScrollVRAMTransferParameters,(TilemapTransferBase).w
                 clr.w   (TilemapRowXOrFillWord).w
                 move.w  #$F400,(TilemapRowYPosition).w
@@ -308,7 +308,7 @@ StageTransition_CompleteShieldViperFade:                ; DATA XREF: ROM:0000F11
 ; Waits for the Shield Viper transition VRAM transfer
 StageTransition_WaitForShieldViperVramTransfer:         ; DATA XREF: ROM:0000F116   o  ; was: sub_F4C6
                 bsr.w   StageTransition_ApplyBossBackdropPaletteFade
-                subq.w  #1,(dword_FF8128).w
+                subq.w  #1,(StageTransitionTimer).w
                 bmi.s   StageTransition_UpdateShieldViperVramTransfer
                 rts
 ; ---------------------------------------------------------------------------
@@ -458,7 +458,7 @@ StageTransition_WaitForWolfGaropaObjectClear:           ; DATA XREF: ROM:0000F12
                 bne.s   StageTransition_WolfGaropaObjectClearWaitReturn
                 move.w  #$30,(StageStateOffset).w       ; '0'
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
-                move.w  #$80,(dword_FF8128).w
+                move.w  #$80,(StageTransitionTimer).w
 StageTransition_WolfGaropaObjectClearWaitReturn:        ; CODE XREF: StageTransition_WaitForWolfGaropaObjectClear+8   j  ; was: locret_F6C2
                 rts
 ; End of function StageTransition_WaitForWolfGaropaObjectClear
@@ -467,7 +467,7 @@ StageTransition_WaitForWolfGaropaTransitionTrigger:     ; DATA XREF: ROM:0000F12
                 bsr.w   StageTransition_UpdateWolfGaropaHorizontalScroll
                 tst.w   (MessageSequenceState).w
                 bne.s   StageTransition_WolfGaropaTriggerWaitReturn
-                subq.w  #1,(dword_FF8128).w
+                subq.w  #1,(StageTransitionTimer).w
                 bpl.s   StageTransition_WolfGaropaTriggerWaitReturn
                 tst.w   (word_FF8230).w
                 bne.s   StageTransition_WolfGaropaTriggerWaitReturn
@@ -684,7 +684,7 @@ StageTransition_FillMissirayQuarterSpeedVScroll:        ; CODE XREF: StageTransi
 ; End of function StageTransition_UpdateMissirayParallax
 ; Updates either member of the linked Missiray scene-object pair
 StageTransition_UpdateMissiraySceneObject:              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_F950
-                move.b  (byte_FFA420).w,$20(a5)
+                move.b  (PlayerOAMBucketOffset).w,$20(a5)
                 subq.b  #4,$20(a5)
                 tst.w   $56(a5)
                 bne.s   StageTransition_MissiraySceneObjectReturn

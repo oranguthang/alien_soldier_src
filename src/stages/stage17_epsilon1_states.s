@@ -40,7 +40,7 @@ UnreferencedIndexedPaletteWords:    dc.w    $200, $400, $622, $844, $5478, $A950
 ; Unreferenced type-$308 transition-object and Stage 17 parallax updater
 UnreferencedCreateType308AndUpdateStage17Parallax:
                 move.w  #$2E,(PlayerScriptStateOffset).w  ; '.'  ; was: sub_E190
-                move.w  #$20,(dword_FF8128).w           ; ' '
+                move.w  #$20,(Epsilon1TransitionY).w    ; ' '
                 move.w  #$308,(SecondaryEntityType).w
                 clr.w   (SecondaryEntityState).w
                 bsr.w   Stage17_UpdateEpsilon1Parallax
@@ -56,7 +56,7 @@ UnreferencedCreateType308AndUpdateStage17Parallax_Return:  ; CODE XREF: Unrefere
 ; Update the Stage 17 pre-Epsilon-1 transition and its parallax
 Stage17_UpdatePreEpsilon1Transition:                    ; DATA XREF: ROM:0000D9C8   o  ; was: sub_E1C0
                                         ; ROM:0000D9CA   o
-                move.w  #$18,(dword_FF8128).w
+                move.w  #$18,(Epsilon1TransitionY).w
                 bsr.w   Stage17_UpdateEpsilon1Parallax
                 tst.w   (Entity_ObjectPool).w
                 bne.s   Stage17_UpdatePreEpsilon1Transition_Return
@@ -89,14 +89,14 @@ Stage17_UpdateEpsilon1Parallax:                         ; CODE XREF: Unreference
                 rts
 ; ---------------------------------------------------------------------------
 Stage17_UpdateEpsilon1Parallax_Active:                  ; CODE XREF: Stage17_UpdateEpsilon1Parallax+6   j  ; was: loc_E1FC
-                move.w  (dword_FF8128).w,d0
+                move.w  (Epsilon1TransitionY).w,d0
                 subi.w  #$28,d0                         ; '('
                 neg.w   d0
                 move.w  d0,(PrimaryCameraYPosition).w
-                move.l  #$FFFEA000,(dword_FF8130).w
-                move.l  (dword_FF812C).w,d0
-                add.l   (dword_FF8130).w,d0
-                move.l  d0,(dword_FF812C).w
+                move.l  #$FFFEA000,(Epsilon1ParallaxStep).w
+                move.l  (Epsilon1ParallaxPos).w,d0
+                add.l   (Epsilon1ParallaxStep).w,d0
+                move.l  d0,(Epsilon1ParallaxPos).w
                 asr.l   #8,d0
                 move.l  d0,d1
                 muls.w  #4,d0

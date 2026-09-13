@@ -102,7 +102,7 @@ GameOver_UpdateInteractiveLandscape_CheckAdvance:       ; CODE XREF: GameOver_Up
                 btst    #6,(ControllerPressedState).w
                 beq.s   GameOver_UpdateInteractiveLandscape_Render
                 addq.w  #2,(GameSubstateIndex).w
-                clr.w   (dword_FF8128).w
+                clr.w   (GameOverLandscapeIndex).w
                 move.w  #$50,(dword_FF807E).w           ; 'P'
                 move.w  #$20,(word_FF8082).w            ; ' '
 GameOver_UpdateInteractiveLandscape_Render:             ; CODE XREF: GameOver_UpdateInteractiveLandscape+5C   j  ; was: loc_2771A
@@ -114,12 +114,12 @@ GameOver_UpdateAutoLandscape:                           ; DATA XREF: ROM:000276A
                 addi.w  #$18,(dword_FF807E).w
                 cmpi.w  #$450,(dword_FF807E).w
                 bmi.s   GameOver_UpdateAutoLandscape_AdvanceTimer
-                addq.w  #2,(dword_FF8128).w
+                addq.w  #2,(GameOverLandscapeIndex).w
                 move.w  #$20,(dword_FF807E).w           ; ' '
                 move.w  #$20,(word_FF8082).w            ; ' '
 GameOver_UpdateAutoLandscape_AdvanceTimer:              ; CODE XREF: GameOver_UpdateAutoLandscape+C   j  ; was: loc_27740
                 subq.w  #1,(word_FF8082).w
-                move.w  (dword_FF8128).w,d0
+                move.w  (GameOverLandscapeIndex).w,d0
                 move.w  GameOver_LandscapeAngleSequence(pc,d0.w),(word_FF807C).w
                 bpl.s   GameOver_UpdateAutoLandscape_Render
                 addq.w  #2,(GameSubstateIndex).w

@@ -57,7 +57,7 @@ EndingStarfield_InitializeNextParticle:                 ; CODE XREF: EndingStarf
                 clr.l   (a1)+
                 dbf     d7,EndingStarfield_InitializeNextParticle
                 move.w  #$1A0,(CutsceneTimer).l
-                addq.w  #2,(dword_FF8128+2).w
+                addq.w  #2,(EndingSequenceState).w
 ; Updates the starfield and accent colors during its $1A0-frame hold
 EndingStarfield_UpdateAndHold:                          ; DATA XREF: ROM:00007C40   o  ; was: loc_7E48
                 bsr.w   EndingSequence_AnimateAccentColors
@@ -65,7 +65,7 @@ EndingStarfield_UpdateAndHold:                          ; DATA XREF: ROM:00007C4
                 subq.w  #1,(CutsceneTimer).l
                 bne.w   Cutscene_Return
                 clr.w   (CutscenePaletteStep).l
-                addq.w  #2,(dword_FF8128+2).w
+                addq.w  #2,(EndingSequenceState).w
                 rts
 ; End of function EndingStarfield_Initialize
 ; Integrates one of four particle banks and publishes it to 59 star sprites
@@ -148,7 +148,7 @@ EndingStarfield_FadeOutAndPreparePlanet:                ; DATA XREF: ROM:00007C4
 EndingPlanet_SetNextBufferHighBits:                     ; CODE XREF: EndingStarfield_FadeOutAndPreparePlanet+76   j  ; was: loc_7F7A
                 or.l    d1,(a0)+
                 dbf     d0,EndingPlanet_SetNextBufferHighBits
-                addq.w  #2,(dword_FF8128+2).w
+                addq.w  #2,(EndingSequenceState).w
                 rts
 ; End of function EndingStarfield_FadeOutAndPreparePlanet
 ; Finishes background loading and configures the ending planet scene
@@ -222,7 +222,7 @@ EndingPlanet_ClearNextVScrollPair:                      ; CODE XREF: EndingPlane
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 bsr.w   EndingPlanet_StartFadeIn
-                addq.w  #2,(dword_FF8128+2).w
+                addq.w  #2,(EndingSequenceState).w
                 rts
 ; End of function EndingPlanet_Initialize
 ; Fades in the planet, animates its vertical motion, then dissolves its pattern
@@ -237,7 +237,7 @@ EndingPlanet_ShowAndDissolve:                           ; DATA XREF: ROM:00007C4
                 cmpi.w  #$40,(PatternDissolveStep).l    ; '@'
                 bcs.w   Cutscene_Return
                 move.w  #$100,(CutsceneTimer).l
-                addq.w  #2,(dword_FF8128+2).w
+                addq.w  #2,(EndingSequenceState).w
                 rts
 ; End of function EndingPlanet_ShowAndDissolve
 ; Starts the planet fade at step -14 and immediately applies that step
@@ -265,7 +265,7 @@ EndingPlanet_HoldDissolved:                             ; DATA XREF: ROM:00007C4
                 bsr.w   EndingPlanet_DispatchVerticalMotion
                 subq.w  #1,(CutsceneTimer).l
                 bne.w   Cutscene_Return
-                addq.w  #2,(dword_FF8128+2).w
+                addq.w  #2,(EndingSequenceState).w
                 rts
 ; End of function EndingPlanet_HoldDissolved
 ; Restores the planet pattern, hides the secondary object, and starts the zoom delay
@@ -279,7 +279,7 @@ EndingPlanet_RevealPattern:                             ; DATA XREF: ROM:00007C4
                 clr.w   (TertiaryEntityFlags).w
                 clr.w   (PlanetZoomFrameIndex).l
                 move.w  #$140,(CutsceneTimer).l
-                addq.w  #2,(dword_FF8128+2).w
+                addq.w  #2,(EndingSequenceState).w
                 rts
 ; End of function EndingPlanet_RevealPattern
 ; Selects a fixed-size entry in the shared sprite graphics-frame table
@@ -619,7 +619,7 @@ EndingPlanet_WriteReverseVScroll:                       ; CODE XREF: EndingPlane
 ; Selects the final ending state after the zoom timer expires
 EndingPlanet_FinishZoom:                                ; CODE XREF: EndingPlanet_RunZoom+28   j  ; was: sub_85BE
                 clr.w   (CutscenePaletteStep).l
-                move.w  #$18,(dword_FF8128+2).w
+                move.w  #$18,(EndingSequenceState).w
                 rts
 ; End of function EndingPlanet_FinishZoom
 ; Continues perspective scroll while fading out and handing control to credits mode
@@ -638,6 +638,6 @@ EndingPlanet_FadeOutZoom:                               ; DATA XREF: ROM:00007C4
                 bne.w   Cutscene_Return
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
-                move.w  #1,(dword_FF8128).w
+                move.w  #1,(EndingSequenceComplete).w
                 rts
 ; End of function EndingPlanet_FadeOutZoom

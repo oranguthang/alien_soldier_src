@@ -19,7 +19,7 @@ Results_ActivatePostStageSummary:                       ; was: sub_1DC52
                 lea     ResultsPostStageCompletionAssetLoadList(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                movea.l #$FFFF2020,a0
+                movea.l #SharedTilemapWorkspace,a0
                 move.w  #$4000,d0
                 moveq   #$F,d7
                 jsr     (Gfx_AdjustTileIndexRows).l

@@ -32,8 +32,8 @@ Cutscene_CopyPlanetGridCenter:                          ; CODE XREF: Cutscene_Er
 ; Builds a centered planet sprite grid and appends it to the OAM buffer
 Cutscene_RenderPlanetSpriteGrid:                        ; CODE XREF: EndingPlanet_ShowAndDissolve+C   p  ; was: sub_769A
                                         ; EndingPlanet_RevealPattern+8   p
-                movea.w #(dword_FFA100-M68K_RAM),a0
-                movea.w #(dword_FFA100-M68K_RAM),a1
+                movea.w #(SharedSpriteScratch-M68K_RAM),a0
+                movea.w #(SharedSpriteScratch-M68K_RAM),a1
                 clr.w   d5
                 move.w  (SpriteGridRowLimit).l,d3
 Cutscene_CalculatePlanetGridTop:                        ; CODE XREF: Cutscene_RenderPlanetSpriteGrid+14   j  ; was: loc_76AA
@@ -71,8 +71,8 @@ Cutscene_RenderShipSpriteGrid:                          ; CODE XREF: Cutscene_Er
                                         ; sub_549C   p
                 move.w  (TwelfthEntityYPos).w,(ShipGridCenterY).l
                 move.w  (TwelfthEntityXPos).w,(ShipGridCenterX).l
-                movea.w #(dword_FFA100-M68K_RAM),a0
-                movea.w #(dword_FFA100-M68K_RAM),a1
+                movea.w #(SharedSpriteScratch-M68K_RAM),a0
+                movea.w #(SharedSpriteScratch-M68K_RAM),a1
                 clr.w   d5
                 move.w  (ShipGridRowLimit).l,d3
 Cutscene_CalculateShipGridTop:                          ; CODE XREF: Cutscene_RenderShipSpriteGrid+24   j  ; was: loc_772C

@@ -52,7 +52,7 @@ XiTigerCutscene_AssetLoadDescriptors:   dc.w    7       ; field_0  ; was: stru_1
 XiTigerCutscene_Update:                                 ; DATA XREF: ROM:StageTransition_UpdateHandlerTable   o  ; was: sub_1E8F6
                 jsr     (UI_BuildHUDSpriteList).l
                 jsr     (UI_UpdateGameplayHUD).l
-                move.w  (dword_FF8128).w,d0
+                move.w  (XiTigerStateOffset).w,d0
                 movea.w XiTigerCutscene_StateTable(pc,d0.w),a0
                 adda.l  #XiTigerCutscene_Setup,a0
                 jmp     (a0)
@@ -72,9 +72,9 @@ XiTigerCutscene_StateTable: dc.w    XiTigerCutscene_Setup-XiTigerCutscene_Setup 
 ; Sets up Xi Tiger cutscene
 XiTigerCutscene_Setup:                                  ; DATA XREF: XiTigerCutscene_Update+14   o  ; was: sub_1E924
                                         ; ROM:XiTigerCutscene_StateTable   o
-                addq.w  #2,(dword_FF8128).w
-                move.l  #$20000,(dword_FF812C).w
-                move.w  #$100,(dword_FF8130).w
+                addq.w  #2,(XiTigerStateOffset).w
+                move.l  #$20000,(XiTigerMotionStep).w
+                move.w  #$100,(XiTigerStateCounter).w
                 move.b  #$1E,d0
                 jsr     (Sound_PlaySFX).l
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
@@ -114,10 +114,10 @@ XiTigerCutscene_AdvanceReveal:                          ; DATA XREF: ROM:0001E91
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   XiTigerCutscene_UpdateRevealFrame
-                addq.w  #2,(dword_FF8130+2).w
-                cmpi.w  #$E,(dword_FF8130+2).w
+                addq.w  #2,(XiTigerPaletteLevel).w
+                cmpi.w  #$E,(XiTigerPaletteLevel).w
                 bmi.s   XiTigerCutscene_UpdateRevealFrame
-                addq.w  #2,(dword_FF8128).w
+                addq.w  #2,(XiTigerStateOffset).w
 XiTigerCutscene_UpdateRevealFrame:                      ; CODE XREF: XiTigerCutscene_AdvanceReveal+10   j  ; was: loc_1E9D2
                                         ; XiTigerCutscene_AdvanceReveal+1C   j
                 bsr.w   XiTigerCutscene_ApplyPaletteFade
@@ -125,17 +125,17 @@ XiTigerCutscene_UpdateRevealFrame:                      ; CODE XREF: XiTigerCuts
 ; End of function XiTigerCutscene_AdvanceReveal
 ; Holds the opening composition while emitting particles, then begins the reveal
 XiTigerCutscene_WaitBeforeReveal:                       ; DATA XREF: ROM:0001E914   o  ; was: sub_1E9D8
-                subq.w  #1,(dword_FF8130).w
+                subq.w  #1,(XiTigerStateCounter).w
                 bpl.s   XiTigerCutscene_UpdateWaitingFrame
                 move.b  #$A5,d0
                 jsr     (Sound_PlaySFX).l
-                addq.w  #2,(dword_FF8128).w
-                move.w  #$50,(dword_FF8130).w           ; 'P'
+                addq.w  #2,(XiTigerStateOffset).w
+                move.w  #$50,(XiTigerStateCounter).w    ; 'P'
                 clr.w   (Entity_ObjectPool).w
                 clr.w   (SecondaryEntityType).w
 XiTigerCutscene_UpdateWaitingFrame:                     ; CODE XREF: XiTigerCutscene_WaitBeforeReveal+4   j  ; was: loc_1E9FA
                 bsr.w   XiTigerCutscene_SpawnRandomParticle
-                move.w  (dword_FF8128+2).w,d0
+                move.w  (XiTigerPhaseCounter).w,d0
                 cmpi.w  #$200,d0
                 bmi.s   XiTigerCutscene_RenderWaitingFrame
                 andi.w  #$F,d0
@@ -150,17 +150,17 @@ XiTigerCutscene_RenderWaitingFrame:                     ; CODE XREF: XiTigerCuts
 ; End of function XiTigerCutscene_WaitBeforeReveal
 ; Initializes the scrolling reveal and its raster-effect state
 XiTigerCutscene_InitializeReveal:                       ; DATA XREF: ROM:0001E918   o  ; was: sub_1EA22
-                subq.w  #1,(dword_FF8130).w
+                subq.w  #1,(XiTigerStateCounter).w
                 bpl.w   XiTigerCutscene_Return
                 move.b  #$82,d0
                 jsr     (Sound_QueueBGMRequest).l
-                addq.w  #2,(dword_FF8128).w
+                addq.w  #2,(XiTigerStateOffset).w
                 clr.w   (PaletteShadowColor29).w
                 clr.w   (PaletteShadowColor30).w
-                clr.w   (dword_FF8128+2).w
-                move.l  #$1820000,(dword_FF812C).w
-                clr.w   (dword_FF8130).w
-                move.w  #$FFE0,(dword_FF8134+2).w
+                clr.w   (XiTigerPhaseCounter).w
+                move.l  #$1820000,(XiTigerMotionStep).w
+                clr.w   (XiTigerStateCounter).w
+                move.w  #$FFE0,(XiTigerSpriteXOffset).w
                 clr.w   (RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 move.b  #7,(VDPReg11Shadow+1).w
@@ -179,29 +179,29 @@ XiTigerCutscene_AnimateReveal:                          ; DATA XREF: ROM:0001E91
                 move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 bne.s   XiTigerCutscene_UpdateRevealOffsets
-                subq.w  #2,(dword_FF8130+2).w
+                subq.w  #2,(XiTigerPaletteLevel).w
                 bne.s   XiTigerCutscene_UpdateRevealOffsets
-                addq.w  #2,(dword_FF8128).w
+                addq.w  #2,(XiTigerStateOffset).w
 ; Updates the reveal offsets on alternating frames; this path does not read input
 XiTigerCutscene_UpdateRevealOffsets:                    ; CODE XREF: XiTigerCutscene_AnimateReveal+8   j  ; was: loc_1EAAE
                                         ; XiTigerCutscene_AnimateReveal+E   j
                                         ; DATA XREF:
                 btst    #0,(FrameCounter+1).w
                 bne.s   XiTigerCutscene_AdvanceRevealTimer
-                addq.w  #1,(dword_FF8134+2).w
+                addq.w  #1,(XiTigerSpriteXOffset).w
                 bmi.s   XiTigerCutscene_AdvanceRevealTimer
-                clr.w   (dword_FF8134+2).w
+                clr.w   (XiTigerSpriteXOffset).w
 XiTigerCutscene_AdvanceRevealTimer:                     ; CODE XREF: XiTigerCutscene_UpdateRevealOffsets+6   j  ; was: loc_1EAC0
                                         ; XiTigerCutscene_UpdateRevealOffsets+C   j
-                addq.w  #1,(dword_FF8128+2).w
-                cmpi.w  #$C0,(dword_FF8128+2).w
+                addq.w  #1,(XiTigerPhaseCounter).w
+                cmpi.w  #$C0,(XiTigerPhaseCounter).w
                 bne.s   XiTigerCutscene_ContinueReveal
                 move.b  #$11,d0
                 jsr     (Sound_PlaySFX).l
-                addq.w  #2,(dword_FF8128).w
+                addq.w  #2,(XiTigerStateOffset).w
                 move.w  #$48,(PaletteShadowColor29).w   ; 'H'
                 move.w  #$2AE,(PaletteShadowColor30).w
-                move.w  #$C,(dword_FF8130+2).w
+                move.w  #$C,(XiTigerPaletteLevel).w
                 bra.s   XiTigerCutscene_AnimateFlash
 ; ---------------------------------------------------------------------------
 XiTigerCutscene_ContinueReveal:                         ; CODE XREF: XiTigerCutscene_UpdateRevealOffsets+18   j  ; was: loc_1EAEE
@@ -212,16 +212,16 @@ XiTigerCutscene_ContinueReveal:                         ; CODE XREF: XiTigerCuts
 ; Animates the timed palette flash before fade-out
 XiTigerCutscene_AnimateFlash:                           ; CODE XREF: XiTigerCutscene_UpdateRevealOffsets+3A   j  ; was: sub_1EAFA
                                         ; DATA XREF: ROM:0001E91E   o
-                addq.w  #1,(dword_FF8128+2).w
-                cmpi.w  #$160,(dword_FF8128+2).w
+                addq.w  #1,(XiTigerPhaseCounter).w
+                cmpi.w  #$160,(XiTigerPhaseCounter).w
                 bne.s   XiTigerCutscene_UpdateFlash
-                addq.w  #2,(dword_FF8128).w
+                addq.w  #2,(XiTigerStateOffset).w
                 bra.s   XiTigerCutscene_AnimateFadeOut
 ; ---------------------------------------------------------------------------
 XiTigerCutscene_UpdateFlash:                            ; CODE XREF: XiTigerCutscene_AnimateFlash+A   j  ; was: loc_1EB0C
-                subq.w  #1,(dword_FF8130+2).w
+                subq.w  #1,(XiTigerPaletteLevel).w
                 bpl.s   XiTigerCutscene_ApplyFlashPalette
-                clr.w   (dword_FF8130+2).w
+                clr.w   (XiTigerPaletteLevel).w
 XiTigerCutscene_ApplyFlashPalette:                      ; CODE XREF: XiTigerCutscene_UpdateFlash+6   j  ; was: loc_1EB16
                 movea.w #(PaletteActiveColor17Hi-M68K_RAM),a0
                 move.w  #$8000,d7
@@ -233,11 +233,11 @@ XiTigerCutscene_ApplyFlashPalette:                      ; CODE XREF: XiTigerCuts
 ; Reduces the reveal offset and palette intensity before leaving the cutscene
 XiTigerCutscene_AnimateFadeOut:                         ; CODE XREF: XiTigerCutscene_AnimateFlash+10   j  ; was: sub_1EB2C
                                         ; DATA XREF: ROM:0001E920   o
-                subq.w  #2,(dword_FF8134+2).w
-                addq.w  #1,(dword_FF8130+2).w
-                cmpi.w  #$10,(dword_FF8130+2).w
+                subq.w  #2,(XiTigerSpriteXOffset).w
+                addq.w  #1,(XiTigerPaletteLevel).w
+                cmpi.w  #$10,(XiTigerPaletteLevel).w
                 bne.s   XiTigerCutscene_UpdateFadeOut
-                addq.w  #2,(dword_FF8128).w
+                addq.w  #2,(XiTigerStateOffset).w
                 rts
 ; ---------------------------------------------------------------------------
 XiTigerCutscene_UpdateFadeOut:                          ; CODE XREF: XiTigerCutscene_AnimateFadeOut+E   j  ; was: loc_1EB42
@@ -256,20 +256,20 @@ XiTigerCutscene_EnterStageHandler:                      ; DATA XREF: ROM:0001E92
 ; Builds three ten-entry strips for the cutscene's composite sprite
 XiTigerCutscene_BuildCompositeSprite:                   ; CODE XREF: XiTigerCutscene_WaitBeforeReveal+40   p  ; was: sub_1EB66
                                         ; XiTigerCutscene_AnimateReveal+5C   j
-                movea.w #(dword_FFA100-M68K_RAM),a0
+                movea.w #(SharedSpriteScratch-M68K_RAM),a0
                 move.w  #$C3DC,d0
                 move.w  #$F00,d1
                 move.w  #$A0,d3
-                add.w   (dword_FF8134+2).w,d3
+                add.w   (XiTigerSpriteXOffset).w,d3
                 bsr.s   XiTigerCutscene_WriteCompositeStrip
                 move.w  #$140,d3
-                add.w   (dword_FF8134+2).w,d3
+                add.w   (XiTigerSpriteXOffset).w,d3
                 bsr.s   XiTigerCutscene_WriteCompositeStrip
                 move.w  #$160,d3
-                add.w   (dword_FF8134+2).w,d3
+                add.w   (XiTigerSpriteXOffset).w,d3
                 bsr.s   XiTigerCutscene_WriteCompositeStrip
                 move.w  #$FFFF,(a0)
-                movea.w #(dword_FFA100-M68K_RAM),a0
+                movea.w #(SharedSpriteScratch-M68K_RAM),a0
                 jmp     (Sprite_AppendOAMEntries).l
 ; End of function XiTigerCutscene_BuildCompositeSprite
 ; Writes one ten-entry strip into the OAM staging list
@@ -288,12 +288,12 @@ XiTigerCutscene_WriteNextStripEntry:                    ; CODE XREF: XiTigerCuts
 ; End of function XiTigerCutscene_WriteCompositeStrip
 ; Updates the paired display objects and layer offsets from the phase accumulator
 XiTigerCutscene_UpdateActorAndLayerPositions:           ; CODE XREF: XiTigerCutscene_WaitBeforeReveal:XiTigerCutscene_RenderWaitingFrame   p  ; was: sub_1EBB6
-                addi.l  #$800,(dword_FF812C).w
-                move.w  (dword_FF812C).w,d0
-                add.w   d0,(dword_FF8128+2).w
+                addi.l  #$800,(XiTigerMotionStep).w
+                move.w  (XiTigerMotionStep).w,d0
+                add.w   d0,(XiTigerPhaseCounter).w
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 movea.w #(SecondaryEntityType-M68K_RAM),a1
-                move.w  (dword_FF8128+2).w,d0
+                move.w  (XiTigerPhaseCounter).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 cmpi.w  #$20,d0                         ; ' '
                 bmi.s   XiTigerCutscene_ApplyActorPositions
@@ -328,7 +328,7 @@ XiTigerCutscene_ApplyPaletteFade:                       ; CODE XREF: XiTigerCuts
                 move.w  #$E000,d7
                 moveq   #$3F,d5                         ; '?'
 XiTigerCutscene_ApplySelectedPaletteFade:               ; CODE XREF: XiTigerCutscene_AnimateFlash+26   p  ; was: loc_1EC2A
-                move.w  (dword_FF8130+2).w,d0
+                move.w  (XiTigerPaletteLevel).w,d0
                 jmp     (Gfx_ApplyPaletteFade).l
 ; End of function XiTigerCutscene_ApplyPaletteFade
 ; Writes the sine-wave raster table and updates the cutscene layer positions
@@ -337,8 +337,8 @@ XiTigerCutscene_UpdateWaveAndLayerPositions:            ; CODE XREF: XiTigerCuts
                 movea.w #(HScrollPlaneBRow0-M68K_RAM),a0
                 lea     (Math_QuarterSineTable).l,a1
                 moveq   #0,d0
-                addi.w  #$108,(dword_FF8134).w
-                move.w  (dword_FF8134).w,d0
+                addi.w  #$108,(XiTigerWavePhase).w
+                move.w  (XiTigerWavePhase).w,d0
                 move.l  #$1814000,d3
                 move.w  #$DF,d7
 XiTigerCutscene_WriteNextWaveLine:                      ; CODE XREF: XiTigerCutscene_UpdateWaveAndLayerPositions+3A   j  ; was: loc_1EC54
@@ -355,17 +355,17 @@ XiTigerCutscene_WriteNextWaveLine:                      ; CODE XREF: XiTigerCuts
                 addq.w  #4,a0
                 dbf     d7,XiTigerCutscene_WriteNextWaveLine
                 subq.w  #4,(SecondaryCameraYPos).w
-                move.w  (dword_FF8134+2).w,d7
+                move.w  (XiTigerSpriteXOffset).w,d7
                 asr.w   #1,d7
-                addq.w  #1,(dword_FF8130).w
-                move.w  (dword_FF8130).w,d0
+                addq.w  #1,(XiTigerStateCounter).w
+                move.w  (XiTigerStateCounter).w,d0
                 andi.w  #$3F,d0                         ; '?'
-                btst    #6,(dword_FF8130+1).w
+                btst    #6,(XiTigerStateCounter+1).w
                 beq.s   XiTigerCutscene_UpdateLayerPositions
                 eori.w  #$3F,d0                         ; '?'
                 btst    #0,(FrameCounter+1).w
                 bne.s   XiTigerCutscene_UpdateLayerPositions
-                addq.w  #1,(dword_FF8130).w
+                addq.w  #1,(XiTigerStateCounter).w
 XiTigerCutscene_UpdateLayerPositions:                   ; CODE XREF: XiTigerCutscene_UpdateWaveAndLayerPositions+5A   j  ; was: loc_1ECA0
                                         ; XiTigerCutscene_UpdateWaveAndLayerPositions+66   j
                 subi.w  #$20,d0                         ; ' '

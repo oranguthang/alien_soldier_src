@@ -44,19 +44,19 @@ UnreferencedWave_RenderTilemapToVRAM_Return:            ; CODE XREF: Unreference
                 rts
 ; End of function UnreferencedWave_RenderTilemapToVRAM
 
-; Initializes the wave-scroll state and horizontal range
-Effect_InitWaveScroll:
-                move.w  #2,(word_FF8100).w              ; was: sub_2626C
+; Initializes the wave-scroll state, control word, and Plane B offset
+Effect_InitWaveScroll:                                  ; was: sub_2626C
+                move.w  #2,(WaveControlWord).w
                 move.w  #0,(WaveParameterIndex).w
                 move.w  #0,(WaveStateOffset).w
                 move.w  #$70,(VScrollPlaneBColumn0).w   ; 'p'
                 rts
 ; End of function Effect_InitWaveScroll
 ; Stops scrolling effect by resetting state variables and counters
-Stage_StopScrollEffect:
-                move.b  #4,(VDPReg0Shadow+1).w          ; was: sub_26286
+Stage_StopScrollEffect:                                 ; was: sub_26286
+                move.b  #4,(VDPReg0Shadow+1).w
                 move.b  #$30,(VDPReg2Shadow+1).w        ; '0'
-                move.w  #0,(word_FF8100).w
+                move.w  #0,(WaveControlWord).w
                 move.w  #0,(VScrollPlaneBColumn0).w
                 rts
 ; End of function Stage_StopScrollEffect
@@ -167,8 +167,8 @@ Gfx_GenerateWaveDeformation:                            ; CODE XREF: Effect_Wave
                 move.w  (a0,d0.w),d0
                 moveq   #0,d1
                 moveq   #0,d2
-                movea.l #$FFFF9F00,a0
-                movea.l #$FFFF9F00,a1
+                movea.l #WaveSineTableCenter,a0
+                movea.l #WaveSineTableCenter,a1
                 move.w  #$7F,d7
 Gfx_GenerateWaveDeformation_FillSineLoop:               ; CODE XREF: Gfx_GenerateWaveDeformation+4C   j  ; was: loc_263BE
                 suba.w  #2,a0

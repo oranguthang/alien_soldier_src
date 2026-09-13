@@ -117,7 +117,7 @@ VBlank_InitXiTigerEffect:                               ; DATA XREF: VBlank_Disp
                 ori.b   #$10,(VDPReg0Shadow+1).w
                 move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 VBlank_InitXiTigerEffect_SelectBuffer:                  ; CODE XREF: VBlank_InitXiTigerEffect+4   j  ; was: loc_14E8
-                lea     (word_FF9FC0).w,a6
+                lea     (XiTigerVScrollBuffer).w,a6
                 rts
 ; End of function VBlank_InitXiTigerEffect
 ; Installs a buffered HBlank writer for VSRAM address two
@@ -341,7 +341,7 @@ VBlank_InitStage10Effect_UpdateRegisters:               ; CODE XREF: VBlank_Init
                 move.w  (VScrollPlaneBColumn0).w,(VDP_DATA).l
                 move.l  #$40000010,(VDP_CTRL).l
                 move.w  (VScrollBuffer).w,(VDP_DATA).l
-                movea.w #(byte_FF9FF8-M68K_RAM),a0
+                movea.w #(Stage10HBlankScrollData-M68K_RAM),a0
                 move.w  (VScrollBuffer).w,(a0)+
                 move.w  (VScrollPlaneBColumn0).w,(a0)+
                 move.w  (PreviousCameraXPosition).w,d0
@@ -352,7 +352,7 @@ VBlank_InitStage10Effect_UpdateRegisters:               ; CODE XREF: VBlank_Init
 ; Branch target that sets scroll value for Stage 10 effect and prepares sprite buffer
 VBlank_InitStage10Effect_StoreHBlankData:               ; CODE XREF: VBlank_InitStage10Effect+AC   j  ; was: loc_1834
                 move.w  d0,(a0)+
-                movea.w #(byte_FF9FF8-M68K_RAM),a6
+                movea.w #(Stage10HBlankScrollData-M68K_RAM),a6
                 rts
 ; End of function VBlank_InitStage10Effect
 ; ---------------------------------------------------------------------------

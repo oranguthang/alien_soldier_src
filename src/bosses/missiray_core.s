@@ -114,7 +114,7 @@ Boss_MissirayInitialize:                                ; DATA XREF: ROM:Boss_Mi
                 tst.b   (DataLoaderControl).w
                 bmi.w   Boss_MissirayInitializeReturn
                 addq.w  #2,4(a5)
-                move.b  #4,(byte_FFA420).w
+                move.b  #4,(PlayerOAMBucketOffset).w
                 move.w  #$3D0,d0
                 move.w  #$3E0,d1
                 jsr     (Object_ClearAllExceptTypes).l

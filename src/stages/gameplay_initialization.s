@@ -50,7 +50,7 @@ EndingSequence_InitializeFromTransition:                ; DATA XREF: ROM:0001E85
 ; End of function EndingSequence_InitializeFromTransition
 ; Updates the shared ending sequence or advances after it signals completion
 EndingSequence_UpdateFromTransition:                    ; DATA XREF: ROM:0001E868   o  ; was: sub_1EE66
-                tst.w   (dword_FF8128).w
+                tst.w   (EndingSequenceComplete).w
                 bne.w   EndingSequence_AdvanceStage
                 jmp     (EndingSequence_Dispatch).l
 ; ---------------------------------------------------------------------------
@@ -120,8 +120,8 @@ WeaponSetup_ActivateScreen:                             ; CODE XREF: WeaponSetup
                 jsr     (UI_QueueSelectedWeaponIconTransfer).l
                 move.b  #$8E,d0
                 jsr     (Sound_QueueBGMRequest).l
-                move.l  #$1400000,(dword_FF8130).w
-                clr.w   (dword_FF8134).w
+                move.l  #$1400000,(WeaponSetupBgPhase).w
+                clr.w   (WeaponSetupHighlight).w
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 jmp     (Gfx_FadePaletteTransition).l
@@ -289,9 +289,9 @@ WeaponSetup_HandleLoadoutState:                         ; DATA XREF: WeaponSetup
 ; ---------------------------------------------------------------------------
 ; Renders the cursor for the currently selected loadout slot
 WeaponSetup_RenderSelectedSlotCursor:                   ; CODE XREF: WeaponSetup_HandleLoadoutState+24   j  ; was: loc_1F176
-                movea.w #(dword_FFA100-M68K_RAM),a0
+                movea.w #(SharedSpriteScratch-M68K_RAM),a0
                 movea.w a0,a1
-                move.w  (dword_FF8128).w,d0
+                move.w  (WeaponSetupForceIndex).w,d0
                 move.w  WeaponSetup_SlotCursorYPositions(pc,d0.w),(a1)+
                 move.w  #$B00,(a1)+
                 move.w  #$C6F0,(a1)+

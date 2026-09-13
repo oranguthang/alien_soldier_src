@@ -9,12 +9,12 @@ VBlank_Epsilon1ScrollEffect:                            ; DATA XREF: VBlank_Disp
                 ori.b   #$10,(VDPReg0Shadow+1).w
                 move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 VBlank_Epsilon1ScrollEffect_Update:                     ; CODE XREF: VBlank_Epsilon1ScrollEffect+4   j  ; was: loc_198A
-                move.w  (dword_FF8128).w,d1
+                move.w  (Epsilon1TransitionY).w,d1
                 neg.w   d1
                 add.w   (PlaneAShakeOffset).w,d1
                 move.w  d1,d0
                 neg.w   d0
-                move.w  d0,(dword_FF8134).w
+                move.w  d0,(Epsilon1VScrollValue).w
                 addi.w  #$DF,d1
                 cmpi.w  #$E2,d1
                 bmi.s   VBlank_Epsilon1ScrollEffect_ApplyRegisters
@@ -39,7 +39,7 @@ HBlank_ApplyEpsilon1VScrollAndPlaneMode_CopyLength: dc.w    $200  ; DATA XREF: R
 ; VDP register 11 and plane A's name-table base after a fixed delay
 HBlank_ApplyEpsilon1VScrollAndPlaneMode:                ; was: sub_19D8
                 move.l  #$40020010,(VDP_CTRL).l
-                move.w  (dword_FF8134).w,(VDP_DATA).l
+                move.w  (Epsilon1VScrollValue).w,(VDP_DATA).l
                 nop
                 nop
                 nop
