@@ -95,7 +95,7 @@ Boss_ShellshogunSetupPhase:                             ; DATA XREF: ROM:0003952
                 clr.w   $56(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
-                movea.w #(byte_FFCF20-M68K_RAM),a0
+                movea.w #(TwentyFifthEntityType-M68K_RAM),a0
                 move.w  #$6464,d0
                 moveq   #2,d7
 Boss_ShellshogunInitializeAuxiliaryParts:               ; CODE XREF: Boss_ShellshogunSetupPhase+C4   j  ; was: loc_39610
@@ -110,7 +110,7 @@ Boss_ShellshogunInitializeAuxiliaryParts:               ; CODE XREF: Boss_Shells
                 dbf     d7,Boss_ShellshogunInitializeAuxiliaryParts
                 move.w  #0,$9C8(a5)
                 move.w  #$FCFC,$9CA(a5)
-                movea.w #(byte_FFD040-M68K_RAM),a0
+                movea.w #(TwentyEighthEntityType-M68K_RAM),a0
                 moveq   #2,d7
 Boss_ShellshogunInitializeSecondaryObjects:             ; CODE XREF: Boss_ShellshogunSetupPhase+10A   j  ; was: loc_3964C
                 move.w  #$10,(a0)

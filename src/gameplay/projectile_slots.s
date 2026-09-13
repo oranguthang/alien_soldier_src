@@ -1,7 +1,7 @@
 ; Finds the first free slot in the forward projectile/object pool
 Projectile_FindFreePrimarySlot:                         ; CODE XREF: ShipSequence_SpawnStarParticle   p  ; was: sub_1C050
                                         ; Projectile_FindFreeOrRecycleSlot+4   p
-                movea.w #(word_FFCF80-M68K_RAM),a0
+                movea.w #(TwentySixthEntityType-M68K_RAM),a0
                 move.w  (a0),d0
                 beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
@@ -98,7 +98,7 @@ Projectile_FindFreePrimarySlot_Return:                  ; CODE XREF: Projectile_
 ; Finds free slot in projectile buffer unrolled search
 Projectile_FindFreeSlot:                                ; CODE XREF: Projectile_SpawnType1A8AtAngle   p  ; was: sub_1C16A
                                         ; sub_2A0D6   p
-                movea.w #(byte_FFD9A0-M68K_RAM),a0
+                movea.w #(FiftyThirdEntityType-M68K_RAM),a0
                 move.w  (a0),d0
                 beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
@@ -241,7 +241,7 @@ Projectile_FindFreeOrRecycleSlot:                       ; CODE XREF: Projectile_
                 movem.l d7,-(sp)
                 jsr     Projectile_FindFreePrimarySlot(pc)  ; (pc)
                 beq.s   Projectile_FindFreeOrRecycleSlot_Return
-                movea.w #(word_FFCF80-M68K_RAM),a0
+                movea.w #(TwentySixthEntityType-M68K_RAM),a0
                 moveq   #$1A,d7
 Projectile_FindFreeOrRecycleSlot_Scan:                  ; CODE XREF: Projectile_FindFreeOrRecycleSlot+20   j  ; was: loc_1C314
                 move.w  (a0),d0

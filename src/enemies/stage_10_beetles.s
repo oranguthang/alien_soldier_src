@@ -58,7 +58,7 @@ Stage10_BeetleWaveWaitForBeetleState_Return:            ; CODE XREF: Stage10_Bee
 Stage10_BeetleWaveDelayState:                           ; DATA XREF: ROM:0002E6E0   o  ; was: sub_2E752
                 subq.w  #1,$48(a5)
                 bne.s   Stage10_BeetleWaveDelayState_Return
-                cmpi.w  #$1B8,(word_FFDB20).w
+                cmpi.w  #$1B8,(Entity57Type).w
                 beq.s   Stage10_BeetleWaveDelayState_FinishSpecialStage
                 move.w  #2,4(a5)
 Stage10_BeetleWaveDelayState_Return:                    ; CODE XREF: Stage10_BeetleWaveDelayState+4   j  ; was: locret_2E766

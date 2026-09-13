@@ -42,7 +42,7 @@ Boss_SunsetStingSetupArena:                             ; DATA XREF: ROM:Boss_Su
                 jsr     (Object_ClearAllExceptTypes).l
                 addq.w  #2,4(a5)
                 move.b  #$80,$4B(a5)
-                clr.w   (word_FFC67E).w
+                clr.w   (PrimaryEntityWork5E).w
                 rts
 ; End of function Boss_SunsetStingSetupArena
 ; Loads boss sprites, palette, tiles and initializes position/velocity
@@ -522,14 +522,14 @@ Boss_SunsetStingUpdateBodyGraphics:                     ; CODE XREF: Boss_Sunset
                 nop
                 bsr.w   Boss_SunsetStingUpdateCameraOffset
                 lea     Boss_SunsetStingPrimaryTileAnimationOffsets(pc),a0
-                move.w  (word_FFC67E).w,d0
+                move.w  (PrimaryEntityWork5E).w,d0
                 lsr.w   #3,d0
                 bsr.w   Boss_SunsetStingLoadTileTableEntry
                 lea     Boss_SunsetStingEarlyFormTileLoadCommands+$24(pc),a0
-                move.w  (word_FFC67E).w,d0
+                move.w  (PrimaryEntityWork5E).w,d0
                 lsr.w   #2,d0
                 bsr.w   Boss_SunsetStingLoadTileTableEntry
-                addq.w  #1,(word_FFC67E).w
+                addq.w  #1,(PrimaryEntityWork5E).w
                 rts
 ; End of function Boss_SunsetStingUpdateGraphics
 ; Loads compressed tile data from indexed table entry
@@ -561,7 +561,7 @@ Boss_SunsetStingScatterBodyPartsState:                  ; DATA XREF: ROM:00040D2
                 bne.w   Boss_SunsetStingUpdateGraphics
                 addq.w  #2,4(a5)
                 clr.b   $21(a5)
-                move.w  (word_FFC67C).w,d4
+                move.w  (PrimaryEntityWork5C).w,d4
                 subq.w  #2,d4
                 lea     $60(a5),a4
                 lea     (Math_SineTable).l,a2
@@ -602,7 +602,7 @@ Boss_SunsetStingBeginStaggeredDebrisCleanup:            ; CODE XREF: Boss_Sunset
                 move.b  #$40,$4B(a5)                    ; '@'
                 addq.w  #2,4(a5)
                 move.w  #1,d5
-                move.w  (word_FFC67C).w,d4
+                move.w  (PrimaryEntityWork5C).w,d4
                 subq.w  #2,d4
                 lea     $60(a5),a4
 Boss_SunsetStingSeedDebrisCleanupDelay:                 ; CODE XREF: Boss_SunsetStingScatterBodyPartsState+B4   j  ; was: loc_4142E
@@ -800,7 +800,7 @@ Boss_SunsetStingConfigureBodyPart:                      ; CODE XREF: Boss_Sunset
                 bra.s   Boss_SunsetStingReadBodyPartDescriptor
 ; ---------------------------------------------------------------------------
 Boss_SunsetStingFinishBodyPartInitialization:           ; CODE XREF: Boss_SunsetStingInitBodyParts+1C   j  ; was: loc_41852
-                move.w  d7,(word_FFC67C).w
+                move.w  d7,(PrimaryEntityWork5C).w
                 lea     (a3),a5
                 clr.w   $4E(a5)
                 rts
@@ -808,7 +808,7 @@ Boss_SunsetStingFinishBodyPartInitialization:           ; CODE XREF: Boss_Sunset
 ; Updates positions of all boss body parts using sine/cosine
 Boss_SunsetStingUpdateBodyPartPositions:                ; CODE XREF: Boss_SunsetStingUpdateGraphics+20   p  ; was: sub_4185E
                                         ; Boss_SunsetStingSecondFormUpdate+78   p
-                move.w  (word_FFC67C).w,d7
+                move.w  (PrimaryEntityWork5C).w,d7
                 subq.w  #1,d7
                 lea     $60(a5),a4
                 movea.l #Math_SineTable,a2

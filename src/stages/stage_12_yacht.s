@@ -462,7 +462,7 @@ Stage12_TeddyBearPilotStart:                            ; DATA XREF: ROM:0002F93
                 move.l  #Stage12_TeddyBearOverwrittenPilotAnimation,8(a5)
                 clr.w   $C(a5)
                 addq.w  #2,(StageStateOffset).w
-                addq.w  #2,(word_FFDB24).w
+                addq.w  #2,(Entity57State).w
                 move.w  #$F,(word_FF829E).w
                 bclr    #0,(StageTimerPauseFlag).w
                 move.l  #Stage12_TeddyBearDropAndPilotAnimation,8(a5)
@@ -523,7 +523,7 @@ Stage12_TeddyBearShotReturn:                            ; CODE XREF: Stage12_Ted
 Stage12_TeddyBearAttachToYacht:                         ; CODE XREF: Stage12_TeddyBearFacePlayerDelay:loc_2FAE4   p  ; was: sub_2FBEA
                                         ; sub_2FB10   p
                 bset    #3,$E(a5)
-                movea.w #(word_FFDB20-M68K_RAM),a0
+                movea.w #(Entity57Type-M68K_RAM),a0
                 move.w  $10(a0),d0
                 addi.w  #$44,d0                         ; 'D'
                 move.w  d0,$10(a5)

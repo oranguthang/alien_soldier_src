@@ -284,7 +284,7 @@ Boss_AntroidLeapAttackA:                                ; DATA XREF: ROM:0003751
                 addi.l  #$5000,$1C(a5)
                 bmi.s   Boss_AntroidLeapAttackAAnimate
                 movea.w #(FifteenthEntityType-M68K_RAM),a1
-                movea.w #(word_FFCF80-M68K_RAM),a0
+                movea.w #(TwentySixthEntityType-M68K_RAM),a0
                 tst.w   6(a5)
                 beq.s   Boss_AntroidLeapAttackACheckContact
                 exg     a0,a1
@@ -361,7 +361,7 @@ Boss_AntroidLeapAttackB:                                ; DATA XREF: ROM:0003751
                 addi.l  #$5000,$1C(a5)
                 bmi.w   Boss_AntroidLeapAttackBAnimate
                 movea.w #(FifteenthEntityType-M68K_RAM),a0
-                movea.w #(word_FFCF80-M68K_RAM),a1
+                movea.w #(TwentySixthEntityType-M68K_RAM),a1
                 tst.w   6(a5)
                 beq.s   Boss_AntroidLeapAttackBCheckContact
                 exg     a0,a1

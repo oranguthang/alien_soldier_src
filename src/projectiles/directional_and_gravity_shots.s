@@ -1,6 +1,6 @@
 ; Find a free record in the enemy projectile-pool range
 Projectile_FindFreeEnemyPoolSlot:                       ; CODE XREF: Projectile_AllocateSelectedTwoSpeedShot   p  ; was: sub_2AFBE
-                movea.w #(byte_FFCC80-M68K_RAM),a0
+                movea.w #(EighteenthEntityType-M68K_RAM),a0
                 jmp     Projectile_FindFreePrimarySlot_CheckEnemyRange
 ; End of function Projectile_FindFreeEnemyPoolSlot
 ; Allocate a record and dispatch one of the two type-$148 initializers by d1

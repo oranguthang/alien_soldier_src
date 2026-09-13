@@ -517,7 +517,7 @@ Boss_GustheadDefeatFinalizeReturn:                      ; CODE XREF: Boss_Gusthe
 ; End of function Boss_GustheadDefeatFinalize
 ; Updates attached Gusthead segments or dispatches detached-segment motion
 Boss_GustheadSegmentMain:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_40070
-                btst    #7,(byte_FFC66A).w
+                btst    #7,(PrimaryEntityWork4A).w
                 bne.w   Boss_GustheadDispatchDetachedSegmentState
                 clr.w   d1
                 clr.w   d2

@@ -6292,3 +6292,90 @@ Provenance rises from 15,497 to 15,509 mappings and the audit registry from
 12,647 to 12,659. The semantic review upper bound remains 3,150 because every
 new mapping has a matching audit record. The enforced address-derived ceiling
 falls from 554 to 542, all still confined to RAM equates.
+
+The sixteenth-through-twenty-third record pass replaces thirteen raw equates.
+The record bases are established by the fixed `$60` stride and independent
+users across Sirene, Destroyer MK2, Medusa, Valkirie, Joker, Victor, Z-Leo,
+enemy allocation, and Jampan. Sirene proves a structural work byte in the
+sixteenth record; Victor proves a structural work word in the twenty-first.
+Jampan's shield setup establishes the twenty-third record's sprite attribute,
+status, and two owner-specific collision-work fields without promoting those
+last two to unsupported engine-wide meanings.
+
+All thirteen fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,509 to 15,522 mappings and the audit registry from
+12,659 to 12,672. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 542 to 529, all still confined to RAM equates.
+
+The twenty-fourth-through-twenty-eighth record pass replaces nine raw equates.
+These records are reused between fixed boss parts and projectile allocation,
+so their global names remain structural. Destroyer Proto proves the
+twenty-fourth record's flags; Sirene proves an owner-specific offset-`$56`
+work byte in the twenty-sixth. Jampan proves the twenty-eighth record's sprite
+attribute and another copied work byte without assigning that byte an
+unsupported engine-wide purpose.
+
+All nine fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,522 to 15,531 mappings and the audit registry from
+12,672 to 12,681. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 529 to 520, all still confined to RAM equates.
+
+The twenty-ninth-through-thirty-second record pass replaces thirteen raw
+equates. Jampan proves the twenty-ninth record's flags, coordinate fields, and
+vertical velocity during its post-defeat shield transition. Z-Leo establishes
+the thirtieth record base, while Artemis independently consumes its integer
+coordinates as projectile spawn origins. Wolf Garopa establishes the
+thirty-first record. Victor ring traversal establishes the thirty-second and
+its direction-selected mapping pointer; Valkirie consumes the same record's
+integer coordinates in a separate ownership phase.
+
+All thirteen fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,531 to 15,544 mappings and the audit registry from
+12,681 to 12,694. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 520 to 507, all still confined to RAM equates.
+
+The sparse late-entity pass replaces ten raw equates. Z-Leo, projectile
+allocators, and Back Stringer prove record bases 33, 34, 38, 46, 50, and 53,
+but their changing owners require structural names. The ending-planet debris
+record has a closed type/flags/horizontal-velocity chain and receives semantic
+aliases. Stage 10/11 initialization proves `AmbientParticlePool` as six
+consecutive 96-byte records rather than one anonymous byte location.
+
+All ten fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,544 to 15,554 mappings and the audit registry from
+12,694 to 12,704. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 507 to 497, all still confined to RAM equates.
+
+The entity-record-57 pass replaces thirteen raw equates. Its many incompatible
+owners include stage transitions, Stage 12 actors, Medusa, Z-Leo, Sharpssteel,
+effects, and projectiles, so the stable identity is the proven record index
+rather than one character name. Type, flags, state, signed 16.16 coordinates
+and velocities, status, and collision flags follow the common record layout;
+four later fields remain explicit owner-dependent work storage.
+
+All thirteen fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,554 to 15,567 mappings and the audit registry from
+12,704 to 12,717. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 497 to 484, all still confined to RAM equates.
+
+The final entity-pool alias pass replaces nineteen raw equates: seven
+owner-dependent fields in the primary record and twelve fields in records 58
+through 60. The primary fields retain structural offset names because their
+incompatible users include Gusthead, Epsilon 1, Stage 3, Shield Viper, and
+Sunset Sting. The late records' fixed layout is independently exercised by
+Valkirie, Z-Leo, stage transitions, Sharpssteel, Seven Forces, Flying Neo,
+Artemis, Sylpheed, and Wolf Garopa. Their proven fields cover type, state,
+integer coordinate halves, signed 16.16 velocities, and one Valkirie shadow Y
+coordinate. The entire 61-record `Entity_ObjectPool` now contains no live
+address-derived aliases.
+
+All nineteen fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,567 to 15,586 mappings and the audit registry from
+12,717 to 12,736. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 484 to 465, all still confined to RAM equates.

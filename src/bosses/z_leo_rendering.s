@@ -46,7 +46,7 @@ Boss_ZLeoPrepareRisingReturnPose:                       ; CODE XREF: Boss_ZLeoBe
 Boss_ZLeoSelectRisingReturnPose:                        ; CODE XREF: Boss_ZLeoBeginRisingReturn+5E   j  ; was: loc_525B4
                 move.w  $5B4(a5),d0
                 addq.w  #4,d0
-                cmp.w   (dword_FFDB34).w,d0
+                cmp.w   (Entity57YPos).w,d0
                 bpl.s   Boss_ZLeoRenderRisingThresholdPose
                 move.b  #$F0,d0
                 jsr     (Sound_PlaySFX).l
@@ -84,7 +84,7 @@ Boss_ZLeoSyncStageCoordinateAndRender:                  ; CODE XREF: Boss_ZLeoRu
                                         ; Boss_ZLeoRunBattleReadyPose+30   j
                 move.w  $5B4(a5),d0
                 addq.w  #4,d0
-                move.w  d0,(dword_FFDB34).w
+                move.w  d0,(Entity57YPos).w
 ; Update pose segments, composite sprites, tiles, graphics, and flash color
 Boss_ZLeoRenderCompositeFrame:                          ; CODE XREF: Boss_ZLeoPrepareIntroDescent+54   j  ; was: loc_5262E
                                         ; Boss_ZLeoRunIntroCountdown+24   j
@@ -206,7 +206,7 @@ Boss_ZLeoDisableParts:
 ; End of function Boss_ZLeoDisableParts
 ; Graphics init handler 1
 Boss_ZLeoGraphicsInit1:                                 ; CODE XREF: Boss_ZLeoInit+4C   p  ; was: sub_5279E
-                movea.w #(word_FFDB20-M68K_RAM),a0
+                movea.w #(Entity57Type-M68K_RAM),a0
                 move.w  #$40C,(a0)
                 move.w  #$400,2(a0)
                 clr.w   $56(a0)
@@ -249,7 +249,7 @@ Boss_ZLeoBuildHBlankRegisterBuffer:                     ; CODE XREF: Boss_ZLeoIn
                 movea.w #(word_FF9E00-M68K_RAM),a0
                 move.w  (PrimaryCameraYPosition).w,d7
                 neg.w   d7
-                move.w  (dword_FFDB34).w,d0
+                move.w  (Entity57YPos).w,d0
                 subi.w  #$8B,d0
                 beq.s   Boss_ZLeoClampFirstHBlankLine
                 bmi.s   Boss_ZLeoClampFirstHBlankLine
@@ -265,7 +265,7 @@ Boss_ZLeoWriteFirstHBlankSegment:                       ; CODE XREF: Boss_ZLeoBu
                 move.w  #$8B00,(a0)+
                 move.w  #$8230,(a0)+
                 move.w  #$8A1F,d2
-                cmpi.w  #$148,(dword_FFDB34).w
+                cmpi.w  #$148,(Entity57YPos).w
                 bmi.s   Boss_ZLeoWriteRemainingHBlankSegments
                 move.w  #$8AFF,d2
 Boss_ZLeoWriteRemainingHBlankSegments:                  ; CODE XREF: Boss_ZLeoBuildHBlankRegisterBuffer+3A   j  ; was: loc_52846
@@ -274,7 +274,7 @@ Boss_ZLeoWriteRemainingHBlankSegments:                  ; CODE XREF: Boss_ZLeoBu
                 move.w  #$8B00,(a0)+
                 move.w  #$8230,(a0)+
                 move.w  #$8AFF,(a0)+
-                move.w  (dword_FFDB34).w,d1
+                move.w  (Entity57YPos).w,d1
                 addi.w  #$98,d1
                 neg.w   d1
                 move.w  d1,(a0)+
@@ -317,15 +317,15 @@ Boss_ZLeoUpdateWingSprites:                             ; CODE XREF: Boss_ZLeoBe
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 move.b  $34(a0),d2
                 ext.w   d2
-                movea.w #(word_FFCDA0-M68K_RAM),a0
+                movea.w #(TwentyFirstEntityType-M68K_RAM),a0
                 moveq   #$FFFFFFFE,d0
                 moveq   #$FFFFFFF6,d1
                 bsr.s   Boss_ZLeoUpdateWingPositions
-                movea.w #(word_FFCEC0-M68K_RAM),a0
+                movea.w #(TwentyFourthEntityType-M68K_RAM),a0
                 moveq   #0,d0
                 moveq   #0,d1
                 bsr.s   Boss_ZLeoUpdateWingPositions
-                movea.w #(byte_FFCFE0-M68K_RAM),a0
+                movea.w #(TwentySeventhEntityType-M68K_RAM),a0
                 moveq   #2,d0
                 moveq   #$A,d1
 ; End of function Boss_ZLeoUpdateWingSprites
@@ -358,10 +358,10 @@ Boss_ZLeoUpdateWingPositions:                           ; CODE XREF: Boss_ZLeoUp
 ; End of function Boss_ZLeoUpdateWingPositions
 ; Sprite update handler
 Boss_ZLeoSpriteUpdate:                                  ; CODE XREF: Boss_ZLeoBeginRisingReturn+10E   p  ; was: sub_5293C
-                movea.w #(byte_FFD100-M68K_RAM),a0
+                movea.w #(ThirtiethEntityType-M68K_RAM),a0
                 move.w  #$FFDE,d0
                 bsr.s   Boss_ZLeoUpdateHeadPosition
-                movea.w #(byte_FFD220-M68K_RAM),a0
+                movea.w #(ThirtyThirdEntityType-M68K_RAM),a0
                 move.w  #$22,d0                         ; '"'
 ; End of function Boss_ZLeoSpriteUpdate
 ; Update head sprite positions
@@ -453,16 +453,16 @@ Boss_ZLeoSpawnDefeatEffectReturn:                       ; CODE XREF: Boss_ZLeoSp
 Boss_ZLeoUpdateDefeatStageScroll:                       ; CODE XREF: Boss_ZLeoBeginDefeatSequence+6C   p  ; was: sub_52A54
                 tst.w   (RasterEffectIndex).w
                 beq.s   Boss_ZLeoUpdateDefeatStageScrollReturn
-                cmpi.w  #$200,(dword_FFDB34).w
+                cmpi.w  #$200,(Entity57YPos).w
                 bmi.s   Boss_ZLeoAccelerateDefeatStageScroll
                 clr.l   $1C(a5)
-                move.w  #$200,(dword_FFDB34).w
+                move.w  #$200,(Entity57YPos).w
                 clr.w   (RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 rts
 ; ---------------------------------------------------------------------------
 Boss_ZLeoAccelerateDefeatStageScroll:                   ; CODE XREF: Boss_ZLeoUpdateDefeatStageScroll+C   j  ; was: loc_52A76
-                addi.l  #$800,(dword_FFDB3C).w
+                addi.l  #$800,(Entity57YVel).w
 Boss_ZLeoUpdateDefeatStageScrollReturn:                 ; CODE XREF: Boss_ZLeoUpdateDefeatStageScroll+4   j  ; was: locret_52A7E
                 rts
 ; End of function Boss_ZLeoUpdateDefeatStageScroll

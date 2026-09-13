@@ -415,8 +415,8 @@ EndingPlanet_ZoomObjectComplete:                        ; DATA XREF: ROM:0000823
 
 ; Creates the single planet-debris object at the planet's current position
 EndingPlanet_CreateDebris:                              ; CODE XREF: EndingPlanet_PauseAtCenter+32   j  ; was: sub_833E
-                lea     (word_FFD820).w,a4
-                move.w  #$EC00,word_FFD822-word_FFD820(a4)
+                lea     (EndingPlanetDebrisType).w,a4
+                move.w  #$EC00,EndingPlanetDebrisFlags-EndingPlanetDebrisType(a4)
                 move.w  #$10,(a4)
                 move.l  #EndingPlanetDebrisAnimationSequence,8(a4)
                 move.w  #$8100,$E(a4)
@@ -430,8 +430,8 @@ EndingPlanet_CreateDebris:                              ; CODE XREF: EndingPlane
 ; End of function EndingPlanet_CreateDebris
 ; Accelerates the debris and clears it when its lifetime counter reaches `$80`
 EndingPlanet_UpdateDebris:                              ; CODE XREF: EndingPlanet_ExitScreen+C   p  ; was: sub_8380
-                lea     (word_FFD820).w,a4
-                addi.l  #$4000,dword_FFD838-word_FFD820(a4)
+                lea     (EndingPlanetDebrisType).w,a4
+                addi.l  #$4000,EndingPlanetDebrisXVel-EndingPlanetDebrisType(a4)
                 addi.l  #$3000,$1C(a4)
                 cmpi.w  #$80,$C(a4)
                 bcs.w   Cutscene_Return

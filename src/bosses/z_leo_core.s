@@ -189,7 +189,7 @@ Boss_ZLeoIntroInit:                                     ; DATA XREF: ROM:00051B8
                 move.w  #$10,d0
                 move.w  #$C000,d1
                 move.w  #$4B80,d2
-                movea.w #(word_FFCDA0-M68K_RAM),a0
+                movea.w #(TwentyFirstEntityType-M68K_RAM),a0
                 moveq   #2,d7
 Boss_ZLeoInitializeIntroPartRows:                       ; CODE XREF: Boss_ZLeoIntroInit+110   j  ; was: loc_51D1E
                 moveq   #$10,d3
@@ -208,7 +208,7 @@ Boss_ZLeoInitializeIntroPartRow:                        ; CODE XREF: Boss_ZLeoIn
                 move.l  d4,$848(a5)
                 move.l  d4,$968(a5)
                 move.l  d4,$A88(a5)
-                movea.w #(byte_FFD100-M68K_RAM),a0
+                movea.w #(ThirtiethEntityType-M68K_RAM),a0
                 moveq   #$50,d3                         ; 'P'
                 moveq   #5,d7
 Boss_ZLeoInitializeLowerIntroParts:                     ; CODE XREF: Boss_ZLeoIntroInit+140   j  ; was: loc_51D60
@@ -257,7 +257,7 @@ Boss_ZLeoRunIntroDescent:                               ; DATA XREF: ROM:00051B8
 Boss_ZLeoUpdateIntroDescentPose:                        ; CODE XREF: Boss_ZLeoPrepareIntroDescent+36   j  ; was: loc_51E24
                 move.w  $5B4(a5),d0
                 addi.w  #0,d0
-                move.w  d0,(dword_FFDB34).w
+                move.w  d0,(Entity57YPos).w
                 lea     Boss_ZLeoIntroDescentPose(pc),a1
                 nop
                 bra.w   Boss_ZLeoRenderCompositeFrame
@@ -282,11 +282,11 @@ Debug_ZLeoCheckMoveDownInput:                           ; CODE XREF: Debug_ZLeoP
 Debug_ZLeoCheckIncreaseScrollInput:                     ; CODE XREF: Debug_ZLeoPositionAndStartIntro+2A   j  ; was: loc_51E6A
                 btst    #6,(ControllerHeldState).w
                 beq.s   Debug_ZLeoCheckDecreaseScrollInput
-                addq.w  #2,(dword_FFDB34).w
+                addq.w  #2,(Entity57YPos).w
 Debug_ZLeoCheckDecreaseScrollInput:                     ; CODE XREF: Debug_ZLeoPositionAndStartIntro+36   j  ; was: loc_51E76
                 btst    #4,(ControllerHeldState).w
                 beq.s   Boss_ZLeoPrepareIntroMovement
-                subq.w  #2,(dword_FFDB34).w
+                subq.w  #2,(Entity57YPos).w
 Boss_ZLeoPrepareIntroMovement:                          ; CODE XREF: Boss_ZLeoIntroInit+1AC   j  ; was: loc_51E82
                                         ; Debug_ZLeoPositionAndStartIntro+42   j
                 move.w  #$10,4(a5)
@@ -447,8 +447,8 @@ Boss_ZLeoBeginDefeatSequence:                           ; CODE XREF: Boss_ZLeoMa
                 bset    #0,(StageTimerPauseFlag).w
                 clr.b   $21(a5)
                 move.w  #$34,(PlayerScriptStateOffset).w  ; '4'
-                bset    #2,(word_FFDB22).w
-                move.l  #$FFFF0000,(dword_FFDB3C).w
+                bset    #2,(Entity57Flags).w
+                move.l  #$FFFF0000,(Entity57YVel).w
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.w  #$C0,$11C(a5)
@@ -488,7 +488,7 @@ Boss_ZLeoUpdateDefeatFade:                              ; CODE XREF: Boss_ZLeoBe
 Boss_ZLeoBeginDefeatWhiteout:                           ; CODE XREF: Boss_ZLeoBeginDefeatSequence+96   j  ; was: loc_520F0
                 addq.w  #2,4(a5)
                 clr.w   $11C(a5)
-                movea.w #(byte_FFDB80-M68K_RAM),a0
+                movea.w #(Entity58Type-M68K_RAM),a0
                 move.w  #$354,(a0)
                 clr.w   4(a0)
                 move.w  #$120,$10(a0)
@@ -687,8 +687,8 @@ Boss_ZLeoWaitForScrollingLaserCue:                      ; DATA XREF: ROM:00051BA
 Boss_ZLeoStartScrollingLaserAttack:                     ; CODE XREF: Boss_ZLeoBeginScrollingLaserAttack+2A   j  ; was: loc_5232C
                 addq.w  #2,4(a5)
                 bset    #2,(byte_FF8245).w
-                bset    #2,(word_FFDB22).w
-                move.l  #$FFF00000,(dword_FFDB3C).w
+                bset    #2,(Entity57Flags).w
+                move.l  #$FFF00000,(Entity57YVel).w
                 move.b  #$4F,d0                         ; 'O'
                 jsr     (Sound_PlaySFX).l
                 bsr.w   Boss_ZLeoLoadPrimaryTiles
@@ -701,13 +701,13 @@ Boss_ZLeoStartScrollingLaserAttack:                     ; CODE XREF: Boss_ZLeoBe
 Boss_ZLeoRunScrollingLaserEntryPose:                    ; DATA XREF: ROM:00051BAA   o  ; was: sub_52368
                 tst.w   $58(a5)
                 bmi.s   Boss_ZLeoBeginScrollingLaserBurst
-                cmpi.w  #$40,(dword_FFDB34).w           ; '@'
+                cmpi.w  #$40,(Entity57YPos).w           ; '@'
                 bpl.s   Boss_ZLeoRenderScrollingLaserEntryPose
                 move.w  #$34,(PlayerScriptStateOffset).w  ; '4'
-                move.w  (dword_FFDB34).w,d0
+                move.w  (Entity57YPos).w,d0
                 subi.w  #$20,d0                         ; ' '
                 move.w  d0,(PlayerYPosition).w
-                clr.l   (dword_FFDB3C).w
+                clr.l   (Entity57YVel).w
 Boss_ZLeoRenderScrollingLaserEntryPose:                 ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+C   j  ; was: loc_5238C
                 lea     Boss_ZLeoScrollingLaserEntryPose(pc),a1
                 nop
@@ -722,10 +722,10 @@ Boss_ZLeoBeginScrollingLaserBurst:                      ; CODE XREF: Boss_ZLeoRu
 Boss_ZLeoRunScrollingLaserBurst:                        ; DATA XREF: ROM:00051BAC   o  ; was: loc_523AA
                 bclr    #0,$23E(a5)
                 beq.s   Boss_ZLeoLoopScrollingLaserBurstPose
-                movea.w #(byte_FFD100-M68K_RAM),a4
+                movea.w #(ThirtiethEntityType-M68K_RAM),a4
                 btst    #0,$11D(a5)
                 bne.s   Boss_ZLeoSpawnScrollingLaserPair
-                movea.w #(byte_FFD220-M68K_RAM),a4
+                movea.w #(ThirtyThirdEntityType-M68K_RAM),a4
 Boss_ZLeoSpawnScrollingLaserPair:                       ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+54   j  ; was: loc_523C2
                 move.w  #9,$48(a4)
                 bsr.w   Projectile_ZLeoSpawnLasers
@@ -781,10 +781,10 @@ Boss_ZLeoUpdateScrollingAttackFrame:                    ; CODE XREF: Boss_ZLeoRu
 ; ---------------------------------------------------------------------------
 Boss_ZLeoBeginScrollReversal:                           ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+EC   j  ; was: loc_52462
                 addq.w  #2,4(a5)
-                move.l  #$FFC00000,(dword_FFDB34).w
-                move.l  #$50000,(dword_FFDB3C).w
+                move.l  #$FFC00000,(Entity57YPos).w
+                move.l  #$50000,(Entity57YVel).w
                 move.w  #$120,(PlayerXPosition).w
-                move.w  (dword_FFDB34).w,d0
+                move.w  (Entity57YPos).w,d0
                 subi.w  #$20,d0                         ; ' '
                 move.w  d0,(PlayerYPosition).w
                 move.w  #$80,$11C(a5)
@@ -792,19 +792,19 @@ Boss_ZLeoBeginScrollReversal:                           ; CODE XREF: Boss_ZLeoRu
 Boss_ZLeoRunScrollReversal:                             ; DATA XREF: ROM:00051BB2   o  ; was: loc_5248E
                 tst.w   (PlayerScriptStateOffset).w
                 beq.s   Boss_ZLeoUpdateStageScrollReversal
-                cmpi.w  #$C0,(dword_FFDB34).w
+                cmpi.w  #$C0,(Entity57YPos).w
                 bmi.s   Boss_ZLeoUpdateStageScrollReversal
                 clr.w   (PlayerScriptStateOffset).w
                 bclr    #2,(byte_FF8245).w
                 bclr    #0,(StageTimerPauseFlag).w
 Boss_ZLeoUpdateStageScrollReversal:                     ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+12A   j  ; was: loc_524AC
                                         ; Boss_ZLeoRunScrollingLaserEntryPose+132   j
-                btst    #2,(word_FFDB22).w
+                btst    #2,(Entity57Flags).w
                 beq.s   Boss_ZLeoCountPostReversalDelay
-                subi.l  #$880,(dword_FFDB3C).w
+                subi.l  #$880,(Entity57YVel).w
                 bpl.s   Boss_ZLeoAccelerateReverseBossMotion
-                bclr    #2,(word_FFDB22).w
-                clr.l   (dword_FFDB3C).w
+                bclr    #2,(Entity57Flags).w
+                clr.l   (Entity57YVel).w
 Boss_ZLeoCountPostReversalDelay:                        ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+14A   j  ; was: loc_524C8
                 subq.w  #1,$11C(a5)
                 bmi.s   Boss_ZLeoBeginDropAttackHold

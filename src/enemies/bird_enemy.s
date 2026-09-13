@@ -128,7 +128,7 @@ Enemy_BirdInit_SelectInitialState:                      ; CODE XREF: Enemy_BirdI
                 btst    #1,$5F(a5)
                 bne.s   Enemy_BirdSetWaitState
                 move.w  #2,4(a5)
-                cmpi.w  #$1B8,(word_FFDB20).w
+                cmpi.w  #$1B8,(Entity57Type).w
                 bne.s   Enemy_BirdInit_Return
                 move.b  #2,$25(a5)
                 rts
@@ -447,7 +447,7 @@ Enemy_UpdateBirdDefeatDebris_EmitParticles:             ; CODE XREF: Enemy_Updat
                 jsr     (Effect_SpawnRadialParticlePattern).l
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l
-                cmpi.w  #$1B8,(word_FFDB20).w
+                cmpi.w  #$1B8,(Entity57Type).w
                 beq.s   Enemy_UpdateBirdDefeatDebris_RemoveForSpecialStage
                 moveq   #7,d0
                 jmp     Pickup_SpawnRandomFromCurrentObject

@@ -423,7 +423,7 @@ Object_DestroyerMK2ScaleFragmentDistance:               ; CODE XREF: Object_Dest
 Object_DestroyerMK2SelectUpwardFragmentVelocity:        ; CODE XREF: Object_DestroyerMK2InitializeFragmentGroup+2E   j  ; was: loc_4BA9C
                 move.w  #$FFFC,d3
 Object_DestroyerMK2InitializeFragmentRecords:           ; CODE XREF: Object_DestroyerMK2InitializeFragmentGroup+34   j  ; was: loc_4BAA0
-                movea.w #(byte_FFCC20-M68K_RAM),a0
+                movea.w #(SeventeenthEntityType-M68K_RAM),a0
                 move.w  #7,d7
                 clr.w   d6
 Object_DestroyerMK2InitializeFragmentRecordLoop:        ; CODE XREF: Object_DestroyerMK2InitializeFragmentGroup+9A   j  ; was: loc_4BAAA

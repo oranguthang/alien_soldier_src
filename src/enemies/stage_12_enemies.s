@@ -182,7 +182,7 @@ Enemy_UpdateStage12DefeatDebris:                        ; DATA XREF: ROM:Entity_
                 jsr     (Effect_SpawnExplosionA).l
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l
-                cmpi.w  #$1B8,(word_FFDB20).w
+                cmpi.w  #$1B8,(Entity57Type).w
                 beq.s   Enemy_UpdateStage12DefeatDebris_RemoveForSpecialStage
                 moveq   #$F,d0
                 jmp     Pickup_SpawnRandomFromCurrentObject
@@ -204,8 +204,8 @@ Enemy_Stage12TurretController:                          ; DATA XREF: ROM:Entity_
                 tst.w   (word_FF808C).w
                 bpl.w   Enemy_Stage12TurretHide
                 bsr.s   Enemy_DispatchStage12TurretState
-                move.l  (dword_FFDB30).w,$10(a5)
-                move.l  (dword_FFDB34).w,$14(a5)
+                move.l  (Entity57XPos).w,$10(a5)
+                move.l  (Entity57YPos).w,$14(a5)
                 cmpi.w  #4,4(a5)
                 bcc.w   Enemy_Stage12TurretSpawnPeriodicShot
                 rts
@@ -234,9 +234,9 @@ Enemy_Stage12TurretInit:                                ; DATA XREF: ROM:Enemy_S
 ; End of function Enemy_Stage12TurretInit
 ; Turret idle state
 Enemy_Stage12TurretIdle:                                ; DATA XREF: ROM:0002E50C   o  ; was: sub_2E524
-                cmpi.w  #$1B8,(word_FFDB20).w
+                cmpi.w  #$1B8,(Entity57Type).w
                 bne.s   Enemy_Stage12TurretIdle_Return
-                cmpi.w  #6,(word_FFDB24).w
+                cmpi.w  #6,(Entity57State).w
                 bcs.s   Enemy_Stage12TurretIdle_Return
                 move.w  #$100,$48(a5)
                 addq.w  #2,4(a5)
@@ -374,8 +374,8 @@ Enemy_Stage12LauncherAttachedWaitState_Return:          ; CODE XREF: Enemy_Stage
 ; Updates launcher position relative to ship
 Enemy_Stage12LauncherUpdatePosition:                    ; CODE XREF: Enemy_Stage12LauncherInitState:Enemy_Stage12LauncherAttachedWaitState   p  ; was: sub_2E672
                                         ; sub_2E690   p
-                move.l  (dword_FFDB30).w,$10(a5)
-                move.l  (dword_FFDB34).w,$14(a5)
+                move.l  (Entity57XPos).w,$10(a5)
+                move.l  (Entity57YPos).w,$14(a5)
                 move.w  $4C(a5),d0
                 add.w   d0,$10(a5)
                 move.w  $4E(a5),d0

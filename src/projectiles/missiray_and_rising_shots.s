@@ -18,7 +18,7 @@ Projectile_InitRisingShotWaveMember:                    ; CODE XREF: Effect_Risi
 Projectile_InitMissirayAndRisingShotCommon:             ; CODE XREF: Projectile_InitMissirayFallingShot+1E   j  ; was: loc_33998
                 move.w  #$3C4,(a0)
                 move.w  #$400,$E(a0)
-                cmpi.w  #$3E0,(word_FFDB20).w
+                cmpi.w  #$3E0,(Entity57Type).w
                 bne.s   Projectile_InitMissirayAndRisingShotFinish
                 ori.w   #$4000,$E(a0)
 Projectile_InitMissirayAndRisingShotFinish:             ; CODE XREF: Projectile_InitRisingShotWaveMember+32   j  ; was: loc_339B0
@@ -39,7 +39,7 @@ Projectile_MissirayAndRisingShotMain:                   ; DATA XREF: ROM:Entity_
                 beq.s   Projectile_MissirayAndRisingShotDispatchState
                 cmpi.w  #$E,4(a5)
                 bcc.s   Projectile_MissirayAndRisingShotDispatchState
-                cmpi.w  #$3E0,(word_FFDB20).w
+                cmpi.w  #$3E0,(Entity57Type).w
                 bne.s   Projectile_MissirayAndRisingShotCheckCollision
                 btst    #1,(byte_FF80EC).w
                 bne.w   Projectile_MissirayAndRisingShotBeginImpact
@@ -47,9 +47,9 @@ Projectile_MissirayAndRisingShotMain:                   ; DATA XREF: ROM:Entity_
                 move.b  $2C(a5),d0
                 ext.w   d0
                 add.w   $14(a5),d0
-                cmp.w   (dword_FFDB34).w,d0
+                cmp.w   (Entity57YPos).w,d0
                 bgt.s   Projectile_MissirayAndRisingShotCheckCollision
-                bset    #6,(byte_FFDB42).w
+                bset    #6,(Entity57CollisionFlags).w
                 move.w  #$12,4(a5)
                 clr.b   $21(a5)
                 bra.s   Projectile_MissirayAndRisingShotDispatchState
@@ -251,7 +251,7 @@ Projectile_Stage24RisingShotArcReturn:                  ; CODE XREF: Projectile_
 ; Begins the radial burst when a Stage 24 rising shot crosses the camera top edge
 Projectile_Stage24RisingShotBeginTopEdgeBurst:          ; DATA XREF: ROM:00033A62   o  ; was: sub_33C4A
                 bclr    #7,2(a5)
-                move.w  (dword_FFDB34).w,$14(a5)
+                move.w  (Entity57YPos).w,$14(a5)
                 bsr.w   Projectile_Stage24RisingShotSpawnRadialBurst
                 move.w  #4,$48(a5)
                 move.w  #$20,$4A(a5)                    ; ' '
@@ -261,7 +261,7 @@ Projectile_Stage24RisingShotBeginTopEdgeBurst:          ; DATA XREF: ROM:00033A6
 ; End of function Projectile_Stage24RisingShotBeginTopEdgeBurst
 ; Emits a short vertical trail before converting the rising shot to a type-$160 effect
 Projectile_Stage24RisingShotEmitTopEdgeTrail:           ; DATA XREF: ROM:00033A64   o  ; was: sub_33C72
-                move.w  (dword_FFDB34).w,$14(a5)
+                move.w  (Entity57YPos).w,$14(a5)
                 subq.w  #1,$48(a5)
                 bne.s   Projectile_Stage24RisingShotTrailReturn
                 subq.w  #1,$4C(a5)

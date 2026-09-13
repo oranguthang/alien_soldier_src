@@ -301,12 +301,12 @@ Boss_MadamBarbarUpdatePlayerLeftSidePose:               ; CODE XREF: Boss_MadamB
                 nop
                 bsr.w   Boss_MadamBarbarUpdatePose
                 bsr.w   Boss_MadamBarbarPlayRotationSound
-                movea.w #(word_FFCF80-M68K_RAM),a0
+                movea.w #(TwentySixthEntityType-M68K_RAM),a0
                 cmpi.w  #8,$58(a5)
                 beq.s   Boss_MadamBarbarAnchorPlayerLeftSidePose
                 cmpi.w  #$C,$58(a5)
                 beq.s   Boss_MadamBarbarAnchorPlayerLeftSidePose
-                movea.w #(byte_FFCFE0-M68K_RAM),a0
+                movea.w #(TwentySeventhEntityType-M68K_RAM),a0
 Boss_MadamBarbarAnchorPlayerLeftSidePose:               ; CODE XREF: Boss_MadamBarbarSelectAttackState+AC   j  ; was: loc_3A856
                                         ; Boss_MadamBarbarSelectAttackState+B4   j
                 move.w  #$C8,$14(a0)
@@ -337,12 +337,12 @@ Boss_MadamBarbarUpdatePlayerRightSidePose:              ; CODE XREF: Boss_MadamB
                 nop
                 bsr.w   Boss_MadamBarbarUpdatePose
                 bsr.w   Boss_MadamBarbarPlayRotationSound
-                movea.w #(byte_FFD040-M68K_RAM),a0
+                movea.w #(TwentyEighthEntityType-M68K_RAM),a0
                 cmpi.w  #4,$58(a5)
                 beq.s   Boss_MadamBarbarAnchorPlayerRightSidePose
                 cmpi.w  #$10,$58(a5)
                 beq.s   Boss_MadamBarbarAnchorPlayerRightSidePose
-                movea.w #(byte_FFD0A0-M68K_RAM),a0
+                movea.w #(TwentyNinthEntityType-M68K_RAM),a0
 Boss_MadamBarbarAnchorPlayerRightSidePose:              ; CODE XREF: Boss_MadamBarbarSelectAttackState+128   j  ; was: loc_3A8D2
                                         ; Boss_MadamBarbarSelectAttackState+130   j
                 move.w  #$C8,$14(a0)
@@ -786,7 +786,7 @@ Boss_MadamBarbarSpawnDebris:                            ; CODE XREF: Boss_MadamB
                 move.w  (FrameCounter).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 bne.s   Boss_MadamBarbarSpawnDebrisReturn
-                movea.w #(byte_FFD700-M68K_RAM),a0
+                movea.w #(FortySixthEntityType-M68K_RAM),a0
                 jsr     (Projectile_FindFreePrimarySlot_CheckEnemyRange).l
                 bne.s   Boss_MadamBarbarSpawnDebrisReturn
                 move.w  #$120,(a0)

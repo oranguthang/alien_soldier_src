@@ -296,7 +296,7 @@ Boss_SnakeSegmentFireState:                             ; DATA XREF: ROM:Boss_Sn
                 blt.s   Boss_SnakeSegmentFireReturn
                 cmpi.w  #$160,$14(a5)
                 bgt.s   Boss_SnakeSegmentFireReturn
-                lea     (word_FFCF80).w,a0
+                lea     (TwentySixthEntityType).w,a0
                 jsr     (Projectile_FindFreePrimarySlot_CheckEnemyRange).l
                 bne.s   Boss_SnakeSegmentFireReturn
                 jsr     (Projectile_InitType88).l

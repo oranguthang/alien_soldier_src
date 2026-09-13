@@ -732,6 +732,13 @@ record therefore use structural `PrimaryEntity` names rather than a boss name.
 | `PrimaryEntityXVelocity` | `$FFFFC638` | `$18` | Signed 16.16 horizontal velocity; some boss code deliberately reuses the primary record field as scratch motion state. |
 | `PrimaryEntityAngle` | `$FFFFC640` | `$20` | Primary entity angle compared with linked Jampan objects' offset-`$20` angles. |
 | `PrimaryEntityStatus` | `$FFFFC641` | `$21` | Broad entity status/control byte; only Shield Viper bit-six tests are proven for the absolute alias. |
+| `PrimaryEntityWork4A` | `$FFFFC66A` | `$4A` | Owner-dependent work byte; Gusthead tests bit seven to distinguish attached and detached segment handling. |
+| `PrimaryEntityWork4B` | `$FFFFC66B` | `$4B` | Owner-dependent work byte copied by one VBlank effect into the register-10 shadow; no stable entity-wide role is proven. |
+| `PrimaryEntityWork4C` | `$FFFFC66C` | `$4C` | Owner-dependent work word used as Epsilon 1 mode bits and independently as a Stage 3 orbit-angle offset. |
+| `PrimaryEntityWork58` | `$FFFFC678` | `$58` | Owner-dependent work word used as a Shield Viper defeat flag and a Sunset Sting selected-chain offset. |
+| `PrimaryEntityWork5A` | `$FFFFC67A` | `$5A` | Owner-dependent work word used by the Sunset Sting transition as a vertical reference for linked parts. |
+| `PrimaryEntityWork5C` | `$FFFFC67C` | `$5C` | Owner-dependent work word populated and consumed as Sunset Sting's linked-body-part count. |
+| `PrimaryEntityWork5E` | `$FFFFC67E` | `$5E` | Owner-dependent work word cleared and advanced as Sunset Sting graphics-animation progress. |
 
 ## Reviewed secondary entity record
 
@@ -881,6 +888,86 @@ record therefore use structural `PrimaryEntity` names rather than a boss name.
 | `FourteenthEntityYPos` | `$FFFFCB14` | 14 | Valkirie targeting reads the record's integer Y coordinate. |
 | `FifteenthEntityType` | `$FFFFCB60` | 15 | Bugmax and Antroid select this fixed object record. |
 | `SixteenthEntityType` | `$FFFFCBC0` | 16 | Shiper and Artemis select this fixed object record. |
+| `SixteenthEntityWork56` | `$FFFFCC16` | 16 | Sirene uses this owner-specific work byte as a pose-grid anchor. |
+| `SeventeenthEntityType` | `$FFFFCC20` | 17 | Destroyer MK2 fragments and Medusa pose parts traverse from this record. |
+| `EighteenthEntityType` | `$FFFFCC80` | 18 | Enemy-projectile allocation and Valkirie selection use this record base. |
+| `NineteenthEntityType` | `$FFFFCCE0` | 19 | Valkirie bullet allocation and part commands use this record base. |
+| `TwentiethEntityType` | `$FFFFCD40` | 20 | Joker linked objects and Victor ring setup use this record base. |
+| `TwentyFirstEntityType` | `$FFFFCDA0` | 21 | Artemis, Joker, Victor, and Z-Leo use this fixed record. |
+| `TwentyFirstEntityWork4C` | `$FFFFCDEC` | 21 | Owner-specific work word assigned during Victor ring deployment. |
+| `TwentySecondEntityType` | `$FFFFCE00` | 22 | Enemy allocation and Joker linked-part rendering use this record base. |
+| `TwentyThirdEntityType` | `$FFFFCE60` | 23 | Jampan shield traversal and Joker linked-part rendering use this record. |
+| `TwentyThirdEntityAttr` | `$FFFFCE6E` | 23 | Sprite attribute whose priority bit controls Jampan shield collision. |
+| `TwentyThirdEntityStatus` | `$FFFFCE81` | 23 | Status byte set and cleared with Jampan shield activation. |
+| `TwentyThirdEntityWork26` | `$FFFFCE86` | 23 | Owner-specific shield collision control word. |
+| `TwentyThirdEntityWork2C` | `$FFFFCE8C` | 23 | Owner-specific paired shield collision extents. |
+| `TwentyFourthEntityType` | `$FFFFCEC0` | 24 | Destroyer Proto projectiles and Z-Leo wing code use this record base. |
+| `TwentyFourthEntityFlags` | `$FFFFCEC2` | 24 | Display/control flags initialized by Destroyer Proto projectile setup. |
+| `TwentyFifthEntityType` | `$FFFFCF20` | 25 | Shellshogun and Wolf Garopa use this fixed part record. |
+| `TwentySixthEntityType` | `$FFFFCF80` | 26 | Forward projectile allocation and several fixed boss parts start here. |
+| `TwentySixthEntityWork56` | `$FFFFCFD6` | 26 | Sirene uses this owner-specific work byte as a pose-row anchor. |
+| `TwentySeventhEntityType` | `$FFFFCFE0` | 27 | Valkirie, Madam Barbar, and Z-Leo use this fixed linked-object record. |
+| `TwentyEighthEntityType` | `$FFFFD040` | 28 | Jampan, Madam Barbar, Shellshogun, and Wolf Garopa use this record. |
+| `TwentyEighthEntityAttr` | `$FFFFD04E` | 28 | Sprite attribute copied into Jampan's projected shield objects. |
+| `JampanShieldWork20` | `$FFFFD060` | 28 | Owner-specific byte copied into each projected Jampan shield's offset `$20`. |
+| `TwentyNinthEntityType` | `$FFFFD0A0` | 29 | Jampan's post-defeat shield and Madam Barbar use this fixed record. |
+| `TwentyNinthEntityFlags` | `$FFFFD0A2` | 29 | Display/control flags updated during Jampan's post-defeat transition. |
+| `TwentyNinthEntityXPos` | `$FFFFD0B0` | 29 | Integer X position copied into Jampan's post-defeat controller. |
+| `TwentyNinthEntityYPos` | `$FFFFD0B4` | 29 | Integer Y position tested and copied during Jampan's defeat. |
+| `TwentyNinthEntityYVel` | `$FFFFD0BC` | 29 | Signed 16.16 vertical velocity cleared after the defeat-shield descent. |
+| `ThirtiethEntityType` | `$FFFFD100` | 30 | Z-Leo uses this fixed linked-part record. |
+| `ThirtiethEntityXPos` | `$FFFFD110` | 30 | Integer X source position used by Artemis projectile setup. |
+| `ThirtiethEntityYPos` | `$FFFFD114` | 30 | Integer Y source position used by Artemis projectile setup. |
+| `ThirtyFirstEntityType` | `$FFFFD160` | 31 | Wolf Garopa uses this fixed orb record. |
+| `ThirtySecondEntityType` | `$FFFFD1C0` | 32 | Victor starts reverse ring-link traversal from this record. |
+| `VictorRingEndMapping` | `$FFFFD1C8` | 32 | Mapping pointer switched when Victor reverses ring deployment. |
+| `ThirtySecondEntityXPos` | `$FFFFD1D0` | 32 | Integer X coordinate measured by Valkirie's tracking state. |
+| `ThirtySecondEntityYPos` | `$FFFFD1D4` | 32 | Integer Y coordinate measured by Valkirie's tracking state. |
+| `ThirtyThirdEntityType` | `$FFFFD220` | 33 | Z-Leo uses this fixed linked-part record. |
+| `ThirtyFourthEntityType` | `$FFFFD280` | 34 | Caterpillar and Sunset Sting begin bounded projectile searches here. |
+| `ThirtyEighthEntityType` | `$FFFFD400` | 38 | Joker begins a bounded descending-shot allocation range here. |
+| `FortySixthEntityType` | `$FFFFD700` | 46 | Several boss and stage paths begin bounded projectile allocation here. |
+| `EndingPlanetDebrisType` | `$FFFFD820` | 49 | Fixed ending-planet debris object type and record base. |
+| `EndingPlanetDebrisFlags` | `$FFFFD822` | 49 | Display/control flags of the ending-planet debris object. |
+| `EndingPlanetDebrisXVel` | `$FFFFD838` | 49 | Signed 16.16 horizontal velocity accelerated during debris motion. |
+| `FiftiethEntityType` | `$FFFFD880` | 50 | Sirene and Terobuster begin bounded projectile searches here. |
+| `AmbientParticlePool` | `$FFFFD8E0` | 51 | Six consecutive Stage 10/11 ambient-particle records. |
+| `FiftyThirdEntityType` | `$FFFFD9A0` | 53 | Back Stringer tail slots and the reverse projectile scan start here. |
+
+## Reviewed entity record 57
+
+| Symbol | Address | Offset | Static evidence |
+|---|---:|---:|---|
+| `Entity57Type` | `$FFFFDB20` | `$00` | Shared record type used by effects, transitions, enemies, bosses, and projectiles. |
+| `Entity57Flags` | `$FFFFDB22` | `$02` | Display/control flags manipulated by transitions and Z-Leo. |
+| `Entity57State` | `$FFFFDB24` | `$04` | Even state index cleared by transitions and advanced by Stage 12 logic. |
+| `Entity57XPos` | `$FFFFDB30` | `$10` | Signed 16.16 X position copied or compared by multiple owners. |
+| `Entity57YPos` | `$FFFFDB34` | `$14` | Signed 16.16 Y position and shared vertical reference. |
+| `Entity57XVel` | `$FFFFDB38` | `$18` | Signed 16.16 horizontal velocity used by Sharpssteel. |
+| `Entity57YVel` | `$FFFFDB3C` | `$1C` | Signed 16.16 vertical velocity used by Z-Leo and Sharpssteel. |
+| `Entity57Status` | `$FFFFDB41` | `$21` | Status byte cleared during record reconfiguration. |
+| `Entity57CollisionFlags` | `$FFFFDB42` | `$22` | Object collision flags; the rising-shot path sets bit six. |
+| `Entity57Work24` | `$FFFFDB44` | `$24` | Owner-dependent work word initialized by Stage 10-to-13 setup. |
+| `Entity57Work56` | `$FFFFDB76` | `$56` | Owner-dependent Medusa pose and movement gate byte. |
+| `Entity57Work58` | `$FFFFDB78` | `$58` | Owner-dependent Sharpssteel phase-control word. |
+| `Entity57Work5A` | `$FFFFDB7A` | `$5A` | Owner-dependent Sharpssteel complex-phase flag byte. |
+
+## Reviewed entity records 58–60
+
+| Symbol | Address | Record/offset | Static evidence |
+|---|---:|---:|---|
+| `Entity58Type` | `$FFFFDB80` | 58/`$00` | Shared Valkirie, Z-Leo, transition, and arena-boundary record. |
+| `Entity58YPos` | `$FFFFDB94` | 58/`$14` | Integer Y coordinate written by Valkirie projectile growth. |
+| `Entity59Type` | `$FFFFDBE0` | 59/`$00` | Shared transition and arena-boundary record type. |
+| `Entity59State` | `$FFFFDBE4` | 59/`$04` | Even object state advanced by Sharpssteel. |
+| `Entity59XPos` | `$FFFFDBF0` | 59/`$10` | Integer X coordinate computed by Sharpssteel. |
+| `Entity59YPos` | `$FFFFDBF4` | 59/`$14` | Integer Y coordinate computed by Sharpssteel. |
+| `Entity59XVel` | `$FFFFDBF8` | 59/`$18` | Signed 16.16 horizontal velocity initialized by Sharpssteel. |
+| `Entity59YVel` | `$FFFFDBFC` | 59/`$1C` | Signed 16.16 vertical velocity initialized by Sharpssteel. |
+| `Entity60Type` | `$FFFFDC40` | 60/`$00` | Shared Seven Forces and late-boss record type. |
+| `Entity60XPos` | `$FFFFDC50` | 60/`$10` | Integer X coordinate checked during Wolf Garopa transition. |
+| `Entity60XVel` | `$FFFFDC58` | 60/`$18` | Signed 16.16 horizontal velocity consumed by Sylpheed. |
+| `Entity60YVel` | `$FFFFDC5C` | 60/`$1C` | Signed 16.16 vertical velocity consumed by Sylpheed. |
 
 ## Review policy
 

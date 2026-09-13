@@ -583,13 +583,13 @@ PrimaryEntityYPos       equ     $FFFFC634               ; was: dword_FFC634
 PrimaryEntityXVelocity  equ     $FFFFC638               ; was: dword_FFC638
 PrimaryEntityAngle      equ     $FFFFC640               ; was: byte_FFC640
 PrimaryEntityStatus     equ     $FFFFC641               ; was: byte_FFC641
-byte_FFC66A             equ     $FFFFC66A
-byte_FFC66B             equ     $FFFFC66B
-word_FFC66C             equ     $FFFFC66C
-word_FFC678             equ     $FFFFC678
-word_FFC67A             equ     $FFFFC67A
-word_FFC67C             equ     $FFFFC67C
-word_FFC67E             equ     $FFFFC67E
+PrimaryEntityWork4A     equ     $FFFFC66A               ; was: byte_FFC66A
+PrimaryEntityWork4B     equ     $FFFFC66B               ; was: byte_FFC66B
+PrimaryEntityWork4C     equ     $FFFFC66C               ; was: word_FFC66C
+PrimaryEntityWork58     equ     $FFFFC678               ; was: word_FFC678
+PrimaryEntityWork5A     equ     $FFFFC67A               ; was: word_FFC67A
+PrimaryEntityWork5C     equ     $FFFFC67C               ; was: word_FFC67C
+PrimaryEntityWork5E     equ     $FFFFC67E               ; was: word_FFC67E
 SecondaryEntityType     equ     $FFFFC680               ; was: word_FFC680
 SecondaryEntityFlags    equ     $FFFFC682               ; was: word_FFC682
 SecondaryEntityState    equ     $FFFFC684               ; was: word_FFC684
@@ -679,76 +679,76 @@ FourteenthEntityXPos    equ     $FFFFCB10               ; was: word_FFCB10
 FourteenthEntityYPos    equ     $FFFFCB14               ; was: word_FFCB14
 FifteenthEntityType     equ     $FFFFCB60               ; was: byte_FFCB60
 SixteenthEntityType     equ     $FFFFCBC0               ; was: byte_FFCBC0
-byte_FFCC16             equ     $FFFFCC16
-byte_FFCC20             equ     $FFFFCC20
-byte_FFCC80             equ     $FFFFCC80
-byte_FFCCE0             equ     $FFFFCCE0
-word_FFCD40             equ     $FFFFCD40
-word_FFCDA0             equ     $FFFFCDA0
-word_FFCDEC             equ     $FFFFCDEC
-byte_FFCE00             equ     $FFFFCE00
-byte_FFCE60             equ     $FFFFCE60
-word_FFCE6E             equ     $FFFFCE6E
-byte_FFCE81             equ     $FFFFCE81
-word_FFCE86             equ     $FFFFCE86
-dword_FFCE8C            equ     $FFFFCE8C
-word_FFCEC0             equ     $FFFFCEC0
-word_FFCEC2             equ     $FFFFCEC2
-byte_FFCF20             equ     $FFFFCF20
-word_FFCF80             equ     $FFFFCF80
-byte_FFCFD6             equ     $FFFFCFD6
-byte_FFCFE0             equ     $FFFFCFE0
-byte_FFD040             equ     $FFFFD040
-word_FFD04E             equ     $FFFFD04E
-byte_FFD060             equ     $FFFFD060
-byte_FFD0A0             equ     $FFFFD0A0
-byte_FFD0A2             equ     $FFFFD0A2
-word_FFD0B0             equ     $FFFFD0B0
-word_FFD0B4             equ     $FFFFD0B4
-dword_FFD0BC            equ     $FFFFD0BC
-byte_FFD100             equ     $FFFFD100
-word_FFD110             equ     $FFFFD110
-word_FFD114             equ     $FFFFD114
-byte_FFD160             equ     $FFFFD160
-word_FFD1C0             equ     $FFFFD1C0
-dword_FFD1C8            equ     $FFFFD1C8
-word_FFD1D0             equ     $FFFFD1D0
-word_FFD1D4             equ     $FFFFD1D4
-byte_FFD220             equ     $FFFFD220
-byte_FFD280             equ     $FFFFD280
-byte_FFD400             equ     $FFFFD400
-byte_FFD700             equ     $FFFFD700
-word_FFD820             equ     $FFFFD820
-word_FFD822             equ     $FFFFD822
-dword_FFD838            equ     $FFFFD838
-byte_FFD880             equ     $FFFFD880
-byte_FFD8E0             equ     $FFFFD8E0
-byte_FFD9A0             equ     $FFFFD9A0
-word_FFDB20             equ     $FFFFDB20
-word_FFDB22             equ     $FFFFDB22
-word_FFDB24             equ     $FFFFDB24
-dword_FFDB30            equ     $FFFFDB30
-dword_FFDB34            equ     $FFFFDB34
-dword_FFDB38            equ     $FFFFDB38
-dword_FFDB3C            equ     $FFFFDB3C
-byte_FFDB41             equ     $FFFFDB41
-byte_FFDB42             equ     $FFFFDB42
-word_FFDB44             equ     $FFFFDB44
-byte_FFDB76             equ     $FFFFDB76
-word_FFDB78             equ     $FFFFDB78
-byte_FFDB7A             equ     $FFFFDB7A
-byte_FFDB80             equ     $FFFFDB80
-word_FFDB94             equ     $FFFFDB94
-word_FFDBE0             equ     $FFFFDBE0
-word_FFDBE4             equ     $FFFFDBE4
-word_FFDBF0             equ     $FFFFDBF0
-word_FFDBF4             equ     $FFFFDBF4
-dword_FFDBF8            equ     $FFFFDBF8
-dword_FFDBFC            equ     $FFFFDBFC
-word_FFDC40             equ     $FFFFDC40
-word_FFDC50             equ     $FFFFDC50
-dword_FFDC58            equ     $FFFFDC58
-dword_FFDC5C            equ     $FFFFDC5C
+SixteenthEntityWork56   equ     $FFFFCC16               ; was: byte_FFCC16
+SeventeenthEntityType   equ     $FFFFCC20               ; was: byte_FFCC20
+EighteenthEntityType    equ     $FFFFCC80               ; was: byte_FFCC80
+NineteenthEntityType    equ     $FFFFCCE0               ; was: byte_FFCCE0
+TwentiethEntityType     equ     $FFFFCD40               ; was: word_FFCD40
+TwentyFirstEntityType   equ     $FFFFCDA0               ; was: word_FFCDA0
+TwentyFirstEntityWork4C equ     $FFFFCDEC               ; was: word_FFCDEC
+TwentySecondEntityType  equ     $FFFFCE00               ; was: byte_FFCE00
+TwentyThirdEntityType   equ     $FFFFCE60               ; was: byte_FFCE60
+TwentyThirdEntityAttr   equ     $FFFFCE6E               ; was: word_FFCE6E
+TwentyThirdEntityStatus equ     $FFFFCE81               ; was: byte_FFCE81
+TwentyThirdEntityWork26 equ     $FFFFCE86               ; was: word_FFCE86
+TwentyThirdEntityWork2C equ     $FFFFCE8C               ; was: dword_FFCE8C
+TwentyFourthEntityType  equ     $FFFFCEC0               ; was: word_FFCEC0
+TwentyFourthEntityFlags equ     $FFFFCEC2               ; was: word_FFCEC2
+TwentyFifthEntityType   equ     $FFFFCF20               ; was: byte_FFCF20
+TwentySixthEntityType   equ     $FFFFCF80               ; was: word_FFCF80
+TwentySixthEntityWork56 equ     $FFFFCFD6               ; was: byte_FFCFD6
+TwentySeventhEntityType equ     $FFFFCFE0               ; was: byte_FFCFE0
+TwentyEighthEntityType  equ     $FFFFD040               ; was: byte_FFD040
+TwentyEighthEntityAttr  equ     $FFFFD04E               ; was: word_FFD04E
+JampanShieldWork20      equ     $FFFFD060               ; was: byte_FFD060
+TwentyNinthEntityType   equ     $FFFFD0A0               ; was: byte_FFD0A0
+TwentyNinthEntityFlags  equ     $FFFFD0A2               ; was: byte_FFD0A2
+TwentyNinthEntityXPos   equ     $FFFFD0B0               ; was: word_FFD0B0
+TwentyNinthEntityYPos   equ     $FFFFD0B4               ; was: word_FFD0B4
+TwentyNinthEntityYVel   equ     $FFFFD0BC               ; was: dword_FFD0BC
+ThirtiethEntityType     equ     $FFFFD100               ; was: byte_FFD100
+ThirtiethEntityXPos     equ     $FFFFD110               ; was: word_FFD110
+ThirtiethEntityYPos     equ     $FFFFD114               ; was: word_FFD114
+ThirtyFirstEntityType   equ     $FFFFD160               ; was: byte_FFD160
+ThirtySecondEntityType  equ     $FFFFD1C0               ; was: word_FFD1C0
+VictorRingEndMapping    equ     $FFFFD1C8               ; was: dword_FFD1C8
+ThirtySecondEntityXPos  equ     $FFFFD1D0               ; was: word_FFD1D0
+ThirtySecondEntityYPos  equ     $FFFFD1D4               ; was: word_FFD1D4
+ThirtyThirdEntityType   equ     $FFFFD220               ; was: byte_FFD220
+ThirtyFourthEntityType  equ     $FFFFD280               ; was: byte_FFD280
+ThirtyEighthEntityType  equ     $FFFFD400               ; was: byte_FFD400
+FortySixthEntityType    equ     $FFFFD700               ; was: byte_FFD700
+EndingPlanetDebrisType  equ     $FFFFD820               ; was: word_FFD820
+EndingPlanetDebrisFlags equ     $FFFFD822               ; was: word_FFD822
+EndingPlanetDebrisXVel  equ     $FFFFD838               ; was: dword_FFD838
+FiftiethEntityType      equ     $FFFFD880               ; was: byte_FFD880
+AmbientParticlePool     equ     $FFFFD8E0               ; was: byte_FFD8E0
+FiftyThirdEntityType    equ     $FFFFD9A0               ; was: byte_FFD9A0
+Entity57Type            equ     $FFFFDB20               ; was: word_FFDB20
+Entity57Flags           equ     $FFFFDB22               ; was: word_FFDB22
+Entity57State           equ     $FFFFDB24               ; was: word_FFDB24
+Entity57XPos            equ     $FFFFDB30               ; was: dword_FFDB30
+Entity57YPos            equ     $FFFFDB34               ; was: dword_FFDB34
+Entity57XVel            equ     $FFFFDB38               ; was: dword_FFDB38
+Entity57YVel            equ     $FFFFDB3C               ; was: dword_FFDB3C
+Entity57Status          equ     $FFFFDB41               ; was: byte_FFDB41
+Entity57CollisionFlags  equ     $FFFFDB42               ; was: byte_FFDB42
+Entity57Work24          equ     $FFFFDB44               ; was: word_FFDB44
+Entity57Work56          equ     $FFFFDB76               ; was: byte_FFDB76
+Entity57Work58          equ     $FFFFDB78               ; was: word_FFDB78
+Entity57Work5A          equ     $FFFFDB7A               ; was: byte_FFDB7A
+Entity58Type            equ     $FFFFDB80               ; was: byte_FFDB80
+Entity58YPos            equ     $FFFFDB94               ; was: word_FFDB94
+Entity59Type            equ     $FFFFDBE0               ; was: word_FFDBE0
+Entity59State           equ     $FFFFDBE4               ; was: word_FFDBE4
+Entity59XPos            equ     $FFFFDBF0               ; was: word_FFDBF0
+Entity59YPos            equ     $FFFFDBF4               ; was: word_FFDBF4
+Entity59XVel            equ     $FFFFDBF8               ; was: dword_FFDBF8
+Entity59YVel            equ     $FFFFDBFC               ; was: dword_FFDBFC
+Entity60Type            equ     $FFFFDC40               ; was: word_FFDC40
+Entity60XPos            equ     $FFFFDC50               ; was: word_FFDC50
+Entity60XVel            equ     $FFFFDC58               ; was: dword_FFDC58
+Entity60YVel            equ     $FFFFDC5C               ; was: dword_FFDC5C
 SpriteOAMBuffer         equ     $FFFFE000               ; was: dword_FFE000
 PaletteActiveBuffer     equ     $FFFFE300               ; was: word_FFE300
 word_FFE302             equ     $FFFFE302

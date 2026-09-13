@@ -5,7 +5,7 @@ Boss_ShiperSpawnOscillatingShot:                        ; CODE XREF: Boss_Shiper
                 move.w  (FrameCounter).w,d0
                 andi.w  #$1F,d0
                 bne.w   Boss_ShiperSpawnOscillatingShotReturn
-                movea.w #(byte_FFD700-M68K_RAM),a0
+                movea.w #(FortySixthEntityType-M68K_RAM),a0
                 tst.w   (DifficultyMode).w
                 bne.s   Boss_ShiperSpawnOscillatingShotUseEnemySlots
                 jsr     (Projectile_FindFreePrimarySlot_CheckFinalRange).l

@@ -61,7 +61,7 @@ Boss_InitArtemisState0:                                 ; DATA XREF: Boss_Update
                 move.w  #$438,(a5)
                 move.w  #$8C00,2(a5)
                 clr.w   6(a5)
-                movea.w #(word_FFDC40-M68K_RAM),a0
+                movea.w #(Entity60Type-M68K_RAM),a0
                 move.w  $10(a0),$10(a5)
                 move.w  $14(a0),$14(a5)
                 move.w  $18(a0),$18(a5)
@@ -509,12 +509,12 @@ Boss_CheckArtemisPosePartFlag1:                         ; CODE XREF: Boss_Render
 Boss_CheckArtemisPosePartFlag2:                         ; CODE XREF: Boss_RenderArtemisPose+30   j  ; was: loc_584BE
                 btst    #2,$3BC(a5)
                 beq.s   Boss_CheckArtemisPosePartFlag3
-                movea.w #(word_FFCDA0-M68K_RAM),a0
+                movea.w #(TwentyFirstEntityType-M68K_RAM),a0
                 bsr.s   Boss_UpdateArtemisActivePartVerticalPosition
 Boss_CheckArtemisPosePartFlag3:                         ; CODE XREF: Boss_RenderArtemisPose+3E   j  ; was: loc_584CC
                 btst    #3,$3BC(a5)
                 beq.s   Boss_RenderArtemisPoseReturn
-                movea.w #(word_FFCF80-M68K_RAM),a0
+                movea.w #(TwentySixthEntityType-M68K_RAM),a0
                 bra.s   Boss_UpdateArtemisActivePartVerticalPosition
 ; ---------------------------------------------------------------------------
 Boss_RenderArtemisPoseReturn:                           ; CODE XREF: Boss_RenderArtemisPose+4C   j  ; was: locret_584DA

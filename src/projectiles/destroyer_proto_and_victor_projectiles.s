@@ -79,12 +79,12 @@ Boss_DestroyerProtoLaunchTwinProjectiles:               ; CODE XREF: Boss_Destro
                 lea     (EighthEntityType).w,a0
                 bsr.w   Projectile_DestroyerProtoInitFromPart
                 lea     (SeventhEntityType).w,a4
-                lea     (word_FFCEC0).w,a0
+                lea     (TwentyFourthEntityType).w,a0
 ; End of function Boss_DestroyerProtoLaunchTwinProjectiles
 ; Initializes one delayed Destroyer Proto projectile from a linked part
 Projectile_DestroyerProtoInitFromPart:                  ; CODE XREF: Projectile_DestroyerProtoActivateStreamShot   p  ; was: sub_3216C
                                         ; Boss_DestroyerProtoLaunchTwinProjectiles+8   p
-                move.w  #$EC00,word_FFCEC2-word_FFCEC0(a0)
+                move.w  #$EC00,TwentyFourthEntityFlags-TwentyFourthEntityType(a0)
                 move.b  #$40,$21(a0)                    ; '@'
                 move.l  #$F808F808,$2C(a0)
                 move.l  #$F010F010,$28(a0)

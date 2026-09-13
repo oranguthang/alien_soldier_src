@@ -249,10 +249,10 @@ Boss_WolfGaropaStoreOrbCenter:                          ; CODE XREF: Boss_WolfGa
                 move.w  d2,$A30(a5)
                 lea     Boss_WolfGaropaOrbDirectionalMappingTable(pc),a1
                 nop
-                movea.w #(byte_FFD040-M68K_RAM),a0
+                movea.w #(TwentyEighthEntityType-M68K_RAM),a0
                 andi.w  #$E7FF,$E(a0)
                 jsr     (Sprite_UpdateFourDirectionFrame).l
-                movea.w #(byte_FFD160-M68K_RAM),a0
+                movea.w #(ThirtyFirstEntityType-M68K_RAM),a0
                 jsr     (Gfx_AnimateWolfGaropaOrbAtA0).l
                 move.w  $6BC(a5),d0
                 btst    #3,$65E(a5)
@@ -539,7 +539,7 @@ Boss_WolfGaropaPoseTargetsEnd:                          ; was: word_508A2_End
 
 ; Calculate the player angle and steer the orb toward it
 Boss_WolfGaropaSteerOrbAngleTowardPlayer:               ; CODE XREF: Boss_WolfGaropaUpdateBattleStartWait+BE   p  ; was: sub_509B0
-                movea.w #(byte_FFD040-M68K_RAM),a5
+                movea.w #(TwentyEighthEntityType-M68K_RAM),a5
                 jsr     (Math_CalculateAngleToPlayer).l
                 movea.w #(Entity_ObjectPool-M68K_RAM),a5
                 moveq   #0,d3

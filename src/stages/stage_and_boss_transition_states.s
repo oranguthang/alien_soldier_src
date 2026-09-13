@@ -227,7 +227,7 @@ StageTransition_CheckPostDestroyerProtoSpeedsComplete:  ; CODE XREF: StageTransi
                 move.w  #$2A,(StageTableIndex).w        ; '*'
                 move.w  #$166,(dword_FF9D96).w
                 move.l  #$2000000,(dword_FF9DAA).w
-                move.w  #$3C8,(word_FFDB20).w
+                move.w  #$3C8,(Entity57Type).w
 StageTransition_AdvancePostDestroyerProtoScroll:        ; CODE XREF: StageTransition_UpdatePostDestroyerProtoScroll+1C   j  ; was: loc_F3C2
                 addi.l  #$10,(dword_FF9DA2).w
                 tst.w   (dword_FF9DAA).w
@@ -421,10 +421,10 @@ StageTransition_FinalizeWolfGaropaBackdrop:             ; DATA XREF: ROM:0000F12
                 addq.w  #2,(StageStateOffset).w
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
                 clr.b   (StageRouteFlags).w
-                move.w  #$494,(word_FFDB20).w
-                clr.w   (word_FFDB24).w
-                clr.w   (word_FFDB22).w
-                clr.b   (byte_FFDB41).w
+                move.w  #$494,(Entity57Type).w
+                clr.w   (Entity57State).w
+                clr.w   (Entity57Flags).w
+                clr.b   (Entity57Status).w
 StageTransition_WolfGaropaBackdropFinalizeReturn:       ; CODE XREF: StageTransition_FinalizeWolfGaropaBackdrop+1A   j  ; was: locret_F660
                 rts
 ; End of function StageTransition_FinalizeWolfGaropaBackdrop
@@ -590,8 +590,8 @@ StageTransition_InitializeMissirayEntryScene:           ; DATA XREF: ROM:0000F13
                 move.b  #2,(byte_FFA95A).w
                 move.b  #8,(byte_FFA95B).w
                 move.w  #$200,(word_FF9DB0).w
-                movea.w #(word_FFDB20-M68K_RAM),a0
-                movea.w #(byte_FFDB80-M68K_RAM),a1
+                movea.w #(Entity57Type-M68K_RAM),a0
+                movea.w #(Entity58Type-M68K_RAM),a1
                 move.w  #$3E0,(a0)
                 move.w  #$C400,2(a0)
                 move.l  #MissirayEntryPrimarySpriteMapping,8(a0)
@@ -613,7 +613,7 @@ StageTransition_InitializeMissirayEntryScene:           ; DATA XREF: ROM:0000F13
                 move.w  #$8200,$E(a1)
                 move.w  #$D0,$10(a1)
                 move.w  d7,$14(a1)
-                move.w  #$3C8,(word_FFDBE0).w
+                move.w  #$3C8,(Entity59Type).w
 ; Updates the Missiray entry parallax until the scene delay expires
 StageTransition_UpdateMissirayEntryDelay:               ; DATA XREF: ROM:0000F13E   o  ; was: loc_F89C
                 bsr.w   StageTransition_UpdateMissirayParallax
@@ -710,7 +710,7 @@ StageTransition_CheckMissiraySceneDownInput:            ; CODE XREF: StageTransi
                 move.w  #$160,$14(a5)
 StageTransition_SyncMissiraySceneObjectHeight:          ; CODE XREF: StageTransition_UpdateMissiraySceneObject+16   j  ; was: loc_F9AA
                                         ; StageTransition_UpdateMissiraySceneObject+24   j
-                movea.w #(byte_FFDB80-M68K_RAM),a0
+                movea.w #(Entity58Type-M68K_RAM),a0
                 move.w  $14(a5),$14(a0)
 StageTransition_MissiraySceneObjectReturn:              ; CODE XREF: StageTransition_UpdateMissiraySceneObject+E   j  ; was: locret_F9B4
                 rts
@@ -719,11 +719,11 @@ StageTransition_MissiraySceneObjectReturn:              ; CODE XREF: StageTransi
 StageTransition_InitializeStage24SceneObjects:          ; DATA XREF: ROM:0000F14A   o  ; was: sub_F9B6
                 addq.w  #2,(StageStateOffset).w
                 clr.b   (byte_FFA958).w
-                movea.w #(word_FFDB20-M68K_RAM),a0
+                movea.w #(Entity57Type-M68K_RAM),a0
                 move.w  #$410,(a0)
                 move.w  #$256,$10(a0)
                 move.w  #$60,$14(a0)                    ; '`'
-                movea.w #(byte_FFDB80-M68K_RAM),a0
+                movea.w #(Entity58Type-M68K_RAM),a0
                 move.w  #$10,(a0)
                 move.w  #$C500,2(a0)
                 move.w  #$AC0,$E(a0)
@@ -753,7 +753,7 @@ StageTransition_Stage24VerticalScrollReturn:            ; CODE XREF: StageTransi
 ; Derives and clamps the Stage 24 vertical offset from the first scene object
 StageTransition_UpdateStage24VerticalOffset:            ; DATA XREF: ROM:0000F14E   o  ; was: sub_FA3A
                 move.w  #$100,d0
-                sub.w   (dword_FFDB34).w,d0
+                sub.w   (Entity57YPos).w,d0
                 bmi.s   StageTransition_CheckStage24VerticalOffsetLimit
                 moveq   #0,d0
 StageTransition_CheckStage24VerticalOffsetLimit:        ; CODE XREF: StageTransition_UpdateStage24VerticalOffset+8   j  ; was: loc_FA46

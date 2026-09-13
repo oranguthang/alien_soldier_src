@@ -592,7 +592,7 @@ Boss_WolfGaropaUpdateBallisticTransitionA:              ; DATA XREF: ROM:0004FE7
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 bset    #7,$23E(a5)
-                movea.w #(byte_FFCF20-M68K_RAM),a0
+                movea.w #(TwentyFifthEntityType-M68K_RAM),a0
                 btst    #2,$41C(a5)
                 bne.s   Boss_WolfGaropaContinueAfterBallisticTransitionA
                 move.w  #2,$35C(a5)
@@ -699,7 +699,7 @@ Boss_WolfGaropaUpdateFinalBallisticMotion:              ; DATA XREF: ROM:0004FE7
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 bset    #7,$23E(a5)
-                movea.w #(byte_FFCF20-M68K_RAM),a0
+                movea.w #(TwentyFifthEntityType-M68K_RAM),a0
                 bra.w   Boss_WolfGaropaSetPoseLinkedRecordY
 ; End of function Boss_WolfGaropaUpdateFinalBallisticMotion
 ; Wait for the scripted launch event, then install launch velocity
@@ -753,7 +753,7 @@ Boss_WolfGaropaResetMovementSequence:                   ; CODE XREF: Boss_WolfGa
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 bset    #7,$23E(a5)
-                movea.w #(byte_FFCF20-M68K_RAM),a0
+                movea.w #(TwentyFifthEntityType-M68K_RAM),a0
                 bra.w   Boss_WolfGaropaSetPoseLinkedRecordY
 ; End of function Boss_WolfGaropaUpdateLaunchMotion
 ; Advance only the current pose script

@@ -1,11 +1,11 @@
 ; Initializes the two Wolf Garopa arena-boundary records
 StageTransition_InitializeWolfGaropaArenaBoundaries:    ; CODE XREF: StageTransition_UpdateWolfGaropaApproach+28   p  ; was: sub_FEA0
                                         ; StageTransition_RestartWolfGaropaBackdropFinalize+E   p
-                movea.w #(byte_FFDB80-M68K_RAM),a0
+                movea.w #(Entity58Type-M68K_RAM),a0
                 clr.w   $48(a0)
                 move.w  #$D0,$10(a0)
                 bsr.s   StageTransition_InitializeWolfGaropaArenaBoundary
-                movea.w #(word_FFDBE0-M68K_RAM),a0
+                movea.w #(Entity59Type-M68K_RAM),a0
                 move.w  #1,$48(a0)
                 move.w  #$170,$10(a0)
 ; End of function StageTransition_InitializeWolfGaropaArenaBoundaries

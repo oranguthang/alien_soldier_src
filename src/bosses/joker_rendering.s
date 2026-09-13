@@ -1,10 +1,10 @@
 ; Positions Joker's linked parts and prepares its rasterized tile display
 Boss_JokerRenderBody:                                   ; CODE XREF: Boss_JokerUpdatePhaseGatePose+98   p  ; was: sub_3BA1A
                                         ; Boss_JokerUpdateDefeatDescent+30   j
-                movea.w #(word_FFCD40-M68K_RAM),a0
-                movea.w #(byte_FFCE00-M68K_RAM),a1
-                movea.w #(word_FFCDA0-M68K_RAM),a2
-                movea.w #(byte_FFCE60-M68K_RAM),a3
+                movea.w #(TwentiethEntityType-M68K_RAM),a0
+                movea.w #(TwentySecondEntityType-M68K_RAM),a1
+                movea.w #(TwentyFirstEntityType-M68K_RAM),a2
+                movea.w #(TwentyThirdEntityType-M68K_RAM),a3
                 tst.w   $54(a5)
                 beq.s   Boss_JokerPositionLinkedParts
                 exg     a0,a1
@@ -329,7 +329,7 @@ Boss_JokerInitializePoseChannels:
 Boss_JokerSpawnDescendingShotEmitter:                   ; CODE XREF: Boss_JokerDiveDescentState+42   p  ; was: sub_3BE16
                 tst.w   $35C(a5)
                 bne.s   Boss_JokerSpawnDescendingShotEmitterReturn
-                movea.w #(byte_FFD700-M68K_RAM),a0
+                movea.w #(FortySixthEntityType-M68K_RAM),a0
                 jsr     (Projectile_FindFreePrimarySlot_CheckFinalRange).l
                 bne.s   Boss_JokerSpawnDescendingShotEmitterReturn
                 subi.w  #$14,(word_FF8234).w
@@ -372,7 +372,7 @@ Projectile_JokerDescendingShotEmitterTrackPlayer:       ; CODE XREF: Projectile_
 Projectile_JokerDescendingShotEmitterUpdateTimer:       ; CODE XREF: Projectile_JokerDescendingShotEmitter+20   j  ; was: loc_3BEB0
                 subq.w  #1,$48(a5)
                 bpl.s   Projectile_JokerDescendingShotEmitterUpdatePreShotJitter
-                movea.w #(byte_FFD400-M68K_RAM),a0
+                movea.w #(ThirtyEighthEntityType-M68K_RAM),a0
                 jsr     (Projectile_FindFreePrimarySlot_CheckFinalRange).l
                 bne.s   Projectile_JokerDescendingShotEmitterCountEmission
                 move.w  $10(a5),$10(a0)

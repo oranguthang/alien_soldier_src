@@ -115,7 +115,7 @@ Boss_ShellshogunStoreOrbitPhase:                        ; CODE XREF: Boss_Shells
                                         ; Boss_ShellshogunUpdateOrbitingParts+20   j
                 move.w  d0,$1DE(a5)
                 move.w  d1,$23C(a5)
-                movea.w #(byte_FFCF20-M68K_RAM),a0
+                movea.w #(TwentyFifthEntityType-M68K_RAM),a0
                 movea.l #Math_SineTable,a1
                 movea.l #Boss_ShellshogunOrbitingPartSourcesAndRadii,a2
                 move.w  $56(a5),d0

@@ -98,7 +98,7 @@ Boss_BackStringerTransformationPaletteReturn:           ; CODE XREF: Boss_BackSt
 ; End of function Boss_BackStringerUpdateTransformationPalette
 ; Initializes the preallocated tail-segment display slots
 Boss_BackStringerInitializeTailSegmentSlots:            ; CODE XREF: Boss_BackStringerInitializeState+64   p  ; was: sub_4506E
-                movea.w #(byte_FFD9A0-M68K_RAM),a0
+                movea.w #(FiftyThirdEntityType-M68K_RAM),a0
                 moveq   #5,d7
 Boss_BackStringerInitializeTailSegmentSlotsLoop:        ; CODE XREF: Boss_BackStringerInitializeTailSegmentSlots+18   j  ; was: loc_45074
                 move.w  #$10,(a0)
@@ -119,7 +119,7 @@ Boss_BackStringerInitializeTailSegmentSlotsLoop:        ; CODE XREF: Boss_BackSt
 Boss_BackStringerResetTailSegments:                     ; CODE XREF: Boss_BackStringerResetManualControlState+1E   j  ; was: sub_450B2
                                         ; Boss_BackStringerDivePreparationState+3EE   p
                 clr.l   $2FC(a5)
-                movea.w #(byte_FFD9A0-M68K_RAM),a0
+                movea.w #(FiftyThirdEntityType-M68K_RAM),a0
                 moveq   #5,d7
 Boss_BackStringerResetTailSegmentsLoop:                 ; CODE XREF: Boss_BackStringerResetTailSegments+36   j  ; was: loc_450BC
                 move.w  #$10,(a0)
@@ -152,7 +152,7 @@ Boss_BackStringerUpdateTailSegmentPositions:            ; CODE XREF: Boss_BackSt
                 bne.s   Boss_BackStringerPrepareTailSegmentLoop
                 moveq   #0,d3
 Boss_BackStringerPrepareTailSegmentLoop:                ; CODE XREF: Boss_BackStringerUpdateTailSegmentPositions+12   j  ; was: loc_45124
-                movea.w #(byte_FFD9A0-M68K_RAM),a0
+                movea.w #(FiftyThirdEntityType-M68K_RAM),a0
                 moveq   #5,d7
 Boss_BackStringerUpdateTailSegmentLoop:                 ; CODE XREF: Boss_BackStringerUpdateTailSegmentPositions+30   j  ; was: loc_4512A
                 andi.w  #$F7FF,$E(a0)
@@ -195,7 +195,7 @@ Boss_BackStringerRetractTailSegments:                   ; CODE XREF: Boss_BackSt
                                         ; Boss_BackStringerDiveAttackState+7A   p
                 move.w  #$324,d0
                 moveq   #$FFFFFFFF,d1
-                movea.w #(byte_FFD9A0-M68K_RAM),a0
+                movea.w #(FiftyThirdEntityType-M68K_RAM),a0
                 moveq   #5,d7
 Boss_BackStringerRetractTailSegmentsLoop:               ; CODE XREF: Boss_BackStringerRetractTailSegments+24   j  ; was: loc_451B6
                 move.w  d0,(a0)

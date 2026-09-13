@@ -235,7 +235,7 @@ Boss_SharpssteelUpdateBladeAssemblyMotion:              ; CODE XREF: Boss_Sharps
 ; ---------------------------------------------------------------------------
 Boss_SharpssteelBeginSevenBladeTriggerWait:             ; CODE XREF: Boss_SharpssteelWaitForTwoBladeTriggersState+6   j
                 addq.w  #2,4(a5)
-                addq.w  #2,(word_FFDBE4).w
+                addq.w  #2,(Entity59State).w
 ; Continues blade assembly motion until seven trigger events have completed
 Boss_SharpssteelWaitForSevenBladeTriggersState:         ; DATA XREF: ROM:00047C74   o  ; was: loc_47EBC
                 cmpi.w  #7,$29C(a5)
@@ -245,9 +245,9 @@ Boss_SharpssteelWaitForSevenBladeTriggersState:         ; DATA XREF: ROM:00047C7
 ; ---------------------------------------------------------------------------
 Boss_SharpssteelBeginRotationSweep:                     ; CODE XREF: Boss_SharpssteelWaitForTwoBladeTriggersState+2A   j
                 addq.w  #2,4(a5)
-                addq.w  #2,(word_FFDBE4).w
-                move.l  #$FFFD8000,(dword_FFDBF8).w
-                move.l  #$FFFD0000,(dword_FFDBFC).w
+                addq.w  #2,(Entity59State).w
+                move.l  #$FFFD8000,(Entity59XVel).w
+                move.l  #$FFFD0000,(Entity59YVel).w
 ; Waits for the signed rotation-sweep completion flag
 Boss_SharpssteelWaitForRotationSweepState:              ; DATA XREF: ROM:00047C76   o  ; was: loc_47EE2
                 tst.w   $58(a5)
@@ -279,10 +279,10 @@ Boss_SharpssteelUpdateAttackSelectionDelayPose:         ; CODE XREF: Boss_Sharps
 Boss_SharpssteelPublishBladePartTargets:                ; CODE XREF: Boss_SharpssteelWaitForTwoBladeTriggersState+2C   p  ; was: sub_47F24
                 move.w  $370(a5),d0
                 addi.w  #0,d0
-                move.w  d0,(word_FFDBF0).w
+                move.w  d0,(Entity59XPos).w
                 move.w  $374(a5),d0
                 addi.w  #-$10,d0
-                move.w  d0,(word_FFDBF4).w
+                move.w  d0,(Entity59YPos).w
                 rts
 ; End of function Boss_SharpssteelPublishBladePartTargets
 ; Initializes the vertical opening and later ten-shot falling-projectile cycle
@@ -316,7 +316,7 @@ Boss_SharpssteelLoadBladeTargetHistoryTail:             ; CODE XREF: Boss_Sharps
 ; Derives the blade target velocity from shared motion and the travel accumulator
 Boss_SharpssteelUpdateBladeTargetVelocity:              ; CODE XREF: Boss_SharpssteelAccelerateBladeAssemblyState+10   p  ; was: sub_47FA2
                                         ; Boss_SharpssteelAccelerateBladeAssemblyState+3A   p
-                move.w  (dword_FFDB34).w,d0
+                move.w  (Entity57YPos).w,d0
                 add.w   $2FC(a5),d0
                 addi.w  #-$C,d0
                 move.w  d0,$194(a5)
@@ -325,7 +325,7 @@ Boss_SharpssteelUpdateBladeTargetVelocity:              ; CODE XREF: Boss_Sharps
 ; Fills all six blade-target history samples with the current shared target
 Boss_SharpssteelFillBladeTargetHistory:                 ; CODE XREF: Boss_SharpssteelWaitForTwoBladeTriggersState+66   p  ; was: sub_47FB4
                 movea.w #(word_FF9600-M68K_RAM),a0
-                move.w  (dword_FFDB30).w,d1
+                move.w  (Entity57XPos).w,d1
                 addi.w  #$74,d1                         ; 't'
                 moveq   #5,d7
 Boss_SharpssteelFillBladeTargetHistoryLoop:             ; CODE XREF: Boss_SharpssteelFillBladeTargetHistory+10   j
@@ -336,7 +336,7 @@ Boss_SharpssteelFillBladeTargetHistoryLoop:             ; CODE XREF: Boss_Sharps
 ; Shifts a new shared target through the six-sample blade history
 Boss_SharpssteelShiftBladeTargetHistory:                ; CODE XREF: Boss_SharpssteelMain+2C   p  ; was: sub_47FCA
                 movea.w #(word_FF9600-M68K_RAM),a0
-                move.w  (dword_FFDB30).w,d1
+                move.w  (Entity57XPos).w,d1
                 addi.w  #$74,d1                         ; 't'
                 moveq   #5,d7
 Boss_SharpssteelShiftBladeTargetHistoryLoop:            ; CODE XREF: Boss_SharpssteelShiftBladeTargetHistory+14   j
@@ -644,7 +644,7 @@ Boss_SharpssteelFinishOpeningVerticalTurn:              ; CODE XREF: Boss_Sharps
 ; Moves the blade assembly to the shared vertical threshold
 Boss_SharpssteelMoveBladeAssemblyToThresholdState:      ; DATA XREF: ROM:00047C64   o  ; was: loc_4837A
                 addi.l  #$2000,$DC(a5)
-                move.w  (dword_FFDB34).w,d0
+                move.w  (Entity57YPos).w,d0
                 subi.w  #$20,d0                         ; ' '
                 cmp.w   $D4(a5),d0
                 bmi.s   Boss_SharpssteelBeginBladeAssemblySweep
@@ -661,11 +661,11 @@ Boss_SharpssteelBeginBladeAssemblySweep:                ; CODE XREF: Boss_Sharps
                 move.w  #4,(PlaneBShakeLevel).w
                 move.b  #$2F,d0                         ; '/'
                 jsr     (Sound_PlaySFX).l
-                move.l  #$20000,(dword_FFDB3C).w
-                move.w  #2,(word_FFDB78).w
+                move.l  #$20000,(Entity57YVel).w
+                move.w  #2,(Entity57Work58).w
                 moveq   #0,d0
                 move.w  #$B0,d0
-                sub.w   (dword_FFDB30).w,d0
+                sub.w   (Entity57XPos).w,d0
                 swap    d0
                 asr.l   #5,d0
                 move.l  d0,$D8(a5)
@@ -730,7 +730,7 @@ Boss_SharpssteelInitializeComplexPhase:
                 move.w  #$2C,4(a5)                      ; ','  ; was: sub_48486
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
-                move.w  (dword_FFDB30).w,d0
+                move.w  (Entity57XPos).w,d0
                 addi.w  #$74,d0                         ; 't'
                 move.w  d0,$10(a5)
                 move.w  #$200,$14(a5)

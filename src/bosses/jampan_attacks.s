@@ -146,7 +146,7 @@ Boss_JampanFinishShieldRotationCycle:                   ; CODE XREF: Boss_Jampan
                                         ; Boss_JampanRotateShieldPatternBackwardState+34   j
                 move.w  #2,(SecondaryEntityWork52).w
                 move.w  #2,(QuaternaryEntityWork52).w
-                clr.b   (byte_FFCE81).w
+                clr.b   (TwentyThirdEntityStatus).w
                 addq.w  #2,4(a5)
 Boss_JampanRotateShieldPatternBackwardReturn:           ; CODE XREF: Boss_JampanRotateShieldPatternBackwardState+14   j
                 rts
@@ -242,7 +242,7 @@ Boss_JampanUpdateExpandedAlternatePattern:              ; CODE XREF: Boss_Jampan
                 cmpi.w  #$18,(dword_FF942C).w
                 bcs.s   Boss_JampanExpandAlternatePatternReturn
                 move.w  #$18,(dword_FF942C).w
-                move.w  #$A0,(word_FFCE86).w
+                move.w  #$A0,(TwentyThirdEntityWork26).w
                 addq.w  #2,4(a5)
 Boss_JampanExpandAlternatePatternReturn:                ; CODE XREF: Boss_JampanExpandAlternatePatternState+24   j
                 rts
@@ -410,7 +410,7 @@ Boss_JampanDefeatExplosionHoldState:                    ; DATA XREF: ROM:0004922
                 bne.s   Boss_JampanDefeatExplosionHoldReturn
                 move.w  #$40,$48(a5)                    ; '@'
                 addq.w  #2,4(a5)
-                movea.w #(byte_FFD0A0-M68K_RAM),a0
+                movea.w #(TwentyNinthEntityType-M68K_RAM),a0
                 move.w  #$23C,(a0)
                 move.w  #$D00,2(a0)
                 move.l  $10(a5),$10(a0)
@@ -421,9 +421,9 @@ Boss_JampanDefeatExplosionHoldReturn:                   ; CODE XREF: Boss_Jampan
 ; Waits for the shield object to descend to Y $60
 Boss_JampanWaitForDefeatShieldDescentState:             ; DATA XREF: ROM:0004922E   o  ; was: sub_49E9A
                 jsr     (Boss_SpawnExplosionDebris).l
-                cmpi.w  #$60,(word_FFD0B4).w            ; '`'
+                cmpi.w  #$60,(TwentyNinthEntityYPos).w  ; '`'
                 bcc.s   Boss_JampanWaitForDefeatShieldDescentReturn
-                clr.l   (dword_FFD0BC).w
+                clr.l   (TwentyNinthEntityYVel).w
                 addq.w  #2,4(a5)
 Boss_JampanWaitForDefeatShieldDescentReturn:            ; CODE XREF: Boss_JampanWaitForDefeatShieldDescentState+C   j
                 rts
@@ -474,9 +474,9 @@ Boss_JampanFadeDefeatPaletteInReturn:                   ; CODE XREF: Boss_Jampan
 ; End of function Boss_JampanFadeDefeatPaletteInState
 ; Adopts the type-$23C shield position and prepares the post-defeat controller
 Boss_JampanPreparePostDefeatControllerState:            ; DATA XREF: ROM:00049236   o  ; was: sub_49F22
-                move.w  (word_FFD0B0).w,$10(a5)
-                move.w  (word_FFD0B4).w,$14(a5)
-                bset    #4,(byte_FFD0A2).w
+                move.w  (TwentyNinthEntityXPos).w,$10(a5)
+                move.w  (TwentyNinthEntityYPos).w,$14(a5)
+                bset    #4,(TwentyNinthEntityFlags).w
                 move.w  #$80,$48(a5)
                 addq.w  #2,4(a5)
                 rts

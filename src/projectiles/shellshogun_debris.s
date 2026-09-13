@@ -9,7 +9,7 @@ Boss_ShellshogunSpawnFallingDebris:
 Boss_ShellshogunSpawnFallingDebrisNext:                 ; CODE XREF: Boss_ShellshogunSpawnFallingDebris+6   j  ; was: loc_3716A
                                         ; Boss_ShellshogunSpawnFallingDebris+82   j
                 jsr     (RandomNumber).l
-                movea.w #(byte_FFD700-M68K_RAM),a0
+                movea.w #(FortySixthEntityType-M68K_RAM),a0
                 jsr     (Projectile_FindFreePrimarySlot_CheckEnemyRange).l
                 bne.s   Boss_ShellshogunSpawnFallingDebrisReturn
                 move.w  #$108,(a0)

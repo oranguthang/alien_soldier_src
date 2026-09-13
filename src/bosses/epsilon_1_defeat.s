@@ -433,7 +433,7 @@ Boss_Epsilon1ReturnBodyOffsetToCenterReturn:            ; CODE XREF: Boss_Epsilo
 ; Updates one linked side part through extension, retraction, and destruction
 Boss_Epsilon1UpdateLinkedPart:                          ; CODE XREF: Boss_Epsilon1Main+1CC   p  ; was: sub_46C5C
                                         ; Boss_Epsilon1Main+200   p
-                btst    #0,(word_FFC66C).w
+                btst    #0,(PrimaryEntityWork4C).w
                 beq.s   Boss_Epsilon1DispatchLinkedPartState
                 cmpi.w  #6,4(a1)
                 bcc.s   Boss_Epsilon1DispatchLinkedPartState

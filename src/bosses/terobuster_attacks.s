@@ -231,7 +231,7 @@ Boss_TerobusterTrySpawnHomingMissile:                   ; CODE XREF: Boss_Terobu
                 bne.s   Boss_TerobusterSpawnHomingMissileReturn
                 andi.w  #$1F,d0
                 bne.s   Boss_TerobusterSpawnHomingMissileReturn
-                movea.w #(byte_FFD880-M68K_RAM),a0
+                movea.w #(FiftiethEntityType-M68K_RAM),a0
                 jsr     (Projectile_FindFreePrimarySlot_CheckFinalRange).l
                 bne.s   Boss_TerobusterSpawnHomingMissileReturn
                 move.w  #$138,(a0)

@@ -288,7 +288,7 @@ Stage12_InitializeSharpssteelEncounter:                 ; DATA XREF: ROM:0000D97
 Stage12_UpdatePostSharpssteel:                          ; DATA XREF: ROM:0000D97E   o  ; was: sub_DBBC
                 tst.w   (Entity_ObjectPool).w
                 bne.w   Stage_MidgameStateReturn
-                move.w  #$FFFF,(word_FFDB44).w
+                move.w  #$FFFF,(Entity57Work24).w
                 bra.w   Stage_StartTimeBonusAndPreloadNextPhase
 ; End of function Stage12_UpdatePostSharpssteel
 ; Leave Stage 12 and start the teleport transition into Stage 13

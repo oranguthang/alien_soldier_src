@@ -56,12 +56,12 @@ Projectile_UpdateArtemisEmitterAnchorJitter:            ; CODE XREF: Projectile_
                 move.b  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 subq.w  #8,d0
-                add.w   (word_FFD110).w,d0
+                add.w   (ThirtiethEntityXPos).w,d0
                 move.w  d0,$10(a5)
                 move.b  (RandomNumberState+1).w,d0
                 andi.w  #$F,d0
                 subq.w  #8,d0
-                add.w   (word_FFD114).w,d0
+                add.w   (ThirtiethEntityYPos).w,d0
                 move.w  d0,$14(a5)
                 bset    #7,2(a5)
                 btst    #0,(FrameCounter+1).w

@@ -244,7 +244,7 @@ Boss_ShieldViperLinkedPartReturnWaitReturn:             ; CODE XREF: Boss_Shield
 ; End of function Boss_ShieldViperFinishLinkedPartReturn
 ; Dispatch a type-$378 pattern shot, or convert a visible shot during boss defeat
 Projectile_ShieldViperPatternShotMain:                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4EF2E
-                btst    #0,(word_FFC678).w
+                btst    #0,(PrimaryEntityWork58).w
                 beq.s   Projectile_ShieldViperDispatchPatternShotState
                 btst    #7,2(a5)
                 beq.s   Projectile_ShieldViperRemoveHiddenPatternShotAfterDefeat

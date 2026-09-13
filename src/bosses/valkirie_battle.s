@@ -70,7 +70,7 @@ Entity_InitValkirieBattleState0:                        ; DATA XREF: Entity_Upda
                 movea.l #Boss_ValkirieIntroObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l
                 bsr.w   Entity_InitValkirieAuxiliaryGroup
-                movea.w #(word_FFDC40-M68K_RAM),a0
+                movea.w #(Entity60Type-M68K_RAM),a0
                 move.w  $10(a0),$10(a5)
                 move.w  #2,$1DE(a5)
                 bra.w   Entity_StartValkirieBattleState4
@@ -444,7 +444,7 @@ Valkirie_State10PartHideCommands:   dc.w    $BF00, $540, $600, $6C0, 0  ; was: w
 ; Allocate one Valkirie bullet when the global projectile gate permits it
 Projectile_SpawnValkirieBullet:                         ; CODE XREF: Entity_StartValkirieBattleStateE+88   p  ; was: sub_55C8C
                                         ; Entity_UpdateValkirieBattleState10:Entity_RenderValkirieBattleState10   p
-                movea.w #(byte_FFCCE0-M68K_RAM),a1
+                movea.w #(NineteenthEntityType-M68K_RAM),a1
                 moveq   #$18,d3
                 btst    #0,(FrameCounter+1).w
                 bne.s   Projectile_SpawnValkirieBulletReturn
@@ -502,7 +502,7 @@ Entity_StartValkirieBattleState24:                      ; CODE XREF: Entity_Upda
 ; Wait in state $24 until both tracked coordinates are within 16 pixels
 Entity_UpdateValkirieBattleState24:                     ; DATA XREF: ROM:000557DE   o  ; was: loc_55D34
                 moveq   #0,d1
-                move.w  (word_FFD1D0).w,d0
+                move.w  (ThirtySecondEntityXPos).w,d0
                 sub.w   $4F0(a5),d0
                 bpl.s   Entity_CheckValkirieState24VerticalDistance
                 neg.w   d0
@@ -511,7 +511,7 @@ Entity_CheckValkirieState24VerticalDistance:            ; CODE XREF: Entity_Upda
                 bpl.s   Entity_MeasureValkirieState24VerticalDistance
                 addq.w  #1,d1
 Entity_MeasureValkirieState24VerticalDistance:          ; CODE XREF: Entity_UpdateValkirieBattleState14+70   j  ; was: loc_55D4A
-                move.w  (word_FFD1D4).w,d0
+                move.w  (ThirtySecondEntityYPos).w,d0
                 sub.w   $4F4(a5),d0
                 bpl.s   Entity_CheckValkirieState24Arrival
                 neg.w   d0

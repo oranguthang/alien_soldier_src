@@ -9,7 +9,7 @@ Stage_SevenForcesInitializeStage20:                     ; DATA XREF: ROM:0000E4A
                 move.w  (PrimaryCameraXPosition).w,(CameraXLowerBound).w
                 move.w  (PrimaryCameraXPosition).w,(CameraXUpperBound).w
                 move.w  (PrimaryCameraXPosition).w,(PreviousCameraXPosition).w
-                movea.w #(word_FFDC40-M68K_RAM),a0
+                movea.w #(Entity60Type-M68K_RAM),a0
                 move.w  #$428,(a0)
                 move.w  #2,4(a0)
                 move.b  #2,(VDPReg11Shadow+1).w

@@ -235,7 +235,7 @@ Boss_UpdateSireneState12:                               ; DATA XREF: ROM:0005750
                 move.w  $54(a5),d1
                 clr.w   $54(a5)
                 move.w  $70(a5),d0
-                cmp.w   (dword_FFDB30).w,d0
+                cmp.w   (Entity57XPos).w,d0
                 bpl.s   Boss_CheckSireneState12FacingChange
                 move.w  #$100,$54(a5)
 Boss_CheckSireneState12FacingChange:                    ; CODE XREF: Boss_UpdateSireneState12   j  ; was: loc_577BE
@@ -288,8 +288,8 @@ Boss_UpdateSireneBattleEffect:                          ; CODE XREF: Boss_Update
                 bsr.w   Gfx_UpdateSireneBattleEffectPattern
                 move.w  (PlayerXPosition).w,d0
                 move.w  (PlayerYPosition).w,d1
-                sub.w   (dword_FFDB30).w,d0
-                sub.w   (dword_FFDB34).w,d1
+                sub.w   (Entity57XPos).w,d0
+                sub.w   (Entity57YPos).w,d1
                 jsr     (Math_Arctan2Lookup).l
                 asr.w   #7,d2
                 addi.w  #$80,d2
@@ -307,8 +307,8 @@ Boss_UpdateSireneBattleEffect:                          ; CODE XREF: Boss_Update
 Boss_ClampSireneEffectPrimaryYMaximum:                  ; CODE XREF: Boss_UpdateSireneBattleEffect+48   j  ; was: loc_5788C
                 move.w  $70(a5),d0
                 move.w  $74(a5),d1
-                sub.w   (dword_FFDB30).w,d0
-                sub.w   (dword_FFDB34).w,d1
+                sub.w   (Entity57XPos).w,d0
+                sub.w   (Entity57YPos).w,d1
                 jsr     (Math_Arctan2Lookup).l
                 asr.w   #7,d2
                 addi.w  #$80,d2
@@ -396,7 +396,7 @@ Gfx_WriteSireneNarrowDistortionOffsetsLoop:             ; CODE XREF: Boss_Update
 ; End of function Boss_UpdateSireneBattleEffect
 ; Initialize the Sirene battle-effect object and display parameters
 Gfx_InitSireneBattleEffect:                             ; CODE XREF: Boss_UpdateSireneState10   p  ; was: sub_579B2
-                movea.w #(word_FFDB20-M68K_RAM),a0
+                movea.w #(Entity57Type-M68K_RAM),a0
                 move.w  #$48C,(a0)
                 move.w  #$100,2(a0)
                 clr.b   $21(a0)
@@ -482,7 +482,7 @@ Boss_ApplySirenePoseToParts:                            ; CODE XREF: Boss_Render
                 move.w  d1,$596(a5)
                 move.b  $14(a0),d0
                 asl.w   #1,d0
-                movea.w #(byte_FFCC16-M68K_RAM),a2
+                movea.w #(SixteenthEntityWork56-M68K_RAM),a2
                 bsr.w   Boss_PropagateSirenePoseGrid
                 move.b  $18(a0),d0
                 asl.w   #1,d0
@@ -494,7 +494,7 @@ Boss_ApplySirenePoseToParts:                            ; CODE XREF: Boss_Render
                 and.w   d7,d0
                 move.w  d0,$8F6(a5)
                 move.w  d0,$956(a5)
-                movea.w #(byte_FFCFD6-M68K_RAM),a2
+                movea.w #(TwentySixthEntityWork56-M68K_RAM),a2
                 moveq   #2,d7
 Boss_PropagateSirenePoseRowsLoop:                       ; CODE XREF: Boss_ApplySirenePoseToParts+8A   j  ; was: loc_57AFA
                 moveq   #$B,d6
@@ -705,7 +705,7 @@ Boss_SpawnSirenePeriodicProjectile:                     ; CODE XREF: Boss_Update
                 move.w  (FrameCounter).w,d0
                 andi.w  #$1F,d0
                 bne.s   Boss_SpawnSirenePeriodicProjectileReturn
-                movea.w #(byte_FFD880-M68K_RAM),a0
+                movea.w #(FiftiethEntityType-M68K_RAM),a0
                 jsr     (Projectile_FindFreePrimarySlot_CheckFinalRange).l
                 bne.s   Boss_SpawnSirenePeriodicProjectileReturn
                 move.w  #$490,(a0)
@@ -773,8 +773,8 @@ Projectile_ConvertSireneHomingToParticle:               ; CODE XREF: Projectile_
                 jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
 Projectile_HomeSireneProjectileTowardPlayer:            ; CODE XREF: Projectile_UpdateSireneHoming+38   j  ; was: loc_57E7E
-                move.w  (dword_FFDB30).w,d0
-                move.w  (dword_FFDB34).w,d1
+                move.w  (Entity57XPos).w,d0
+                move.w  (Entity57YPos).w,d1
                 sub.w   $10(a5),d0
                 sub.w   $14(a5),d1
                 jsr     (Math_Arctan2Lookup).l

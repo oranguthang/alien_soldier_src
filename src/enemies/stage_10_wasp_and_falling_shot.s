@@ -20,7 +20,7 @@ Projectile_FallingShotInit:                             ; DATA XREF: ROM:Project
                 move.l  #$FE02FE02,$2C(a5)
                 move.l  #$F808F808,$28(a5)
                 addq.w  #2,4(a5)
-                cmpi.w  #$1B8,(word_FFDB20).w
+                cmpi.w  #$1B8,(Entity57Type).w
                 bne.s   Projectile_FallingShotUpdate
                 ori.w   #$8000,$E(a5)
 ; Applies gravity and stops the shot on terrain, collision flags, or special-stage bounds
@@ -31,16 +31,16 @@ Projectile_FallingShotUpdate:                           ; CODE XREF: Projectile_
                 bne.s   Projectile_FallingShotUpdate_StopOnImpact
                 bclr    #7,$22(a5)
                 bne.s   Projectile_FallingShotUpdate_StopOnImpact
-                cmpi.w  #$1B8,(word_FFDB20).w
+                cmpi.w  #$1B8,(Entity57Type).w
                 bne.s   Projectile_FallingShotUpdate_CheckTerrain
-                move.w  (dword_FFDB34).w,d0
+                move.w  (Entity57YPos).w,d0
                 subq.w  #8,d0
                 cmp.w   $14(a5),d0
                 bhi.s   Projectile_FallingShotUpdate_CheckSpecialBounds
-                move.w  (dword_FFDB30).w,d0
+                move.w  (Entity57XPos).w,d0
                 cmp.w   $10(a5),d0
                 bhi.s   Projectile_FallingShotUpdate_CheckSpecialBounds
-                move.w  (dword_FFDB30).w,d0
+                move.w  (Entity57XPos).w,d0
                 addi.w  #$100,d0
                 cmp.w   $10(a5),d0
                 bcc.s   Projectile_FallingShotUpdate_StopOnImpact

@@ -479,7 +479,7 @@ Boss_BugmaxAcceleratePositiveHitFragmentSpawnOffset:    ; CODE XREF: Boss_Bugmax
                 move.l  #$20000,(PrimaryEntityXVelocity).w
 Boss_BugmaxAllocateHitFragment:                         ; CODE XREF: Boss_BugmaxEmitHitFragmentFromCurrentPart+28   j  ; was: loc_4D948
                                         ; Boss_BugmaxEmitHitFragmentFromCurrentPart+32   j
-                lea     (word_FFCF80).w,a0
+                lea     (TwentySixthEntityType).w,a0
                 jsr     (Projectile_FindFreePrimarySlot_CheckExtendedRange).l
                 bne.w   Boss_BugmaxHitFragmentEmissionReturn
                 move.w  #$338,(a0)

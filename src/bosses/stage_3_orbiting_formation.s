@@ -339,7 +339,7 @@ Boss_Stage3OrbitingFormationFireFromNextPart:           ; CODE XREF: Boss_Stage3
                 clr.w   d1
                 move.w  #$8004,d2
                 move.w  $4C(a5),d6
-                add.w   (word_FFC66C).w,d6
+                add.w   (PrimaryEntityWork4C).w,d6
                 andi.w  #$FF,d6
                 add.w   d6,d6
                 jsr     (Projectile_InitializeDifficultyScaledTwoSpeedShot).l

@@ -32,14 +32,14 @@ Boss_AntroidSelectBlinkMetaspriteReturn:                ; CODE XREF: Boss_Antroi
 Boss_AntroidEnterStateWithFirstPartSlot:                ; CODE XREF: Boss_AntroidReturnToNeutral+E   p  ; was: sub_37ED2
                                         ; Boss_AntroidReturnToNeutral+22   p
                 movea.w #(FifteenthEntityType-M68K_RAM),a0
-                movea.w #(word_FFCF80-M68K_RAM),a1
+                movea.w #(TwentySixthEntityType-M68K_RAM),a1
                 bra.s   Boss_AntroidEnterState
 ; End of function Boss_AntroidEnterStateWithFirstPartSlot
 ; Enters state d0 with the second fixed part slot selected initially
 Boss_AntroidEnterStateWithSecondPartSlot:               ; CODE XREF: Boss_AntroidLeapAttackA+98   p  ; was: sub_37EDC
                                         ; Boss_AntroidEnterWaitState+2   p
                 movea.w #(FifteenthEntityType-M68K_RAM),a1
-                movea.w #(word_FFCF80-M68K_RAM),a0
+                movea.w #(TwentySixthEntityType-M68K_RAM),a0
 Boss_AntroidEnterState:                                 ; CODE XREF: Boss_AntroidEnterStateWithFirstPartSlot+8   j  ; was: loc_37EE4
                 move.w  d0,4(a5)
                 clr.w   $58(a5)

@@ -1,7 +1,7 @@
 ; Initialize the Stage 8 Flying Neo composite rendered from the shared
 ; high-RAM display record
 Stage8_InitializeFlyingNeoComposite:                    ; CODE XREF: Stage8_InitializeTrainSequence+3A   p  ; was: sub_D6D6
-                movea.w #(word_FFDC40-M68K_RAM),a0
+                movea.w #(Entity60Type-M68K_RAM),a0
                 move.w  #$170,(a0)
                 move.w  #$D00,2(a0)
                 clr.w   4(a0)
@@ -17,7 +17,7 @@ Stage8_InitializeFlyingNeoComposite:                    ; CODE XREF: Stage8_Init
 ; End of function Stage8_InitializeFlyingNeoComposite
 ; Spawn Flying Neo and queue its initial tile columns
 Stage8_StartFlyingNeoCompositeAndQueueTiles:            ; CODE XREF: Stage8_UpdateFlyingNeoApproachDelay+14   p  ; was: sub_D714
-                movea.w #(word_FFDC40-M68K_RAM),a0
+                movea.w #(Entity60Type-M68K_RAM),a0
                 addq.w  #2,4(a0)
                 move.w  #$EF00,2(a0)
                 move.l  #$FFFAE000,$18(a0)
@@ -85,7 +85,7 @@ Midgame_RandomLightningUseSecondaryPalette:             ; CODE XREF: Midgame_Upd
 Midgame_CreateRandomLightningComposite:                 ; CODE XREF: Midgame_UpdateRandomLightningEffect+6C   j  ; was: loc_D7DE
                 cmpi.w  #1,d7
                 beq.s   Midgame_UpdateRandomLightningEffect_Return
-                movea.w #(word_FFDB20-M68K_RAM),a0
+                movea.w #(Entity57Type-M68K_RAM),a0
                 move.w  #$160,(a0)
                 move.w  #$E100,2(a0)
                 move.w  (RandomNumberState).w,d0

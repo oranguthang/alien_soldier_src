@@ -234,7 +234,7 @@ Boss_VictorSelectSplitShotAttack:                       ; CODE XREF: Boss_Victor
 Boss_VictorDeployRing:                                  ; DATA XREF: ROM:00032434   o  ; was: sub_32708
                 bsr.w   Boss_VictorUpdateViewportOffset
                 bsr.w   Boss_VictorUpdateAnimation
-                lea     (word_FFCD40).w,a4
+                lea     (TwentiethEntityType).w,a4
                 lea     (Entity_ObjectPool).w,a0
                 bsr.w   Boss_VictorConfigureRingPattern
                 move.w  #$B,d6
@@ -261,7 +261,7 @@ Boss_VictorInitNextRingSegment:                         ; CODE XREF: Boss_Victor
                 bpl.s   Boss_VictorFinishRingDeployment
                 ori.w   #$1000,$E(a4)
 Boss_VictorFinishRingDeployment:                        ; CODE XREF: Boss_VictorDeployRing+78   j  ; was: loc_32788
-                move.w  #3,(word_FFCDEC).w
+                move.w  #3,(TwentyFirstEntityWork4C).w
                 move.b  #$4B,d0                         ; 'K'
                 jsr     (Sound_PlaySFX).l
                 move.w  #$40,$4A(a5)                    ; '@'
@@ -320,7 +320,7 @@ Boss_VictorReverseRing:                                 ; DATA XREF: ROM:0003243
                 move.w  #3,(PlaneAShakeLevel).w
                 move.b  #$53,d0                         ; 'S'
                 jsr     (Sound_PlaySFX).l
-                lea     (word_FFCDA0).w,a4
+                lea     (TwentyFirstEntityType).w,a4
                 move.w  #$B,d6
 Boss_VictorLinkNextRingSegment:                         ; CODE XREF: Boss_VictorReverseRing+5E   j  ; was: loc_32870
                 move.w  #$40,$42(a4)                    ; '@'
@@ -333,12 +333,12 @@ Boss_VictorLinkNextRingSegment:                         ; CODE XREF: Boss_Victor
                 addq.w  #2,4(a4)
                 adda.w  #$60,a4                         ; '`'
                 dbf     d6,Boss_VictorLinkNextRingSegment
-                move.l  #SharedVictorSunsetStingSegmentMappingB,(dword_FFD1C8).w
+                move.l  #SharedVictorSunsetStingSegmentMappingB,(VictorRingEndMapping).w
                 move.w  (dword_FF9404+2).w,d0
                 eori.w  #$100,d0
                 move.w  d0,$40(a5)
                 move.w  #$C0,$42(a5)
-                lea     (word_FFCDA0).w,a4
+                lea     (TwentyFirstEntityType).w,a4
                 move.w  a4,$44(a5)
                 addq.w  #2,4(a5)
                 rts
@@ -365,7 +365,7 @@ Boss_VictorClampRetractionFromRight:                    ; CODE XREF: Boss_Victor
                 bcs.w   Entity_UpdateReturn
                 move.w  #$180,$10(a5)
 Boss_VictorLinkRingForRetraction:                       ; CODE XREF: Boss_VictorRetractRing+40   j  ; was: loc_32912
-                lea     (word_FFD1C0).w,a4
+                lea     (ThirtySecondEntityType).w,a4
                 move.w  #$A,d6
 Boss_VictorLinkPreviousRingSegment:                     ; CODE XREF: Boss_VictorRetractRing+84   j  ; was: loc_3291A
                 movea.w a4,a3
@@ -385,7 +385,7 @@ Boss_VictorLinkPreviousRingSegment:                     ; CODE XREF: Boss_Victor
                 move.w  $42(a3),$42(a4)
                 move.w  #$10,$4A(a4)
                 addq.w  #2,4(a4)
-                move.l  #SharedVictorSunsetStingSegmentMappingA,(dword_FFD1C8).w
+                move.l  #SharedVictorSunsetStingSegmentMappingA,(VictorRingEndMapping).w
                 move.w  #$20,$4A(a5)                    ; ' '
                 addq.w  #2,4(a5)
                 rts

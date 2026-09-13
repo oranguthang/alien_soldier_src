@@ -810,7 +810,7 @@ Effect_SpawnSevenForcesTransitionParticleReturn:        ; CODE XREF: Effect_Spaw
 Boss_QueueSevenForcesPostBattleTransition:              ; CODE XREF: Entity_UpdateValkirieBattle+26   j  ; was: sub_555C8
                                         ; Boss_UpdateMedusa+26   j
                 bset    #0,(StageTimerPauseFlag).w
-                movea.w #(word_FFDC40-M68K_RAM),a5
+                movea.w #(Entity60Type-M68K_RAM),a5
                 bsr.s   Entity_DispatchSevenForcesPostBattleTransition
                 movea.w #(Entity_ObjectPool-M68K_RAM),a5
                 rts

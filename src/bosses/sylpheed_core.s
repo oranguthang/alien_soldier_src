@@ -68,7 +68,7 @@ Boss_InitSylpheed:                                      ; DATA XREF: Boss_Update
                 move.w  #$444,(a5)
                 move.w  #$CC00,2(a5)
                 clr.w   6(a5)
-                movea.w #(word_FFDC40-M68K_RAM),a0
+                movea.w #(Entity60Type-M68K_RAM),a0
                 move.w  $10(a0),$10(a5)
                 move.w  $14(a0),$14(a5)
                 move.l  $18(a0),d0
@@ -105,8 +105,8 @@ Boss_EnterSylpheedEntranceState12:                      ; CODE XREF: Boss_InitSy
                 move.w  #$12,4(a5)
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
-                move.l  (dword_FFDC58).w,$18(a5)
-                move.l  (dword_FFDC5C).w,$1C(a5)
+                move.l  (Entity60XVel).w,$18(a5)
+                move.l  (Entity60YVel).w,$1C(a5)
                 move.w  #$FFE0,$50(a5)
                 move.w  #$80,$56(a5)
                 move.w  #$120,$3BC(a5)

@@ -78,7 +78,7 @@ EnemySpawn_SelectSearchOriginY_Return:                  ; CODE XREF: EnemySpawn_
 ; End of function EnemySpawn_SelectSearchOriginY
 ; Allocates and clears one of the four enemy object slots
 EnemySpawn_AllocateObjectSlot:                          ; CODE XREF: EnemySpawn_StartDirectorTimer+16   p  ; was: sub_2C3F8
-                movea.w #(byte_FFCE00-M68K_RAM),a0
+                movea.w #(TwentySecondEntityType-M68K_RAM),a0
                 moveq   #3,d7
 EnemySpawn_AllocateObjectSlot_Loop:                     ; CODE XREF: EnemySpawn_AllocateObjectSlot+E   j  ; was: loc_2C3FE
                 tst.w   (a0)

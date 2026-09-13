@@ -9,7 +9,7 @@ Boss_VictorResetNextOrbitingPart:                       ; CODE XREF: Boss_Victor
                 move.w  #4,4(a4)
                 adda.w  #$60,a4                         ; '`'
                 dbf     d6,Boss_VictorResetNextOrbitingPart
-                lea     (word_FFCDA0).w,a4
+                lea     (TwentyFirstEntityType).w,a4
                 move.w  a4,(dword_FF9414).w
                 move.l  #$80000,(dword_FF940C+2).w
                 move.w  #4,(dword_FF9410+2).w

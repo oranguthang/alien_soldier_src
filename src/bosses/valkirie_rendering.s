@@ -219,12 +219,12 @@ Valkirie_PoseFrameDataEnd:                              ; was: word_563E6_End
 ; Create and initialize the six-object auxiliary Valkirie group
 Entity_InitValkirieAuxiliaryGroup:                      ; CODE XREF: Entity_InitValkirieBattleState0+52   p  ; was: sub_566B6
                                         ; Entity_StartValkirieBattleState14+26   p
-                movea.w #(byte_FFCFE0-M68K_RAM),a0
+                movea.w #(TwentySeventhEntityType-M68K_RAM),a0
                 moveq   #5,d7
 Entity_ClearValkirieAuxiliaryGroupLoop:                 ; CODE XREF: Entity_InitValkirieAuxiliaryGroup+C   j  ; was: loc_566BC
                 jsr     (Object_Clear96Bytes).l
                 dbf     d7,Entity_ClearValkirieAuxiliaryGroupLoop
-                movea.w #(byte_FFCFE0-M68K_RAM),a5
+                movea.w #(TwentySeventhEntityType-M68K_RAM),a5
                 movea.w a5,a4
                 move.w  #$300,(dword_FF8040).w
                 moveq   #5,d7

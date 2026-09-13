@@ -39,7 +39,7 @@ Boss_UnidentifiedSevenForceInit:                        ; DATA XREF: Boss_Uniden
                 clr.w   6(a5)
                 movea.l #Boss_UnidentifiedSevenForceObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l
-                movea.w #(word_FFDC40-M68K_RAM),a0
+                movea.w #(Entity60Type-M68K_RAM),a0
                 move.w  $10(a0),$10(a5)
                 move.w  #2,$1DE(a5)
                 bra.w   Boss_UnidentifiedSevenForceInitState4

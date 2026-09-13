@@ -165,7 +165,7 @@ VBlank_InitSplitVScrollEffect:                          ; DATA XREF: VBlank_Disp
 VBlank_InitSplitVScrollEffect_Update:                   ; CODE XREF: VBlank_InitSplitVScrollEffect+4   j  ; was: loc_1572
                 move.l  #$40020010,(VDP_CTRL).l
                 move.w  (word_FFEC04).w,(VDP_DATA).l
-                move.b  (byte_FFC66B).w,(VDPReg10Shadow+1).w
+                move.b  (PrimaryEntityWork4B).w,(VDPReg10Shadow+1).w
                 move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 rts
 ; End of function VBlank_InitSplitVScrollEffect

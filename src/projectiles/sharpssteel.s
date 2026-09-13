@@ -118,7 +118,7 @@ Projectile_SharpssteelHandleFallingShotLowerBoundary:   ; CODE XREF: Projectile_
 Projectile_SharpssteelCheckFallingShotDeflectionRegion:  ; CODE XREF: Projectile_SharpssteelFallingShotMain+AA   j
                 tst.w   $48(a5)
                 bne.w   Projectile_SharpssteelFallingShotReturn
-                movea.w #(word_FFDB20-M68K_RAM),a0
+                movea.w #(Entity57Type-M68K_RAM),a0
                 move.w  $10(a0),d0
                 cmp.w   $10(a5),d0
                 bpl.s   Projectile_SharpssteelCheckFallingShotDeflectionReturn

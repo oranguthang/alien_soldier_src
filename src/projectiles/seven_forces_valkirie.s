@@ -101,7 +101,7 @@ Entity_ValkirieProjectileMove:                          ; DATA XREF: ROM:000549F
                 addq.w  #2,4(a5)
 Entity_ValkirieProjectileUpdateShadowPosition:          ; CODE XREF: Entity_ValkirieProjectileMove+6   j  ; was: loc_54A3C
                                         ; Entity_ValkirieProjectileDecelerate:Entity_ValkirieProjectileContinueShadowSync   j
-                movea.w #(byte_FFDB80-M68K_RAM),a0
+                movea.w #(Entity58Type-M68K_RAM),a0
                 move.w  $14(a5),d0
                 addi.w  #$10,d0
                 move.w  d0,$14(a0)
@@ -124,7 +124,7 @@ Entity_ValkirieProjectileContinueShadowSync:            ; CODE XREF: Entity_Valk
 ; End of function Entity_ValkirieProjectileDecelerate
 ; Grows projectile sprite by incrementing animation frame counter
 Entity_ValkirieProjectileGrowAnimation:                 ; DATA XREF: ROM:000549F8   o  ; was: sub_54A80
-                move.w  #$150,(word_FFDB94).w
+                move.w  #$150,(Entity58YPos).w
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Entity_ValkirieProjectileTransferGrowthFrame
@@ -163,7 +163,7 @@ Entity_ValkirieProjectileShrinkAndLaunch:               ; DATA XREF: ROM:000549F
                 subq.w  #4,$48(a5)
                 bne.s   Entity_ValkirieProjectileTransferShrinkFrame
                 addq.w  #2,4(a5)
-                movea.w #(byte_FFDB80-M68K_RAM),a0
+                movea.w #(Entity58Type-M68K_RAM),a0
                 move.l  #$FFFE8000,$1C(a0)
                 bset    #1,2(a0)
 Entity_ValkirieProjectileTransferShrinkFrame:           ; CODE XREF: Entity_ValkirieProjectileShrinkAndLaunch+C   j  ; was: loc_54B02

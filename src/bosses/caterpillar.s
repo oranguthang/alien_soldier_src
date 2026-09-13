@@ -334,7 +334,7 @@ Boss_CaterpillarApplySegmentWaveHeight:                 ; CODE XREF: Boss_Caterp
 ; End of function Boss_CaterpillarPositionSegmentOnWave
 ; Searches primary and extended ranges for a free homing-projectile slot
 Boss_CaterpillarFindFreeHomingProjectileSlot:           ; CODE XREF: Boss_CaterpillarHomingProjectileSegment:Boss_CaterpillarSpawnHomingProjectile   p  ; was: sub_3D4AC
-                movea.w #(byte_FFD280-M68K_RAM),a0
+                movea.w #(ThirtyFourthEntityType-M68K_RAM),a0
                 jmp     Projectile_FindFreePrimarySlot_CheckExtendedRange
 ; End of function Boss_CaterpillarFindFreeHomingProjectileSlot
 ; Stage ship controller with position-history trail and state dispatch

@@ -67,8 +67,8 @@ Boss_SunsetStingSecondFormInitializeState:              ; DATA XREF: ROM:Boss_Su
                 jsr     (Object_ClearAllExceptTypes).l
                 addq.w  #2,4(a5)
                 move.b  #$80,$4B(a5)
-                clr.w   (word_FFC67E).w
-                clr.w   (word_FFC678).w
+                clr.w   (PrimaryEntityWork5E).w
+                clr.w   (PrimaryEntityWork58).w
                 move.l  #$1C00000,$10(a5)
                 move.l  #$2000000,$14(a5)
                 rts
@@ -96,7 +96,7 @@ Boss_SunsetStingSecondFormLoadGraphicsState:            ; DATA XREF: ROM:0004194
                 ori.w   #$100,$B42(a5)
                 move.w  #$D00,2(a5)
                 lea     (a5),a1
-                move.w  (word_FFC67C).w,d3
+                move.w  (PrimaryEntityWork5C).w,d3
                 subq.w  #1,d3
 Boss_SunsetStingInitializeSecondFormPartPositions:      ; CODE XREF: Boss_SunsetStingSecondFormLoadGraphicsState+76   j  ; was: loc_41A1A
                 move.l  #$1C00000,$10(a1)
@@ -224,7 +224,7 @@ Boss_SunsetStingMovementUpdatePosePatterns:             ; CODE XREF: Boss_Sunset
                 bhi.s   Boss_SunsetStingMovementTrySpawnProjectile
                 tst.b   $4B(a5)
                 bne.w   Boss_SunsetStingMovementDecrementShotDelay
-                move.w  (word_FFC678).w,d0
+                move.w  (PrimaryEntityWork58).w,d0
                 move.b  (FifthEntityWork5C).w,d1
                 andi.w  #4,d1
                 eori.w  #4,d0
@@ -241,20 +241,20 @@ Boss_SunsetStingMovementTrySpawnProjectile:             ; CODE XREF: Boss_Sunset
 Boss_SunsetStingMovementUpdateActiveChain:              ; CODE XREF: Boss_SunsetStingUpdateMovement+A4   j  ; was: loc_41BF6
                 tst.w   d6
                 bmi.s   Boss_SunsetStingMovementUpdateSelectedChain
-                cmp.w   (word_FFC678).w,d6
+                cmp.w   (PrimaryEntityWork58).w,d6
                 beq.s   Boss_SunsetStingMovementUpdateSelectedChain
                 lea     Boss_SunsetStingChainRootOffsets(pc),a2
                 movea.w (a2,d6.w),a4
                 adda.w  a5,a4
                 move.l  #SharedVictorSunsetStingSegmentMappingB,$1E8(a4)
-                move.w  (word_FFC678).w,d0
-                move.w  d6,(word_FFC678).w
+                move.w  (PrimaryEntityWork58).w,d0
+                move.w  d6,(PrimaryEntityWork58).w
                 movea.w (a2,d0.w),a4
                 adda.w  a5,a4
                 move.l  #SharedVictorSunsetStingSegmentMappingA,$1E8(a4)
 Boss_SunsetStingMovementUpdateSelectedChain:            ; CODE XREF: Boss_SunsetStingSetIdleState+20   j  ; was: loc_41C28
                                         ; Boss_SunsetStingUpdateMovement+F6   j
-                move.w  (word_FFC678).w,d6
+                move.w  (PrimaryEntityWork58).w,d6
                 lea     Boss_SunsetStingChainRootOffsets(pc),a4
                 movea.w (a4,d6.w),a4
                 adda.l  a5,a4
@@ -403,7 +403,7 @@ Boss_SunsetStingInitHomingProjectile:                   ; CODE XREF: Boss_Sunset
                 andi.w  #$FF,d0
                 subi.b  #$40,d0                         ; '@'
                 move.w  d0,-(sp)
-                movea.w #(byte_FFD280-M68K_RAM),a0
+                movea.w #(ThirtyFourthEntityType-M68K_RAM),a0
                 jsr     (Projectile_FindFreePrimarySlot_CheckExtendedRange).l
                 bne.s   Boss_SunsetStingInitHomingProjectileReturn
                 move.w  (sp)+,d6

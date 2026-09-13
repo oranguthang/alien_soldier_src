@@ -115,7 +115,7 @@ Boss_SunsetStingInterpolateChainRootAngles:             ; CODE XREF: Boss_Sunset
 Boss_SunsetStingInterpolateChainRootAnglesLoop:         ; CODE XREF: Boss_SunsetStingInterpolateChainRootAngles+1C   j  ; was: loc_42120
                 movea.w (a2)+,a4
                 adda.w  a5,a4
-                move.w  (word_FFC67A).w,d2
+                move.w  (PrimaryEntityWork5A).w,d2
                 add.w   (a3)+,d2
                 sub.w   $58(a4),d2
                 asr.w   #3,d2
@@ -277,10 +277,10 @@ Boss_SunsetStingSecondFormRender:                       ; CODE XREF: Boss_Sunset
                 jsr     (Boss_SunsetStingUpdateBodyPartPositions).l
                 bsr.w   Boss_SunsetStingUpdateScreenBounds
                 lea     Boss_SunsetStingSecondFormTileAnimationOffsets(pc),a0
-                move.w  (word_FFC67E).w,d0
+                move.w  (PrimaryEntityWork5E).w,d0
                 lsr.w   #2,d0
                 bsr.w   Gfx_LoadIndexedAnimationTiles
-                addq.w  #1,(word_FFC67E).w
+                addq.w  #1,(PrimaryEntityWork5E).w
                 ori.w   #$1800,$48E(a5)
                 andi.w  #$E7FF,$6CE(a5)
                 andi.w  #$E7FF,$90E(a5)
@@ -356,7 +356,7 @@ Boss_SunsetStingScatterSecondFormBodyPartsState:
                 bne.w   Boss_SunsetStingSecondFormUpdate
                 addq.w  #2,4(a5)
                 clr.b   $21(a5)
-                move.w  (word_FFC67C).w,d4
+                move.w  (PrimaryEntityWork5C).w,d4
                 subq.w  #2,d4
                 lea     $60(a5),a4
                 lea     (Math_SineTable).l,a2
@@ -394,7 +394,7 @@ Boss_SunsetStingBeginStaggeredBodyPartRemoval:          ; CODE XREF: Boss_Sunset
                 move.b  #$40,$4B(a5)                    ; '@'
                 addq.w  #2,4(a5)
                 move.w  #1,d5
-                move.w  (word_FFC67C).w,d4
+                move.w  (PrimaryEntityWork5C).w,d4
                 subq.w  #2,d4
                 lea     $60(a5),a4
 Boss_SunsetStingAssignBodyPartRemovalDelayLoop:         ; CODE XREF: Boss_SunsetStingScatterSecondFormBodyPartsState+B0   j  ; was: loc_424B0

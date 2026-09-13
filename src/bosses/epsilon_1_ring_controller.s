@@ -1,7 +1,7 @@
 Boss_Epsilon1RingController:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_46D68
-                btst    #0,(word_FFC66C).w
+                btst    #0,(PrimaryEntityWork4C).w
                 bne.s   Boss_Epsilon1DeactivateRingController
-                btst    #2,(word_FFC66C).w
+                btst    #2,(PrimaryEntityWork4C).w
                 beq.s   Boss_Epsilon1DispatchRingMode
 Boss_Epsilon1DeactivateRingController:                  ; CODE XREF: Boss_Epsilon1RingController+6   j  ; was: loc_46D78
                 andi.w  #$7FFF,2(a5)

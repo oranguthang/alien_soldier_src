@@ -58,10 +58,10 @@ Boss_InitMedusaState0:                                  ; DATA XREF: Boss_Update
                 move.w  #$430,(a5)
                 move.w  #$CC00,2(a5)
                 clr.w   (word_FF9804).w
-                movea.w #(word_FFDB20-M68K_RAM),a0
+                movea.w #(Entity57Type-M68K_RAM),a0
                 move.w  #$450,(a0)
                 clr.w   4(a0)
-                movea.w #(word_FFDC40-M68K_RAM),a0
+                movea.w #(Entity60Type-M68K_RAM),a0
                 move.w  $10(a0),$10(a5)
                 move.w  $14(a0),$14(a5)
                 move.l  $18(a0),$18(a5)
@@ -84,7 +84,7 @@ Boss_InitMedusaAtFixedPosition:                         ; was: sub_56A8A
 ; End of function Boss_InitMedusaAtFixedPosition
 ; State two follows the shared vertical coordinate and accepts left/right input
 Boss_UpdateMedusaState2:                                ; DATA XREF: ROM:000569F2   o  ; was: sub_56ABA
-                move.w  (dword_FFDB34).w,d0
+                move.w  (Entity57YPos).w,d0
                 move.w  d0,$14(a5)
                 btst    #2,(ControllerHeldState).w
                 beq.s   Boss_CheckMedusaState2RightInput
@@ -140,7 +140,7 @@ Boss_EnterMedusaState6:                                 ; CODE XREF: Boss_Update
 Boss_UpdateMedusaState6:                                ; DATA XREF: ROM:000569F6   o  ; was: sub_56B6C
                 addi.l  #$2000,$1C(a5)
                 bmi.s   Boss_RenderMedusaState6
-                move.w  (dword_FFDB34).w,d0
+                move.w  (Entity57YPos).w,d0
                 cmp.w   $14(a5),d0
                 bmi.s   Boss_EnterMedusaState8
 Boss_RenderMedusaState6:                                ; CODE XREF: Boss_UpdateMedusaState6+8   j  ; was: loc_56B80
@@ -163,14 +163,14 @@ Boss_UpdateMedusaState8:                                ; DATA XREF: ROM:000569F
                 beq.s   Boss_SyncMedusaState8VerticalPosition
                 addi.l  #$2000,$1C(a5)
                 bmi.s   Boss_RenderMedusaState8
-                move.w  (dword_FFDB34).w,d0
+                move.w  (Entity57YPos).w,d0
                 cmp.w   $14(a5),d0
                 bpl.s   Boss_RenderMedusaState8
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 clr.w   $4DC(a5)
 Boss_SyncMedusaState8VerticalPosition:                  ; CODE XREF: Boss_UpdateMedusaState8   j  ; was: loc_56BD6
-                move.w  (dword_FFDB34).w,d0
+                move.w  (Entity57YPos).w,d0
                 move.w  d0,$14(a5)
                 cmpi.w  #$1C0,$10(a5)
                 bpl.s   Boss_EnterMedusaStateA
@@ -216,20 +216,20 @@ Boss_EnterMedusaStateC:                                 ; CODE XREF: Boss_Update
 ; State C consumes scripted commands and tracks the selected horizontal target
 Boss_UpdateMedusaStateC:                                ; DATA XREF: ROM:000569FC   o  ; was: loc_56C5C
                 move.l  #Medusa_StateACPoseScript,$53C(a5)
-                tst.b   (byte_FFDB76).w
+                tst.b   (Entity57Work56).w
                 beq.w   Boss_EnterMedusaStateE
                 tst.w   $4DC(a5)
                 beq.s   Boss_SyncMedusaStateCVerticalPosition
                 addi.l  #$2000,$1C(a5)
                 bmi.s   Boss_ProcessMedusaStateCCommand
-                move.w  (dword_FFDB34).w,d0
+                move.w  (Entity57YPos).w,d0
                 cmp.w   $14(a5),d0
                 bpl.s   Boss_ProcessMedusaStateCCommand
                 move.w  #1,(PlaneAShakeLevel).w
                 clr.w   $4DC(a5)
                 clr.l   $1C(a5)
 Boss_SyncMedusaStateCVerticalPosition:                  ; CODE XREF: Boss_UpdateMedusaStateC   j  ; was: loc_56C94
-                move.w  (dword_FFDB34).w,d0
+                move.w  (Entity57YPos).w,d0
                 move.w  d0,$14(a5)
 Boss_ProcessMedusaStateCCommand:                        ; CODE XREF: Boss_UpdateMedusaStateC   j  ; was: loc_56C9C
                 cmpi.w  #4,$47E(a5)
@@ -265,9 +265,9 @@ Boss_UpdateMedusaStateE:                                ; DATA XREF: ROM:000569F
                 addi.l  #$2000,$1C(a5)
                 bmi.s   Boss_RenderMedusaStateE
 Boss_CheckMedusaStateEVerticalTransfer:                 ; CODE XREF: Boss_UpdateMedusaStateE   j  ; was: loc_56D08
-                tst.b   (byte_FFDB76).w
+                tst.b   (Entity57Work56).w
                 beq.s   Boss_RenderMedusaStateE
-                move.w  (dword_FFDB34).w,d0
+                move.w  (Entity57YPos).w,d0
                 cmp.w   $14(a5),d0
                 bpl.s   Boss_RenderMedusaStateE
                 addq.w  #2,4(a5)
@@ -331,7 +331,7 @@ Boss_EnterMedusaState10:                                ; CODE XREF: Boss_Update
 ; State $10 accelerates left until it can return to state C
 Boss_UpdateMedusaState10:                               ; DATA XREF: ROM:00056A00   o  ; was: loc_56DD0
                 move.l  #Medusa_State10PoseScript,$53C(a5)
-                tst.b   (byte_FFDB76).w
+                tst.b   (Entity57Work56).w
                 beq.w   Boss_EnterMedusaStateE
                 move.w  #1,(PlaneAShakeLevel).w
                 cmpi.w  #$D0,$10(a5)
@@ -409,7 +409,7 @@ Boss_ApplyMedusaRightAcceleration:                      ; CODE XREF: Boss_Accele
 ; Synchronize Medusa with the shared vertical coordinate
 Boss_SyncMedusaVerticalPosition:                        ; CODE XREF: Boss_UpdateMedusaStateAApproach   j  ; was: sub_56EAC
                                         ; Boss_RenderMedusaState12MovingPose   j
-                move.w  (dword_FFDB34).w,d0
+                move.w  (Entity57YPos).w,d0
                 move.w  d0,$14(a5)
 ; End of function Boss_SyncMedusaVerticalPosition
 ; Advance the pose, apply it to the metasprite, and traverse its 20 parts
@@ -508,7 +508,7 @@ Boss_ApplyMedusaPoseToParts:                            ; CODE XREF: Boss_Render
                 bsr.w   Boss_OffsetMedusaPosePartGroup
                 movea.w #(TwelfthEntityType-M68K_RAM),a1
                 bsr.w   Boss_OffsetMedusaPosePartGroup
-                movea.w #(byte_FFCC20-M68K_RAM),a1
+                movea.w #(SeventeenthEntityType-M68K_RAM),a1
                 bsr.w   Boss_OffsetMedusaPosePartGroup
                 move.b  $14(a0),d1
                 ext.w   d1

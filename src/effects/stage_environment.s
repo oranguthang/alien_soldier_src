@@ -142,7 +142,7 @@ TerrainTileAnimation_FramePatterns: dc.w    $878C, $888D, $898E, $8A8F, $8B90  ;
 
 ; Initialize the six ambient screen particles shared by Stages 10 and 11
 Midgame_InitializeAmbientParticles:                     ; CODE XREF: Midgame_InitializeRasterAndAmbientEffects+A   p  ; was: sub_2F504
-                movea.w #(byte_FFD8E0-M68K_RAM),a0
+                movea.w #(AmbientParticlePool-M68K_RAM),a0
                 moveq   #5,d7
 Midgame_InitializeAmbientParticles_Loop:                ; CODE XREF: Midgame_InitializeAmbientParticles+C   j  ; was: loc_2F50A
                 bsr.s   Midgame_InitializeAmbientParticle

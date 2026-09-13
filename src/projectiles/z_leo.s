@@ -134,7 +134,7 @@ Projectile_ZLeoOrbRemove:                               ; CODE XREF: Projectile_
                 rts
 ; ---------------------------------------------------------------------------
 Projectile_ZLeoOrbBounceAtStageBoundary:                ; CODE XREF: Projectile_ZLeoOrbMain+52   j  ; was: loc_530B6
-                move.w  (dword_FFDB34).w,d0
+                move.w  (Entity57YPos).w,d0
                 cmp.w   $14(a5),d0
                 bpl.s   Projectile_ZLeoOrbSelectFlashFrame
                 tst.w   $1C(a5)

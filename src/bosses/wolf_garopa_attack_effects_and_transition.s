@@ -1,6 +1,6 @@
 Effect_InitializeWolfGaropaBoundaryPair:                ; CODE XREF: Boss_WolfGaropaTryLoadAttackEffectA+1C   p  ; was: sub_50CD4
                                         ; Boss_WolfGaropaLoadAttackEffectB+14   p
-                movea.w #(word_FFDC40-M68K_RAM),a0
+                movea.w #(Entity60Type-M68K_RAM),a0
                 move.w  #$418,(a0)
                 clr.w   2(a0)
                 move.w  d0,$48(a0)
@@ -21,7 +21,7 @@ Effect_InitializeWolfGaropaBoundaryPair:                ; CODE XREF: Boss_WolfGa
 Effect_StoreWolfGaropaBoundaryPairParameters:           ; CODE XREF: Effect_InitializeWolfGaropaBoundaryPair+42   j  ; was: loc_50D28
                 move.l  d1,$28(a0)
                 move.l  d2,$2C(a0)
-                movea.w #(word_FFDB20-M68K_RAM),a0
+                movea.w #(Entity57Type-M68K_RAM),a0
                 move.w  d3,$14(a0)
                 jsr     (Pickup_SpawnSmall).l
                 move.w  #$420,(a0)
@@ -90,9 +90,9 @@ Effect_PushPlayerFromWolfGaropaBoundary:                ; CODE XREF: Effect_Wolf
                 cmpi.w  #$91,(PlayerXPosition).w
                 bpl.s   Effect_WolfGaropaBoundaryReturn
                 bset    #6,$21(a5)
-                tst.w   (word_FFDB20).w
+                tst.w   (Entity57Type).w
                 beq.s   Effect_WolfGaropaBoundaryPushReturn
-                bset    #4,(word_FFDB22).w
+                bset    #4,(Entity57Flags).w
 Effect_WolfGaropaBoundaryPushReturn:                    ; CODE XREF: Effect_WolfGaropaBoundaryMain+B2   j  ; was: locret_50E0A
                 rts
 ; End of function Effect_WolfGaropaBoundaryMain
@@ -104,9 +104,9 @@ Effect_WolfGaropaBoundaryFollowerMain:                  ; DATA XREF: ROM:Entity_
                 rts
 ; ---------------------------------------------------------------------------
 Effect_UpdateWolfGaropaBoundaryFollowerPosition:        ; CODE XREF: Effect_WolfGaropaBoundaryFollowerMain+4   j  ; was: loc_50E1A
-                tst.w   (word_FFDC40).w
+                tst.w   (Entity60Type).w
                 beq.s   Effect_ScrollWolfGaropaBoundaryFollower
-                move.w  (word_FFDC50).w,d0
+                move.w  (Entity60XPos).w,d0
                 addi.w  #$30,d0                         ; '0'
                 move.w  d0,$10(a5)
                 bra.s   Effect_UpdateWolfGaropaBoundaryFollowerSprite

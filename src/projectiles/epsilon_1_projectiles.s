@@ -329,9 +329,9 @@ Projectile_Epsilon1ConvertBarrageRowProjectileToDebrisReturn:  ; CODE XREF: Proj
 ; End of function Projectile_Epsilon1ConvertBarrageRowProjectileToDebris
 ; Type-$284 fixed ring object created with the twelve-object Epsilon 1 ring
 Boss_Epsilon1RingObjectMain:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_47486
-                btst    #0,(word_FFC66C).w
+                btst    #0,(PrimaryEntityWork4C).w
                 bne.s   Boss_Epsilon1ForceRingObjectDefeatHold
-                btst    #2,(word_FFC66C).w
+                btst    #2,(PrimaryEntityWork4C).w
                 beq.s   Boss_Epsilon1DispatchRingObjectState
                 clr.w   4(a5)
                 bra.s   Boss_Epsilon1DeactivateRingObjectAndLink

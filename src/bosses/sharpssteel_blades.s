@@ -2,7 +2,7 @@
 
 Boss_SharpssteelWaitForComplexAlignmentState:           ; DATA XREF: ROM:00047C88   o  ; was: sub_484E4
                 move.w  $314(a5),d0
-                sub.w   (dword_FFDB34).w,d0
+                sub.w   (Entity57YPos).w,d0
                 cmpi.w  #$38,d0                         ; '8'
                 bmi.s   Boss_SharpssteelInitializeComplexAcceleration
                 bsr.w   Boss_SharpssteelUpdateBladeAnglesFromPose
@@ -12,14 +12,14 @@ Boss_SharpssteelInitializeComplexAcceleration:          ; CODE XREF: Boss_Sharps
                 addq.w  #2,4(a5)
                 move.w  #8,(PlaneAShakeLevel).w
                 move.w  #2,(PlaneBShakeLevel).w
-                bset    #0,(byte_FFDB7A).w
-                clr.l   (dword_FFDB3C).w
-                move.l  #$8000,(dword_FFDB38).w
+                bset    #0,(Entity57Work5A).w
+                clr.l   (Entity57YVel).w
+                move.l  #$8000,(Entity57XVel).w
                 move.l  #$A000,$18(a5)
                 cmpi.w  #$120,$10(a5)
                 bmi.s   Boss_SharpssteelAccelerateComplexMotionState
                 neg.l   $18(a5)
-                neg.l   (dword_FFDB38).w
+                neg.l   (Entity57XVel).w
 ; Advances the complex-phase motion until the blade animation trigger fires
 Boss_SharpssteelAccelerateComplexMotionState:           ; CODE XREF: Boss_SharpssteelWaitForComplexAlignmentState+46   j  ; was: loc_48534
                                         ; DATA XREF: ROM:00047C8A   o
@@ -28,14 +28,14 @@ Boss_SharpssteelAccelerateComplexMotionState:           ; CODE XREF: Boss_Sharps
                 bne.s   Boss_SharpssteelBeginComplexOscillation
                 move.w  $314(a5),d0
                 subi.w  #$30,d0                         ; '0'
-                move.w  d0,(dword_FFDB34).w
+                move.w  d0,(Entity57YPos).w
                 lea     Boss_SharpssteelComplexOscillationPoseCommands(pc),a1
                 nop
                 bra.w   Boss_SharpssteelUpdateBladeAssembly
 ; ---------------------------------------------------------------------------
 Boss_SharpssteelBeginComplexOscillation:                ; CODE XREF: Boss_SharpssteelWaitForComplexAlignmentState+5E   j
                 addq.w  #2,4(a5)
-                bset    #1,(byte_FFDB7A).w
+                bset    #1,(Entity57Work5A).w
                 clr.w   $11E(a5)
                 addi.l  #$A000,$1C(a5)
                 move.l  #$15000,d0

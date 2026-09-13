@@ -1,8 +1,8 @@
 Projectile_Epsilon1ConvertOnGlobalMode:                 ; CODE XREF: Projectile_Epsilon1SpreadProjectileMain   p  ; was: sub_477D8
                                         ; Projectile_Epsilon1BarrageEmitterMain   p
-                btst    #0,(word_FFC66C).w
+                btst    #0,(PrimaryEntityWork4C).w
                 bne.s   Projectile_Epsilon1ConvertToType88
-                btst    #2,(word_FFC66C).w
+                btst    #2,(PrimaryEntityWork4C).w
                 beq.s   Projectile_Epsilon1GlobalModeReturn
 Projectile_Epsilon1ConvertToType88:                     ; CODE XREF: Projectile_Epsilon1ConvertOnGlobalMode+6   j  ; was: loc_477E8
                 move.l  #SharedCombatSpriteAnimation05,8(a5)

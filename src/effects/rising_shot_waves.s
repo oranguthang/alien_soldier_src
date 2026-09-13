@@ -15,7 +15,7 @@ Effect_RisingShotWaveControllerStates:  dc.w    Effect_RisingShotWaveInit-*  ; D
 ; Initializes the controller and its optional Stage 11 fish-wave companion
 Effect_RisingShotWaveInit:                              ; DATA XREF: ROM:Effect_RisingShotWaveControllerStates   o  ; was: sub_3367A
                 clr.w   $4A(a5)
-                cmpi.w  #$3E0,(word_FFDB20).w
+                cmpi.w  #$3E0,(Entity57Type).w
                 beq.s   Effect_RisingShotWaveSkipFishController
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Effect_RisingShotWaveBeginDelay
@@ -60,7 +60,7 @@ Effect_RisingShotWaveFinishAllocation:                  ; CODE XREF: Effect_Risi
 ; End of function Effect_RisingShotWaveAllocateMembers
 ; Initializes one delayed rising shot at each scripted position
 Effect_RisingShotWaveLaunchPattern:                     ; DATA XREF: ROM:00033676   o  ; was: sub_336EA
-                cmpi.w  #$3E0,(word_FFDB20).w
+                cmpi.w  #$3E0,(Entity57Type).w
                 beq.s   Effect_RisingShotWaveSelectStage24Pattern
                 lea     Effect_RisingShotWavePositionScript(pc),a1
                 nop
@@ -97,7 +97,7 @@ Effect_RisingShotWaveAdvanceMember:                     ; CODE XREF: Effect_Risi
 ; ---------------------------------------------------------------------------
 Effect_RisingShotWaveFinish:                            ; CODE XREF: Effect_RisingShotWaveLaunchPattern+54   j  ; was: loc_3374C
                 move.w  #$1000,2(a5)
-                cmpi.w  #$3E0,(word_FFDB20).w
+                cmpi.w  #$3E0,(Entity57Type).w
                 beq.s   Effect_RisingShotWaveFinishReturn
                 movea.w $40(a5),a0
                 move.w  #$1000,2(a0)

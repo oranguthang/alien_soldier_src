@@ -393,7 +393,7 @@ Boss_ShiperWaitForBossMessageState:                     ; DATA XREF: ROM:000364B
                 bne.s   Boss_ShiperWaitForBossMessageReturn
                 subi.w  #$A0,(CameraXLowerBound).w
                 clr.b   (byte_FF80EC).w
-                move.w  #$104,(word_FFDB20).w
+                move.w  #$104,(Entity57Type).w
                 bra.w   Boss_ShiperRetreatState
 ; ---------------------------------------------------------------------------
 Boss_ShiperWaitForBossMessageReturn:                    ; CODE XREF: Boss_ShiperWaitForBossMessageState+8   j  ; was: locret_3692E

@@ -97,26 +97,26 @@ Boss_JampanAttackSelectionNoOpHook:                     ; CODE XREF: Boss_Jampan
 Boss_JampanEnableShields:                               ; CODE XREF: Boss_JampanShieldCycleDelayState+12   p  ; was: sub_4A118
                                         ; Boss_JampanWaitForAlternatePatternAngleState+10   p
                 move.w  #5,d7
-                movea.w #(byte_FFCE60-M68K_RAM),a0
+                movea.w #(TwentyThirdEntityType-M68K_RAM),a0
 Boss_JampanEnableShieldLoop:                            ; CODE XREF: Boss_JampanEnableShields+12   j  ; was: loc_4A120
                 ori.w   #$8000,2(a0)
                 lea     $60(a0),a0
                 dbf     d7,Boss_JampanEnableShieldLoop
-                move.b  #$40,(byte_FFCE81).w            ; '@'
-                move.w  #$A0,(word_FFCE86).w
-                move.l  #$F808F808,(dword_FFCE8C).w
+                move.b  #$40,(TwentyThirdEntityStatus).w  ; '@'
+                move.w  #$A0,(TwentyThirdEntityWork26).w
+                move.l  #$F808F808,(TwentyThirdEntityWork2C).w
                 rts
 ; End of function Boss_JampanEnableShields
 ; Disables all 6 shield entities
 Boss_JampanDisableShields:                              ; CODE XREF: Boss_JampanCollapseShieldRadiusState+1A   p  ; was: sub_4A144
                                         ; Boss_JampanCollapseAlternatePatternState+12   p
                 move.w  #5,d7
-                movea.w #(byte_FFCE60-M68K_RAM),a0
+                movea.w #(TwentyThirdEntityType-M68K_RAM),a0
 Boss_JampanDisableShieldLoop:                           ; CODE XREF: Boss_JampanDisableShields+12   j  ; was: loc_4A14C
                 andi.w  #$7FFF,2(a0)
                 lea     $60(a0),a0
                 dbf     d7,Boss_JampanDisableShieldLoop
-                clr.b   (byte_FFCE81).w
+                clr.b   (TwentyThirdEntityStatus).w
                 rts
 ; End of function Boss_JampanDisableShields
 ; Projects the six shield objects from the shared radius and angle fields
@@ -136,29 +136,29 @@ Boss_JampanUpdateShieldFormationGeometry:               ; CODE XREF: Boss_Jampan
                 andi.w  #$1FE,d6
                 andi.w  #$1FE,d7
                 movea.w #(SeventhEntityType-M68K_RAM),a1
-                movea.w #(byte_FFD040-M68K_RAM),a0
+                movea.w #(TwentyEighthEntityType-M68K_RAM),a0
                 bsr.w   Boss_JampanProjectPartFromAngles
                 movea.w a0,a1
                 lea     -$60(a0),a0
                 move.w  #4,d0
 Boss_JampanProjectNextShieldObject:                     ; CODE XREF: Boss_JampanUpdateShieldFormationGeometry+60   j  ; was: loc_4A1AA
                 bsr.w   Boss_JampanProjectPartFromAngles
-                move.w  (word_FFD04E).w,$E(a0)
-                move.b  (byte_FFD060).w,$20(a0)
+                move.w  (TwentyEighthEntityAttr).w,$E(a0)
+                move.b  (JampanShieldWork20).w,$20(a0)
                 movea.w a0,a1
                 lea     -$60(a0),a0
                 dbf     d0,Boss_JampanProjectNextShieldObject
                 cmpi.w  #$52,4(a5)                      ; 'R'
                 bcc.s   Boss_JampanClearShieldCollisionField
-                move.w  (word_FFCE6E).w,d0
+                move.w  (TwentyThirdEntityAttr).w,d0
                 andi.w  #$8000,d0
                 bne.s   Boss_JampanSetShieldCollisionField
 Boss_JampanClearShieldCollisionField:                   ; CODE XREF: Boss_JampanUpdateShieldFormationGeometry+6A   j  ; was: loc_4A1D6
-                clr.b   (byte_FFCE81).w
+                clr.b   (TwentyThirdEntityStatus).w
                 rts
 ; ---------------------------------------------------------------------------
 Boss_JampanSetShieldCollisionField:                     ; CODE XREF: Boss_JampanUpdateShieldFormationGeometry+74   j  ; was: loc_4A1DC
-                move.b  #$40,(byte_FFCE81).w            ; '@'
+                move.b  #$40,(TwentyThirdEntityStatus).w  ; '@'
                 rts
 ; End of function Boss_JampanUpdateShieldFormationGeometry
 ; Type-$23C shield handler: falling motion, bounces, shot burst, and conversion
