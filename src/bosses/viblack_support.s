@@ -101,13 +101,13 @@ Boss_ViblackUpdateScrollAndCompanion:                   ; CODE XREF: Boss_Viblac
 ; Shifts the prior vertical-scroll samples and builds the next clipped profile
 Boss_ViblackBuildScrollProfile:                         ; CODE XREF: Boss_ViblackInit+E0   j  ; was: sub_43FEA
                                         ; Boss_ViblackUpdateScrollAndCompanion   p
-                movea.w #(word_FF9480-M68K_RAM),a0
+                movea.w #(ViblackScrollSamples-M68K_RAM),a0
                 movea.w #(VerticalScrollProfile-M68K_RAM),a1
                 moveq   #9,d7
 Boss_ViblackCopyPreviousScrollSamplesLoop:              ; CODE XREF: Boss_ViblackBuildScrollProfile+C   j  ; was: loc_43FF4
                 move.l  (a0)+,(a1)+
                 dbf     d7,Boss_ViblackCopyPreviousScrollSamplesLoop
-                movea.w #(word_FF9480-M68K_RAM),a0
+                movea.w #(ViblackScrollSamples-M68K_RAM),a0
                 move.w  #0,d0
                 moveq   #$13,d7
 Boss_ViblackClearNextScrollSamplesLoop:                 ; CODE XREF: Boss_ViblackBuildScrollProfile+1C   j  ; was: loc_44004
@@ -151,7 +151,7 @@ Boss_ViblackBuildLowerScrollProfileLoop:                ; CODE XREF: Boss_Viblac
                 move.w  d0,-(a1)
                 dbf     d7,Boss_ViblackBuildLowerScrollProfileLoop
                 movea.w #(dword_FF9400-M68K_RAM),a0
-                movea.w #(word_FF9480-M68K_RAM),a1
+                movea.w #(ViblackScrollSamples-M68K_RAM),a1
                 moveq   #$13,d7
                 move.w  (SecondaryCameraXPos).w,d0
                 addi.w  #$F,d0

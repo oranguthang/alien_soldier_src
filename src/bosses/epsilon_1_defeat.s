@@ -338,7 +338,7 @@ Boss_Epsilon1FinalDespawnReturn:                        ; CODE XREF: Boss_Epsilo
 Boss_Epsilon1UpdateBodyPose:                            ; CODE XREF: Boss_Epsilon1Main+124   p  ; was: sub_46B64
                 move.w  (dword_FF9414+2).w,d0
                 add.w   d0,d0
-                lea     (word_FF9480).w,a0
+                lea     (Epsilon1AngleHistory).w,a0
                 move.w  (a0,d0.w),$56(a5)
                 move.w  (dword_FF9418+2).w,d0
                 lea     Boss_Epsilon1BodyPoseStates(pc,d0.w),a0

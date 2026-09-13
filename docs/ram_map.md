@@ -179,6 +179,7 @@ fields to seed its displayed state.
 | `TransitionProgress` (`GameOverLandscapeAngle` overlay) | `$FFFF807C` | Transition effects advance this word toward `$7F` and use it for interpolation, palette, and mask phases; the mutually exclusive Game Over landscape uses the same storage as its lookup-table angle offset. |
 | `TransitionOriginXY` (`GameOverLandscapeDepth` overlay) | `$FFFF807E` | Transition objects publish their high-word X and Y positions as a packed pair for buffer construction; Game Over reuses the first word as the perspective depth divisor. |
 | `TransitionMaskStep` (`GameOverViewOffset` overlay) | `$FFFF8082` | Transition setup clears this mask step and the tunnel effect derives it from progress; Game Over reuses the word as the signed view offset added to its perspective accumulator. |
+| `SharedSceneControl` (`PasswordCursorMoveFlag`, `StageEventTimer`, `PaletteTestSelector` overlays) | `$FFFF806E` | Password navigation uses this word as a cursor-motion gate, Stage 9/12/13 use it as encounter or exit countdowns, and an unreferenced controller routine uses it as a packed palette target/value selector. |
 
 `SetupTransitionIndex` is deliberately named for both observed lifetimes. A
 narrow weapon-page or cutscene-route name would be false because the same RAM
@@ -764,6 +765,9 @@ repeats the resulting four-word group into `HorizontalScrollProfile`.
 | `Epsilon1ProximityTimer` | `$FFFF9472` | Epsilon 1 increments this word while the player remains within twelve pixels and the proximity flag is clear; difficulty selects a `$40` or `$80` threshold. |
 | `Epsilon1ProximityFlag` | `$FFFF9474` | The proximity threshold sets this word; it changes attack selection and terminates ring repetitions until battle-center recovery clears it. |
 | `Epsilon1VerticalAccel` | `$FFFF9478` | Epsilon 1 attack states load signed acceleration values here, and the shared motion helper adds the longword to the boss vertical velocity. |
+| `SharedProfileBuffer` (`TransitionRampBuffer`, `Epsilon1AngleHistory`, `ViblackScrollSamples` overlays) | `$FFFF9480` | Transition code builds a 63-pair symmetric ramp here, Epsilon 1 shifts and samples angle history, and Viblack builds then copies its scroll samples; the modes are mutually exclusive. |
+| `BugmaxPositionHistory` | `$FFFF95E0` | Bugmax seeds eight packed position samples, shifts a new boss X/Y pair through the history, and reads delayed endpoints for linked-chain projection. |
+| `BugmaxAuxAngleHistory` | `$FFFF9680` | Bugmax shifts eight rows of eight auxiliary-chain angle samples and copies delayed row values into the secondary linked-part records. |
 | `ShieldViperTrailAngles` | `$FFFF94A0` | Shield Viper initializes and shifts angle-history words from this base, then applies or interpolates them across linked body records. |
 | `Epsilon1TileDMARecord` | `$FFFF9446` | The animated-tile helper builds one four-word destination/source/count/frame record here before submitting it to the indexed-column loader. |
 | `FlyingNeoVScrollRamp` | `$FFFF9506` | Flying Neo's line-scroll builder writes its descending vertical ramp and camera-relative tail from this address. |

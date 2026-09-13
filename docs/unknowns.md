@@ -7045,3 +7045,46 @@ mappings and the exact-address audit registry from 13,160 to 13,163. The
 semantic review upper bound remains 3,095 because every new imported mapping
 has a matching record. The enforced address-derived ceiling falls from 96 to
 93, all still confined to RAM equates.
+
+The shared low-RAM scene-control pass resolves `$FFFF806E` through three
+mutually exclusive overlays. `PasswordCursorMoveFlag` becomes two after a
+valid horizontal selection change, gates input while the cursor moves, and
+clears on arrival. `StageEventTimer` carries the Stage 9 post-boss delay and
+Stage 12/13 encounter countdowns. The unreferenced controller-driven palette
+routine uses `PaletteTestSelector` bits for both its target-word offset and its
+replacement-value selection. `SharedSceneControl` therefore remains the
+honest physical anchor rather than assigning any one subsystem permanent
+ownership.
+
+The raw definition receives provenance and one exact-address audit record;
+the three contextual aliases do not invent additional imported mappings.
+Provenance rises from 15,958 to 15,959 mappings and the audit registry from
+13,163 to 13,164. The semantic review upper bound remains 3,095, and the
+enforced address-derived ceiling falls from 93 to 92 RAM equates.
+
+The shared profile-buffer pass resolves `$FFFF9480` as another intentional
+workspace overlay. Transition code fills and consumes a 63-pair symmetric
+`TransitionRampBuffer`; Epsilon 1 shifts, clears, and samples
+`Epsilon1AngleHistory`; Viblack constructs and copies
+`ViblackScrollSamples`. These lifetimes are mutually exclusive, so
+`SharedProfileBuffer` records the physical allocation while each subsystem
+uses its own proven view.
+
+The raw definition receives provenance and one exact-address audit record;
+the contextual aliases do not create fictitious imported symbols. Provenance
+rises from 15,959 to 15,960 mappings and the audit registry from 13,164 to
+13,165. The semantic review upper bound remains 3,095, and the enforced
+address-derived ceiling falls from 92 to 91 RAM equates.
+
+The Bugmax history pass resolves two boss-private work areas.
+`BugmaxPositionHistory` holds eight packed X/Y samples: initialization seeds
+all entries, both linked-chain geometry paths shift the current boss position,
+and delayed endpoints drive their projections. `BugmaxAuxAngleHistory` holds
+eight rows of eight angle samples that are shifted and copied into the
+auxiliary linked-part records through delayed row offsets.
+
+Both definitions receive provenance and exact-address static audit records.
+Provenance rises from 15,960 to 15,962 mappings and the audit registry from
+13,165 to 13,167. The semantic review upper bound remains 3,095 because both
+new mappings have matching records, while the enforced address-derived ceiling
+falls from 91 to 89 RAM equates.

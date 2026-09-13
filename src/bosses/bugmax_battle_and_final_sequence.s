@@ -96,7 +96,7 @@ Boss_BugmaxSeedSecondaryAngleHistoryRowLoop:            ; CODE XREF: Boss_Bugmax
                 add.w   (PrimaryCameraXPosition).w,d0
                 swap    d0
                 move.w  $14(a5),d0
-                lea     (word_FF95E0).w,a0
+                lea     (BugmaxPositionHistory).w,a0
                 move.w  #7,d7
 Boss_BugmaxSeedPrimaryPositionHistoryLoop:              ; CODE XREF: Boss_BugmaxInitializeBattleObjectChains+1AC   j  ; was: loc_4CAFE
                 move.l  d0,(a0)+

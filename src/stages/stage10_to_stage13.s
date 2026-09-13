@@ -222,7 +222,7 @@ Stage12_UpdateScrollToExit:                             ; DATA XREF: ROM:0000D97
                 cmpi.w  #$1580,(PrimaryCameraXPosition).w
                 bmi.w   Stage_MidgameStateReturn
                 addq.w  #2,(StageStateOffset).w
-                move.w  #$80,(word_FF806E).w
+                move.w  #$80,(StageEventTimer).w
                 move.w  #$8000,(GlobalSpritePriorityBit).w
                 move.b  #1,(SoundFadeOutDelay).w
                 rts
@@ -393,9 +393,9 @@ Stage12To13_UpdateTeleportAndSnakeScroll:               ; CODE XREF: Stage12To13
 ; Decrement the Stage 12 exit timer when it is active
 Stage12_DecrementExitTimer:                             ; CODE XREF: Stage12_UpdateScrollToExitTiles+8   p  ; was: sub_DCFC
                                         ; Stage12_UpdateScrollToSharpssteel+8   p
-                tst.w   (word_FF806E).w
+                tst.w   (StageEventTimer).w
                 bmi.w   Stage_MidgameStateReturn
-                subq.w  #1,(word_FF806E).w
+                subq.w  #1,(StageEventTimer).w
                 bne.w   Stage_MidgameStateReturn
                 rts
 ; End of function Stage12_DecrementExitTimer
@@ -429,7 +429,7 @@ Stage13_InitializeBugmaxApproach:                       ; DATA XREF: ROM:0000D99
                 move.w  #$460,d0
                 cmp.w   (PrimaryCameraXPosition).w,d0
                 bpl.w   Stage_MidgameStateReturn
-                move.w  #$100,(word_FF806E).w
+                move.w  #$100,(StageEventTimer).w
                 addq.w  #2,(StageStateOffset).w
                 clr.l   (CameraXDelta).w
                 move.w  d0,(PrimaryCameraXPosition).w
@@ -447,7 +447,7 @@ Stage13_UpdateBugmaxApproach:                           ; DATA XREF: ROM:0000D99
                 bsr.w   Scroll_UpdateSnakeBackground
                 jsr     (Tilemap_QueueNextConstantRow).l
                 bpl.w   Stage_MidgameStateReturn
-                subq.w  #1,(word_FF806E).w
+                subq.w  #1,(StageEventTimer).w
                 bmi.s   Stage13_InitializeBugmaxEncounter
                 tst.w   (Entity_ObjectPool).w
                 bne.w   Stage_MidgameStateReturn

@@ -46,7 +46,7 @@ Boss_BugmaxProjectForwardLinkedChainLoop:               ; CODE XREF: Boss_Bugmax
                 lea     $60(a0),a0
                 dbf     d7,Boss_BugmaxProjectForwardLinkedChainLoop
                 move.w  $10(a5),d0
-                lea     (word_FF95E0).w,a0
+                lea     (BugmaxPositionHistory).w,a0
                 move.w  #7,d7
 Boss_BugmaxShiftPrimaryPositionHistoryLoop:             ; CODE XREF: Boss_BugmaxUpdateLinkedChainGeometry+6E   j  ; was: loc_4BF58
                 move.w  (a0),d1
@@ -289,7 +289,7 @@ Boss_BugmaxUpdatePositionAndAngleHistories:             ; CODE XREF: Boss_Bugmax
                 add.w   (PrimaryCameraXPosition).w,d0
                 swap    d0
                 move.w  $14(a5),d0
-                lea     (word_FF95E0).w,a0
+                lea     (BugmaxPositionHistory).w,a0
                 move.w  #7,d7
 Boss_BugmaxShiftPositionHistoryLoop:                    ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+14C   j  ; was: loc_4C242
                 move.l  (a0),d1
@@ -358,7 +358,7 @@ Boss_BugmaxCopyPrimaryAnglesToLinkedPartsLoop:          ; CODE XREF: Boss_Bugmax
                 dbf     d7,Boss_BugmaxCopyPrimaryAnglesToLinkedPartsLoop
                 move.w  (SecondaryEntityWork4C).w,d0
                 add.w   d0,d0
-                lea     (word_FF9680).w,a0
+                lea     (BugmaxAuxAngleHistory).w,a0
                 move.w  #7,d7
 Boss_BugmaxShiftSecondaryAngleHistoryRowsLoop:          ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+22A   j  ; was: loc_4C318
                 move.w  #7,d6
@@ -369,7 +369,7 @@ Boss_BugmaxShiftSecondaryAngleHistoryRowLoop:           ; CODE XREF: Boss_Bugmax
                 dbf     d6,Boss_BugmaxShiftSecondaryAngleHistoryRowLoop
                 dbf     d7,Boss_BugmaxShiftSecondaryAngleHistoryRowsLoop
                 movea.w #(EighthEntityType-M68K_RAM),a0
-                lea     (word_FF9680).w,a1
+                lea     (BugmaxAuxAngleHistory).w,a1
                 move.w  #$10,d6
                 move.w  #7,d7
 Boss_BugmaxCopySecondaryAnglesToLinkedPartsLoop:        ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+24C   j  ; was: loc_4C33A

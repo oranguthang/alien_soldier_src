@@ -86,14 +86,14 @@ Boss_Epsilon1UpdateBodyAndAngleHistory:                 ; CODE XREF: Boss_Epsilo
                 bsr.w   Boss_Epsilon1UpdateBodyPose
                 move.w  (dword_FF9414).w,d0
                 andi.w  #$1FE,d0
-                lea     (word_FF9480).w,a0
+                lea     (Epsilon1AngleHistory).w,a0
                 move.w  #$2F,d7                         ; '/'
 Boss_Epsilon1ShiftAngleHistoryLoop:                     ; CODE XREF: Boss_Epsilon1Main+13E   j  ; was: loc_45C08
                 move.w  (a0),d1
                 move.w  d0,(a0)+
                 move.w  d1,d0
                 dbf     d7,Boss_Epsilon1ShiftAngleHistoryLoop
-                lea     (word_FF9480).w,a0
+                lea     (Epsilon1AngleHistory).w,a0
                 lea     (dword_FF9400).w,a1
                 move.w  #5,d7
 Boss_Epsilon1SampleAngleHistoryLoop:                    ; CODE XREF: Boss_Epsilon1Main+15A   j  ; was: loc_45C1E
@@ -273,7 +273,7 @@ Boss_Epsilon1InitializeBattleObjectsState:              ; DATA XREF: ROM:00045CF
                 clr.l   (dword_FF946E).w
                 clr.l   (Epsilon1VerticalAccel).w
                 moveq   #0,d0
-                lea     (word_FF9480).w,a0
+                lea     (Epsilon1AngleHistory).w,a0
                 move.w  #5,d7
 Boss_Epsilon1ClearAngleHistoryRowsLoop:                 ; CODE XREF: Boss_Epsilon1InitializeBattleObjectsState+70   j  ; was: loc_45E00
                 move.w  (dword_FF9414+2).w,d6

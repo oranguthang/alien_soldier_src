@@ -16,13 +16,13 @@ Stage17_InitializeEpsilon1Transition_Return:            ; CODE XREF: Stage17_Ini
 UnreferencedUpdateIndexedPaletteWord:
                 btst    #0,(ControllerHeldState).w      ; was: sub_E14E
                 beq.s   UnreferencedUpdateIndexedPaletteWord_CheckDecrease
-                addq.w  #2,(word_FF806E).w
+                addq.w  #2,(PaletteTestSelector).w
 UnreferencedUpdateIndexedPaletteWord_CheckDecrease:     ; CODE XREF: UnreferencedUpdateIndexedPaletteWord+6   j  ; was: loc_E15A
                 btst    #1,(ControllerHeldState).w
                 beq.s   UnreferencedUpdateIndexedPaletteWord_Select
-                subq.w  #2,(word_FF806E).w
+                subq.w  #2,(PaletteTestSelector).w
 UnreferencedUpdateIndexedPaletteWord_Select:            ; CODE XREF: UnreferencedUpdateIndexedPaletteWord+12   j  ; was: loc_E166
-                move.w  (word_FF806E).w,d0
+                move.w  (PaletteTestSelector).w,d0
                 move.w  d0,d1
                 asr.w   #2,d0
                 andi.w  #$1E,d0

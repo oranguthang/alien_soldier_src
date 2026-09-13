@@ -297,7 +297,7 @@ Stage9_WaitForXiTigerEntranceObject:                    ; DATA XREF: ROM:0000C8B
                 addq.w  #2,(StageStateOffset).w
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
                 move.b  #1,(AlternateTimeBonusSound).w
-                move.w  #$1C0,(word_FF806E).w
+                move.w  #$1C0,(StageEventTimer).w
 Stage9_UpdateCaterpillarCameraAndScroll:                ; CODE XREF: UnreferencedStage9_UpdateCaterpillarScroll+10   j  ; was: loc_D4BA
                                         ; Stage9_UpdateXiTigerEntranceDelay+3A   j
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
@@ -387,7 +387,7 @@ Stage9_WriteDenseCameraRasterOffsets:                   ; CODE XREF: Stage9_Writ
 ; Wait for the post-Xi-Tiger delay and start the interstage message sequence
 Stage9_UpdatePostXiTigerTransition:                     ; DATA XREF: ROM:0000C8BE   o  ; was: sub_D594
                 bsr.w   Stage9_UpdateCaterpillarCameraAndScroll
-                subq.w  #1,(word_FF806E).w
+                subq.w  #1,(StageEventTimer).w
                 bpl.s   Stage9_UpdatePostXiTigerTransition_Return
                 tst.w   (GameplayExitMode).w
                 bne.s   Stage9_UpdatePostXiTigerTransition_Return

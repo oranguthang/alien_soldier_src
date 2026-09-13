@@ -10,8 +10,8 @@ Effect_ScrollSineTable1:
 Effect_ScrollSineTable2:
                 move.l  #Effect_TransitionSineTable,d5  ; was: sub_26C62
 Effect_BuildSineScrollBuffer:                           ; CODE XREF: Effect_ScrollSineTable1+6   j  ; was: loc_26C68
-                movea.w #(word_FF9480-M68K_RAM),a0
-                movea.w #(word_FF9480-M68K_RAM),a2
+                movea.w #(TransitionRampBuffer-M68K_RAM),a0
+                movea.w #(TransitionRampBuffer-M68K_RAM),a2
                 moveq   #$FFFFFFFE,d6
                 moveq   #$3E,d7                         ; '>'
                 move.w  (TransitionProgress).w,d1

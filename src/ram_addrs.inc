@@ -152,7 +152,10 @@ dword_FF805E            equ     $FFFF805E
 dword_FF8062            equ     $FFFF8062
 dword_FF8066            equ     $FFFF8066
 dword_FF806A            equ     $FFFF806A
-word_FF806E             equ     $FFFF806E
+SharedSceneControl      equ     $FFFF806E               ; was: word_FF806E
+PasswordCursorMoveFlag  equ     SharedSceneControl
+StageEventTimer         equ     SharedSceneControl
+PaletteTestSelector     equ     SharedSceneControl
 TransitionModeOffset    equ     $FFFF807A               ; was: word_FF807A
 TransitionProgress      equ     $FFFF807C               ; was: word_FF807C
 GameOverLandscapeAngle  equ     TransitionProgress
@@ -388,7 +391,10 @@ dword_FF946E            equ     $FFFF946E
 Epsilon1ProximityTimer  equ     $FFFF9472               ; was: word_FF9472
 Epsilon1ProximityFlag   equ     $FFFF9474               ; was: word_FF9474
 Epsilon1VerticalAccel   equ     $FFFF9478               ; was: dword_FF9478
-word_FF9480             equ     $FFFF9480
+SharedProfileBuffer     equ     $FFFF9480               ; was: word_FF9480
+TransitionRampBuffer    equ     SharedProfileBuffer
+Epsilon1AngleHistory    equ     SharedProfileBuffer
+ViblackScrollSamples    equ     SharedProfileBuffer
 ShieldViperTrailAngles  equ     $FFFF94A0               ; was: word_FF94A0
 word_FF9500             equ     $FFFF9500
 word_FF9502             equ     $FFFF9502
@@ -397,7 +403,7 @@ word_FF9508             equ     $FFFF9508
 word_FF9510             equ     $FFFF9510
 word_FF951A             equ     $FFFF951A
 byte_FF9520             equ     $FFFF9520
-word_FF95E0             equ     $FFFF95E0
+BugmaxPositionHistory   equ     $FFFF95E0               ; was: word_FF95E0
 word_FF9600             equ     $FFFF9600
 word_FF9602             equ     $FFFF9602
 byte_FF9604             equ     $FFFF9604
@@ -412,7 +418,7 @@ word_FF9622             equ     $FFFF9622
 word_FF9628             equ     $FFFF9628
 word_FF9630             equ     $FFFF9630
 word_FF963A             equ     $FFFF963A
-word_FF9680             equ     $FFFF9680
+BugmaxAuxAngleHistory   equ     $FFFF9680               ; was: word_FF9680
 dword_FF9700            equ     $FFFF9700
 word_FF9800             equ     $FFFF9800
 word_FF9804             equ     $FFFF9804

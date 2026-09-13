@@ -58,7 +58,7 @@ PasswordMenu_Activate:                                  ; CODE XREF: PasswordMen
                 clr.w   (dword_FF8066+2).w
                 move.b  #$F,(dword_FF806A).w
                 move.w  #$18,(dword_FF806A+2).w
-                clr.w   (word_FF806E).w
+                clr.w   (PasswordCursorMoveFlag).w
                 lea     (Text_PressStartToExit).l,a0
                 move.w  #$A300,d0
                 move.w  #$4A14,d4
@@ -109,7 +109,7 @@ PasswordMenu_UpdateFrame:                               ; CODE XREF: PasswordMen
 ; End of function PasswordMenu_Update
 ; Handles field navigation, digit editing, and password validation
 PasswordMenu_HandleInput:                               ; CODE XREF: PasswordMenu_Update+54   p  ; was: sub_A550
-                tst.w   (word_FF806E).w
+                tst.w   (PasswordCursorMoveFlag).w
                 bne.w   PasswordCursor_AnimateToSelection
                 move.w  (dword_FF8066+2).w,d0
                 moveq   #0,d1
@@ -142,7 +142,7 @@ PasswordInput_PlayMoveSound:                            ; CODE XREF: PasswordMen
 PasswordInput_StoreSelection:                           ; CODE XREF: PasswordMenu_HandleInput+24   j  ; was: loc_A5A4
                                         ; PasswordMenu_HandleInput+2C   j
                 move.w  d0,(dword_FF8066+2).w
-                move.w  d1,(word_FF806E).w
+                move.w  d1,(PasswordCursorMoveFlag).w
                 move.l  #Password_CharacterCursorSpriteMapping,(PrimaryEntityMapping).w
                 cmpi.w  #8,d0
                 beq.w   PasswordInput_HandleConfirmField
@@ -271,7 +271,7 @@ PasswordCursor_MoveLeftOrSnap:                          ; CODE XREF: PasswordMen
                 bmi.s   PasswordCursor_MoveLeftFourPixels
 PasswordCursor_SnapToTarget:                            ; CODE XREF: PasswordMenu_HandleInput+19C   j  ; was: loc_A6FA
                 move.w  (a0,d0.w),$10(a1)
-                clr.w   (word_FF806E).w
+                clr.w   (PasswordCursorMoveFlag).w
                 rts
 ; ---------------------------------------------------------------------------
 PasswordCursor_MoveLeftFourPixels:                      ; CODE XREF: PasswordMenu_HandleInput+1A8   j  ; was: loc_A706
@@ -286,7 +286,7 @@ PasswordInput_HandleConfirmField:                       ; CODE XREF: PasswordMen
                 move.l  #Password_ConfirmCursorSpriteMapping,(PrimaryEntityMapping).w
                 move.b  #$F,(dword_FF806A).w
                 move.w  #$18,(dword_FF806A+2).w
-                tst.w   (word_FF806E).w
+                tst.w   (PasswordCursorMoveFlag).w
                 bne.s   PasswordInput_Return
                 move.l  (PasswordDigits).w,d0
                 moveq   #0,d4

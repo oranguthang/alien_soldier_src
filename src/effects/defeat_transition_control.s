@@ -278,8 +278,8 @@ TransitionEffect_UpdateMode3Buffers_Prepare:            ; CODE XREF: TransitionE
 ; End of function TransitionEffect_UpdateMode3Buffers
 ; Builds 63 mirrored ramp pairs at $FF9480 from the transition sine table
 TransitionEffect_BuildSymmetricRamp:                    ; CODE XREF: TransitionEffect_UpdateMode2Buffers+4   p  ; was: sub_26BD6
-                movea.w #(word_FF9480-M68K_RAM),a0
-                movea.w #(word_FF9480-M68K_RAM),a1
+                movea.w #(TransitionRampBuffer-M68K_RAM),a0
+                movea.w #(TransitionRampBuffer-M68K_RAM),a1
                 moveq   #$3E,d7                         ; '>'
                 movea.l #Effect_TransitionSineTable,a2
                 move.w  (TransitionProgress).w,d0
