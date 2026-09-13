@@ -6597,3 +6597,17 @@ mappings and the audit registry from 12,995 to 13,001. Auditing the four prior
 procedure names reduces the semantic review upper bound from 3,147 to 3,143.
 The enforced address-derived ceiling falls from 209 to 207, all still confined
 to RAM equates.
+
+The orphaned P2 adjustment pass replaces three raw RAM aliases and removes the
+unsupported `Camera` owner from eight inherited procedure labels. Neither
+helper has a reconstructed static caller, and none of the three words has a
+reader. Static code proves only that one helper changes X/Y words by `$20` from
+P2 directions, while the modifier-gated helper changes a Y word by one. The
+new names preserve those facts and explicitly avoid claiming camera state.
+
+The three RAM aliases add provenance mappings and all eleven changed
+definitions receive exact-address audit records. Provenance rises from 15,844
+to 15,847 mappings and the audit registry from 13,001 to 13,012. Auditing the
+eight inherited labels reduces the semantic review upper bound from 3,143 to
+3,135. The enforced address-derived ceiling falls from 207 to 204, all still
+confined to RAM equates.

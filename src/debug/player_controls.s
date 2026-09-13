@@ -53,44 +53,44 @@ Effect_ScreenShakeUpdate_StorePlaneB:                   ; CODE XREF: Effect_Scre
 Effect_ScreenShakeUpdate_Return:                        ; CODE XREF: Effect_ScreenShakeUpdate+4   j  ; was: locret_1CBB8
                 rts
 ; End of function Effect_ScreenShakeUpdate
-; Debug Y-axis camera adjustment
-Camera_DebugAdjustY:
+; Unreferenced P2 up/down adjustment of the fine Y value
+UnreferencedAdjustP2FineY:
                 btst    #4,(ControllerHeldState+1).w    ; was: sub_1CBBA
-                beq.w   Camera_DebugAdjustY_Return
+                beq.w   UnreferencedAdjustP2FineY_Return
                 btst    #0,(ControllerPressedState+1).w
-                beq.w   Camera_DebugAdjustY_CheckDown
-                addq.w  #1,(word_FFA00E).w
-Camera_DebugAdjustY_CheckDown:                          ; CODE XREF: Camera_DebugAdjustY+10   j  ; was: loc_1CBD2
+                beq.w   UnreferencedAdjustP2FineY_CheckDecrease
+                addq.w  #1,(P2DebugFineYValue).w
+UnreferencedAdjustP2FineY_CheckDecrease:                ; CODE XREF: UnreferencedAdjustP2FineY+10   j  ; was: loc_1CBD2
                 btst    #1,(ControllerPressedState+1).w
-                beq.w   Camera_DebugAdjustY_Return
-                subq.w  #1,(word_FFA00E).w
-Camera_DebugAdjustY_Return:                             ; CODE XREF: Camera_DebugAdjustY+6   j  ; was: locret_1CBE0
-                                        ; Camera_DebugAdjustY+1E   j
+                beq.w   UnreferencedAdjustP2FineY_Return
+                subq.w  #1,(P2DebugFineYValue).w
+UnreferencedAdjustP2FineY_Return:                       ; CODE XREF: UnreferencedAdjustP2FineY+6   j  ; was: locret_1CBE0
+                                        ; UnreferencedAdjustP2FineY+1E   j
                 rts
-; End of function Camera_DebugAdjustY
-; Debug XY camera adjustment
-Camera_DebugAdjustXY:
+; End of function UnreferencedAdjustP2FineY
+; Unreferenced P2 directional adjustment of the coarse X/Y values
+UnreferencedAdjustP2CoarseXY:
                 btst    #4,(ControllerHeldState+1).w    ; was: sub_1CBE2
-                bne.w   Camera_DebugAdjustXY_Return
+                bne.w   UnreferencedAdjustP2CoarseXY_Return
                 btst    #0,(ControllerPressedState+1).w
-                beq.w   Camera_DebugAdjustXY_CheckDown
-                subi.w  #$20,(word_FFA00C).w            ; ' '
-Camera_DebugAdjustXY_CheckDown:                         ; CODE XREF: Camera_DebugAdjustXY+10   j  ; was: loc_1CBFC
+                beq.w   UnreferencedAdjustP2CoarseXY_CheckDown
+                subi.w  #$20,(P2DebugCoarseYValue).w    ; ' '
+UnreferencedAdjustP2CoarseXY_CheckDown:                 ; CODE XREF: UnreferencedAdjustP2CoarseXY+10   j  ; was: loc_1CBFC
                 btst    #1,(ControllerPressedState+1).w
-                beq.w   Camera_DebugAdjustXY_CheckLeft
-                addi.w  #$20,(word_FFA00C).w            ; ' '
-Camera_DebugAdjustXY_CheckLeft:                         ; CODE XREF: Camera_DebugAdjustXY+20   j  ; was: loc_1CC0C
+                beq.w   UnreferencedAdjustP2CoarseXY_CheckLeft
+                addi.w  #$20,(P2DebugCoarseYValue).w    ; ' '
+UnreferencedAdjustP2CoarseXY_CheckLeft:                 ; CODE XREF: UnreferencedAdjustP2CoarseXY+20   j  ; was: loc_1CC0C
                 btst    #2,(ControllerPressedState+1).w
-                beq.w   Camera_DebugAdjustXY_CheckRight
-                subi.w  #$20,(word_FFA00A).w            ; ' '
-Camera_DebugAdjustXY_CheckRight:                        ; CODE XREF: Camera_DebugAdjustXY+30   j  ; was: loc_1CC1C
+                beq.w   UnreferencedAdjustP2CoarseXY_CheckRight
+                subi.w  #$20,(P2DebugCoarseXValue).w    ; ' '
+UnreferencedAdjustP2CoarseXY_CheckRight:                ; CODE XREF: UnreferencedAdjustP2CoarseXY+30   j  ; was: loc_1CC1C
                 btst    #3,(ControllerPressedState+1).w
-                beq.w   Camera_DebugAdjustXY_Return
-                addi.w  #$20,(word_FFA00A).w            ; ' '
-Camera_DebugAdjustXY_Return:                            ; CODE XREF: Camera_DebugAdjustXY+6   j  ; was: locret_1CC2C
-                                        ; Camera_DebugAdjustXY+40   j
+                beq.w   UnreferencedAdjustP2CoarseXY_Return
+                addi.w  #$20,(P2DebugCoarseXValue).w    ; ' '
+UnreferencedAdjustP2CoarseXY_Return:                    ; CODE XREF: UnreferencedAdjustP2CoarseXY+6   j  ; was: locret_1CC2C
+                                        ; UnreferencedAdjustP2CoarseXY+40   j
                 rts
-; End of function Camera_DebugAdjustXY
+; End of function UnreferencedAdjustP2CoarseXY
 ; Build second-controller debug movement, attack, and jump commands
 Debug_BuildControllerCommands:
                 clr.l   (DebugInputXDirection).w        ; was: sub_1CC2E

@@ -441,9 +441,9 @@ byte_FF9FF8             equ     $FFFF9FF8
 FrameCounter            equ     $FFFFA000               ; was: word_FFA000
 ScoreAddendPrefixByte   equ     $FFFFA005               ; was: byte_FFA005
 ScoreAddendBCD          equ     $FFFFA006               ; was: dword_FFA006
-word_FFA00A             equ     $FFFFA00A
-word_FFA00C             equ     $FFFFA00C
-word_FFA00E             equ     $FFFFA00E
+P2DebugCoarseXValue     equ     $FFFFA00A               ; was: word_FFA00A
+P2DebugCoarseYValue     equ     $FFFFA00C               ; was: word_FFA00C
+P2DebugFineYValue       equ     $FFFFA00E               ; was: word_FFA00E
 PlaneAShakeLevel        equ     $FFFFA010               ; was: word_FFA010
 PlaneAShakeOffset       equ     $FFFFA012               ; was: word_FFA012
 PlaneBShakeLevel        equ     $FFFFA014               ; was: word_FFA014

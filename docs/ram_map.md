@@ -852,6 +852,9 @@ values, but not yet a stable shared meaning.
 
 | Symbol | Address | Static evidence |
 |---|---:|---|
+| `P2DebugCoarseXValue` | `$FFFFA00A` | An unreferenced controller-two helper subtracts or adds `$20` for newly pressed left or right; no reconstructed reader proves that the value belongs to a camera. |
+| `P2DebugCoarseYValue` | `$FFFFA00C` | The same helper subtracts or adds `$20` for newly pressed up or down; no reconstructed reader exists. |
+| `P2DebugFineYValue` | `$FFFFA00E` | A separate unreferenced helper adds or subtracts one for controller-two up or down while modifier bit four is held; no reconstructed reader exists. |
 | `DebugJumpInput` | `$FFFFA980` | Written as one for newly pressed controller-two bit 4; no reconstructed static reader proves its downstream effect. |
 | `DebugAttackInput` | `$FFFFA9C0` | Written as one for newly pressed controller-two bit 6; no reconstructed static reader proves its downstream effect. |
 | `DebugInputXDirection` | `$FFFFA9D0` | Cleared as a longword, then its leading word receives -1 or +1 for controller-two left or right; no reconstructed static reader exists. |
