@@ -171,21 +171,51 @@ RasterLayoutOffset      equ     $FFFF8090               ; was: word_FF8090
 GlobalSpriteFlipBits    equ     $FFFF8092               ; was: word_FF8092
 VBlankFrameDivider      equ     $FFFF8096               ; was: word_FF8096
 CombatPercentTimer      equ     $FFFF809A               ; was: word_FF809A
-word_FF809C             equ     $FFFF809C
+DashActiveWriteOnly     equ     $FFFF809C               ; was: word_FF809C
 ExplosionSoundDelay     equ     $FFFF809E               ; was: word_FF809E
 TransitionEdgeSpan      equ     $FFFF80A0               ; was: dword_FF80A0
 MessageSequenceFlags    equ     $FFFF80A8               ; was: byte_FF80A8
 StagePlaneAEntryMode    equ     $FFFF80AA               ; was: word_FF80AA
 StagePlaneBEntryMode    equ     $FFFF80AC               ; was: word_FF80AC
 MessageSequenceState    equ     $FFFF80C2               ; was: word_FF80C2
-word_FF80C4             equ     $FFFF80C4
-word_FF80C6             equ     $FFFF80C6
-dword_FF80C8            equ     $FFFF80C8
-word_FF80CC             equ     $FFFF80CC
-dword_FF80CE            equ     $FFFF80CE
-word_FF80D2             equ     $FFFF80D2
-word_FF80D4             equ     $FFFF80D4
-word_FF80D6             equ     $FFFF80D6
+MessageWorkWord0        equ     $FFFF80C4               ; was: word_FF80C4
+MessageGlyphVRAMCursor  equ     MessageWorkWord0
+ResultsTimeBonusX0      equ     MessageWorkWord0
+MessageWaitTimer        equ     MessageWorkWord0
+LinearSpriteX           equ     MessageWorkWord0
+MessageWorkWord1        equ     $FFFF80C6               ; was: word_FF80C6
+BattleBannerTimer       equ     MessageWorkWord1
+MessageGlyphDelay       equ     MessageWorkWord1
+MessageTileChunkIndex   equ     MessageWorkWord1
+StageIntroBannerX       equ     MessageWorkWord1
+ResultsTimeBonusAngle   equ     MessageWorkWord1
+RadialTextAngle         equ     MessageWorkWord1
+MessageWorkLong0        equ     $FFFF80C8               ; was: dword_FF80C8
+MessageScriptCursor     equ     MessageWorkLong0
+BattleBannerVelocity    equ     MessageWorkLong0
+ResultsTimeBonusTimer   equ     MessageWorkLong0
+StageIntroSoundRequest  equ     MessageWorkLong0
+MessageHoldTimer        equ     MessageWorkLong0
+MessageWorkWord2        equ     $FFFF80CC               ; was: word_FF80CC
+MessageTilemapVRAMPos   equ     MessageWorkWord2
+ResultsTimeBonusRadialY equ     MessageWorkWord2
+RadialTextCenterY       equ     MessageWorkWord2
+MessageWorkLong1        equ     $FFFF80CE               ; was: dword_FF80CE
+MessageGlyphSourcePtr   equ     MessageWorkLong1
+BattleBannerOffset      equ     MessageWorkLong1
+BattleBannerDelay       equ     MessageWorkLong1
+StageIntroPostDelay     equ     MessageWorkLong1
+ResultsTimeBonusRadius  equ     MessageWorkLong1
+RadialTextRadius        equ     MessageWorkLong1
+MessageScriptEndTimer   equ     MessageWorkLong1
+MessageWorkWord3        equ     $FFFF80D2               ; was: word_FF80D2
+MessageGlyphTileWord    equ     MessageWorkWord3
+MessageWorkWord4        equ     $FFFF80D4               ; was: word_FF80D4
+MessageTilemapAttrs     equ     MessageWorkWord4
+StageIntroBannerTimer   equ     MessageWorkWord4
+MessageSpriteY          equ     MessageWorkWord4
+MessageWorkWord5        equ     $FFFF80D6               ; was: word_FF80D6
+ResultsTimeBonusX1      equ     MessageWorkWord5
 PlayerDefeatPhase       equ     $FFFF80E6               ; was: word_FF80E6
 BossColorEffectFlags    equ     $FFFF80EC               ; was: byte_FF80EC
 ColorFadePhase          equ     $FFFF80EE               ; was: word_FF80EE

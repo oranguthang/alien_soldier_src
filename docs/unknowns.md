@@ -7117,3 +7117,36 @@ address-sharing aliases of their audited art segments. Provenance rises from
 15,962 to 15,963 mappings, the audit registry from 13,167 to 13,201, and the
 semantic review upper bound falls from 3,095 to 3,062. The enforced
 address-derived ceiling falls from 89 to 88 RAM equates.
+
+The dash-activity pass resolves the write-only word at `$FFFF809C`. The
+ordinary dash, Phoenix attack, and Seven Forces dash paths are its only 68000
+references and store one on each active movement frame. Because no source path
+reads it, `DashActiveWriteOnly` records both the common publisher meaning and
+the missing consumer instead of inventing a gameplay effect.
+
+The field receives one provenance mapping, exact-address audit record, and RAM
+map entry. Provenance rises from 15,963 to 15,964 mappings and the audit
+registry from 13,201 to 13,202. The semantic review upper bound remains 3,062,
+and the enforced address-derived ceiling falls from 88 to 87 RAM equates.
+
+The message-workspace pass resolves the contiguous `$FFFF80C4-$FFFF80D7`
+scratch block without assigning it one false lifetime. Eight physical anchors
+now expose contextual aliases for encoded-script cursors and tile attributes,
+glyph source/VRAM/tile state, READY/FIGHT timing and motion, STAGE/EMERGENCY
+banner state, and the radial or linear remaining-time display. State-table
+dispatch makes those lifetimes mutually exclusive. The `$FFFF80D6` glyph-setup
+write of `$000C` remains deliberately unexplained because no source path reads
+it before the results sequence overwrites the slot.
+
+The same audit corrects two generated table claims. The former
+`UI_ContinueDisplayValueTable` and
+`StageTransitionMessageStartStateByStage` values are stored in
+`StageIntroSoundRequest`; the stage-number banner clears each nonzero byte and
+passes it directly to `Sound_PlaySFX`. They are now
+`StageEntrySoundRequestByStage` and `StageIntroSoundRequestByStage`.
+
+Eight new imported-name mappings raise provenance from 15,964 to 15,972. The
+eight workspace anchors plus the newly audited stage-entry sound table raise
+the exact-address registry from 13,202 to 13,211. Auditing that existing table
+reduces the semantic-review upper bound from 3,062 to 3,061, and the enforced
+address-derived ceiling falls from 87 to 79 RAM equates.

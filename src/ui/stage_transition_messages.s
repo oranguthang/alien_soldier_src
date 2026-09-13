@@ -126,15 +126,15 @@ StageTransition_LoadStage:                              ; CODE XREF: StageTransi
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
                 move.w  (StageTableIndex).w,d0
                 asr.b   #1,d0
-                move.b  StageTransitionMessageStartStateByStage(pc,d0.w),(dword_FF80C8).w
+                move.b  StageIntroSoundRequestByStage(pc,d0.w),(StageIntroSoundRequest).w
                 clr.b   (StageTimerPauseFlag).w
                 jsr     (Stage_LoadAssetsForCurrentTableIndex).l
 StageTransition_LoadOrSetupReturn:                      ; CODE XREF: StageTransition_ResumeSetup+C   j  ; was: locret_1E40A
                                         ; StageTransition_ResumeSetup+16   j
                 rts
 ; End of function StageTransition_UpdateMessageScreen
-; ---------------------------------------------------------------------------
-StageTransitionMessageStartStateByStage:    dc.b    $18, 0, 0  ; DATA XREF: StageTransition_LoadStage+28   r  ; was: byte_1E40C
+; Per-stage SFX request consumed when the STAGE-number banner reaches its cue
+StageIntroSoundRequestByStage:  dc.b    $18, 0, 0       ; DATA XREF: StageTransition_LoadStage+28   r  ; was: byte_1E40C
                 dc.b    0, $18, 0
                 dc.b    0, $18, 0
                 dc.b    $18, 0, 0

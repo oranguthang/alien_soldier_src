@@ -3,15 +3,15 @@ StageIntro_InitializeBanner:                            ; DATA XREF: ROM:0000A9F
                 addq.w  #2,(MessageSequenceState).w
                 jsr     (Stage_LoadTimeLimit).l
                 bclr    #0,(StageTimerPauseFlag).w
-                move.l  #StageIntro_GlyphSourceList,(dword_FF80CE).w
-                move.w  #$5400,(word_FF80C4).w
+                move.l  #StageIntro_GlyphSourceList,(MessageGlyphSourcePtr).w
+                move.w  #$5400,(MessageGlyphVRAMCursor).w
 ; Streams the glyph set used by the stage-number banner
 StageIntro_LoadStageNumberGlyph:                        ; DATA XREF: ROM:0000A9F4   o  ; was: loc_AEB8
                 bsr.w   Message_LoadNextGlyphTile
                 cmpi.w  #$52,(MessageSequenceState).w   ; 'R'
                 beq.s   StageIntro_LoadStageNumberGlyphReturn
-                move.w  #$EC,(word_FF80C6).w
-                move.w  #$80,(word_FF80D4).w
+                move.w  #$EC,(StageIntroBannerX).w
+                move.w  #$80,(StageIntroBannerTimer).w
                 move.w  #$E0,(PaletteRGBAdjustLevel).w
                 move.b  #$E0,(PaletteRGBChannelMask).w
                 move.b  #2,(PaletteRGBAdjustStep).w
@@ -20,20 +20,20 @@ StageIntro_LoadStageNumberGlyphReturn:                  ; CODE XREF: StageIntro_
 ; End of function StageIntro_InitializeBanner
 ; Slides in the STAGE label and its two packed-BCD number digits
 StageIntro_UpdateStageNumberBanner:                     ; DATA XREF: ROM:0000A9F6   o  ; was: sub_AEE4
-                addq.w  #1,(word_FF80C6).w
-                cmpi.w  #$FC,(word_FF80C6).w
+                addq.w  #1,(StageIntroBannerX).w
+                cmpi.w  #$FC,(StageIntroBannerX).w
                 bmi.s   StageIntro_ClampStageNumberX
-                move.w  #$FC,(word_FF80C6).w
+                move.w  #$FC,(StageIntroBannerX).w
 StageIntro_ClampStageNumberX:                           ; CODE XREF: StageIntro_UpdateStageNumberBanner+A   j  ; was: loc_AEF6
-                cmpi.w  #$40,(word_FF80D4).w            ; '@'
+                cmpi.w  #$40,(StageIntroBannerTimer).w  ; '@'
                 bne.s   StageIntro_UpdateStageNumberDelay
-                move.b  (dword_FF80C8).w,d0
+                move.b  (StageIntroSoundRequest).w,d0
                 beq.s   StageIntro_UpdateStageNumberDelay
-                clr.b   (dword_FF80C8).w
+                clr.b   (StageIntroSoundRequest).w
                 jsr     (Sound_PlaySFX).l
 StageIntro_UpdateStageNumberDelay:                      ; CODE XREF: StageIntro_UpdateStageNumberBanner+18   j  ; was: loc_AF0E
                                         ; StageIntro_UpdateStageNumberBanner+1E   j
-                subq.w  #1,(word_FF80D4).w
+                subq.w  #1,(StageIntroBannerTimer).w
                 bpl.s   StageIntro_RenderStageNumberBanner
                 clr.w   (MessageSequenceState).w
 StageIntro_RenderStageNumberBanner:                     ; CODE XREF: StageIntro_UpdateStageNumberBanner+2E   j  ; was: loc_AF18
@@ -51,7 +51,7 @@ StageIntro_RenderStageNumberBanner:                     ; CODE XREF: StageIntro_
                 asl.w   #1,d3
                 addi.w  #-$3960,d2
                 addi.w  #-$3960,d3
-                move.w  (word_FF80C6).w,d1
+                move.w  (StageIntroBannerX).w,d1
                 moveq   #4,d7
 ; Writes the five fixed STAGE-label sprite entries before the two number digits
 StageIntro_WriteStageLabelSprites:                      ; CODE XREF: StageIntro_UpdateStageNumberBanner+74   j  ; was: loc_AF4C
@@ -75,15 +75,15 @@ StageIntro_WriteStageLabelSprites:                      ; CODE XREF: StageIntro_
 ; Initializes the flashing EMERGENCY banner
 StageIntro_InitializeEmergencyBanner:                   ; DATA XREF: ROM:0000A9F8   o  ; was: sub_AF82
                 addq.w  #2,(MessageSequenceState).w
-                move.l  #StageIntro_EmergencyGlyphSourceList,(dword_FF80CE).w
-                move.w  #$5400,(word_FF80C4).w
+                move.l  #StageIntro_EmergencyGlyphSourceList,(MessageGlyphSourcePtr).w
+                move.w  #$5400,(MessageGlyphVRAMCursor).w
 ; Streams the unique glyphs used by the EMERGENCY banner
 StageIntro_LoadEmergencyGlyph:                          ; DATA XREF: ROM:0000A9FA   o  ; was: loc_AF94
                 bsr.w   Message_LoadNextGlyphTile
                 cmpi.w  #$58,(MessageSequenceState).w   ; 'X'
                 beq.s   StageIntro_EmergencyGlyphReturn
-                move.w  #$F0,(word_FF80C6).w
-                move.w  #$100,(word_FF80D4).w
+                move.w  #$F0,(StageIntroBannerX).w
+                move.w  #$100,(StageIntroBannerTimer).w
                 move.b  #$D2,d0
                 jsr     (Sound_PlaySFX).l
 StageIntro_EmergencyGlyphReturn:                        ; CODE XREF: StageIntro_InitializeEmergencyBanner+1C   j  ; was: locret_AFB6
@@ -92,23 +92,23 @@ StageIntro_EmergencyGlyphReturn:                        ; CODE XREF: StageIntro_
 ; End of function StageIntro_InitializeEmergencyBanner
 ; Updates the flashing EMERGENCY banner and its delay
 StageIntro_UpdateEmergencyFlash:                        ; DATA XREF: ROM:0000A9FC   o  ; was: sub_AFB8
-                cmpi.w  #$5C,(word_FF80D4).w            ; '\'
+                cmpi.w  #$5C,(StageIntroBannerTimer).w  ; '\'
                 bne.s   StageIntro_UpdateEmergencyDelay
                 move.b  #$15,d0
                 jsr     (Sound_PlaySFX).l
 StageIntro_UpdateEmergencyDelay:                        ; CODE XREF: StageIntro_UpdateEmergencyFlash+6   j  ; was: loc_AFCA
-                subq.w  #1,(word_FF80D4).w
+                subq.w  #1,(StageIntroBannerTimer).w
                 bpl.s   StageIntro_CheckEmergencyFlashFrame
                 clr.w   (MessageSequenceState).w
 StageIntro_CheckEmergencyFlashFrame:                    ; CODE XREF: StageIntro_UpdateEmergencyFlash+16   j  ; was: loc_AFD4
-                btst    #4,(word_FF80D4+1).w
+                btst    #4,(StageIntroBannerTimer+1).w
                 bne.s   StageIntro_EmergencyGlyphReturn
                 lea     StageIntro_EmergencySpriteTileLayout(pc),a0
                 nop
                 bsr.w   Message_LoadSpriteTileIndices
                 movea.w #(SharedSpriteScratch-M68K_RAM),a0
                 move.w  #$EC,d0
-                move.w  (word_FF80C6).w,d1
+                move.w  (StageIntroBannerX).w,d1
                 moveq   #8,d7
 ; Writes the nine EMERGENCY sprite entries with horizontal spacing
 StageIntro_WriteEmergencySprites:                       ; CODE XREF: StageIntro_UpdateEmergencyFlash+48   j  ; was: loc_AFF4
@@ -123,10 +123,10 @@ StageIntro_WriteEmergencySprites:                       ; CODE XREF: StageIntro_
 ; Initializes pause timer before text exit
 StageIntro_InitializePostBannerDelay:                   ; DATA XREF: ROM:0000A9FE   o  ; was: sub_B00E
                 addq.w  #2,(MessageSequenceState).w
-                move.w  #$50,(dword_FF80CE).w           ; 'P'
+                move.w  #$50,(StageIntroPostDelay).w    ; 'P'
 ; Decrements pause timer each frame before text transition
 StageIntro_UpdatePostBannerDelay:                       ; DATA XREF: ROM:0000AA00   o  ; was: loc_B018
-                subq.w  #1,(dword_FF80CE).w
+                subq.w  #1,(StageIntroPostDelay).w
                 bpl.s   StageIntro_PostBannerDelayReturn
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
 StageIntro_PostBannerDelayReturn:                       ; CODE XREF: StageIntro_InitializePostBannerDelay+E   j  ; was: locret_B024
@@ -135,8 +135,8 @@ StageIntro_PostBannerDelayReturn:                       ; CODE XREF: StageIntro_
 ; Initializes the post-boss remaining-time bonus sequence
 Results_InitializeTimeBonus:                            ; DATA XREF: ROM:0000A9D0   o  ; was: sub_B026
                 addq.w  #2,(MessageSequenceState).w
-                move.l  #Results_TimeBonusGlyphSourceList,(dword_FF80CE).w
-                move.w  #$5400,(word_FF80C4).w
+                move.l  #Results_TimeBonusGlyphSourceList,(MessageGlyphSourcePtr).w
+                move.w  #$5400,(MessageGlyphVRAMCursor).w
                 rts
 ; End of function Results_InitializeTimeBonus
 ; Streams the unique glyphs used by the time-bonus display
@@ -147,12 +147,12 @@ Results_LoadTimeBonusGlyphs:                            ; DATA XREF: ROM:0000A9D
                 move.w  #$E0,(PaletteRGBAdjustLevel).w
                 move.b  #$E0,(PaletteRGBChannelMask).w
                 move.b  #2,(PaletteRGBAdjustStep).w
-                move.w  #$80,(word_FF80C6).w
-                move.w  #$40,(dword_FF80CE).w           ; '@'
-                move.w  #$E8,(word_FF80CC).w
-                move.w  #$200,(word_FF80D4).w
-                move.w  #$108,(word_FF80C4).w
-                move.w  #$200,(word_FF80D6).w
+                move.w  #$80,(ResultsTimeBonusAngle).w
+                move.w  #$40,(ResultsTimeBonusRadius).w  ; '@'
+                move.w  #$E8,(ResultsTimeBonusRadialY).w
+                move.w  #$200,(MessageSpriteY).w
+                move.w  #$108,(ResultsTimeBonusX0).w
+                move.w  #$200,(ResultsTimeBonusX1).w
                 move.b  #$BE,d0
                 jsr     (Sound_PlaySFX).l
 Results_LoadTimeBonusGlyphsReturn:                      ; CODE XREF: Results_LoadTimeBonusGlyphs+A   j  ; was: locret_B086
@@ -161,17 +161,17 @@ Results_LoadTimeBonusGlyphsReturn:                      ; CODE XREF: Results_Loa
 ; Spins the time-bonus sprites inward while reducing their radial distance
 Results_SpinInTimeBonus:                                ; DATA XREF: ROM:0000A9D4   o  ; was: sub_B088
                 bsr.w   Results_RenderSpinningTimeBonus
-                move.w  (word_FF80C6).w,d0
+                move.w  (ResultsTimeBonusAngle).w,d0
                 addq.w  #8,d0
                 andi.w  #$1FE,d0
-                move.w  d0,(word_FF80C6).w
-                subq.w  #4,(dword_FF80CE).w
+                move.w  d0,(ResultsTimeBonusAngle).w
+                subq.w  #4,(ResultsTimeBonusRadius).w
                 bpl.s   Results_SpinInTimeBonusReturn
-                cmpi.w  #4,(dword_FF80CE).w
+                cmpi.w  #4,(ResultsTimeBonusRadius).w
                 bpl.s   Results_SpinInTimeBonusReturn
                 addq.w  #2,(MessageSequenceState).w
-                clr.w   (word_FF80C6).w
-                clr.w   (dword_FF80CE).w
+                clr.w   (ResultsTimeBonusAngle).w
+                clr.w   (ResultsTimeBonusRadius).w
 Results_SpinInTimeBonusReturn:                          ; CODE XREF: Results_SpinInTimeBonus+16   j  ; was: locret_B0B4
                                         ; Results_SpinInTimeBonus+1E   j
                 rts
@@ -179,19 +179,19 @@ Results_SpinInTimeBonusReturn:                          ; CODE XREF: Results_Spi
 ; Slows the time-bonus spin to its fixed terminal angle
 Results_SlowTimeBonusSpin:                              ; DATA XREF: ROM:0000A9D6   o  ; was: sub_B0B6
                 bsr.w   Results_RenderSpinningTimeBonus
-                subq.w  #1,(dword_FF80CE).w
-                cmpi.w  #$FFF4,(dword_FF80CE).w
+                subq.w  #1,(ResultsTimeBonusRadius).w
+                cmpi.w  #$FFF4,(ResultsTimeBonusRadius).w
                 bne.s   Results_SlowTimeBonusSpinReturn
                 addq.w  #2,(MessageSequenceState).w
-                move.w  #$FFF4,(dword_FF80CE).w
-                move.w  #$20,(dword_FF80C8).w           ; ' '
+                move.w  #$FFF4,(ResultsTimeBonusRadius).w
+                move.w  #$20,(ResultsTimeBonusTimer).w  ; ' '
 Results_SlowTimeBonusSpinReturn:                        ; CODE XREF: Results_SlowTimeBonusSpin+E   j  ; was: locret_B0D6
                 rts
 ; End of function Results_SlowTimeBonusSpin
 ; Finishes the spin, records the stage time, and selects the zero/nonzero path
 Results_FinishTimeBonusSpin:                            ; DATA XREF: ROM:0000A9D8   o  ; was: sub_B0D8
                 bsr.w   Results_RenderSpinningTimeBonus
-                subq.w  #1,(dword_FF80C8).w
+                subq.w  #1,(ResultsTimeBonusTimer).w
                 bpl.s   Results_FinishTimeBonusSpinReturn
                 tst.b   (AlternateTimeBonusSound).w
                 beq.s   Results_RequestTimeBonusSound
@@ -207,49 +207,49 @@ Results_StoreTimeBonus:                                 ; CODE XREF: Results_Fin
                 tst.w   (StageTimeRemaining).w
                 beq.s   Results_SkipZeroTimeBonus
                 addq.w  #2,(MessageSequenceState).w
-                move.w  #$F0,(word_FF80D4).w
+                move.w  #$F0,(MessageSpriteY).w
                 move.w  (StageTimeRemaining).w,(ResultsTimeBonusBCD).w
                 andi.w  #$FFF0,(ResultsTimeBonusBCD).w
                 rts
 ; ---------------------------------------------------------------------------
 Results_SkipZeroTimeBonus:                              ; CODE XREF: Results_FinishTimeBonusSpin+30   j  ; was: loc_B122
                 move.w  #$46,(MessageSequenceState).w   ; 'F'
-                move.w  #$F0,(word_FF80D4).w
-                move.w  #$11A,(word_FF80C4).w
+                move.w  #$F0,(MessageSpriteY).w
+                move.w  #$11A,(ResultsTimeBonusX0).w
 Results_FinishTimeBonusSpinReturn:                      ; CODE XREF: Results_FinishTimeBonusSpin+8   j  ; was: locret_B134
                 rts
 ; End of function Results_FinishTimeBonusSpin
 ; Moves the linear time-bonus display into its held position
 Results_AnimateTimeBonusEntry:                          ; DATA XREF: ROM:0000A9DA   o  ; was: sub_B136
                 bsr.w   Results_RenderLinearTimeBonus
-                subq.w  #1,(word_FF80CC).w
-                addq.w  #1,(word_FF80D4).w
-                cmpi.w  #$E0,(word_FF80CC).w
+                subq.w  #1,(ResultsTimeBonusRadialY).w
+                addq.w  #1,(MessageSpriteY).w
+                cmpi.w  #$E0,(ResultsTimeBonusRadialY).w
                 bne.s   Results_AnimateTimeBonusEntryReturn
                 addq.w  #2,(MessageSequenceState).w
-                move.w  #4,(dword_FF80C8).w
+                move.w  #4,(ResultsTimeBonusTimer).w
 Results_AnimateTimeBonusEntryReturn:                    ; CODE XREF: Results_AnimateTimeBonusEntry+12   j  ; was: locret_B154
                 rts
 ; End of function Results_AnimateTimeBonusEntry
 ; Holds the linear time-bonus display before its exit
 Results_HoldTimeBonus:                                  ; DATA XREF: ROM:0000A9DC   o  ; was: sub_B156
                 bsr.w   Results_RenderLinearTimeBonus
-                subq.w  #1,(dword_FF80C8).w
+                subq.w  #1,(ResultsTimeBonusTimer).w
                 bpl.s   Results_HoldTimeBonusReturn
                 addq.w  #2,(MessageSequenceState).w
-                move.w  #$114,(word_FF80D6).w
+                move.w  #$114,(ResultsTimeBonusX1).w
 Results_HoldTimeBonusReturn:                            ; CODE XREF: Results_HoldTimeBonus+8   j  ; was: locret_B16A
                 rts
 ; End of function Results_HoldTimeBonus
 ; Moves the linear time-bonus display out and advances the sequence
 Results_AnimateTimeBonusExit:                           ; DATA XREF: ROM:0000A9DE   o  ; was: sub_B16C
                 bsr.w   Results_RenderLinearTimeBonus
-                subq.w  #2,(word_FF80C4).w
-                addq.w  #2,(word_FF80D6).w
-                cmpi.w  #$EC,(word_FF80C4).w
+                subq.w  #2,(ResultsTimeBonusX0).w
+                addq.w  #2,(ResultsTimeBonusX1).w
+                cmpi.w  #$EC,(ResultsTimeBonusX0).w
                 bne.s   Results_AnimateTimeBonusExitReturn
                 addq.w  #4,(MessageSequenceState).w
-                move.w  #$40,(dword_FF80C8).w           ; '@'
+                move.w  #$40,(ResultsTimeBonusTimer).w  ; '@'
 Results_AnimateTimeBonusExitReturn:                     ; CODE XREF: Results_AnimateTimeBonusExit+12   j  ; was: locret_B18A
                 rts
 ; End of function Results_AnimateTimeBonusExit
@@ -257,7 +257,7 @@ Results_AnimateTimeBonusExitReturn:                     ; CODE XREF: Results_Ani
 Results_ApplyRemainingTimeBonus:                        ; DATA XREF: ROM:0000A9E0   o  ; was: sub_B18C
                                         ; ROM:0000A9E2   o
                 bsr.w   Results_RenderLinearTimeBonus
-                subq.w  #1,(dword_FF80C8).w
+                subq.w  #1,(ResultsTimeBonusTimer).w
                 bpl.s   Results_ApplyRemainingTimeBonusReturn
                 clr.w   (MessageSequenceState).w
                 moveq   #0,d0
@@ -270,18 +270,18 @@ Results_ApplyRemainingTimeBonusReturn:                  ; CODE XREF: Results_App
 Message_FadeInRadialText:                               ; DATA XREF: ROM:0000A9E4   o  ; was: sub_B1A8
                                         ; ROM:0000A9E6   o
                 bsr.w   Message_RenderRadialText
-                addq.w  #1,(word_FF80D4).w
-                cmpi.w  #$FC,(word_FF80D4).w
+                addq.w  #1,(MessageSpriteY).w
+                cmpi.w  #$FC,(MessageSpriteY).w
                 bne.s   Message_FadeInRadialTextReturn
                 addq.w  #2,(MessageSequenceState).w
-                move.w  #$80,(dword_FF80C8).w
+                move.w  #$80,(MessageHoldTimer).w
 Message_FadeInRadialTextReturn:                         ; CODE XREF: Message_FadeInRadialText+E   j  ; was: locret_B1C2
                 rts
 ; End of function Message_FadeInRadialText
 ; Holds radial text sprites until the sequence timer expires
 Message_FadeOutRadialText:                              ; DATA XREF: ROM:0000A9EA   o  ; was: sub_B1C4
                 bsr.w   Message_RenderRadialText
-                subq.w  #1,(dword_FF80C8).w
+                subq.w  #1,(MessageHoldTimer).w
                 bpl.s   Message_FadeOutRadialTextReturn
                 clr.w   (MessageSequenceState).w
 Message_FadeOutRadialTextReturn:                        ; CODE XREF: Message_FadeOutRadialText+8   j  ; was: locret_B1D2
@@ -289,7 +289,7 @@ Message_FadeOutRadialTextReturn:                        ; CODE XREF: Message_Fad
 ; End of function Message_FadeOutRadialText
 ; Waits for frame timer countdown before clearing state
 Message_UpdateWaitTimer:                                ; DATA XREF: ROM:0000A9EC   o  ; was: sub_B1D4
-                subq.w  #1,(word_FF80C4).w
+                subq.w  #1,(MessageWaitTimer).w
                 bpl.s   Message_UpdateWaitTimerReturn
                 clr.w   (MessageSequenceState).w
 Message_UpdateWaitTimerReturn:                          ; CODE XREF: Message_UpdateWaitTimer+4   j  ; was: locret_B1DE
@@ -330,10 +330,10 @@ Message_RenderRadialText:                               ; CODE XREF: Message_Fad
 Results_PositionTimeBonusSprites:                       ; CODE XREF: Results_RenderSpinningTimeBonus+A   p  ; was: sub_B22C
                                         ; Results_RenderLinearTimeBonus+E   p
                 bsr.w   Message_CalculateRadialSpriteCoords
-                move.w  (word_FF80D6).w,d1
+                move.w  (ResultsTimeBonusX1).w,d1
                 moveq   #3,d7
 Results_WriteTimeBonusSpritePositions:                  ; CODE XREF: Results_PositionTimeBonusSprites+18   j  ; was: loc_B236
-                move.w  (word_FF80D4).w,(a0)
+                move.w  (MessageSpriteY).w,(a0)
                 move.w  d1,(a1)
                 addq.w  #8,a0
                 addq.w  #8,a1
@@ -347,7 +347,7 @@ Message_PositionRadialTextSprites:                      ; CODE XREF: Message_Ren
                 subi.w  #$60,d1                         ; '`'
                 moveq   #1,d7
 Message_WriteRadialTextSpritePositions:                 ; CODE XREF: Message_PositionRadialTextSprites+18   j  ; was: loc_B254
-                move.w  (word_FF80D4).w,(a0)
+                move.w  (MessageSpriteY).w,(a0)
                 move.w  d1,(a1)
                 addq.w  #8,a0
                 addq.w  #8,a1
@@ -363,10 +363,10 @@ Message_CalculateRadialSpriteCoords:                    ; CODE XREF: Results_Pos
                 movea.w #(RadialSpriteYForward-M68K_RAM),a2
                 movea.w #(RadialSpriteXForward-M68K_RAM),a3
                 movea.l #Math_SineTable,a4
-                move.w  (word_FF80C6).w,d0
-                move.w  (dword_FF80CE).w,d1
+                move.w  (RadialTextAngle).w,d0
+                move.w  (RadialTextRadius).w,d1
                 move.w  d1,d4
-                move.w  (word_FF80CC).w,d6
+                move.w  (RadialTextCenterY).w,d6
                 moveq   #4,d7
 Message_CalculateRadialSpritePairLoop:                  ; CODE XREF: Message_CalculateRadialSpriteCoords+5C   j  ; was: loc_B28E
                 move.w  -$80(a4,d0.w),d2
@@ -395,10 +395,10 @@ Message_CalculateRadialSpritePairLoop:                  ; CODE XREF: Message_Cal
                 dbf     d7,Message_CalculateRadialSpritePairLoop
                 movea.w #(LinearSpriteYStart-M68K_RAM),a0
                 movea.w #(LinearSpriteXStart-M68K_RAM),a1
-                move.w  (word_FF80C4).w,d1
+                move.w  (LinearSpriteX).w,d1
                 moveq   #4,d7
 Message_WriteLinearSpritePositions:                     ; CODE XREF: Message_CalculateRadialSpriteCoords+7C   j  ; was: loc_B2D6
-                move.w  (word_FF80D4).w,(a0)
+                move.w  (MessageSpriteY).w,(a0)
                 move.w  d1,(a1)
                 addq.w  #8,a0
                 addq.w  #8,a1
@@ -467,7 +467,7 @@ StageIntro_EmergencySpriteTileLayout:   dc.w    2, 4, $600, $80A, $CFF  ; was: w
 ; Copies one unique font glyph and queues its VRAM transfer
 Message_LoadNextGlyphTile:                              ; CODE XREF: BattleBanner_LoadGlyphs   p  ; was: sub_B38C
                                         ; sub_AE9A:loc_AEB8   p
-                movea.l (dword_FF80CE).w,a0
+                movea.l (MessageGlyphSourcePtr).w,a0
                 moveq   #0,d0
                 move.b  (a0)+,d0
                 cmpi.b  #$FF,d0
@@ -476,7 +476,7 @@ Message_LoadNextGlyphTile:                              ; CODE XREF: BattleBanne
                 rts
 ; ---------------------------------------------------------------------------
 Message_CopyGlyphTile:                                  ; CODE XREF: Message_LoadNextGlyphTile+C   j  ; was: loc_B3A0
-                move.l  a0,(dword_FF80CE).w
+                move.l  a0,(MessageGlyphSourcePtr).w
                 asl.w   #6,d0
                 addi.l  #tiles_font,d0
                 movea.l d0,a0
@@ -487,19 +487,19 @@ Message_CopyGlyphTileLoop:                              ; CODE XREF: Message_Loa
                 dbf     d7,Message_CopyGlyphTileLoop
                 movea.w (VDPCommandQueueHead).w,a5
                 move.w  #$83,-(a5)
-                move.w  (word_FF80C4).w,-(a5)
+                move.w  (MessageGlyphVRAMCursor).w,-(a5)
                 move.w  #$9580,-(a5)
                 move.w  #$96D1,-(a5)
                 move.l  #$8F02977F,-(a5)
                 move.l  #$94009320,-(a5)
                 move.w  a5,(VDPCommandQueueHead).w
-                addi.w  #$40,(word_FF80C4).w            ; '@'
+                addi.w  #$40,(MessageGlyphVRAMCursor).w  ; '@'
                 rts
 ; End of function Message_LoadNextGlyphTile
 ; Renders a message sprite line with caller-provided position offsets
 Message_RenderLineWithOffsets:                          ; CODE XREF: BattleBanner_AnimateFightLine+28   p  ; was: sub_B3E6
-                move.w  (dword_FF80C8).w,d5
-                move.w  (dword_FF80CE).w,d6
+                move.w  (BattleBannerVelocity).w,d5
+                move.w  (BattleBannerOffset).w,d6
                 bra.s   Message_RenderLineWithCurrentOffsets
 ; End of function Message_RenderLineWithOffsets
 ; Renders a message sprite line without position offsets
@@ -559,8 +559,8 @@ BossMessage_Start:                                      ; CODE XREF: Boss_Destro
                 bmi.s   BossMessage_SelectScript
 BossMessage_StartReadyFightBanner:                      ; CODE XREF: BossMessage_Start+6   j  ; was: loc_B464
                 move.w  #$1E,(MessageSequenceState).w
-                move.l  #BattleBanner_GlyphSourceList,(dword_FF80CE).w
-                move.w  #$5400,(word_FF80C4).w
+                move.l  #BattleBanner_GlyphSourceList,(MessageGlyphSourcePtr).w
+                move.w  #$5400,(MessageGlyphVRAMCursor).w
                 move.b  #4,(VDPReg18Shadow+1).w
                 rts
 ; ---------------------------------------------------------------------------
@@ -571,7 +571,7 @@ BossMessage_SelectScript:                               ; CODE XREF: BossMessage
                 addi.w  #4,d0
 BossMessage_StartScript:                                ; CODE XREF: BossMessage_Start+3A   j  ; was: loc_B48E
                 move.w  #$10,(MessageSequenceState).w
-                move.l  BossMessageScriptPointerTable(pc,d0.w),(dword_FF80C8).w
+                move.l  BossMessageScriptPointerTable(pc,d0.w),(MessageScriptCursor).w
                 rts
 ; End of function BossMessage_Start
 ; ---------------------------------------------------------------------------
@@ -604,7 +604,7 @@ ShipName_StartScript:                                   ; CODE XREF: ShipSequenc
                 addi.w  #4,d0
 ShipName_SelectScript:                                  ; CODE XREF: ShipName_StartScript+E   j  ; was: loc_B4F8
                 move.w  #2,(MessageSequenceState).w
-                move.l  ShipNameScriptPointerTable(pc,d0.w),(dword_FF80C8).w
+                move.l  ShipNameScriptPointerTable(pc,d0.w),(MessageScriptCursor).w
                 rts
 ; End of function ShipName_StartScript
 ; ---------------------------------------------------------------------------

@@ -220,7 +220,7 @@ Player_EndSevenForcesDash:                              ; CODE XREF: Player_Seve
                 bra.w   Player_ResetSevenForcesBattleState
 ; ---------------------------------------------------------------------------
 Player_UpdateSevenForcesDash:                           ; CODE XREF: Player_SevenForcesDashState6+A   j  ; was: loc_1A046
-                move.w  #1,(word_FF809C).w
+                move.w  #1,(DashActiveWriteOnly).w
                 bset    #6,$21(a5)
                 bset    #4,$23(a5)
                 bsr.s   Player_ApplySevenForcesDashVelocity

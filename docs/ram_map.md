@@ -136,6 +136,21 @@ alone does not yet prove the exact player-facing counting convention.
 | `MessageAdvanceButtons` | `$FFFF8310` | The dispatcher stores the controller byte masked with `$70`; the glyph-delay state advances immediately when the result is nonzero. |
 | `MessageDisplayFlags` | `$FFFFFF31` | Message-script entry sets bit 7 and finalization clears it. The signed HUD path suppresses its update while that bit is set; initialization clears the whole byte. |
 | `MessageGlyphTileBuffer` | `$FFFFA300` | Both message glyph paths write exactly sixteen longwords, staging one 64-byte 8x8 4bpp tile before queuing its DMA transfer. |
+| `MessageWorkWord0` | `$FFFF80C4` | Shared physical slot: glyph loaders use `MessageGlyphVRAMCursor`, results use `ResultsTimeBonusX0`/`LinearSpriteX`, and the wait state uses `MessageWaitTimer`. |
+| `MessageWorkWord1` | `$FFFF80C6` | Shared physical slot for `BattleBannerTimer`, `MessageGlyphDelay`, `MessageTileChunkIndex`, `StageIntroBannerX`, and the result/radial angle aliases. |
+| `MessageWorkLong0` | `$FFFF80C8` | Shared physical slot for `MessageScriptCursor`, `BattleBannerVelocity`, `StageIntroSoundRequest`, and result or generic hold timers. |
+| `MessageWorkWord2` | `$FFFF80CC` | Encoded glyphs use `MessageTilemapVRAMPos`; radial result rendering reuses it through the vertical-center aliases. |
+| `MessageWorkLong1` | `$FFFF80CE` | Shared source pointer, READY/FIGHT delay or motion offset, stage-intro delay, script-end timer, and radial radius storage. |
+| `MessageWorkWord3` | `$FFFF80D2` | `MessageGlyphTileWord` starts at `$86A0` plus decoded priority bits and advances by two after each emitted glyph. |
+| `MessageWorkWord4` | `$FFFF80D4` | Encoded tilemap attributes, stage-intro banner timer, and result/radial sprite Y occupy this slot in mutually exclusive states. |
+| `MessageWorkWord5` | `$FFFF80D6` | Results use `ResultsTimeBonusX1`; glyph setup also writes `$000C`, but no source path reads that value before overwrite. |
+
+The numbered names identify the contiguous physical workspace rather than
+pretending that one state owns it permanently. Code uses the contextual aliases
+where the lifetime is proven. `StageEntrySoundRequestByStage` and
+`StageIntroSoundRequestByStage` both publish values consumed directly by
+`Sound_PlaySFX`; their former display-value and message-start-state names were
+therefore corrected.
 
 ## Reviewed interstage-transition fields
 
@@ -668,6 +683,7 @@ loaded tile base with the active palette or orientation bits.
 | `PlayerKnockbackXVel` | `$FFFF8300` | Hostile collision records the damaging object's horizontal velocity; player knockback consumes it when nonzero and otherwise derives direction from facing. |
 | `PhoenixAttackStatus` | `$FFFF8304` | Full-health checks publish the signed health/max difference here; Phoenix dash paths require zero, then reuse the word as the `$78`-to-zero particle/status countdown. |
 | `CombatHitFlags` | `$FFFF8308` | Successful weapon collision publishes target status bits and a hit bit; Epsilon 1 consumes bits two and zero as forced-state and direction events. |
+| `DashActiveWriteOnly` | `$FFFF809C` | Ordinary, Phoenix, and Seven Forces dash paths write one on active frames; no 68000 source path reads the word. |
 | `StageMotionYDelta` | `$FFFF830A` | Stage 12 publishes the paired signed 16.16 vertical motion; shared physics and pickup movement consume it as global compensation. |
 | `HealthDeltaDisplayValue` | `$FFFF8262` | Damage sets bit 15 and pickups leave it clear; renderers consume the sign and lower three decimal digits. |
 | `TransientValueScreenX` | `$FFFF8264` | Transient-value rendering uses this as the first digit X and advances by eight; its source writer is not reconstructed. |

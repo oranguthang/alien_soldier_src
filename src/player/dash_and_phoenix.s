@@ -143,7 +143,7 @@ Player_PhoenixAttackUpdate_PlayBlockedSound:            ; CODE XREF: Player_Phoe
                 jsr     (Sound_PlaySFX).l
 Player_PhoenixAttackUpdate_UpdateCollision:             ; CODE XREF: Player_PhoenixAttackUpdate+12   j  ; was: loc_158A0
                                         ; Player_PhoenixAttackUpdate+5A   j
-                move.w  #1,(word_FF809C).w
+                move.w  #1,(DashActiveWriteOnly).w
                 bset    #6,$21(a5)
                 bset    #4,$23(a5)
                 bset    #4,(byte_FF8244).w
@@ -296,7 +296,7 @@ Player_DashAttackState_CleanupAfterMovement:            ; CODE XREF: Player_Dash
                 bra.s   Player_DashAttackState_Cleanup
 ; ---------------------------------------------------------------------------
 Player_DashAttackState_UpdateMovement:                  ; CODE XREF: Player_DashAttackState+C   j  ; was: loc_15A6E
-                move.w  #1,(word_FF809C).w
+                move.w  #1,(DashActiveWriteOnly).w
                 bset    #6,$21(a5)
                 bset    #4,$23(a5)
                 bsr.w   Player_ApplyHorizontalMovement

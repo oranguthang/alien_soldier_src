@@ -51,7 +51,7 @@ StageEntry_InitializeGameplayState_CopyAmmo:            ; was: loc_1CD5A
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
                 move.w  (StageTableIndex).w,d0
                 asr.b   #1,d0
-                move.b  UI_ContinueDisplayValueTable(pc,d0.w),(dword_FF80C8).w
+                move.b  StageEntrySoundRequestByStage(pc,d0.w),(StageIntroSoundRequest).w
                 rts
 ; End of function StageEntry_InitializeGameplayState
 
@@ -76,8 +76,8 @@ UI_ClearPaletteBuffers:                                 ; CODE XREF: UI_ResetPal
                 move.w  #4,(MessageMode).w
                 rts
 ; End of function UI_ResetPaletteAndMessageMode
-; ---------------------------------------------------------------------------
-UI_ContinueDisplayValueTable:   dc.b    $18, $18, $18, $18, $18, $18, $18, $18, $18, $18  ; was: byte_1CDCE
+; Per-stage SFX request consumed when the STAGE-number banner reaches its cue
+StageEntrySoundRequestByStage:  dc.b    $18, $18, $18, $18, $18, $18, $18, $18, $18, $18  ; was: byte_1CDCE
                                         ; DATA XREF: StageEntry_InitializeGameplayState+66   r
                 dc.b    $18, $18, $18, $18, $18, $18, $18, $18, $18, 0
                 dc.b    $18, $18, $18, $18, $18, $18, $18, $18, $18, $18

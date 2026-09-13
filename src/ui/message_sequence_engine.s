@@ -130,11 +130,11 @@ Message_QueueFontBasePatternDMA:                        ; CODE XREF: Message_Que
 ; Finalizes prior script graphics, then prepares the READY/FIGHT glyph list
 BattleBanner_PrepareGlyphs:                             ; DATA XREF: ROM:0000A9BE   o  ; was: sub_AA86
                 bsr.s   MessageSequence_FinalizeScriptGraphics
-                subq.w  #1,(dword_FF80CE).w
+                subq.w  #1,(BattleBannerDelay).w
                 bpl.s   BattleBanner_PrepareGlyphsReturn
                 addq.w  #2,(MessageSequenceState).w
-                move.l  #BattleBanner_GlyphSourceList,(dword_FF80CE).w
-                move.w  #$5400,(word_FF80C4).w
+                move.l  #BattleBanner_GlyphSourceList,(MessageGlyphSourcePtr).w
+                move.w  #$5400,(MessageGlyphVRAMCursor).w
 BattleBanner_PrepareGlyphsReturn:                       ; CODE XREF: BattleBanner_PrepareGlyphs+6   j  ; was: locret_AAA0
                 rts
 ; End of function BattleBanner_PrepareGlyphs
@@ -145,8 +145,8 @@ BattleBanner_LoadGlyphs:                                ; DATA XREF: ROM:0000A9C
                 beq.s   BattleBanner_LoadGlyphsReturn
                 move.b  #$16,d0
                 jsr     (Sound_PlaySFX).l
-                move.w  #$60,(word_FF80C6).w            ; '`'
-                move.w  #$64,(dword_FF80CE).w           ; 'd'
+                move.w  #$60,(BattleBannerTimer).w      ; '`'
+                move.w  #$64,(MessageWorkLong1).w       ; shared slot; value is not read before the next state overwrites it
 BattleBanner_LoadGlyphsReturn:                          ; CODE XREF: BattleBanner_LoadGlyphs+A   j  ; was: locret_AAC4
                 rts
 ; End of function BattleBanner_LoadGlyphs
@@ -154,7 +154,7 @@ BattleBanner_LoadGlyphsReturn:                          ; CODE XREF: BattleBanne
 BattleBanner_HoldReadyLine:                             ; DATA XREF: ROM:0000A9C2   o  ; was: sub_AAC6
                 movea.l #BattleBanner_StaticSpriteLine,a0
                 bsr.w   Message_RenderLine
-                subq.w  #1,(word_FF80C6).w
+                subq.w  #1,(BattleBannerTimer).w
                 bpl.s   BattleBanner_HoldReadyLineReturn
                 addq.w  #2,(MessageSequenceState).w
 BattleBanner_HoldReadyLineReturn:                       ; CODE XREF: BattleBanner_HoldReadyLine+E   j  ; was: locret_AADA
@@ -167,30 +167,30 @@ BattleBanner_StartFightLine:                            ; DATA XREF: ROM:0000A9C
                 move.b  #$17,d0
                 jsr     (Sound_PlaySFX).l
                 addq.w  #2,(MessageSequenceState).w
-                move.w  #$34,(word_FF80C6).w            ; '4'
-                clr.l   (dword_FF80CE).w
-                move.l  #$20000,(dword_FF80C8).w
+                move.w  #$34,(BattleBannerTimer).w      ; '4'
+                clr.l   (BattleBannerOffset).w
+                move.l  #$20000,(BattleBannerVelocity).w
                 bclr    #0,(StageTimerPauseFlag).w
                 jsr     (Results_StorePhaseSplitTime).l
                 rts
 ; End of function BattleBanner_StartFightLine
 ; Animates the FIGHT line with a decreasing fixed-point velocity
 BattleBanner_AnimateFightLine:                          ; DATA XREF: ROM:0000A9C6   o  ; was: sub_AB14
-                subq.w  #1,(word_FF80C6).w
+                subq.w  #1,(BattleBannerTimer).w
                 bpl.s   BattleBanner_UpdateFightLineMotion
                 clr.w   (MessageSequenceState).w
                 rts
 ; ---------------------------------------------------------------------------
 BattleBanner_UpdateFightLineMotion:                     ; CODE XREF: BattleBanner_AnimateFightLine+4   j  ; was: loc_AB20
-                move.l  (dword_FF80C8).w,d0
-                add.l   d0,(dword_FF80CE).w
+                move.l  (BattleBannerVelocity).w,d0
+                add.l   d0,(BattleBannerOffset).w
                 subi.l  #$2000,d0
                 movem.l d0,-(sp)
                 movea.l #BattleBanner_MovingSpriteLine,a0
-                clr.l   (dword_FF80C8).w
+                clr.l   (BattleBannerVelocity).w
                 bsr.w   Message_RenderLineWithOffsets
                 movem.l (sp)+,d0
-                move.l  d0,(dword_FF80C8).w
+                move.l  d0,(BattleBannerVelocity).w
                 rts
 ; End of function BattleBanner_AnimateFightLine
 ; Starts either encoded message-script entry path and queues its font tiles
@@ -203,21 +203,21 @@ MessageScript_Begin:                                    ; DATA XREF: ROM:0000A9A
 ; Dispatches an encoded message command, terminator, or glyph record
 MessageScript_DispatchCommand:                          ; DATA XREF: ROM:0000A9A8   o  ; was: sub_AB58
                                         ; ROM:0000A9B6   o
-                movea.l (dword_FF80C8).w,a0
+                movea.l (MessageScriptCursor).w,a0
                 move.w  (a0),d0
                 cmpi.w  #$FFFE,d0
                 beq.w   MessageScript_QueueTilemapDMA
                 cmpi.w  #$FFFF,d0
                 bne.w   MessageScript_SetupGlyph
                 addq.w  #8,(MessageSequenceState).w
-                move.w  #$40,(dword_FF80CE).w           ; '@'
+                move.w  #$40,(MessageScriptEndTimer).w  ; '@'
                 rts
 ; End of function MessageScript_DispatchCommand
 ; Decodes one message glyph record and initializes its render attributes
 MessageScript_SetupGlyph:                               ; CODE XREF: MessageScript_DispatchCommand+12   j  ; was: sub_AB7A
                 addq.w  #2,(MessageSequenceState).w
-                move.w  #$D0,(word_FF80C6).w
-                addq.l  #2,(dword_FF80C8).w
+                move.w  #$D0,(MessageGlyphDelay).w
+                addq.l  #2,(MessageScriptCursor).w
                 ext.l   d0
                 adda.l  d0,a0
                 moveq   #0,d4
@@ -228,11 +228,11 @@ MessageScript_SetupGlyph:                               ; CODE XREF: MessageScri
                 add.w   d3,d4
                 move.w  d4,d3
                 andi.w  #$7FFE,d4
-                move.l  a0,(dword_FF80CE).w
-                move.w  d4,(word_FF80CC).w
-                move.w  #$C,(word_FF80D6).w
-                move.w  #$5400,(word_FF80C4).w
-                move.w  #$86A0,(word_FF80D2).w
+                move.l  a0,(MessageGlyphSourcePtr).w
+                move.w  d4,(MessageTilemapVRAMPos).w
+                move.w  #$C,(MessageWorkWord5).w        ; write-only in this path; results later reuse the slot as an X coordinate
+                move.w  #$5400,(MessageGlyphVRAMCursor).w
+                move.w  #$86A0,(MessageGlyphTileWord).w
                 moveq   #0,d2
                 btst    #0,d3
                 beq.s   MessageScript_CheckGlyphPriority
@@ -242,7 +242,7 @@ MessageScript_CheckGlyphPriority:                       ; CODE XREF: MessageScri
                 bpl.s   MessageScript_StoreGlyphAttributes
                 addi.w  #$4000,d2
 MessageScript_StoreGlyphAttributes:                     ; CODE XREF: MessageScript_SetupGlyph+4C   j  ; was: loc_ABCC
-                add.w   d2,(word_FF80D2).w
+                add.w   d2,(MessageGlyphTileWord).w
 ; End of function MessageScript_SetupGlyph
 ; Idle message-sequence state
 MessageSequence_Idle:                                   ; DATA XREF: ROM:MessageSequence_HandlerTable   o  ; was: nullsub_22
@@ -315,7 +315,7 @@ Message_QueueFontPatternFillDMA:                        ; CODE XREF: Message_Que
 ; Builds one transparent glyph tile, queues its DMA, and writes tilemap words
 MessageScript_RenderGlyph:                              ; DATA XREF: ROM:0000A9AA   o  ; was: sub_AC74
                                         ; ROM:0000A9B8   o
-                movea.l (dword_FF80CE).w,a0
+                movea.l (MessageGlyphSourcePtr).w,a0
                 moveq   #0,d0
                 move.b  (a0),d0
                 cmpi.b  #$FF,d0
@@ -369,18 +369,18 @@ MessageScript_StoreGlyphRow:                            ; CODE XREF: MessageScri
                 dbf     d7,MessageScript_CopyGlyphRowLoop
                 movea.w (VDPCommandQueueHead).w,a5
                 move.w  #$83,-(a5)
-                move.w  (word_FF80C4).w,-(a5)
+                move.w  (MessageGlyphVRAMCursor).w,-(a5)
                 move.w  #$9580,-(a5)
                 move.w  #$96D1,-(a5)
                 move.l  #$8F02977F,-(a5)
                 move.l  #$94009320,-(a5)
                 movea.w (VDPStagingDataCursor).w,a0
-                move.w  (word_FF80D2).w,d0
+                move.w  (MessageGlyphTileWord).w,d0
                 move.w  d0,(a0)+
                 addq.w  #1,d0
                 move.w  d0,(a0)+
                 move.w  #$83,-(a5)
-                move.w  (word_FF80CC).w,-(a5)
+                move.w  (MessageTilemapVRAMPos).w,-(a5)
                 move.b  (VDPStagingDataCursor).w,d1
                 move.b  (VDPStagingDataCursor+1).w,d2
                 asr.b   #1,d1
@@ -393,12 +393,12 @@ MessageScript_StoreGlyphRow:                            ; CODE XREF: MessageScri
                 move.l  #$94009302,-(a5)
                 move.w  a5,(VDPCommandQueueHead).w
                 addq.w  #4,(VDPStagingDataCursor).w
-                addi.w  #$40,(word_FF80C4).w            ; '@'
-                addq.l  #1,(dword_FF80CE).w
-                addq.w  #2,(word_FF80CC).w
-                addq.w  #2,(word_FF80D2).w
-                subq.w  #1,(word_FF80C6).w
-                move.b  (dword_FF80CE+3).w,d0
+                addi.w  #$40,(MessageGlyphVRAMCursor).w  ; '@'
+                addq.l  #1,(MessageGlyphSourcePtr).w
+                addq.w  #2,(MessageTilemapVRAMPos).w
+                addq.w  #2,(MessageGlyphTileWord).w
+                subq.w  #1,(MessageGlyphDelay).w
+                move.b  (MessageGlyphSourcePtr+3).w,d0
                 andi.b  #3,d0
                 bne.s   MessageScript_RenderGlyphReturn
                 move.b  #$AD,d0
@@ -411,7 +411,7 @@ MessageScript_WaitAndRefreshGlyph:                      ; DATA XREF: ROM:0000A9A
                                         ; ROM:0000A9BA   o
                 tst.b   (MessageAdvanceButtons).w
                 bne.s   MessageScript_RefreshGlyphTiles
-                subq.w  #1,(word_FF80C6).w
+                subq.w  #1,(MessageGlyphDelay).w
                 bpl.s   MessageScript_WaitAndRefreshGlyphReturn
 MessageScript_RefreshGlyphTiles:                        ; CODE XREF: MessageScript_WaitAndRefreshGlyph+4   j  ; was: loc_ADA2
                 subq.w  #4,(MessageSequenceState).w
@@ -422,14 +422,14 @@ MessageScript_WaitAndRefreshGlyphReturn:                ; CODE XREF: MessageScri
 ; Decodes a script DMA command and queues its ROM-to-VRAM tilemap transfer
 MessageScript_QueueTilemapDMA:                          ; CODE XREF: MessageScript_DispatchCommand+A   j  ; was: sub_ADAC
                 addq.w  #6,(MessageSequenceState).w
-                clr.w   (word_FF80C6).w
-                addq.l  #6,(dword_FF80C8).w
-                movea.l (dword_FF80C8).w,a0
+                clr.w   (MessageTileChunkIndex).w
+                addq.l  #6,(MessageScriptCursor).w
+                movea.l (MessageScriptCursor).w,a0
                 move.l  -4(a0),d0
                 andi.l  #$3FFFFF,d0
                 move.w  -4(a0),d1
                 andi.w  #$E000,d1
-                move.w  d1,(word_FF80D4).w
+                move.w  d1,(MessageTilemapAttrs).w
                 movea.w (VDPCommandQueueHead).w,a5
                 move.w  #$83,-(a5)
                 move.w  #$5E00,-(a5)
@@ -451,14 +451,14 @@ MessageScript_QueueTilemapDMA:                          ; CODE XREF: MessageScri
 ; Writes one four-word chunk of the script-provided tilemap
 MessageScript_RenderTilemapChunk:                       ; DATA XREF: ROM:0000A9AE   o  ; was: sub_AE0E
                                         ; ROM:0000A9BC   o
-                move.w  (word_FF80C6).w,d0
+                move.w  (MessageTileChunkIndex).w,d0
                 move.w  d0,d3
-                addq.w  #2,(word_FF80C6).w
-                cmpi.w  #8,(word_FF80C6).w
+                addq.w  #2,(MessageTileChunkIndex).w
+                cmpi.w  #8,(MessageTileChunkIndex).w
                 bmi.s   MessageScript_SelectTilemapHalf
                 subq.w  #6,(MessageSequenceState).w
 MessageScript_SelectTilemapHalf:                        ; CODE XREF: MessageScript_RenderTilemapChunk+10   j  ; was: loc_AE24
-                move.w  (word_FF80D4).w,d2
+                move.w  (MessageTilemapAttrs).w,d2
                 bclr    #$F,d2
                 beq.s   MessageScript_WriteTilemapChunk
                 addq.w  #8,d0
