@@ -80,7 +80,7 @@ Boss_Epsilon1WaitForBattleMessageReturn:                ; CODE XREF: Boss_Epsilo
 ; Selects one of three attack branches when the ring controller is idle
 Boss_Epsilon1SelectAttackState:                         ; DATA XREF: ROM:00045D02   o  ; was: sub_4627A
                 clr.l   (SecondaryEntityXVel).w
-                tst.w   (word_FFC7A4).w
+                tst.w   (FifthEntityState).w
                 bne.s   Boss_Epsilon1SelectAttackReturn
                 tst.w   (Epsilon1ProximityFlag).w
                 bne.s   Boss_Epsilon1SelectVerticalSweepAttack
@@ -145,11 +145,11 @@ Boss_Epsilon1CollapseSpreadRingReturn:                  ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1CollapseSpreadRingState
 ; Activates the ring controller for the spread branch
 Boss_Epsilon1ActivateSpreadRingState:                   ; DATA XREF: ROM:00045D0C   o  ; was: sub_46320
-                tst.w   (word_FFC7A4).w
+                tst.w   (FifthEntityState).w
                 bne.s   Boss_Epsilon1ActivateSpreadRingReturn
-                move.w  #0,(word_FFC7FE).w
+                move.w  #0,(FifthEntityWork5E).w
                 nop
-                addq.w  #2,(word_FFC7A4).w
+                addq.w  #2,(FifthEntityState).w
                 addq.w  #2,4(a5)
 Boss_Epsilon1ActivateSpreadRingReturn:                  ; CODE XREF: Boss_Epsilon1ActivateSpreadRingState+4   j  ; was: locret_46336
                 rts
@@ -157,9 +157,9 @@ Boss_Epsilon1ActivateSpreadRingReturn:                  ; CODE XREF: Boss_Epsilo
 ; Waits for ring-controller state $0A, then releases that controller
 Boss_Epsilon1WaitForSpreadRingReadyState:               ; DATA XREF: ROM:00045D0E   o  ; was: sub_46338
                 bsr.w   Boss_Epsilon1UpdateBattleCenterMotion
-                cmpi.w  #$A,(word_FFC7A4).w
+                cmpi.w  #$A,(FifthEntityState).w
                 bne.s   Boss_Epsilon1WaitForSpreadRingReadyReturn
-                addq.w  #2,(word_FFC7A4).w
+                addq.w  #2,(FifthEntityState).w
                 addq.w  #2,4(a5)
 Boss_Epsilon1WaitForSpreadRingReadyReturn:              ; CODE XREF: Boss_Epsilon1WaitForSpreadRingReadyState+A   j  ; was: locret_4634C
                 rts
@@ -204,7 +204,7 @@ Boss_Epsilon1LaunchSpreadPairState:                     ; DATA XREF: ROM:00045D1
                 move.w  $14(a5),d1
                 movea.w (dword_FF941C+2).w,a0
                 bsr.s   Projectile_PrepareEpsilon1ElevenStepSpread
-                tst.w   (word_FFC7A4).w
+                tst.w   (FifthEntityState).w
                 beq.s   Boss_Epsilon1FinishSpreadPair
                 move.w  #$1E,4(a5)
                 rts
@@ -279,11 +279,11 @@ Boss_Epsilon1CollapseRingCycleReturn:                   ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1CollapseRingCycleState
 ; Activates the ring controller with its alternate command flag
 Boss_Epsilon1ActivateRingCycleState:                    ; DATA XREF: ROM:00045D1E   o  ; was: sub_4647E
-                tst.w   (word_FFC7A4).w
+                tst.w   (FifthEntityState).w
                 bne.s   Boss_Epsilon1ActivateRingCycleReturn
-                move.w  #1,(word_FFC7FE).w
+                move.w  #1,(FifthEntityWork5E).w
                 nop
-                addq.w  #2,(word_FFC7A4).w
+                addq.w  #2,(FifthEntityState).w
                 addq.w  #2,4(a5)
 Boss_Epsilon1ActivateRingCycleReturn:                   ; CODE XREF: Boss_Epsilon1ActivateRingCycleState+4   j  ; was: locret_46494
                 rts
@@ -291,9 +291,9 @@ Boss_Epsilon1ActivateRingCycleReturn:                   ; CODE XREF: Boss_Epsilo
 ; Waits for the ring controller to complete, then returns to attack selection
 Boss_Epsilon1WaitForRingCycleCompleteState:             ; DATA XREF: ROM:00045D20   o  ; was: sub_46496
                 bsr.w   Boss_Epsilon1UpdateBattleCenterMotion
-                cmpi.w  #$C,(word_FFC7A4).w
+                cmpi.w  #$C,(FifthEntityState).w
                 bne.s   Boss_Epsilon1WaitForRingCycleCompleteReturn
-                addq.w  #2,(word_FFC7A4).w
+                addq.w  #2,(FifthEntityState).w
                 move.w  #$12,4(a5)
 Boss_Epsilon1WaitForRingCycleCompleteReturn:            ; CODE XREF: Boss_Epsilon1WaitForRingCycleCompleteState+A   j  ; was: locret_464AC
                 rts

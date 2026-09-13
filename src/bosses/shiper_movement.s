@@ -254,7 +254,7 @@ Boss_ShiperSpinAttackReverseRotation:                   ; CODE XREF: Boss_Shiper
 ; End of function Boss_ShiperSpinAttack
 ; Updates boss position handling collision detection and sprite positioning
 Boss_ShiperPositionUpdate:                              ; CODE XREF: Boss_ShiperUpdateMain+4   p  ; was: sub_36CB0
-                movea.w #(byte_FFCBC0-M68K_RAM),a0
+                movea.w #(SixteenthEntityType-M68K_RAM),a0
                 movea.w #(SecondaryEntityType-M68K_RAM),a1
                 move.w  $10(a1),d0
                 addi.w  #$28,d0                         ; '('
@@ -466,7 +466,7 @@ Boss_ShiperTentacleShiftRotationHistory:                ; CODE XREF: Boss_Shiper
                 move.w  d0,(a0)+
                 move.w  d1,d0
                 dbf     d7,Boss_ShiperTentacleShiftRotationHistory
-                movea.w #(word_FFC980-M68K_RAM),a0
+                movea.w #(TenthEntityType-M68K_RAM),a0
                 move.l  $70(a5),d0
                 move.l  $74(a5),d1
                 swap    d0
@@ -478,7 +478,7 @@ Boss_ShiperTentacleShiftRotationHistory:                ; CODE XREF: Boss_Shiper
                 add.l   $16C(a5),d0
                 move.l  d0,$10(a0)
                 move.l  d1,$14(a0)
-                movea.w #(word_FFC9E0-M68K_RAM),a1
+                movea.w #(EleventhEntityType-M68K_RAM),a1
                 movea.w #(dword_FF9400-M68K_RAM),a2
                 movea.w #(word_FF9500-M68K_RAM),a3
                 movea.w #(dword_FF9A00-M68K_RAM),a4

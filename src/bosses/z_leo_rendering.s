@@ -302,7 +302,7 @@ Boss_ZLeoInitialTileLoadData:   dc.w    $4E00, $4000, $900, $2A2B, $2A2B, $2A2B,
 Boss_ZLeoUpdateBladeSprite:                             ; CODE XREF: Boss_ZLeoBeginRisingReturn+106   p  ; was: sub_528B2
                 lea     Boss_ZLeoBladeDirectionFrameTable(pc),a1
                 nop
-                movea.w #(word_FFC860-M68K_RAM),a0
+                movea.w #(SeventhEntityType-M68K_RAM),a0
                 andi.w  #$E7FF,$E(a0)
                 jmp     Sprite_UpdateFourDirectionFrame
 ; End of function Boss_ZLeoUpdateBladeSprite

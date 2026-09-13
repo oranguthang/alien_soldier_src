@@ -237,18 +237,18 @@ Entity_ClearValkirieAuxiliaryGroupLoop:                 ; CODE XREF: Entity_Init
                 move.w  #$65,$206(a5)                   ; 'e'
                 move.l  #$F808F808,$20C(a5)
                 move.l  #$F010F010,$208(a5)
-                move.b  #3,(byte_FFC9DE).w
+                move.b  #3,(ValkirieAuxFlags).w
                 movea.w a5,a0
                 movea.w #(Entity_ObjectPool-M68K_RAM),a5
                 rts
 ; End of function Entity_InitValkirieAuxiliaryGroup
 ; Update the auxiliary group while attached, launching, or tracking a target
 Entity_UpdateValkirieAuxiliaryGroup:                    ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_5671A
-                btst    #1,(byte_FFC9DE).w
+                btst    #1,(ValkirieAuxFlags).w
                 beq.w   Entity_UpdateDetachedValkirieAuxiliaryGroup
-                bclr    #4,(byte_FFC9DE).w
+                bclr    #4,(ValkirieAuxFlags).w
                 beq.s   Entity_SyncValkirieAuxiliaryGroup
-                bclr    #1,(byte_FFC9DE).w
+                bclr    #1,(ValkirieAuxFlags).w
                 move.w  #$D00,$1E2(a5)
                 move.b  #$C0,$201(a5)
                 move.b  #$10,$203(a5)
@@ -276,7 +276,7 @@ Entity_SyncValkirieAuxiliaryGroup:                      ; CODE XREF: Entity_Upda
                 bsr.w   Entity_UpdateValkirieAuxiliaryAnchors
                 moveq   #8,d5
                 move.w  #$1F8,d6
-                btst    #0,(byte_FFC9DE).w
+                btst    #0,(ValkirieAuxFlags).w
                 bne.s   Entity_RotateValkirieAuxiliaryGroupForward
                 cmpi.w  #$100,$B6(a5)
                 beq.w   Entity_UpdateValkirieAuxiliaryGroupReturn
@@ -302,9 +302,9 @@ Entity_RotateValkirieAuxiliaryGroupForward:             ; CODE XREF: Entity_Upda
                 rts
 ; ---------------------------------------------------------------------------
 Entity_UpdateDetachedValkirieAuxiliaryGroup:            ; CODE XREF: Entity_UpdateValkirieAuxiliaryGroup+6   j  ; was: loc_56804
-                bclr    #5,(byte_FFC9DE).w
+                bclr    #5,(ValkirieAuxFlags).w
                 beq.s   Entity_AdvanceValkirieAuxiliaryAngle
-                bset    #1,(byte_FFC9DE).w
+                bset    #1,(ValkirieAuxFlags).w
                 clr.w   $1E2(a5)
                 move.b  #$80,$201(a5)
                 move.b  #$10,$203(a5)
@@ -335,7 +335,7 @@ Entity_TrackValkirieAuxiliaryTarget:                    ; CODE XREF: Entity_Upda
                 move.w  (PrimaryCameraXPosition).w,d1
                 add.w   $10(a5),d1
                 move.w  $23C(a5),d2
-                btst    #7,(byte_FFC9DE).w
+                btst    #7,(ValkirieAuxFlags).w
                 beq.s   Entity_AdjustValkirieAuxiliaryVelocity
                 bsr.w   Entity_AimValkirieAuxiliaryAtPlayer
 Entity_AdjustValkirieAuxiliaryVelocity:                 ; CODE XREF: Entity_UpdateValkirieAuxiliaryGroup+15C   j  ; was: loc_5687C
@@ -416,8 +416,8 @@ Entity_UpdateValkirieAuxiliaryAnchors:                  ; CODE XREF: Entity_Upda
 ; End of function Entity_UpdateValkirieAuxiliaryAnchors
 ; Calculate the direction from the auxiliary anchor to the player
 Entity_AimValkirieAuxiliaryAtPlayer:                    ; CODE XREF: Entity_UpdateValkirieAuxiliaryGroup+15E   p  ; was: sub_5692C
-                move.w  (word_FFCB10).w,d0
-                move.w  (word_FFCB14).w,d1
+                move.w  (FourteenthEntityXPos).w,d0
+                move.w  (FourteenthEntityYPos).w,d1
                 sub.w   $1F0(a5),d0
                 sub.w   $1F4(a5),d1
                 jmp     (Math_CalculateDirectionIndex).l

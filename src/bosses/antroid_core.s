@@ -283,7 +283,7 @@ Boss_AntroidLaunchLeapAttackA:                          ; CODE XREF: Boss_Antroi
 Boss_AntroidLeapAttackA:                                ; DATA XREF: ROM:00037518   o  ; was: sub_377F6
                 addi.l  #$5000,$1C(a5)
                 bmi.s   Boss_AntroidLeapAttackAAnimate
-                movea.w #(byte_FFCB60-M68K_RAM),a1
+                movea.w #(FifteenthEntityType-M68K_RAM),a1
                 movea.w #(word_FFCF80-M68K_RAM),a0
                 tst.w   6(a5)
                 beq.s   Boss_AntroidLeapAttackACheckContact
@@ -360,7 +360,7 @@ Boss_AntroidLaunchLeapAttackB:                          ; CODE XREF: Boss_Antroi
 Boss_AntroidLeapAttackB:                                ; DATA XREF: ROM:0003751C   o  ; was: sub_378BE
                 addi.l  #$5000,$1C(a5)
                 bmi.w   Boss_AntroidLeapAttackBAnimate
-                movea.w #(byte_FFCB60-M68K_RAM),a0
+                movea.w #(FifteenthEntityType-M68K_RAM),a0
                 movea.w #(word_FFCF80-M68K_RAM),a1
                 tst.w   6(a5)
                 beq.s   Boss_AntroidLeapAttackBCheckContact

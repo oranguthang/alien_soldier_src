@@ -524,14 +524,14 @@ Object_TransitionDebrisResolveBoundsOrCollision:        ; DATA XREF: ROM:0004BB3
 ; ---------------------------------------------------------------------------
 Object_TransitionDebrisRemoveOutsideVerticalBounds:     ; CODE XREF: Object_TransitionDebrisResolveBoundsOrCollision+6   j  ; was: loc_4BBA8
                                         ; Object_TransitionDebrisResolveBoundsOrCollision+E   j
-                subq.w  #1,(word_FFC792).w
+                subq.w  #1,(QuaternaryEntityWork52).w
                 move.w  #$1000,2(a5)
                 rts
 ; ---------------------------------------------------------------------------
 Object_TransitionDebrisConvertAfterCollision:           ; CODE XREF: Object_TransitionDebrisResolveBoundsOrCollision+1C   j  ; was: loc_4BBB4
                 move.w  #$BC,d0
                 jsr     (Sound_PlaySFX).l
-                subq.w  #1,(word_FFC792).w
+                subq.w  #1,(QuaternaryEntityWork52).w
                 clr.b   $21(a5)
                 move.l  #SharedCombatSpriteAnimation05,8(a5)
                 jsr     (Projectile_InitType88FromCurrent).l
@@ -584,7 +584,7 @@ Boss_DestroyerMK2UpdateLinkedObjectGeometry:            ; CODE XREF: Boss_Destro
                 move.l  $10(a5),$10(a0)
                 move.l  $14(a5),$14(a0)
                 move.w  #3,d7
-                movea.w #(word_FFC7A0-M68K_RAM),a0
+                movea.w #(FifthEntityType-M68K_RAM),a0
 Boss_DestroyerMK2UpdateLinkedComponentLoop:             ; CODE XREF: Boss_DestroyerMK2UpdateLinkedObjectGeometry+7E   j  ; was: loc_4BC8C
                 cmpi.w  #4,$4E(a0)
                 bcc.s   Boss_DestroyerMK2SelectLowerComponentScrollGroup
@@ -609,7 +609,7 @@ Boss_DestroyerMK2UpdateLinkedComponentPosition:         ; CODE XREF: Boss_Destro
                 andi.w  #$1FF,(dword_FF9408).w
                 clr.w   d3
                 move.b  $20(a5),d3
-                movea.w #(word_FFC920-M68K_RAM),a0
+                movea.w #(NinthEntityType-M68K_RAM),a0
                 move.w  (dword_FF9404).w,d5
                 move.w  (dword_FF9408).w,d6
                 lea     (Math_SineTable).l,a1
@@ -677,31 +677,31 @@ Boss_DestroyerMK2OrbitingPartSpriteAttributeTable:  dc.w    $6300, $6300, $6300,
 
 ; Activate idle linked records according to the encounter flag byte
 Boss_DestroyerMK2ActivateLinkedPartsFromFlags:
-                tst.w   (word_FFC804).w                 ; was: sub_4BDAC
+                tst.w   (SixthEntityState).w            ; was: sub_4BDAC
                 bne.s   Boss_DestroyerMK2CheckConditionalNearPartActivation
-                move.w  #2,(word_FFC804).w
+                move.w  #2,(SixthEntityState).w
 Boss_DestroyerMK2CheckConditionalNearPartActivation:    ; CODE XREF: Boss_DestroyerMK2ActivateLinkedPartsFromFlags+4   j  ; was: loc_4BDB8
                 btst    #6,(ControllerHeldState).w
                 beq.s   Boss_DestroyerMK2CheckFarPartActivationFlags
-                tst.w   (word_FFC7A4).w
+                tst.w   (FifthEntityState).w
                 bne.s   Boss_DestroyerMK2CheckFarPartActivationFlags
-                move.w  #2,(word_FFC7A4).w
+                move.w  #2,(FifthEntityState).w
 Boss_DestroyerMK2CheckFarPartActivationFlags:           ; CODE XREF: Boss_DestroyerMK2ActivateLinkedPartsFromFlags+12   j  ; was: loc_4BDCC
                                         ; Boss_DestroyerMK2ActivateLinkedPartsFromFlags+18   j
                 btst    #1,(ControllerHeldState).w
                 beq.s   Boss_DestroyerMK2LinkedPartFlagActivationReturn
                 btst    #5,(ControllerHeldState).w
                 beq.s   Boss_DestroyerMK2CheckSecondFarPartActivation
-                tst.w   (word_FFC8C4).w
+                tst.w   (EighthEntityState).w
                 bne.s   Boss_DestroyerMK2CheckSecondFarPartActivation
-                move.w  #2,(word_FFC8C4).w
+                move.w  #2,(EighthEntityState).w
 Boss_DestroyerMK2CheckSecondFarPartActivation:          ; CODE XREF: Boss_DestroyerMK2ActivateLinkedPartsFromFlags+2E   j  ; was: loc_4BDE8
                                         ; Boss_DestroyerMK2ActivateLinkedPartsFromFlags+34   j
                 btst    #6,(ControllerHeldState).w
                 beq.s   Boss_DestroyerMK2LinkedPartFlagActivationReturn
-                tst.w   (word_FFC864).w
+                tst.w   (SeventhEntityState).w
                 bne.s   Boss_DestroyerMK2LinkedPartFlagActivationReturn
-                move.w  #2,(word_FFC864).w
+                move.w  #2,(SeventhEntityState).w
 Boss_DestroyerMK2LinkedPartFlagActivationReturn:        ; CODE XREF: Boss_DestroyerMK2ActivateLinkedPartsFromFlags+26   j  ; was: locret_4BDFC
                                         ; Boss_DestroyerMK2ActivateLinkedPartsFromFlags+42   j
                 rts

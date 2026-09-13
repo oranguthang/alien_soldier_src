@@ -543,9 +543,9 @@ Boss_MadamBarbarApplyPartFlagArrangement:               ; CODE XREF: Boss_MadamB
 ; End of function Boss_MadamBarbarApplyPartFlagArrangement
 ; Updates the two bounded rotation-control words
 Boss_MadamBarbarUpdateRotationBounds:                   ; CODE XREF: Boss_MadamBarbarUpdateParts   p  ; was: sub_3AB16
-                movea.w #(byte_FFC7FC-M68K_RAM),a0
+                movea.w #(FifthEntityWork5C-M68K_RAM),a0
                 bsr.s   Boss_MadamBarbarUpdateRotationBound
-                movea.w #(word_FFC7FE-M68K_RAM),a0
+                movea.w #(FifthEntityWork5E-M68K_RAM),a0
 ; End of function Boss_MadamBarbarUpdateRotationBounds
 ; Moves one rotation-control word between limits 8 and $20
 Boss_MadamBarbarUpdateRotationBound:                    ; CODE XREF: Boss_MadamBarbarUpdateRotationBounds+4   p  ; was: sub_3AB20

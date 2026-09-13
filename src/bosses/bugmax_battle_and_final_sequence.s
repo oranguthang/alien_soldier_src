@@ -11,9 +11,9 @@ Gfx_BugmaxBattleTileTransferDescriptor: dc.w    $6330, $2000, $104, 0, 0, 0, 0, 
 ; Initialize the controller, primary and secondary linked chains, and history buffers
 Boss_BugmaxInitializeBattleObjectChains:                ; DATA XREF: ROM:0004C3F0   o  ; was: sub_4C954
                 addq.w  #2,4(a5)
-                move.l  (dword_FFC878).w,d0
+                move.l  (SeventhEntityXVel).w,d0
                 move.l  d0,$18(a5)
-                move.l  (dword_FFC87C).w,d0
+                move.l  (SeventhEntityYVel).w,d0
                 asr.l   #1,d0
                 move.l  d0,$1C(a5)
                 move.w  #$100,(dword_FF9414+2).w
@@ -65,7 +65,7 @@ Boss_BugmaxInitializePrimaryLinkedChainLoop:            ; CODE XREF: Boss_Bugmax
                 lea     Boss_BugmaxSecondaryLinkedPartMappings(pc),a1
                 nop
                 move.w  #7,d7
-                movea.w #(word_FFC8C0-M68K_RAM),a0
+                movea.w #(EighthEntityType-M68K_RAM),a0
 Boss_BugmaxInitializeSecondaryLinkedChainLoop:          ; CODE XREF: Boss_BugmaxInitializeBattleObjectChains+146   j  ; was: loc_4CA78
                 move.w  #$10,(a0)
                 move.w  $E(a5),$E(a0)
@@ -551,7 +551,7 @@ Boss_BugmaxInitializeAngleOffsetDistribution:           ; CODE XREF: Boss_Bugmax
                 sub.w   d0,(dword_FF9410+2).w
                 move.w  (dword_FF9410).w,d0
                 moveq   #0,d6
-                movea.w #(word_FFC8C0-M68K_RAM),a0
+                movea.w #(EighthEntityType-M68K_RAM),a0
                 move.w  #2,d7
 Boss_BugmaxDistributeFirstAngleOffsetGroupLoop:         ; CODE XREF: Boss_BugmaxDistributeSecondaryChainAngleOffsets+2E   j  ; was: loc_4D06E
                 move.w  d6,$4E(a0)
@@ -769,7 +769,7 @@ Boss_BugmaxScatterPrimaryObjectPoolLoop:                ; CODE XREF: Boss_Bugmax
                 lea     $60(a0),a0
                 dbf     d7,Boss_BugmaxScatterPrimaryObjectPoolLoop
                 move.w  #7,d7
-                movea.w #(word_FFC8C0-M68K_RAM),a0
+                movea.w #(EighthEntityType-M68K_RAM),a0
 Boss_BugmaxScatterSecondaryObjectPoolLoop:              ; CODE XREF: Boss_BugmaxScatterLinkedParts+76   j  ; was: loc_4D2C8
                 move.w  #$344,(a0)
                 move.w  #1,$5C(a0)

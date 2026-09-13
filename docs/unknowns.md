@@ -6208,3 +6208,87 @@ Provenance rises from 15,444 to 15,451 mappings and the audit registry from
 12,594 to 12,601. The semantic review upper bound remains 3,150 because every
 new mapping has a matching audit record. The enforced address-derived ceiling
 falls from 607 to 600, all still confined to RAM equates.
+
+The fourth-record and fifth-record header pass replaces seven raw equates.
+Three owner-dependent fourth-record fields remain structural; a fourth is
+proved to reload Sunset Sting's active-chain countdown and becomes
+`SunsetStingChainPeriod`. The next `$60`-byte record receives type, flags, and
+state names. Its state field is independently exercised as Epsilon 1's ring
+controller and as one member of Destroyer MK2's linked-state wait set.
+
+All seven fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,451 to 15,458 mappings and the audit registry from
+12,601 to 12,608. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 600 to 593, all still confined to RAM equates.
+
+The fifth-record work and sixth-record header pass replaces nine raw equates.
+Sunset Sting's packed chain selector/countdown and pose-radius byte have closed
+consumer chains and receive semantic names. Cross-boss review rejects two
+initially tempting narrow names: `$FFFFC7FC` and `$FFFFC7FE` are also the two
+Madam Barbar rotation-bound words, so they remain `FifthEntityWork5C` and
+`FifthEntityWork5E` rather than falsely naming one owner. The sixth record's
+type, flags, and state offsets are established by scene setup and Destroyer MK2
+linked-part control.
+
+All nine fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,458 to 15,467 mappings and the audit registry from
+12,608 to 12,617. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 593 to 584, all still confined to RAM equates.
+
+The sixth-record work and seventh-record motion pass replaces ten raw equates.
+Offsets `$40`, `$52`, and `$56` of the sixth record remain structural because
+their known Destroyer Proto, Jampan, and Sirene uses do not establish a stable
+cross-owner meaning. The seventh record receives type, flags, state, signed
+16.16 X/Y position, and signed 16.16 X/Y velocity names. Jampan proves the
+coordinate fields by copying them into a spawned attack object; Bugmax proves
+the motion fields while also demonstrating that the high word of the Y
+coordinate can be reused as scratch under another owner.
+
+All ten fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,467 to 15,477 mappings and the audit registry from
+12,617 to 12,627. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 584 to 574, all still confined to RAM equates.
+
+The seventh-record work and eighth-record header pass replaces nine raw
+equates. Destroyer Proto proves two seventh-record linked-angle fields, and
+Jampan proves three shield-formation angle bases plus one linked-part control
+field. The shared slots keep structural names because `SeventhEntityWork4C`
+also serves Bugmax linked-part spin and the record changes owner. The eighth
+record receives type, flags, and state names from scene initialization,
+record-base traversal, and Destroyer MK2 linked-state checks.
+
+All nine fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,477 to 15,486 mappings and the audit registry from
+12,627 to 12,636. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 574 to 565, all still confined to RAM equates.
+
+The ninth-through-eleventh record pass replaces eleven raw equates. The ninth
+and tenth record bases and flags are proven by pool traversal and star-row
+initialization. Tenth-record offset `$5E` has one closed Valkirie
+producer/consumer chain and becomes `ValkirieAuxFlags`: its bits
+coordinate attachment, launch, rotation, and targeting transitions. The
+eleventh record receives type and flags names plus the coordinate and signed
+16.16 velocity fields exercised by the two planet-grid sequences.
+
+All eleven fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,486 to 15,497 mappings and the audit registry from
+12,636 to 12,647. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 565 to 554, all still confined to RAM equates.
+
+The twelfth-through-sixteenth record pass replaces twelve raw equates. The
+twelfth record receives type, flags, coordinate, and signed 16.16 velocity
+names from the two ship-grid sequences. Four later record bases are proven by
+the `$60` pool stride and fixed-slot users in Flying Neo, Sharpssteel, Bugmax,
+Antroid, Shiper, and Artemis. Valkirie targeting additionally proves the
+fourteenth record's integer X/Y coordinate halves.
+
+All twelve fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,497 to 15,509 mappings and the audit registry from
+12,647 to 12,659. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 554 to 542, all still confined to RAM equates.

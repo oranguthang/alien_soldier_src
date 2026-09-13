@@ -46,8 +46,8 @@ Boss_FindLowestSegmentAdvance:                          ; CODE XREF: Boss_FindLo
 ; Selects the visually lowest segment (largest Y coordinate) for targeting
 Boss_JetsripperFindLowestSegment:                       ; CODE XREF: Boss_JetsripperRotateState+34   p  ; was: sub_35E8C
                                         ; Boss_JetsripperUpdateMovement+92   p
-                movea.w #(word_FFC920-M68K_RAM),a0
-                movea.w #(word_FFC8C0-M68K_RAM),a1
+                movea.w #(NinthEntityType-M68K_RAM),a0
+                movea.w #(EighthEntityType-M68K_RAM),a1
                 move.l  $44(a1),d1
                 moveq   #3,d7
 Boss_JetsripperFindLowestSegmentNextCandidate:          ; CODE XREF: Boss_JetsripperFindLowestSegment+1E   j  ; was: loc_35E9A
@@ -233,7 +233,7 @@ Boss_JetsripperCalculateAngleVelocity:                  ; CODE XREF: Boss_Jetsri
 ; End of function Boss_JetsripperCalculateAngleVelocity
 ; Updates positions of sprite segment chain based on velocity deltas
 Boss_UpdateSegmentChainPositions:
-                movea.w #(word_FFC980-M68K_RAM),a0      ; was: sub_36074
+                movea.w #(TenthEntityType-M68K_RAM),a0  ; was: sub_36074
                 movea.w a0,a1
                 lea     -$60(a0),a0
                 moveq   #0,d0

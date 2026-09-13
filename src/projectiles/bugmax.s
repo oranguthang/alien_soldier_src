@@ -401,7 +401,7 @@ Projectile_BugmaxSineInactiveState:                     ; was: nullsub_111
 
 ; Configure the linked-chain strike object's collision and damage fields
 Boss_BugmaxConfigureAimedChainHitbox:                   ; CODE XREF: Boss_BugmaxAnimateAndAimChainStrike+3E   p  ; was: sub_4D85E
-                movea.w #(byte_FFCB60-M68K_RAM),a0
+                movea.w #(FifteenthEntityType-M68K_RAM),a0
                 move.b  #2,$21(a0)
                 move.l  #$FC04FC04,$2C(a0)
                 clr.b   $22(a0)
@@ -410,7 +410,7 @@ Boss_BugmaxConfigureAimedChainHitbox:                   ; CODE XREF: Boss_Bugmax
 ; Consume linked-chain contact state and publish its impact-effect coordinates
 Boss_BugmaxHandleAimedChainContactEffect:               ; CODE XREF: Boss_BugmaxExtendAimedChainStrike+4   p  ; was: sub_4D876
                                         ; Boss_BugmaxHoldExtendedChainStrike+4   p
-                movea.w #(byte_FFCB60-M68K_RAM),a0
+                movea.w #(FifteenthEntityType-M68K_RAM),a0
                 tst.w   $5C(a0)
                 bne.s   Boss_BugmaxPollAimedChainContactSignal
                 bclr    #1,$22(a0)
@@ -434,7 +434,7 @@ Boss_BugmaxAimedChainContactReturn:                     ; CODE XREF: Boss_Bugmax
 ; End of function Boss_BugmaxHandleAimedChainContactEffect
 ; Continue contact handling until the retracting chain reaches the disable threshold
 Boss_BugmaxHandleContactOrDisableChainHitbox:           ; CODE XREF: Boss_BugmaxRetractAimedChainStrike+4   p  ; was: sub_4D8C2
-                movea.w #(byte_FFCB60-M68K_RAM),a0
+                movea.w #(FifteenthEntityType-M68K_RAM),a0
                 cmpi.w  #$FFF0,(dword_FF9410).w
                 bgt.s   Boss_BugmaxHandleAimedChainContactEffect
                 clr.b   $21(a0)

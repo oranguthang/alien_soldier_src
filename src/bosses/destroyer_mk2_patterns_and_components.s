@@ -18,11 +18,11 @@ Boss_DestroyerMK2ActivateNearLinkedPart:                ; DATA XREF: ROM:Boss_De
                 move.w  (PlayerCenterX).w,d0
                 cmp.w   $10(a5),d0
                 bgt.s   Boss_DestroyerMK2SelectRightNearLinkedPart
-                movea.w #(word_FFC7A0-M68K_RAM),a0
+                movea.w #(FifthEntityType-M68K_RAM),a0
                 bra.s   Boss_DestroyerMK2ActivateSelectedNearLinkedPart
 ; ---------------------------------------------------------------------------
 Boss_DestroyerMK2SelectRightNearLinkedPart:             ; CODE XREF: Boss_DestroyerMK2ActivateNearLinkedPart+C   j  ; was: loc_4B074
-                movea.w #(word_FFC800-M68K_RAM),a0
+                movea.w #(SixthEntityType-M68K_RAM),a0
 Boss_DestroyerMK2ActivateSelectedNearLinkedPart:        ; CODE XREF: Boss_DestroyerMK2ActivateNearLinkedPart+12   j  ; was: loc_4B078
                 bsr.w   Boss_DestroyerMK2ActivateLinkedPartIfIdle
                 move.w  #$20,$48(a5)                    ; ' '
@@ -36,11 +36,11 @@ Boss_DestroyerMK2WaitThenActivateFarLinkedPart:         ; DATA XREF: ROM:0004B05
                 move.w  (PlayerCenterX).w,d0
                 cmp.w   $10(a5),d0
                 bgt.s   Boss_DestroyerMK2SelectRightFarLinkedPart
-                movea.w #(word_FFC860-M68K_RAM),a0
+                movea.w #(SeventhEntityType-M68K_RAM),a0
                 bra.s   Boss_DestroyerMK2ActivateSelectedFarLinkedPart
 ; ---------------------------------------------------------------------------
 Boss_DestroyerMK2SelectRightFarLinkedPart:              ; CODE XREF: Boss_DestroyerMK2WaitThenActivateFarLinkedPart+12   j  ; was: loc_4B09E
-                movea.w #(word_FFC8C0-M68K_RAM),a0
+                movea.w #(EighthEntityType-M68K_RAM),a0
 Boss_DestroyerMK2ActivateSelectedFarLinkedPart:         ; CODE XREF: Boss_DestroyerMK2WaitThenActivateFarLinkedPart+18   j  ; was: loc_4B0A2
                 bsr.w   Boss_DestroyerMK2ActivateLinkedPartIfIdle
                 move.w  #$40,$48(a5)                    ; '@'
@@ -55,16 +55,16 @@ Boss_DestroyerMK2WaitThenActivateLinkedPair:            ; DATA XREF: ROM:0004B05
                 move.w  (PlayerCenterX).w,d0
                 cmp.w   $10(a5),d0
                 bgt.s   Boss_DestroyerMK2SelectRightLinkedPair
-                movea.w #(word_FFC7A0-M68K_RAM),a0
+                movea.w #(FifthEntityType-M68K_RAM),a0
                 bsr.w   Boss_DestroyerMK2ActivateLinkedPartIfIdle
-                movea.w #(word_FFC860-M68K_RAM),a0
+                movea.w #(SeventhEntityType-M68K_RAM),a0
                 bsr.w   Boss_DestroyerMK2ActivateLinkedPartIfIdle
                 rts
 ; ---------------------------------------------------------------------------
 Boss_DestroyerMK2SelectRightLinkedPair:                 ; CODE XREF: Boss_DestroyerMK2WaitThenActivateLinkedPair+12   j  ; was: loc_4B0D4
-                movea.w #(word_FFC800-M68K_RAM),a0
+                movea.w #(SixthEntityType-M68K_RAM),a0
                 bsr.w   Boss_DestroyerMK2ActivateLinkedPartIfIdle
-                movea.w #(word_FFC8C0-M68K_RAM),a0
+                movea.w #(EighthEntityType-M68K_RAM),a0
                 bsr.w   Boss_DestroyerMK2ActivateLinkedPartIfIdle
 Boss_DestroyerMK2LinkedPairActivationReturn:            ; CODE XREF: Boss_DestroyerMK2WaitThenActivateLinkedPair+4   j  ; was: locret_4B0E4
                 rts
@@ -269,13 +269,13 @@ Boss_DestroyerMK2ProjectilePatternCycleReturn:          ; CODE XREF: Boss_Destro
 ; Wait for five linked parts to become idle before disabling collision
 Boss_DestroyerMK2WaitForLinkedPartsToDeactivate:        ; DATA XREF: ROM:0004A92A   o  ; was: sub_4B304
                 bsr.w   Boss_DestroyerMK2UpdateLinkedObjectGeometry
-                tst.w   (word_FFC7A4).w
+                tst.w   (FifthEntityState).w
                 bne.s   Boss_DestroyerMK2LinkedPartWaitReturn
-                tst.w   (word_FFC804).w
+                tst.w   (SixthEntityState).w
                 bne.s   Boss_DestroyerMK2LinkedPartWaitReturn
-                tst.w   (word_FFC864).w
+                tst.w   (SeventhEntityState).w
                 bne.s   Boss_DestroyerMK2LinkedPartWaitReturn
-                tst.w   (word_FFC8C4).w
+                tst.w   (EighthEntityState).w
                 bne.s   Boss_DestroyerMK2LinkedPartWaitReturn
                 tst.w   (QuaternaryEntityState).w
                 bne.s   Boss_DestroyerMK2LinkedPartWaitReturn

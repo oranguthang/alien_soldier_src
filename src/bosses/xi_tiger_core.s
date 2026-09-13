@@ -698,7 +698,7 @@ Boss_XiTigerSelectBodyMappingReturn:                    ; CODE XREF: Boss_XiTige
 ; End of function Boss_XiTigerSelectBodyMapping
 ; Updates claw sprites based on state
 Boss_XiTigerUpdateClaws:                                ; CODE XREF: Boss_XiTigerUpdateSprites+C   p  ; was: sub_3E0F6
-                movea.w #(word_FFC860-M68K_RAM),a0
+                movea.w #(SeventhEntityType-M68K_RAM),a0
                 move.w  #$CA80,$E(a0)
                 move.w  #0,d1
                 tst.w   $1DE(a5)
@@ -707,7 +707,7 @@ Boss_XiTigerUpdateClaws:                                ; CODE XREF: Boss_XiTige
                 move.w  #$10,d1
 Boss_XiTigerConfigureSecondClaw:                        ; CODE XREF: Boss_XiTigerUpdateClaws+12   j  ; was: loc_3E114
                 bsr.s   Boss_XiTigerUpdateClawMapping
-                movea.w #(word_FFCA40-M68K_RAM),a0
+                movea.w #(TwelfthEntityType-M68K_RAM),a0
                 move.w  #$C280,$E(a0)
                 move.w  #$10,d1
                 tst.w   $1DC(a5)

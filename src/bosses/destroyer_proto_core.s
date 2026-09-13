@@ -190,13 +190,13 @@ Boss_DestroyerProtoUpdatePartAngles:                    ; CODE XREF: Boss_Destro
                 bsr.w   Boss_DestroyerProtoAddOuterPartAngle
                 lea     (TertiaryEntityType).w,a4
                 bsr.w   Boss_DestroyerProtoAddOuterPartAngle
-                lea     (word_FFC7A0).w,a4
+                lea     (FifthEntityType).w,a4
                 bsr.w   Boss_DestroyerProtoAddOuterPartAngle
-                lea     (word_FFC800).w,a4
+                lea     (SixthEntityType).w,a4
                 bsr.w   Boss_DestroyerProtoAddOuterPartAngle
                 lea     (QuaternaryEntityType).w,a4
                 bsr.w   Boss_DestroyerProtoAddInnerPartAngles
-                lea     (word_FFC860).w,a4
+                lea     (SeventhEntityType).w,a4
                 bsr.w   Boss_DestroyerProtoAddInnerPartAngles
                 rts
 ; End of function Boss_DestroyerProtoUpdatePartAngles
@@ -256,12 +256,12 @@ Boss_DestroyerSyncPartAngles:                           ; CODE XREF: Boss_Destro
                 addi.w  #$100,d3
                 andi.w  #$1FE,d3
                 move.w  d2,(TertiaryEntityWork40).w
-                move.w  d2,(word_FFC780).w
-                move.w  d2,(word_FFC786).w
-                move.w  d3,(word_FFC7E0).w
-                move.w  d3,(word_FFC840).w
-                move.w  d3,(word_FFC8A0).w
-                move.w  d3,(word_FFC8A6).w
+                move.w  d2,(QuaternaryEntityWork40).w
+                move.w  d2,(QuaternaryEntityWork46).w
+                move.w  d3,(FifthEntityWork40).w
+                move.w  d3,(SixthEntityWork40).w
+                move.w  d3,(SeventhEntityWork40).w
+                move.w  d3,(SeventhEntityWork46).w
                 rts
 ; End of function Boss_DestroyerSyncPartAngles
 ; Maintains intro motion until the battle-start transition completes

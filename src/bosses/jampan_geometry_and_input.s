@@ -3,7 +3,7 @@
 ; Applies the reverse angular-velocity table, then returns to the wait state
 Boss_JampanRotateOrbitGroupBackwardState:               ; DATA XREF: ROM:0004A54C   o  ; was: sub_4A5F0
                 move.w  #$C,d7
-                movea.w #(word_FFC980-M68K_RAM),a0
+                movea.w #(TenthEntityType-M68K_RAM),a0
                 clr.w   d6
 Boss_JampanRotateOrbitGroupBackwardLoop:                ; CODE XREF: Boss_JampanRotateOrbitGroupBackwardState+28   j  ; was: loc_4A5FA
                 move.l  Boss_JampanBackwardAngularVelocityTable(pc,d6.w),d0
@@ -122,7 +122,7 @@ Boss_JampanNormalizeOrbitAngles:                        ; CODE XREF: Boss_Jampan
                 andi.w  #$1FF,(dword_FF9404).w
                 andi.w  #$1FF,(dword_FF9408).w
                 movea.w a5,a1
-                lea     (word_FFC860).w,a0
+                lea     (SeventhEntityType).w,a0
                 move.w  #$F,d0
 Boss_JampanProjectNextOrbitingPart:                     ; CODE XREF: Boss_JampanUpdateOrbitingPartGeometry+8A   j  ; was: loc_4A740
                 lea     (Math_SineTable).l,a2

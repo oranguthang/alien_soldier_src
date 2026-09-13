@@ -154,7 +154,7 @@ Boss_FlyingNeoSetup:                                    ; DATA XREF: ROM:0003C0A
                 move.w  #$10,d0
                 moveq   #8,d1
                 move.w  #$8080,d2
-                movea.w #(word_FFC9E0-M68K_RAM),a0
+                movea.w #(EleventhEntityType-M68K_RAM),a0
                 move.w  d0,(a0)
                 move.w  #$C080,2(a0)
                 move.w  #$4300,$E(a0)
@@ -166,7 +166,7 @@ Boss_FlyingNeoSetup:                                    ; DATA XREF: ROM:0003C0A
                 move.w  #$6398,$E(a0)
                 move.w  #$D00,8(a0)
                 move.b  #$18,$20(a0)
-                movea.w #(word_FFCA40-M68K_RAM),a0
+                movea.w #(TwelfthEntityType-M68K_RAM),a0
                 lea     Boss_FlyingNeoAuxiliarySpriteDescriptorA(pc),a1
                 nop
                 moveq   #2,d7
@@ -334,7 +334,7 @@ Boss_FlyingNeoDefeatLaunchType88PartState:              ; DATA XREF: ROM:0003C0B
                 addq.w  #2,4(a5)
                 move.w  #$70,$48(a5)                    ; 'p'
                 bsr.w   Boss_FlyingNeoQueueFixedTileRowTransfer
-                movea.w #(word_FFC9E0-M68K_RAM),a0
+                movea.w #(EleventhEntityType-M68K_RAM),a0
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.l  #$FFFEE000,$18(a0)
                 tst.w   $54(a5)

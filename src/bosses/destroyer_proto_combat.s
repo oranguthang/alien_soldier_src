@@ -72,10 +72,10 @@ Boss_DestroyerProtoChooseAttack:                        ; DATA XREF: ROM:0003151
                 jsr     (Math_CalculateAngleToPlayer).l
                 addi.w  #$10,d2
                 andi.w  #$1E0,d2
-                move.w  d2,(word_FFC780).w
-                move.w  d2,(word_FFC786).w
-                move.w  d2,(word_FFC8A0).w
-                move.w  d2,(word_FFC8A6).w
+                move.w  d2,(QuaternaryEntityWork40).w
+                move.w  d2,(QuaternaryEntityWork46).w
+                move.w  d2,(SeventhEntityWork40).w
+                move.w  d2,(SeventhEntityWork46).w
                 jsr     (RandomNumber).l
                 andi.w  #$60,d0                         ; '`'
                 addi.w  #$20,d0                         ; ' '
@@ -86,8 +86,8 @@ Boss_DestroyerProtoChooseAttack:                        ; DATA XREF: ROM:0003151
                 add.w   d0,d2
                 add.w   d0,d2
                 andi.w  #$1FE,d2
-                move.w  d2,(word_FFC7E0).w
-                move.w  d2,(word_FFC840).w
+                move.w  d2,(FifthEntityWork40).w
+                move.w  d2,(SixthEntityWork40).w
                 move.w  #$1C,$4A(a5)
                 addq.w  #2,4(a5)
                 rts
@@ -273,12 +273,12 @@ Boss_DestroyerProtoAimAllPartsAtPlayer:                 ; CODE XREF: Boss_Destro
                 andi.w  #$1E0,d2
                 move.w  d2,(SecondaryEntityWork40).w
                 move.w  d2,(TertiaryEntityWork40).w
-                move.w  d2,(word_FFC780).w
-                move.w  d2,(word_FFC786).w
-                move.w  d2,(word_FFC7E0).w
-                move.w  d2,(word_FFC840).w
-                move.w  d2,(word_FFC8A0).w
-                move.w  d2,(word_FFC8A6).w
+                move.w  d2,(QuaternaryEntityWork40).w
+                move.w  d2,(QuaternaryEntityWork46).w
+                move.w  d2,(FifthEntityWork40).w
+                move.w  d2,(SixthEntityWork40).w
+                move.w  d2,(SeventhEntityWork40).w
+                move.w  d2,(SeventhEntityWork46).w
                 move.w  #$1C,$4A(a5)
                 move.w  #$20,4(a5)                      ; ' '
                 rts
@@ -337,7 +337,7 @@ Boss_DestroyerProtoFireNextStreamPair:                  ; CODE XREF: Boss_Destro
                 bsr.w   Projectile_DestroyerProtoActivateStreamShot
                 move.b  #$CE,d0
                 jsr     (Sound_PlaySFX).l
-                lea     (word_FFC860).w,a4
+                lea     (SeventhEntityType).w,a4
                 movea.l $5C(a5),a0
                 addi.l  #$60,$5C(a5)                    ; '`'
 ; End of function Boss_DestroyerProtoFireNextStreamPair
@@ -370,13 +370,13 @@ Boss_DestroyerProtoRotatePartsForStream:                ; CODE XREF: Boss_Destro
                 lea     (QuaternaryEntityType).w,a4
                 bsr.w   Boss_DestroyerProtoAddInnerPartAngles
                 move.w  #$FFFE,d0
-                lea     (word_FFC7A0).w,a4
+                lea     (FifthEntityType).w,a4
                 bsr.w   Boss_DestroyerProtoAddOuterPartAngle
                 move.w  #$FFFC,d0
-                lea     (word_FFC800).w,a4
+                lea     (SixthEntityType).w,a4
                 bsr.w   Boss_DestroyerProtoAddOuterPartAngle
                 move.w  #$FFF8,d1
-                lea     (word_FFC860).w,a4
+                lea     (SeventhEntityType).w,a4
                 bsr.w   Boss_DestroyerProtoAddInnerPartAngles
                 rts
 ; End of function Boss_DestroyerProtoRotatePartsForStream

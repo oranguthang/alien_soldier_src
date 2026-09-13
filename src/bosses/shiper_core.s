@@ -164,7 +164,7 @@ Boss_ShiperSetupNextAuxiliaryPart:                      ; CODE XREF: Boss_Shiper
                 move.w  #$10,$2A0(a5)
                 move.w  #$C080,$2A2(a5)
                 move.b  #$24,$2C0(a5)                   ; '$'
-                movea.w #(word_FFC980-M68K_RAM),a0
+                movea.w #(TenthEntityType-M68K_RAM),a0
                 moveq   #$30,d0                         ; '0'
                 moveq   #5,d7
 Boss_ShiperSetupNextChainPart:                          ; CODE XREF: Boss_ShiperSetupState+112   j  ; was: loc_36664
@@ -180,7 +180,7 @@ Boss_ShiperSetupNextChainPart:                          ; CODE XREF: Boss_Shiper
                 move.w  #$63A7,$54E(a5)
                 move.w  #$F00,$548(a5)
                 move.w  #$F0F0,$54A(a5)
-                movea.w #(byte_FFCBC0-M68K_RAM),a0
+                movea.w #(SixteenthEntityType-M68K_RAM),a0
                 move.w  #$10,(a0)
                 movea.l #Boss_ShiperObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l

@@ -220,7 +220,7 @@ Boss_SharpssteelEnableOuterBladeHitboxes:
                 bset    #6,$681(a5)
                 move.w  d1,$5C6(a5)
                 move.w  d1,$686(a5)
-                movea.w #(word_FFC9E0-M68K_RAM),a0
+                movea.w #(EleventhEntityType-M68K_RAM),a0
                 bra.s   Boss_SharpssteelEnableLinkedBladeHitboxes
 ; End of function Boss_SharpssteelEnableOuterBladeHitboxes
 ; Enables collision and writes the collision value for the inner blade group
@@ -230,7 +230,7 @@ Boss_SharpssteelEnableInnerBladeHitboxes:               ; CODE XREF: Boss_Sharps
                 bset    #6,$621(a5)
                 move.w  d1,$566(a5)
                 move.w  d1,$626(a5)
-                movea.w #(word_FFC860-M68K_RAM),a0
+                movea.w #(SeventhEntityType-M68K_RAM),a0
 Boss_SharpssteelEnableLinkedBladeHitboxes:              ; CODE XREF: Boss_SharpssteelEnableOuterBladeHitboxes+18   j
                 moveq   #6,d0
                 bset    d0,$21(a0)
@@ -247,7 +247,7 @@ Boss_SharpssteelEnableLinkedBladeHitboxes:              ; CODE XREF: Boss_Sharps
 Boss_SharpssteelDisableOuterBladeHitboxes:
                 bclr    #6,$5C1(a5)                     ; was: sub_4878A
                 bclr    #6,$681(a5)
-                movea.w #(word_FFC9E0-M68K_RAM),a0
+                movea.w #(EleventhEntityType-M68K_RAM),a0
                 bra.s   Boss_SharpssteelDisableLinkedBladeHitboxes
 ; End of function Boss_SharpssteelDisableOuterBladeHitboxes
 ; Disables collision for the inner blade group
@@ -255,7 +255,7 @@ Boss_SharpssteelDisableInnerBladeHitboxes:              ; CODE XREF: Boss_Sharps
                                         ; Boss_SharpssteelCloseRangeBladeAttackState+2E   p
                 bclr    #6,$561(a5)
                 bclr    #6,$621(a5)
-                movea.w #(word_FFC860-M68K_RAM),a0
+                movea.w #(SeventhEntityType-M68K_RAM),a0
 Boss_SharpssteelDisableLinkedBladeHitboxes:             ; CODE XREF: Boss_SharpssteelDisableOuterBladeHitboxes+10   j
                 moveq   #6,d0
                 bclr    d0,$21(a0)
@@ -307,10 +307,10 @@ Boss_SharpssteelDisableCoreSegmentCollision:            ; CODE XREF: Boss_Sharps
 Boss_SharpssteelUpdateCoreSpriteFrames:                 ; CODE XREF: Boss_SharpssteelUpdateBladeAssembly+8   p  ; was: sub_48820
                 lea     Boss_SharpssteelCoreDirectionalSpriteFrames(pc),a1
                 nop
-                movea.w #(word_FFC980-M68K_RAM),a0
+                movea.w #(TenthEntityType-M68K_RAM),a0
                 andi.w  #$E7FF,$E(a0)
                 jsr     (Sprite_UpdateFourDirectionFrame).l
-                movea.w #(byte_FFCB00-M68K_RAM),a0
+                movea.w #(FourteenthEntityType-M68K_RAM),a0
                 andi.w  #$E7FF,$E(a0)
                 jmp     Sprite_UpdateFourDirectionFrame
 ; End of function Boss_SharpssteelUpdateCoreSpriteFrames
@@ -398,12 +398,12 @@ Boss_SharpssteelSetOuterBladeGroupSizes:                ; CODE XREF: Boss_Sharps
 ; Sets collision-box group sizes for the inner blade group
 Boss_SharpssteelSetInnerBladeGroupSizes:                ; CODE XREF: Boss_SharpssteelInitializeManualControl+32   p  ; was: sub_48940
                                         ; Boss_SharpssteelInitializeBladeEntrance+50   p
-                movea.w #(word_FFC860-M68K_RAM),a0
+                movea.w #(SeventhEntityType-M68K_RAM),a0
                 bra.s   Boss_SharpssteelStoreBladeGroupSizes
 ; ---------------------------------------------------------------------------
 Boss_SharpssteelSelectOuterBladeGroup:                  ; CODE XREF: Boss_SharpssteelInitializeFallingShotCycle+5A   j
                                         ; Boss_SharpssteelSetOuterBladeGroupSizes+2   p
-                movea.w #(word_FFC9E0-M68K_RAM),a0
+                movea.w #(EleventhEntityType-M68K_RAM),a0
 Boss_SharpssteelStoreBladeGroupSizes:                   ; CODE XREF: Boss_SharpssteelSetInnerBladeGroupSizes+4   j
                 move.b  d0,$20(a0)
                 move.b  d0,$80(a0)

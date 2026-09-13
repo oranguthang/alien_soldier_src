@@ -50,7 +50,7 @@ Boss_FlyingNeoSetPositiveOrbitAngularImpulse:           ; CODE XREF: Boss_Flying
 Boss_FlyingNeoApplyFacingGraphics:                      ; CODE XREF: Boss_FlyingNeoSetup+130   p  ; was: sub_3CE14
                                         ; Boss_FlyingNeoPlayerControlled+50   p
                 moveq   #3,d0
-                movea.w #(word_FFCA40-M68K_RAM),a0
+                movea.w #(TwelfthEntityType-M68K_RAM),a0
                 moveq   #8,d7
                 tst.w   $54(a5)
                 bne.w   Boss_FlyingNeoApplyNonzeroFacingGraphics

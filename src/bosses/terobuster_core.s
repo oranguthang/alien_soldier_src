@@ -131,8 +131,8 @@ Boss_TerobusterResetDecisionAnimation:                  ; CODE XREF: Boss_Terobu
                 move.w  #$10,$11C(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
-                movea.w #(word_FFC800-M68K_RAM),a0
-                movea.w #(word_FFC9E0-M68K_RAM),a1
+                movea.w #(SixthEntityType-M68K_RAM),a0
+                movea.w #(EleventhEntityType-M68K_RAM),a1
                 tst.w   $A(a5)
                 beq.s   Boss_TerobusterBindActivePart
                 exg     a0,a1
@@ -232,8 +232,8 @@ Boss_TerobusterMissileAttackAUpdate:                    ; CODE XREF: Boss_Terobu
                 lea     Boss_TerobusterMissileAttackAPoseCommands(pc),a1
                 nop
                 bsr.w   Boss_TerobusterInterpolateAnimation
-                movea.w #(word_FFC800-M68K_RAM),a0
-                movea.w #(word_FFC9E0-M68K_RAM),a1
+                movea.w #(SixthEntityType-M68K_RAM),a0
+                movea.w #(EleventhEntityType-M68K_RAM),a1
                 tst.w   $A(a5)
                 beq.s   Boss_TerobusterMissileAttackASelectPart
                 exg     a0,a1
@@ -305,8 +305,8 @@ Boss_TerobusterMissileAttackBUpdate:                    ; CODE XREF: Boss_Terobu
                 exg     a0,a1
 Boss_TerobusterMissileAttackBSelectPoseCommands:        ; CODE XREF: Boss_TerobusterDecisionState+1C6   j  ; was: loc_388B8
                 bsr.w   Boss_TerobusterInterpolateAnimation
-                movea.w #(word_FFC800-M68K_RAM),a0
-                movea.w #(word_FFC9E0-M68K_RAM),a1
+                movea.w #(SixthEntityType-M68K_RAM),a0
+                movea.w #(EleventhEntityType-M68K_RAM),a1
                 tst.w   $A(a5)
                 beq.s   Boss_TerobusterMissileAttackBSelectPart
                 exg     a0,a1

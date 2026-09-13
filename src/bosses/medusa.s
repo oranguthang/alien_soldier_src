@@ -504,9 +504,9 @@ Boss_ApplyMedusaPoseToParts:                            ; CODE XREF: Boss_Render
                 move.w  d0,$654(a5)
                 movea.w #(SecondaryEntityType-M68K_RAM),a1
                 bsr.w   Boss_OffsetMedusaPosePartGroup
-                movea.w #(word_FFC860-M68K_RAM),a1
+                movea.w #(SeventhEntityType-M68K_RAM),a1
                 bsr.w   Boss_OffsetMedusaPosePartGroup
-                movea.w #(word_FFCA40-M68K_RAM),a1
+                movea.w #(TwelfthEntityType-M68K_RAM),a1
                 bsr.w   Boss_OffsetMedusaPosePartGroup
                 movea.w #(byte_FFCC20-M68K_RAM),a1
                 bsr.w   Boss_OffsetMedusaPosePartGroup

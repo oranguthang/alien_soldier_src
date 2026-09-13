@@ -139,8 +139,8 @@ Boss_FlyingNeoCheckAlternatePartAnchorBoundary:         ; CODE XREF: Boss_Flying
                 cmpi.w  #$1000,$BC(a5)
                 bpl.w   Boss_FlyingNeoLaunchFromPartAnchor
 Boss_FlyingNeoSelectPartAnchorRecord:                   ; CODE XREF: Boss_FlyingNeoPartAnchorState+C   j  ; was: loc_3C982
-                movea.w #(word_FFC800-M68K_RAM),a0
-                movea.w #(word_FFC980-M68K_RAM),a1
+                movea.w #(SixthEntityType-M68K_RAM),a0
+                movea.w #(TenthEntityType-M68K_RAM),a1
                 cmpi.w  #5,6(a5)
                 bmi.s   Boss_FlyingNeoBindPartAnchorRecord
                 exg     a0,a1
@@ -154,9 +154,9 @@ Boss_FlyingNeoBindPartAnchorRecord:                     ; CODE XREF: Boss_Flying
                 nop
                 bsr.w   Boss_FlyingNeoUpdatePoseAnimation
                 bsr.w   Boss_FlyingNeoUpdateSprites
-                movea.w #(word_FFC800-M68K_RAM),a0
+                movea.w #(SixthEntityType-M68K_RAM),a0
                 bsr.s   Boss_FlyingNeoUpdatePartAnchorMapping
-                movea.w #(word_FFC980-M68K_RAM),a0
+                movea.w #(TenthEntityType-M68K_RAM),a0
 ; End of function Boss_FlyingNeoHoverDecisionState
 ; Selects one of two mappings for a linked anchor part from its Y position
 Boss_FlyingNeoUpdatePartAnchorMapping:                  ; CODE XREF: Boss_FlyingNeoHoverDecisionState+208   p  ; was: sub_3C9C0
@@ -171,7 +171,7 @@ Boss_FlyingNeoUpdatePartAnchorMappingReturn:            ; CODE XREF: Boss_Flying
 ; End of function Boss_FlyingNeoUpdatePartAnchorMapping
 ; Returns the player's deltas from the tracked part, then restores the boss pointer
 Boss_FlyingNeoGetTrackedPartPlayerDelta:                ; CODE XREF: Boss_FlyingNeoPursuitState+C   p  ; was: sub_3C9E0
-                movea.w #(word_FFCA40-M68K_RAM),a5
+                movea.w #(TwelfthEntityType-M68K_RAM),a5
                 jsr     (Physics_GetPlayerDelta).l
                 movea.w #(Entity_ObjectPool-M68K_RAM),a5
                 rts
@@ -220,7 +220,7 @@ Boss_FlyingNeoPositionAuxiliaryParts:                   ; CODE XREF: Boss_Flying
                 move.b  1(a0,d0.w),d5
                 ext.w   d4
                 ext.w   d5
-                movea.w #(word_FFC9E0-M68K_RAM),a0
+                movea.w #(EleventhEntityType-M68K_RAM),a0
                 moveq   #$FFFFFFD2,d0
                 moveq   #$16,d1
                 tst.w   $54(a5)
@@ -234,7 +234,7 @@ Boss_FlyingNeoStoreFirstAuxiliaryPartPosition:          ; CODE XREF: Boss_Flying
                 add.w   $14(a5),d1
                 move.w  d0,$10(a0)
                 move.w  d1,$14(a0)
-                movea.w #(word_FFCA40-M68K_RAM),a0
+                movea.w #(TwelfthEntityType-M68K_RAM),a0
                 moveq   #$32,d0                         ; '2'
                 moveq   #$A,d1
                 tst.w   $54(a5)
@@ -254,8 +254,8 @@ Boss_FlyingNeoShiftAngleHistory:                        ; CODE XREF: Boss_Flying
                 move.w  d0,(a1)+
                 move.w  d1,d0
                 dbf     d7,Boss_FlyingNeoShiftAngleHistory
-                movea.w #(word_FFCA40-M68K_RAM),a0
-                movea.w #(byte_FFCAA0-M68K_RAM),a1
+                movea.w #(TwelfthEntityType-M68K_RAM),a0
+                movea.w #(ThirteenthEntityType-M68K_RAM),a1
                 movea.w #(byte_FF9806-M68K_RAM),a2
                 movea.w #(word_FF9900-M68K_RAM),a3
                 movea.w #(dword_FF9A00-M68K_RAM),a4
@@ -317,7 +317,7 @@ Boss_FlyingNeoDefeatPaletteFadeParameters:  dc.w    2, $CEE, 0, 0, $866, $200, $
 
 ; Fills eight linked-part angles from d0 and clears their 36-word history
 Boss_FlyingNeoFillPartAnglesAndClearHistory:
-                movea.w #(byte_FFCAA0-M68K_RAM),a0      ; was: sub_3CB76
+                movea.w #(ThirteenthEntityType-M68K_RAM),a0  ; was: sub_3CB76
                 moveq   #7,d7
 Boss_FlyingNeoFillNextPartAngle:                        ; CODE XREF: Boss_FlyingNeoFillPartAnglesAndClearHistory+E   j  ; was: loc_3CB7C
                 move.w  d0,$56(a0)

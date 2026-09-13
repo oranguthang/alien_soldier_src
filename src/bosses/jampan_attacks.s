@@ -1,7 +1,7 @@
 ; Jampan offset and shield attacks, defeat sequence, and post-defeat movement
 
 Boss_JampanMoveOffsetAttackAcrossScreenState:           ; DATA XREF: ROM:000491FE   o  ; was: sub_49A14
-                eori.w  #$8000,(word_FFC862).w
+                eori.w  #$8000,(SeventhEntityFlags).w
                 bsr.w   Boss_JampanTrackVerticalOrbitOffset
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 move.w  $5A(a5),d0
@@ -14,10 +14,10 @@ Boss_JampanMoveOffsetAttackAcrossScreenState:           ; DATA XREF: ROM:000491F
                 add.w   d1,$10(a5)
                 subq.w  #1,$48(a5)
                 bne.s   Boss_JampanMoveOffsetAttackAcrossScreenReturn
-                ori.w   #$8000,(word_FFC862).w
-                move.w  #1,(word_FFC8B2).w
+                ori.w   #$8000,(SeventhEntityFlags).w
+                move.w  #1,(SeventhEntityWork52).w
                 move.w  #1,(TertiaryEntityWork52).w
-                move.w  #1,(word_FFC7F2).w
+                move.w  #1,(FifthEntityWork52).w
                 tst.w   (word_FF8234).w
                 ble.s   Boss_JampanFinishOffsetAttack
                 subq.w  #2,4(a5)
@@ -25,7 +25,7 @@ Boss_JampanMoveOffsetAttackAcrossScreenState:           ; DATA XREF: ROM:000491F
 ; ---------------------------------------------------------------------------
 Boss_JampanFinishOffsetAttack:                          ; CODE XREF: Boss_JampanMoveOffsetAttackAcrossScreenState+1C   j
                                         ; Boss_JampanMoveOffsetAttackAcrossScreenState+22   j
-                ori.w   #$8000,(word_FFC862).w
+                ori.w   #$8000,(SeventhEntityFlags).w
                 bset    #1,$4C(a5)
                 move.w  #$12,4(a5)
 Boss_JampanMoveOffsetAttackAcrossScreenReturn:          ; CODE XREF: Boss_JampanMoveOffsetAttackAcrossScreenState+2C   j
@@ -145,7 +145,7 @@ Boss_JampanUseAbsolutePlayerHorizontalDelta:            ; CODE XREF: Boss_Jampan
 Boss_JampanFinishShieldRotationCycle:                   ; CODE XREF: Boss_JampanRotateShieldPatternBackwardState+22   j
                                         ; Boss_JampanRotateShieldPatternBackwardState+34   j
                 move.w  #2,(SecondaryEntityWork52).w
-                move.w  #2,(word_FFC792).w
+                move.w  #2,(QuaternaryEntityWork52).w
                 clr.b   (byte_FFCE81).w
                 addq.w  #2,4(a5)
 Boss_JampanRotateShieldPatternBackwardReturn:           ; CODE XREF: Boss_JampanRotateShieldPatternBackwardState+14   j
@@ -159,7 +159,7 @@ Boss_JampanCollapseShieldRadiusState:                   ; DATA XREF: ROM:0004921
                 subq.w  #1,(dword_FF942C).w
                 bne.s   Boss_JampanCollapseShieldRadiusReturn
                 clr.w   (TertiaryEntityWork52).w
-                clr.w   (word_FFC7F2).w
+                clr.w   (FifthEntityWork52).w
                 bsr.w   Boss_JampanDisableShields
                 move.w  #$10,$48(a5)
                 addq.w  #2,4(a5)
@@ -172,7 +172,7 @@ Boss_JampanShieldCycleRecoveryDelayState:               ; DATA XREF: ROM:0004921
                 subq.w  #1,$48(a5)
                 bne.s   Boss_JampanShieldCycleRecoveryDelayReturn
                 move.w  #1,(TertiaryEntityWork52).w
-                move.w  #1,(word_FFC7F2).w
+                move.w  #1,(FifthEntityWork52).w
                 move.w  #$12,4(a5)
 Boss_JampanShieldCycleRecoveryDelayReturn:              ; CODE XREF: Boss_JampanShieldCycleRecoveryDelayState+8   j
                 rts
@@ -208,9 +208,9 @@ Boss_JampanFinishAlternatePatternInitialization:        ; CODE XREF: Boss_Jampan
                 bclr    #2,$4C(a5)
                 clr.l   $1C(a5)
                 clr.l   $54(a5)
-                clr.w   (word_FFC8B2).w
+                clr.w   (SeventhEntityWork52).w
                 move.w  #3,(SecondaryEntityWork52).w
-                move.w  #3,(word_FFC792).w
+                move.w  #3,(QuaternaryEntityWork52).w
                 andi.w  #$1FC,(dword_FF9408).w
                 move.w  #4,(dword_FF9414).w
                 move.w  #4,(dword_FF9410).w
@@ -378,7 +378,7 @@ Boss_JampanFinishDefeatOffsetConvergence:               ; CODE XREF: Boss_Jampan
                 clr.l   $54(a5)
                 clr.l   (dword_FF9410).w
                 clr.l   (dword_FF9414).w
-                ori.w   #$8000,(word_FFC862).w
+                ori.w   #$8000,(SeventhEntityFlags).w
                 clr.b   $21(a5)
                 move.b  #1,(byte_FF830E).w
                 addq.w  #2,4(a5)
@@ -493,8 +493,8 @@ Boss_JampanReinitializePostDefeatObjectsState:          ; DATA XREF: ROM:0004923
                 move.w  #$100,(dword_FF9404).w
                 move.w  #$100,(dword_FF9408).w
                 move.w  #1,(TertiaryEntityWork52).w
-                move.w  #1,(word_FFC7F2).w
-                move.w  #1,(word_FFC852).w
+                move.w  #1,(FifthEntityWork52).w
+                move.w  #1,(SixthEntityWork52).w
                 addq.w  #2,4(a5)
                 bsr.w   Boss_JampanInitializePostDefeatSequenceTimer
 Boss_JampanReinitializePostDefeatObjectsReturn:         ; CODE XREF: Boss_JampanReinitializePostDefeatObjectsState+4   j
@@ -504,7 +504,7 @@ Boss_JampanReinitializePostDefeatObjectsReturn:         ; CODE XREF: Boss_Jampan
 Boss_JampanInitializePostDefeatMovementState:           ; DATA XREF: ROM:0004923A   o  ; was: sub_49F88
                 bsr.w   Boss_JampanUpdatePostDefeatSequenceTimer
                 move.w  #1,(SecondaryEntityWork52).w
-                move.w  #1,(word_FFC792).w
+                move.w  #1,(QuaternaryEntityWork52).w
                 bsr.w   Boss_JampanAdjustOrbitParametersFromInput
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 addq.w  #2,4(a5)
@@ -581,11 +581,11 @@ Boss_JampanPostDefeatObjectStateHandlers:   dc.w    Boss_JampanInitializePostDef
 Boss_JampanInitializePostDefeatObjectState:             ; DATA XREF: ROM:Boss_JampanPostDefeatObjectStateHandlers   o  ; was: sub_4A044
                 move.b  #$40,$20(a5)                    ; '@'
                 move.w  #1,(SecondaryEntityWork52).w
-                move.w  #1,(word_FFC792).w
+                move.w  #1,(QuaternaryEntityWork52).w
                 clr.w   (TertiaryEntityWork52).w
-                clr.w   (word_FFC7F2).w
-                clr.w   (word_FFC8B2).w
-                clr.w   (word_FFC852).w
+                clr.w   (FifthEntityWork52).w
+                clr.w   (SeventhEntityWork52).w
+                clr.w   (SixthEntityWork52).w
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 move.l  #$FFFE0000,$1C(a5)
                 addq.w  #2,4(a5)

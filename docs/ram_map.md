@@ -778,6 +778,109 @@ record therefore use structural `PrimaryEntity` names rather than a boss name.
 | `QuaternaryEntityFlags` | `$FFFFC742` | `$02` | Display/control flags initialized with the preceding star-row entity records. |
 | `QuaternaryEntityState` | `$FFFFC744` | `$04` | Even state-table offset tested by Destroyer MK2 cleanup and Epsilon 1 defeat handling. |
 | `QuaternaryEntityStatus` | `$FFFFC761` | `$21` | Status byte cleared with the controller and third record when Epsilon 1 begins defeat. |
+| `QuaternaryEntityWork40` | `$FFFFC780` | `$40` | Owner-specific work word used as a linked-part angle by Destroyer Proto. |
+| `QuaternaryEntityWork46` | `$FFFFC786` | `$46` | Owner-specific second angle word used by Destroyer Proto. |
+| `QuaternaryEntityWork52` | `$FFFFC792` | `$52` | Owner-specific linked-part control word used by Jampan. |
+| `SunsetStingChainPeriod` | `$FFFFC79C` | `$5C` | Reload period for the second-form active-chain countdown. |
+
+## Reviewed fifth entity record
+
+| Symbol | Address | Offset | Static evidence |
+|---|---:|---:|---|
+| `FifthEntityType` | `$FFFFC7A0` | `$00` | Object type and base of the fifth 96-byte pool record; several subsystems traverse later records from here. |
+| `FifthEntityFlags` | `$FFFFC7A2` | `$02` | Display/control flags initialized with adjacent star-row records. |
+| `FifthEntityState` | `$FFFFC7A4` | `$04` | Epsilon 1 ring-controller state and common linked-record state field checked by Destroyer MK2. |
+| `FifthEntityWork40` | `$FFFFC7E0` | `$40` | Owner-specific work word used as a linked-part angle by Destroyer Proto. |
+| `FifthEntityWork52` | `$FFFFC7F2` | `$52` | Owner-specific linked-part control word used by Jampan. |
+| `SunsetStingChainCycle` | `$FFFFC7F8` | `$58` | Packed chain selector and per-chain countdown used by Sunset Sting's second form. |
+| `FifthEntityWork5C` | `$FFFFC7FC` | `$5C` | Union word/byte storage used for Sunset Sting turning and Madam Barbar rotation bounds. |
+| `SunsetStingPoseRadius` | `$FFFFC7FD` | `$5D` | Low-byte pose radius derived from randomness and player distance. |
+| `FifthEntityWork5E` | `$FFFFC7FE` | `$5E` | Union work word used for Epsilon 1 ring commands and Madam Barbar rotation bounds. |
+
+## Reviewed sixth entity record
+
+| Symbol | Address | Offset | Static evidence |
+|---|---:|---:|---|
+| `SixthEntityType` | `$FFFFC800` | `$00` | Object type and base of the sixth 96-byte pool record. |
+| `SixthEntityFlags` | `$FFFFC802` | `$02` | Display/control flags initialized with adjacent star-row records. |
+| `SixthEntityState` | `$FFFFC804` | `$04` | Linked-part state activated and polled by Destroyer MK2. |
+| `SixthEntityWork40` | `$FFFFC840` | `$40` | Owner-specific work word used as a linked-part angle by Destroyer Proto. |
+| `SixthEntityWork52` | `$FFFFC852` | `$52` | Owner-specific linked-part control word used by Jampan. |
+| `SixthEntityWork56` | `$FFFFC856` | `$56` | Owner-specific work byte used as a pose-grid anchor by Sirene. |
+
+## Reviewed seventh entity record
+
+| Symbol | Address | Offset | Static evidence |
+|---|---:|---:|---|
+| `SeventhEntityType` | `$FFFFC860` | `$00` | Object type and base of the seventh 96-byte pool record. |
+| `SeventhEntityFlags` | `$FFFFC862` | `$02` | Display/control flags manipulated by Jampan and ordinary record-based code. |
+| `SeventhEntityState` | `$FFFFC864` | `$04` | Linked-part state activated and polled by Destroyer MK2. |
+| `SeventhEntityXPos` | `$FFFFC870` | `$10` | Signed 16.16 X coordinate copied by Jampan into spawned attack objects. |
+| `SeventhEntityYPos` | `$FFFFC874` | `$14` | Signed 16.16 Y coordinate; Bugmax also reuses its high word as owner-specific scratch. |
+| `SeventhEntityXVel` | `$FFFFC878` | `$18` | Signed 16.16 horizontal velocity seeded and consumed by Bugmax. |
+| `SeventhEntityYVel` | `$FFFFC87C` | `$1C` | Signed 16.16 vertical velocity seeded and consumed by Bugmax. |
+| `SeventhEntityWork40` | `$FFFFC8A0` | `$40` | Owner-specific linked-part angle word used by Destroyer Proto. |
+| `SeventhEntityWork46` | `$FFFFC8A6` | `$46` | Owner-specific second linked-part angle word used by Destroyer Proto. |
+| `SeventhEntityWork4A` | `$FFFFC8AA` | `$4A` | Owner-specific work word used as a Jampan shield-formation angle base. |
+| `SeventhEntityWork4C` | `$FFFFC8AC` | `$4C` | Union work word used by Jampan formation geometry and Bugmax linked-part spin. |
+| `SeventhEntityWork4E` | `$FFFFC8AE` | `$4E` | Owner-specific work word used as a Jampan shield-formation angle base. |
+| `SeventhEntityWork52` | `$FFFFC8B2` | `$52` | Owner-specific linked-part control word used by Jampan. |
+
+## Reviewed eighth entity record
+
+| Symbol | Address | Offset | Static evidence |
+|---|---:|---:|---|
+| `EighthEntityType` | `$FFFFC8C0` | `$00` | Object type and base of the eighth 96-byte pool record. |
+| `EighthEntityFlags` | `$FFFFC8C2` | `$02` | Display/control flags initialized with adjacent star-row records. |
+| `EighthEntityState` | `$FFFFC8C4` | `$04` | Linked-part state activated and polled by Destroyer MK2. |
+
+## Reviewed ninth entity record
+
+| Symbol | Address | Offset | Static evidence |
+|---|---:|---:|---|
+| `NinthEntityType` | `$FFFFC920` | `$00` | Object type and base of the ninth 96-byte pool record. |
+| `NinthEntityFlags` | `$FFFFC922` | `$02` | Display/control flags initialized with adjacent star-row records. |
+
+## Reviewed tenth entity record
+
+| Symbol | Address | Offset | Static evidence |
+|---|---:|---:|---|
+| `TenthEntityType` | `$FFFFC980` | `$00` | Object type and base of the tenth 96-byte pool record. |
+| `TenthEntityFlags` | `$FFFFC982` | `$02` | Display/control flags initialized with adjacent star-row records. |
+| `ValkirieAuxFlags` | `$FFFFC9DE` | `$5E` | Bitfield coordinating Valkirie auxiliary attachment, launch, rotation, and targeting transitions. |
+
+## Reviewed eleventh entity record
+
+| Symbol | Address | Offset | Static evidence |
+|---|---:|---:|---|
+| `EleventhEntityType` | `$FFFFC9E0` | `$00` | Object type and base of the eleventh 96-byte pool record. |
+| `EleventhEntityFlags` | `$FFFFC9E2` | `$02` | Display/control flags and active bit used by the planet-grid sequence. |
+| `EleventhEntityXPos` | `$FFFFC9F0` | `$10` | Integer X-position half copied into the sprite-grid center. |
+| `EleventhEntityYPos` | `$FFFFC9F4` | `$14` | Integer Y-position half copied into the sprite-grid center. |
+| `EleventhEntityXVel` | `$FFFFC9F8` | `$18` | Signed 16.16 horizontal velocity used by the first planet-grid sequence. |
+| `EleventhEntityYVel` | `$FFFFC9FC` | `$1C` | Signed 16.16 vertical velocity used by the second planet-grid sequence. |
+
+## Reviewed twelfth entity record
+
+| Symbol | Address | Offset | Static evidence |
+|---|---:|---:|---|
+| `TwelfthEntityType` | `$FFFFCA40` | `$00` | Object type and base of the twelfth 96-byte pool record. |
+| `TwelfthEntityFlags` | `$FFFFCA42` | `$02` | Display/control flags and active bit used by the ship-grid sequence. |
+| `TwelfthEntityXPos` | `$FFFFCA50` | `$10` | Integer X-position half copied into the ship-grid center. |
+| `TwelfthEntityYPos` | `$FFFFCA54` | `$14` | Integer Y-position half copied into the ship-grid center. |
+| `TwelfthEntityXVel` | `$FFFFCA58` | `$18` | Signed 16.16 horizontal velocity used by the first ship-grid sequence. |
+| `TwelfthEntityYVel` | `$FFFFCA5C` | `$1C` | Signed 16.16 vertical velocity used by the second ship-grid sequence. |
+
+## Reviewed later entity record bases
+
+| Symbol | Address | Record | Static evidence |
+|---|---:|---:|---|
+| `ThirteenthEntityType` | `$FFFFCAA0` | 13 | Flying Neo traverses ordinary linked-object fields from this record base. |
+| `FourteenthEntityType` | `$FFFFCB00` | 14 | Sharpssteel and linked-object code use this fixed record base. |
+| `FourteenthEntityXPos` | `$FFFFCB10` | 14 | Valkirie targeting reads the record's integer X coordinate. |
+| `FourteenthEntityYPos` | `$FFFFCB14` | 14 | Valkirie targeting reads the record's integer Y coordinate. |
+| `FifteenthEntityType` | `$FFFFCB60` | 15 | Bugmax and Antroid select this fixed object record. |
+| `SixteenthEntityType` | `$FFFFCBC0` | 16 | Shiper and Artemis select this fixed object record. |
 
 ## Review policy
 

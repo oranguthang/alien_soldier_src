@@ -104,9 +104,9 @@ Boss_SunsetStingInitializeSecondFormPartPositions:      ; CODE XREF: Boss_Sunset
                 adda.w  #$60,a1                         ; '`'
                 dbf     d3,Boss_SunsetStingInitializeSecondFormPartPositions
                 move.l  #$FFFF0000,$18(a5)
-                move.b  #$18,(byte_FFC79C).w
-                move.b  (byte_FFC79C).w,(word_FFC7F8+1).w
-                move.b  #$FF,(byte_FFC7FC).w
+                move.b  #$18,(SunsetStingChainPeriod).w
+                move.b  (SunsetStingChainPeriod).w,(SunsetStingChainCycle+1).w
+                move.b  #$FF,(FifthEntityWork5C).w
                 move.w  #$180,$56(a5)
                 movea.l #Boss_SunsetStingSecondFormTileLoadCommands,a0
                 jsr     (Tilemap_QueueIndexedRows).l
@@ -151,12 +151,12 @@ Boss_SunsetStingBeginMovementState:                     ; DATA XREF: ROM:0004194
 ; Sets boss to idle state and initializes attack timer
 Boss_SunsetStingSetIdleState:                           ; CODE XREF: Boss_SunsetStingMoveAndShoot+2A   j  ; was: sub_41ADE
                                         ; Boss_SunsetStingCheckPhaseTransition+8   j
-                move.b  #$10,(byte_FFC79C).w
+                move.b  #$10,(SunsetStingChainPeriod).w
                 move.b  #0,$4B(a5)
 Boss_SunsetStingInitializeMovementState:                ; CODE XREF: Boss_SunsetStingBeginMovementState+6   j  ; was: loc_41AEA
                 move.w  #$A,4(a5)
-                clr.w   (word_FFC7F8).w
-                move.b  (byte_FFC79C).w,(word_FFC7F8+1).w
+                clr.w   (SunsetStingChainCycle).w
+                move.b  (SunsetStingChainPeriod).w,(SunsetStingChainCycle+1).w
                 bsr.w   Boss_SunsetStingCalculateTargetDirection
                 bra.w   Boss_SunsetStingMovementUpdateSelectedChain
 ; End of function Boss_SunsetStingSetIdleState
@@ -165,7 +165,7 @@ Boss_SunsetStingUpdateMovement:                         ; DATA XREF: ROM:0004195
                 move.w  #$10,d2
                 move.w  #$F0,d0
                 sub.w   $14(a5),d0
-                move.b  (byte_FFC7FC).w,d1
+                move.b  (FifthEntityWork5C).w,d1
                 asl.w   #8,d1
                 eor.w   d0,d1
                 bpl.s   Boss_SunsetStingMovementNormalizeVerticalDelta
@@ -190,7 +190,7 @@ Boss_SunsetStingMovementApplyBodyAngleStep:             ; CODE XREF: Boss_Sunset
                 add.w   d0,$56(a5)
 Boss_SunsetStingMovementUpdatePartFacing:               ; CODE XREF: Boss_SunsetStingWaitForSecondFormIntroMessageState:Boss_SunsetStingSecondFormIntroUpdate   j  ; was: loc_41B42
                                         ; Boss_SunsetStingUpdateMovement+22   j
-                tst.b   (byte_FFC7FC).w
+                tst.b   (FifthEntityWork5C).w
                 bpl.s   Boss_SunsetStingMovementFacePositive
                 ori.w   #$800,$4EE(a5)
                 ori.w   #$800,$72E(a5)
@@ -205,27 +205,27 @@ Boss_SunsetStingMovementFacePositive:                   ; CODE XREF: Boss_Sunset
                 andi.w  #$F7FF,$72E(a5)
 Boss_SunsetStingMovementUpdatePosePatterns:             ; CODE XREF: Boss_SunsetStingUpdateMovement+5E   j  ; was: loc_41B7C
                 moveq   #$FFFFFFFF,d6
-                move.b  (word_FFC7F8+1).w,d3
-                move.b  (word_FFC7F8).w,d0
+                move.b  (SunsetStingChainCycle+1).w,d3
+                move.b  (SunsetStingChainCycle).w,d0
                 lea     Boss_SunsetStingPrimaryTrackingPoseOffsets(pc),a3
                 bsr.w   Boss_SunsetStingUpdatePartRotation
-                move.b  (word_FFC7F8+1).w,d3
-                move.b  (word_FFC7F8).w,d0
+                move.b  (SunsetStingChainCycle+1).w,d3
+                move.b  (SunsetStingChainCycle).w,d0
                 eori.b  #$14,d0
                 lea     Boss_SunsetStingSecondaryTrackingPoseOffsets(pc),a3
                 bsr.w   Boss_SunsetStingUpdatePartRotation
-                subq.b  #1,(word_FFC7F8+1).w
+                subq.b  #1,(SunsetStingChainCycle+1).w
                 bne.s   Boss_SunsetStingMovementUpdateActiveChain
-                addq.b  #4,(word_FFC7F8).w
-                andi.b  #$E,(word_FFC7F8).w
-                move.b  (byte_FFC79C).w,(word_FFC7F8+1).w
+                addq.b  #4,(SunsetStingChainCycle).w
+                andi.b  #$E,(SunsetStingChainCycle).w
+                move.b  (SunsetStingChainPeriod).w,(SunsetStingChainCycle+1).w
                 bsr.w   Boss_SunsetStingCalculateTargetDirection
                 cmpi.w  #$A0,d0
                 bhi.s   Boss_SunsetStingMovementTrySpawnProjectile
                 tst.b   $4B(a5)
                 bne.w   Boss_SunsetStingMovementDecrementShotDelay
                 move.w  (word_FFC678).w,d0
-                move.b  (byte_FFC7FC).w,d1
+                move.b  (FifthEntityWork5C).w,d1
                 andi.w  #4,d1
                 eori.w  #4,d0
                 eor.b   d0,d1
@@ -284,7 +284,7 @@ Boss_SunsetStingCalculateTargetDirection:               ; CODE XREF: Boss_Sunset
                                         ; Boss_SunsetStingUpdateMovement+B6   p
                 jsr     (RandomNumber).l
                 andi.w  #$1F,d0
-                move.b  d0,(byte_FFC7FD).w
+                move.b  d0,(SunsetStingPoseRadius).w
                 move.w  $14(a5),d0
                 cmpi.w  #$120,d0
                 bhi.s   Boss_SunsetStingTargetDirectionUseBodyAngle
@@ -295,9 +295,9 @@ Boss_SunsetStingCalculateTargetDirection:               ; CODE XREF: Boss_Sunset
                 bpl.s   Boss_SunsetStingTargetDirectionStoreDelta
                 neg.w   d0
 Boss_SunsetStingTargetDirectionStoreDelta:              ; CODE XREF: Boss_SunsetStingCalculateTargetDirection+26   j  ; was: loc_41D10
-                add.b   d0,(byte_FFC7FD).w
+                add.b   d0,(SunsetStingPoseRadius).w
                 swap    d0
-                move.b  d0,(byte_FFC7FC).w
+                move.b  d0,(FifthEntityWork5C).w
                 swap    d0
                 rts
 ; ---------------------------------------------------------------------------
@@ -306,15 +306,15 @@ Boss_SunsetStingTargetDirectionUseBodyAngle:            ; CODE XREF: Boss_Sunset
                 lsr.w   #1,d0
                 ext.w   d0
                 lsr.w   #8,d0
-                move.b  d0,(byte_FFC7FC).w
+                move.b  d0,(FifthEntityWork5C).w
                 move.w  #$1FF,d0
-                move.b  d0,(byte_FFC7FD).w
+                move.b  d0,(SunsetStingPoseRadius).w
                 rts
 ; End of function Boss_SunsetStingCalculateTargetDirection
 ; Gets pointer to specific body part based on angle
 Boss_SunsetStingGetBodyPartPointer:                     ; CODE XREF: Boss_SunsetStingUpdatePartRotation:Boss_SunsetStingUpdatePartRotationForTarget   p  ; was: sub_41D36
                                         ; Boss_SunsetStingFlipAndAnimate+1E   p
-                tst.b   (byte_FFC7FC).w
+                tst.b   (FifthEntityWork5C).w
                 bmi.s   Boss_SunsetStingResolveBodyPartIndex
                 eori.b  #$10,d0
 Boss_SunsetStingResolveBodyPartIndex:                   ; CODE XREF: Boss_SunsetStingGetBodyPartPointer+4   j  ; was: loc_41D40
@@ -438,7 +438,7 @@ Boss_SunsetStingMoveAndShoot:                           ; DATA XREF: ROM:00041E3
 ; Calculate direction and rotate while attacking
 Boss_SunsetStingMoveAndShoot_AttackLoop:                ; DATA XREF: ROM:0004195E   o  ; was: loc_41E52
                 bsr.w   Boss_SunsetStingCalculateTargetDirection
-                move.b  (byte_FFC7FC).w,d0
+                move.b  (FifthEntityWork5C).w,d0
                 ext.w   d0
                 add.w   d0,d0
                 addq.w  #1,d0
@@ -451,25 +451,25 @@ Boss_SunsetStingMoveAndShoot_AttackLoop:                ; DATA XREF: ROM:0004195
 ; Flips boss horizontal direction and updates animation
 Boss_SunsetStingFlipDirection:                          ; DATA XREF: ROM:00041E3C   o  ; was: sub_41E74
                 move.w  #$12,4(a5)
-                andi.b  #8,(word_FFC7F8).w
-                move.b  #$20,(word_FFC7F8+1).w          ; ' '
-                not.b   (byte_FFC7FC).w
+                andi.b  #8,(SunsetStingChainCycle).w
+                move.b  #$20,(SunsetStingChainCycle+1).w  ; ' '
+                not.b   (FifthEntityWork5C).w
                 bra.w   Boss_SunsetStingMovementUpdateSelectedChain
 ; End of function Boss_SunsetStingFlipDirection
 ; Applies pose pattern A with a randomized target radius
 Boss_SunsetStingApplyPosePatternAState:                 ; DATA XREF: ROM:00041958   o  ; was: sub_41E8E
                 lea     Boss_SunsetStingPosePatternA(pc),a3
                 moveq   #0,d2
-                move.b  (byte_FFC7FD).w,d2
+                move.b  (SunsetStingPoseRadius).w,d2
                 bra.w   Boss_SunsetStingApplySelectedPosePattern
 ; End of function Boss_SunsetStingApplyPosePatternAState
 ; Flips direction, toggles sprite flip flag, updates animation
 Boss_SunsetStingFlipAndAnimate:                         ; DATA XREF: ROM:00041E40   o  ; was: sub_41E9C
                 move.w  #$C,4(a5)
-                andi.b  #8,(word_FFC7F8).w
-                move.b  #$20,(word_FFC7F8+1).w          ; ' '
-                not.b   (byte_FFC7FC).w
-                move.b  (word_FFC7F8).w,d0
+                andi.b  #8,(SunsetStingChainCycle).w
+                move.b  #$20,(SunsetStingChainCycle+1).w  ; ' '
+                not.b   (FifthEntityWork5C).w
+                move.b  (SunsetStingChainCycle).w,d0
                 eori.b  #$14,d0
                 bsr.w   Boss_SunsetStingGetBodyPartPointer
                 eori.w  #$800,$E(a4)
@@ -479,7 +479,7 @@ Boss_SunsetStingFlipAndAnimate:                         ; DATA XREF: ROM:00041E4
 Boss_SunsetStingApplyPosePatternBState:                 ; DATA XREF: ROM:00041952   o  ; was: sub_41EC8
                 lea     Boss_SunsetStingPosePatternB(pc),a3
                 moveq   #0,d2
-                move.b  (byte_FFC7FD).w,d2
+                move.b  (SunsetStingPoseRadius).w,d2
                 bra.w   Boss_SunsetStingApplySelectedPosePattern
 ; End of function Boss_SunsetStingApplyPosePatternBState
 ; Applies pose pattern C with a fixed target radius
@@ -489,25 +489,25 @@ Boss_SunsetStingApplyPosePatternCState:                 ; DATA XREF: ROM:0004195
                 move.w  #$20,d2                         ; ' '
 Boss_SunsetStingApplySelectedPosePattern:               ; CODE XREF: Boss_SunsetStingApplyPosePatternAState+A   j  ; was: loc_41EDE
                                         ; Boss_SunsetStingApplyPosePatternBState+A   j
-                move.b  (word_FFC7F8+1).w,d3
-                move.b  (word_FFC7F8).w,d0
+                move.b  (SunsetStingChainCycle+1).w,d3
+                move.b  (SunsetStingChainCycle).w,d0
                 eori.b  #$14,d0
                 bsr.w   Boss_SunsetStingUpdatePartRotationForTarget
                 ori.b   #$40,-$3F(a1)                   ; '@'
-                subq.b  #1,(word_FFC7F8+1).w
+                subq.b  #1,(SunsetStingChainCycle+1).w
                 bne.s   Boss_SunsetStingFinishPosePatternUpdate
-                move.b  (word_FFC7F8).w,d0
-                addq.b  #4,(word_FFC7F8).w
-                move.b  (word_FFC7F8).w,d1
+                move.b  (SunsetStingChainCycle).w,d0
+                addq.b  #4,(SunsetStingChainCycle).w
+                move.b  (SunsetStingChainCycle).w,d1
                 eor.b   d0,d1
                 andi.b  #8,d1
                 beq.s   Boss_SunsetStingNormalizePosePatternIndex
-                eori.b  #8,(word_FFC7F8).w
+                eori.b  #8,(SunsetStingChainCycle).w
                 addq.w  #2,4(a5)
                 subi.w  #$80,(word_FF8234).w
 Boss_SunsetStingNormalizePosePatternIndex:              ; CODE XREF: Boss_SunsetStingApplyPosePatternCState+36   j  ; was: loc_41F1E
-                andi.b  #$E,(word_FFC7F8).w
-                move.b  #$20,(word_FFC7F8+1).w          ; ' '
+                andi.b  #$E,(SunsetStingChainCycle).w
+                move.b  #$20,(SunsetStingChainCycle+1).w  ; ' '
 Boss_SunsetStingFinishPosePatternUpdate:                ; CODE XREF: Boss_SunsetStingApplyPosePatternCState+22   j  ; was: loc_41F2A
                 bra.w   Boss_SunsetStingMovementUpdateSelectedChain
 ; End of function Boss_SunsetStingApplyPosePatternCState
@@ -543,7 +543,7 @@ Boss_SunsetStingRefillHealthState:                      ; DATA XREF: ROM:0004196
 Boss_SunsetStingRefillApplyPoseToChain:                 ; CODE XREF: Boss_SunsetStingRefillHealthState+2E   j  ; was: loc_41F82
                 lea     Boss_SunsetStingPosePatternC(pc),a3
                 move.w  #$30,d2                         ; '0'
-                move.b  (word_FFC7F8+1).w,d3
+                move.b  (SunsetStingChainCycle+1).w,d3
                 move.w  d0,-(sp)
                 bsr.w   Boss_SunsetStingUpdatePartRotationForTarget
                 move.w  (sp)+,d0

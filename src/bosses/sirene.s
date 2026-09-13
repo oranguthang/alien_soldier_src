@@ -469,7 +469,7 @@ Boss_ApplySirenePoseToParts:                            ; CODE XREF: Boss_Render
                 move.w  d1,$1D6(a5)
                 move.b  8(a0),d0
                 asl.w   #1,d0
-                movea.w #(byte_FFC856-M68K_RAM),a2
+                movea.w #(SixthEntityWork56-M68K_RAM),a2
                 bsr.w   Boss_PropagateSirenePoseGrid
                 move.b  $C(a0),d0
                 asl.w   #1,d0

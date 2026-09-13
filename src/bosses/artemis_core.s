@@ -499,12 +499,12 @@ Boss_RenderArtemisPose:                                 ; CODE XREF: Boss_Update
                 addi.w  #$12A,d6
                 btst    #0,$3BC(a5)
                 beq.s   Boss_CheckArtemisPosePartFlag1
-                movea.w #(word_FFC980-M68K_RAM),a0
+                movea.w #(TenthEntityType-M68K_RAM),a0
                 bsr.s   Boss_UpdateArtemisActivePartVerticalPosition
 Boss_CheckArtemisPosePartFlag1:                         ; CODE XREF: Boss_RenderArtemisPose+22   j  ; was: loc_584B0
                 btst    #1,$3BC(a5)
                 beq.s   Boss_CheckArtemisPosePartFlag2
-                movea.w #(byte_FFCBC0-M68K_RAM),a0
+                movea.w #(SixteenthEntityType-M68K_RAM),a0
                 bsr.s   Boss_UpdateArtemisActivePartVerticalPosition
 Boss_CheckArtemisPosePartFlag2:                         ; CODE XREF: Boss_RenderArtemisPose+30   j  ; was: loc_584BE
                 btst    #2,$3BC(a5)

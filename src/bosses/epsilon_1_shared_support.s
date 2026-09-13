@@ -372,7 +372,7 @@ Boss_Epsilon1SpawnIntroProjectileState:                 ; DATA XREF: ROM:Boss_Ep
                 bne.s   Boss_Epsilon1SpawnIntroProjectileReturn
                 addq.w  #2,4(a5)
                 move.w  #2,$4A(a5)
-                movea.w #(word_FFC7A0-M68K_RAM),a0
+                movea.w #(FifthEntityType-M68K_RAM),a0
                 move.w  #$278,(a0)
                 move.w  #$C3C0,$E(a0)
                 move.w  #$A00,8(a0)
@@ -383,19 +383,19 @@ Boss_Epsilon1SpawnIntroProjectileReturn:                ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1SpawnIntroProjectileState
 ; Activates the waiting intro object after its state returns to zero
 Boss_Epsilon1ActivateIntroProjectileState:              ; DATA XREF: ROM:00047B9C   o  ; was: sub_47BD4
-                tst.w   (word_FFC7A4).w
+                tst.w   (FifthEntityState).w
                 bne.s   Boss_Epsilon1ActivateIntroProjectileReturn
-                move.w  #1,(word_FFC7FE).w
-                addq.w  #2,(word_FFC7A4).w
+                move.w  #1,(FifthEntityWork5E).w
+                addq.w  #2,(FifthEntityState).w
                 addq.w  #2,4(a5)
 Boss_Epsilon1ActivateIntroProjectileReturn:             ; CODE XREF: Boss_Epsilon1ActivateIntroProjectileState+4   j  ; was: locret_47BE8
                 rts
 ; End of function Boss_Epsilon1ActivateIntroProjectileState
 ; Repeats the intro object cycle twice, then starts the completion delay
 Boss_Epsilon1AdvanceIntroCycleState:                    ; DATA XREF: ROM:00047B9E   o  ; was: sub_47BEA
-                cmpi.w  #$C,(word_FFC7A4).w
+                cmpi.w  #$C,(FifthEntityState).w
                 bne.s   Boss_Epsilon1AdvanceIntroCycleReturn
-                addq.w  #2,(word_FFC7A4).w
+                addq.w  #2,(FifthEntityState).w
                 subq.w  #1,$4A(a5)
                 beq.s   Boss_Epsilon1StartIntroCompletionDelay
                 subq.w  #2,4(a5)

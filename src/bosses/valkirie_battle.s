@@ -486,7 +486,7 @@ Entity_CheckValkirieState14SoundEvent:                  ; CODE XREF: Entity_Upda
 Entity_UpdateValkirieState14Timer:                      ; CODE XREF: Entity_UpdateValkirieBattleState14+22   j  ; was: loc_55D04
                 subq.w  #1,$11C(a5)
                 bne.s   Entity_RenderValkirieBattleState14
-                bset    #4,(byte_FFC9DE).w
+                bset    #4,(ValkirieAuxFlags).w
 Entity_RenderValkirieBattleState14:                     ; CODE XREF: Entity_UpdateValkirieBattleState14+32   j  ; was: loc_55D10
                 lea     Valkirie_State14PoseScript(pc),a1
                 nop
@@ -494,7 +494,7 @@ Entity_RenderValkirieBattleState14:                     ; CODE XREF: Entity_Upda
 ; ---------------------------------------------------------------------------
 ; Enter state $24 after the state-$14 animation terminates
 Entity_StartValkirieBattleState24:                      ; CODE XREF: Entity_UpdateValkirieBattleState14+4   j  ; was: loc_55D1A
-                bset    #7,(byte_FFC9DE).w
+                bset    #7,(ValkirieAuxFlags).w
                 move.w  #$24,4(a5)                      ; '$'
                 clr.b   $23E(a5)
                 clr.w   $58(a5)
@@ -526,7 +526,7 @@ Entity_RenderValkirieBattleState24:                     ; CODE XREF: Entity_Upda
                 bra.w   Entity_RenderValkirieBattleAnimation
 ; ---------------------------------------------------------------------------
 Entity_CompleteValkirieBattleState24:                   ; CODE XREF: Entity_UpdateValkirieBattleState14+88   j  ; was: loc_55D6A
-                bset    #5,(byte_FFC9DE).w
+                bset    #5,(ValkirieAuxFlags).w
                 bra.w   Entity_StartValkirieBattleState8
 ; End of function Entity_UpdateValkirieBattleState14
 ; Start close-range response state $12 with a randomized hold timer

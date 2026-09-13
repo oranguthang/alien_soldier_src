@@ -26,8 +26,8 @@ Cutscene_UpdateStarRowPositions:                        ; CODE XREF: Cutscene_Ex
 ; Copies the planet object's Y/X coordinates into the generic grid center
 Cutscene_CopyPlanetGridCenter:                          ; CODE XREF: Cutscene_EraseFirstPlanetGrid+8   p  ; was: sub_768A
                                         ; sub_5244   p
-                move.w  (word_FFC9F4).w,(SpriteGridCenterY).l
-                move.w  (word_FFC9F0).w,(SpriteGridCenterX).l
+                move.w  (EleventhEntityYPos).w,(SpriteGridCenterY).l
+                move.w  (EleventhEntityXPos).w,(SpriteGridCenterX).l
 ; End of function Cutscene_CopyPlanetGridCenter
 ; Builds a centered planet sprite grid and appends it to the OAM buffer
 Cutscene_RenderPlanetSpriteGrid:                        ; CODE XREF: EndingPlanet_ShowAndDissolve+C   p  ; was: sub_769A
@@ -69,8 +69,8 @@ Cutscene_WritePlanetGridCell:                           ; CODE XREF: Cutscene_Re
 ; Copies the ship center, builds its sprite grid, and appends it to OAM
 Cutscene_RenderShipSpriteGrid:                          ; CODE XREF: Cutscene_EraseFirstShipGrid+8   p  ; was: sub_770C
                                         ; sub_549C   p
-                move.w  (word_FFCA54).w,(ShipGridCenterY).l
-                move.w  (word_FFCA50).w,(ShipGridCenterX).l
+                move.w  (TwelfthEntityYPos).w,(ShipGridCenterY).l
+                move.w  (TwelfthEntityXPos).w,(ShipGridCenterX).l
                 movea.w #(dword_FFA100-M68K_RAM),a0
                 movea.w #(dword_FFA100-M68K_RAM),a1
                 clr.w   d5

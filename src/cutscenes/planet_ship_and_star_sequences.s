@@ -27,8 +27,8 @@ Cutscene_StartPlanetGrid:                               ; DATA XREF: ROM:Cutscen
 Cutscene_SetupFirstPlanetGrid:                          ; DATA XREF: ROM:00005160   o  ; was: sub_5184
                 subq.w  #1,(PlanetGridTimer).l
                 bne.w   Cutscene_Return
-                lea     (word_FFC9E0).w,a5
-                move.w  #$CC00,word_FFC9E2-word_FFC9E0(a5)
+                lea     (EleventhEntityType).w,a5
+                move.w  #$CC00,EleventhEntityFlags-EleventhEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #CutsceneFirstPlanetGridSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
@@ -52,7 +52,7 @@ Cutscene_SetupFirstPlanetGrid:                          ; DATA XREF: ROM:0000516
 ; End of function Cutscene_SetupFirstPlanetGrid
 ; Accelerates the first grid horizontally while erasing pattern nibbles
 Cutscene_EraseFirstPlanetGrid:                          ; DATA XREF: ROM:00005162   o  ; was: sub_5214
-                addi.l  #$80,(dword_FFC9F8).w
+                addi.l  #$80,(EleventhEntityXVel).w
                 bsr.w   Cutscene_CopyPlanetGridCenter
                 bsr.w   Cutscene_ErasePlanetPatternStep
                 bsr.w   Cutscene_QueuePlanetPatternRows
@@ -77,13 +77,13 @@ Cutscene_AdvancePlanetGridState:
 ; Reverses the first grid's horizontal motion while restoring its pattern
 Cutscene_RevealFirstPlanetGrid:                         ; DATA XREF: ROM:00005166   o  ; was: sub_525E
                                         ; ROM:00005168   o
-                subi.l  #$80,(dword_FFC9F8).w
+                subi.l  #$80,(EleventhEntityXVel).w
                 bsr.w   Cutscene_CopyPlanetGridCenter
                 bsr.w   Cutscene_RevealPlanetPatternStep
                 bsr.w   Cutscene_QueuePlanetPatternRows
                 tst.w   (PatternDissolveStep).l
                 bpl.w   Cutscene_Return
-                clr.l   (dword_FFC9F8).w
+                clr.l   (EleventhEntityXVel).w
                 move.w  #$100,(PlanetGridTimer).l
                 addq.w  #2,(PlanetGridState).l
                 rts
@@ -94,8 +94,8 @@ Cutscene_SetupSecondPlanetGrid:                         ; DATA XREF: ROM:0000516
                 bsr.w   Cutscene_QueuePlanetPatternRows
                 subq.w  #1,(PlanetGridTimer).l
                 bne.w   Cutscene_Return
-                lea     (word_FFC9E0).w,a5
-                move.w  #$CC00,word_FFC9E2-word_FFC9E0(a5)
+                lea     (EleventhEntityType).w,a5
+                move.w  #$CC00,EleventhEntityFlags-EleventhEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #CutsceneSecondPlanetGridSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
@@ -103,7 +103,7 @@ Cutscene_SetupSecondPlanetGrid:                         ; DATA XREF: ROM:0000516
                 move.w  #$120,$14(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                andi.w  #$7FFF,(word_FFC9E2).w
+                andi.w  #$7FFF,(EleventhEntityFlags).w
                 move.w  #$4E0,(SpriteGridFirstTile).l
                 move.w  #$120,(SpriteGridCenterY).l
                 move.w  #$180,(SpriteGridCenterX).l
@@ -120,8 +120,8 @@ Cutscene_SetupSecondPlanetGrid:                         ; DATA XREF: ROM:0000516
 ; End of function Cutscene_SetupSecondPlanetGrid
 ; Accelerates the second grid vertically while erasing pattern nibbles
 Cutscene_EraseSecondPlanetGrid:                         ; DATA XREF: ROM:0000516C   o  ; was: sub_532E
-                ori.w   #$8000,(word_FFC9E2).w
-                subi.l  #$40,(dword_FFC9FC).w           ; '@'
+                ori.w   #$8000,(EleventhEntityFlags).w
+                subi.l  #$40,(EleventhEntityYVel).w     ; '@'
                 bsr.w   Cutscene_CopyPlanetGridCenter
                 bsr.w   Cutscene_ErasePlanetPatternStep
                 bsr.w   Cutscene_QueuePlanetPatternRows
@@ -148,13 +148,13 @@ Cutscene_WaitSecondPlanetGridHold:
 ; End of function Cutscene_WaitSecondPlanetGridHold
 ; Reverses the second grid's vertical motion while restoring its pattern
 Cutscene_RevealSecondPlanetGrid:                        ; DATA XREF: ROM:00005170   o  ; was: sub_537E
-                addi.l  #$40,(dword_FFC9FC).w           ; '@'
+                addi.l  #$40,(EleventhEntityYVel).w     ; '@'
                 bsr.w   Cutscene_CopyPlanetGridCenter
                 bsr.w   Cutscene_RevealPlanetPatternStep
                 bsr.w   Cutscene_QueuePlanetPatternRows
                 tst.w   (PatternDissolveStep).l
                 bpl.w   Cutscene_Return
-                clr.w   (word_FFC9E2).w
+                clr.w   (EleventhEntityFlags).w
                 addq.w  #2,(PlanetGridState).l
                 rts
 ; End of function Cutscene_RevealSecondPlanetGrid
@@ -191,8 +191,8 @@ Cutscene_StartFirstShipGridDelay:                       ; DATA XREF: ROM:Cutscen
 Cutscene_SetupFirstShipGrid:                            ; DATA XREF: ROM:000053BA   o  ; was: sub_53DC
                 subq.w  #1,(ShipGridTimer).l
                 bne.w   Cutscene_Return
-                lea     (word_FFCA40).w,a5
-                move.w  #$CC00,word_FFCA42-word_FFCA40(a5)
+                lea     (TwelfthEntityType).w,a5
+                move.w  #$CC00,TwelfthEntityFlags-TwelfthEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #CutsceneFirstShipGridSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
@@ -216,7 +216,7 @@ Cutscene_SetupFirstShipGrid:                            ; DATA XREF: ROM:000053B
 ; End of function Cutscene_SetupFirstShipGrid
 ; Changes horizontal velocity while erasing the first ship-grid pattern
 Cutscene_EraseFirstShipGrid:                            ; DATA XREF: ROM:000053BC   o  ; was: sub_546C
-                subi.l  #$80,(dword_FFCA58).w
+                subi.l  #$80,(TwelfthEntityXVel).w
                 bsr.w   Cutscene_RenderShipSpriteGrid
                 bsr.w   Cutscene_EraseShipPatternStep
                 bsr.w   Cutscene_QueueShipPatternRows
@@ -237,13 +237,13 @@ Cutscene_HoldFirstShipGrid:                             ; DATA XREF: ROM:000053B
 ; End of function Cutscene_HoldFirstShipGrid
 ; Reverses horizontal velocity while restoring the first ship-grid pattern
 Cutscene_RevealFirstShipGrid:                           ; DATA XREF: ROM:000053C0   o  ; was: sub_54B6
-                addi.l  #$80,(dword_FFCA58).w
+                addi.l  #$80,(TwelfthEntityXVel).w
                 bsr.w   Cutscene_RenderShipSpriteGrid
                 bsr.w   Cutscene_RevealShipPatternStep
                 bsr.w   Cutscene_QueueShipPatternRows
                 tst.w   (ShipPatternStep).l
                 bpl.w   Cutscene_Return
-                clr.l   (dword_FFCA58).w
+                clr.l   (TwelfthEntityXVel).w
                 move.w  #$100,(ShipGridTimer).l
                 addq.w  #2,(ShipGridState).l
                 rts
@@ -254,8 +254,8 @@ Cutscene_SetupSecondShipGrid:                           ; DATA XREF: ROM:000053C
                 bsr.w   Cutscene_QueueShipPatternRows
                 subq.w  #1,(ShipGridTimer).l
                 bne.w   Cutscene_Return
-                lea     (word_FFCA40).w,a5
-                move.w  #$CC00,word_FFCA42-word_FFCA40(a5)
+                lea     (TwelfthEntityType).w,a5
+                move.w  #$CC00,TwelfthEntityFlags-TwelfthEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #CutsceneSecondShipGridSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
@@ -263,7 +263,7 @@ Cutscene_SetupSecondShipGrid:                           ; DATA XREF: ROM:000053C
                 move.w  #$C0,$14(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                andi.w  #$7FFF,(word_FFCA42).w
+                andi.w  #$7FFF,(TwelfthEntityFlags).w
                 move.w  #$4F0,(ShipGridFirstTile).l
                 move.w  #$C0,(ShipGridCenterY).l
                 move.w  #$C0,(ShipGridCenterX).l
@@ -280,8 +280,8 @@ Cutscene_SetupSecondShipGrid:                           ; DATA XREF: ROM:000053C
 ; End of function Cutscene_SetupSecondShipGrid
 ; Changes vertical velocity while erasing the second ship-grid pattern
 Cutscene_EraseSecondShipGrid:                           ; DATA XREF: ROM:000053C4   o  ; was: sub_5586
-                ori.w   #$8000,(word_FFCA42).w
-                addi.l  #$40,(dword_FFCA5C).w           ; '@'
+                ori.w   #$8000,(TwelfthEntityFlags).w
+                addi.l  #$40,(TwelfthEntityYVel).w      ; '@'
                 bsr.w   Cutscene_RenderShipSpriteGrid
                 bsr.w   Cutscene_EraseShipPatternStep
                 bsr.w   Cutscene_QueueShipPatternRows
@@ -302,13 +302,13 @@ Cutscene_HoldSecondShipGrid:                            ; DATA XREF: ROM:000053C
 ; End of function Cutscene_HoldSecondShipGrid
 ; Reverses vertical velocity while restoring the second ship-grid pattern
 Cutscene_RevealSecondShipGrid:                          ; DATA XREF: ROM:000053C8   o  ; was: sub_55D6
-                subi.l  #$40,(dword_FFCA5C).w           ; '@'
+                subi.l  #$40,(TwelfthEntityYVel).w      ; '@'
                 bsr.w   Cutscene_RenderShipSpriteGrid
                 bsr.w   Cutscene_RevealShipPatternStep
                 bsr.w   Cutscene_QueueShipPatternRows
                 tst.w   (ShipPatternStep).l
                 bpl.w   Cutscene_Return
-                clr.w   (word_FFCA42).w
+                clr.w   (TwelfthEntityFlags).w
                 addq.w  #2,(ShipGridState).l
                 rts
 ; End of function Cutscene_RevealSecondShipGrid
@@ -377,8 +377,8 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 move.w  #$9C,$14(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                lea     (word_FFC7A0).w,a5
-                move.w  #$CC00,word_FFC7A2-word_FFC7A0(a5)
+                lea     (FifthEntityType).w,a5
+                move.w  #$CC00,FifthEntityFlags-FifthEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
@@ -386,8 +386,8 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 move.w  #$C4,$14(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                lea     (word_FFC800).w,a5
-                move.w  #$CC00,word_FFC802-word_FFC800(a5)
+                lea     (SixthEntityType).w,a5
+                move.w  #$CC00,SixthEntityFlags-SixthEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
@@ -395,8 +395,8 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 move.w  #$C4,$14(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                lea     (word_FFC860).w,a5
-                move.w  #$CC00,word_FFC862-word_FFC860(a5)
+                lea     (SeventhEntityType).w,a5
+                move.w  #$CC00,SeventhEntityFlags-SeventhEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
@@ -404,8 +404,8 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 move.w  #$C4,$14(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                lea     (word_FFC8C0).w,a5
-                move.w  #$CC00,word_FFC8C2-word_FFC8C0(a5)
+                lea     (EighthEntityType).w,a5
+                move.w  #$CC00,EighthEntityFlags-EighthEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
@@ -413,8 +413,8 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 move.w  #$C4,$14(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                lea     (word_FFC920).w,a5
-                move.w  #$CC00,word_FFC922-word_FFC920(a5)
+                lea     (NinthEntityType).w,a5
+                move.w  #$CC00,NinthEntityFlags-NinthEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$ED00,$E(a5)
@@ -422,8 +422,8 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 move.w  #$B0,$14(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                lea     (word_FFC980).w,a5
-                move.w  #$CC00,word_FFC982-word_FFC980(a5)
+                lea     (TenthEntityType).w,a5
+                move.w  #$CC00,TenthEntityFlags-TenthEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)

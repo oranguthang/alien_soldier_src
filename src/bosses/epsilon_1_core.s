@@ -334,14 +334,14 @@ Boss_Epsilon1ClearAngleHistoryRowLoop:                  ; CODE XREF: Boss_Epsilo
                 move.w  #$36,$4E(a0)                    ; '6'
                 move.w  #$140,$52(a0)
                 move.w  #0,$50(a0)
-                movea.w #(word_FFC7A0-M68K_RAM),a0
+                movea.w #(FifthEntityType-M68K_RAM),a0
                 move.w  #$278,(a0)
                 move.w  #$C3C0,$E(a0)
                 move.w  #$A00,8(a0)
                 move.w  #$F4F4,$A(a0)
                 move.w  #$C80,2(a0)
-                movea.w #(word_FFC800-M68K_RAM),a0
-                movea.w #(word_FFCA40-M68K_RAM),a1
+                movea.w #(SixthEntityType-M68K_RAM),a0
+                movea.w #(TwelfthEntityType-M68K_RAM),a1
                 clr.w   d6
                 move.w  #$FFB0,d4
                 move.w  #$50,d5                         ; 'P'

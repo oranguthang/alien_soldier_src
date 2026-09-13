@@ -3,7 +3,7 @@
 Boss_VictorPreparePartLaunch:                           ; DATA XREF: ROM:0003243C   o  ; was: sub_329A6
                 bsr.w   Boss_VictorUpdateViewportOffset
                 bsr.w   Boss_VictorUpdateAnimation
-                lea     (word_FFC7A0).w,a4
+                lea     (FifthEntityType).w,a4
                 move.w  #7,d6
 Boss_VictorResetNextOrbitingPart:                       ; CODE XREF: Boss_VictorPreparePartLaunch+1A   j  ; was: loc_329B6
                 move.w  #4,4(a4)
@@ -43,7 +43,7 @@ Boss_VictorExpandPartFormation:                         ; DATA XREF: ROM:0003244
 Boss_VictorFinishPartLaunchCycles:                      ; CODE XREF: Boss_VictorExpandPartFormation+18   j  ; was: loc_32A36
                 subq.w  #1,(dword_FF9410+2).w
                 bne.w   Entity_UpdateReturn
-                lea     (word_FFC7A0).w,a4
+                lea     (FifthEntityType).w,a4
                 move.w  #7,d6
 Boss_VictorReactivateNextOrbitingPart:                  ; CODE XREF: Boss_VictorExpandPartFormation+4A   j  ; was: loc_32A46
                 move.w  #0,4(a4)

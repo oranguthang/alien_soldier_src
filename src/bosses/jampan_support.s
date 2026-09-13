@@ -123,9 +123,9 @@ Boss_JampanDisableShieldLoop:                           ; CODE XREF: Boss_Jampan
 Boss_JampanUpdateShieldFormationGeometry:               ; CODE XREF: Boss_JampanShieldCycleDelayState+16   p  ; was: sub_4A160
                                         ; Boss_JampanExpandShieldRadiusState+C   p
                 move.w  (dword_FF942C).w,d4
-                move.w  (word_FFC8AA).w,d5
-                move.w  (word_FFC8AC).w,d6
-                move.w  (word_FFC8AE).w,d7
+                move.w  (SeventhEntityWork4A).w,d5
+                move.w  (SeventhEntityWork4C).w,d6
+                move.w  (SeventhEntityWork4E).w,d7
                 add.w   (dword_FF9400).w,d5
                 add.w   (dword_FF9404).w,d6
                 add.w   (dword_FF9408).w,d7
@@ -135,7 +135,7 @@ Boss_JampanUpdateShieldFormationGeometry:               ; CODE XREF: Boss_Jampan
                 andi.w  #$1FE,d5
                 andi.w  #$1FE,d6
                 andi.w  #$1FE,d7
-                movea.w #(word_FFC860-M68K_RAM),a1
+                movea.w #(SeventhEntityType-M68K_RAM),a1
                 movea.w #(byte_FFD040-M68K_RAM),a0
                 bsr.w   Boss_JampanProjectPartFromAngles
                 movea.w a0,a1
@@ -529,7 +529,7 @@ Boss_JampanOrbitGroupStateHandlers: dc.w    Boss_JampanInitializeOrbitGroupAngle
 ; Initializes the 13 angular accumulators to $20.0000
 Boss_JampanInitializeOrbitGroupAnglesState:             ; DATA XREF: ROM:Boss_JampanOrbitGroupStateHandlers   o  ; was: sub_4A54E
                 move.w  #$C,d7
-                movea.w #(word_FFC980-M68K_RAM),a0
+                movea.w #(TenthEntityType-M68K_RAM),a0
 Boss_JampanInitializeOrbitGroupAngleLoop:               ; CODE XREF: Boss_JampanInitializeOrbitGroupAnglesState+14   j  ; was: loc_4A556
                 move.l  #$200000,$54(a0)
                 lea     $60(a0),a0
@@ -549,7 +549,7 @@ Boss_JampanWaitForOrbitGroupRotationSignalReturn:       ; CODE XREF: Boss_Jampan
 ; Applies the forward angular-velocity table for $20 frames
 Boss_JampanRotateOrbitGroupForwardState:                ; DATA XREF: ROM:0004A54A   o  ; was: sub_4A57E
                 move.w  #$C,d7
-                movea.w #(word_FFC980-M68K_RAM),a0
+                movea.w #(TenthEntityType-M68K_RAM),a0
                 clr.w   d6
 Boss_JampanRotateOrbitGroupForwardLoop:                 ; CODE XREF: Boss_JampanRotateOrbitGroupForwardState+28   j  ; was: loc_4A588
                 move.l  Boss_JampanForwardAngularVelocityTable(pc,d6.w),d0
