@@ -38,7 +38,7 @@ Sys_ClearRAMPartial_Loop:                               ; CODE XREF: Sys_ClearRA
 ; Clears object RAM area at FF8000
 Sys_ClearObjectRAM:                                     ; CODE XREF: Sys_InitFullGame+24   p  ; was: sub_2EF0
                                         ; Sys_InitGameMode+20   p
-                lea     (dword_FF8000).w,a0
+                lea     (GameplayStateBuffer).w,a0
                 moveq   #0,d0
                 move.w  #$1FF,d1
 Sys_ClearObjectRAM_Loop:                                ; CODE XREF: Sys_ClearObjectRAM+12   j  ; was: loc_2EFA

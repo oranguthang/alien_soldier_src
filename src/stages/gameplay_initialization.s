@@ -90,7 +90,7 @@ WeaponSetup_ActivateScreen:                             ; CODE XREF: WeaponSetup
                 lea     WeaponSetup_AssetLoadDescriptors(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                move.b  #1,(byte_FF7001).l
+                move.b  #1,(WeaponSetupWriteFlag).l
                 clr.w   d0
                 clr.w   d1
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
@@ -159,9 +159,9 @@ WeaponSetup_AssetLoadDescriptors:   dc.w    3           ; field_0  ; was: stru_1
 
 ; Initializes the weapon-setup screen's three color lookup tables in RAM
 WeaponSetup_InitializeColorTables:                      ; CODE XREF: WeaponSetup_InitializeScreen+88   p  ; was: sub_1F002
-                lea     (word_FF0D00).l,a0
-                lea     (word_FF0D80).l,a1
-                lea     (word_FF0E00).l,a2
+                lea     (PlaneTilemapRow26).l,a0
+                lea     (PlaneTilemapRow27).l,a1
+                lea     (PlaneTilemapRow28).l,a2
                 move.w  #$FF,d1
                 moveq   #$3F,d7                         ; '?'
 WeaponSetup_InitializeColorTables_Loop:                 ; CODE XREF: WeaponSetup_InitializeColorTables+1E   j  ; was: loc_1F01A
@@ -169,7 +169,7 @@ WeaponSetup_InitializeColorTables_Loop:                 ; CODE XREF: WeaponSetup
                 move.w  d1,(a1)+
                 move.w  d1,(a2)+
                 dbf     d7,WeaponSetup_InitializeColorTables_Loop
-                move.b  #$82,(byte_FF78FF).l
+                move.b  #$82,(WeaponSetupTilemapMode).l
                 rts
 ; End of function WeaponSetup_InitializeColorTables
 ; Initializes weapon-setup text and the six force-name tile regions

@@ -6461,3 +6461,90 @@ Provenance rises from 15,693 to 15,697 mappings and the audit registry from
 12,843 to 12,847. The semantic review upper bound remains 3,150 because every
 new mapping has a matching audit record. The enforced address-derived ceiling
 falls from 358 to 354, all still confined to RAM equates.
+
+The sound-driver global-state pass replaces thirty-five raw equates. The
+already audited driver establishes the four-slot request queue, selected
+priority and request, tempo and fade counters, pause and PCM flags, FM3 offset
+banks, BGM/special-SFX data pointers, and the manual/voice volume-transition
+state. Its fixed `$30` record stride proves the sparse PCM, BGM FM/PSG,
+ordinary SFX, and dedicated special-SFX record anchors. The YM2612 writers and
+pause path prove the final adjusted shadow-table bases and 32-byte level-shadow
+range without assigning unobserved hardware state to adjacent bytes.
+
+All thirty-five fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,697 to 15,732 mappings and the audit registry from
+12,847 to 12,882. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 354 to 319, all still confined to RAM equates.
+
+The Z80 exchange pass replaces thirty raw aliases. The 68000-side producers
+prove two parallel eight-byte voice-DAC slots, the reordered seven-byte
+immediate DAC command mailbox, its status/request/panning fields, the sound
+driver busy byte, and the VBlank activity handshake. Four DPCM sample-header
+members remain explicitly numbered because the reconstructed 68000 code only
+copies them; it does not prove their codec-level meanings. The pause renderer
+also proves `$A00C00` as a fixed Z80-RAM sprite-data source.
+
+All thirty aliases receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,732 to 15,762 mappings and the audit registry from
+12,882 to 12,912. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 319 to 289, all still confined to RAM and hardware-window equates.
+
+The controller, frame-timing, results, and demo-state pass replaces twenty-four
+raw aliases. Direct port polling proves the two controller response IDs and six
+button-remap source-bit settings. Reset establishes the `TREASURE` warm-reset
+signature and snapshots the console-version flags used by VBlank. HUD and
+VBlank consumers jointly prove the frame-skip level. Credits and results prove
+the one-shot extended-layout value. The demo subsystem proves its packed input,
+run length, stream pointer, recording offset/mode, countdown, rotation index,
+and three saved option fields through complete save/use/restore chains.
+
+All twenty-four aliases receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,762 to 15,786 mappings and the audit registry from
+12,912 to 12,936. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 289 to 265, all still confined to RAM equates. The adjacent
+clear-only `$FFFFFF00` longword and boot-only `$FFFFFF36` word remain raw until
+their roles have stronger evidence.
+
+The plane-tilemap and cutscene-workspace pass replaces nineteen raw aliases.
+Nine anchors follow the proven 64-word, `$80`-byte plane-map row stride and are
+filled as whole rows by stage or frontend initialization. The remaining ten
+aliases describe the shared cutscene workspace through its observed uses:
+story-title expansion, the ship-arrival tilemap, and the ending starfield's
+banked position, depth, and velocity arrays. Role-specific interior aliases are
+kept where the same physical workspace has distinct owners.
+
+All nineteen aliases receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,786 to 15,805 mappings and the audit registry from
+12,936 to 12,955. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 265 to 246, all still confined to RAM equates.
+
+The large-tilemap, terrain-workspace, and stage-mode pass replaces nineteen raw
+aliases. Full-buffer loops prove an 8 KiB tilemap workspace and its second 4 KiB
+page; bounded writers identify four Flying Neo tile-attribute ranges and the
+Xi-Tiger credits tilemap. Terrain probes and enemy placement share the `$FF7800`
+collision buffer. Stage initialization and paired cleanup paths establish the
+tilemap-mode bytes. The Stage 8 control base and weapon-setup write-only flag
+retain structural names because their downstream bit meanings remain unknown.
+
+All nineteen aliases receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,805 to 15,824 mappings and the audit registry from
+12,955 to 12,974. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 246 to 227, all still confined to RAM equates.
+
+The gameplay-block and weapon-mode pass replaces nine raw aliases. Two bounded
+clear loops prove the `$FF8000` gameplay-state base and its broad 8 KiB extent.
+Weapon setup and consumers prove the animation pointer, selected icon tile,
+fixed-point X/Y motion terms, and special-move spawn offsets. Two fields remain
+explicit unions: one alternates between a target pointer and icon frame index;
+the other holds a motion-table pointer or a mode-specific word value.
+
+All nine aliases receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,824 to 15,833 mappings and the audit registry from
+12,974 to 12,983. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 227 to 218, all still confined to RAM equates.

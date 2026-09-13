@@ -15,9 +15,9 @@ Sound_InitializeBGM:                                    ; CODE XREF: Sound_LoadB
                 moveq   #0,d0
                 move.w  (a4),d0
                 add.l   a4,d0
-                move.l  d0,(dword_FFF820).w
-                move.b  5(a4),(byte_FFF802).w
-                move.b  5(a4),(byte_FFF801).w
+                move.l  d0,(SoundBGMDataPtr).w
+                move.b  5(a4),(SoundTempoReload).w
+                move.b  5(a4),(SoundTempoCounter).w
                 moveq   #0,d1
                 movea.l a4,a3
                 addq.w  #6,a4
@@ -30,7 +30,7 @@ Sound_InitializeBGM:                                    ; CODE XREF: Sound_LoadB
                 move.b  4(a3),d4
                 moveq   #$30,d6                         ; '0'
                 move.b  #1,d5
-                lea     (byte_FFF840).w,a1
+                lea     (SoundPCMChannelRecord).w,a1
                 lea     Sound_BGMFMChannelTypes(pc),a2
 Sound_InitializeNextBGMFMChannel:                       ; CODE XREF: Sound_LoadBGMRequest+8A   j  ; was: loc_82FD0
                 move.b  d3,(a1)
@@ -51,7 +51,7 @@ Sound_InitializeBGMPSGChannels:                         ; CODE XREF: Sound_LoadB
                 move.b  3(a3),d7
                 beq.s   Sound_MarkBGMChannelsOverriddenBySFX
                 subq.b  #1,d7
-                lea     (byte_FFF990).w,a1
+                lea     (SoundBGMPSGChannels).w,a1
                 lea     Sound_BGMPSGChannelTypes(pc),a2
 Sound_InitializeNextBGMPSGChannel:                      ; CODE XREF: Sound_LoadBGMRequest+CA   j  ; was: loc_8300C
                 move.b  d3,(a1)
@@ -69,7 +69,7 @@ Sound_InitializeNextBGMPSGChannel:                      ; CODE XREF: Sound_LoadB
                 adda.w  d6,a1
                 dbf     d7,Sound_InitializeNextBGMPSGChannel
 Sound_MarkBGMChannelsOverriddenBySFX:                   ; CODE XREF: Sound_LoadBGMRequest+94   j  ; was: loc_8303A
-                lea     (byte_FFFA20).w,a1
+                lea     (SoundSFXFMChannels).w,a1
                 moveq   #5,d7
 Sound_CheckNextActiveSFXChannel:                        ; CODE XREF: Sound_LoadBGMRequest+F8   j  ; was: loc_83040
                 tst.b   (a1)
@@ -90,15 +90,15 @@ Sound_MarkBGMChannelOverridden:                         ; CODE XREF: Sound_LoadB
 Sound_ContinueActiveSFXChannelScan:                     ; CODE XREF: Sound_LoadBGMRequest+D6   j  ; was: loc_83062
                 adda.w  d6,a1
                 dbf     d7,Sound_CheckNextActiveSFXChannel
-                tst.w   (word_FFFB40).w
+                tst.w   (SoundSpecialSFXFM).w
                 bpl.s   Sound_MarkSpecialFMOverrideForBGM
-                bset    #2,(byte_FFF900).w
+                bset    #2,(SoundBGMFMChannel3).w
 Sound_MarkSpecialFMOverrideForBGM:                      ; CODE XREF: Sound_LoadBGMRequest+100   j  ; was: loc_83074
-                tst.w   (word_FFFB70).w
+                tst.w   (SoundSpecialSFXPSG).w
                 bpl.s   Sound_RefreshBGMFMChannels
-                bset    #2,(byte_FFF9F0).w
+                bset    #2,(SoundBGMPSGChannel2).w
 Sound_RefreshBGMFMChannels:                             ; CODE XREF: Sound_LoadBGMRequest+10C   j  ; was: loc_83080
-                lea     (word_FFF870).w,a5
+                lea     (SoundBGMFMChannels).w,a5
                 moveq   #5,d4
 Sound_RefreshNextBGMFMChannel:                          ; CODE XREF: Sound_LoadBGMRequest+120   j  ; was: loc_83086
                 jsr     Sound_SendFMKeyOffIfAllowed(pc)  ; (pc)
@@ -109,7 +109,7 @@ Sound_RefreshBGMPSGChannels:                            ; CODE XREF: Sound_LoadB
                 jsr     Sound_MutePSGIfNotOverridden(pc)  ; (pc)
                 adda.w  d6,a5
                 dbf     d4,Sound_RefreshBGMPSGChannels
-                btst    #2,(byte_FFF9F0).w
+                btst    #2,(SoundBGMPSGChannel2).w
                 bne.s   Sound_FinishBGMInitialization
                 move.b  #$FF,(VDP_PSG).l
 ; Discard the caller's BGM-load return address and finish initialization
@@ -199,13 +199,13 @@ Sound_ClearSFXChannelRecordLoop:                        ; CODE XREF: Sound_LoadS
                 move.b  #$C0,$27(a5)
 Sound_ContinueSFXChannelInitialization:                 ; CODE XREF: Sound_LoadSFX+B4   j  ; was: loc_83178
                 dbf     d7,Sound_InitializeNextSFXChannel
-                tst.b   (byte_FFFA50).w
+                tst.b   (SoundSFXFMChannel1).w
                 bpl.s   Sound_MarkSpecialFMChannelOverridden
-                bset    #2,(word_FFFB40).w
+                bset    #2,(SoundSpecialSFXFM).w
 Sound_MarkSpecialFMChannelOverridden:                   ; CODE XREF: Sound_LoadSFX+C4   j  ; was: loc_83188
-                tst.b   (byte_FFFB10).w
+                tst.b   (SoundSFXPSGChannel2).w
                 bpl.s   Sound_LoadSFXReturn
-                bset    #2,(word_FFFB70).w
+                bset    #2,(SoundSpecialSFXPSG).w
 Sound_LoadSFXReturn:                                    ; CODE XREF: Sound_LoadSFX+D0   j  ; was: locret_83194
                 rts
 ; End of function Sound_LoadSFX
@@ -235,7 +235,7 @@ Sound_ResolveSpecialSFXHeader:                          ; CODE XREF: Sound_LoadS
                 moveq   #0,d0
                 move.w  (a1)+,d0
                 add.l   a3,d0
-                move.l  d0,(dword_FFF824).w
+                move.l  d0,(SoundSpecialSFXDataPtr).w
                 move.b  (a1)+,d5
                 moveq   #0,d7
                 move.b  (a1)+,d7
@@ -244,13 +244,13 @@ Sound_ResolveSpecialSFXHeader:                          ; CODE XREF: Sound_LoadS
 Sound_InitializeNextSpecialSFXChannel:                  ; CODE XREF: Sound_LoadSpecialSFX:Sound_ContinueSpecialSFXChannelInitialization   j  ; was: loc_83204
                 move.b  1(a1),d4
                 bmi.s   Sound_SelectSpecialSFXPSGChannel
-                bset    #2,(byte_FFF900).w
-                lea     (word_FFFB40).w,a5
+                bset    #2,(SoundBGMFMChannel3).w
+                lea     (SoundSpecialSFXFM).w,a5
                 bra.s   Sound_ClearAndInitializeSpecialSFXChannel
 ; ---------------------------------------------------------------------------
 Sound_SelectSpecialSFXPSGChannel:                       ; CODE XREF: Sound_LoadSpecialSFX+32   j  ; was: loc_83216
-                bset    #2,(byte_FFF9F0).w
-                lea     (word_FFFB70).w,a5
+                bset    #2,(SoundBGMPSGChannel2).w
+                lea     (SoundSpecialSFXPSG).w,a5
 Sound_ClearAndInitializeSpecialSFXChannel:              ; CODE XREF: Sound_LoadSpecialSFX+3E   j  ; was: loc_83220
                 movea.l a5,a2
                 moveq   #$B,d0
@@ -271,13 +271,13 @@ Sound_ClearSpecialSFXChannelRecordLoop:                 ; CODE XREF: Sound_LoadS
                 move.b  #$C0,$27(a5)
 Sound_ContinueSpecialSFXChannelInitialization:          ; CODE XREF: Sound_LoadSpecialSFX+74   j  ; was: loc_83252
                 dbf     d7,Sound_InitializeNextSpecialSFXChannel
-                tst.b   (byte_FFFA50).w
+                tst.b   (SoundSFXFMChannel1).w
                 bpl.s   Sound_MarkSpecialPSGChannelOverridden
-                bset    #2,(word_FFFB40).w
+                bset    #2,(SoundSpecialSFXFM).w
 Sound_MarkSpecialPSGChannelOverridden:                  ; CODE XREF: Sound_LoadSpecialSFX+84   j  ; was: loc_83262
-                tst.b   (byte_FFFB10).w
+                tst.b   (SoundSFXPSGChannel2).w
                 bpl.s   Sound_LoadSpecialSFXReturn
-                bset    #2,(word_FFFB70).w
+                bset    #2,(SoundSpecialSFXPSG).w
                 ori.b   #$1F,d4
                 move.b  d4,(VDP_PSG).l
                 bchg    #5,d4
@@ -292,11 +292,11 @@ Sound_UnreferencedSFXChannelPointers:   binclude "data/other/unused_10.bin"  ; w
 Sound_StopSFXAndRestoreBGMChannels:                     ; CODE XREF: Sound_DispatchPendingRequest+68   j  ; was: sub_8329C
                                         ; Sound_LoadBGMRequest:Sound_InitializeBGM   p
                                         ; DATA XREF:
-                clr.b   (byte_FFF800).w
+                clr.b   (SoundCurrentPriority).w
                 moveq   #$27,d0                         ; '''
                 moveq   #0,d1
                 jsr     Sound_WriteYM2612Port0Thunk(pc)  ; (pc)
-                lea     (byte_FFFA20).w,a5
+                lea     (SoundSFXFMChannels).w,a5
                 moveq   #5,d6
 Sound_StopNextSFXChannel:                               ; CODE XREF: Sound_StopSFXAndRestoreBGMChannels+9E   j  ; was: loc_832AE
                 tst.b   (a5)
@@ -308,10 +308,10 @@ Sound_StopNextSFXChannel:                               ; CODE XREF: Sound_StopS
                 jsr     Sound_SendFMKeyOffIfAllowed(pc)  ; (pc)
                 cmpi.b  #4,d3
                 bne.s   Sound_SelectOverriddenBGMFMChannel
-                tst.b   (word_FFFB40).w
+                tst.b   (SoundSpecialSFXFM).w
                 bpl.s   Sound_SelectOverriddenBGMFMChannel
-                lea     (word_FFFB40).w,a5
-                movea.l (dword_FFF824).w,a1
+                lea     (SoundSpecialSFXFM).w,a5
+                movea.l (SoundSpecialSFXDataPtr).w,a1
                 bra.s   Sound_RestoreBGMFMChannel
 ; ---------------------------------------------------------------------------
 Sound_SelectOverriddenBGMFMChannel:                     ; CODE XREF: Sound_StopSFXAndRestoreBGMChannels+2C   j  ; was: loc_832DA
@@ -321,7 +321,7 @@ Sound_SelectOverriddenBGMFMChannel:                     ; CODE XREF: Sound_StopS
                 lea     Sound_BGMChannelRecordPointers(pc),a0
                 movea.l a5,a3
                 movea.l (a0,d3.w),a5
-                movea.l (dword_FFF820).w,a1
+                movea.l (SoundBGMDataPtr).w,a1
 Sound_RestoreBGMFMChannel:                              ; CODE XREF: Sound_StopSFXAndRestoreBGMChannels+3C   j  ; was: loc_832EC
                 bclr    #2,(a5)
                 bset    #1,(a5)
@@ -332,7 +332,7 @@ Sound_RestoreBGMFMChannel:                              ; CODE XREF: Sound_StopS
 ; ---------------------------------------------------------------------------
 Sound_RestoreBGMPSGChannel:                             ; CODE XREF: Sound_StopSFXAndRestoreBGMChannels+22   j  ; was: loc_83300
                 jsr     Sound_MutePSGIfNotOverridden(pc)  ; (pc)
-                lea     (word_FFFB70).w,a0
+                lea     (SoundSpecialSFXPSG).w,a0
                 cmpi.b  #$E0,d3
                 beq.s   Sound_MarkBGMPSGChannelRestored
                 cmpi.b  #$C0,d3
@@ -357,31 +357,31 @@ Sound_ContinueSFXChannelStopLoop:                       ; CODE XREF: Sound_StopS
 Sound_StopSpecialSFXAndRestoreBGMChannels:              ; CODE XREF: Sound_DispatchPendingRequest+6C   j  ; was: sub_83340
                                         ; Sound_LoadBGMRequest+E   p
                                         ; DATA XREF:
-                lea     (word_FFFB40).w,a5
+                lea     (SoundSpecialSFXFM).w,a5
                 tst.b   (a5)
                 bpl.s   Sound_StopSpecialSFXPSGChannel
                 bclr    #7,(a5)
                 btst    #2,(a5)
                 bne.s   Sound_StopSpecialSFXPSGChannel
                 jsr     Sound_SendFMKeyOff(pc)          ; (pc)
-                lea     (byte_FFF900).w,a5
+                lea     (SoundBGMFMChannel3).w,a5
                 bclr    #2,(a5)
                 bset    #1,(a5)
                 tst.b   (a5)
                 bpl.s   Sound_StopSpecialSFXPSGChannel
-                movea.l (dword_FFF820).w,a1
+                movea.l (SoundBGMDataPtr).w,a1
                 move.b  $B(a5),d0
                 jsr     Sound_ProgramFMInstrument(pc)   ; (pc)
 Sound_StopSpecialSFXPSGChannel:                         ; CODE XREF: Sound_StopSpecialSFXAndRestoreBGMChannels+6   j  ; was: loc_83372
                                         ; Sound_StopSpecialSFXAndRestoreBGMChannels+10   j
-                lea     (word_FFFB70).w,a5
+                lea     (SoundSpecialSFXPSG).w,a5
                 tst.b   (a5)
                 bpl.s   Sound_StopSpecialSFXAndRestoreBGMReturn
                 bclr    #7,(a5)
                 btst    #2,(a5)
                 bne.s   Sound_StopSpecialSFXAndRestoreBGMReturn
                 jsr     Sound_MutePSGChannel(pc)        ; (pc)
-                lea     (byte_FFF9F0).w,a5
+                lea     (SoundBGMPSGChannel2).w,a5
                 bclr    #2,(a5)
                 bset    #1,(a5)
                 tst.b   (a5)
@@ -395,28 +395,28 @@ Sound_StopSpecialSFXAndRestoreBGMReturn:                ; CODE XREF: Sound_StopS
 ; End of function Sound_StopSpecialSFXAndRestoreBGMChannels
 ; Start the 40-step music fade-out at one volume step every four frames
 Sound_StartMusicFadeOut:                                ; CODE XREF: Sound_DispatchPendingRequest:Sound_ControlRequestBranches   j  ; was: sub_833AA
-                move.b  #3,(byte_FFF806).w
-                move.b  #$28,(byte_FFF804).w            ; '('
-                clr.b   (byte_FFF840).w
+                move.b  #3,(SoundFadeTickCounter).w
+                move.b  #$28,(SoundFadeStepsRemaining).w  ; '('
+                clr.b   (SoundPCMChannelRecord).w
                 rts
 ; End of function Sound_StartMusicFadeOut
 ; Advance the active music fade-out timer and channel attenuation
 Sound_UpdateMusicFadeOut:                               ; CODE XREF: Sound_UpdateDriver+14   p  ; was: sub_833BC
                                         ; DATA XREF: Sound_UpdateDriver+14   o
                 moveq   #0,d0
-                move.b  (byte_FFF804).w,d0
+                move.b  (SoundFadeStepsRemaining).w,d0
                 beq.s   Sound_UpdateMusicFadeOutReturn
-                move.b  (byte_FFF806).w,d0
+                move.b  (SoundFadeTickCounter).w,d0
                 beq.s   Sound_AdvanceMusicFadeOutStep
-                subq.b  #1,(byte_FFF806).w
+                subq.b  #1,(SoundFadeTickCounter).w
 Sound_UpdateMusicFadeOutReturn:                         ; CODE XREF: Sound_UpdateMusicFadeOut+6   j  ; was: locret_833CE
                 rts
 ; ---------------------------------------------------------------------------
 Sound_AdvanceMusicFadeOutStep:                          ; CODE XREF: Sound_UpdateMusicFadeOut+C   j  ; was: loc_833D0
-                subq.b  #1,(byte_FFF804).w
+                subq.b  #1,(SoundFadeStepsRemaining).w
                 beq.w   Sound_StopAllPlayback
-                move.b  #3,(byte_FFF806).w
-                lea     (word_FFF870).w,a5
+                move.b  #3,(SoundFadeTickCounter).w
+                lea     (SoundBGMFMChannels).w,a5
                 moveq   #5,d7
 Sound_FadeNextBGMFMChannel:                             ; CODE XREF: Sound_UpdateMusicFadeOut+40   j  ; was: loc_833E4
                 tst.b   (a5)
@@ -455,12 +455,12 @@ Sound_ContinueBGMPSGFadeLoop:                           ; CODE XREF: Sound_Updat
 ; Processes sound tempo tick and increments channel timers
 Sound_ProcessTempoTick:                                 ; CODE XREF: Sound_UpdateDriver+10   p  ; was: sub_8342A
                                         ; DATA XREF: Sound_UpdateDriver+10   o
-                tst.b   (byte_FFF802).w
+                tst.b   (SoundTempoReload).w
                 beq.s   Sound_ProcessTempoTickReturn
-                subq.b  #1,(byte_FFF801).w
+                subq.b  #1,(SoundTempoCounter).w
                 bne.s   Sound_ProcessTempoTickReturn
-                move.b  (byte_FFF802).w,(byte_FFF801).w
-                lea     (byte_FFF840).w,a0
+                move.b  (SoundTempoReload).w,(SoundTempoCounter).w
+                lea     (SoundPCMChannelRecord).w,a0
                 moveq   #$30,d0                         ; '0'
                 moveq   #9,d1
 Sound_AdvanceNextChannelTempoTimer:                     ; CODE XREF: Sound_ProcessTempoTick+24   j  ; was: loc_83444
@@ -528,13 +528,13 @@ Sound_StopAllPlayback:                                  ; CODE XREF: Sound_Dispa
                 moveq   #$27,d0                         ; '''
                 moveq   #0,d1
                 jsr     Sound_WriteYM2612Port0Thunk(pc)  ; (pc)
-                lea     (byte_FFF800).w,a0
+                lea     (SoundCurrentPriority).w,a0
                 move.w  #$E3,d0
 ; Clear the playback-state region in longwords
 Sound_ClearPlaybackRAMLoop:                             ; CODE XREF: Sound_StopAllPlayback+12   j  ; was: loc_834BE
                 clr.l   (a0)+
                 dbf     d0,Sound_ClearPlaybackRAMLoop
-                move.b  #$FF,(byte_FFF809).w
+                move.b  #$FF,(SoundSelectedRequest).w
                 jsr     Sound_KeyOffAllFMChannels(pc)   ; (pc)
                 bra.w   Sound_MuteAllPSGChannels
 ; End of function Sound_StopAllPlayback

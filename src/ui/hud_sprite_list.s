@@ -14,16 +14,16 @@ UI_AppendHUDSpriteList:                                 ; CODE XREF: DebugMenu_U
                 bne.s   UI_AppendHUDSpriteList_SelectModeEntries
                 btst    #2,(ControllerPressedState).w
                 beq.s   UI_AppendHUDSpriteList_CheckFrameSkipIncrease
-                subq.w  #1,(word_FFFF3E).w
+                subq.w  #1,(FrameSkipLevel).w
                 bpl.s   UI_AppendHUDSpriteList_SelectModeEntries
-                clr.w   (word_FFFF3E).w
+                clr.w   (FrameSkipLevel).w
 UI_AppendHUDSpriteList_CheckFrameSkipIncrease:          ; CODE XREF: UI_BuildHUDSpriteList+30   j  ; was: loc_132B4
                 btst    #3,(ControllerPressedState).w
                 beq.s   UI_AppendHUDSpriteList_SelectModeEntries
-                addq.w  #1,(word_FFFF3E).w
-                cmpi.w  #4,(word_FFFF3E).w
+                addq.w  #1,(FrameSkipLevel).w
+                cmpi.w  #4,(FrameSkipLevel).w
                 bmi.s   UI_AppendHUDSpriteList_SelectModeEntries
-                move.w  #3,(word_FFFF3E).w
+                move.w  #3,(FrameSkipLevel).w
 UI_AppendHUDSpriteList_SelectModeEntries:               ; CODE XREF: UI_BuildHUDSpriteList+28   j  ; was: loc_132CE
                                         ; UI_BuildHUDSpriteList+36   j
                 btst    #1,(VBlankFrameCounter+1).w
@@ -46,7 +46,7 @@ UI_AppendHUDSpriteList_AppendAlternateModeEntries:      ; CODE XREF: UI_BuildHUD
                 move.w  #$C00,(a1)+
                 move.w  #$C7D8,(a1)+
                 move.w  #$10C,(a1)+
-                move.w  (word_FFFF3E).w,d1
+                move.w  (FrameSkipLevel).w,d1
                 andi.w  #3,d1
                 subq.w  #1,d1
                 bmi.s   UI_AppendHUDSpriteList_AppendBaseIndicator

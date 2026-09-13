@@ -1,7 +1,7 @@
 Physics_CheckLowerTerrain:                              ; CODE XREF: Physics_LowerTerrainCheckWrapper+10   j  ; was: sub_146FC
                                         ; Physics_FacingTerrainCheckWrapper+16   j
                 lea     (M68K_RAM).l,a0
-                lea     (dword_FF7800).l,a1
+                lea     (TerrainCollisionBuffer).l,a1
                 move.w  #$80,d7
                 moveq   #$FFFFFFF8,d0
                 moveq   #$18,d1
@@ -50,7 +50,7 @@ Physics_CheckLowerTerrain_Return:                       ; CODE XREF: Physics_Che
 Physics_CheckLowerTerrainWhenDescending:                ; CODE XREF: Physics_DescendingTerrainCheckWrapper+10   j  ; was: sub_14760
                                         ; Enemy_MainStateMachine+13E   p
                 lea     (M68K_RAM).l,a0
-                lea     (dword_FF7800).l,a1
+                lea     (TerrainCollisionBuffer).l,a1
                 move.w  #$80,d7
                 moveq   #$FFFFFFF8,d0
                 moveq   #$18,d1
@@ -106,7 +106,7 @@ Physics_CheckLowerTerrainWhenDescending_Return:         ; CODE XREF: Physics_Che
 Physics_CheckUpperTerrain:                              ; CODE XREF: Physics_UpperTerrainCheckWrapper+10   j  ; was: sub_147D6
                                         ; Physics_FacingTerrainCheckWrapper+1A   j
                 lea     (M68K_RAM).l,a0
-                lea     (dword_FF7800).l,a1
+                lea     (TerrainCollisionBuffer).l,a1
                 move.w  #$80,d7
                 moveq   #$FFFFFFF8,d0
                 moveq   #$FFFFFFE8,d1
@@ -155,7 +155,7 @@ Physics_CheckUpperTerrain_Return:                       ; CODE XREF: Physics_Che
 Physics_CheckUpperTerrainWhenRising:                    ; CODE XREF: Physics_RisingTerrainCheckWrapper+10   j  ; was: sub_1483A
                                         ; sub_2C71E:Enemy_MainStateMachine_CheckRisingTerrain   j
                 lea     (M68K_RAM).l,a0
-                lea     (dword_FF7800).l,a1
+                lea     (TerrainCollisionBuffer).l,a1
                 move.w  #$80,d7
                 moveq   #$FFFFFFF8,d0
                 moveq   #$FFFFFFE8,d1

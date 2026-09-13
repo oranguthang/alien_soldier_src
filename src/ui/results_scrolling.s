@@ -31,8 +31,8 @@ Results_HandlerOffsets: dc.w    Results_InitializeDataDisplay-*  ; DATA XREF: Re
 Results_InitializeDataDisplay:                          ; DATA XREF: ROM:Results_HandlerOffsets   o  ; was: sub_1FC26
                 addq.w  #2,(dword_FF9400).w
                 move.w  #1,d0
-                move.w  (word_FFFF46).w,(word_FF9442).w
-                clr.w   (word_FFFF46).w
+                move.w  (ResultsExtendedLayout).w,(word_FF9442).w
+                clr.w   (ResultsExtendedLayout).w
                 tst.w   (word_FF9442).w
                 bne.s   Results_SetExtendedScrollBounds
                 tst.w   d0

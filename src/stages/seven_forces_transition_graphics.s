@@ -486,13 +486,13 @@ Gfx_CheckSevenForcesCutsceneBackgroundComplete:         ; CODE XREF: Cutscene_Se
 ; End of function Gfx_CheckSevenForcesCutsceneBackgroundComplete
 ; Fills the four Stage 20 plane buffers
 Gfx_FillStage20PlaneBuffers:                            ; CODE XREF: Stage_SevenForcesInitializeStage20+1A   p  ; was: sub_EFE8
-                move.b  #$82,(byte_FF7981).l
-                move.b  #$90,(byte_FF7982).l
-                move.b  #$92,(byte_FF7983).l
-                lea     (word_FF0C80).l,a0
-                lea     (word_FF0D00).l,a1
-                lea     (word_FF0D80).l,a2
-                lea     (word_FF0E00).l,a3
+                move.b  #$82,(Stage20PlaneMode0).l
+                move.b  #$90,(Stage20PlaneMode1).l
+                move.b  #$92,(Stage20PlaneMode2).l
+                lea     (PlaneTilemapRow25).l,a0
+                lea     (PlaneTilemapRow26).l,a1
+                lea     (PlaneTilemapRow27).l,a2
+                lea     (PlaneTilemapRow28).l,a3
                 move.w  #$181,d1
                 moveq   #$3F,d7                         ; '?'
 Gfx_FillStage20PlaneBuffersLoop:                        ; CODE XREF: Gfx_FillStage20PlaneBuffers+3E   j  ; was: loc_F01E
@@ -505,15 +505,15 @@ Gfx_FillStage20PlaneBuffersLoop:                        ; CODE XREF: Gfx_FillSta
 ; End of function Gfx_FillStage20PlaneBuffers
 ; Background graphics setup
 Gfx_ClearSylpheedPlaneModes:                            ; CODE XREF: Stage_SevenForcesInitializeSylpheedScroll+16   p  ; was: sub_F02C
-                clr.b   (byte_FF7981).l
-                clr.b   (byte_FF7982).l
-                clr.b   (byte_FF7983).l
+                clr.b   (Stage20PlaneMode0).l
+                clr.b   (Stage20PlaneMode1).l
+                clr.b   (Stage20PlaneMode2).l
                 rts
 ; End of function Gfx_ClearSylpheedPlaneModes
 ; Initializes the Artemis tilemap row
 Gfx_InitializeArtemisTilemapRow:                        ; CODE XREF: Stage_SevenForcesInitializeArtemisCameraAndAssets   p  ; was: sub_F040
-                move.b  #2,(byte_FF7B00).l
-                lea     (word_FF0B00).l,a0
+                move.b  #2,(SevenForcesTilemapMode).l
+                lea     (PlaneTilemapRow22).l,a0
                 move.w  #$300,d1
                 moveq   #$3F,d7                         ; '?'
 Gfx_FillArtemisTilemapRowLoop:                          ; CODE XREF: Gfx_InitializeArtemisTilemapRow+16   j  ; was: loc_F054
@@ -523,7 +523,7 @@ Gfx_FillArtemisTilemapRowLoop:                          ; CODE XREF: Gfx_Initial
 ; End of function Gfx_InitializeArtemisTilemapRow
 ; Clears byte flag at FF7B00
 Gfx_ClearSevenForcesTilemapMode:                        ; CODE XREF: Stage_SevenForcesUpdateSirenePrimaryPlane+34   p  ; was: sub_F05C
-                clr.b   (byte_FF7B00).l
+                clr.b   (SevenForcesTilemapMode).l
                 rts
 ; End of function Gfx_ClearSevenForcesTilemapMode
 ; Unreferenced helper that clamps and applies a palette fade

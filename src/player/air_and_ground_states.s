@@ -186,8 +186,8 @@ Player_CheckCounterInput_Activate:                      ; CODE XREF: Player_Chec
                 move.w  (WeaponSlotOffset).w,(WeaponSavedSlotOffset).w
                 move.w  #$12,(WeaponStateIndex).w
                 move.b  #$7F,(PlayerInputMask).w
-                move.w  #0,(word_FF8032).w
-                move.w  #0,(word_FF8034).w
+                move.w  #0,(SpecialMoveSpawnXOffset).w
+                move.w  #0,(SpecialMoveSpawnYOffset).w
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.w  #$20,4(a5)                      ; ' '

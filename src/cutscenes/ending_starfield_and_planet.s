@@ -21,11 +21,11 @@ EndingStarfield_InitializeNextSprite:                   ; CODE XREF: EndingStarf
                 move.w  #$6364,$E(a5)
                 adda.w  #$60,a5                         ; '`'
                 dbf     d7,EndingStarfield_InitializeNextSprite
-                lea     (word_FF1000).l,a2
-                lea     (word_FF1400).l,a3
-                lea     (dword_FF1800).l,a1
-                lea     (dword_FF1C00).l,a4
-                lea     (dword_FF2000).l,a5
+                lea     (CutsceneWorkBuffer).l,a2
+                lea     (EndingStarYPositions).l,a3
+                lea     (EndingStarDepthValues).l,a1
+                lea     (EndingStarXVelocities).l,a4
+                lea     (EndingStarYVelocities).l,a5
                 move.w  #$FF,d7
 EndingStarfield_InitializeNextParticle:                 ; CODE XREF: EndingStarfield_Initialize+D0   j  ; was: loc_7DEA
                 jsr     (RandomNumber).l
@@ -71,11 +71,11 @@ EndingStarfield_UpdateAndHold:                          ; DATA XREF: ROM:00007C4
 ; Integrates one of four particle banks and publishes it to 59 star sprites
 EndingStarfield_Update:                                 ; CODE XREF: EndingStarfield_Initialize+E4   p  ; was: sub_7E66
                                         ; EndingStarfield_FadeOutAndPreparePlanet   p
-                lea     (word_FF1000).l,a2
-                lea     (word_FF1400).l,a3
-                lea     (dword_FF1800).l,a1
-                lea     (dword_FF1C00).l,a4
-                lea     (dword_FF2000).l,a5
+                lea     (CutsceneWorkBuffer).l,a2
+                lea     (EndingStarYPositions).l,a3
+                lea     (EndingStarDepthValues).l,a1
+                lea     (EndingStarXVelocities).l,a4
+                lea     (EndingStarYVelocities).l,a5
                 move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 lsl.w   #8,d0
@@ -93,9 +93,9 @@ EndingStarfield_IntegrateNextParticle:                  ; CODE XREF: EndingStarf
                 move.l  $C00(a1),d0
                 add.l   d0,(a1)+
                 dbf     d7,EndingStarfield_IntegrateNextParticle
-                lea     (word_FF1000).l,a2
-                lea     (word_FF1400).l,a3
-                lea     (dword_FF1800).l,a1
+                lea     (CutsceneWorkBuffer).l,a2
+                lea     (EndingStarYPositions).l,a3
+                lea     (EndingStarDepthValues).l,a1
                 move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 lsl.w   #8,d0
@@ -142,7 +142,7 @@ EndingStarfield_FadeOutAndPreparePlanet:                ; DATA XREF: ROM:00007C4
                 move.w  #$800,(TilemapRowXOrFillWord).w
                 move.w  #0,(TilemapRowYPosition).w
                 move.w  #$1F,(TilemapRowCountdown).w
-                lea     (dword_FF4000).l,a0
+                lea     (LargeTilemapBuffer).l,a0
                 move.l  #$80008000,d1
                 move.w  #$7FF,d0
 EndingPlanet_SetNextBufferHighBits:                     ; CODE XREF: EndingStarfield_FadeOutAndPreparePlanet+76   j  ; was: loc_7F7A

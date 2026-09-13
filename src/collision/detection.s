@@ -227,7 +227,7 @@ Collision_CheckWeaponProjectilesAgainstEnemies_ResolveFlaggedTarget:  ; CODE XRE
 Collision_CheckWeaponProjectilesAgainstEnemies_CheckLinkedTarget:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+72   j  ; was: loc_13D44
                 btst    #1,$23(a3)
                 beq.s   Collision_CheckWeaponProjectilesAgainstEnemies_ApplyFlaggedDamage
-                cmpa.w  (word_FF801C).w,a2
+                cmpa.w  (WeaponTargetOrFrame).w,a2
                 bne.s   Collision_CheckWeaponProjectilesAgainstEnemies_NextTarget
 Collision_CheckWeaponProjectilesAgainstEnemies_ApplyFlaggedDamage:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+80   j  ; was: loc_13D52
                 btst    #1,(byte_FF80EC).w

@@ -3,7 +3,7 @@ VBLANK:                                                 ; DATA XREF: ROM:0000007
 Int_VBlank_AcquireZ80Bus:                               ; CODE XREF: VBLANK+C   j  ; was: loc_A7E
                 bset    #0,(IO_Z80BUS).l
                 bne.s   Int_VBlank_AcquireZ80Bus
-                move.b  #1,(byte_A01FFF).l
+                move.b  #1,(Z80VBlankActive).l
 Int_VBlank_ReleaseZ80Bus:                               ; CODE XREF: VBLANK+1E   j  ; was: loc_A90
                 bclr    #0,(IO_Z80BUS).l
                 beq.s   Int_VBlank_ReleaseZ80Bus
@@ -12,7 +12,7 @@ Int_VBlank_WaitForBlanking:                             ; CODE XREF: VBLANK+2E  
                 move.w  (VDP_CTRL).l,d0
                 andi.w  #8,d0
                 beq.s   Int_VBlank_WaitForBlanking
-                btst    #6,(byte_FFFF26).w
+                btst    #6,(ConsoleVersionFlags).w
                 beq.w   Int_VBlank_RunEffects
                 move.w  #$300,d0
 Int_VBlank_DebugDelayLoop:                              ; CODE XREF: VBLANK:Int_VBlank_DebugDelayLoop   j  ; was: loc_AB8
@@ -24,13 +24,13 @@ Int_VBlank_RunEffects:                                  ; CODE XREF: VBLANK+36  
                 beq.s   Int_VBlank_UpdateFrameDivider
                 subq.b  #1,(byte_FF830E).w
                 bne.s   Int_VBlank_UpdateFrameDivider
-                move.b  #1,(dword_FFF80A+3).w
+                move.b  #1,(SoundRequestQueue+3).w
 Int_VBlank_UpdateFrameDivider:                          ; CODE XREF: VBLANK+50   j  ; was: loc_AD8
                                         ; VBLANK+56   j
                 subq.w  #1,(word_FF8096).w
                 bpl.s   Int_VBlank_CheckExtendedHandler
                 move.w  #4,d0
-                sub.w   (word_FFFF3E).w,d0
+                sub.w   (FrameSkipLevel).w,d0
                 move.w  d0,(word_FF8096).w
 Int_VBlank_CheckExtendedHandler:                        ; CODE XREF: VBLANK+62   j  ; was: loc_AEA
                 tst.b   (VBlankUpdateReady).w
@@ -39,7 +39,7 @@ Int_VBlank_AcquireZ80BusForExit:                        ; CODE XREF: VBLANK+7E  
                                         ; Sys_VBlankHandler+12   j
                 bset    #0,(IO_Z80BUS).l
                 bne.s   Int_VBlank_AcquireZ80BusForExit
-                move.b  #0,(byte_A01FFF).l
+                move.b  #0,(Z80VBlankActive).l
 Int_VBlank_ReleaseZ80BusForExit:                        ; CODE XREF: VBLANK+90   j  ; was: loc_B02
                 bclr    #0,(IO_Z80BUS).l
                 beq.s   Int_VBlank_ReleaseZ80BusForExit
@@ -51,7 +51,7 @@ Int_VBlank_ReleaseZ80BusForExit:                        ; CODE XREF: VBLANK+90  
 
 ; Extended VBlank interrupt handler that manages sound Z80 bus acquisition VDP updates and input processing
 Sys_VBlankHandler:                                      ; CODE XREF: VBLANK+74   j  ; was: sub_B1A
-                tst.w   (word_FFFF3E).w
+                tst.w   (FrameSkipLevel).w
                 beq.s   Sys_VBlankHandler_RunUpdate
                 tst.b   (FrameControlFlags).w
                 bmi.s   Sys_VBlankHandler_RunUpdate
@@ -67,7 +67,7 @@ Sys_VBlankHandler_RunUpdate:                            ; CODE XREF: Sys_VBlankH
 Sys_VBlankHandler_AcquireZ80BusForExit:                 ; CODE XREF: Sys_VBlankHandler+32   j  ; was: loc_B44
                 bset    #0,(IO_Z80BUS).l
                 bne.s   Sys_VBlankHandler_AcquireZ80BusForExit
-                move.b  #0,(byte_A01FFF).l
+                move.b  #0,(Z80VBlankActive).l
 Sys_VBlankHandler_ReleaseZ80BusForExit:                 ; CODE XREF: Sys_VBlankHandler+44   j  ; was: loc_B56
                 bclr    #0,(IO_Z80BUS).l
                 beq.s   Sys_VBlankHandler_ReleaseZ80BusForExit
@@ -100,13 +100,13 @@ Input_HandleControllerState_CheckTransition:            ; CODE XREF: Input_Handl
                 bmi.w   Input_HandleControllerState_ClearActiveFlag
                 bset    #7,d0
                 move.b  d0,(byte_FFF705).w
-                move.b  #1,(byte_FFF807).w
+                move.b  #1,(SoundPauseState).w
                 rts
 ; ---------------------------------------------------------------------------
 Input_HandleControllerState_ClearActiveFlag:            ; CODE XREF: Input_HandleControllerState+2E   j  ; was: loc_BC4
                 bclr    #7,d0
                 move.b  d0,(byte_FFF705).w
-                move.b  #$80,(byte_FFF807).w
+                move.b  #$80,(SoundPauseState).w
 Input_HandleControllerState_Return:                     ; CODE XREF: Input_HandleControllerState+8   j  ; was: locret_BD2
                                         ; Input_HandleControllerState+28   j
                 rts
@@ -158,8 +158,8 @@ Sys_DispatchGameState:
                 bne.w   Sys_DispatchGameState_Run
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
-                move.b  #4,(dword_FFF80A).w
-                clr.b   (byte_FFF807).w
+                move.b  #4,(SoundRequestQueue).w
+                clr.b   (SoundPauseState).w
                 clr.w   (DataLoaderControl).w
                 clr.w   (GameModeIndex).w
                 clr.w   (GameSubstateIndex).w

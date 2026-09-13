@@ -251,7 +251,7 @@ StoryTitle_ClearPlaneATail:                             ; was: loc_4B96
                 bsr.w   StoryTitle_UpdateRevealPalette
                 move.w  #$10,(word_FF8090).w
                 move.w  #$C,(StoryTitleGlyphsLeft).l
-                lea     (word_FF1000).l,a0
+                lea     (CutsceneWorkBuffer).l,a0
                 moveq   #0,d1
                 move.w  #$77F,d0
 StoryTitle_ClearPatternWorkspace:                       ; was: loc_4BF2
@@ -265,7 +265,7 @@ StoryTitle_ClearPatternWorkspace:                       ; was: loc_4BF2
                 lsl.w   #6,d0
                 addi.l  #tiles_font,d0
                 movea.l d0,a0
-                lea     (byte_FF2380).l,a1
+                lea     (StoryTitleMirroredGlyph).l,a1
                 move.w  #$3F,d0                         ; '?'
 StoryTitle_MirrorInitialGlyphNibbles:                   ; was: loc_4C26
                 move.b  (a0),d1
@@ -351,15 +351,15 @@ StoryTitle_RevealLogoCharacters:                        ; DATA XREF: ROM:0000498
                 addq.w  #2,(CutscenePaletteStep).l
                 bsr.w   StoryTitle_UpdateRevealPalette
                 subq.w  #4,(StoryTitleExpandSpan).l
-                lea     (word_FF1000).l,a0
+                lea     (CutsceneWorkBuffer).l,a0
                 moveq   #0,d1
                 move.w  #$27F,d0
 StoryTitle_ClearCharacterWorkspace:                     ; was: loc_4D6A
                 move.l  d1,(a0)+
                 dbf     d0,StoryTitle_ClearCharacterWorkspace
-                lea     (byte_FF2384).l,a0
-                lea     (off_FF14C3).l,a1
-                lea     (off_FF14C3).l,a2
+                lea     (StoryTitleGlyphReadBase).l,a0
+                lea     (StoryTitleLeftOrigin).l,a1
+                lea     (StoryTitleLeftOrigin).l,a2
                 move.w  (StoryTitleExpandSpan).l,d4
                 addq.w  #1,d4
                 lsr.w   #1,d4
@@ -387,9 +387,9 @@ StoryTitle_CharacterLeftAdvanceRow:                     ; was: loc_4DBC
                 addq.l  #4,a2
                 movea.l a2,a1
                 dbf     d6,StoryTitle_CharacterLeftNextRow
-                lea     (byte_FF2384).l,a0
-                lea     (word_FF1500).l,a1
-                lea     (word_FF1500).l,a2
+                lea     (StoryTitleGlyphReadBase).l,a0
+                lea     (StoryTitleRightOrigin).l,a1
+                lea     (StoryTitleRightOrigin).l,a2
                 move.w  (StoryTitleExpandSpan).l,d4
                 addq.w  #1,d4
                 lsr.w   #1,d4
@@ -465,7 +465,7 @@ StoryTitle_AdvanceRevealCharacter:                      ; was: loc_4E96
                 jsr     (Sound_PlaySFX).l
                 move.w  #$21,(StoryTitleExpandSpan).l   ; '!'
                 clr.w   (CutscenePaletteStep).l
-                lea     (word_FF1000).l,a0
+                lea     (CutsceneWorkBuffer).l,a0
                 moveq   #0,d1
                 move.w  #$27F,d0
 StoryTitle_ClearNextCharacterWorkspace:                 ; was: loc_4EBA
@@ -480,7 +480,7 @@ StoryTitle_ClearNextCharacterWorkspace:                 ; was: loc_4EBA
                 lsl.w   #6,d0
                 addi.l  #tiles_font,d0
                 movea.l d0,a0
-                lea     (byte_FF2380).l,a1
+                lea     (StoryTitleMirroredGlyph).l,a1
                 move.w  #$3F,d0                         ; '?'
 StoryTitle_MirrorNextGlyphNibbles:                      ; was: loc_4EEE
                 move.b  (a0),d1
@@ -565,15 +565,15 @@ StoryTitle_ExpandCompletedLogo:                         ; DATA XREF: ROM:0000498
                 addq.w  #2,(CutscenePaletteStep).l
                 bsr.w   StoryTitle_UpdateRevealPalette
                 subq.w  #4,(StoryTitleExpandSpan).l
-                lea     (word_FF1000).l,a0
+                lea     (CutsceneWorkBuffer).l,a0
                 moveq   #0,d1
                 move.w  #$27F,d0
 StoryTitle_ClearCompletedLogoWorkspace:                 ; was: loc_4FFE
                 move.l  d1,(a0)+
                 dbf     d0,StoryTitle_ClearCompletedLogoWorkspace
-                lea     (byte_FF2384).l,a0
+                lea     (StoryTitleGlyphReadBase).l,a0
                 movea.l a0,a2
-                lea     (off_FF14C3).l,a1
+                lea     (StoryTitleLeftOrigin).l,a1
                 movea.l a1,a3
                 move.w  (StoryTitleExpandSpan).l,d4
                 addq.w  #1,d4
@@ -610,9 +610,9 @@ StoryTitle_CompletedLogoLeftAdvanceRow:                 ; was: loc_5064
                 addq.l  #4,a3
                 movea.l a3,a1
                 dbf     d6,StoryTitle_CompletedLogoLeftNextRow
-                lea     (byte_FF2384).l,a0
+                lea     (StoryTitleGlyphReadBase).l,a0
                 movea.l a0,a2
-                lea     (word_FF1500).l,a1
+                lea     (StoryTitleRightOrigin).l,a1
                 movea.l a1,a3
                 move.w  (StoryTitleExpandSpan).l,d4
                 addq.w  #1,d4

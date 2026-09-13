@@ -92,7 +92,7 @@ Frontend_InitializeSegaScreen:                          ; was: sub_1CF82
                 move.w  #$BF,d7
                 jsr     (Gfx_UpdateTilemapIndices).l
                 bsr.w   Frontend_CopyPaletteLines
-                lea     (dword_FF4000).l,a0
+                lea     (LargeTilemapBuffer).l,a0
                 move.w  #$7FF,d0
 Frontend_InitializeSegaScreen_SetHighPriorityTiles:     ; was: loc_1CFD0
                 move.l  (a0),d1

@@ -2,7 +2,7 @@ Sys_InitStageState:                                     ; CODE XREF: Stage_Updat
                 clr.w   (word_FF807A).w
                 jsr     (Stage_InitializationNoOpHook).l
                 bsr.w   Weapon_ClearAmmoRegenTimers
-                clr.w   (word_FFFF3E).w
+                clr.w   (FrameSkipLevel).w
                 move.w  (WeaponStateIndex).w,d0
                 beq.s   Stage_UseDefaultWeaponState
                 cmpi.w  #$10,d0
@@ -114,10 +114,10 @@ Stage_InitializeStage8:                                 ; DATA XREF: ROM:0001227
                 lea     Stage8ConfigRecord(pc),a0
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord
-                move.w  #$81E0,(word_FF5000).l
-                lea     (word_FF0480).l,a0
-                lea     (word_FF0500).l,a1
-                lea     (word_FF0C00).l,a2
+                move.w  #$81E0,(LargeTilemapPage2).l
+                lea     (PlaneTilemapRow9).l,a0
+                lea     (PlaneTilemapRow10).l,a1
+                lea     (PlaneTilemapRow24).l,a2
                 moveq   #$C,d1
                 moveq   #$3F,d7                         ; '?'
 Stage8_FillThreeWordRanges:                             ; CODE XREF: Stage_InitializeStage8+2E   j  ; was: loc_1231C
@@ -125,7 +125,7 @@ Stage8_FillThreeWordRanges:                             ; CODE XREF: Stage_Initi
                 move.w  d1,(a1)+
                 move.w  d1,(a2)+
                 dbf     d7,Stage8_FillThreeWordRanges
-                move.b  #$82,(byte_FF780C).l
+                move.b  #$82,(Stage8TilemapMode).l
                 rts
 ; End of function Stage_InitializeStage8
 ; Initializes the Stage 9 configuration and shared word ranges
@@ -136,10 +136,10 @@ Stage_InitializeStage9:                                 ; DATA XREF: ROM:0001227
 Stage_ClearPaletteHighBitsBeforeFourRangeFill:          ; CODE XREF: Stage_ApplyXiTigerConfiguration+A   j  ; was: loc_1233A
                 jsr     (Boss_FlyingNeoClearPaletteHighBits).l
 Stage_PrepareFourWordRangesWithD:                       ; CODE XREF: Stage9_InitializeFlyCorridor+86   j  ; was: loc_12340
-                lea     (word_FF0C80).l,a0
-                lea     (word_FF0D00).l,a1
-                lea     (word_FF0D80).l,a2
-                lea     (word_FF0E00).l,a3
+                lea     (PlaneTilemapRow25).l,a0
+                lea     (PlaneTilemapRow26).l,a1
+                lea     (PlaneTilemapRow27).l,a2
+                lea     (PlaneTilemapRow28).l,a3
                 moveq   #$D,d1
                 moveq   #$3F,d7                         ; '?'
 Stage_WriteDToFourWordRanges:                           ; CODE XREF: Stage_InitializeStage9+34   j  ; was: loc_1235C
@@ -148,7 +148,7 @@ Stage_WriteDToFourWordRanges:                           ; CODE XREF: Stage_Initi
                 move.w  d1,(a2)+
                 move.w  d1,(a3)+
                 dbf     d7,Stage_WriteDToFourWordRanges
-                move.b  #$82,(byte_FF780D).l
+                move.b  #$82,(Stage9TilemapMode).l
                 rts
 ; End of function Stage_InitializeStage9
 ; Initializes stage 10 data structure and palette
@@ -178,7 +178,7 @@ Stage_ApplyStage13Configuration:                        ; DATA XREF: ROM:0001228
 ; Clears 224 bytes of shared state beginning at FF7800
 Stage_ClearSharedStateBuffer:                           ; CODE XREF: Stage12_UpdateScrollToExitTiles+1A   p  ; was: sub_1239A
                                         ; Stage13_InitializeSnakeEncounter+1A   p
-                lea     (dword_FF7800).l,a0
+                lea     (TerrainCollisionBuffer).l,a0
                 moveq   #0,d0
                 moveq   #$37,d7                         ; '7'
 Stage_ClearNextSharedStateBufferLong:                   ; CODE XREF: Stage_ClearSharedStateBuffer+C   j  ; was: loc_123A4
@@ -214,10 +214,10 @@ Stage_InitializeStage17Boss:                            ; DATA XREF: ROM:0001228
                 lea     Stage17BossConfigRecord(pc),a0
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord
-                lea     (word_FF0C00).l,a0
-                lea     (word_FF0C80).l,a1
-                lea     (word_FF0D00).l,a2
-                lea     (word_FF0D80).l,a3
+                lea     (PlaneTilemapRow24).l,a0
+                lea     (PlaneTilemapRow25).l,a1
+                lea     (PlaneTilemapRow26).l,a2
+                lea     (PlaneTilemapRow27).l,a3
                 move.w  #$2FF,d1
                 moveq   #$3F,d7                         ; '?'
 Stage17_Write02FFToFourWordRanges:                      ; CODE XREF: Stage_InitializeStage17Boss+36   j  ; was: loc_1240C
@@ -226,7 +226,7 @@ Stage17_Write02FFToFourWordRanges:                      ; CODE XREF: Stage_Initi
                 move.w  d1,(a2)+
                 move.w  d1,(a3)+
                 dbf     d7,Stage17_Write02FFToFourWordRanges
-                move.b  #$82,(byte_FF7AFF).l
+                move.b  #$82,(Stage17TilemapMode).l
                 move.b  #4,(VDPReg11Shadow+1).w
                 move.b  #3,(byte_FFA95B).w
                 clr.w   (CameraXLowerBound).w
@@ -299,10 +299,10 @@ UnreferencedApplyStage20Variant2Configuration:
 UnreferencedApplyStage20VariantAndFillWordRanges:       ; CODE XREF: UnreferencedApplyStage20Variant1Configuration+6   j  ; was: loc_124EC
                                         ; UnreferencedApplyStage20Variant3Configuration+6   j
                 bsr.w   Stage_ApplyConfigurationRecord
-                lea     (word_FF0D00).l,a0
-                lea     (word_FF0D80).l,a1
-                lea     (word_FF0E00).l,a2
-                lea     (word_FF0E80).l,a3
+                lea     (PlaneTilemapRow26).l,a0
+                lea     (PlaneTilemapRow27).l,a1
+                lea     (PlaneTilemapRow28).l,a2
+                lea     (PlaneTilemapRow29).l,a3
                 move.w  #$300,d1
                 moveq   #$3F,d7                         ; '?'
 UnreferencedStage20Write0300ToFourWordRanges:           ; CODE XREF: UnreferencedApplyStage20Variant2Configuration+30   j  ; was: loc_1250E
@@ -311,7 +311,7 @@ UnreferencedStage20Write0300ToFourWordRanges:           ; CODE XREF: Unreference
                 move.w  d1,(a2)+
                 move.w  d1,(a3)+
                 dbf     d7,UnreferencedStage20Write0300ToFourWordRanges
-                move.b  #$82,(byte_FF7B00).l
+                move.b  #$82,(SevenForcesTilemapMode).l
                 rts
 ; End of function UnreferencedApplyStage20Variant2Configuration
 ; Unreferenced wrapper for the third Stage 20 configuration variant
@@ -328,7 +328,7 @@ UnreferencedApplyStage20Variant4Configuration:
 ; End of function UnreferencedApplyStage20Variant4Configuration
 ; Initializes the Stage 20 tilemap, configuration, and camera values
 Stage_InitializeStage20:                                ; DATA XREF: ROM:00012292   o  ; was: sub_12538
-                lea     (dword_FF4000).l,a0
+                lea     (LargeTilemapBuffer).l,a0
                 move.w  #$8000,d0
                 move.w  #$180,d1
                 move.w  #$BF,d7

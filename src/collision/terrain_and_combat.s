@@ -375,7 +375,7 @@ Physics_AlignToWallSurface_AdjustOppositeDirection:     ; CODE XREF: Physics_Ali
 Collision_InitBufferPointers:                           ; CODE XREF: Enemy_PhasePatternAirborneState:Enemy_PhasePatternAirborneState_CheckTerrain   p  ; was: sub_1458A
                                         ; Enemy_UpdateBouncingDebrisSpawner+22   p
                 lea     (M68K_RAM).l,a0
-                lea     (dword_FF7800).l,a1
+                lea     (TerrainCollisionBuffer).l,a1
                 move.w  #$80,d7
 ; End of function Collision_InitBufferPointers
 ; Gets terrain tile data at specified position with screen offset
@@ -424,7 +424,7 @@ Collision_CheckProjectileTile:                          ; CODE XREF: Projectile_
                 move.w  $10(a5),d0
                 move.w  $14(a5),d1
                 lea     (M68K_RAM).l,a0
-                lea     (dword_FF7800).l,a1
+                lea     (TerrainCollisionBuffer).l,a1
                 move.w  d0,d2
                 subi.w  #$80,d2
                 add.w   (PrimaryCameraXPosition).w,d2
@@ -453,7 +453,7 @@ Collision_CheckProjectileTile_Return:                   ; CODE XREF: Collision_C
 Physics_EntityWallCheck:                                ; CODE XREF: Physics_WallCheckWrapper+A   j  ; was: sub_14648
                                         ; sub_2CC34:loc_2CC54   p
                 lea     (M68K_RAM).l,a0
-                lea     (dword_FF7800).l,a1
+                lea     (TerrainCollisionBuffer).l,a1
                 move.w  #$80,d7
                 moveq   #$FFFFFFF8,d0
                 moveq   #0,d1
@@ -483,7 +483,7 @@ Physics_EntityExtendedWallCheck:                        ; CODE XREF: Physics_Ext
 Physics_EntityExtendedWallCheck_Begin:                  ; CODE XREF: Physics_EntityExtendedWallCheck+6   j  ; was: loc_14694
                                         ; Physics_FacingExtendedWallCheckWrapper+12   j
                 lea     (M68K_RAM).l,a0
-                lea     (dword_FF7800).l,a1
+                lea     (TerrainCollisionBuffer).l,a1
                 move.w  #$80,d7
                 moveq   #$FFFFFFF8,d0
                 moveq   #0,d1

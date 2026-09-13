@@ -213,16 +213,16 @@ WeaponSelect_CheckDirectionalBit2:                      ; CODE XREF: WeaponSelec
 Weapon_ClearRuntimeParameters:                          ; CODE XREF: WeaponSelect_Initialize+1A   p  ; was: sub_17B5E
                                         ; Weapon_AdvanceCurrentState+16   p
                 moveq   #0,d0
-                move.w  d0,(word_FF801C).w
-                move.w  d0,(word_FF801E).w
-                move.w  d0,(dword_FF8020).w
-                move.w  d0,(dword_FF8020+2).w
-                move.w  d0,(dword_FF8024).w
-                move.w  d0,(dword_FF8024+2).w
-                move.w  d0,(dword_FF8028).w
-                move.w  d0,(dword_FF8028+2).w
-                move.w  d0,(dword_FF802C).w
-                move.w  d0,(dword_FF802C+2).w
+                move.w  d0,(WeaponTargetOrFrame).w
+                move.w  d0,(WeaponIconFrameTile).w
+                move.w  d0,(WeaponAnimationDataPtr).w
+                move.w  d0,(WeaponAnimationDataPtr+2).w
+                move.w  d0,(WeaponYMotionParameter).w
+                move.w  d0,(WeaponYMotionParameter+2).w
+                move.w  d0,(WeaponXMotionParameter).w
+                move.w  d0,(WeaponXMotionParameter+2).w
+                move.w  d0,(WeaponModeParameter).w
+                move.w  d0,(WeaponModeParameter+2).w
                 rts
 ; End of function Weapon_ClearRuntimeParameters
 ; Updates the weapon-selection overlay and handles its close transition
@@ -320,7 +320,7 @@ Weapon_ConfigureState2Damage:                           ; DATA XREF: ROM:0001798
                 subq.w  #2,d0
 Weapon_StoreState2Damage:                               ; CODE XREF: Weapon_ConfigureState2Damage+A   j  ; was: loc_17C74
                                         ; Weapon_ConfigureState2Damage+12   j
-                move.w  d0,(dword_FF802C).w
+                move.w  d0,(WeaponModeParameter).w
                 bra.w   Weapon_UpdateTargetingReticle
 ; End of function Weapon_ConfigureState2Damage
 ; Initializes four state-four indicator objects and their threshold flag
@@ -336,11 +336,11 @@ Weapon_State4IndicatorInitLoop:                         ; CODE XREF: Weapon_Conf
 Weapon_State4NextIndicator:                             ; CODE XREF: Weapon_ConfigureState4Indicators+8   j  ; was: loc_17C96
                 lea     $C0(a0),a0
                 dbf     d7,Weapon_State4IndicatorInitLoop
-                clr.w   (dword_FF802C).w
+                clr.w   (WeaponModeParameter).w
                 move.w  $10(a1),d0
                 cmpi.w  #$320,d0
                 bmi.s   Weapon_FinishState4Indicators
-                addq.w  #1,(dword_FF802C).w
+                addq.w  #1,(WeaponModeParameter).w
 ; Continues state-four processing through the targeting reticle update
 Weapon_FinishState4Indicators:                          ; CODE XREF: Weapon_ConfigureState4Indicators+2E   j  ; was: loc_17CB0
                 bra.w   Weapon_UpdateTargetingReticle
@@ -379,16 +379,16 @@ Weapon_State6CalculateVelocity:                         ; CODE XREF: Weapon_Conf
                 ext.l   d2
                 asl.l   d3,d1
                 asl.l   d3,d2
-                move.l  d1,(dword_FF8024).w
+                move.l  d1,(WeaponYMotionParameter).w
                 move.l  (dword_FF8240).w,d0
                 asl.l   #1,d0
                 add.l   d0,d2
-                move.l  d2,(dword_FF8028).w
+                move.l  d2,(WeaponXMotionParameter).w
                 moveq   #0,d0
                 move.w  $10(a1),d0
                 cmpi.w  #$7D0,d0
                 bmi.s   Weapon_State6SelectMotionTable
-                move.l  #Weapon_DirectionVectorsSpeed13,(dword_FF802C).w
+                move.l  #Weapon_DirectionVectorsSpeed13,(WeaponModeParameter).w
                 rts
 ; ---------------------------------------------------------------------------
 Weapon_State6SelectMotionTable:                         ; CODE XREF: Weapon_ConfigureState6Motion+6E   j  ; was: loc_17D2E
@@ -399,16 +399,16 @@ Weapon_State6ClampMotionIndex:                          ; CODE XREF: Weapon_Conf
                 divs.w  #$FA,d0
                 asl.w   #2,d0
                 andi.w  #$1C,d0
-                move.l  (a2,d0.w),(dword_FF802C).w
+                move.l  (a2,d0.w),(WeaponModeParameter).w
                 rts
 ; End of function Weapon_ConfigureState6Motion
 ; Configures state-eight motion data and selects an eligible target
 Weapon_ConfigureState8Targeting:                        ; DATA XREF: ROM:0001798C   o  ; was: sub_17D46
-                move.w  #0,(dword_FF8028+2).w
+                move.w  #0,(WeaponXMotionParameter+2).w
                 moveq   #0,d0
                 move.w  $10(a1),d0
                 bne.s   Weapon_State8SelectMotionTable
-                move.w  #1,(dword_FF8028+2).w
+                move.w  #1,(WeaponXMotionParameter+2).w
 Weapon_State8SelectMotionTable:                         ; CODE XREF: Weapon_ConfigureState8Targeting+C   j  ; was: loc_17D5A
                 cmpi.w  #$3E8,d0
                 bmi.s   Weapon_State8CalculateMotionIndex
@@ -424,7 +424,7 @@ Weapon_State8ClampMotionIndex:                          ; CODE XREF: Weapon_Conf
                 asl.w   #2,d0
                 andi.w  #$1C,d0
 Weapon_State8StoreMotionTable:                          ; CODE XREF: Weapon_ConfigureState8Targeting+1C   j  ; was: loc_17D74
-                move.l  -$C(a2,d0.w),(dword_FF802C).w
+                move.l  -$C(a2,d0.w),(WeaponModeParameter).w
                 movea.w #(PlayerEffectObjectPool-M68K_RAM),a0
                 moveq   #3,d7
 Weapon_State8IndicatorInitLoop:                         ; CODE XREF: Weapon_ConfigureState8Targeting+52   j  ; was: loc_17D80
@@ -436,7 +436,7 @@ Weapon_State8IndicatorInitLoop:                         ; CODE XREF: Weapon_Conf
 Weapon_State8NextIndicator:                             ; CODE XREF: Weapon_ConfigureState8Targeting+3C   j  ; was: loc_17D94
                 lea     $C0(a0),a0
                 dbf     d7,Weapon_State8IndicatorInitLoop
-                clr.w   (word_FF801C).w
+                clr.w   (WeaponTargetOrFrame).w
                 move.w  (LockOnListCountMinus1).w,d7
                 bmi.s   Weapon_State8SelectLowestValueTarget
                 movea.w #(LockOnTargetList-M68K_RAM),a1
@@ -448,7 +448,7 @@ Weapon_State8FindFlaggedTarget:                         ; CODE XREF: Weapon_Conf
                 rts
 ; ---------------------------------------------------------------------------
 Weapon_State8UseFlaggedTarget:                          ; CODE XREF: Weapon_ConfigureState8Targeting+6C   j  ; was: loc_17DBA
-                move.w  a0,(word_FF801C).w
+                move.w  a0,(WeaponTargetOrFrame).w
                 btst    #4,(ControllerHeldState).w
                 beq.w   Weapon_UpdateTargetingReticle_Scan
                 moveq   #1,d6
@@ -463,7 +463,7 @@ Weapon_State8SelectLowestValueTarget:                   ; CODE XREF: Weapon_Conf
 Weapon_State8CompareTargetValue:                        ; CODE XREF: Weapon_ConfigureState8Targeting+A8   j  ; was: loc_17DDE
                                         ; Weapon_ConfigureState8Targeting+AA   j
                 dbf     d7,Weapon_State8CheckNextTarget
-                move.w  a1,(word_FF801C).w
+                move.w  a1,(WeaponTargetOrFrame).w
 Weapon_State8TargetSelectionReturn:                     ; CODE XREF: Weapon_ConfigureState8Targeting+8C   j  ; was: locret_17DE6
                 rts
 ; ---------------------------------------------------------------------------
@@ -482,7 +482,7 @@ Weapon_ConfigureState10Gauge:                           ; DATA XREF: ROM:0001798
                 move.w  $10(a1),d0
                 cmpi.w  #$3E8,d0
                 bmi.s   Weapon_State10CalculateGaugeLevel
-                move.l  #Weapon_DirectionVectorsSpeed12,(dword_FF802C).w
+                move.l  #Weapon_DirectionVectorsSpeed12,(WeaponModeParameter).w
                 bra.s   Weapon_UpdateState10GaugePalette
 ; ---------------------------------------------------------------------------
 Weapon_State10CalculateGaugeLevel:                      ; CODE XREF: Weapon_ConfigureState10Gauge+A   j  ; was: loc_17E10
@@ -493,7 +493,7 @@ Weapon_State10ClampGaugeLevel:                          ; CODE XREF: Weapon_Conf
                 divs.w  #$80,d0
                 asl.w   #2,d0
                 andi.w  #$1C,d0
-                move.l  -8(a2,d0.w),(dword_FF802C).w
+                move.l  -8(a2,d0.w),(WeaponModeParameter).w
 ; Writes the state-ten gauge color to both palette buffers
 Weapon_UpdateState10GaugePalette:                       ; CODE XREF: Weapon_ConfigureState10Gauge+14   j  ; was: loc_17E26
                 move.w  (FrameCounter).w,d0
@@ -510,16 +510,16 @@ Weapon_State10GaugePaletteCycle:    dc.w    $EEE, $EA6, $ECC, $E44  ; was: word_
 
 ; Advances the state-twelve icon animation and queues its DMA transfer
 Weapon_UpdateState12Icon:                               ; DATA XREF: ROM:00017990   o  ; was: sub_17E46
-                tst.l   (dword_FF8020).w
+                tst.l   (WeaponAnimationDataPtr).w
                 bne.s   Weapon_State12AdvanceIconFrame
 Weapon_State12IconReturn:                               ; CODE XREF: Weapon_UpdateState12Icon+10   j  ; was: locret_17E4C
                 rts
 ; ---------------------------------------------------------------------------
 Weapon_State12AdvanceIconFrame:                         ; CODE XREF: Weapon_UpdateState12Icon+4   j  ; was: loc_17E4E
-                move.w  (word_FF801C).w,d0
+                move.w  (WeaponTargetOrFrame).w,d0
                 cmpi.w  #$20,d0                         ; ' '
                 bpl.s   Weapon_State12IconReturn
-                addq.w  #2,(word_FF801C).w
+                addq.w  #2,(WeaponTargetOrFrame).w
                 andi.w  #$1E,d0
                 tst.w   (ShootingMode).w
                 beq.s   Weapon_LoadState12IconFrame
@@ -530,8 +530,8 @@ Weapon_LoadState12IconFrame:                            ; CODE XREF: Weapon_Upda
                 move.w  Weapon_State12IconPaletteRamp(pc,d0.w),(PaletteShadowColor54).w
                 lsr.w   #1,d0
                 andi.w  #$E,d0
-                movea.l (dword_FF8020).w,a0
-                move.w  $20(a0,d0.w),(word_FF801E).w
+                movea.l (WeaponAnimationDataPtr).w,a0
+                move.w  $20(a0,d0.w),(WeaponIconFrameTile).w
                 asl.w   #1,d0
                 move.l  (a0,d0.w),d0
                 move.l  #$94009340,d1

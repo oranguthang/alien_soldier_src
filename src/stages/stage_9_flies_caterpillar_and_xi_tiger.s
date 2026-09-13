@@ -23,7 +23,7 @@ Stage9_InitializeFlyCorridor:                           ; DATA XREF: ROM:0000C8A
                 move.w  #$2C,(RasterEffectIndex).w      ; ','
                 clr.w   (RasterEffectInitState).w
                 move.w  #8,(word_FF8090).w
-                clr.b   (byte_FF780C).l
+                clr.b   (Stage8TilemapMode).l
                 jmp     Stage_PrepareFourWordRangesWithD
 ; End of function Stage9_InitializeFlyCorridor
 ; Update the corridor until its vertical position reaches the ship transition

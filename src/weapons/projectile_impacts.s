@@ -66,7 +66,7 @@ Weapon_HandleExplosiveImpact:                           ; DATA XREF: ROM:Entity_
                 bclr    #4,$23(a5)
                 bne.s   Weapon_HandleExplosiveImpact_InitBurst
 Weapon_HandleExplosiveImpact_InitExplosion:             ; CODE XREF: Weapon_HandleExplosiveImpact+6   j  ; was: loc_18B44
-                tst.w   (dword_FF802C).w
+                tst.w   (WeaponModeParameter).w
                 beq.s   Weapon_HandleExplosiveImpact_InitImpact
                 move.l  $18(a5),d0
                 asr.l   #3,d0
@@ -196,8 +196,8 @@ Effect_UpdateImpactParticleSpawner_SetVelocity:         ; CODE XREF: Effect_Upda
 Effect_UpdateImpactParticleSpawner_ApplyDirection:      ; CODE XREF: Effect_UpdateImpactParticleSpawner+82   j  ; was: loc_18CDA
                 asr.l   #2,d0
                 asr.l   #2,d1
-                add.l   (dword_FF8024).w,d0
-                add.l   (dword_FF8028).w,d1
+                add.l   (WeaponYMotionParameter).w,d0
+                add.l   (WeaponXMotionParameter).w,d1
                 move.l  d1,$18(a0)
                 move.l  d0,$1C(a0)
 Effect_UpdateImpactParticleSpawner_Deactivate:          ; CODE XREF: Effect_UpdateImpactParticleSpawner+18   j  ; was: loc_18CEE
@@ -207,8 +207,8 @@ Effect_UpdateImpactParticleSpawner_Deactivate:          ; CODE XREF: Effect_Upda
 ; ---------------------------------------------------------------------------
 ; Updates particle effect sprite animation with gravity and fading
 Effect_UpdateImpactParticleAnimation:                   ; CODE XREF: Effect_UpdateImpactParticleSpawner+E   j  ; was: loc_18CF6
-                move.l  (dword_FF8024).w,d0
-                move.l  (dword_FF8028).w,d1
+                move.l  (WeaponYMotionParameter).w,d0
+                move.l  (WeaponXMotionParameter).w,d1
                 add.l   d1,$18(a5)
                 add.l   d0,$1C(a5)
                 subq.w  #2,$48(a5)
@@ -263,7 +263,7 @@ Weapon_UpdateSeekingMissile_CheckAlternateSlot:         ; CODE XREF: Weapon_Upda
                 btst    #5,d0
                 beq.s   Weapon_UpdateSeekingMissile_ApplyVelocity
 Weapon_UpdateSeekingMissile_SelectTargetAngle:          ; CODE XREF: Weapon_UpdateSeekingMissile+54   j  ; was: loc_18DBC
-                move.w  (word_FF801C).w,d0
+                move.w  (WeaponTargetOrFrame).w,d0
                 bne.s   Weapon_UpdateSeekingMissile_ComputeTargetAngle
                 move.w  (RandomNumberState).w,d2
                 bra.s   Weapon_UpdateSeekingMissile_AdjustHeading
@@ -303,10 +303,10 @@ Weapon_UpdateSeekingMissile_ApplyVelocity:              ; CODE XREF: Weapon_Upda
                 andi.w  #$7E,d2                         ; '~'
                 move.w  d2,$56(a5)
                 andi.w  #$7C,d2                         ; '|'
-                movea.l (dword_FF802C).w,a0
+                movea.l (WeaponModeParameter).w,a0
                 move.l  (a0,d2.w),d1
                 move.l  $20(a0,d2.w),d0
-                move.w  (dword_FF8028+2).w,d2
+                move.w  (WeaponXMotionParameter+2).w,d2
                 asr.l   d2,d1
                 asr.l   d2,d0
                 move.l  d1,$1C(a5)

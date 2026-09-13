@@ -18,7 +18,7 @@ UI_InitializeGameVariables_Common:                      ; CODE XREF: UI_SetPassw
                 clr.w   (PostStageEntryCountBCD).w
                 clr.w   (DestroyedEnemyCountBCD).w
                 clr.w   (PlayerDamageBCD).w
-                clr.w   (word_FFFF3E).w
+                clr.w   (FrameSkipLevel).w
                 clr.w   (word_FF8090).w
                 clr.b   (MessageDisplayFlags).w
                 bsr.w   Results_InitializeStageHistory
@@ -43,7 +43,7 @@ StageEntry_InitializeGameplayState_CopyAmmo:            ; was: loc_1CD5A
                 clr.w   (DebugResourceRefill).w
                 clr.w   (DestroyedEnemyCountBCD).w
                 clr.w   (PlayerDamageBCD).w
-                clr.w   (word_FFFF3E).w
+                clr.w   (FrameSkipLevel).w
                 clr.w   (WeaponStateIndex).w
                 clr.w   (word_FF8090).w
                 clr.b   (MessageDisplayFlags).w

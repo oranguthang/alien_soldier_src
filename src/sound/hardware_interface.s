@@ -3,17 +3,17 @@ Sound_ResetPlaybackState:                               ; CODE XREF: Sound_LoadB
                 moveq   #$27,d0                         ; '''
                 moveq   #0,d1
                 jsr     Sound_WriteYM2612Port0Thunk(pc)  ; (pc)
-                move.b  (byte_FFF800).w,d0
+                move.b  (SoundCurrentPriority).w,d0
                 move.w  d0,-(sp)
-                lea     (byte_FFF800).w,a0
+                lea     (SoundCurrentPriority).w,a0
                 move.w  #$87,d0
 ; Resets sound RAM preserving settings
 Sound_ClearPlaybackStateForBGM:                         ; CODE XREF: Sound_ResetPlaybackState+18   j  ; was: loc_834E8
                 clr.l   (a0)+
                 dbf     d0,Sound_ClearPlaybackStateForBGM
                 move.w  (sp)+,d0
-                move.b  d0,(byte_FFF800).w
-                move.b  #$FF,(byte_FFF809).w
+                move.b  d0,(SoundCurrentPriority).w
+                move.b  #$FF,(SoundSelectedRequest).w
                 rts
 ; End of function Sound_ResetPlaybackState
 ; Loads Z80 sound driver code with bus request and reset sequence
@@ -115,7 +115,7 @@ Sound_WriteYM2612Port0:                                 ; CODE XREF: Sound_Updat
                 cmpi.b  #$40,d0                         ; '@'
                 bcs.w   Sound_PrepareYM2612Port0Write
                 andi.w  #$FF,d0
-                lea     (byte_FFFBA0).w,a0
+                lea     (SoundFMShadowIndexBase).w,a0
                 move.b  d1,(a0,d0.w)
 Sound_PrepareYM2612Port0Write:                          ; CODE XREF: Sound_WriteYM2612Port0+4   j  ; was: loc_835CC
                                         ; Sound_WriteYM2612Port0+C   j
@@ -125,7 +125,7 @@ Sound_RequestZ80BusForYM2612Port0:                      ; CODE XREF: Sound_Write
 Sound_WaitForZ80BusForYM2612Port0:                      ; CODE XREF: Sound_WriteYM2612Port0+32   j  ; was: loc_835DA
                 bset    #0,(IO_Z80BUS).l
                 bne.s   Sound_WaitForZ80BusForYM2612Port0
-                tst.b   (byte_A01F2A).l
+                tst.b   (Z80DriverBusy).l
                 beq.s   Sound_WaitForYM2612Port0AddressReady
                 move.w  #0,(IO_Z80BUS).l
                 bsr.w   Sound_DelayForZ80BusRetry
@@ -156,8 +156,8 @@ Sound_WriteYM2612Port1:                                 ; CODE XREF: Sound_Proce
                 cmpi.b  #$40,d0                         ; '@'
                 bcs.w   Sound_PrepareYM2612Port1Write
                 andi.w  #$FF,d0
-                lea     (byte_FFFBA0).w,a0
-                move.b  d1,byte_FFFBB0-byte_FFFBA0(a0,d0.w)
+                lea     (SoundFMShadowIndexBase).w,a0
+                move.b  d1,SoundFMPort1IndexBase-SoundFMShadowIndexBase(a0,d0.w)
 Sound_PrepareYM2612Port1Write:                          ; CODE XREF: Sound_WriteYM2612Port1+4   j  ; was: loc_83634
                                         ; Sound_WriteYM2612Port1+C   j
                 lea     (Z80_YM2612).l,a0
@@ -166,7 +166,7 @@ Sound_RequestZ80BusForYM2612Port1:                      ; CODE XREF: Sound_Write
 Sound_WaitForZ80BusForYM2612Port1:                      ; CODE XREF: Sound_WriteYM2612Port1+32   j  ; was: loc_83642
                 bset    #0,(IO_Z80BUS).l
                 bne.s   Sound_WaitForZ80BusForYM2612Port1
-                tst.b   (byte_A01F2A).l
+                tst.b   (Z80DriverBusy).l
                 beq.s   Sound_WaitForYM2612Port1AddressReady
                 move.w  #0,(IO_Z80BUS).l
                 bsr.w   Sound_DelayForZ80BusRetry

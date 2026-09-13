@@ -247,7 +247,7 @@ Math_CalcTileOffset3:
 ; End of function Math_CalcTileOffset3
 ; Clear 8KB RAM buffer at FF8000
 Sys_ClearRAMBuffer8K:
-                movea.w #(dword_FF8000-M68K_RAM),a0     ; was: sub_1B8A6
+                movea.w #(GameplayStateBuffer-M68K_RAM),a0  ; was: sub_1B8A6
                 moveq   #0,d0
                 move.w  #$7FF,d7
 Sys_ClearRAMBuffer8K_Loop:                              ; CODE XREF: Sys_ClearRAMBuffer8K+C   j  ; was: loc_1B8B0

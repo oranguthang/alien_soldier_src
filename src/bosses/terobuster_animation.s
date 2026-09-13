@@ -127,7 +127,7 @@ Boss_TerobusterIntroPoseChannels:   dc.w    $70, $D400, $70D4, $1431, $F842, $2E
 
 ; Initializes Terobuster's five-byte intro palette sequence
 Boss_TerobusterInitializePaletteSequence:               ; CODE XREF: Boss_TerobusterIntro+24   p  ; was: sub_393A6
-                movea.l #(M68K_RAM_PHYSICAL+(byte_FF644A-M68K_RAM)),a0
+                movea.l #(M68K_RAM_PHYSICAL+(TerobusterIntroPalette-M68K_RAM)),a0
                 move.b  #$CE,d0
                 move.b  #$C5,(a0)+
                 move.b  d0,(a0)+

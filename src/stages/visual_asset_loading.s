@@ -411,7 +411,7 @@ Stage_InitializeXiTigerState:                           ; CODE XREF: XiTigerStag
                 clr.w   (word_FF807A).w
                 jsr     (Stage_InitializationNoOpHook).l
                 bsr.w   Weapon_ClearAmmoRegenTimers
-                clr.w   (word_FFFF3E).w
+                clr.w   (FrameSkipLevel).w
                 move.w  (WeaponStateIndex).w,d0
                 beq.s   Stage_ResetXiTigerWeaponSelection
                 cmpi.w  #$10,d0

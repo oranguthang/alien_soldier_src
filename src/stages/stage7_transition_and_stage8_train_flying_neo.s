@@ -23,7 +23,7 @@ Stage7_StartTransitionToStage8_CheckReady:              ; CODE XREF: Stage7_Star
 ; Write six source bytes to three strided pairs in the Stage 8 control region
 Stage8_WriteStridedControlBytes:                        ; CODE XREF: Stage8_InitializeTrainSequence+38   p  ; was: sub_CE2E
                                         ; Stage8_InitializeFlyingNeoEncounter+1A   p
-                lea     (M68K_RAM_PHYSICAL+(byte_FF615D-M68K_RAM)).l,a0
+                lea     (M68K_RAM_PHYSICAL+(Stage8StridedControl-M68K_RAM)).l,a0
                 move.b  (a1)+,(a0)
                 move.b  (a1)+,1(a0)
                 move.b  (a1)+,8(a0)

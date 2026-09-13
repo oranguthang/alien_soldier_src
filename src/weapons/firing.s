@@ -89,7 +89,7 @@ Weapon_FireProjectile_SetupObject:                      ; CODE XREF: Weapon_Fire
 Weapon_FireProjectile_SetDamageAndVelocity:             ; CODE XREF: Weapon_FireProjectile+88   j  ; was: loc_17FD2
                 move.b  $20(a5),$20(a0)
                 subq.b  #4,$20(a0)
-                move.w  (dword_FF802C).w,$5E(a0)
+                move.w  (WeaponModeParameter).w,$5E(a0)
                 movea.l #Weapon_DirectionTableOffsets,a1
                 move.b  (a1,d6.w),d6
                 andi.w  #$7C,d6                         ; '|'
@@ -393,7 +393,7 @@ Weapon_FireBulletHandler_SetDamage:                     ; CODE XREF: Weapon_Fire
                 movea.l #Weapon_DirectionTableOffsets,a1
                 moveq   #0,d5
                 move.b  (a1,d6.w),d5
-                movea.l (dword_FF802C).w,a1
+                movea.l (WeaponModeParameter).w,a1
                 move.l  (a1,d5.w),d1
                 move.l  $20(a1,d5.w),d2
                 move.l  d1,$1C(a0)

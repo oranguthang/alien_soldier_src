@@ -10,23 +10,23 @@ Sound_InitDriverThunk:                                  ; CODE XREF: Reset+246  
 ; Main sound driver update loop
 Sound_UpdateDriver:                                     ; CODE XREF: Sound_UpdateThunk   j  ; was: sub_8232C
                                         ; DATA XREF: Sound_UpdateThunk   o
-                clr.b   (byte_FFF80E).w
-                tst.b   (byte_FFF807).w
+                clr.b   (SoundChannelGroupFlags).w
+                tst.b   (SoundPauseState).w
                 bne.w   Sound_ProcessPauseTransition
                 jsr     Sound_UpdateBGMVolumeTransitions(pc)  ; (pc)
                 jsr     Sound_ProcessTempoTick(pc)      ; (pc)
                 jsr     Sound_UpdateMusicFadeOut(pc)    ; (pc)
-                tst.l   (dword_FFF80A).w
+                tst.l   (SoundRequestQueue).w
                 beq.s   Sound_UpdateActiveChannels
                 jsr     Sound_SelectPendingRequest(pc)  ; (pc)
 Sound_UpdateActiveChannels:                             ; CODE XREF: Sound_UpdateDriver+1C   j  ; was: loc_8234E
                 jsr     Sound_DispatchPendingRequest(pc)  ; (pc)
-                lea     (byte_FFF840).w,a5
+                lea     (SoundPCMChannelRecord).w,a5
                 tst.b   (a5)
                 bpl.s   Sound_ProcessBGMFMChannels
                 jsr     Sound_ProcessPCMSequence(pc)    ; (pc)
 Sound_ProcessBGMFMChannels:                             ; CODE XREF: Sound_UpdateDriver+2C   j  ; was: loc_8235E
-                clr.b   (byte_FFF808).w
+                clr.b   (SoundPCMEventFlag).w
                 moveq   #5,d7
 Sound_ProcessNextBGMFMChannel:                          ; CODE XREF: Sound_UpdateDriver:Sound_ContinueBGMFMChannelLoop   j  ; was: loc_82364
                 adda.w  #$30,a5                         ; '0'
@@ -43,7 +43,7 @@ Sound_ProcessBGMPSGChannels:                            ; CODE XREF: Sound_Updat
                 jsr     Sound_ProcessPSGChannel(pc)     ; (pc)
 Sound_ContinueBGMPSGChannelLoop:                        ; CODE XREF: Sound_UpdateDriver+50   j  ; was: loc_82382
                 dbf     d7,Sound_ProcessBGMPSGChannels
-                move.b  #$80,(byte_FFF80E).w
+                move.b  #$80,(SoundChannelGroupFlags).w
                 moveq   #2,d7
 Sound_ProcessSFXFMChannels:                             ; CODE XREF: Sound_UpdateDriver:Sound_ContinueSFXFMChannelLoop   j  ; was: loc_8238E
                 adda.w  #$30,a5                         ; '0'
@@ -60,7 +60,7 @@ Sound_ProcessSFXPSGChannels:                            ; CODE XREF: Sound_Updat
                 jsr     Sound_ProcessPSGChannel(pc)     ; (pc)
 Sound_ContinueSFXPSGChannelLoop:                        ; CODE XREF: Sound_UpdateDriver+7A   j  ; was: loc_823AC
                 dbf     d7,Sound_ProcessSFXPSGChannels
-                move.b  #$40,(byte_FFF80E).w            ; '@'
+                move.b  #$40,(SoundChannelGroupFlags).w  ; '@'
                 moveq   #1,d7
 Sound_ProcessSpecialSFXChannels:                        ; CODE XREF: Sound_UpdateDriver:loc_823D0   j  ; was: loc_823B8
                 adda.w  #$30,a5                         ; '0'
@@ -84,7 +84,7 @@ Sound_ProcessPCMSequence:                               ; CODE XREF: Sound_Updat
                                         ; DATA XREF: Sound_UpdateDriver+2E   o
                 subq.b  #1,$E(a5)
                 bne.w   Sound_ProcessPCMSequenceReturn
-                move.b  #$80,(byte_FFF808).w
+                move.b  #$80,(SoundPCMEventFlag).w
                 movea.l 4(a5),a4
 Sound_ReadPCMSequenceCommand:                           ; CODE XREF: Sound_ProcessPCMSequence+20   j  ; was: loc_823E8
                 moveq   #0,d5
@@ -122,22 +122,22 @@ Sound_SavePCMSequencePosition:                          ; CODE XREF: Sound_Proce
 Sound_WaitForPCMZ80Bus:                                 ; CODE XREF: Sound_ProcessPCMSequence+6A   j  ; was: loc_82438
                 bset    #0,(IO_Z80BUS).l
                 bne.s   Sound_WaitForPCMZ80Bus
-                tst.b   (byte_A01FFD).l
+                tst.b   (Z80DACRequestState).l
                 bmi.s   Sound_ReleasePCMZ80Bus
-                move.b  (byte_A01FFC).l,d0
+                move.b  (Z80DACStatus).l,d0
                 andi.b  #$C0,d0
                 move.b  5(a3),d1
                 andi.b  #$C0,d1
                 cmp.b   d0,d1
                 bcs.w   Sound_ReleasePCMZ80Bus
-                move.b  #1,(byte_A01FFD).l
-                move.b  (a3)+,(byte_A01FE8).l
-                move.b  (a3)+,(byte_A01FE9).l
-                move.b  (a3)+,(byte_A01FE6).l
-                move.b  (a3)+,(byte_A01FE7).l
-                move.b  (a3)+,(byte_A01FFE).l
-                move.b  (a3)+,(byte_A01FFB).l
-                move.b  $27(a5),(byte_A01FF9).l
+                move.b  #1,(Z80DACRequestState).l
+                move.b  (a3)+,(Z80DACCommandByte0).l
+                move.b  (a3)+,(Z80DACCommandByte1).l
+                move.b  (a3)+,(Z80DACCommandByte2).l
+                move.b  (a3)+,(Z80DACCommandByte3).l
+                move.b  (a3)+,(Z80DACCommandByte4).l
+                move.b  (a3)+,(Z80DACCommandByte5).l
+                move.b  $27(a5),(Z80DACPanning).l
 Sound_ReleasePCMZ80Bus:                                 ; CODE XREF: Sound_ProcessPCMSequence+72   j  ; was: loc_82496
                                         ; Sound_ProcessPCMSequence+88   j
                 move.w  #0,(IO_Z80BUS).l
@@ -380,7 +380,7 @@ Sound_CheckFMFrequencyWriteFlags:                       ; CODE XREF: Sound_Updat
                 btst    #2,(a5)
                 bne.w   Sound_UpdateChannelFrequencyReturn
                 jsr     Sound_ApplyPitchEffects(pc)     ; (pc)
-                tst.b   (byte_FFF80F).w
+                tst.b   (SoundFM3SpecialMode).w
                 beq.s   Sound_WriteFrequencyBytes
                 cmpi.b  #2,1(a5)
                 beq.w   Sound_UpdateFMOperators
@@ -482,10 +482,10 @@ Sound_AddPitchEnvelopeTranspose:                        ; CODE XREF: Sound_Apply
 ; Updates YM2612 frequency registers for all 4 FM operators per channel
 Sound_UpdateFMOperators:                                ; CODE XREF: Sound_UpdateChannelFrequency+34   j  ; was: sub_827B6
                 lea     Sound_FM3OperatorFrequencyRegisters(pc),a1
-                lea     (word_FFF810).w,a2
-                tst.b   (byte_FFF80E).w
+                lea     (SoundBGMFM3Offsets).w,a2
+                tst.b   (SoundChannelGroupFlags).w
                 beq.s   Sound_SelectFM3FrequencyShadowBank
-                lea     (word_FFF818).w,a2
+                lea     (SoundSFXFM3Offsets).w,a2
 Sound_SelectFM3FrequencyShadowBank:                     ; CODE XREF: Sound_UpdateFMOperators+C   j  ; was: loc_827C8
                 moveq   #3,d5
 Sound_WriteNextFM3OperatorFrequency:                    ; CODE XREF: Sound_UpdateFMOperators+2C   j  ; was: loc_827CA
@@ -611,9 +611,9 @@ Sound_WriteChannelPanAndAMS:                            ; CODE XREF: Sound_Resta
 Sound_WaitForPanUpdateZ80Bus:                           ; CODE XREF: Sound_WriteChannelPanAndAMS+30   j  ; was: loc_828C2
                 bset    #0,(IO_Z80BUS).l
                 bne.s   Sound_WaitForPanUpdateZ80Bus
-                move.b  (byte_A01FFD).l,d0
+                move.b  (Z80DACRequestState).l,d0
                 beq.w   Sound_ReleasePanUpdateZ80Bus
-                move.b  $27(a5),(byte_A01FF8).l
+                move.b  $27(a5),(Z80DACPanningUpdate).l
 Sound_ReleasePanUpdateZ80Bus:                           ; CODE XREF: Sound_WriteChannelPanAndAMS+38   j  ; was: loc_828DE
                 move.w  #0,(IO_Z80BUS).l
                 move    (sp)+,sr
@@ -628,14 +628,14 @@ Sound_WriteChannelPanAndAMSReturn:                      ; CODE XREF: Sound_Write
 ; End of function Sound_WriteChannelPanAndAMS
 ; Apply pause or resume transitions requested by the input/VBlank path
 Sound_ProcessPauseTransition:                           ; CODE XREF: Sound_UpdateDriver+8   j  ; was: sub_828F6
-                cmpi.b  #$FF,(byte_FFF807).w
+                cmpi.b  #$FF,(SoundPauseState).w
                 bne.w   Sound_BeginPauseTransition
                 rts
 ; ---------------------------------------------------------------------------
 Sound_BeginPauseTransition:                             ; CODE XREF: Sound_ProcessPauseTransition+6   j  ; was: loc_82902
-                tst.b   (byte_FFF807).w
+                tst.b   (SoundPauseState).w
                 bmi.s   Sound_ResumeFromPause
-                move.b  #$FF,(byte_FFF807).w
+                move.b  #$FF,(SoundPauseState).w
                 move    sr,-(sp)
                 ori     #$700,sr
 Sound_RequestZ80BusForPause:                            ; CODE XREF: Sound_ProcessPauseTransition+44   j  ; was: loc_82914
@@ -643,7 +643,7 @@ Sound_RequestZ80BusForPause:                            ; CODE XREF: Sound_Proce
 Sound_WaitForZ80BusForPause:                            ; CODE XREF: Sound_ProcessPauseTransition+2E   j  ; was: loc_8291C
                 bset    #0,(IO_Z80BUS).l
                 bne.s   Sound_WaitForZ80BusForPause
-                tst.b   (byte_A01F2A).l
+                tst.b   (Z80DriverBusy).l
                 beq.s   Sound_MuteChannelsForPause
                 move.w  #0,(IO_Z80BUS).l
                 bsr.w   Sound_DelayForZ80BusRetry
@@ -651,7 +651,7 @@ Sound_WaitForZ80BusForPause:                            ; CODE XREF: Sound_Proce
 ; ---------------------------------------------------------------------------
 Sound_MuteChannelsForPause:                             ; CODE XREF: Sound_ProcessPauseTransition+36   j  ; was: loc_8293C
                 move    (sp)+,sr
-                lea     (dword_FFFBE0).w,a1
+                lea     (SoundFMLevelShadows).w,a1
                 move.l  (a1)+,-(sp)
                 move.l  (a1)+,-(sp)
                 move.l  (a1)+,-(sp)
@@ -661,7 +661,7 @@ Sound_MuteChannelsForPause:                             ; CODE XREF: Sound_Proce
                 move.l  (a1)+,-(sp)
                 move.l  (a1)+,-(sp)
                 jsr     Sound_SetAllFMOperatorLevelsMaximum(pc)  ; (pc)
-                lea     (dword_FFFC00).w,a1
+                lea     (SoundFMShadowsEnd).w,a1
                 move.l  (sp)+,-(a1)
                 move.l  (sp)+,-(a1)
                 move.l  (sp)+,-(a1)
@@ -673,12 +673,12 @@ Sound_MuteChannelsForPause:                             ; CODE XREF: Sound_Proce
                 bra.w   Sound_MuteAllPSGChannels
 ; ---------------------------------------------------------------------------
 Sound_ResumeFromPause:                                  ; CODE XREF: Sound_ProcessPauseTransition+10   j  ; was: loc_8296E
-                clr.b   (byte_FFF807).w
+                clr.b   (SoundPauseState).w
                 move    sr,-(sp)
                 ori     #$700,sr
                 move.w  #0,(IO_Z80BUS).l
                 move    (sp)+,sr
-                lea     (byte_FFFBA0).w,a1
+                lea     (SoundFMShadowIndexBase).w,a1
                 moveq   #2,d2
 Sound_RestoreFMRegisterBankLoop:                        ; CODE XREF: Sound_ProcessPauseTransition+AE   j  ; was: loc_82988
                 moveq   #$40,d0                         ; '@'

@@ -1,5 +1,5 @@
 Sys_InitFullGame:                                       ; CODE XREF: RegionRestricted+4   p  ; was: sub_2D40
-                clr.w   (word_FFFF3E).w
+                clr.w   (FrameSkipLevel).w
                 bsr.w   Gfx_LoadVDPRegistersAlt
                 bsr.w   Sys_InitSubsystems
                 bsr.w   Sys_InitGraphicsChain
@@ -14,7 +14,7 @@ Sys_InitFullGame:                                       ; CODE XREF: RegionRestr
 ; Full game mode initialization sequence
 Sys_InitGameMode:                                       ; CODE XREF: EndingSequence_Initialize+A   p  ; was: sub_2D6C
                                         ; TitleScreen_Initialize+6   p
-                clr.w   (word_FFFF3E).w
+                clr.w   (FrameSkipLevel).w
                 bsr.w   Gfx_LoadVDPRegisters
                 bsr.w   Sys_InitSubsystems
                 bsr.w   Sys_InitGraphicsChain

@@ -89,9 +89,9 @@ Reset_InitRuntime:                                      ; CODE XREF: Reset:loc_2
 Reset_CheckDeveloperSignature:                          ; CODE XREF: Reset+120   j  ; was: loc_32C
                 btst    #6,(IO_EXT_DATA+1).l
                 beq.w   ChecksumCheck
-                cmpi.l  #'TREA',(dword_FFFF10).w
+                cmpi.l  #'TREA',(DeveloperSignatureTREA).w
                 bne.w   ChecksumCheck
-                cmpi.l  #'SURE',(dword_FFFF14).w
+                cmpi.l  #'SURE',(DeveloperSignatureSURE).w
                 beq.w   Reset_InitDefaults
 ChecksumCheck:                                          ; CODE XREF: Reset+134   j
                                         ; Reset+140   j
@@ -111,27 +111,27 @@ Reset_ChecksumLoop:                                     ; CODE XREF: Reset+162  
 GameProgram:                                            ; CODE XREF: Reset+17C   j
                 move.l  d1,(a1)+
                 dbf     d0,GameProgram
-                move.l  #'TREA',(dword_FFFF10).w
-                move.l  #'SURE',(dword_FFFF14).w
-                move.b  (IO_PCBVER+1).l,(byte_FFFF26).w
+                move.l  #'TREA',(DeveloperSignatureTREA).w
+                move.l  #'SURE',(DeveloperSignatureSURE).w
+                move.b  (IO_PCBVER+1).l,(ConsoleVersionFlags).w
                 move.w  #2,(DifficultyMode).w
                 move.l  #$100000,(HighScoreBCD).w
                 move.w  #0,(MessageMode).w
                 move.b  #0,(ControlLayoutFlags).w
                 clr.w   (SoundDisableFlags).w
-                clr.w   (word_FFFF3E).w
+                clr.w   (FrameSkipLevel).w
                 move.w  #0,(word_FFFF36).w
                 move.l  #$1010101,(PasswordDigits).w
 Reset_InitDefaults:                                     ; CODE XREF: Reset+14C   j  ; was: loc_3C8
                 move.b  #0,(MessageDisplayFlags).w
-                move.b  #6,(byte_FFFF20).w
-                move.b  #6,(byte_FFFF21).w
-                move.b  #4,(byte_FFFF22).w
-                move.b  #4,(byte_FFFF23).w
-                move.b  #5,(byte_FFFF24).w
-                move.b  #5,(byte_FFFF25).w
+                move.b  #6,(P1ButtonASourceBit).w
+                move.b  #6,(P2ButtonASourceBit).w
+                move.b  #4,(P1ButtonBSourceBit).w
+                move.b  #4,(P2ButtonBSourceBit).w
+                move.b  #5,(P1ButtonCSourceBit).w
+                move.b  #5,(P2ButtonCSourceBit).w
                 clr.w   (DemoPlaybackActive).w
-                clr.w   (word_FFFF62).w
+                clr.w   (DemoRotationIndex).w
 Reset_WaitForBlanking:                                  ; CODE XREF: Reset+204   j  ; was: loc_3FA
                 move.w  (VDP_CTRL).l,d0
                 btst    #1,d0
@@ -155,7 +155,7 @@ Reset_ClearZ80RAMLoop:                                  ; CODE XREF: Reset+242  
                 move.l  d0,(a0)+
                 dbf     d1,Reset_ClearZ80RAMLoop
                 jsr     (Sound_InitDriverThunk).l
-                move.b  #4,(dword_FFF80A).w
+                move.b  #4,(SoundRequestQueue).w
                 jsr     (Sound_UpdateThunk).l
                 move.b  #1,(VBlankUpdateReady).w
                 move    #$2300,sr

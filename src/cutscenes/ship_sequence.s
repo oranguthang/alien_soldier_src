@@ -484,7 +484,7 @@ ShipSequence_WriteLowerVScroll:                         ; CODE XREF: ShipSequenc
 ; End of function ShipSequence_UpdateVerticalScroll
 ; Sets priority on `$160` staged arrival tiles and reloads their descriptor
 ShipSequence_EnableArrivalPlanePriority:                ; CODE XREF: ShipSequence_DecelerateVerticalScroll+14   p  ; was: sub_8D60
-                lea     (word_FF2020).l,a0
+                lea     (ShipArrivalTilemap).l,a0
                 move.w  #$15F,d1
 ShipSequence_SetNextPriorityBit:                        ; CODE XREF: ShipSequence_EnableArrivalPlanePriority+12   j  ; was: loc_8D6A
                 move.w  (a0),d0
@@ -496,7 +496,7 @@ ShipSequence_SetNextPriorityBit:                        ; CODE XREF: ShipSequenc
 ; End of function ShipSequence_EnableArrivalPlanePriority
 ; Clears priority on `$160` staged arrival tiles and reloads their descriptor
 ShipSequence_DisableArrivalPlanePriority:               ; CODE XREF: ShipSequence_FlashAndClearObjects+16   p  ; was: sub_8D82
-                lea     (word_FF2020).l,a0
+                lea     (ShipArrivalTilemap).l,a0
                 move.w  #$15F,d1
 ShipSequence_ClearNextPriorityBit:                      ; CODE XREF: ShipSequence_DisableArrivalPlanePriority+12   j  ; was: loc_8D8C
                 move.w  (a0),d0
@@ -533,7 +533,7 @@ ShipPattern_RevealRows:                                 ; CODE XREF: ShipSequenc
                 move.w  #$11,d1
 ShipPattern_ClampVisibleRow:                            ; CODE XREF: ShipPattern_RevealRows+12   j  ; was: loc_8E12
                 lea     (ShipRowRevealProgress).l,a0
-                lea     (word_FF1000).l,a2
+                lea     (CutsceneWorkBuffer).l,a2
 ShipPattern_RevealNextRow:                              ; CODE XREF: ShipPattern_RevealRows+36   j  ; was: loc_8E1E
                 movem.l a2,-(sp)
                 bsr.w   ShipPattern_RevealNextNibble
@@ -571,7 +571,7 @@ ShipPattern_NibbleMasks:    dc.w    $F000, $F00, $F0, $F  ; was: word_8E6C
 
 ; Clears the complete `$240`-byte pattern workspace
 ShipPattern_ClearBuffer:                                ; CODE XREF: ShipSequence_InitializePatternReveal+50   p  ; was: sub_8E74
-                lea     (word_FF1000).l,a1
+                lea     (CutsceneWorkBuffer).l,a1
                 moveq   #0,d0
                 move.w  #$8F,d1
 ShipPattern_ClearNextLongword:                          ; CODE XREF: ShipPattern_ClearBuffer+E   j  ; was: loc_8E80

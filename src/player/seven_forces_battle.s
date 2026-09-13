@@ -100,8 +100,8 @@ Player_ActivateSevenForcesSpecialState4:                ; CODE XREF: Player_Chec
                 move.w  (WeaponSlotOffset).w,(WeaponSavedSlotOffset).w
                 move.w  #$12,(WeaponStateIndex).w
                 move.b  #$7F,(PlayerInputMask).w
-                move.w  #0,(word_FF8032).w
-                move.w  #$FFEE,(word_FF8034).w
+                move.w  #0,(SpecialMoveSpawnXOffset).w
+                move.w  #$FFEE,(SpecialMoveSpawnYOffset).w
                 move.w  #4,4(a5)
                 move.w  #$1C,$5C(a5)
                 moveq   #1,d0

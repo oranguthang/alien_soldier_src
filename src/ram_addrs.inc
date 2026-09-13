@@ -78,63 +78,63 @@ CreditsSceneDataCursor  equ     $FFFF018A               ; was: dword_FF018A
 CreditsSceneTimer       equ     $FFFF018E               ; was: word_FF018E
 CreditsPaletteTarget    equ     $FFFF0190               ; was: dword_FF0190
 CreditsPaletteFadeIndex equ     $FFFF0194               ; was: word_FF0194
-word_FF0480             equ     $FFFF0480
-word_FF0500             equ     $FFFF0500
-word_FF0B00             equ     $FFFF0B00
-word_FF0C00             equ     $FFFF0C00
-word_FF0C80             equ     $FFFF0C80
-word_FF0D00             equ     $FFFF0D00
-word_FF0D80             equ     $FFFF0D80
-word_FF0E00             equ     $FFFF0E00
-word_FF0E80             equ     $FFFF0E80
-word_FF1000             equ     $FFFF1000
-word_FF1400             equ     $FFFF1400
-off_FF14C3              equ     $FFFF14C3
-word_FF1500             equ     $FFFF1500
-dword_FF1800            equ     $FFFF1800
-dword_FF1C00            equ     $FFFF1C00
-dword_FF2000            equ     $FFFF2000
-word_FF2020             equ     $FFFF2020
+PlaneTilemapRow9        equ     $FFFF0480               ; was: word_FF0480
+PlaneTilemapRow10       equ     $FFFF0500               ; was: word_FF0500
+PlaneTilemapRow22       equ     $FFFF0B00               ; was: word_FF0B00
+PlaneTilemapRow24       equ     $FFFF0C00               ; was: word_FF0C00
+PlaneTilemapRow25       equ     $FFFF0C80               ; was: word_FF0C80
+PlaneTilemapRow26       equ     $FFFF0D00               ; was: word_FF0D00
+PlaneTilemapRow27       equ     $FFFF0D80               ; was: word_FF0D80
+PlaneTilemapRow28       equ     $FFFF0E00               ; was: word_FF0E00
+PlaneTilemapRow29       equ     $FFFF0E80               ; was: word_FF0E80
+CutsceneWorkBuffer      equ     $FFFF1000               ; was: word_FF1000
+EndingStarYPositions    equ     $FFFF1400               ; was: word_FF1400
+StoryTitleLeftOrigin    equ     $FFFF14C3               ; was: off_FF14C3
+StoryTitleRightOrigin   equ     $FFFF1500               ; was: word_FF1500
+EndingStarDepthValues   equ     $FFFF1800               ; was: dword_FF1800
+EndingStarXVelocities   equ     $FFFF1C00               ; was: dword_FF1C00
+EndingStarYVelocities   equ     $FFFF2000               ; was: dword_FF2000
+ShipArrivalTilemap      equ     $FFFF2020               ; was: word_FF2020
 byte_FF2080             equ     $FFFF2080
 word_FF20E0             equ     $FFFF20E0
 word_FF20E4             equ     $FFFF20E4
-byte_FF2380             equ     $FFFF2380
-byte_FF2384             equ     $FFFF2384
-dword_FF4000            equ     $FFFF4000
-word_FF4020             equ     $FFFF4020
-word_FF4360             equ     $FFFF4360
-word_FF4400             equ     $FFFF4400
-word_FF4AC0             equ     $FFFF4AC0
-word_FF5000             equ     $FFFF5000
-dword_FF5180            equ     $FFFF5180
-byte_FF615D             equ     $FFFF615D
+StoryTitleMirroredGlyph equ     $FFFF2380               ; was: byte_FF2380
+StoryTitleGlyphReadBase equ     $FFFF2384               ; was: byte_FF2384
+LargeTilemapBuffer      equ     $FFFF4000               ; was: dword_FF4000
+FlyingNeoTileAttrRangeA equ     $FFFF4020               ; was: word_FF4020
+FlyingNeoTileAttrRangeC equ     $FFFF4360               ; was: word_FF4360
+FlyingNeoTileAttrRangeD equ     $FFFF4400               ; was: word_FF4400
+FlyingNeoTileAttrRangeB equ     $FFFF4AC0               ; was: word_FF4AC0
+LargeTilemapPage2       equ     $FFFF5000               ; was: word_FF5000
+CreditsXiTigerTilemap   equ     $FFFF5180               ; was: dword_FF5180
+Stage8StridedControl    equ     $FFFF615D               ; was: byte_FF615D
 dword_FF6180            equ     $FFFF6180
 dword_FF6194            equ     $FFFF6194
 dword_FF619C            equ     $FFFF619C
 dword_FF61A4            equ     $FFFF61A4
-byte_FF644A             equ     $FFFF644A
-byte_FF7001             equ     $FFFF7001
-dword_FF7800            equ     $FFFF7800
-byte_FF780C             equ     $FFFF780C
-byte_FF780D             equ     $FFFF780D
-byte_FF78FF             equ     $FFFF78FF
-byte_FF7981             equ     $FFFF7981
-byte_FF7982             equ     $FFFF7982
-byte_FF7983             equ     $FFFF7983
-byte_FF7AFF             equ     $FFFF7AFF
-byte_FF7B00             equ     $FFFF7B00
-dword_FF8000            equ     $FFFF8000
+TerobusterIntroPalette  equ     $FFFF644A               ; was: byte_FF644A
+WeaponSetupWriteFlag    equ     $FFFF7001               ; was: byte_FF7001
+TerrainCollisionBuffer  equ     $FFFF7800               ; was: dword_FF7800
+Stage8TilemapMode       equ     $FFFF780C               ; was: byte_FF780C
+Stage9TilemapMode       equ     $FFFF780D               ; was: byte_FF780D
+WeaponSetupTilemapMode  equ     $FFFF78FF               ; was: byte_FF78FF
+Stage20PlaneMode0       equ     $FFFF7981               ; was: byte_FF7981
+Stage20PlaneMode1       equ     $FFFF7982               ; was: byte_FF7982
+Stage20PlaneMode2       equ     $FFFF7983               ; was: byte_FF7983
+Stage17TilemapMode      equ     $FFFF7AFF               ; was: byte_FF7AFF
+SevenForcesTilemapMode  equ     $FFFF7B00               ; was: byte_FF7B00
+GameplayStateBuffer     equ     $FFFF8000               ; was: dword_FF8000
 ResultsFirstColorOffset equ     $FFFF8014               ; was: word_FF8014
 ResultsOtherColorOffset equ     $FFFF8016               ; was: word_FF8016
-word_FF801C             equ     $FFFF801C
-word_FF801E             equ     $FFFF801E
-dword_FF8020            equ     $FFFF8020
-dword_FF8024            equ     $FFFF8024
-dword_FF8028            equ     $FFFF8028
-dword_FF802C            equ     $FFFF802C
+WeaponTargetOrFrame     equ     $FFFF801C               ; was: word_FF801C
+WeaponIconFrameTile     equ     $FFFF801E               ; was: word_FF801E
+WeaponAnimationDataPtr  equ     $FFFF8020               ; was: dword_FF8020
+WeaponYMotionParameter  equ     $FFFF8024               ; was: dword_FF8024
+WeaponXMotionParameter  equ     $FFFF8028               ; was: dword_FF8028
+WeaponModeParameter     equ     $FFFF802C               ; was: dword_FF802C
 WeaponMenuRadius        equ     $FFFF8030               ; was: word_FF8030
-word_FF8032             equ     $FFFF8032
-word_FF8034             equ     $FFFF8034
+SpecialMoveSpawnXOffset equ     $FFFF8032               ; was: word_FF8032
+SpecialMoveSpawnYOffset equ     $FFFF8034               ; was: word_FF8034
 WeaponMenuAngle         equ     $FFFF8036               ; was: word_FF8036
 WeaponStateCooldown     equ     $FFFF8038               ; was: word_FF8038
 WeaponMenuAngularStep   equ     $FFFF803A               ; was: word_FF803A
@@ -900,55 +900,55 @@ VDPReg15Shadow          equ     $FFFFF7EE               ; was: word_FFF7EE
 VDPReg16Shadow          equ     $FFFFF7F0               ; was: word_FFF7F0
 VDPReg17Shadow          equ     $FFFFF7F2               ; was: word_FFF7F2
 VDPReg18Shadow          equ     $FFFFF7F4               ; was: word_FFF7F4
-byte_FFF800             equ     $FFFFF800
-byte_FFF801             equ     $FFFFF801
-byte_FFF802             equ     $FFFFF802
-byte_FFF803             equ     $FFFFF803
-byte_FFF804             equ     $FFFFF804
-byte_FFF806             equ     $FFFFF806
-byte_FFF807             equ     $FFFFF807
-byte_FFF808             equ     $FFFFF808
-byte_FFF809             equ     $FFFFF809
-dword_FFF80A            equ     $FFFFF80A
-byte_FFF80E             equ     $FFFFF80E
-byte_FFF80F             equ     $FFFFF80F
-word_FFF810             equ     $FFFFF810
-word_FFF818             equ     $FFFFF818
-dword_FFF820            equ     $FFFFF820
-dword_FFF824            equ     $FFFFF824
-byte_FFF828             equ     $FFFFF828
-byte_FFF829             equ     $FFFFF829
-byte_FFF82A             equ     $FFFFF82A
-byte_FFF82B             equ     $FFFFF82B
-byte_FFF82C             equ     $FFFFF82C
-byte_FFF840             equ     $FFFFF840
-word_FFF870             equ     $FFFFF870
-byte_FFF900             equ     $FFFFF900
-byte_FFF990             equ     $FFFFF990
-byte_FFF9F0             equ     $FFFFF9F0
-byte_FFFA20             equ     $FFFFFA20
-byte_FFFA50             equ     $FFFFFA50
-byte_FFFB10             equ     $FFFFFB10
-word_FFFB40             equ     $FFFFFB40
-word_FFFB70             equ     $FFFFFB70
-byte_FFFBA0             equ     $FFFFFBA0
-byte_FFFBB0             equ     $FFFFFBB0
-dword_FFFBE0            equ     $FFFFFBE0
-dword_FFFC00            equ     $FFFFFC00
+SoundCurrentPriority    equ     $FFFFF800               ; was: byte_FFF800
+SoundTempoCounter       equ     $FFFFF801               ; was: byte_FFF801
+SoundTempoReload        equ     $FFFFF802               ; was: byte_FFF802
+SoundCommunicationByte  equ     $FFFFF803               ; was: byte_FFF803
+SoundFadeStepsRemaining equ     $FFFFF804               ; was: byte_FFF804
+SoundFadeTickCounter    equ     $FFFFF806               ; was: byte_FFF806
+SoundPauseState         equ     $FFFFF807               ; was: byte_FFF807
+SoundPCMEventFlag       equ     $FFFFF808               ; was: byte_FFF808
+SoundSelectedRequest    equ     $FFFFF809               ; was: byte_FFF809
+SoundRequestQueue       equ     $FFFFF80A               ; was: dword_FFF80A
+SoundChannelGroupFlags  equ     $FFFFF80E               ; was: byte_FFF80E
+SoundFM3SpecialMode     equ     $FFFFF80F               ; was: byte_FFF80F
+SoundBGMFM3Offsets      equ     $FFFFF810               ; was: word_FFF810
+SoundSFXFM3Offsets      equ     $FFFFF818               ; was: word_FFF818
+SoundBGMDataPtr         equ     $FFFFF820               ; was: dword_FFF820
+SoundSpecialSFXDataPtr  equ     $FFFFF824               ; was: dword_FFF824
+SoundManualVolumeState  equ     $FFFFF828               ; was: byte_FFF828
+SoundFMVolumeStep       equ     $FFFFF829               ; was: byte_FFF829
+SoundPSGVolumeStep      equ     $FFFFF82A               ; was: byte_FFF82A
+SoundVoiceDuckingState  equ     $FFFFF82B               ; was: byte_FFF82B
+SoundVoiceSlotToggle    equ     $FFFFF82C               ; was: byte_FFF82C
+SoundPCMChannelRecord   equ     $FFFFF840               ; was: byte_FFF840
+SoundBGMFMChannels      equ     $FFFFF870               ; was: word_FFF870
+SoundBGMFMChannel3      equ     $FFFFF900               ; was: byte_FFF900
+SoundBGMPSGChannels     equ     $FFFFF990               ; was: byte_FFF990
+SoundBGMPSGChannel2     equ     $FFFFF9F0               ; was: byte_FFF9F0
+SoundSFXFMChannels      equ     $FFFFFA20               ; was: byte_FFFA20
+SoundSFXFMChannel1      equ     $FFFFFA50               ; was: byte_FFFA50
+SoundSFXPSGChannel2     equ     $FFFFFB10               ; was: byte_FFFB10
+SoundSpecialSFXFM       equ     $FFFFFB40               ; was: word_FFFB40
+SoundSpecialSFXPSG      equ     $FFFFFB70               ; was: word_FFFB70
+SoundFMShadowIndexBase  equ     $FFFFFBA0               ; was: byte_FFFBA0
+SoundFMPort1IndexBase   equ     $FFFFFBB0               ; was: byte_FFFBB0
+SoundFMLevelShadows     equ     $FFFFFBE0               ; was: dword_FFFBE0
+SoundFMShadowsEnd       equ     $FFFFFC00               ; was: dword_FFFC00
 dword_FFFF00            equ     $FFFFFF00
-byte_FFFF06             equ     $FFFFFF06
-byte_FFFF07             equ     $FFFFFF07
+Controller1TypeID       equ     $FFFFFF06               ; was: byte_FFFF06
+Controller2TypeID       equ     $FFFFFF07               ; was: byte_FFFF07
 RandomNumberState       equ     $FFFFFF08               ; was: dword_FFFF08
 DifficultyMode          equ     $FFFFFF0E               ; was: word_FFFF0E
-dword_FFFF10            equ     $FFFFFF10
-dword_FFFF14            equ     $FFFFFF14
-byte_FFFF20             equ     $FFFFFF20
-byte_FFFF21             equ     $FFFFFF21
-byte_FFFF22             equ     $FFFFFF22
-byte_FFFF23             equ     $FFFFFF23
-byte_FFFF24             equ     $FFFFFF24
-byte_FFFF25             equ     $FFFFFF25
-byte_FFFF26             equ     $FFFFFF26
+DeveloperSignatureTREA  equ     $FFFFFF10               ; was: dword_FFFF10
+DeveloperSignatureSURE  equ     $FFFFFF14               ; was: dword_FFFF14
+P1ButtonASourceBit      equ     $FFFFFF20               ; was: byte_FFFF20
+P2ButtonASourceBit      equ     $FFFFFF21               ; was: byte_FFFF21
+P1ButtonBSourceBit      equ     $FFFFFF22               ; was: byte_FFFF22
+P2ButtonBSourceBit      equ     $FFFFFF23               ; was: byte_FFFF23
+P1ButtonCSourceBit      equ     $FFFFFF24               ; was: byte_FFFF24
+P2ButtonCSourceBit      equ     $FFFFFF25               ; was: byte_FFFF25
+ConsoleVersionFlags     equ     $FFFFFF26               ; was: byte_FFFF26
 PaletteFillColor        equ     $FFFFFF28               ; was: word_FFFF28
 MessageMode             equ     $FFFFFF2A               ; was: word_FFFF2A
 HighScoreBCD            equ     $FFFFFF2C               ; was: dword_FFFF2C
@@ -957,56 +957,56 @@ MessageDisplayFlags     equ     $FFFFFF31               ; was: byte_FFFF31
 word_FFFF36             equ     $FFFFFF36
 SoundDisableFlags       equ     $FFFFFF38               ; was: word_FFFF38
 PasswordDigits          equ     $FFFFFF3A               ; was: dword_FFFF3A
-word_FFFF3E             equ     $FFFFFF3E
+FrameSkipLevel          equ     $FFFFFF3E               ; was: word_FFFF3E
 PostStageEntryCountBCD  equ     $FFFFFF40               ; was: word_FFFF40
 DestroyedEnemyCountBCD  equ     $FFFFFF42               ; was: word_FFFF42
 PlayerDamageBCD         equ     $FFFFFF44               ; was: word_FFFF44
-word_FFFF46             equ     $FFFFFF46
-word_FFFF48             equ     $FFFFFF48
-word_FFFF4A             equ     $FFFFFF4A
-dword_FFFF4C            equ     $FFFFFF4C
-word_FFFF50             equ     $FFFFFF50
-word_FFFF52             equ     $FFFFFF52
-word_FFFF56             equ     $FFFFFF56
-word_FFFF58             equ     $FFFFFF58
+ResultsExtendedLayout   equ     $FFFFFF46               ; was: word_FFFF46
+DemoCurrentInputWord    equ     $FFFFFF48               ; was: word_FFFF48
+DemoInputRunFrames      equ     $FFFFFF4A               ; was: word_FFFF4A
+DemoInputStreamPtr      equ     $FFFFFF4C               ; was: dword_FFFF4C
+DemoRecordingOffset     equ     $FFFFFF50               ; was: word_FFFF50
+DemoPlaybackInputWord   equ     $FFFFFF52               ; was: word_FFFF52
+DemoRecordingMode       equ     $FFFFFF56               ; was: word_FFFF56
+DemoFramesRemaining     equ     $FFFFFF58               ; was: word_FFFF58
 DemoPlaybackActive      equ     $FFFFFF5A               ; was: word_FFFF5A
 DemoPlaybackState       equ     $FFFFFF5C               ; was: word_FFFF5C
-word_FFFF5E             equ     $FFFFFF5E
-word_FFFF60             equ     $FFFFFF60
-word_FFFF62             equ     $FFFFFF62
+SavedDifficultyMode     equ     $FFFFFF5E               ; was: word_FFFF5E
+SavedSoundDisableFlags  equ     $FFFFFF60               ; was: word_FFFF60
+DemoRotationIndex       equ     $FFFFFF62               ; was: word_FFFF62
 DemoStageTableIndex     equ     $FFFFFF64               ; was: word_FFFF64
-byte_FFFF66             equ     $FFFFFF66
+SavedControlLayoutFlags equ     $FFFFFF66               ; was: byte_FFFF66
 byte_FFFFFF             equ     $FFFFFFFF
 Z80_RAM                 equ     $A00000
-byte_A00C00             equ     $A00C00
-byte_A01F2A             equ     $A01F2A
-byte_A01F80             equ     $A01F80
-byte_A01F81             equ     $A01F81
-byte_A01F82             equ     $A01F82
-byte_A01F83             equ     $A01F83
-byte_A01F84             equ     $A01F84
-byte_A01F85             equ     $A01F85
-byte_A01F86             equ     $A01F86
-byte_A01F87             equ     $A01F87
-byte_A01FA0             equ     $A01FA0
-byte_A01FA1             equ     $A01FA1
-byte_A01FA2             equ     $A01FA2
-byte_A01FA3             equ     $A01FA3
-byte_A01FA4             equ     $A01FA4
-byte_A01FA5             equ     $A01FA5
-byte_A01FA6             equ     $A01FA6
-byte_A01FA7             equ     $A01FA7
-byte_A01FE6             equ     $A01FE6
-byte_A01FE7             equ     $A01FE7
-byte_A01FE8             equ     $A01FE8
-byte_A01FE9             equ     $A01FE9
-byte_A01FF8             equ     $A01FF8
-byte_A01FF9             equ     $A01FF9
-byte_A01FFA             equ     $A01FFA
-byte_A01FFB             equ     $A01FFB
-byte_A01FFC             equ     $A01FFC
-byte_A01FFD             equ     $A01FFD
-byte_A01FFE             equ     $A01FFE
-byte_A01FFF             equ     $A01FFF
+PauseMenuZ80SpriteData  equ     $A00C00                 ; was: byte_A00C00
+Z80DriverBusy           equ     $A01F2A                 ; was: byte_A01F2A
+Z80VoiceSlotADesc0      equ     $A01F80                 ; was: byte_A01F80
+Z80VoiceSlotADesc1      equ     $A01F81                 ; was: byte_A01F81
+Z80VoiceSlotAHeader0    equ     $A01F82                 ; was: byte_A01F82
+Z80VoiceSlotAHeader1    equ     $A01F83                 ; was: byte_A01F83
+Z80VoiceSlotAHeader2    equ     $A01F84                 ; was: byte_A01F84
+Z80VoiceSlotAHeader3    equ     $A01F85                 ; was: byte_A01F85
+Z80VoiceSlotAActive     equ     $A01F86                 ; was: byte_A01F86
+Z80VoiceSlotAFlags      equ     $A01F87                 ; was: byte_A01F87
+Z80VoiceSlotBDesc0      equ     $A01FA0                 ; was: byte_A01FA0
+Z80VoiceSlotBDesc1      equ     $A01FA1                 ; was: byte_A01FA1
+Z80VoiceSlotBHeader0    equ     $A01FA2                 ; was: byte_A01FA2
+Z80VoiceSlotBHeader1    equ     $A01FA3                 ; was: byte_A01FA3
+Z80VoiceSlotBHeader2    equ     $A01FA4                 ; was: byte_A01FA4
+Z80VoiceSlotBHeader3    equ     $A01FA5                 ; was: byte_A01FA5
+Z80VoiceSlotBActive     equ     $A01FA6                 ; was: byte_A01FA6
+Z80VoiceSlotBFlags      equ     $A01FA7                 ; was: byte_A01FA7
+Z80DACCommandByte2      equ     $A01FE6                 ; was: byte_A01FE6
+Z80DACCommandByte3      equ     $A01FE7                 ; was: byte_A01FE7
+Z80DACCommandByte0      equ     $A01FE8                 ; was: byte_A01FE8
+Z80DACCommandByte1      equ     $A01FE9                 ; was: byte_A01FE9
+Z80DACPanningUpdate     equ     $A01FF8                 ; was: byte_A01FF8
+Z80DACPanning           equ     $A01FF9                 ; was: byte_A01FF9
+Z80DACCommandByte6      equ     $A01FFA                 ; was: byte_A01FFA
+Z80DACCommandByte5      equ     $A01FFB                 ; was: byte_A01FFB
+Z80DACStatus            equ     $A01FFC                 ; was: byte_A01FFC
+Z80DACRequestState      equ     $A01FFD                 ; was: byte_A01FFD
+Z80DACCommandByte4      equ     $A01FFE                 ; was: byte_A01FFE
+Z80VBlankActive         equ     $A01FFF                 ; was: byte_A01FFF
 Z80_YM2612              equ     $A04000
 ; ----------------------------------

@@ -5,7 +5,7 @@ Credits_InitXiTiger:                                    ; DATA XREF: Sys_Dispatc
                 jsr     (Gfx_QueueLargeFontDMACommand81).l
                 movea.l #Credits_XiTigerAssetLoadList,a0
                 jsr     (LoadObjData).l
-                lea     (word_FF5000).l,a0
+                lea     (LargeTilemapPage2).l,a0
                 move.w  #$FF,d7
 Credits_InitXiTiger_ClearTileAttributesLoop:            ; CODE XREF: Credits_InitXiTiger+34   j  ; was: loc_20982
                 move.w  (a0),d0
@@ -13,7 +13,7 @@ Credits_InitXiTiger_ClearTileAttributesLoop:            ; CODE XREF: Credits_Ini
                 move.w  d0,(a0)+
                 dbf     d7,Credits_InitXiTiger_ClearTileAttributesLoop
                 jsr     (Sys_ClearEntityObjectPool).l
-                lea     (dword_FF5180).l,a0
+                lea     (CreditsXiTigerTilemap).l,a0
                 move.w  #$A000,d0
                 move.w  #0,d1
                 move.w  #2,d7
@@ -91,7 +91,7 @@ Credits_InitXiTiger_InitVerticalScrollLoop:             ; CODE XREF: Credits_Ini
                 clr.w   (SecondaryCameraYPos).w
                 clr.w   (SecondaryCameraXPos).w
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
-                move.w  (SoundDisableFlags).w,(word_FFFF60).w
+                move.w  (SoundDisableFlags).w,(SavedSoundDisableFlags).w
                 move.w  #0,(SoundDisableFlags).w
                 move.b  #$90,d0
                 jsr     (Sound_QueueBGMRequest).l
@@ -367,8 +367,8 @@ Credits_FadeOutAndExit:                                 ; DATA XREF: ROM:00020BC
                 jsr     (Gfx_ApplyPaletteFade).l
                 cmpi.w  #$FFF2,(ScenePaletteFadeOffset).l
                 bne.w   Credits_StateReturn
-                move.w  #1,(word_FFFF46).w
-                move.w  (word_FFFF60).w,(SoundDisableFlags).w
+                move.w  #1,(ResultsExtendedLayout).w
+                move.w  (SavedSoundDisableFlags).w,(SoundDisableFlags).w
                 jsr     (Sys_ClearEntityObjectPool).l
                 move.w  #$84,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w

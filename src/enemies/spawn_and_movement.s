@@ -97,7 +97,7 @@ EnemySpawn_AllocateObjectSlot_Initialize:               ; CODE XREF: EnemySpawn_
 ; Searches the terrain layout for a valid spawn position near the player
 EnemySpawn_FindTerrainPosition:                         ; CODE XREF: EnemySpawn_StartDirectorTimer+32   p  ; was: sub_2C41C
                 lea     (M68K_RAM).l,a2
-                lea     (dword_FF7800).l,a1
+                lea     (TerrainCollisionBuffer).l,a1
                 move.w  #$80,d7
                 moveq   #$FFFFFFFF,d6
                 move.w  d0,d2

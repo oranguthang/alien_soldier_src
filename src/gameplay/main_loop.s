@@ -204,7 +204,7 @@ UI_DisplayPauseGraphics_Return:                         ; CODE XREF: UI_DisplayP
 UI_DisplayPauseGraphics_Render:                         ; CODE XREF: UI_DisplayPauseGraphics+26   j  ; was: loc_1C946
                 lea     (dword_FFA100).w,a0
                 movea.w a0,a1
-                move.l  #byte_A00C00,(a1)+
+                move.l  #PauseMenuZ80SpriteData,(a1)+
                 move.w  #$C7EB,(a1)+
                 move.w  #$C0,(a1)+
                 move.l  #Z80_RAM,(a1)+

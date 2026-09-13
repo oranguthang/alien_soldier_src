@@ -91,8 +91,8 @@ Weapon_SetCircleAttackProperties:                       ; CODE XREF: Player_Spaw
                 dbf     d7,Weapon_CircleAttack_SpawnLoop
                 andi.w  #6,d6
                 asl.w   #1,d6
-                move.l  Weapon_CircleAttackAnimationPointers(pc,d6.w),(dword_FF8020).w
-                clr.w   (word_FF801C).w
+                move.l  Weapon_CircleAttackAnimationPointers(pc,d6.w),(WeaponAnimationDataPtr).w
+                clr.w   (WeaponTargetOrFrame).w
                 move.b  #$B4,d0
                 jmp     (Sound_PlaySFX).l
 ; ---------------------------------------------------------------------------
@@ -171,7 +171,7 @@ Weapon_SetHomingProjectileData:                         ; CODE XREF: Weapon_Fire
                 move.b  (a1,d6.w),d5
                 movea.l #Weapon_DirectionTableOffsets,a1
                 move.b  (a1,d6.w),d6
-                movea.l (dword_FF802C).w,a1
+                movea.l (WeaponModeParameter).w,a1
                 move.l  (a1,d6.w),d0
                 move.l  $20(a1,d6.w),d1
                 move.l  d0,$1C(a0)
@@ -288,8 +288,8 @@ Player_UpdateTargetSight:                               ; DATA XREF: ROM:Entity_
                 clr.w   $56(a5)
                 move.w  $10(a0),d5
                 move.w  $14(a0),d6
-                add.w   (word_FF8032).w,d5
-                add.w   (word_FF8034).w,d6
+                add.w   (SpecialMoveSpawnXOffset).w,d5
+                add.w   (SpecialMoveSpawnYOffset).w,d6
                 move.w  (WeaponMenuRadius).w,d0
                 move.w  (WeaponMenuAngle).w,d7
                 add.w   $50(a5),d7

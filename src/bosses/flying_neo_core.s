@@ -105,23 +105,23 @@ Boss_FlyingNeoInitOrWaitReturn:                         ; CODE XREF: Boss_Flying
 ; Clears bit 15 in four palette-buffer ranges
 Boss_FlyingNeoClearPaletteHighBits:                     ; CODE XREF: Stage_InitializeStage9:Stage_ClearPaletteHighBitsBeforeFourRangeFill   p  ; was: sub_3C110
                                         ; Boss_FlyingNeoInit+22   p
-                lea     (word_FF4020).l,a0
+                lea     (FlyingNeoTileAttrRangeA).l,a0
                 move.w  #$7FFF,d0
                 move.w  #$EF,d7
 Boss_FlyingNeoClearPaletteHighBitsFirstRange:           ; CODE XREF: Boss_FlyingNeoClearPaletteHighBits+10   j  ; was: loc_3C11E
                 and.w   d0,(a0)+
                 dbf     d7,Boss_FlyingNeoClearPaletteHighBitsFirstRange
-                lea     (word_FF4AC0).l,a0
+                lea     (FlyingNeoTileAttrRangeB).l,a0
                 move.w  #$F,d7
 Boss_FlyingNeoClearPaletteHighBitsSecondRange:          ; CODE XREF: Boss_FlyingNeoClearPaletteHighBits+20   j  ; was: loc_3C12E
                 and.w   d0,(a0)+
                 dbf     d7,Boss_FlyingNeoClearPaletteHighBitsSecondRange
-                lea     (word_FF4360).l,a0
+                lea     (FlyingNeoTileAttrRangeC).l,a0
                 move.w  #$2F,d7                         ; '/'
 Boss_FlyingNeoClearPaletteHighBitsThirdRange:           ; CODE XREF: Boss_FlyingNeoClearPaletteHighBits+30   j  ; was: loc_3C13E
                 and.w   d0,(a0)+
                 dbf     d7,Boss_FlyingNeoClearPaletteHighBitsThirdRange
-                lea     (word_FF4400).l,a0
+                lea     (FlyingNeoTileAttrRangeD).l,a0
                 move.w  #$2F,d7                         ; '/'
 Boss_FlyingNeoClearPaletteHighBitsFourthRange:          ; CODE XREF: Boss_FlyingNeoClearPaletteHighBits+40   j  ; was: loc_3C14E
                 and.w   d0,(a0)+

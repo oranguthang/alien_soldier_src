@@ -390,6 +390,89 @@ passes consume the resulting count.
 | `VBlankSoundRequestDelay` | `$FFFFF762` | While nonzero, the VBlank event handler decrements this word and defers processing the pending sound-request byte. |
 | `VBlankPendingSound` | `$FFFFF764` | When the delay is zero, VBlank passes this byte to `Sound_QueueRequest` and clears it only after the request is accepted. |
 
+## Reviewed sound-driver global state
+
+The driver stores 48-byte playback records consecutively from `$FFF840`.
+Names for sparse absolute aliases use the statically proven record family and
+zero-based index; they do not claim a musical voice identity.
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `SoundCurrentPriority` | `$FFFFF800` | Request selection compares queued priorities with this byte, updates it for the accepted request, and clears it when ordinary SFX playback stops. |
+| `SoundTempoCounter` | `$FFFFF801` | Tempo processing decrements this byte and reloads it from `SoundTempoReload` on expiry. |
+| `SoundTempoReload` | `$FFFFF802` | BGM headers and sequence command `$EA` install this value; each tempo expiry copies it to `SoundTempoCounter`. |
+| `SoundCommunicationByte` | `$FFFFF803` | Sequence command `$E2` copies its single parameter here; no reconstructed reader proves a narrower communication endpoint. |
+| `SoundFadeStepsRemaining` | `$FFFFF804` | Music fade-out initializes this byte to 40 and consumes one step every time the tick counter expires. |
+| `SoundFadeTickCounter` | `$FFFFF806` | Fade-out initializes and reloads this byte to three, decrementing it between volume steps. |
+| `SoundPauseState` | `$FFFFF807` | VBlank posts pause/resume values; the sound update consumes them and uses `$FF` as the stable paused state. |
+| `SoundPCMEventFlag` | `$FFFFF808` | The driver clears this byte before FM processing and sets bit 7 after decoding a PCM sequence event; stopped-channel handling tests that bit. |
+| `SoundSelectedRequest` | `$FFFFF809` | Priority selection stores the winning sound ID here; dispatch consumes it and restores the empty `$FF` sentinel. |
+| `SoundRequestQueue` | `$FFFFF80A` | `Sound_QueueRequest` fills four consecutive request bytes and the driver priority scan consumes the same four slots. |
+| `SoundChannelGroupFlags` | `$FFFFF80E` | The update loop publishes zero for BGM, `$80` for ordinary SFX, and `$40` for special SFX while shared sequence handlers run. |
+| `SoundFM3SpecialMode` | `$FFFFF80F` | The FM3 special-mode command sets this byte; frequency and stopped-channel paths use it to select operator-frequency handling. |
+| `SoundBGMFM3Offsets` | `$FFFFF810` | Four words hold BGM FM3 operator frequency offsets selected when `SoundChannelGroupFlags` is zero. |
+| `SoundSFXFM3Offsets` | `$FFFFF818` | Four words hold the corresponding non-BGM FM3 operator offsets. |
+| `SoundBGMDataPtr` | `$FFFFF820` | BGM initialization resolves this pointer from the selected header; shared LFO and instrument handlers reload it as BGM data. |
+| `SoundSpecialSFXDataPtr` | `$FFFFF824` | Special-SFX loading resolves this pointer; shared instrument and channel-restoration paths use it for the dedicated records. |
+| `SoundManualVolumeState` | `$FFFFF828` | Extended commands request attenuation or restoration through this byte; the volume-transition state machine consumes those states. |
+| `SoundFMVolumeStep` | `$FFFFF829` | Manual or voice-DAC ducking setup stores the FM attenuation step consumed by all active BGM FM records. |
+| `SoundPSGVolumeStep` | `$FFFFF82A` | The matching PSG attenuation step is applied to all active BGM PSG records. |
+| `SoundVoiceDuckingState` | `$FFFFF82B` | Voice-DAC launch and Z80 status transitions advance this byte through pending, active, and released ducking states. |
+| `SoundVoiceSlotToggle` | `$FFFFF82C` | Voice-DAC allocation tests, sets, or clears bit zero while choosing between the two Z80 playback slots. |
+| `SoundPCMChannelRecord` | `$FFFFF840` | The main update treats this 48-byte record as the BGM PCM sequence channel before advancing to FM records. |
+| `SoundBGMFMChannels` | `$FFFFF870` | This is the first of six consecutive 48-byte BGM FM records processed by update, fade, and volume-transition loops. |
+| `SoundBGMFMChannel3` | `$FFFFF900` | This sparse alias is BGM FM record index three; dedicated special FM SFX marks and restores its override flags. |
+| `SoundBGMPSGChannels` | `$FFFFF990` | This is the first of three consecutive 48-byte BGM PSG records initialized and processed after the FM range. |
+| `SoundBGMPSGChannel2` | `$FFFFF9F0` | This sparse alias is BGM PSG record index two; the dedicated special PSG channel overrides and restores it. |
+| `SoundSFXFMChannels` | `$FFFFFA20` | This is the first of three consecutive 48-byte ordinary SFX FM records. |
+| `SoundSFXFMChannel1` | `$FFFFFA50` | This sparse alias is ordinary SFX FM record index one and is checked when special SFX ownership changes. |
+| `SoundSFXPSGChannel2` | `$FFFFFB10` | This sparse alias is ordinary SFX PSG record index two and is checked when special PSG ownership changes. |
+| `SoundSpecialSFXFM` | `$FFFFFB40` | Dedicated special-SFX loading, playback, stop, and restoration paths use this 48-byte FM record. |
+| `SoundSpecialSFXPSG` | `$FFFFFB70` | The matching dedicated 48-byte PSG record is selected for negative channel types. |
+| `SoundFMShadowIndexBase` | `$FFFFFBA0` | YM2612 writers add register numbers `$40-$4F` to this adjusted base to address the port-zero total-level shadows. |
+| `SoundFMPort1IndexBase` | `$FFFFFBB0` | Its offset from `SoundFMShadowIndexBase` selects the parallel port-one total-level shadows. |
+| `SoundFMLevelShadows` | `$FFFFFBE0` | The resulting 32-byte region stores both ports' operator total-level values and is saved across pause muting. |
+| `SoundFMShadowsEnd` | `$FFFFFC00` | Pause handling uses this exclusive end address while restoring the 32-byte shadow region backward. |
+
+## Reviewed Z80 RAM exchange fields
+
+The 68000 accesses these bytes only while holding the Z80 bus. Slot A and B
+store parallel voice-DAC records. Unknown DPCM header members remain numbered
+by their verified byte order rather than receiving invented codec meanings.
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `PauseMenuZ80SpriteData` | `$A00C00` | The pause renderer submits this fixed Z80-RAM address as one of its two sprite-data sources. |
+| `Z80DriverBusy` | `$A01F2A` | YM2612 and pause paths poll this byte under bus ownership and retry while it is nonzero. |
+| `Z80VoiceSlotADesc0` | `$A01F80` | Voice-slot setup copies descriptor byte zero to the first byte of slot A. |
+| `Z80VoiceSlotADesc1` | `$A01F81` | Voice-slot setup copies descriptor byte one to the second byte of slot A. |
+| `Z80VoiceSlotAHeader0` | `$A01F82` | Slot A receives byte zero of the four-byte DPCM sample header here. |
+| `Z80VoiceSlotAHeader1` | `$A01F83` | Slot A receives byte one of the DPCM sample header here. |
+| `Z80VoiceSlotAHeader2` | `$A01F84` | Slot A receives byte two of the DPCM sample header here. |
+| `Z80VoiceSlotAHeader3` | `$A01F85` | Slot A receives byte three of the DPCM sample header here. |
+| `Z80VoiceSlotAActive` | `$A01F86` | The 68000 writes `$80` when publishing slot A and later reads the byte to test availability. |
+| `Z80VoiceSlotAFlags` | `$A01F87` | Descriptor byte five is copied here; selection compares its upper priority bits with new requests. |
+| `Z80VoiceSlotBDesc0` | `$A01FA0` | Voice-slot setup copies descriptor byte zero to the first byte of slot B. |
+| `Z80VoiceSlotBDesc1` | `$A01FA1` | Voice-slot setup copies descriptor byte one to the second byte of slot B. |
+| `Z80VoiceSlotBHeader0` | `$A01FA2` | Slot B receives byte zero of the four-byte DPCM sample header here. |
+| `Z80VoiceSlotBHeader1` | `$A01FA3` | Slot B receives byte one of the DPCM sample header here. |
+| `Z80VoiceSlotBHeader2` | `$A01FA4` | Slot B receives byte two of the DPCM sample header here. |
+| `Z80VoiceSlotBHeader3` | `$A01FA5` | Slot B receives byte three of the DPCM sample header here. |
+| `Z80VoiceSlotBActive` | `$A01FA6` | The 68000 writes `$80` when publishing slot B and later reads the byte to test availability. |
+| `Z80VoiceSlotBFlags` | `$A01FA7` | Descriptor byte five is copied here; selection compares its upper priority bits with new requests. |
+| `Z80DACCommandByte2` | `$A01FE6` | Immediate PCM and voice paths copy logical descriptor byte two to this mailbox position. |
+| `Z80DACCommandByte3` | `$A01FE7` | Immediate PCM and voice paths copy logical descriptor byte three to this mailbox position. |
+| `Z80DACCommandByte0` | `$A01FE8` | Immediate PCM and voice paths copy logical descriptor byte zero to this mailbox position. |
+| `Z80DACCommandByte1` | `$A01FE9` | Immediate PCM and voice paths copy logical descriptor byte one to this mailbox position. |
+| `Z80DACPanningUpdate` | `$A01FF8` | Active DAC pan changes are written here only when the Z80 request-state byte permits the update. |
+| `Z80DACPanning` | `$A01FF9` | PCM submission publishes channel panning here; resume logic reads it back for YM2612 restoration. |
+| `Z80DACCommandByte6` | `$A01FFA` | Immediate requests copy descriptor byte six here; slot requests publish the fixed `$C0` control value. |
+| `Z80DACCommandByte5` | `$A01FFB` | PCM and voice submissions copy logical descriptor byte five to this shared mailbox byte. |
+| `Z80DACStatus` | `$A01FFC` | Selection and ducking paths read its active-slot, priority, and voice-active status bits under bus ownership. |
+| `Z80DACRequestState` | `$A01FFD` | PCM writes one and voice requests write `$80`; later paths test zero/sign before replacing data or panning. |
+| `Z80DACCommandByte4` | `$A01FFE` | Immediate requests copy descriptor byte four here; slot-preemption setup may instead publish `$80`. |
+| `Z80VBlankActive` | `$A01FFF` | The interrupt path sets this byte after acquiring the Z80 bus and clears it before releasing the VBlank-side bus window. |
+
 ## Reviewed raster-effect control fields
 
 | Symbol | Address | Static evidence |
@@ -1035,6 +1118,113 @@ record therefore use structural `PrimaryEntity` names rather than a boss name.
 | `Entity60XPos` | `$FFFFDC50` | 60/`$10` | Integer X coordinate checked during Wolf Garopa transition. |
 | `Entity60XVel` | `$FFFFDC58` | 60/`$18` | Signed 16.16 horizontal velocity consumed by Sylpheed. |
 | `Entity60YVel` | `$FFFFDC5C` | 60/`$1C` | Signed 16.16 vertical velocity consumed by Sylpheed. |
+
+## Reviewed gameplay and weapon-mode state
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `GameplayStateBuffer` | `$FFFF8000` | Full initialization clears 2 KiB from this base, while the explicit broad reset clears the complete 8 KiB state block. |
+| `WeaponTargetOrFrame` | `$FFFF801C` | Targeting modes store an object pointer here; icon mode reuses the word as its even frame counter. |
+| `WeaponIconFrameTile` | `$FFFF801E` | State-twelve icon animation copies the selected frame's tile word here after clearing it with the other runtime parameters. |
+| `WeaponAnimationDataPtr` | `$FFFF8020` | Circle-attack setup and weapon icon mode install and consume an animation-data pointer here. |
+| `WeaponYMotionParameter` | `$FFFF8024` | Weapon setup derives a fixed-point vertical motion term here; impact particles add it to vertical velocity. |
+| `WeaponXMotionParameter` | `$FFFF8028` | The paired fixed-point term is added to horizontal velocity; other weapon modes intentionally reuse its halves as parameters. |
+| `WeaponModeParameter` | `$FFFF802C` | Weapon modes store either a motion-table pointer or a word-sized damage/count value here, so the neutral union name is intentional. |
+| `SpecialMoveSpawnXOffset` | `$FFFF8032` | Special activation initializes this word and the circle-effect spawner adds it to the player's X position. |
+| `SpecialMoveSpawnYOffset` | `$FFFF8034` | Special activation initializes this word and the circle-effect spawner adds it to the player's Y position. |
+
+These weapon fields are mode-dependent unions. The map records all observed
+roles rather than pretending that one weapon state's interpretation applies to
+every state.
+
+## Reviewed large tilemap and terrain workspaces
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `LargeTilemapBuffer` | `$FFFF4000` | Frontend and ending paths walk `$800` longwords from this base, proving an 8 KiB shared tilemap workspace. |
+| `FlyingNeoTileAttrRangeA` | `$FFFF4020` | Flying Neo clears the priority bit on 240 consecutive tile words beginning here. |
+| `FlyingNeoTileAttrRangeB` | `$FFFF4AC0` | The second range in the same operation contains sixteen consecutive tile words. |
+| `FlyingNeoTileAttrRangeC` | `$FFFF4360` | The third range contains 48 consecutive tile words whose priority bits are cleared. |
+| `FlyingNeoTileAttrRangeD` | `$FFFF4400` | The fourth range contains the matching 48 tile words. |
+| `LargeTilemapPage2` | `$FFFF5000` | This address is exactly 4 KiB after the shared buffer base; Stage 8 writes its first tile and credits edits 256 words from it. |
+| `CreditsXiTigerTilemap` | `$FFFF5180` | Credits updates tile indices across three 16-word rows loaded for the Xi-Tiger scene. |
+| `Stage8StridedControl` | `$FFFF615D` | Train and Flying Neo profiles write three byte pairs at offsets zero, eight, and sixteen from this base. |
+| `TerobusterIntroPalette` | `$FFFF644A` | Terobuster initialization writes its five-byte intro palette sequence beginning here. |
+| `WeaponSetupWriteFlag` | `$FFFF7001` | Weapon-setup initialization writes one here; no reconstructed reader supports a narrower role. |
+| `TerrainCollisionBuffer` | `$FFFF7800` | Terrain probes and enemy placement consistently pass this base with an `$80` bound; stage transitions clear 224 bytes from it. |
+| `Stage8TilemapMode` | `$FFFF780C` | Stage 8 setup writes `$82`, and the Stage 9 corridor transition clears the same byte. |
+| `Stage9TilemapMode` | `$FFFF780D` | Stage 9 writes `$82` after filling its four plane-map rows. |
+| `WeaponSetupTilemapMode` | `$FFFF78FF` | Weapon setup writes `$82` after initializing its three plane-map color tables. |
+| `Stage20PlaneMode0` | `$FFFF7981` | Stage 20 plane setup writes `$82`; the Sylpheed cleanup clears it with the adjacent mode bytes. |
+| `Stage20PlaneMode1` | `$FFFF7982` | Stage 20 plane setup writes `$90`; the Sylpheed cleanup clears it. |
+| `Stage20PlaneMode2` | `$FFFF7983` | Stage 20 plane setup writes `$92`; the Sylpheed cleanup clears it. |
+| `Stage17TilemapMode` | `$FFFF7AFF` | Stage 17 writes `$82` after filling four complete plane-map rows. |
+| `SevenForcesTilemapMode` | `$FFFF7B00` | Artemis setup writes two before filling its row; the shared Seven Forces cleanup clears it. |
+
+The three paired bytes at `Stage8StridedControl` and the write-only weapon flag
+remain deliberately structural names because no current reader proves their
+bit-level protocol.
+
+## Reviewed plane-tilemap and cutscene work buffers
+
+The `$FFFF0000` plane map uses 64 words (`$80` bytes) per row. These sparse
+anchors are the rows explicitly initialized by stage and frontend code; no
+ownership beyond the observed shared plane-map storage is implied.
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `PlaneTilemapRow9` | `$FFFF0480` | Stage 8 fills 64 words here in parallel with rows 10 and 24. |
+| `PlaneTilemapRow10` | `$FFFF0500` | This is the next `$80`-byte row and receives the same 64-word Stage 8 fill. |
+| `PlaneTilemapRow22` | `$FFFF0B00` | Artemis setup fills this complete 64-word tilemap row with tile `$0300`. |
+| `PlaneTilemapRow24` | `$FFFF0C00` | Stage 8 and Stage 17 fill this complete row; its address is 24 row strides from the plane-map base. |
+| `PlaneTilemapRow25` | `$FFFF0C80` | Stage 9, Stage 17, and Stage 20 setup fill this 64-word row. |
+| `PlaneTilemapRow26` | `$FFFF0D00` | Stage and weapon-setup paths fill this complete 64-word row. |
+| `PlaneTilemapRow27` | `$FFFF0D80` | Stage and weapon-setup paths fill this complete 64-word row. |
+| `PlaneTilemapRow28` | `$FFFF0E00` | Stage and weapon-setup paths fill this complete 64-word row. |
+| `PlaneTilemapRow29` | `$FFFF0E80` | The unreferenced Stage 20 variant fills this complete 64-word row. |
+| `CutsceneWorkBuffer` | `$FFFF1000` | Story-title expansion clears and builds here, the ship reveal uses it as a `$240`-byte pattern buffer, and ending starfield reuses it for X positions. |
+| `EndingStarYPositions` | `$FFFF1400` | Starfield initialization writes 256 fixed-point Y positions and the updater selects one of four `$100`-byte banks. |
+| `StoryTitleLeftOrigin` | `$FFFF14C3` | Story-title expansion starts its leftward destination traversal from this byte in the shared workspace. |
+| `StoryTitleRightOrigin` | `$FFFF1500` | The matching rightward expansion traversal starts from this aligned workspace address. |
+| `EndingStarDepthValues` | `$FFFF1800` | Starfield initialization creates 256 depth/frame accumulators and update selects one of four banks. |
+| `EndingStarXVelocities` | `$FFFF1C00` | Starfield initialization stores the fixed-point horizontal velocity paired with each X position. |
+| `EndingStarYVelocities` | `$FFFF2000` | Starfield initialization stores the fixed-point vertical velocity paired with each Y position. |
+| `ShipArrivalTilemap` | `$FFFF2020` | Ship arrival toggles priority on exactly `$160` consecutive staged tile words before requeueing the map. |
+| `StoryTitleMirroredGlyph` | `$FFFF2380` | Glyph setup writes 128 bytes of mirrored source nibbles beginning here. |
+| `StoryTitleGlyphReadBase` | `$FFFF2384` | Both title-expansion paths begin their reverse source traversal relative to this interior glyph-buffer anchor. |
+
+## Reviewed controller, timing, results, and demo state
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `Controller1TypeID` | `$FFFFFF06` | Port-one polling stores the four-bit hardware response and accepts `$D` as the connected controller signature. |
+| `Controller2TypeID` | `$FFFFFF07` | Port-two polling stores the corresponding hardware response before applying the same `$D` connection test. |
+| `DeveloperSignatureTREA` | `$FFFFFF10` | Reset compares this longword with `TREA` and writes it as the first half of the warm-reset developer signature. |
+| `DeveloperSignatureSURE` | `$FFFFFF14` | Reset compares this longword with `SURE` and writes it as the second half of the warm-reset developer signature. |
+| `P1ButtonASourceBit` | `$FFFFFF20` | Optional port-one remapping reads this byte as the source bit mapped onto output button A; reset installs identity bit six. |
+| `P2ButtonASourceBit` | `$FFFFFF21` | Optional port-two remapping reads this byte as the source bit mapped onto output button A; reset installs identity bit six. |
+| `P1ButtonBSourceBit` | `$FFFFFF22` | Optional port-one remapping reads this byte as the source bit mapped onto output button B; reset installs identity bit four. |
+| `P2ButtonBSourceBit` | `$FFFFFF23` | Optional port-two remapping reads this byte as the source bit mapped onto output button B; reset installs identity bit four. |
+| `P1ButtonCSourceBit` | `$FFFFFF24` | Optional port-one remapping reads this byte as the source bit mapped onto output button C; reset installs identity bit five. |
+| `P2ButtonCSourceBit` | `$FFFFFF25` | Optional port-two remapping reads this byte as the source bit mapped onto output button C; reset installs identity bit five. |
+| `ConsoleVersionFlags` | `$FFFFFF26` | Reset snapshots the console version register; VBlank tests its bit six before applying the alternate timing delay. |
+| `FrameSkipLevel` | `$FFFFFF3E` | HUD controls clamp this value to zero through three, while VBlank subtracts it from the update interval. |
+| `ResultsExtendedLayout` | `$FFFFFF46` | Credits sets this word before entering results; results consumes and clears it while selecting extended scroll bounds. |
+| `DemoCurrentInputWord` | `$FFFFFF48` | Playback holds the current packed held/pressed input here; recording retains the previous sample for run-length encoding. |
+| `DemoInputRunFrames` | `$FFFFFF4A` | Playback counts down the current input run, while recording increments and emits the same run length. |
+| `DemoInputStreamPtr` | `$FFFFFF4C` | Playback saves and advances the pointer to the next run-length encoded input record. |
+| `DemoRecordingOffset` | `$FFFFFF50` | Recording advances this word by four bytes for each count/input pair written into its RAM buffer. |
+| `DemoPlaybackInputWord` | `$FFFFFF52` | Playback copies the selected packed input here before publishing its two bytes to held and pressed controller state. |
+| `DemoRecordingMode` | `$FFFFFF56` | Zero selects ROM playback; a nonzero value selects the RAM recording path and suppresses input injection. |
+| `DemoFramesRemaining` | `$FFFFFF58` | Demo startup loads `$1000`; each update decrements the word and exits on zero. |
+| `SavedDifficultyMode` | `$FFFFFF5E` | Demo entry saves the selected difficulty here and restores it on exit. |
+| `SavedSoundDisableFlags` | `$FFFFFF60` | Demo and credits temporarily save the sound-disable options here and restore them on exit. |
+| `DemoRotationIndex` | `$FFFFFF62` | Each completed demo advances this even index modulo eight to select the next stage and input stream. |
+| `SavedControlLayoutFlags` | `$FFFFFF66` | Demo entry saves the control-layout byte here and restores it on exit. |
+
+The adjacent `$FFFFFF00` clear-only longword and `$FFFFFF36` boot-only option
+word remain raw: their exact roles are not established by the current static
+references.
 
 ## Review policy
 
