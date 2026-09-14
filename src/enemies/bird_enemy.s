@@ -66,7 +66,7 @@ Enemy_BirdController:                                   ; DATA XREF: ROM:Entity_
                 btst    #4,$22(a5)
                 bne.w   Enemy_ConvertBirdToDefeatDebris
                 move.b  #$BC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.l  #SharedCombatSpriteAnimation00,8(a5)
@@ -446,7 +446,7 @@ Enemy_UpdateBirdDefeatDebris_EmitParticles:             ; CODE XREF: Enemy_Updat
                 movea.l #SharedCombatSpriteAnimation00,a1
                 jsr     (Effect_SpawnRadialParticlePattern).l
                 move.b  #$BC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 cmpi.w  #$1B8,(Entity57Type).w
                 beq.s   Enemy_UpdateBirdDefeatDebris_RemoveForSpecialStage
                 moveq   #7,d0

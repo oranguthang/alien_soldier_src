@@ -166,7 +166,7 @@ Projectile_SpawnFragmentCluster:                        ; was: sub_30670
                 clr.w   4(a0)
                 move.w  #$10,$46(a0)
                 move.b  #$CE,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 rts
 ; End of function Projectile_SpawnFragmentCluster
 ; Projectile state dispatcher using jump table for behavior selection
@@ -456,7 +456,7 @@ Projectile_FragmentConvertToImpact:                     ; was: sub_30A76
                 clr.w   $C(a5)
                 clr.b   $21(a5)
                 move.b  #$BC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.w  #8,4(a5)
@@ -645,7 +645,7 @@ Stage15_FallingRockCheckTerrain:
 Stage15_FallingRockBounceFromTerrain:
                 move.w  #3,(PlaneAShakeLevel).w
                 move.b  #$53,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.l  $1C(a5),$40(a5)
                 jsr     (Physics_AlignToTerrain).l
                 move.l  $40(a5),d0

@@ -132,7 +132,7 @@ Boss_EnterMedusaState6:                                 ; CODE XREF: Boss_Update
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.b  #$F0,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 movea.l #Boss_MedusaObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l
 ; End of function Boss_UpdateMedusaState4
@@ -276,7 +276,7 @@ Boss_CheckMedusaStateEVerticalTransfer:                 ; CODE XREF: Boss_Update
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.b  #$48,d0                         ; 'H'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #2,(PlaneAShakeLevel).w
                 bra.w   Boss_EnterMedusaStateC
 ; ---------------------------------------------------------------------------
@@ -547,7 +547,7 @@ Boss_MedusaPlaySFXEvery4Frames:                         ; CODE XREF: Boss_Render
                 move.w  (FrameCounter).w,d1
                 andi.w  #3,d1
                 bne.s   Boss_PlayMedusaSFXEvery4FramesReturn
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; ---------------------------------------------------------------------------
 Boss_PlayMedusaSFXEvery4FramesReturn:                   ; CODE XREF: Boss_MedusaPlaySFXEvery4Frames+8   j  ; was: locret_57030
                 rts
@@ -557,7 +557,7 @@ Boss_MedusaPlaySFXEvery8Frames:                         ; CODE XREF: Boss_Update
                 move.w  (FrameCounter).w,d1
                 andi.w  #7,d1
                 bne.s   Boss_PlayMedusaSFXEvery8FramesReturn
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; ---------------------------------------------------------------------------
 Boss_PlayMedusaSFXEvery8FramesReturn:                   ; CODE XREF: Boss_MedusaPlaySFXEvery8Frames+8   j  ; was: locret_57042
                 rts

@@ -232,5 +232,5 @@ Effect_ConfigureSharedExplosion:                        ; CODE XREF: Effect_Init
                 move.w  #2,(PlaneAShakeLevel).w
                 move.w  #2,(PlaneBShakeLevel).w
                 move.b  #$BC,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Effect_InitSharedExplosionFromCurrent

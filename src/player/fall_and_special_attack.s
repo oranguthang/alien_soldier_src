@@ -303,7 +303,7 @@ Player_InitSpecialAttack:                               ; CODE XREF: Player_Hand
                 moveq   #7,d7
                 jsr     (Sys_ClearObjectBlocks96).l
                 move.b  #$B0,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bra.w   Player_SpawnTripleShot
 ; End of function Player_InitSpecialAttack
 ; Handles special attack state logic

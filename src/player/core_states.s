@@ -161,7 +161,7 @@ Player_StateHandlerOffsets: dc.w    Player_HandleJump-Player_HandleDeathSequence
 Player_HandleDeathSequence:                             ; CODE XREF: Player_Update+94   j  ; was: sub_150C2
                                         ; DATA XREF: Player_UpdateState+8   o
                 move.b  #$2B,d0                         ; '+'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.b  #$73,(PlayerInputMask).w        ; 's'
                 move.w  #$8000,(PlayerDefeatPhase).w
                 jsr     (Sys_ClearObjectBlocks17).l
@@ -200,7 +200,7 @@ Player_HandleDeathSequence_UpdateTimer:                 ; CODE XREF: Player_Hand
                 andi.w  #$70,d0                         ; 'p'
                 beq.s   Player_HandleDeathSequence_RenderParticles
                 move.b  #$BD,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 subq.w  #1,$48(a5)
                 bmi.s   Player_HandleDeathSequence_BeginRespawn
 Player_HandleDeathSequence_RenderParticles:             ; CODE XREF: Player_HandleDeathSequence+AE   j  ; was: loc_15182
@@ -501,7 +501,7 @@ Player_InitLandingState:                                ; CODE XREF: Player_AirC
                 move.w  #6,$4A(a5)
                 move.w  #8,$5C(a5)
                 move.b  #$B1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bra.w   Player_AutoFlipDirection
 ; End of function Player_InitLandingState
 ; Handles player landing state logic
@@ -590,7 +590,7 @@ Player_ToggleShootingModeWithInputMask:                 ; CODE XREF: Player_Chec
                 move.b  #$7F,(PlayerInputMask).w
                 eori.w  #2,(ShootingMode).w
                 move.b  #$A3,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 moveq   #0,d0
                 rts
 ; End of function Player_ToggleShootingModeWithInputMask

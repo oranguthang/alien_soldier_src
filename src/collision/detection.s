@@ -242,7 +242,7 @@ Collision_CheckWeaponProjectilesAgainstEnemies_ApplyFlaggedDamage:  ; CODE XREF:
                 btst    #7,$23(a2)
                 beq.s   Collision_CheckWeaponProjectilesAgainstEnemies_MarkFlaggedHit
                 move.b  #$AE,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bset    #3,(BossColorEffectFlags).w
 Collision_CheckWeaponProjectilesAgainstEnemies_MarkFlaggedHit:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+B4   j  ; was: loc_13D90
                 bset    #0,(BossColorEffectFlags).w
@@ -282,7 +282,7 @@ Collision_CheckWeaponProjectilesAgainstEnemies_ResolveStandardTarget:  ; CODE XR
                 bset    #7,$22(a3)
                 bset    #6,$22(a2)
                 move.b  #$AE,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  $26(a3),d4
                 move.w  #$FFFF,$26(a3)
                 sub.w   d4,$24(a2)
@@ -514,7 +514,7 @@ Collision_CheckSpecialAttackTargets_ApplyFlaggedDamage:  ; CODE XREF: Collision_
                 bne.s   Collision_CheckSpecialAttackTargets_NextTarget
                 movem.l d0,-(sp)
                 move.b  #$AE,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 movem.l (sp)+,d0
                 move.b  $21(a3),d4
                 or.b    d4,(CombatHitFlags).w
@@ -546,7 +546,7 @@ Collision_CheckSpecialAttackTargets_ApplyStandardDamage:  ; CODE XREF: Collision
                 ori.b   #$50,$22(a2)                    ; 'P'
                 movem.l d0,-(sp)
                 move.b  #$AE,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 movem.l (sp)+,d0
                 move.w  $26(a3),d4
                 sub.w   d4,$24(a2)

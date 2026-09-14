@@ -146,7 +146,7 @@ Projectile_Epsilon1ConvertSpreadProjectileToDebris:     ; CODE XREF: Projectile_
                 tst.w   $5E(a5)
                 bne.w   Projectile_Epsilon1ConvertSpreadProjectileToDebrisReturn
                 move.b  #$E1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Projectile_Epsilon1ConvertSpreadProjectileToDebrisReturn:  ; CODE XREF: Projectile_Epsilon1ConvertSpreadProjectileToDebris+38   j
                                         ; Projectile_Epsilon1ConvertSpreadProjectileToDebris+42   j
                 rts
@@ -222,7 +222,7 @@ Projectile_Epsilon1FinishBarrageRowEmission:            ; CODE XREF: Projectile_
                 ori.w   #$8000,2(a5)
                 addq.w  #2,4(a5)
                 move.b  #$AB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Projectile_Epsilon1EmitBarrageRowReturn:                ; CODE XREF: Projectile_Epsilon1EmitBarrageRowState+A   j
                 rts
 ; End of function Projectile_Epsilon1EmitBarrageRowState
@@ -323,7 +323,7 @@ Projectile_Epsilon1ConvertBarrageRowProjectileToDebris:  ; CODE XREF: Projectile
                 bne.s   Projectile_Epsilon1ConvertBarrageRowProjectileToDebrisReturn
                 move.w  #2,(PlaneAShakeLevel).w
                 move.b  #$E1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Projectile_Epsilon1ConvertBarrageRowProjectileToDebrisReturn:  ; CODE XREF: Projectile_Epsilon1ConvertBarrageRowProjectileToDebris+32   j
                 rts
 ; End of function Projectile_Epsilon1ConvertBarrageRowProjectileToDebris
@@ -466,7 +466,7 @@ Boss_Epsilon1LaunchRingObjectState:                     ; DATA XREF: ROM:000474F
                 move.w  #$80,$48(a5)
                 addq.w  #2,4(a5)
                 move.b  #$50,d0                         ; 'P'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_Epsilon1LaunchRingObjectReturn:                    ; CODE XREF: Boss_Epsilon1LaunchRingObjectState+4   j
                 rts
 ; End of function Boss_Epsilon1LaunchRingObjectState

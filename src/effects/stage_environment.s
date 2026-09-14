@@ -75,7 +75,7 @@ TerrainTileAnimation_WaitForActivation:                 ; DATA XREF: ROM:0002F3D
                 move.w  $14(a5),$14(a0)
                 addq.w  #8,$14(a0)
                 move.b  #$45,d0                         ; 'E'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 TerrainTileAnimation_WaitReturn:                        ; CODE XREF: TerrainTileAnimation_WaitForActivation+6   j  ; was: locret_2F46A
                                         ; TerrainTileAnimation_WaitForActivation+C   j
                 rts

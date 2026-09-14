@@ -733,7 +733,7 @@ StageTransition_InitializeStage24SceneObjects:          ; DATA XREF: ROM:0000F14
                 move.w  #$C0,(CameraXUpperBound).w
                 clr.l   (Stage24VScrollSpeed).w
                 move.b  #$C9,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function StageTransition_InitializeStage24SceneObjects
 ; Accelerates the Stage 24 vertical scroll until coordinate $C0
 StageTransition_AccelerateStage24VerticalScroll:        ; DATA XREF: ROM:0000F14C   o  ; was: sub_FA0E

@@ -263,7 +263,7 @@ Boss_VictorInitNextRingSegment:                         ; CODE XREF: Boss_Victor
 Boss_VictorFinishRingDeployment:                        ; CODE XREF: Boss_VictorDeployRing+78   j  ; was: loc_32788
                 move.w  #3,(TwentyFirstEntityWork4C).w
                 move.b  #$4B,d0                         ; 'K'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$40,$4A(a5)                    ; '@'
                 addq.w  #2,4(a5)
                 rts
@@ -319,7 +319,7 @@ Boss_VictorReverseRing:                                 ; DATA XREF: ROM:0003243
                 bne.w   Entity_UpdateReturn
                 move.w  #3,(PlaneAShakeLevel).w
                 move.b  #$53,d0                         ; 'S'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 lea     (TwentyFirstEntityType).w,a4
                 move.w  #$B,d6
 Boss_VictorLinkNextRingSegment:                         ; CODE XREF: Boss_VictorReverseRing+5E   j  ; was: loc_32870

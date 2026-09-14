@@ -50,7 +50,7 @@ Collision_PlayerWeaponVsEnemy_ApplyFlaggedDamage:       ; CODE XREF: Collision_P
                 bne.s   Collision_PlayerWeaponVsEnemy_NextTarget
                 movem.l d0,-(sp)
                 move.b  #$AE,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 movem.l (sp)+,d0
                 ori.b   #$40,(CombatHitFlags).w         ; '@'
                 bset    #0,(BossColorEffectFlags).w
@@ -80,7 +80,7 @@ Collision_PlayerWeaponVsEnemy_ApplyStandardDamage:      ; CODE XREF: Collision_P
                 ori.b   #$40,$22(a2)                    ; '@'
                 movem.l d0,-(sp)
                 move.b  #$AE,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 movem.l (sp)+,d0
                 move.w  $26(a3),d4
                 sub.w   d4,$24(a2)

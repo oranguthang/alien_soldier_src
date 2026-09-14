@@ -70,7 +70,7 @@ Boss_FlyingNeoUpdateDivingArcSound:                     ; CODE XREF: Boss_Flying
                 andi.w  #7,d0
                 bne.s   Boss_FlyingNeoSelectDivingArcPose
                 move.b  #$D1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_FlyingNeoSelectDivingArcPose:                      ; CODE XREF: Boss_FlyingNeoDivingArcState+20   j  ; was: loc_3C8A8
                 lea     Boss_FlyingNeoDivingArcPoseCommands(pc),a1
                 nop

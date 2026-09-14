@@ -63,7 +63,7 @@ Projectile_MissirayAndRisingShotCheckCollision:         ; CODE XREF: Projectile_
 Projectile_MissirayAndRisingShotBeginImpact:            ; CODE XREF: Projectile_MissirayAndRisingShotMain+1C   j  ; was: loc_33A30
                                         ; Projectile_MissirayAndRisingShotMain+4A   j
                 move.b  #$30,d0                         ; '0'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$E,4(a5)
                 clr.b   $21(a5)
 Projectile_MissirayAndRisingShotDispatchState:          ; CODE XREF: Projectile_MissirayAndRisingShotMain+4   j  ; was: loc_33A44
@@ -204,7 +204,7 @@ Projectile_RisingShotLaunch:                            ; CODE XREF: Projectile_
                 move.l  $58(a5),$1C(a5)
                 addq.w  #2,4(a5)
                 move.b  #$57,d0                         ; 'W'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Projectile_RisingShotWait
 ; Moves a rising-wave member upward while emitting shots
 Projectile_RisingShotRiseAndEmit:                       ; DATA XREF: ROM:00033A5C   o  ; was: sub_33BD0
@@ -308,7 +308,7 @@ Projectile_Stage24RisingShotSpawnNextRadialParticle:    ; CODE XREF: Projectile_
                 addi.w  #$40,d6                         ; '@'
                 dbf     d7,Projectile_Stage24RisingShotSpawnNextRadialParticle
                 move.b  #$BB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 rts
 ; End of function Projectile_Stage24RisingShotSpawnRadialBurst
 ; Spawns one radial type-$160 burst particle with the supplied velocity

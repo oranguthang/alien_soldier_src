@@ -144,7 +144,7 @@ Boss_DestroyerMK2TickProjectedSweep:                    ; CODE XREF: Boss_Destro
                 subq.w  #1,$5C(a5)
                 bne.s   Boss_DestroyerMK2ProjectedSweepReturn
                 move.b  #$E9,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bra.w   Boss_DestroyerMK2AdvanceMainState
 ; ---------------------------------------------------------------------------
 Boss_DestroyerMK2ProjectedSweepReturn:                  ; CODE XREF: Boss_DestroyerMK2UpdateProjectedSweep+38   j  ; was: locret_4B198
@@ -406,7 +406,7 @@ Boss_DestroyerMK2ProjectedEffectLoop:                   ; CODE XREF: Boss_Destro
                 subq.w  #1,$5C(a5)
                 bne.s   Boss_DestroyerMK2ProjectedEffectLoop
                 move.b  #$E9,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 rts
 ; End of function Boss_DestroyerMK2EmitFourProjectedEffects
 ; Adds a uniform offset to all 255 scroll rows until the first row reaches $110
@@ -565,7 +565,7 @@ Object_DestroyerMK2InitializeMovement:                  ; DATA XREF: ROM:0004B4A
                 move.l  Object_DestroyerMK2AccelerationTable(pc,d0.w),$54(a5)
                 addq.w  #2,4(a5)
                 move.b  #$E7,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Object_DestroyerMK2MovementInitReturn:                  ; CODE XREF: Object_DestroyerMK2InitializeMovement+4   j  ; was: locret_4B630
                 rts
 ; End of function Object_DestroyerMK2InitializeMovement

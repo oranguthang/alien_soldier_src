@@ -21,7 +21,7 @@ Boss_ZLeoFinishOrbVelocitySelection:                    ; CODE XREF: Boss_ZLeoSp
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   Boss_ZLeoSpawnOrbReturn
                 move.b  #$36,d0                         ; '6'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$468,(a0)
                 move.w  #$8C80,2(a0)
                 move.b  #$42,$21(a0)                    ; 'B'
@@ -107,7 +107,7 @@ Projectile_ZLeoOrbBounceAtStageBoundary:                ; CODE XREF: Projectile_
                 tst.w   $1C(a5)
                 bmi.s   Projectile_ZLeoOrbSelectFlashFrame
                 move.b  #$37,d0                         ; '7'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 neg.l   $1C(a5)
 Projectile_ZLeoOrbSelectFlashFrame:                     ; CODE XREF: Projectile_ZLeoOrbMain+64   j  ; was: loc_530D4
                                         ; Projectile_ZLeoOrbMain+6A   j
@@ -137,7 +137,7 @@ Boss_ZLeoSpawnExpandingOrbitLaser:                      ; CODE XREF: Boss_ZLeoBe
                 move.w  #$E,$59C(a5)
                 move.w  #$8000,$59E(a5)
                 move.b  #$CB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$46C,(a0)
                 move.w  #$8000,2(a0)
                 move.w  #$F00,8(a0)
@@ -215,7 +215,7 @@ Projectile_ZLeoLaserOrbitSpriteAttributes:  dc.w    $C56C, $C50B, $C54B, $C51B  
 ; ---------------------------------------------------------------------------
 Projectile_ZLeoLaserLaunchHorizontal:                   ; CODE XREF: Projectile_ZLeoExpandingOrbitLaserMain+2C   j  ; was: loc_53242
                 move.b  #$7C,d0                         ; '|'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$498,(a5)
                 move.w  #$8E00,2(a5)
                 move.b  #1,$21(a5)
@@ -233,7 +233,7 @@ Projectile_ZLeoHorizontalLaserMain:                     ; CODE XREF: Projectile_
                 bclr    #7,$22(a5)
                 beq.s   Projectile_ZLeoHorizontalLaserTrySpawnTrail
                 move.b  #$BC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #3,(PlaneAShakeLevel).w
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
@@ -300,7 +300,7 @@ Boss_ZLeoCreateScrollingLaserPair:                      ; CODE XREF: Boss_ZLeoRu
                 move.w  #$4000,$59E(a5)
                 move.w  #7,$59C(a5)
                 move.b  #$EA,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; ---------------------------------------------------------------------------
 Boss_ZLeoCreateScrollingLaserPairReturn:                ; CODE XREF: Boss_ZLeoCreateScrollingLaserPair+6   j  ; was: locret_533BC
                                         ; Boss_ZLeoCreateScrollingLaserPair+4E   j
@@ -327,7 +327,7 @@ Boss_ZLeoSpawnDropAttackPair:                           ; CODE XREF: Boss_ZLeoRu
                 move.w  #$6000,$53E(a5)
                 move.w  #3,$53C(a5)
                 move.b  #$59,d0                         ; 'Y'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$478,(a0)
                 move.w  #$C080,2(a0)
                 move.w  #$6380,$E(a0)

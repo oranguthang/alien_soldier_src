@@ -47,7 +47,7 @@ Effect_SpawnExplosionA:                                 ; CODE XREF: Enemy_Updat
                 andi.w  #3,d0
                 move.w  d0,$4C(a0)
                 move.b  #$BB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bra.s   Effect_InitializeExplosion
 ; End of function Effect_SpawnExplosionA
 ; Creates explosion variant B and plays its sound
@@ -62,7 +62,7 @@ Effect_SpawnExplosionB:                                 ; CODE XREF: Enemy_Proce
                 andi.w  #3,d0
                 move.w  d0,$4C(a0)
                 move.b  #$BC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; Initializes an explosion at the current object's position
 Effect_InitializeExplosion:                             ; CODE XREF: Effect_SpawnExplosionA+32   j  ; was: loc_2BF22
                 move.l  $10(a5),$10(a0)

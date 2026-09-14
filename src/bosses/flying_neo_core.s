@@ -289,7 +289,7 @@ Boss_FlyingNeoConvertPartToDefeatParticle:              ; CODE XREF: Boss_Flying
                 move.l  #$FFFEE000,$1C(a0)
                 clr.b   $20(a0)
                 move.b  #$BC,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Boss_FlyingNeoConvertPartToDefeatParticle
 ; Updates the defeat-effect origin from boss position and facing
 Boss_FlyingNeoUpdateDefeatEffectOrigin:                 ; CODE XREF: Boss_FlyingNeoDefeatConvertForwardSlotRangeState+4   p  ; was: sub_3C390
@@ -378,7 +378,7 @@ Boss_FlyingNeoPositionDefeatRainParticle:               ; CODE XREF: Boss_Flying
                 andi.w  #7,d0
                 bne.s   Boss_FlyingNeoUpdateDefeatParticleRainTimer
                 move.b  #$BC,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; ---------------------------------------------------------------------------
 Boss_FlyingNeoUpdateDefeatParticleRainTimer:            ; CODE XREF: Boss_FlyingNeoDefeatParticleRainState+14   j  ; was: loc_3C4A6
                                         ; Boss_FlyingNeoDefeatParticleRainState+1C   j

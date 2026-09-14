@@ -109,7 +109,7 @@ Pickup_CheckCollection:                                 ; CODE XREF: Pickup_Upda
                 bclr    #4,$22(a5)
                 bne.s   Pickup_UpdateFlipAndStageMotion
                 move.b  $4C(a5),d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.l  #$500,d0
                 jsr     (Score_AddPackedBCD).l
                 move.w  (PlayerHealth).w,d0

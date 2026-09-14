@@ -170,7 +170,7 @@ Boss_JetsripperAttackTimer:                             ; DATA XREF: ROM:000356E
                 bpl.w   Boss_JetsripperUpdateMovement
                 addq.w  #2,4(a5)
                 move.b  #$48,d0                         ; 'H'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #8,$52(a5)
                 moveq   #3,d0
                 jsr     (BossMessage_Start).l
@@ -451,7 +451,7 @@ Boss_JetsripperDivePrep:                                ; DATA XREF: ROM:000356F
                 cmpi.w  #$142,$14(a5)
                 bmi.w   Boss_JetsripperUpdateSegmentDisplay
                 move.b  #$DA,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,4(a5)
                 move.w  #$144,$14(a5)
                 move.w  #8,$52(a5)
@@ -502,7 +502,7 @@ Boss_JetsripperDiveStoreAngles:                         ; CODE XREF: Boss_Jetsri
                 cmpi.w  #$1A0,$54(a5)
                 bmi.s   Boss_JetsripperDiveUpdateWindupSegments
                 move.b  #$D7,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,4(a5)
                 move.w  #8,$52(a5)
                 move.w  #$1A0,$54(a5)
@@ -577,7 +577,7 @@ Boss_JetsripperSwingUpdateVerticalMotion:               ; CODE XREF: Boss_Jetsri
                 cmpi.w  #$138,$14(a5)
                 bmi.s   Boss_JetsripperProcessSegmentChain
                 move.b  #$48,d0                         ; 'H'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #8,$52(a5)
                 move.w  #$138,$14(a5)
                 clr.l   $1C(a5)

@@ -21,7 +21,7 @@ Boss_Stage3OrbitingFormationUpdateSpinSound:            ; CODE XREF: Boss_Stage3
                 add.w   d0,d0
                 move.w  Boss_Stage3OrbitingFormationSpinSoundDelays(pc,d0.w),(SharedPatternRow0Long0).w
                 move.b  #$54,d0                         ; 'T'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_Stage3OrbitingFormationSpinSoundReturn:            ; CODE XREF: Boss_Stage3OrbitingFormationUpdateSpinSound+4   j  ; was: locret_33F78
                                         ; Boss_Stage3OrbitingFormationUpdateSpinSound+A   j
                 rts
@@ -67,7 +67,7 @@ Boss_Stage3OrbitingFormationReleaseNextPart:            ; CODE XREF: Boss_Stage3
                 move.w  #$20,d2                         ; ' '
                 jsr     (Effect_SpawnEightWayExplosionParticles).l
                 move.b  #$BC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  (PlaneAShakeLevel).w,(PlaneBShakeLevel).w
                 rts

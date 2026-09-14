@@ -212,7 +212,7 @@ Boss_JokerReadNextPoseCommand:                          ; CODE XREF: Boss_JokerU
                 cmpi.b  #$80,(a1,d0.w)
                 bne.s   Boss_JokerReadPoseControlWord
                 move.b  1(a1,d0.w),d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,$58(a5)
                 move.w  $58(a5),d0
 Boss_JokerReadPoseControlWord:                          ; CODE XREF: Boss_JokerUpdatePose+18   j  ; was: loc_3BCE0

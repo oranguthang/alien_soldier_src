@@ -19,7 +19,7 @@ Pickup_UpdateMaxHealthUpgrade:                          ; CODE XREF: Pickup_MaxH
                 bclr    #4,$22(a5)
                 bne.s   Pickup_ApplyMaxHealthUpgradeSpritePriority
                 move.b  #$A7,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 tst.w   (PlayerHealth).w
                 beq.w   Pickup_ConvertMaxHealthUpgradeToCollectedFeedback
                 bmi.w   Pickup_ConvertMaxHealthUpgradeToCollectedFeedback
@@ -56,5 +56,5 @@ Pickup_MaxHealthUpgradeCollectedFeedback:               ; DATA XREF: ROM:Entity_
                 move.w  #$30,(FrameFreezeTimer).w       ; '0'
                 bset    #4,2(a5)
                 move.b  #$1B,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Pickup_MaxHealthUpgradeCollectedFeedback

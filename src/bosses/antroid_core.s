@@ -423,7 +423,7 @@ Boss_AntroidLaunchAttackMotionReturn:                   ; CODE XREF: Boss_Antroi
 Boss_AntroidApplyAttackImpact:                          ; CODE XREF: Boss_AntroidLeapAttackA+22   p  ; was: sub_37982
                                         ; Boss_AntroidLeapAttackB+24   p
                 move.b  #$AF,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #2,(PlaneAShakeLevel).w
                 tst.w   $1DE(a5)
                 bne.s   Boss_AntroidApplyAttackImpactReturn

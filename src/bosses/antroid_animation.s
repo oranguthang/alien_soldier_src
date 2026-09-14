@@ -12,7 +12,7 @@ Boss_AntroidReadPoseCommand:                            ; CODE XREF: Boss_Antroi
                 cmpi.b  #$80,(a1,d0.w)
                 bne.s   Boss_AntroidDecodePoseCommand
                 move.b  1(a1,d0.w),d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,$58(a5)
                 move.w  $58(a5),d0
 Boss_AntroidDecodePoseCommand:                          ; CODE XREF: Boss_AntroidUpdatePoseAnimation+18   j  ; was: loc_38146

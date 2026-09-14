@@ -158,7 +158,7 @@ Boss_ZLeoWaitForScrollSignChange:                       ; DATA XREF: ROM:000220F
                 btst    #7,(PrimaryEntityXVelocity).w
                 bne.s   Boss_ZLeoWaitForScrollSignChange_Return
                 move.b  #$D5,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,(SharedPatternRow0Long0).w
 Boss_ZLeoWaitForScrollSignChange_Return:                ; CODE XREF: Boss_ZLeoWaitForScrollSignChange+12   j  ; was: locret_222B8
                 rts
@@ -232,7 +232,7 @@ Boss_ZLeoFadeToEnding_ClearPaletteBufferLoop:           ; CODE XREF: Boss_ZLeoFa
                 dbf     d7,Boss_ZLeoFadeToEnding_ClearPaletteBufferLoop
                 move.w  #$80,(SharedPatternRow0Long0+2).w
                 move.b  #$C1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_ZLeoFadeToEnding_Return:                           ; CODE XREF: Boss_ZLeoFadeToEnding+22   j  ; was: locret_22376
                 rts
 ; ---------------------------------------------------------------------------
@@ -400,7 +400,7 @@ Boss_ZLeoSpawnParticles_Loop:                           ; CODE XREF: Boss_ZLeoSp
 Boss_ZLeoSpawnParticles_SelectFinalSfx:                 ; CODE XREF: Boss_ZLeoSpawnParticles+9E   j  ; was: loc_22540
                 move.b  #$2F,d0                         ; '/'
 Boss_ZLeoSpawnParticles_PlaySfx:                        ; CODE XREF: Boss_ZLeoSpawnParticles+A4   j  ; was: loc_22544
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_ZLeoSpawnParticles_Return:                         ; CODE XREF: Boss_ZLeoSpawnParticles+6   j  ; was: locret_2254A
                                         ; Boss_ZLeoSpawnParticles+16   j
                 rts
@@ -421,7 +421,7 @@ Boss_ZLeoParticleSpritePointers:    dc.l    SharedCombatSpriteAnimation00  ; DAT
 Boss_ZLeoSpawnImpactObject:                             ; CODE XREF: Boss_ZLeoIntroSequence+68   p  ; was: sub_2257C
                 lea     (PlayerObjectType).w,a5
                 move.b  #$41,d0                         ; 'A'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 movea.w #(PlayerSpecialObjectSlot-M68K_RAM),a0
                 move.w  #$230,(a0)
                 move.b  #$54,$21(a0)                    ; 'T'

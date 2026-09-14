@@ -49,7 +49,7 @@ Projectile_BugmaxDebrisSpawner_SpawnParticle:           ; DATA XREF: ROM:0002C29
                 btst    #0,(RandomNumberState).w
                 beq.s   Projectile_BugmaxDebrisSpawner_InitializeParticle
                 move.b  #$BB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Projectile_BugmaxDebrisSpawner_InitializeParticle:      ; CODE XREF: Projectile_BugmaxDebrisSpawner_SpawnParticle+14   j  ; was: loc_2C2CC
                 jsr     (Projectile_InitType88).l
                 btst    #0,(RandomNumberState+2).w

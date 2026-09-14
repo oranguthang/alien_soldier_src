@@ -255,7 +255,7 @@ Boss_WolfGaropaUpdateOrbChargeEffects:                  ; CODE XREF: Boss_WolfGa
                 move.w  #$2000,$65C(a5)
                 move.b  #8,$65E(a5)
                 move.b  #$ED,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; ---------------------------------------------------------------------------
 Boss_WolfGaropaUpdateOrbShotCountdown:                  ; CODE XREF: Boss_WolfGaropaUpdateBattleStartWait+D6   j  ; was: loc_4FC48
                 cmpi.w  #$14,$4DE(a5)
@@ -315,7 +315,7 @@ Boss_WolfGaropaApproachOrbAngleC0AndExplode:            ; DATA XREF: Boss_WolfGa
                 tst.w   d3
                 beq.s   Boss_WolfGaropaReturnFromOrbAngleC0
                 move.b  #$35,d0                         ; '5'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 jsr     Boss_WolfGaropaSpawnOrbExplosion(pc)  ; (pc)
                 nop
                 subq.w  #1,$11E(a5)
@@ -568,7 +568,7 @@ Boss_WolfGaropaSetPoseLinkedRecordY:                    ; CODE XREF: Boss_WolfGa
                 btst    #7,$23E(a5)
                 beq.s   Boss_WolfGaropaSetCurrentPoseLinkedRecordY
                 move.b  #$CF,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bra.w   Boss_WolfGaropaUpdateMetaspriteAndOrb
 ; ---------------------------------------------------------------------------
 Boss_WolfGaropaSetCurrentPoseLinkedRecordY:             ; CODE XREF: Boss_WolfGaropaUpdateHorizontalTargetMotion+D6   j  ; was: loc_4FF9A
@@ -612,7 +612,7 @@ Boss_WolfGaropaUpdateBallisticTransitionB:              ; DATA XREF: ROM:0004FE7
                 bclr    #6,$23E(a5)
                 beq.s   Boss_WolfGaropaAdvanceBallisticTransitionPose
                 move.b  #$EE,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_WolfGaropaAdvanceBallisticTransitionPose:          ; CODE XREF: Boss_WolfGaropaUpdateBallisticTransitionB+1C   j  ; was: loc_5002C
                 lea     Boss_WolfGaropaBallisticTransitionBPose(pc),a1
                 nop
@@ -719,7 +719,7 @@ Boss_WolfGaropaBeginLaunchMotion:                       ; CODE XREF: Boss_WolfGa
                 move.l  #$14000,$18(a5)
                 move.l  #$FFF80000,$1C(a5)
                 move.b  #$2A,d0                         ; '*'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bra.w   Boss_WolfGaropaUpdateMetaspriteAndOrb
 ; End of function Boss_WolfGaropaWaitForLaunchContact
 ; Update launch motion, the linked record, and the optional attack effect

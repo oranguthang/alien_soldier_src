@@ -416,7 +416,7 @@ Projectile_InitShieldViperOrbitShot:                    ; CODE XREF: Boss_Shield
                 btst    #0,(FrameCounter+1).w
                 bne.s   Projectile_ShieldViperOrbitShotInitializationReturn
                 move.b  #$58,d0                         ; 'X'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Projectile_ShieldViperOrbitShotInitializationReturn:    ; CODE XREF: Projectile_InitShieldViperOrbitShot+3C   j  ; was: locret_4F10A
                                         ; Projectile_InitShieldViperOrbitShot+44   j
                 rts

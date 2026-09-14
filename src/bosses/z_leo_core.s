@@ -305,7 +305,7 @@ Boss_ZLeoRunIntroCountdown:                             ; DATA XREF: ROM:00051B9
                 cmpi.w  #$1B8,$11C(a5)
                 bne.s   Boss_ZLeoAdvanceIntroCountdown
                 move.b  #$F7,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_ZLeoAdvanceIntroCountdown:                         ; CODE XREF: Boss_ZLeoRunIntroCountdown+6   j  ; was: loc_51EC8
                 subq.w  #1,$11C(a5)
                 bmi.s   Boss_ZLeoBeginBattleEntry
@@ -397,7 +397,7 @@ Boss_ZLeoBeginBattleReadySequence:                      ; CODE XREF: Boss_ZLeoRu
                 move.w  #$60,$11C(a5)                   ; '`'
                 bsr.w   Boss_ZLeoLoadPhaseTiles
                 move.b  #$EC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Boss_ZLeoRunBattlePose
 ; Run the timed battle-ready pose
 Boss_ZLeoRunBattleReadyPose:                            ; DATA XREF: ROM:00051B9A   o  ; was: sub_51FE8
@@ -501,7 +501,7 @@ Boss_ZLeoBeginDefeatWhiteout:                           ; CODE XREF: Boss_ZLeoBe
                 nop
                 jsr     (Tilemap_QueueIndexedRows).l
                 move.b  #$14,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Boss_ZLeoBeginDefeatSequence
 ; Advance defeat whiteout, clear objects, and fill both palette banks with white
 Boss_ZLeoRunDefeatWhiteout:                             ; DATA XREF: ROM:00051B8C   o  ; was: sub_52138
@@ -623,7 +623,7 @@ Boss_ZLeoBeginOrbAttackPose:                            ; CODE XREF: Boss_ZLeoBe
                 move.w  #$FFFF,$C(a5)
                 clr.b   $23E(a5)
                 move.b  #$D1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Boss_ZLeoBeginAttackSelection
 ; Wait for the pose-stream event that opens the orb-emission interval
 Boss_ZLeoWaitForOrbAttackCue:                           ; DATA XREF: ROM:00051BA2   o  ; was: sub_5228A
@@ -654,7 +654,7 @@ Boss_ZLeoRunOrbRecovery:                                ; DATA XREF: ROM:00051BA
                 cmpi.w  #8,$47E(a5)
                 bne.s   Boss_ZLeoCheckOrbRecoveryComplete
                 move.b  #$3A,d0                         ; ':'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_ZLeoCheckOrbRecoveryComplete:                      ; CODE XREF: Boss_ZLeoWaitForOrbAttackCue+3E   j  ; was: loc_522DC
                                         ; Boss_ZLeoWaitForOrbAttackCue+46   j
                 tst.w   $58(a5)
@@ -690,12 +690,12 @@ Boss_ZLeoStartScrollingLaserAttack:                     ; CODE XREF: Boss_ZLeoBe
                 bset    #2,(Entity57Flags).w
                 move.l  #$FFF00000,(Entity57YVel).w
                 move.b  #$4F,d0                         ; 'O'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bsr.w   Boss_ZLeoLoadPrimaryTiles
                 move.w  #$E000,$59E(a5)
                 move.w  #$FFF8,$59C(a5)
                 move.b  #$13,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Boss_ZLeoBeginScrollingLaserAttack
 ; Run the scrolling attack's entry pose and stop its initial velocity at the threshold
 Boss_ZLeoRunScrollingLaserEntryPose:                    ; DATA XREF: ROM:00051BAA   o  ; was: sub_52368

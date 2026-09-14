@@ -13,8 +13,8 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
 - The ROM and all 579 extracted segments have pinned sizes, ranges, and hashes.
 - Vendored assembler/converter files and the emulator commit are pinned.
 - Ordinary cleanup preserves extracted private assets.
-- `src/main.s` is an address-ordered index over 378 modules with a checked
-  1,000-line ceiling; the current mean is 314.3 lines, the largest module is
+- `src/main.s` is an address-ordered index over 379 modules with a checked
+  1,000-line ceiling; the current mean is 313.4 lines, the largest module is
   986 lines, and no waiver is active.
   Layout, release, and 1.0 contracts share that exact ceiling, and the release
   audit rejects a weaker value or a generic declared module filename.
@@ -44,13 +44,13 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
 
 The contract does not require invented semantics. No live address-derived
 definitions remain in executable, preserved-ROM, or RAM source. The exact-
-address audit registry contains 13,545 records. A further 2,797 provenance-mapped
+address audit registry contains 13,558 records. A further 2,784 provenance-mapped
 current names do not yet appear as current-name or alias records; this is an
 upper-bound semantic review queue because aliases that share an address must
 be folded into one record. `make semantic-audit` identifies 513 binary-backed
 `_End` aliases that immediately follow their `binclude` payload and therefore
 do not represent separate semantic review work. The resulting actionable
-upper bound is 2,284 names; no other pending `_End` labels are hidden by that
+upper bound is 2,271 names; no other pending `_End` labels are hidden by that
 classification. Promote or correct names only with recorded static or runtime
 evidence.
 The older source-mutating analysis workflows are also outside the release

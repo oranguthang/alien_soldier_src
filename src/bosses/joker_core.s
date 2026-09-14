@@ -392,7 +392,7 @@ Boss_JokerDivePrep:                                     ; DATA XREF: ROM:0003B2E
 ; ---------------------------------------------------------------------------
 Boss_JokerInitializeDiveMotion:                         ; CODE XREF: Boss_JokerDivePrep+4   j  ; was: loc_3B75C
                 move.b  #$44,d0                         ; 'D'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,4(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
@@ -401,7 +401,7 @@ Boss_JokerInitializeDiveMotion:                         ; CODE XREF: Boss_JokerD
                 move.l  #$FFFB0000,$1C(a5)
                 move.w  #2,(PlaneAShakeLevel).w
                 move.b  #$44,d0                         ; 'D'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 tst.w   $35C(a5)
                 bne.s   Boss_JokerSelectDiveHorizontalMotion
                 subi.w  #$C,(BossCombatCounter).w
@@ -464,7 +464,7 @@ Boss_JokerBeginStretchState:                            ; CODE XREF: Boss_JokerD
                 move.w  #$144,$374(a5)
                 clr.l   $1C(a5)
                 move.b  #$53,d0                         ; 'S'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bsr.w   Boss_JokerSpawnDescendingShotEmitter
 ; End of function Boss_JokerDiveDescentState
 ; Joker boss stretch state adjusting hitbox size dynamically
@@ -522,7 +522,7 @@ Boss_JokerJumpPreparationState:                         ; DATA XREF: ROM:0003B2F
 ; ---------------------------------------------------------------------------
 Boss_JokerInitializeJumpAscent:                         ; CODE XREF: Boss_JokerJumpPreparationState+4   j  ; was: loc_3B8DA
                 move.b  #$44,d0                         ; 'D'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$56,$26(a5)                    ; 'V'
                 addq.w  #2,4(a5)
                 clr.w   $58(a5)
@@ -532,7 +532,7 @@ Boss_JokerInitializeJumpAscent:                         ; CODE XREF: Boss_JokerJ
                 subi.w  #$3E,(BossCombatCounter).w      ; '>'
                 move.w  #2,(PlaneAShakeLevel).w
                 move.b  #$44,d0                         ; 'D'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Boss_JokerJumpPreparationState
 ; Applies upward jump motion until the derived body edge reaches Y $C8
 Boss_JokerJumpAscentState:                              ; DATA XREF: ROM:0003B2F6   o  ; was: sub_3B91A
@@ -557,7 +557,7 @@ Boss_JokerBeginBodyHeightCompression:                   ; CODE XREF: Boss_JokerJ
                 clr.l   $1C(a5)
                 move.w  #5,(PlaneAShakeLevel).w
                 move.b  #$A1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$16,$26(a5)
 ; Compresses body height with a decaying negative accumulator
 Boss_JokerBodyHeightCompressionState:                   ; DATA XREF: ROM:0003B2F8   o  ; was: loc_3B978

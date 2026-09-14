@@ -222,7 +222,7 @@ Boss_JampanPrepareShieldShotBurstState:                 ; DATA XREF: ROM:0004A21
                 subq.w  #1,$48(a5)
                 bne.s   Boss_JampanPrepareShieldShotBurstReturn
                 move.w  #$BB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #4,(PlaneBShakeLevel).w
                 move.b  #$40,$21(a5)                    ; '@'

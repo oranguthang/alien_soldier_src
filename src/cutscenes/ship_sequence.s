@@ -112,7 +112,7 @@ ShipSequence_WaitForNameAndArrival:                     ; DATA XREF: ROM:ShipSeq
                 clr.l   (ShipVerticalVelocity).l
                 addq.w  #2,(ShipSequenceState).l
                 move.b  #$D5,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 rts
 ; End of function ShipSequence_WaitForNameAndArrival
 ; Starts ship-name script zero in the shared message-sequence engine
@@ -239,7 +239,7 @@ ShipSequence_StartFlash:                                ; CODE XREF: ShipSequenc
                 move.w  #$40,(ShipFlashTimer).l         ; '@'
                 move.w  #2,(ShipFlashState).l
                 move.b  #$D8,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 rts
 ; End of function ShipSequence_StartFlash
 ; Toggles the first H-scroll word while advancing the flash timer and position
@@ -711,7 +711,7 @@ ShipSequence_SpawnScheduledDebris:                      ; CODE XREF: ShipSequenc
 ShipDebris_StoreScriptCursor:                           ; CODE XREF: ShipSequence_SpawnScheduledDebris+56   j  ; was: loc_9108
                 move.l  a0,(ShipDebrisCursor).l
                 move.b  #$59,d0                         ; 'Y'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 rts
 ; End of function ShipSequence_SpawnScheduledDebris
 ; ---------------------------------------------------------------------------
@@ -761,7 +761,7 @@ ShipPiece_ConvertToExplosion:                           ; CODE XREF: ShipPiece_U
                 move.l  #SharedCombatSpriteAnimation00,8(a5)
                 jsr     (Projectile_InitType88FromCurrent).l
                 move.b  #$BB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 rts
 ; End of function ShipPiece_UpdateCountdown
 ; Dispatches the four-state falling-debris lifecycle

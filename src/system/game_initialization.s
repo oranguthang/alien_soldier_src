@@ -59,7 +59,7 @@ Sys_ClearGameBuffers:                                   ; CODE XREF: Reset+224  
                 bsr.w   Sys_ClearVDPCommandBuffer
                 bsr.w   Sys_ClearSpriteVDPStagingBuffer
                 bsr.w   Sys_ClearWorkBuffer192
-                bsr.w   Input_InitControllerState
+                bsr.w   Input_InitializeControllerState
                 move.w  #$F400,(VDPCommandQueueHead).w
                 move.w  #$F400,(VDPStagingDataCursor).w
                 move.l  #$FFFFE400,(HScrollDMASource).w

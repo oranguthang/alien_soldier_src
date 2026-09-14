@@ -49,7 +49,7 @@ Boss_GustheadSpawnScrollingDebris:                      ; CODE XREF: Boss_Gusthe
                 andi.w  #$3F,d0                         ; '?'
                 bne.s   Boss_GustheadSpawnScrollingDebrisObject
                 move.w  #$D1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_GustheadSpawnScrollingDebrisObject:                ; CODE XREF: Boss_GustheadSpawnScrollingDebris+26   j  ; was: loc_401CC
                 move.w  #$1E4,(a0)
                 move.l  #SharedCombatSpriteFrame35,8(a0)

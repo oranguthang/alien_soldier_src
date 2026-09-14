@@ -201,7 +201,7 @@ Effect_SharpssteelApplyDefeatFragmentFlashPhase:        ; CODE XREF: Effect_Shar
                 andi.w  #$F,d0
                 bne.s   Effect_SharpssteelTryEmitDefeatFragmentDebris
                 move.b  #$BC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Effect_SharpssteelTryEmitDefeatFragmentDebris:          ; CODE XREF: Effect_SharpssteelDefeatFragmentMain+34   j
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   Effect_SharpssteelUpdateDefeatFragmentVelocity

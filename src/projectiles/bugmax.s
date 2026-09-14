@@ -29,7 +29,7 @@ Projectile_BugmaxEmitPeriodicTrailParticle:             ; CODE XREF: Boss_Bugmax
                 andi.w  #6,d0
                 move.w  Projectile_BugmaxTrailSoundSequence(pc,d0.w),d0
                 andi.w  #$FF,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Projectile_BugmaxTrailParticleEmissionReturn:           ; CODE XREF: Projectile_BugmaxScatteredPartFall+1C   j  ; was: locret_4D43A
                                         ; Projectile_BugmaxScatteredPartFall+24   j
                 rts
@@ -374,7 +374,7 @@ Projectile_BugmaxUpdateSineBounceMotion:                ; DATA XREF: ROM:0004D7D
                 subq.w  #4,d0
                 move.w  d0,$18(a5)
                 move.b  #$E3,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Projectile_BugmaxSineBounceMotionReturn:                ; CODE XREF: Projectile_BugmaxInitializeSineBounceCounter+10   j  ; was: locret_4D82C
                                         ; Projectile_BugmaxInitializeSineBounceCounter+1E   j
                 rts
@@ -382,7 +382,7 @@ Projectile_BugmaxSineBounceMotionReturn:                ; CODE XREF: Projectile_
 Projectile_BugmaxExpireSineProjectile:                  ; CODE XREF: Projectile_BugmaxSineController+C   j  ; was: loc_4D82E
                                         ; Projectile_BugmaxSineController+2A   j
                 move.b  #$E4,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.w  #$C8,$26(a5)

@@ -647,7 +647,7 @@ Boss_GustheadFourWayArcVolleyLoop:                      ; CODE XREF: Boss_Gusthe
                 addi.w  #$20,d6                         ; ' '
                 dbf     d7,Boss_GustheadFourWayArcVolleyLoop
                 move.b  #$4C,d0                         ; 'L'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_GustheadFourWayArcVolleyReturn:                    ; CODE XREF: Boss_GustheadSpawnFourWayArcVolley+E   j  ; was: locret_3F930
                 rts
 ; End of function Boss_GustheadSpawnFourWayArcVolley

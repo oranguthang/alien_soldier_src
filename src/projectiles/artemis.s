@@ -43,7 +43,7 @@ Projectile_UpdateArtemisRadialEmitter:                  ; DATA XREF: ROM:Entity_
                 subq.w  #1,$48(a5)
                 bpl.s   Projectile_UpdateArtemisEmitterAnchorJitter
                 move.b  #$CB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$8D00,2(a5)
                 move.w  #$A00,8(a5)
                 move.w  #$F4F4,$A(a5)

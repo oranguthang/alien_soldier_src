@@ -646,7 +646,7 @@ Boss_SunsetStingSpawnDebrisRain:                        ; CODE XREF: Boss_Sunset
                 andi.w  #7,d0
                 bne.w   Boss_SunsetStingReturn
                 move.b  #$BB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 rts
 ; End of function Boss_SunsetStingSpawnDebrisRain
 ; Final defeat sequence

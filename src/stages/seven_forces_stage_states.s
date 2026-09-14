@@ -146,7 +146,7 @@ Stage_SevenForcesScrollArtemisForeground:               ; DATA XREF: ROM:0000E4C
                 clr.l   (SevenForcesPlaneASpeed).w
                 clr.l   (SevenForcesPlaneBSpeed).w
                 move.b  #$F4,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Stage_SevenForcesScrollArtemisForegroundReturn:         ; CODE XREF: Stage_SevenForcesScrollArtemisForeground+C   j ; was: locret_E95A
                 rts
 ; End of function Stage_SevenForcesScrollArtemisForeground
@@ -159,7 +159,7 @@ Stage_SevenForcesBeginSireneTransition:                 ; DATA XREF: ROM:0000E4C
                 clr.b   (SceneSequenceFlags).w
                 clr.l   (SevenForcesPlaneASpeed).w
                 move.b  #$F5,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$E400,(PrimaryCameraYPosition).w
                 move.w  #$E400,(PreviousCameraYPosition).w
 Stage_SevenForcesUpdateSireneShake:                     ; CODE XREF: Stage_SevenForcesAdvanceSireneTransition:Stage_SevenForcesAdvanceSireneShake   j ; was: loc_E98A
@@ -206,7 +206,7 @@ Stage_SevenForcesAdvanceSireneTransition:               ; DATA XREF: ROM:0000E4C
                 addq.w  #2,(StageStateOffset).w
                 clr.b   (SceneSequenceFlags).w
                 move.b  #$F6,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$D0,(PlayerXPosition).w
                 move.w  #$188,(PlayerYPosition).w
                 addq.w  #2,(PrimaryEntityState).w

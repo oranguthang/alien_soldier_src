@@ -115,7 +115,7 @@ Boss_DestroyerProtoLaunchTwinShots:                     ; DATA XREF: ROM:0003151
                 bne.w   Entity_UpdateReturn
                 bsr.w   Boss_DestroyerProtoLaunchTwinProjectiles
                 move.b  #$EA,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_DestroyerProtoLaunchTwinShots
@@ -174,7 +174,7 @@ Boss_DestroyerProtoChargeSpread:                        ; DATA XREF: ROM:0003152
                 bne.w   Entity_UpdateReturn
                 move.w  #$80,$4A(a5)
                 move.b  #$56,d0                         ; 'V'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_DestroyerProtoChargeSpread
@@ -336,7 +336,7 @@ Boss_DestroyerProtoFireNextStreamPair:                  ; CODE XREF: Boss_Destro
                 addi.l  #$60,$58(a5)                    ; '`'
                 bsr.w   Projectile_DestroyerProtoActivateStreamShot
                 move.b  #$CE,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 lea     (SeventhEntityType).w,a4
                 movea.l $5C(a5),a0
                 addi.l  #$60,$5C(a5)                    ; '`'

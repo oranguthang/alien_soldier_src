@@ -14,7 +14,7 @@ Projectile_BackStringerUpdateFallingDrop:               ; CODE XREF: Projectile_
                 bpl.s   Projectile_BackStringerUpdateFallingDropMotion
 Projectile_BackStringerBounceFallingDrop:               ; CODE XREF: Projectile_BackStringerFallingDropMain+1A   j  ; was: loc_4579E
                 move.b  #$BB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 clr.b   $21(a5)
                 clr.w   $24(a5)
                 eori.w  #$1000,$E(a5)

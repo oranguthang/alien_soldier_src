@@ -462,7 +462,7 @@ StoryTitle_QueueExpansionDMA:                           ; was: loc_4E70
 ; ---------------------------------------------------------------------------
 StoryTitle_AdvanceRevealCharacter:                      ; was: loc_4E96
                 move.b  #$12,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$21,(StoryTitleExpandSpan).l   ; '!'
                 clr.w   (CutscenePaletteStep).l
                 lea     (CutsceneWorkBuffer).l,a0
@@ -653,7 +653,7 @@ StoryTitle_CompletedLogoRightAdvanceRow:                ; was: loc_50D0
 ; ---------------------------------------------------------------------------
 StoryTitle_FinishCompletedLogoExpansion:                ; was: loc_50E0
                 move.b  #$38,d0                         ; '8'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$1C0,(CutsceneTimer).l
                 addq.w  #2,(GameSubstateIndex).w
                 rts

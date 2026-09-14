@@ -10,7 +10,7 @@ Boss_ViblackSpawnChain:                                 ; CODE XREF: Boss_Viblac
                 bne.w   Boss_ViblackSpawnChainReturn
 Boss_ViblackAllocateChainObjects:                       ; CODE XREF: Boss_ViblackSpawnChain+10   j  ; was: loc_443C0
                 move.b  #$CE,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 movea.w #(SharedSpriteScratch-M68K_RAM),a1
                 move.w  a0,(a1)+
                 moveq   #9,d6
@@ -101,7 +101,7 @@ Projectile_ViblackChainReleaseSegmentLoop:              ; CODE XREF: Projectile_
                 clr.l   $1C(a5)
 Projectile_ViblackChainLaunch:                          ; CODE XREF: Projectile_ViblackChainSegment+1A   j  ; was: loc_444F6
                 move.b  #$BB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.l  #$42000,$1C(a5)
                 lea     (Projectile_SpawnSpriteFrames).l,a1  ; make offsets?
                 jmp     Sprite_InitCurrentFromTable

@@ -861,7 +861,7 @@ Boss_BugmaxPrepareJumpState:                            ; DATA XREF: ROM:0004C3E
                 move.l  #$FFFD0000,(SeventhEntityXVel).w
                 addq.w  #2,4(a5)
                 move.b  #$E4,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_BugmaxPrepareJumpReturn:                           ; CODE XREF: Boss_BugmaxPrepareJumpState+C   j  ; was: locret_4C90A
                 rts
 ; End of function Boss_BugmaxPrepareJumpState

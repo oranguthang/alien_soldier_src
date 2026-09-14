@@ -7144,7 +7144,7 @@ The same audit corrects two generated table claims. The former
 `UI_ContinueDisplayValueTable` and
 `StageTransitionMessageStartStateByStage` values are stored in
 `StageIntroSoundRequest`; the stage-number banner clears each nonzero byte and
-passes it directly to `Sound_PlaySFX`. They are now
+passes it directly to `Sound_QueueSFXRequest`. They are now
 `StageEntrySoundRequestByStage` and `StageIntroSoundRequestByStage`.
 
 Eight new imported-name mappings raise provenance from 15,964 to 15,972. The
@@ -8127,3 +8127,30 @@ the audit registry from 13,527 to 13,545. The pending queue falls from 2,815 to
 2,797 and its actionable upper bound from 2,302 to 2,284; the 513 classified
 binary-backed end aliases remain unchanged. The health-pickup module now has
 zero pending current names.
+
+The thirteen pending entries in the former mixed `system/input.s` range are
+audited against the VBlank caller, both I/O ports, the TH-high/low sampling
+protocol, controller-state equations, configurable A/B/C mappings, and the
+sound request consumer. The old `Sound_AcquireZ80Bus` name described only the
+locking mechanism: the entire locked body polls both controllers and touches
+no sound-driver state, so it is now `Input_PollBothControllersWithZ80BusLock`.
+The former `Input_MapSecondaryButtons` is likewise corrected because both
+ports reach it; it copies the configured source bits into canonical A/B/C
+positions for whichever port the shared reader selected.
+
+The low-level port helper is narrowed to the four-bit controller type
+signature it actually returns, primary-port ownership is made explicit, and
+held/pressed/released publication is named separately. The SFX wrapper is now
+`Sound_QueueSFXRequest`: it only applies the option bit-two gate and falls into
+the four-slot request queue rather than starting playback itself. That wrapper
+and the adjacent BGM/queue family move into the natural 56-line
+`sound/request_queue.s` module at `$0034DA-$003549`; `system/input.s` now ends
+with the complete 128-line controller family at `$0034D9`. These short modules
+are complete subsystem units rather than fixed-size slices.
+
+Thirteen exact-address records raise the registry from 13,545 to 13,558. The
+pending queue falls from 2,797 to 2,784 and its actionable upper bound from
+2,284 to 2,271; provenance and the 513 classified binary-backed end aliases
+remain unchanged. The layout rises from 378 to 379 modules, with a 313.4-line
+mean, the unchanged 986-line maximum, and no waiver. Both new module ranges
+have zero pending current names.

@@ -423,7 +423,7 @@ Boss_JetsripperSegmentPhysicsBeginFall:                 ; CODE XREF: Boss_Jetsri
                 move.w  $14(a5),$14(a0)
                 move.l  #$FFFE0000,$1C(a0)
                 move.b  #$C1,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; ---------------------------------------------------------------------------
 Boss_JetsripperSegmentPhysicsReturn:                    ; CODE XREF: Boss_JetsripperSegmentPhysics+8C   j  ; was: locret_362CC
                                         ; Boss_JetsripperSegmentPhysics+AC   j

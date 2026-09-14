@@ -80,7 +80,7 @@ Boss_SunsetStingSegmentLaunchFromRing:                  ; CODE XREF: Boss_Sunset
                 move.w  #$10,$24(a5)
                 addq.w  #2,4(a5)
                 move.b  #$CC,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Boss_SunsetStingSegmentInitializeState
 ; Updates a released primary segment in flight
 Boss_SunsetStingSegmentFlightState:                     ; DATA XREF: ROM:0004337A   o  ; was: sub_43430

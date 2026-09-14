@@ -34,7 +34,7 @@ Effect_ConvertCurrentToTypeC4Burst:                     ; CODE XREF: Object_Upda
                 move.w  #2,(PlaneAShakeLevel).w
                 move.w  #2,(PlaneBShakeLevel).w
                 move.b  #$BC,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Effect_ConvertCurrentToTypeC4Burst
 ; Waits on the shared explosion-sound delay, then enters the projectile update
 Projectile_UpdateAfterGlobalDelay:                      ; CODE XREF: Enemy_ShipSpawnDebrisProjectile   p  ; was: sub_2A390
@@ -56,7 +56,7 @@ Projectile_UpdateWithImpactFrames:                      ; CODE XREF: Boss_Shiper
                 beq.s   Projectile_UpdateWithImpactFrames_Update
 Projectile_UpdateWithImpactFrames_PlaySound:            ; CODE XREF: Projectile_UpdateWithImpactFrames+A   j  ; was: loc_2A3B6
                 move.b  #$BC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Projectile_UpdateWithImpactFrames_Update:               ; CODE XREF: Projectile_UpdateAfterGlobalDelay+4   j  ; was: loc_2A3C0
                                         ; Projectile_UpdateWithImpactFrames+10   j
                 jsr     (Projectile_FindFreePrimarySlot).l
@@ -88,7 +88,7 @@ Projectile_UpdateWithExplosionSound:                    ; CODE XREF: Boss_Destro
                 beq.s   Projectile_UpdateWithExplosionSound_Return
 Projectile_UpdateWithExplosionSound_Play:               ; CODE XREF: Projectile_UpdateWithExplosionSound+16   j  ; was: loc_2A40C
                 move.b  #$BC,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; ---------------------------------------------------------------------------
 Projectile_UpdateWithExplosionSound_Return:             ; CODE XREF: Projectile_UpdateWithExplosionSound+1C   j  ; was: locret_2A416
                                         ; Projectile_UpdateWithExplosionSound+24   j
@@ -106,7 +106,7 @@ Boss_CaterpillarSpawnExplosion:                         ; CODE XREF: Boss_Caterp
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #4,(PlaneBShakeLevel).w
                 move.b  #$BC,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Boss_CaterpillarSpawnExplosion
 ; Spawns 4 projectiles in different directions using sine/cosine table
 Projectile_SpawnFourDirectional:
@@ -146,7 +146,7 @@ Effect_InitSmallExplosion:
                 clr.w   $48(a0)
                 move.w  #4,$4A(a0)
                 move.b  #$BB,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Effect_InitSmallExplosion
 ; Sets screen shake intensity values to 2
 Effect_SetScreenShake:
@@ -198,7 +198,7 @@ Effect_InitLargeExplosion:
                 clr.b   $21(a0)
                 clr.w   $48(a0)
                 move.b  #$BB,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Effect_InitLargeExplosion
 ; Falling projectile that spawns child projectiles periodically
 Projectile_FallingSpawner:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A578
@@ -225,7 +225,7 @@ Enemy_SpawnQuadProjectiles:                             ; CODE XREF: Enemy_Spawn
                 move.l  #SharedCombatSpriteAnimation05,8(a5)
                 bsr.w   Sprite_InitType160FromCurrent
                 move.b  #$BB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 lea     Projectile_QuadVelocityComponents(pc),a2
                 nop
                 moveq   #3,d7

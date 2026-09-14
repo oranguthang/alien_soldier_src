@@ -184,7 +184,7 @@ Player_InitKnockbackState:                              ; CODE XREF: Player_Upda
                 andi.w  #7,d0
                 bne.s   Player_InitKnockbackState_SetDefaultVelocity
                 move.b  #$19,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Player_InitKnockbackState_SetDefaultVelocity:           ; CODE XREF: Player_InitKnockbackState+32   j  ; was: loc_162E6
                 move.l  #$FFFEA000,$1C(a5)
                 tst.l   (PlayerKnockbackXVel).w
@@ -203,7 +203,7 @@ Player_InitKnockbackState_Return:                       ; CODE XREF: Player_Init
 ; ---------------------------------------------------------------------------
 Player_InitKnockbackState_SetAlternateVerticalVelocity:  ; CODE XREF: Player_InitKnockbackState+28   j  ; was: loc_16312
                 move.b  #$19,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.l  #$FFFE8000,$1C(a5)
                 tst.w   (PlayerKnockbackXVel).w
                 bne.w   Player_InitKnockbackState_UseStoredHorizontalVelocity

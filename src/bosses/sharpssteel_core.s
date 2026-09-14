@@ -428,7 +428,7 @@ Boss_SharpssteelSpawnRandomAngleShotsLoop:              ; CODE XREF: Boss_Sharps
                 dbf     d7,Boss_SharpssteelSpawnRandomAngleShotsLoop
 Boss_SharpssteelFinishRandomAngleShotEmission:          ; CODE XREF: Boss_SharpssteelSpawnRandomAngleShots+18   j
                 move.b  #$4C,d0                         ; 'L'
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Boss_SharpssteelSpawnRandomAngleShots
 ; Enters the distance-based attack selector after the inter-cycle delay
 Boss_SharpssteelInitializeAttackSelection:              ; CODE XREF: Boss_SharpssteelFallingShotCycleState+38   j  ; was: sub_480C2
@@ -491,7 +491,7 @@ Boss_SharpssteelFarRangeBladeAttackState:               ; DATA XREF: ROM:00047C7
                 move.w  #$A7,d1
                 bsr.w   Boss_SharpssteelEnableInnerBladeHitboxes
                 move.b  #$D1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_SharpssteelTriggerFarRangeBladeHitbox:             ; CODE XREF: Boss_SharpssteelFarRangeBladeAttackState+E   j
                 btst    #1,$23E(a5)
                 beq.s   Boss_SharpssteelUpdateFarRangeBladePose
@@ -521,7 +521,7 @@ Boss_SharpssteelCloseRangeBladeAttackState:             ; DATA XREF: ROM:00047C9
                 move.w  #$82,d1
                 bsr.w   Boss_SharpssteelEnableInnerBladeHitboxes
                 move.b  #$DC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_SharpssteelTriggerCloseRangeBladeHitbox:           ; CODE XREF: Boss_SharpssteelCloseRangeBladeAttackState+E   j
                 btst    #1,$23E(a5)
                 beq.s   Boss_SharpssteelUpdateCloseRangeBladePose
@@ -570,7 +570,7 @@ Boss_SharpssteelDiveAttackState:                        ; DATA XREF: ROM:00047C7
                 jsr     (Projectile_SpawnFourDirectionalShotsWithSubtypeInD3).l
                 move.w  #$8000,(GlobalSpritePriorityBit).w
                 move.b  #$4D,d0                         ; 'M'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_SharpssteelUpdateDiveAttackPose:                   ; CODE XREF: Boss_SharpssteelDiveAttackState+16   j
                                         ; Boss_SharpssteelDiveAttackState+1E   j
                 lea     Boss_SharpssteelDivePoseCommands(pc),a1
@@ -623,7 +623,7 @@ Boss_SharpssteelInitializeFallingShotCycleFromDelay:    ; CODE XREF: Boss_Sharps
                 bsr.w   Boss_SharpssteelSetOuterBladeGroupSizes
                 bsr.w   Boss_SharpssteelSpawnTenFallingShots
                 move.b  #$4C,d0                         ; 'L'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Boss_SharpssteelPostDiveDelayState
 ; Turns the opening vertical motion before the blade-assembly sweep
 Boss_SharpssteelOpeningVerticalTurnState:               ; DATA XREF: ROM:00047C62   o  ; was: sub_48346
@@ -660,7 +660,7 @@ Boss_SharpssteelBeginBladeAssemblySweep:                ; CODE XREF: Boss_Sharps
                 move.w  #8,(PlaneAShakeLevel).w
                 move.w  #4,(PlaneBShakeLevel).w
                 move.b  #$2F,d0                         ; '/'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.l  #$20000,(Entity57YVel).w
                 move.w  #2,(Entity57Work58).w
                 moveq   #0,d0
@@ -682,7 +682,7 @@ Boss_SharpssteelBladeAssemblySweepState:                ; DATA XREF: ROM:00047C6
                 move.w  #$150,d6
                 jsr     (Projectile_SpawnFourDirectionalShots).l
                 move.b  #$4C,d0                         ; 'L'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_SharpssteelUpdateBladeAssemblySweepPose:           ; CODE XREF: Boss_SharpssteelOpeningVerticalTurnState+B0   j
                                         ; Boss_SharpssteelOpeningVerticalTurnState+B8   j
                 cmpi.w  #$240,$D4(a5)

@@ -376,7 +376,7 @@ Results_QueueCompletionMusicAtScrollThreshold:          ; CODE XREF: UI_RenderRe
                 blt.s   Results_CompletionMusicReturn
                 move.w  #1,(SharedPatternRow1Long1).w
                 move.b  #$85,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Results_CompletionMusicReturn:                          ; CODE XREF: Results_QueueCompletionMusicAtScrollThreshold+4   j  ; was: locret_20014
                                         ; Results_QueueCompletionMusicAtScrollThreshold+12   j
                 rts
@@ -418,7 +418,7 @@ Results_StopHorizontalNavigation:                       ; CODE XREF: Results_Han
                 beq.s   Results_ClearHorizontalStep
                 clr.w   (SharedPatternRow1Long6+2).w
                 move.b  #$DB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Results_ClearHorizontalStep:                            ; CODE XREF: Results_HandleNavigation+54   j  ; was: loc_20088
                 clr.w   (SharedPatternRow0Long6+2).w
 Results_CheckUpNavigation:                              ; CODE XREF: Results_HandleNavigation+2E   j  ; was: loc_2008C
@@ -475,7 +475,7 @@ Results_HandleHorizontalSnapPoint:                      ; CODE XREF: Results_Han
                 beq.s   Results_ClearHorizontalStepAtSnap
                 clr.w   (SharedPatternRow1Long6+2).w
                 move.b  #$DB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Results_ClearHorizontalStepAtSnap:                      ; CODE XREF: Results_HandleNavigation+EE   j  ; was: loc_20128
                                         ; Results_HandleNavigation+F4   j
                 clr.w   (SharedPatternRow0Long6+2).w

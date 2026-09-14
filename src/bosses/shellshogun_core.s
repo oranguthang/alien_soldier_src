@@ -160,7 +160,7 @@ Boss_ShellshogunTriggerEntranceEffect:                  ; CODE XREF: Boss_Shells
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #4,(PlaneBShakeLevel).w
                 move.b  #$A1,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; ---------------------------------------------------------------------------
 Boss_ShellshogunEntrancePoseReturn:                     ; CODE XREF: Boss_ShellshogunEntrancePoseState+8   j  ; was: locret_3971E
                                         ; Boss_ShellshogunEntrancePoseState+18   j
@@ -363,7 +363,7 @@ Boss_ShellshogunUpdateDecisionPose:                     ; CODE XREF: Boss_Shells
 ; ---------------------------------------------------------------------------
 Boss_ShellshogunBeginTimedStageAdvance:                 ; CODE XREF: Boss_ShellshogunDecisionState+18   j  ; was: loc_39988
                 move.b  #$42,d0                         ; 'B'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$28,4(a5)                      ; '('
                 move.w  #$BA,$BC(a5)
                 clr.w   $58(a5)
@@ -423,7 +423,7 @@ Boss_ShellshogunTriggerPoseGateEffect:                  ; CODE XREF: Boss_Shells
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #4,(PlaneBShakeLevel).w
                 move.b  #$A1,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; ---------------------------------------------------------------------------
 Boss_ShellshogunPoseGateReturn:                         ; CODE XREF: Boss_ShellshogunPoseGateState+8   j  ; was: locret_39A54
                                         ; Boss_ShellshogunPoseGateState+18   j
@@ -458,7 +458,7 @@ Boss_ShellshogunSlamPreparationState:                   ; DATA XREF: ROM:0003953
                 move.b  #$C0,$A41(a5)
                 subi.w  #$50,(BossCombatCounter).w      ; 'P'
                 move.b  #$D1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bra.s   Boss_ShellshogunUpdateSlamAnimation
 ; End of function Boss_ShellshogunSlamAttackInit
 ; Updates the slam follow-through pose and linked-part rotation
@@ -469,7 +469,7 @@ Boss_ShellshogunSlamFollowThroughState:                 ; DATA XREF: ROM:0003953
                 cmpi.w  #$18,$58(a5)
                 bne.s   Boss_ShellshogunUpdateSlamRotation
                 move.b  #$A1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #8,(PlaneAShakeLevel).w
                 move.w  #8,(PlaneBShakeLevel).w
                 clr.b   $A41(a5)
@@ -539,7 +539,7 @@ Boss_ShellshogunCheckDirectionalAttackLaunch:           ; CODE XREF: Boss_Shells
                 cmpi.w  #$FFFD,$11E(a5)
                 bne.s   Boss_ShellshogunApplyDirectionalAttackVelocity
                 move.b  #$D0,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 subi.w  #$62,(BossCombatCounter).w      ; 'b'
                 move.w  #3,(PlaneAShakeLevel).w
                 move.w  #3,(PlaneBShakeLevel).w
@@ -595,7 +595,7 @@ Boss_ShellshogunJumpAttackWindupState:                  ; DATA XREF: ROM:0003954
                 andi.w  #$1E0,$29C(a5)
                 bne.s   Boss_ShellshogunSetJumpWindupPartFrame
                 move.b  #$D1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_ShellshogunSetJumpWindupPartFrame:                 ; CODE XREF: Boss_ShellshogunJumpAttackWindupState+16   j  ; was: loc_39C6E
                 move.w  #$C860,$23E(a5)
                 cmpi.w  #9,$58(a5)
@@ -628,7 +628,7 @@ Boss_ShellshogunUpdateJumpAirRotation:                  ; CODE XREF: Boss_Shells
                 andi.w  #$1E0,$29C(a5)
                 bne.s   Boss_ShellshogunRenderJumpAir
                 move.b  #$D1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_ShellshogunRenderJumpAir:                          ; CODE XREF: Boss_ShellshogunJumpAttackAirState+30   j  ; was: loc_39CDE
                 lea     Boss_ShellshogunJumpAirPoseCommands(pc),a1
                 nop
@@ -708,7 +708,7 @@ Boss_ShellshogunCompleteLeapLanding:                    ; CODE XREF: Boss_Shells
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.b  #$A1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Boss_ShellshogunLeapFlightState
 ; Decelerates horizontal velocity during the leap recovery pose
 Boss_ShellshogunLeapRecoveryState:                      ; DATA XREF: ROM:00039548   o  ; was: sub_39DEA

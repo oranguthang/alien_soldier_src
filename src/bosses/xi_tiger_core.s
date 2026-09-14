@@ -145,7 +145,7 @@ Boss_XiTigerFallingLanding:                             ; DATA XREF: ROM:0003D88
                 move.l  #$C000,(StageCameraYVelocity).w
                 move.w  #$FFFF,(MidgameVerticalPhase).w
                 move.b  #$A1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  $23C(a5),$914(a5)
                 move.w  #$CF20,$4A(a5)
                 clr.l   $1C(a5)
@@ -297,7 +297,7 @@ Boss_XiTigerDashPrep:                                   ; DATA XREF: ROM:0003D89
                 bpl.s   Boss_XiTigerUpdateDashPreparationPose
                 subi.w  #$A0,(BossCombatCounter).w
                 move.b  #$D0,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,4(a5)
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #4,(PlaneBShakeLevel).w
@@ -401,7 +401,7 @@ Boss_XiTigerUpdateCloseRangeAttackPose:                 ; CODE XREF: Boss_XiTige
                 bne.w   Boss_XiTigerUpdateSprites
                 subi.w  #$30,(BossCombatCounter).w      ; '0'
                 move.b  #$D1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bsr.w   Boss_XiTigerSelectBodyMapping
                 bra.w   Boss_XiTigerUpdateSprites
 ; ---------------------------------------------------------------------------
@@ -446,7 +446,7 @@ Boss_XiTigerJumpRise:                                   ; DATA XREF: ROM:0003D89
                 move.w  #$FFFF,$C(a5)
                 subi.w  #$E0,(BossCombatCounter).w
                 move.b  #$D0,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_XiTigerUpdateJumpAirbornePose:                     ; CODE XREF: Boss_XiTigerJumpPeak+10   j  ; was: loc_3DDFA
                 lea     Boss_XiTigerAirbornePoseCommands(pc),a1
                 nop
@@ -465,7 +465,7 @@ Boss_XiTigerJumpPeak:                                   ; DATA XREF: ROM:0003D8A
                 move.l  #$C000,(StageCameraYVelocity).w
                 move.w  #$FFFF,(MidgameVerticalPhase).w
                 move.b  #$A4,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bclr    #6,$261(a5)
                 move.w  $23C(a5),$914(a5)
                 move.w  #$CF20,$4A(a5)
@@ -546,7 +546,7 @@ Boss_XiTigerDefeatLeapState:                            ; DATA XREF: ROM:0003D8A
                 move.w  #$CF20,$4A(a5)
                 move.w  $23C(a5),$914(a5)
                 move.b  #$A1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_XiTigerUpdateDefeatLeapPose:                       ; CODE XREF: Boss_XiTigerDefeatLeapState+E   j  ; was: loc_3DF6A
                                         ; Boss_XiTigerDefeatLeapState+18   j
                 lea     Boss_XiTigerLoopingAirbornePoseCommands(pc),a1
@@ -563,7 +563,7 @@ Boss_XiTigerDefeatLandingDelayState:                    ; DATA XREF: ROM:0003D8A
                 addq.w  #2,4(a5)
                 clr.w   6(a5)
                 move.b  #$14,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_XiTigerDecelerateDefeatLanding:                    ; CODE XREF: Boss_XiTigerDefeatLandingDelayState+A   j  ; was: loc_3DF9A
                 tst.l   $18(a5)
                 beq.s   Boss_XiTigerUpdateDefeatLandingPose
@@ -805,7 +805,7 @@ Boss_XiTigerReadPoseCommand:                            ; CODE XREF: Boss_XiTige
                 cmpi.b  #$80,(a1,d0.w)
                 bne.s   Boss_XiTigerDecodePoseCommand
                 move.b  1(a1,d0.w),d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,$58(a5)
                 move.w  $58(a5),d0
 Boss_XiTigerDecodePoseCommand:                          ; CODE XREF: Boss_XiTigerUpdatePoseAnimation+18   j  ; was: loc_3E248

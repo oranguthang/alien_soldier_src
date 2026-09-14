@@ -11,7 +11,7 @@ Boss_UpdateSirene:                                      ; DATA XREF: ROM:Entity_
                 tst.w   (BossHealth).w
                 bne.s   Boss_UpdateSireneBattleEffects
                 move.b  #$C1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bclr    #7,(PlayerRestrictionFlags).w
                 moveq   #$E,d0
                 jmp     Boss_QueueSevenForcesPostBattleTransition
@@ -206,7 +206,7 @@ Boss_UpdateSireneState10:                               ; DATA XREF: ROM:0005750
                 lea     (SireneAndLateStagePaletteCommandBank).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 move.b  #$F9,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 clr.w   (PlayerScriptStateOffset).w
                 subi.w  #$20,(CameraXLowerBound).w      ; ' '
                 addi.w  #$20,(CameraXUpperBound).w      ; ' '
@@ -768,7 +768,7 @@ Projectile_InitSireneHomingPickupDrop:                  ; CODE XREF: Projectile_
 Projectile_ConvertSireneHomingToParticle:               ; CODE XREF: Projectile_UpdateSireneHoming+30   j  ; was: loc_57E66
                                         ; Projectile_UpdateSireneHoming+40   j
                 move.b  #$2F,d0                         ; '/'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.l  #SharedCombatSpriteAnimation00,8(a5)
                 jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------

@@ -143,7 +143,7 @@ Boss_TerobusterSpawnMultiDirectional:                   ; CODE XREF: Boss_Terobu
                 move.w  (a4)+,d2
                 jsr     (Projectile_InitializeEightDirectionShot).l
                 move.b  #$BB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_TerobusterSpawnMultiDirectionalReturn
                 move.w  #1,$1C(a0)

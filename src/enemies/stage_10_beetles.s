@@ -240,7 +240,7 @@ Enemy_ConvertStage10BeetleToDefeatDebris:               ; CODE XREF: Enemy_Stage
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.b  #$BC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.l  #SharedCombatSpriteAnimation00,8(a5)
                 clr.w   $C(a5)
                 jmp     Projectile_InitType88FromCurrent
@@ -280,7 +280,7 @@ Enemy_Stage10BeetleConvertIfActive:
                 btst    #4,$22(a5)
                 bne.s   Enemy_Stage10BeetleConvertIfActive_Return
                 move.b  #$BC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.l  #SharedCombatSpriteAnimation00,8(a5)
                 clr.w   $C(a5)
                 jmp     Projectile_InitType88FromCurrent

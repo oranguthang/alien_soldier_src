@@ -52,7 +52,7 @@ Boss_AntroidJumpAttackAnimateAirborne:                  ; CODE XREF: Boss_Antroi
 ; ---------------------------------------------------------------------------
 Boss_AntroidJumpAttackBeginLandingArc:                  ; CODE XREF: Boss_AntroidPrepareJumpAttack+76   j  ; was: loc_37A30
                 move.b  #$A1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #4,(PlaneAShakeLevel).w
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
@@ -93,7 +93,7 @@ Boss_AntroidJumpSlamAttack:                             ; DATA XREF: ROM:0003753
 Boss_AntroidJumpSlamLaunch:                             ; CODE XREF: Boss_AntroidJumpSlamAttack+6   j  ; was: loc_37AAA
                                         ; Boss_AntroidJumpSlamAttack+1FE   j
                 move.b  #$D1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$28,4(a5)                      ; '('
                 move.w  #2,(PlaneAShakeLevel).w
                 move.w  a5,$48(a5)
@@ -173,7 +173,7 @@ Boss_AntroidJumpSlamLaunchSecondArc:                    ; CODE XREF: Boss_Antroi
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.b  #$D0,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.l  #Boss_AntroidSpriteMapping00,$C8(a5)
                 move.w  #5,(PlaneAShakeLevel).w
                 move.w  a5,$48(a5)
@@ -200,7 +200,7 @@ Boss_AntroidJumpSlamAnimateSecondArc:                   ; CODE XREF: Boss_Antroi
 ; ---------------------------------------------------------------------------
 Boss_AntroidJumpSlamResolveSecondLanding:               ; CODE XREF: Boss_AntroidJumpSlamAttack+170   j  ; was: loc_37C14
                 move.b  #$A1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,4(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)

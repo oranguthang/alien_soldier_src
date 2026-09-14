@@ -140,7 +140,7 @@ Player_PhoenixAttackUpdate_TryProjectile:               ; CODE XREF: Player_Phoe
 Player_PhoenixAttackUpdate_PlayBlockedSound:            ; CODE XREF: Player_PhoenixAttackUpdate+44   j  ; was: loc_15896
                                         ; Player_PhoenixAttackUpdate+4C   j
                 move.b  #$A6,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Player_PhoenixAttackUpdate_UpdateCollision:             ; CODE XREF: Player_PhoenixAttackUpdate+12   j  ; was: loc_158A0
                                         ; Player_PhoenixAttackUpdate+5A   j
                 move.w  #1,(DashActiveWriteOnly).w
@@ -236,7 +236,7 @@ Player_InitiateDashAttack_TryProjectile:                ; CODE XREF: Player_Init
 Player_PlayDashAttackSound:                             ; CODE XREF: Player_InitiateDashAttack+76   j  ; was: loc_159C4
                                         ; Player_InitiateDashAttack+7E   j
                 move.b  #$A6,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.l  #Player_PhoenixDashAttackSpriteMapping,8(a5)
                 move.w  #$78,(PhoenixAttackStatus).w    ; 'x'
                 moveq   #1,d0

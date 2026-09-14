@@ -99,7 +99,7 @@ Boss_JampanShieldCyclePauseState:                       ; DATA XREF: ROM:0004920
                 addq.w  #2,4(a5)
                 bclr    #1,$4C(a5)
                 move.w  #$D1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_JampanShieldCyclePauseReturn:                      ; CODE XREF: Boss_JampanShieldCyclePauseState+14   j
                 rts
 ; End of function Boss_JampanShieldCyclePauseState
@@ -116,7 +116,7 @@ Boss_JampanRotateShieldPatternForwardState:             ; DATA XREF: ROM:0004920
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #4,(PlaneBShakeLevel).w
                 move.w  #$A1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_JampanRotateShieldPatternForwardReturn:            ; CODE XREF: Boss_JampanRotateShieldPatternForwardState+14   j
                 rts
 ; End of function Boss_JampanRotateShieldPatternForwardState

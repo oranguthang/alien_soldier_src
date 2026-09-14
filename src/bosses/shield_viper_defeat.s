@@ -63,7 +63,7 @@ Boss_ShieldViperSpawnDefeatBurst:                       ; CODE XREF: Boss_Shield
                 tst.w   $2C(a5)
                 beq.s   Boss_ShieldViperDefeatBurstReturn
                 move.b  #$C1,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; Signed offsets added to base radial step $10 over a 32-frame cycle
 Boss_ShieldViperDefeatBurstReturn:                      ; CODE XREF: Boss_ShieldViperSpawnDefeatBurst+6   j  ; was: locret_4F26A
                                         ; Boss_ShieldViperSpawnDefeatBurst+32   j

@@ -75,7 +75,7 @@ Boss_TerobusterInitializeDefeatDebris:                  ; CODE XREF: Boss_Terobu
                 andi.w  #7,d0
                 bne.s   Boss_TerobusterDefeatDebrisReturn
                 move.b  #$BB,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; ---------------------------------------------------------------------------
 Boss_TerobusterDefeatDebrisReturn:                      ; CODE XREF: Boss_TerobusterDefeatDebrisState+3A   j  ; was: locret_38C64
                                         ; Boss_TerobusterDefeatDebrisState+98   j
@@ -154,7 +154,7 @@ Boss_TerobusterInitializeLandingPose:                   ; CODE XREF: Boss_Terobu
                 move.w  #5,(PlaneAShakeLevel).w
                 move.w  #5,(PlaneBShakeLevel).w
                 move.b  #$DA,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Boss_TerobusterInitializeLandingPose
 ; Updates boss body part positions with offset calculations
 Boss_TerobusterUpdateBodyParts:                         ; CODE XREF: Boss_TerobusterUpdateMetaspriteAndProjectile+8   p  ; was: sub_38D4C
@@ -248,7 +248,7 @@ Boss_TerobusterTrySpawnHomingMissile:                   ; CODE XREF: Boss_Terobu
                 addi.w  #-$30,$14(a0)
                 move.w  #$180,$56(a0)
                 move.b  #$4A,d0                         ; 'J'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_TerobusterSpawnHomingMissileReturn:                ; CODE XREF: Boss_TerobusterSpawnHomingMissile+C   j  ; was: locret_38EA0
                                         ; Boss_TerobusterSpawnHomingMissile+16   j
                 rts

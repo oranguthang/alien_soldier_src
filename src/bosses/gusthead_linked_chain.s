@@ -120,7 +120,7 @@ Boss_GustheadLinkedChainTerminalBeginAttackCycle:       ; DATA XREF: ROM:000313B
                 move.w  #$180,$40(a5)
                 clr.w   $42(a5)
                 move.b  #$4D,d0                         ; 'M'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #4,4(a5)
                 bra.w   Boss_GustheadLinkedChainFireRandomShot
 ; End of function Boss_GustheadLinkedChainTerminalBeginAttackCycle
@@ -200,7 +200,7 @@ Boss_GustheadLinkedChainTerminalRetractAndFire:         ; DATA XREF: ROM:000313B
                 cmpi.w  #$FFF8,$42(a5)
                 bne.w   Entity_UpdateReturn
                 move.b  #$4D,d0                         ; 'M'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$C0,$46(a5)
                 addq.w  #2,4(a5)
                 rts
@@ -323,7 +323,7 @@ Boss_GustheadLinkedChainSegmentFallAndFire:             ; DATA XREF: ROM:000311A
 Projectile_SpawnRandomAngleShot:                        ; was: sub_3146C
                                         ; Boss_GustheadLinkedChainTerminalFallAndFire+28   p
                 move.b  #$BB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.l  #SharedCombatSpriteAnimation05,8(a0)
                 jsr     (Projectile_InitType88).l
                 movea.w a0,a4

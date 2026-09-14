@@ -190,7 +190,7 @@ Cutscene_XiTigerBossEntranceLandingDelay:               ; DATA XREF: ROM:0002F0A
                 clr.w   $4A(a5)
                 addq.w  #2,4(a5)
                 move.b  #$20,d0                         ; ' '
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Cutscene_XiTigerBossEntranceLandingDelay_Return:        ; CODE XREF: Cutscene_XiTigerBossEntranceLandingDelay+8   j  ; was: locret_2F160
                 rts
 ; End of function Cutscene_XiTigerBossEntranceLandingDelay

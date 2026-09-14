@@ -103,7 +103,7 @@ Sys_GameplayMainLoop_HandleTransition:                  ; CODE XREF: Sys_Gamepla
                 move.w  #$2C,(GameModeIndex).w          ; ','
                 clr.w   (GameSubstateIndex).w
                 move.b  #4,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bra.s   Sys_GameplayMainLoop_UpdateFrameTiming
 ; ---------------------------------------------------------------------------
 Sys_GameplayMainLoop_SelectMode34:                      ; CODE XREF: Sys_GameplayMainLoop+1D0   j  ; was: loc_1C844

@@ -111,7 +111,7 @@ Boss_EnterArtemisState4:                                ; CODE XREF: Boss_InitAr
                 asr.l   #2,d0
                 move.l  d0,$18(a5)
                 move.b  #$26,d0                         ; '&'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Boss_EnterArtemisState4
 ; State four applies vertical acceleration until reaching the upper threshold
 Boss_UpdateArtemisState4:                               ; DATA XREF: ROM:00057F22   o  ; was: sub_5803C
@@ -168,7 +168,7 @@ Boss_EnterArtemisStateA:                                ; CODE XREF: Boss_Update
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.b  #$C2,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 movea.l #Boss_ArtemisAttackObjectInitData,a1
                 jsr     (Object_InitGroupFromTable).l
 ; End of function Boss_UpdateArtemisState4
@@ -187,7 +187,7 @@ Boss_EnterArtemisStateC:                                ; CODE XREF: Boss_Update
                 move.w  #$FFFF,$C(a5)
                 bset    #0,2(a5)
                 move.b  #$39,d0                         ; '9'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Boss_UpdateArtemisStateA
 ; State C completes the pose transition and returns control to the battle phase
 Boss_UpdateArtemisStateC:                               ; DATA XREF: ROM:00057F2A   o  ; was: sub_58136
@@ -265,7 +265,7 @@ Boss_ResetArtemisStateEPoseScript:                      ; CODE XREF: Boss_Return
                 andi.w  #$1C,d1
                 bne.s   Boss_SelectArtemisStateERandomPose
                 move.b  #$39,d0                         ; '9'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_SelectArtemisStateERandomPose:                     ; CODE XREF: Boss_UpdateArtemisStateE+66   j  ; was: loc_581FE
                 move.l  Artemis_StateEPoseScriptTable(pc,d1.w),$41C(a5)
 Boss_RenderArtemisStateE:                               ; CODE XREF: Boss_UpdateArtemisStateE+4   j  ; was: loc_58204
@@ -333,7 +333,7 @@ Boss_EnterArtemisState12:                               ; CODE XREF: Boss_Update
                 jsr     (Entity_ApplyValkiriePartHideCommands).l
                 bsr.w   Boss_InitArtemisAttackPartGroup
                 move.b  #$C2,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Boss_UpdateArtemisState10
 ; State $12 advances pose flags and returns to state E when its script completes
 Boss_UpdateArtemisState12:                              ; DATA XREF: ROM:00057F30   o  ; was: sub_582F4
@@ -375,7 +375,7 @@ Boss_EnterArtemisState14:                               ; CODE XREF: Boss_Update
                 bsr.w   Boss_PositionArtemisActivePartPair
                 move.b  #4,$3BC(a5)
                 move.b  #$DC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  (RandomNumberState).w,d0
                 andi.w  #$1C,d0
                 tst.w   (DifficultyMode).w

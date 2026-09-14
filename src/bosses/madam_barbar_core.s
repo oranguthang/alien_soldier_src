@@ -375,7 +375,7 @@ Boss_MadamBarbarCheckCenterSpinTrigger:                 ; CODE XREF: Boss_MadamB
                 subi.w  #$52,(BossCombatCounter).w      ; 'R'
                 addq.w  #1,$11E(a5)
                 move.b  #$B2,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  $58(a5),d0
 Boss_MadamBarbarSelectCenterSpinPartValue:              ; CODE XREF: Boss_MadamBarbarSelectAttackState+186   j  ; was: loc_3A942
                                         ; Boss_MadamBarbarSelectAttackState+18C   j
@@ -578,7 +578,7 @@ Boss_MadamBarbarPlayRotationSound:                      ; CODE XREF: Boss_MadamB
                 btst    #0,7(a5)
                 bne.s   Boss_MadamBarbarRotationHelperReturn
                 move.b  #$AF,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Boss_MadamBarbarPlayRotationSound
 ; Publishes and clamps the boss-relative shared screen position
 Boss_MadamBarbarPublishScreenPosition:                  ; CODE XREF: Boss_MadamBarbarUpdateParts+90   p  ; was: sub_3AB64
@@ -629,7 +629,7 @@ Boss_MadamBarbarReadNextPoseCommand:                    ; CODE XREF: Boss_MadamB
                 cmpi.b  #$80,(a1,d0.w)
                 bne.s   Boss_MadamBarbarReadPoseControlWord
                 move.b  1(a1,d0.w),d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,$58(a5)
                 move.w  $58(a5),d0
 Boss_MadamBarbarReadPoseControlWord:                    ; CODE XREF: Boss_MadamBarbarUpdatePose+18   j  ; was: loc_3AC10

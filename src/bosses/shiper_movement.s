@@ -246,7 +246,7 @@ Boss_ShiperSpinAttackReverseRotation:                   ; CODE XREF: Boss_Shiper
                 bne.s   Boss_ShiperSpinAttackReturn
                 move.w  #8,(PlaneAShakeLevel).w
                 move.b  #$A1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bsr.w   Boss_ShiperSpawnCircleShot
                 subi.w  #$12C,(BossCombatCounter).w
                 clr.w   $174(a5)
@@ -282,7 +282,7 @@ Boss_ShiperPositionUpdateIntegrateVerticalMotion:       ; CODE XREF: Boss_Shiper
                 bset    #0,$5E(a5)
                 movem.l d0,-(sp)
                 move.b  #$B9,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 movem.l (sp)+,d0
 Boss_ShiperPositionUpdateStoreVerticalMotion:           ; CODE XREF: Boss_ShiperPositionUpdate+5C   j  ; was: loc_36D2E
                 add.l   d0,d1

@@ -161,7 +161,7 @@ Boss_ViblackEntranceDescentState:                       ; DATA XREF: ROM:000439E
                 move.w  #$8000,(GlobalSpritePriorityBit).w
                 move.w  #4,(PlaneAShakeLevel).w
                 move.b  #$DA,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bra.s   Boss_ViblackUpdateStageSurfaceReference
 ; ---------------------------------------------------------------------------
 Boss_ViblackEntranceDescentReturn:                      ; CODE XREF: Boss_ViblackEntranceDescentState+1C   j  ; was: locret_43B82
@@ -395,7 +395,7 @@ Boss_ViblackInitializeTransitionCompanion:              ; CODE XREF: Boss_Viblac
                 clr.l   (SecondaryEntityWork5C).w
                 move.b  #2,(PlaneAScrollModeFlags).w
                 move.b  #$4D,d0                         ; 'M'
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Boss_ViblackDefeatRiseState
 ; Oscillates transition displacement and writes paired transition offsets
 Boss_ViblackTransitionOscillationState:                 ; DATA XREF: ROM:000439F4   o  ; was: sub_43E44

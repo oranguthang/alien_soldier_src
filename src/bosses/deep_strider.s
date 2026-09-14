@@ -97,7 +97,7 @@ Boss_DeepStriderIntroRisingState:                       ; DATA XREF: ROM:0003E5C
                 bmi.s   Boss_DeepStriderAdvanceIntroRise
                 addq.w  #1,$11C(a5)
                 move.b  #$4D,d0                         ; 'M'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bsr.w   Boss_DeepStriderSpawnQuadVolley
 Boss_DeepStriderAdvanceIntroRise:                       ; CODE XREF: Boss_DeepStriderIntroRise+9A   j  ; was: loc_3E6C0
                                         ; Boss_DeepStriderIntroRise+A2   j
@@ -142,7 +142,7 @@ Boss_DeepStriderIntroLaunchSetupState:                  ; DATA XREF: ROM:0003E5D
                 move.l  #$FFF80000,$4FC(a5)
                 clr.w   $11C(a5)
                 move.b  #$4C,d0                         ; 'L'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bsr.w   Boss_DeepStriderSpawnQuadVolley
 ; End of function Boss_DeepStriderIntroDiveState
 ; Lands the introductory launch arc before aligning the battle-entry pose
@@ -276,7 +276,7 @@ Boss_DeepStriderBattleAscendState:                      ; DATA XREF: ROM:0003E5E
                 bmi.s   Boss_DeepStriderAdvanceBattleAscent
                 addq.w  #1,$11E(a5)
                 move.b  #$4D,d0                         ; 'M'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bsr.w   Boss_DeepStriderSpawnQuadVolley
 Boss_DeepStriderAdvanceBattleAscent:                    ; CODE XREF: Boss_DeepStriderBeginBattleCycle+78   j  ; was: loc_3E92A
                                         ; Boss_DeepStriderBeginBattleCycle+80   j
@@ -407,7 +407,7 @@ Boss_DeepStriderBeginHoverExitRise:                     ; CODE XREF: Boss_DeepSt
                 clr.w   $11C(a5)
                 move.l  #$FFFB0000,$4FC(a5)
                 move.b  #$4C,d0                         ; 'L'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bsr.w   Boss_DeepStriderSpawnQuadVolley
                 move.w  #$B,$17C(a5)
 ; Deep Strider post-dive rising with scroll
@@ -520,7 +520,7 @@ Boss_DeepStriderDefeatFallState:                        ; CODE XREF: Boss_DeepSt
                 move.w  #2,(PlaneBShakeLevel).w
                 move.l  #$FFFEE000,$4FC(a5)
                 move.b  #$4D,d0                         ; 'M'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bsr.w   Boss_DeepStriderSpawnQuadVolley
 ; End of function Boss_DeepStriderBeginDefeat
 ; Raises the defeated boss before clearing the remaining stage objects
@@ -552,7 +552,7 @@ Boss_DeepStriderDefeatBurstState:                       ; DATA XREF: ROM:0003E5E
 Boss_DeepStriderSpawnNextDefeatBurst:                   ; CODE XREF: Boss_DeepStriderDefeatBurstState+60   j  ; was: loc_3ECE6
                 lea     $60(a0),a0
                 move.b  #$30,d0                         ; '0'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 jsr     (Projectile_InitType1A8).l
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.l  d4,$1C(a0)
@@ -595,7 +595,7 @@ Boss_DeepStriderApplyDefeatDebrisMotion:                ; CODE XREF: Boss_DeepSt
                 andi.w  #7,d0
                 bne.s   Boss_DeepStriderSpawnDefeatDebrisReturn
                 move.b  #$BC,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; ---------------------------------------------------------------------------
 Boss_DeepStriderSpawnDefeatDebrisReturn:                ; CODE XREF: Boss_DeepStriderSpawnDefeatDebris+12   j  ; was: locret_3ED9A
                                         ; Boss_DeepStriderSpawnDefeatDebris+1A   j
@@ -655,7 +655,7 @@ Boss_DeepStriderDiveSequence:                           ; CODE XREF: Boss_DeepSt
                 cmpi.w  #$32,$11C(a5)                   ; '2'
                 bne.s   Boss_DeepStriderUpdateDiveRotation
 Boss_DeepStriderEmitTimedDiveVolley:                    ; CODE XREF: Boss_DeepStriderDiveSequence+E   j  ; was: loc_3EE36
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bsr.w   Boss_DeepStriderSpawnQuadVolley
 Boss_DeepStriderUpdateDiveRotation:                     ; CODE XREF: Boss_DeepStriderDiveSequence+1A   j  ; was: loc_3EE40
                 subq.w  #4,$56(a5)

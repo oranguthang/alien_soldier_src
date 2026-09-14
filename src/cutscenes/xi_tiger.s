@@ -76,7 +76,7 @@ XiTigerCutscene_Setup:                                  ; DATA XREF: XiTigerCuts
                 move.l  #$20000,(XiTigerMotionStep).w
                 move.w  #$100,(XiTigerStateCounter).w
                 move.b  #$1E,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 bsr.w   XiTigerCutscene_InitializeDisplayObject
                 lea     $60(a0),a0
@@ -128,7 +128,7 @@ XiTigerCutscene_WaitBeforeReveal:                       ; DATA XREF: ROM:0001E91
                 subq.w  #1,(XiTigerStateCounter).w
                 bpl.s   XiTigerCutscene_UpdateWaitingFrame
                 move.b  #$A5,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,(XiTigerStateOffset).w
                 move.w  #$50,(XiTigerStateCounter).w    ; 'P'
                 clr.w   (Entity_ObjectPool).w
@@ -197,7 +197,7 @@ XiTigerCutscene_AdvanceRevealTimer:                     ; CODE XREF: XiTigerCuts
                 cmpi.w  #$C0,(XiTigerPhaseCounter).w
                 bne.s   XiTigerCutscene_ContinueReveal
                 move.b  #$11,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,(XiTigerStateOffset).w
                 move.w  #$48,(PaletteShadowColor29).w   ; 'H'
                 move.w  #$2AE,(PaletteShadowColor30).w

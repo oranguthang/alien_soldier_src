@@ -160,7 +160,7 @@ Boss_WolfGaropaLoadAttackEffectA:                       ; CODE XREF: Boss_WolfGa
                 move.w  #$E2,d1
                 bsr.w   Effect_InitializeWolfGaropaBoundaryPair
                 move.b  #$D0,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 lea     Boss_WolfGaropaAttackEffectATileTransfer(pc),a0
                 nop
                 jsr     (Tilemap_QueueIndexedColumns).l
@@ -190,7 +190,7 @@ Boss_WolfGaropaLoadAttackEffectB:                       ; CODE XREF: Boss_WolfGa
                 move.w  #$DE,d1
                 bsr.w   Effect_InitializeWolfGaropaBoundaryPair
                 move.b  #$D0,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 lea     Boss_WolfGaropaAttackEffectBIndexedRowDescriptor(pc),a0
                 nop
                 jmp     Tilemap_QueueIndexedRows
@@ -594,7 +594,7 @@ Boss_WolfGaropaSpawnOrbProjectilePair:                  ; CODE XREF: Boss_WolfGa
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   Boss_WolfGaropaOrbProjectilePairReturn
                 move.b  #$36,d0                         ; '6'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$408,(a0)
                 move.w  #$CC00,2(a0)
                 move.b  #$42,$21(a0)                    ; 'B'
@@ -678,7 +678,7 @@ Projectile_WolfGaropaCheckOrbShotRemainingBounds:       ; CODE XREF: Projectile_
                 cmpi.w  #$150,$14(a5)
                 bmi.s   Projectile_WolfGaropaOrbShotReturn
                 move.b  #$37,d0                         ; '7'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.l  $18(a5),d0
                 asr.l   #2,d0
                 subi.l  #$28000,d0

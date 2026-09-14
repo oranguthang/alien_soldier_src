@@ -141,7 +141,7 @@ UI_RenderStageTimerAndBossHealth_CheckTimerAlert:       ; CODE XREF: UI_RenderSt
                 bpl.s   UI_RenderStageTimerAndBossHealth_WriteTimer
                 move.w  #$26,(LowTimeWarningTimer).w    ; '&'
                 move.b  #$40,d0                         ; '@'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bra.s   UI_RenderStageTimerAndBossHealth_BlankTimer
 ; ---------------------------------------------------------------------------
 UI_RenderStageTimerAndBossHealth_WriteTimer:            ; CODE XREF: UI_RenderStageTimerAndBossHealth+1A   j  ; was: loc_13000

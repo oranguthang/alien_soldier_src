@@ -48,7 +48,7 @@ clears and prioritizes those same four slots in `Sound_SelectPendingRequest`.
 `Sound_QueueBGMRequest` tests bit 1 of `SoundDisableFlags`; it queues the
 request in `d0` only when BGM is enabled. Some callers submit control request
 `$01` as well as `$81-$9F` music IDs, so the name deliberately says “request”
-rather than “play track.” `Sound_PlaySFX` applies the analogous bit-2 gate.
+rather than “play track.” `Sound_QueueSFXRequest` applies the analogous bit-2 gate.
 `Sound_QueueBGMOrStop` instead replaces a disabled BGM request with control
 request `$04`, which stops all playback, before using the common queue.
 

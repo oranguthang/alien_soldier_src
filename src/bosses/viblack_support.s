@@ -407,7 +407,7 @@ Sound_ViblackPeriodic:                                  ; CODE XREF: Boss_Viblac
                 andi.w  #3,d0
                 bne.s   Boss_ViblackMoveToTargetReturn
                 move.b  #$CD,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Sound_ViblackPeriodic
 ; Periodically spawns side shots from alternating horizontal positions
 Boss_ViblackSpawnSideShot:                              ; CODE XREF: Boss_ViblackMoveToAttackTargetState+4   p  ; was: sub_44368

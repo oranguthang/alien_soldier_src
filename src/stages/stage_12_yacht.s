@@ -60,7 +60,7 @@ Stage12_YachtRevealPan:                                 ; DATA XREF: ROM:0002F5D
 ; Starts the yacht's active vertical-motion phase
 Stage12_YachtBeginMotion:                               ; DATA XREF: ROM:0002F5DE   o  ; was: sub_2F672
                 move.b  #$55,d0                         ; 'U'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Stage12_YachtBeginVerticalBob:                          ; CODE XREF: Stage12_YachtBeginMotion+68   j
                 move.w  #2,$58(a5)
                 move.l  #$22000,$1C(a5)
@@ -451,7 +451,7 @@ Stage12_TeddyBearPilotAttachDelay:                      ; DATA XREF: ROM:0002F93
                 move.l  #Stage12_TeddyBearBoardingPilotLoopAnimation,8(a5)
                 clr.w   $C(a5)
                 move.b  #$18,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Stage12_TeddyBearFacePlayerDelay
 ; Starts the teddy bear's piloting animation while attached to the yacht
 Stage12_TeddyBearPilotStart:                            ; DATA XREF: ROM:0002F932   o  ; was: sub_2FB10
@@ -500,7 +500,7 @@ Stage12_TeddyBearFireDownwardShot:                      ; CODE XREF: Stage12_Ted
                 andi.w  #$3F,d0                         ; '?'
                 bne.s   Stage12_TeddyBearShotReturn
                 move.b  #$2C,d0                         ; ','
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Stage12_TeddyBearShotReturn
                 move.w  #$188,(a0)

@@ -150,7 +150,7 @@ The numbered names identify the contiguous physical workspace rather than
 pretending that one state owns it permanently. Code uses the contextual aliases
 where the lifetime is proven. `StageEntrySoundRequestByStage` and
 `StageIntroSoundRequestByStage` both publish values consumed directly by
-`Sound_PlaySFX`; their former display-value and message-start-state names were
+`Sound_QueueSFXRequest`; their former display-value and message-start-state names were
 therefore corrected.
 
 ## Reviewed interstage-transition fields

@@ -44,7 +44,7 @@ Segment_MissirayFinishOffsetArc:                        ; CODE XREF: Segment_Mis
                 bset    #6,$21(a5)
                 addq.w  #2,4(a5)
                 move.b  #$57,d0                         ; 'W'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Segment_MissirayOffsetArcReturn:                        ; CODE XREF: Segment_MissirayAdvanceOffsetArc+28   j  ; was: locret_544C8
                 rts
 ; End of function Segment_MissirayAdvanceOffsetArc
@@ -373,7 +373,7 @@ Boss_MissiraySpawnAttachedProximityShot:                ; CODE XREF: Boss_Missir
                 move.l  d3,$54(a0)
                 move.w  a5,$48(a0)
                 move.b  #$CE,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_MissiraySpawnAttachedProximityShotReturn:          ; CODE XREF: Boss_MissiraySpawnAttachedProximityShot+6   j  ; was: locret_54830
                 rts
 ; End of function Boss_MissiraySpawnAttachedProximityShot

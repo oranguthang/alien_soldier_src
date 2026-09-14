@@ -172,7 +172,7 @@ Enemy_UpdateBouncingDebrisSpawner_SpawnParticle:        ; CODE XREF: Enemy_Updat
                 andi.w  #7,d0
                 bne.s   Enemy_UpdateBouncingDebrisSpawner_InitParticle
                 move.b  #$BB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Enemy_UpdateBouncingDebrisSpawner_InitParticle:         ; CODE XREF: Enemy_UpdateBouncingDebrisSpawner+4E   j  ; was: loc_2D206
                 bsr.s   Effect_SetRandomParticleMapping
                 jsr     (Projectile_InitType88).l

@@ -200,7 +200,7 @@ Stage21_AsteroidHandleCollision:                        ; CODE XREF: Stage21_Ast
                 bclr    #4,$22(a5)
                 beq.s   Stage21_AsteroidApplyLargeHitResponse
                 move.b  #$32,d0                         ; '2'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bsr.w   Stage21_AsteroidSpawnDestructionResult
 Stage21_AsteroidApplyLargeHitResponse:                  ; CODE XREF: Stage21_AsteroidInitMotionAndCollision+4C   j  ; was: loc_333B4
                 btst    #0,$5E(a5)

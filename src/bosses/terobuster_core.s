@@ -207,7 +207,7 @@ Boss_TerobusterMissileAttackAHandlePoseEvent:           ; CODE XREF: Boss_Terobu
                 move.w  #3,(PlaneAShakeLevel).w
                 move.w  #3,(PlaneBShakeLevel).w
                 move.b  #$49,d0                         ; 'I'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 subi.w  #$80,(BossCombatCounter).w
                 bmi.s   Boss_TerobusterMissileAttackAChooseExitOrder
                 subq.w  #1,$11C(a5)
@@ -274,7 +274,7 @@ Boss_TerobusterMissileAttackBHandlePoseEvent:           ; CODE XREF: Boss_Terobu
                 move.w  #3,(PlaneAShakeLevel).w
                 move.w  #3,(PlaneBShakeLevel).w
                 move.b  #$49,d0                         ; 'I'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 subi.w  #$80,(BossCombatCounter).w
                 bmi.s   Boss_TerobusterMissileAttackBChooseExitOrder
                 subq.w  #1,$11C(a5)
@@ -441,7 +441,7 @@ Boss_TerobusterLandingBeginSecondPose:                  ; CODE XREF: Boss_Terobu
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.b  #$4E,d0                         ; 'N'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bra.w   Boss_TerobusterLandingCheckComplete
 ; ---------------------------------------------------------------------------
 Boss_TerobusterSelectLandingPose:                       ; CODE XREF: Boss_TerobusterLandingBeginSecondPose   j  ; was: loc_38A54
@@ -491,7 +491,7 @@ Boss_TerobusterWaitForStageReadyAnimate:                ; CODE XREF: Boss_Terobu
 ; Enters the defeat motion when the shared boss-health value reaches zero
 Boss_TerobusterBeginDefeat:                             ; CODE XREF: Boss_TerobusterMain+28   j  ; was: sub_38ACC
                 move.b  #$AC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bset    #0,(StageTimerPauseFlag).w
                 move.w  #$A,4(a5)
                 move.b  #2,(BossColorEffectFlags).w

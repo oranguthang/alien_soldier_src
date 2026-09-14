@@ -147,7 +147,7 @@ Boss_EnterSylpheedPlayerTrackingState16:                ; CODE XREF: Boss_EnterS
                 addq.w  #2,4(a5)
                 move.l  #$38000,$1C(a5)
                 move.b  #$D0,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Boss_EnterSylpheedEntranceState12
 ; Track the player while descending in state $16
 Boss_UpdateSylpheedPlayerTrackingState16:               ; DATA XREF: ROM:00059458   o  ; was: sub_595CA
@@ -167,7 +167,7 @@ Boss_EnterSylpheedAttackApproachState18:                ; CODE XREF: Boss_Update
                 bclr    #4,(PlayerSpriteAttributes).w
                 move.w  #$80,$11C(a5)
                 move.b  #$2B,d0                         ; '+'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Boss_UpdateSylpheedPlayerTrackingState16
 ; Approach the attack anchor during state $18
 Boss_UpdateSylpheedAttackApproachState18:               ; DATA XREF: ROM:0005945A   o  ; was: sub_5960E
@@ -338,7 +338,7 @@ Boss_EnterSylpheedRecoveryState8:                       ; CODE XREF: Boss_EnterS
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.b  #$F1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Boss_EnterSylpheedDecisionState4
 ; Update recovery state $8
 Boss_UpdateSylpheedRecoveryState8:                      ; DATA XREF: ROM:0005944A   o  ; was: sub_59818
@@ -361,7 +361,7 @@ Boss_EnterSylpheedJumpRiseStateA:                       ; CODE XREF: Boss_EnterS
                 move.l  #$18000,$18(a5)
                 move.l  #$C000,$1C(a5)
                 move.b  #$DC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Boss_EnterSylpheedJumpRiseStateA
 ; Update jump-rise state $A
 Boss_UpdateSylpheedJumpRiseStateA:                      ; DATA XREF: ROM:0005944C   o  ; was: sub_59866
@@ -379,7 +379,7 @@ Boss_EnterSylpheedJumpFallStateC:                       ; CODE XREF: Boss_Update
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.b  #$D0,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Boss_UpdateSylpheedJumpRiseStateA
 ; Update jump-fall state $C until the pose completes
 Boss_UpdateSylpheedJumpFallStateC:                      ; DATA XREF: ROM:0005944E   o  ; was: sub_598A4
@@ -399,7 +399,7 @@ Boss_EnterSylpheedDiveStateE:                           ; CODE XREF: Boss_EnterS
                 move.l  #$18000,$18(a5)
                 move.l  #$FFFF4000,$1C(a5)
                 move.b  #$DC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Boss_EnterSylpheedDiveStateE
 ; Update dive state $E until the pose completes
 Boss_UpdateSylpheedDiveStateE:                          ; DATA XREF: ROM:00059450   o  ; was: sub_598F0
@@ -417,7 +417,7 @@ Boss_EnterSylpheedClimbState10:                         ; CODE XREF: Boss_Update
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.b  #$D0,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Boss_UpdateSylpheedDiveStateE
 ; Update climb state $10 until the pose completes
 Boss_UpdateSylpheedClimbState10:                        ; DATA XREF: ROM:00059452   o  ; was: sub_5992E

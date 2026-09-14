@@ -399,7 +399,7 @@ Weapon_HandleSeekingProjectileCollision_Explode:        ; CODE XREF: Weapon_Hand
                 btst    #4,$23(a5)
                 beq.s   Weapon_HandleSeekingProjectileCollision_SpawnEffect
                 move.b  #$C8,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Weapon_HandleSeekingProjectileCollision_SpawnEffect:    ; CODE XREF: Weapon_HandleSeekingProjectileCollision+30   j  ; was: loc_18F42
                 movea.w a5,a0
                 bsr.s   Effect_SpawnExplosion
@@ -490,7 +490,7 @@ Weapon_UpdateBombProjectile_Explode:                    ; CODE XREF: Weapon_Upda
                 btst    #4,$23(a5)
                 beq.s   Weapon_UpdateBombProjectile_SpawnDebris
                 move.b  #$C8,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Weapon_UpdateBombProjectile_SpawnDebris:                ; CODE XREF: Weapon_UpdateBombProjectile+BC   j  ; was: loc_1906E
                 movea.w a5,a0
                 bsr.s   Effect_CreateExplosionDebris

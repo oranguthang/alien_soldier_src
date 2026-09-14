@@ -317,7 +317,7 @@ Entity_AdvanceValkirieAuxiliaryAngle:                   ; CODE XREF: Entity_Upda
                 move.w  d1,$56(a5)
                 bne.s   Entity_UpdateValkirieAuxiliaryFlashTimer
                 move.b  #$C6,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Entity_UpdateValkirieAuxiliaryFlashTimer:               ; CODE XREF: Entity_UpdateValkirieAuxiliaryGroup+11C   j  ; was: loc_56842
                 move.w  #$100,d1
                 move.w  d1,$236(a5)

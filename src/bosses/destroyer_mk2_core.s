@@ -243,7 +243,7 @@ Boss_DestroyerMK2ShuffleScrollDeformationState:         ; DATA XREF: ROM:0004A90
                 clr.w   $4A(a5)
                 addq.w  #2,4(a5)
                 move.b  #$5B,d0                         ; '['
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_DestroyerMK2ShuffleScrollDeformationReturn:        ; CODE XREF: Boss_DestroyerMK2ShuffleScrollDeformationState+20   j  ; was: locret_4ABC4
                 rts
 ; End of function Boss_DestroyerMK2ShuffleScrollDeformationState
@@ -421,7 +421,7 @@ Boss_DestroyerMK2WaitForLinkedComponentsState:          ; DATA XREF: ROM:0004A91
                 cmpi.w  #$40,$48(a5)                    ; '@'
                 bne.s   Boss_DestroyerMK2UpdateLinkedComponentWaitTimer
                 move.b  #$E6,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_DestroyerMK2UpdateLinkedComponentWaitTimer:        ; CODE XREF: Boss_DestroyerMK2WaitForLinkedComponentsState+36   j  ; was: loc_4AD8E
                 subq.w  #1,$48(a5)
                 bne.s   Boss_DestroyerMK2WaitForLinkedComponentsReturn

@@ -57,7 +57,7 @@ Boss_VictorReactivateNextOrbitingPart:                  ; CODE XREF: Boss_Victor
 Boss_VictorLaunchOrbitingPart:                          ; CODE XREF: Boss_VictorContractPartFormation+1C   p  ; was: sub_32A60
                                         ; Boss_VictorExpandPartFormation+26   p
                 move.b  #$CC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 movea.w (SharedPatternRow0Long5).w,a4
                 addi.w  #$60,(SharedPatternRow0Long5).w  ; '`'
                 bsr.w   Boss_VictorInitPart

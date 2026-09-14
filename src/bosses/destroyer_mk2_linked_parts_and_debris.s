@@ -110,7 +110,7 @@ Object_DestroyerMK2ReleaseCentralPart:                  ; DATA XREF: ROM:Object_
                 bpl.s   Object_DestroyerMK2ReleaseCentralPartReturn
 Object_DestroyerMK2ReleaseCentralPartNow:               ; CODE XREF: Object_DestroyerMK2ReleaseCentralPart+6   j  ; was: loc_4B76E
                 move.b  #$BB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 subq.w  #1,(SharedPatternRow0Long4).w
                 addq.w  #2,4(a5)
                 move.w  #$FFFC,$1C(a5)
@@ -495,7 +495,7 @@ Object_TransitionDebrisLaunchHorizontally:              ; DATA XREF: ROM:0004BB3
                 move.l  $4C(a5),$18(a5)
                 addq.w  #2,4(a5)
                 move.b  #$E8,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Object_TransitionDebrisLaunchReturn:                    ; CODE XREF: Object_TransitionDebrisLaunchHorizontally+4   j  ; was: locret_4BB70
                 rts
 ; End of function Object_TransitionDebrisLaunchHorizontally
@@ -530,7 +530,7 @@ Object_TransitionDebrisRemoveOutsideVerticalBounds:     ; CODE XREF: Object_Tran
 ; ---------------------------------------------------------------------------
 Object_TransitionDebrisConvertAfterCollision:           ; CODE XREF: Object_TransitionDebrisResolveBoundsOrCollision+1C   j  ; was: loc_4BBB4
                 move.w  #$BC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 subq.w  #1,(QuaternaryEntityWork52).w
                 clr.b   $21(a5)
                 move.l  #SharedCombatSpriteAnimation05,8(a5)

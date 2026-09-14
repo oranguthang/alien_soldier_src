@@ -127,7 +127,7 @@ Boss_JampanWaitForEncounterActivationReturn:            ; CODE XREF: Boss_Jampan
 ; Loads encounter resources and initializes the controller and linked objects
 Boss_JampanInitializeEncounterState:                    ; DATA XREF: ROM:000491D8   o  ; was: sub_49258
                 move.b  #1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,4(a5)
                 move.w  #$80,$48(a5)
                 clr.l   (SharedPatternRow0Long0).w
@@ -302,7 +302,7 @@ Boss_JampanOpeningFallState:                            ; DATA XREF: ROM:000491D
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #4,(PlaneBShakeLevel).w
                 move.w  #$A1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_JampanOpeningFallReturn:                           ; CODE XREF: Boss_JampanOpeningFallState+1A   j
                 rts
 ; End of function Boss_JampanOpeningFallState
@@ -517,7 +517,7 @@ Boss_JampanBounceUntilSettledState:                     ; DATA XREF: ROM:000491E
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #4,(PlaneBShakeLevel).w
                 move.w  #$A1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$110,$14(a5)
                 move.l  $1C(a5),d0
                 asr.l   #1,d0

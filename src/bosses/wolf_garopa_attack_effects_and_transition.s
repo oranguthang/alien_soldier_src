@@ -36,7 +36,7 @@ Effect_WolfGaropaBoundaryMain:                          ; DATA XREF: ROM:Entity_
                 btst    #4,$22(a5)
                 beq.s   Effect_UpdateWolfGaropaBoundaryPosition
                 move.b  #$BC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #6,(PlaneAShakeLevel).w
                 cmpi.w  #$1F0,(PrimaryCameraXPosition).w
                 bpl.w   Effect_RemoveWolfGaropaBoundary
@@ -163,7 +163,7 @@ Boss_WolfGaropaEmitDefeatDebris:                        ; CODE XREF: Boss_WolfGa
                 andi.w  #7,d0
                 bne.s   Boss_WolfGaropaTrySpawnDefeatDebris
                 move.b  #$BB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_WolfGaropaTrySpawnDefeatDebris:                    ; CODE XREF: Boss_WolfGaropaUpdateDefeatTransition+6A   j  ; was: loc_50ED4
                 btst    #0,(FrameCounter+1).w
                 bne.s   Boss_WolfGaropaDefeatTransitionReturn

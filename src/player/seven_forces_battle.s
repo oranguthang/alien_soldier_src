@@ -119,7 +119,7 @@ Player_ToggleSevenForcesShootingMode:                   ; CODE XREF: Player_Chec
                 move.b  #$7F,(PlayerInputMask).w
                 eori.w  #2,(ShootingMode).w
                 move.b  #$A3,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 moveq   #0,d0
                 rts
 ; End of function Player_ToggleSevenForcesShootingMode
@@ -165,7 +165,7 @@ Player_TryStartSevenForcesDash:                         ; CODE XREF: Player_Seve
                 move.b  #$73,(PlayerInputMask).w        ; 's'
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.b  #$A6,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.b  #1,(PlayerAirDashUsedFlag).w
                 move.w  #$C,$50(a5)
                 clr.w   $12(a5)
@@ -263,7 +263,7 @@ Player_SevenForcesCounterForceState:                    ; DATA XREF: ROM:00019E1
 ; Enter the player defeat state with encounter-dependent knockback
 Player_EnterSevenForcesDefeatStateA:                    ; CODE XREF: Player_UpdateSevenForcesBattle+14   p  ; was: sub_1A0C8
                 move.b  #$19,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.b  #$7F,(PlayerInputMask).w
                 move.w  #$8000,(PlayerDefeatPhase).w
                 jsr     (Sys_ClearObjectBlocks17).l

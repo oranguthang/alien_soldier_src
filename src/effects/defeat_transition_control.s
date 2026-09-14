@@ -67,7 +67,7 @@ AlternateTransition_ConfigureEffect:                    ; DATA XREF: ROM:0002693
                 clr.w   (TransitionProgress).w
                 move.w  #8,(TransitionModeOffset).w
                 move.b  #$CA,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function AlternateTransition_ConfigureEffect
 ; Builds the alternate transition's initial mask pattern
 AlternateTransition_BuildInitialPattern:                ; DATA XREF: ROM:0002693E   o  ; was: sub_269B4
@@ -146,7 +146,7 @@ TransitionEffect_ConfigureEffect:                       ; DATA XREF: ROM:00026A1
                 move.b  #3,(VDPReg11Shadow+1).w
                 clr.w   (TransitionProgress).w
                 move.b  #$CA,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #2,(TransitionModeOffset).w
                 rts
 ; End of function TransitionEffect_ConfigureEffect

@@ -447,7 +447,7 @@ Boss_BugmaxStoreAimedChainStrikeAngle:                  ; CODE XREF: Boss_Bugmax
                 bsr.w   Boss_BugmaxConfigureAimedChainHitbox
                 addq.w  #2,4(a5)
                 move.b  #$E2,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_BugmaxChainStrikeAimReturn:                        ; CODE XREF: Boss_BugmaxAnimateAndAimChainStrike+16   j  ; was: locret_4CF1E
                 rts
 ; End of function Boss_BugmaxAnimateAndAimChainStrike

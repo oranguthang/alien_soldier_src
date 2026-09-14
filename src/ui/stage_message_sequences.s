@@ -30,7 +30,7 @@ StageIntro_ClampStageNumberX:                           ; CODE XREF: StageIntro_
                 move.b  (StageIntroSoundRequest).w,d0
                 beq.s   StageIntro_UpdateStageNumberDelay
                 clr.b   (StageIntroSoundRequest).w
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 StageIntro_UpdateStageNumberDelay:                      ; CODE XREF: StageIntro_UpdateStageNumberBanner+18   j  ; was: loc_AF0E
                                         ; StageIntro_UpdateStageNumberBanner+1E   j
                 subq.w  #1,(StageIntroBannerTimer).w
@@ -85,7 +85,7 @@ StageIntro_LoadEmergencyGlyph:                          ; DATA XREF: ROM:0000A9F
                 move.w  #$F0,(StageIntroBannerX).w
                 move.w  #$100,(StageIntroBannerTimer).w
                 move.b  #$D2,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 StageIntro_EmergencyGlyphReturn:                        ; CODE XREF: StageIntro_InitializeEmergencyBanner+1C   j  ; was: locret_AFB6
                                         ; StageIntro_UpdateEmergencyFlash+22   j
                 rts
@@ -95,7 +95,7 @@ StageIntro_UpdateEmergencyFlash:                        ; DATA XREF: ROM:0000A9F
                 cmpi.w  #$5C,(StageIntroBannerTimer).w  ; '\'
                 bne.s   StageIntro_UpdateEmergencyDelay
                 move.b  #$15,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 StageIntro_UpdateEmergencyDelay:                        ; CODE XREF: StageIntro_UpdateEmergencyFlash+6   j  ; was: loc_AFCA
                 subq.w  #1,(StageIntroBannerTimer).w
                 bpl.s   StageIntro_CheckEmergencyFlashFrame
@@ -154,7 +154,7 @@ Results_LoadTimeBonusGlyphs:                            ; DATA XREF: ROM:0000A9D
                 move.w  #$108,(ResultsTimeBonusX0).w
                 move.w  #$200,(ResultsTimeBonusX1).w
                 move.b  #$BE,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Results_LoadTimeBonusGlyphsReturn:                      ; CODE XREF: Results_LoadTimeBonusGlyphs+A   j  ; was: locret_B086
                 rts
 ; End of function Results_LoadTimeBonusGlyphs
@@ -201,7 +201,7 @@ Results_FinishTimeBonusSpin:                            ; DATA XREF: ROM:0000A9D
 ; ---------------------------------------------------------------------------
 Results_RequestTimeBonusSound:                          ; CODE XREF: Results_FinishTimeBonusSpin+E   j  ; was: loc_B0F4
                 move.b  #$C4,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Results_StoreTimeBonus:                                 ; CODE XREF: Results_FinishTimeBonusSpin+1A   j  ; was: loc_B0FE
                 jsr     (Results_StoreStageCompletionTime).l
                 tst.w   (StageTimeRemaining).w

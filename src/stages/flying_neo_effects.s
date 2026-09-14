@@ -80,7 +80,7 @@ Midgame_RandomLightningUseSecondaryPalette:             ; CODE XREF: Midgame_Upd
                 cmpi.w  #2,d7
                 beq.s   Midgame_CreateRandomLightningComposite
                 move.b  #$1A,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; Create the randomized high-RAM lightning composite unless mode one suppresses it
 Midgame_CreateRandomLightningComposite:                 ; CODE XREF: Midgame_UpdateRandomLightningEffect+6C   j  ; was: loc_D7DE
                 cmpi.w  #1,d7

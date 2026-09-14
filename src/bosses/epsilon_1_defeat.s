@@ -106,7 +106,7 @@ Boss_Epsilon1StartLinkedPartDestructionState:           ; DATA XREF: ROM:00045D4
                 addq.w  #2,4(a1)
                 addq.w  #2,4(a5)
                 move.b  #$52,d0                         ; 'R'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$40,$48(a5)                    ; '@'
 Boss_Epsilon1StartLinkedPartDestructionReturn:          ; CODE XREF: Boss_Epsilon1StartLinkedPartDestructionState+4   j  ; was: locret_46910
                                         ; Boss_Epsilon1StartLinkedPartDestructionState+14   j
@@ -140,7 +140,7 @@ Boss_Epsilon1FinishDefeatFall:                          ; CODE XREF: Boss_Epsilo
                 move.w  #$20,$48(a5)                    ; ' '
                 addq.w  #2,4(a5)
                 move.b  #$AC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 rts
 ; End of function Boss_Epsilon1FallWithDefeatDebrisState
 ; Converts the controller to explosion art and spawns the final explosion
@@ -375,7 +375,7 @@ Boss_Epsilon1UseAlternateBodyPose:                      ; CODE XREF: Boss_Epsilo
                 cmpi.w  #$10,4(a5)
                 bls.s   Boss_Epsilon1SelectBodyPoseReturn
                 move.b  #$51,d0                         ; 'Q'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 rts
 ; ---------------------------------------------------------------------------
 Boss_Epsilon1StartHorizontalBodySway:                   ; CODE XREF: Boss_Epsilon1SelectBodyPoseState+6   j  ; was: loc_46BD2
@@ -383,7 +383,7 @@ Boss_Epsilon1StartHorizontalBodySway:                   ; CODE XREF: Boss_Epsilo
                 move.w  #2,(SharedPatternRow1Long0+2).w
                 move.w  #4,(SharedPatternRow0Long6+2).w
                 move.b  #$52,d0                         ; 'R'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 rts
 ; End of function Boss_Epsilon1SelectBodyPoseState
 ; Holds the alternate pose until its countdown expires

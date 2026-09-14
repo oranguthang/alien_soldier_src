@@ -106,7 +106,7 @@ Weapon_FireProjectile_SetDamageAndVelocity:             ; CODE XREF: Weapon_Fire
                 asr.w   #3,d6
                 move.w  d6,$5C(a0)
                 move.b  #$B5,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 rts
 ; End of function Weapon_FireProjectile
 ; Initializes projectile sprite properties including tiles and velocity
@@ -243,7 +243,7 @@ Weapon_FireMultipleShots_NextSlot:                      ; CODE XREF: Weapon_Fire
                 tst.w   d3
                 beq.w   Weapon_InitSpreadShot_Return
                 move.b  #$BF,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 movea.w #(SharedSpriteScratch-M68K_RAM),a3
                 lea     Weapon_DirectionTableOffsets(pc),a1
                 nop
@@ -403,7 +403,7 @@ Weapon_FireBulletHandler_SetDamage:                     ; CODE XREF: Weapon_Fire
                 andi.w  #3,d0
                 bne.s   Weapon_FireBulletHandler_Return
                 move.b  #$EB,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; ---------------------------------------------------------------------------
 Weapon_FireBulletHandler_Return:                        ; CODE XREF: Weapon_FireBulletHandler+C6   j  ; was: locret_183FA
                 rts
@@ -474,7 +474,7 @@ Weapon_SetBeamProjectileData:                           ; CODE XREF: Weapon_Fire
                 btst    #5,d0
                 beq.s   Weapon_FireNoOp
                 move.b  #$BA,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Weapon_FireBeamWeapon
 ; Shared no-op handler for weapon states that do not emit a projectile
 Weapon_FireNoOp:                                        ; CODE XREF: Weapon_FireBeamWeapon+CC   j  ; was: nullsub_45

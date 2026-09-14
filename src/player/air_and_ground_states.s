@@ -128,7 +128,7 @@ Player_InitCeilingLandingState:                         ; CODE XREF: Player_Hand
                 move.w  #6,$4A(a5)
                 move.w  #$14,$5C(a5)
                 move.b  #$B1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bra.w   Player_AutoFlipDirection
 ; End of function Player_InitCeilingLandingState
 ; Handles the landing timer while attached to upper terrain
@@ -215,7 +215,7 @@ Player_CeilingWeaponSelectState:                        ; DATA XREF: ROM:0001508
 Player_ToggleShootingMode:                              ; CODE XREF: Player_CheckCeilingWeaponSelectInput+E   j  ; was: sub_1676E
                 eori.w  #2,(ShootingMode).w
                 move.b  #$A3,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 moveq   #0,d0
                 rts
 ; End of function Player_ToggleShootingMode
@@ -398,7 +398,7 @@ Player_TeleportDash:                                    ; DATA XREF: ROM:000150B
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.b  #$E0,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.l  #Player_PhoenixAndTeleportDashSpriteMapping,8(a5)
 ; Applies velocity during player teleport dash
 Player_TeleportDash_ApplyVelocity:                      ; DATA XREF: ROM:000150B4   o  ; was: loc_169E0
@@ -462,7 +462,7 @@ Player_InitDefeatExitState:                             ; CODE XREF: Player_Upda
                 move.b  #$10,$23(a5)
                 move.w  #$30,$48(a5)                    ; '0'
                 move.b  #$1F,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Player_InitDefeatExitState
 ; Counts down the defeat exit and requests its gameplay fade when expired
 Player_UpdateDefeatExitState:                           ; CODE XREF: Player_Update+2C   j  ; was: sub_16ACE

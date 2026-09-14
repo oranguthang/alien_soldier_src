@@ -60,7 +60,7 @@ there are no pre-approved exceptions.
 
 ### 2. Rebuild the system and opening region
 
-The current boundary at `0x0033FA` bisects `Input_ReadController`. It must be
+The former boundary at `0x0033FA` bisected `Input_ReadPrimaryController`. It was
 removed. The following anchors are the first-wave map, not automatic cut
 points. Each boundary is accepted only after its cross-references and private
 data are checked.

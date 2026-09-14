@@ -27,6 +27,7 @@
                 include "src/system/memory_initialization.s"
                 include "src/system/memory_clearing.s"
                 include "src/system/input.s"
+                include "src/sound/request_queue.s"
                 include "src/math/angles.s"
                 include "src/math/bcd_and_random.s"
                 include "src/rendering/palette_transitions.s"

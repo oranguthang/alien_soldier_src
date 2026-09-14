@@ -356,7 +356,7 @@ Stage18_SegmentedWormRemoveNextSegment:                 ; CODE XREF: Stage18_Seg
 ; ---------------------------------------------------------------------------
 Stage18_SegmentedWormBeginLaunch:                       ; CODE XREF: Stage18_SegmentedWormUpdateHead+3A   j
                 move.b  #$EC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 jsr     (Physics_AlignToTerrain).l
 Stage18_SegmentedWormSetLaunchVelocity:                 ; CODE XREF: Stage18_SegmentedWormSpawnSegments+C0   j
                 move.l  #$FFFB0000,$1C(a5)
@@ -451,7 +451,7 @@ Stage18_SegmentedWormConfigureScatteredSegment:         ; CODE XREF: Stage18_Seg
                 movea.w $44(a4),a4
                 dbf     d6,Stage18_SegmentedWormScatterNextSegment
                 move.b  #$C1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,4(a5)
                 rts
 ; End of function Stage18_SegmentedWormScatterSegments

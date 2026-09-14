@@ -137,7 +137,7 @@ WeaponSelect_InitializeSlotLoop:                        ; CODE XREF: WeaponSelec
                 lea     $60(a0),a0
                 dbf     d7,WeaponSelect_InitializeSlotLoop
                 move.b  #$C0,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function WeaponSelect_Initialize
 ; ---------------------------------------------------------------------------
 WeaponSelect_SlotInitialAngles: dc.w    $180, 0, $80, $100  ; DATA XREF: WeaponSelect_Initialize+84   o  ; was: word_17A9C
@@ -162,7 +162,7 @@ WeaponSelect_CheckInputBit3:                            ; CODE XREF: WeaponSelec
                 addq.w  #2,(WeaponMenuSlotOffset).w
                 andi.w  #6,(WeaponMenuSlotOffset).w
                 move.b  #$A8,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; ---------------------------------------------------------------------------
 WeaponSelect_CheckInputBit2:                            ; CODE XREF: WeaponSelect_UpdateRotationInput+22   j  ; was: loc_17AEA
                 btst    #2,(PlayerPressedInput).w
@@ -171,7 +171,7 @@ WeaponSelect_CheckInputBit2:                            ; CODE XREF: WeaponSelec
                 subq.w  #2,(WeaponMenuSlotOffset).w
                 andi.w  #6,(WeaponMenuSlotOffset).w
                 move.b  #$A8,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; ---------------------------------------------------------------------------
 WeaponSelect_RotationInputReturn:                       ; CODE XREF: WeaponSelect_UpdateRotationInput+44   j  ; was: locret_17B0C
                 rts
@@ -182,7 +182,7 @@ WeaponSelect_HandleDirectionalInput:                    ; was: sub_17B0E
                 andi.b  #$F,d0
                 beq.s   WeaponSelect_DirectionalInputReturn
                 move.b  #$A8,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.b  (PlayerPressedInput).w,d0
                 btst    #0,d0
                 beq.s   WeaponSelect_CheckInputBit1
@@ -260,7 +260,7 @@ WeaponSelect_HandleOpenInput:                           ; CODE XREF: WeaponSelec
 WeaponSelect_StartCloseDelay:                           ; CODE XREF: WeaponSelect_Update+8   j  ; was: loc_17BEC
                                         ; WeaponSelect_Update+5E   j
                 move.b  #$A7,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #8,(WeaponStateCooldown).w
 ; End of function WeaponSelect_Update
 ; Advances the selected slot's weapon state and clears transient state

@@ -48,7 +48,7 @@ TunnelTransition_ConfigureEffect:                       ; DATA XREF: TunnelTrans
                 move.b  #3,(VDPReg11Shadow+1).w
                 clr.w   (TransitionProgress).w
                 move.b  #$AA,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #2,(TransitionModeOffset).w
                 rts
 ; End of function TunnelTransition_ConfigureEffect

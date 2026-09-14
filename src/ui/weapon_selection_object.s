@@ -3,7 +3,7 @@ UI_WeaponSelectionCommitFeedback:                       ; DATA XREF: ROM:Entity_
                 move.w  #$30,(FrameFreezeTimer).w       ; '0'
                 bset    #4,2(a5)
                 move.b  #$1C,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function UI_WeaponSelectionCommitFeedback
 UI_InitWeaponSelectionObject:                           ; CODE XREF: UI_WeaponSelectionObject+6   p  ; was: sub_2BB86
                 addq.w  #2,4(a5)
@@ -71,7 +71,7 @@ UI_UpdateWeaponSelectionObject_CheckConfirm:            ; CODE XREF: UI_UpdateWe
                 bclr    #4,$22(a5)
                 bne.w   UI_UpdateWeaponSelectionObject_ClearInputFlags
                 move.b  #$A7,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 jsr     (Weapon_GetStateDisplayIndex).l
                 beq.s   UI_UpdateWeaponSelectionObject_Hide
                 movea.w (WeaponSlotOffset).w,a0

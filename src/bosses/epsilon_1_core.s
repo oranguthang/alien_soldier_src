@@ -237,7 +237,7 @@ Boss_Epsilon1WaitForBattleStartState:                   ; DATA XREF: ROM:Boss_Ep
                 addq.w  #2,4(a5)
                 move.w  #$80,$48(a5)
                 move.b  #1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_Epsilon1WaitForBattleStartReturn:                  ; CODE XREF: Boss_Epsilon1WaitForBattleStartState+4   j  ; was: locret_45D8C
                 rts
 ; End of function Boss_Epsilon1WaitForBattleStartState

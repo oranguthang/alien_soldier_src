@@ -387,7 +387,7 @@ Boss_MissirayBeginSequentialVerticalMotion:             ; CODE XREF: Boss_Missir
                 move.w  #$50,$48(a5)                    ; 'P'
                 addq.w  #2,(SharedPatternRow0Long0).w
                 move.b  #$57,d0                         ; 'W'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 btst    #7,$50(a5)
                 bne.s   Boss_MissirayUseUpwardSequentialVelocity
                 move.w  #2,(SharedPatternRow0Long2+2).w

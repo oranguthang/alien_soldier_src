@@ -158,7 +158,7 @@ Enemy_ConvertStage12ObjectToDefeatDebris:               ; CODE XREF: Enemy_Stage
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.b  #$BC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.l  #SharedCombatSpriteAnimation00,8(a5)
                 clr.w   $C(a5)
                 jmp     Projectile_InitType88FromCurrent
@@ -181,7 +181,7 @@ Enemy_UpdateStage12DefeatDebris:                        ; DATA XREF: ROM:Entity_
                 bpl.s   Enemy_UpdateStage12DefeatDebris_Blink
                 jsr     (Effect_SpawnExplosionA).l
                 move.b  #$BC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 cmpi.w  #$1B8,(Entity57Type).w
                 beq.s   Enemy_UpdateStage12DefeatDebris_RemoveForSpecialStage
                 moveq   #$F,d0

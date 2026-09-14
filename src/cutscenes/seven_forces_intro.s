@@ -314,7 +314,7 @@ Entity_SevenForcesBeginFormSequenceStateA:              ; DATA XREF: ROM:00054BA
                 move.w  #$40,$48(a5)                    ; '@'
                 clr.w   $5E(a5)
                 move.b  #$A5,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Entity_SevenForcesBeginFormSequenceReturn:              ; CODE XREF: Entity_SevenForcesBeginFormSequenceStateA+4   j  ; was: locret_54F9C
                 rts
 ; End of function Entity_SevenForcesBeginFormSequenceStateA
@@ -331,7 +331,7 @@ Entity_SevenForcesValkirieFadeInStateC:                 ; DATA XREF: ROM:00054BA
                 move.b  #$96,d0
                 jsr     (Sound_QueueBGMRequest).l
                 move.b  #$23,d0                         ; '#'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 lea     (SevenForcesValkirieAssetSet).l,a1
                 jsr     (Boss_LoadAssetSet).l
 Entity_SevenForcesValkirieFadeInApplyPalette:           ; CODE XREF: Entity_SevenForcesValkirieFadeInStateC+12   j  ; was: loc_54FE0
@@ -367,7 +367,7 @@ Entity_SevenForcesUpdateMedusaEntranceState12:          ; CODE XREF: Entity_Seve
                 clr.w   2(a5)
                 move.w  #$40,$48(a5)                    ; '@'
                 move.b  #$A5,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 lea     (SevenForcesMedusaAssetSet).l,a1
                 jsr     (Boss_LoadAssetSet).l
                 move.b  #1,(SceneSequenceFlags).w
@@ -384,7 +384,7 @@ Entity_SevenForcesMedusaHoldCheckSound:                 ; CODE XREF: Entity_Seve
                 cmpi.w  #$38,$48(a5)                    ; '8'
                 bne.s   Entity_SevenForcesMedusaHoldApplyPalette
                 move.b  #$25,d0                         ; '%'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Entity_SevenForcesMedusaHoldApplyPalette:               ; CODE XREF: Entity_SevenForcesMedusaHoldState14+10   j  ; was: loc_55076
                 bra.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
 ; End of function Entity_SevenForcesMedusaHoldState14
@@ -417,7 +417,7 @@ Entity_SevenForcesUpdateSylpheedEntranceState1A:        ; CODE XREF: Entity_Seve
                 clr.w   2(a5)
                 move.w  #$20,$48(a5)                    ; ' '
                 move.b  #$A5,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 lea     (SevenForcesSylpheedAssetSet).l,a1
                 jsr     (Boss_LoadAssetSet).l
 Entity_SevenForcesUpdateSylpheedEntrancePalette:        ; CODE XREF: Entity_SevenForcesStartSylpheedEntranceState18+2E   j  ; was: loc_550F0
@@ -430,7 +430,7 @@ Entity_SevenForcesSylpheedHoldState1C:                  ; DATA XREF: ROM:00054BB
                 bpl.s   Entity_SevenForcesSylpheedHoldApplyPalette
                 addq.w  #2,4(a5)
                 move.b  #$24,d0                         ; '$'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Entity_SevenForcesSylpheedHoldApplyPalette:             ; CODE XREF: Entity_SevenForcesSylpheedHoldState1C+4   j  ; was: loc_55108
                 bra.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
 ; End of function Entity_SevenForcesSylpheedHoldState1C
@@ -478,7 +478,7 @@ Entity_SevenForcesUpdateArtemisEntranceState24:         ; CODE XREF: Entity_Seve
                 addq.w  #2,4(a5)
                 clr.w   2(a5)
                 move.b  #$A5,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 lea     (SevenForcesArtemisAssetSet).l,a1
                 jsr     (Boss_LoadAssetSet).l
 Entity_SevenForcesUpdateArtemisEntrancePalette:         ; CODE XREF: Entity_SevenForcesStartArtemisEntranceState22+5C   j  ; was: loc_551BA
@@ -554,7 +554,7 @@ Entity_SevenForcesSireneHoldState2E:                    ; DATA XREF: ROM:00054BC
                 addq.w  #2,4(a5)
                 move.w  #$20,$48(a5)                    ; ' '
                 move.b  #$28,d0                         ; '('
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 lea     (SevenForcesSireneAssetSet).l,a1
                 jsr     (Boss_LoadAssetSet).l
 Entity_SevenForcesSireneHoldUpdatePalette:              ; CODE XREF: Entity_SevenForcesSireneHoldState2E+4   j  ; was: loc_552AC
@@ -572,9 +572,9 @@ Entity_SevenForcesSirenePaletteEventState32:            ; DATA XREF: ROM:00054BC
                 cmpi.w  #$9C,(StageStateOffset).w
                 bne.s   Entity_SevenForcesSirenePaletteEventState32Return
                 move.b  #$27,d0                         ; '''
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.b  #$A5,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 lea     (SevenForcesSireneTimedAssetSetA).l,a1
                 jsr     (Boss_LoadAssetSet).l
                 bra.w   Entity_SevenForcesResetState
@@ -587,9 +587,9 @@ Entity_SevenForcesSirenePaletteEventState34:            ; DATA XREF: ROM:00054BC
                 cmpi.w  #$A6,(StageStateOffset).w
                 bne.s   Entity_SevenForcesSirenePaletteEventState34Return
                 move.b  #$26,d0                         ; '&'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.b  #$A5,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 lea     (SevenForcesSireneTimedAssetSetB).l,a1
                 jsr     (Boss_LoadAssetSet).l
                 bra.w   Entity_SevenForcesResetState
@@ -603,7 +603,7 @@ Entity_SevenForcesExplosionSequenceState36:             ; DATA XREF: ROM:00054BC
                 cmpi.w  #2,$48(a5)
                 bne.s   Entity_SevenForcesExplosionSequenceCheckTransition
                 move.b  #3,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Entity_SevenForcesExplosionSequenceCheckTransition:     ; CODE XREF: Entity_SevenForcesExplosionSequenceState36+A   j  ; was: loc_55330
                 bsr.w   Gfx_UpdateSevenForcesArtemisPaletteFade
                 cmpi.w  #$98,(StageStateOffset).w
@@ -849,7 +849,7 @@ Entity_StartSevenForcesMedusaTransition:                ; DATA XREF: ROM:000555E
                 move.w  #$FFF4,$5E(a5)
                 bsr.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
                 move.b  #$30,d0                         ; '0'
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Entity_StartSevenForcesMedusaTransition
 ; Start the Sylpheed form transition after Medusa completes
 Entity_StartSevenForcesSylpheedTransition:              ; DATA XREF: ROM:000555EA   o  ; was: sub_5562A
@@ -866,7 +866,7 @@ Entity_StartSevenForcesSylpheedTransition:              ; DATA XREF: ROM:000555E
                 clr.b   (PlaneAScrollModeFlags).w
                 clr.b   (PlaneBScrollModeFlags).w
                 move.b  #$30,d0                         ; '0'
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Entity_StartSevenForcesSylpheedTransition
 ; Start the Artemis form transition after Sylpheed completes
 Entity_StartSevenForcesArtemisTransition:               ; DATA XREF: ROM:000555EC   o  ; was: sub_5566C
@@ -881,7 +881,7 @@ Entity_StartSevenForcesArtemisTransition:               ; DATA XREF: ROM:000555E
                 move.w  #$FFF2,$5E(a5)
                 bsr.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
                 move.b  #$30,d0                         ; '0'
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Entity_StartSevenForcesArtemisTransition
 ; Start the Sirene form transition after Artemis completes
 Entity_StartSevenForcesSireneTransition:                ; DATA XREF: ROM:000555EE   o  ; was: sub_556A8
@@ -893,7 +893,7 @@ Entity_StartSevenForcesSireneTransition:                ; DATA XREF: ROM:000555E
                 move.w  #$FFF2,$5E(a5)
                 bsr.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
                 move.b  #$30,d0                         ; '0'
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Entity_StartSevenForcesSireneTransition
 ; Resume the intro controller at state $24 and clear obsolete objects
 Entity_ResumeSevenForcesIntroState24:                   ; DATA XREF: ROM:000555F0   o  ; was: sub_556D2
@@ -903,7 +903,7 @@ Entity_ResumeSevenForcesIntroState24:                   ; DATA XREF: ROM:000555F
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
                 move.b  #$30,d0                         ; '0'
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Entity_ResumeSevenForcesIntroState24
 ; Resume the intro controller at state $26 and clear obsolete objects
 Entity_ResumeSevenForcesIntroState26:                   ; DATA XREF: ROM:000555F2   o  ; was: sub_556F4
@@ -913,7 +913,7 @@ Entity_ResumeSevenForcesIntroState26:                   ; DATA XREF: ROM:000555F
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
                 move.b  #$30,d0                         ; '0'
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Entity_ResumeSevenForcesIntroState26
 ; Start the final explosion sequence after Sirene completes
 Entity_StartSevenForcesFinalTransition:                 ; DATA XREF: ROM:000555F4   o  ; was: sub_55716

@@ -94,7 +94,7 @@ Weapon_SetCircleAttackProperties:                       ; CODE XREF: Player_Spaw
                 move.l  Weapon_CircleAttackAnimationPointers(pc,d6.w),(WeaponAnimationDataPtr).w
                 clr.w   (WeaponTargetOrFrame).w
                 move.b  #$B4,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; ---------------------------------------------------------------------------
 Weapon_CircleAttack_Return:                             ; CODE XREF: Player_SpawnCircleAttack+1E   j  ; was: locret_1869E
                 rts
@@ -187,7 +187,7 @@ Weapon_SetHomingProjectileData:                         ; CODE XREF: Weapon_Fire
                 btst    #1,(FrameCounter+1).w
                 bne.s   Weapon_FireHomingShot_SoundReturn
                 move.b  #$B3,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; ---------------------------------------------------------------------------
 Weapon_FireHomingShot_SoundReturn:                      ; CODE XREF: Weapon_FireHomingShot+FC   j  ; was: locret_187EA
                 rts
@@ -267,7 +267,7 @@ Effect_CreateDebrisParticle:                            ; CODE XREF: Effect_Spaw
                 btst    #1,(FrameCounter+1).w
                 bne.s   Effect_CreateDebrisParticle_Return
                 move.b  #$D3,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Effect_CreateDebrisParticle_Return:                     ; CODE XREF: Effect_SpawnRandomDebris+9A   j  ; was: locret_188EC
                 rts
 ; End of function Effect_SpawnRandomDebris
@@ -393,5 +393,5 @@ Effect_InitSharedImpactMotion:                          ; CODE XREF: Weapon_Hand
                 move.l  d0,$1C(a5)
                 move.l  d1,$18(a5)
                 move.b  #$C8,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Effect_UpdateKnockbackParticle

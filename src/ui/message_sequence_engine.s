@@ -144,7 +144,7 @@ BattleBanner_LoadGlyphs:                                ; DATA XREF: ROM:0000A9C
                 cmpi.w  #$1E,(MessageSequenceState).w
                 beq.s   BattleBanner_LoadGlyphsReturn
                 move.b  #$16,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$60,(BattleBannerTimer).w      ; '`'
                 move.w  #$64,(MessageWorkLong1).w       ; shared slot; value is not read before the next state overwrites it
 BattleBanner_LoadGlyphsReturn:                          ; CODE XREF: BattleBanner_LoadGlyphs+A   j  ; was: locret_AAC4
@@ -165,7 +165,7 @@ BattleBanner_StartFightLine:                            ; DATA XREF: ROM:0000A9C
                 movea.l #BattleBanner_StaticSpriteLine,a0
                 bsr.w   Message_RenderLine
                 move.b  #$17,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,(MessageSequenceState).w
                 move.w  #$34,(BattleBannerTimer).w      ; '4'
                 clr.l   (BattleBannerOffset).w
@@ -402,7 +402,7 @@ MessageScript_StoreGlyphRow:                            ; CODE XREF: MessageScri
                 andi.b  #3,d0
                 bne.s   MessageScript_RenderGlyphReturn
                 move.b  #$AD,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 MessageScript_RenderGlyphReturn:                        ; CODE XREF: MessageScript_RenderGlyph+114   j  ; was: locret_AD94
                 rts
 ; End of function MessageScript_RenderGlyph

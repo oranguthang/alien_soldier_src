@@ -49,7 +49,7 @@ Boss_ZLeoSelectRisingReturnPose:                        ; CODE XREF: Boss_ZLeoBe
                 cmp.w   (Entity57YPos).w,d0
                 bpl.s   Boss_ZLeoRenderRisingThresholdPose
                 move.b  #$F0,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #1,$11C(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)

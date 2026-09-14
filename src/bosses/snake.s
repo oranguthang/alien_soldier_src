@@ -213,7 +213,7 @@ Boss_SnakeBeginDefeatState:                             ; DATA XREF: ROM:0004084
                 bsr.w   Boss_SnakeSteerTowardTarget
                 jsr     (Effect_SpawnExplosionB).l
                 move.b  #$BC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 andi.w  #$7FFF,2(a5)
                 move.w  #$10,$48(a5)
                 move.w  a5,$4A(a5)
@@ -307,7 +307,7 @@ Boss_SnakeSegmentFireState:                             ; DATA XREF: ROM:Boss_Sn
                 andi.w  #7,d7
                 bne.s   Boss_SnakeSegmentFireReturn
                 move.b  #$4C,d0                         ; 'L'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_SnakeSegmentFireReturn:                            ; CODE XREF: Boss_SnakeSegmentFireState+6   j  ; was: locret_40B9A
                                         ; Boss_SnakeSegmentFireState+E   j
                 rts

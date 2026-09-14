@@ -301,7 +301,7 @@ Stage12_StartTeleportTransitionToStage13:               ; DATA XREF: ROM:0000D98
                 clr.b   (StageRouteFlags).w
                 clr.w   (Stage12TeleportFade).w
                 move.b  #$CA,d0
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Stage12_StartTeleportTransitionToStage13
 ; Delay, initialize, and apply the first Stage 12-to-13 teleport fade
 Stage12To13_UpdateTeleportFadeIn:                       ; DATA XREF: ROM:0000D982   o  ; was: sub_DBF4

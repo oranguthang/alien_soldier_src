@@ -270,7 +270,7 @@ Boss_BackStringerReadNextPoseCommand:                   ; CODE XREF: Boss_BackSt
                 cmpi.b  #$80,(a1,d0.w)
                 bne.s   Boss_BackStringerDecodePoseCommand
                 move.b  1(a1,d0.w),d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,$58(a5)
                 move.w  $58(a5),d0
 Boss_BackStringerDecodePoseCommand:                     ; CODE XREF: Boss_BackStringerAnimatePose+18   j  ; was: loc_45298

@@ -158,7 +158,7 @@ Boss_BackStringerStartOpeningPose:                      ; CODE XREF: Boss_BackSt
                 move.w  #$FFFF,$C(a5)
                 move.w  #$140,$11C(a5)
                 move.b  #$E5,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$1E,(PrimaryEntityState).w
 ; Plays the timed opening pose while changing the first part radius
 Boss_BackStringerOpeningPoseState:                      ; DATA XREF: ROM:0004471A   o  ; was: loc_448A2
@@ -481,7 +481,7 @@ Boss_BackStringerStartDiveAttack:                       ; CODE XREF: Boss_BackSt
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.b  #$B7,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bsr.w   Boss_BackStringerResetTailSegments
 ; End of function Boss_BackStringerBeginEntrance
 ; Extends the tail until it reaches its lower limit or contact state
@@ -736,7 +736,7 @@ Boss_BackStringerDefeatFadeOutState:                    ; DATA XREF: ROM:0004473
                 cmpi.w  #$27E,$48(a5)
                 bne.s   Boss_BackStringerCheckDefeatPhaseThreshold
                 move.b  #$B8,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_BackStringerCheckDefeatPhaseThreshold:             ; CODE XREF: Boss_BackStringerDefeatFadeOutState+12   j  ; was: loc_44F30
                 cmpi.w  #$1E0,$48(a5)
                 bne.s   Boss_BackStringerUpdateDefeatFade

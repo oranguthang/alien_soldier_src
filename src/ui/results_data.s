@@ -321,7 +321,7 @@ Results_QueuePeriodicScrollSound:                       ; CODE XREF: Results_Upd
                 btst    #1,(FrameCounter+1).w
                 bne.s   Results_PeriodicScrollSoundReturn
                 move.b  #$EF,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Results_PeriodicScrollSoundReturn:                      ; CODE XREF: Results_QueuePeriodicScrollSound+6   j  ; was: locret_205AC
                                         ; Results_QueuePeriodicScrollSound+E   j
                 rts

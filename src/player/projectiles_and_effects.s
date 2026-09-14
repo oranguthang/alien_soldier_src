@@ -1,7 +1,7 @@
 Player_SpawnProjectile:                                 ; CODE XREF: Player_PhoenixAttackUpdate+56   p  ; was: sub_173FA
                                         ; Player_InitiateDashAttack+80   p
                 move.b  #$41,d0                         ; 'A'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 move.w  #$E0,(PaletteRGBAdjustLevel).w
                 move.b  #$20,(PaletteRGBChannelMask).w  ; ' '
                 move.b  #2,(PaletteRGBAdjustStep).w
@@ -163,7 +163,7 @@ Player_SpawnPhoenixParticles_CheckSoundFrame:           ; CODE XREF: Player_Spaw
                 andi.w  #$F,d0
                 bne.s   Player_SpawnPhoenixParticles_Allocate
                 move.b  #$AC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Player_SpawnPhoenixParticles_Allocate:                  ; CODE XREF: Player_SpawnPhoenixParticles+2A   j  ; was: loc_175EE
                 bsr.w   PlayerEffect_FindFreeSlot
                 bne.w   Player_SpawnPhoenixParticles_Return

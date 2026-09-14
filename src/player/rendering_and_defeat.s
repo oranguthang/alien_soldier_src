@@ -21,7 +21,7 @@ Player_RenderDirectionalMovement_AdvanceFrame:          ; CODE XREF: Player_Rend
                 bne.s   Player_RenderDirectionalMovement_SubmitFrame
 Player_RenderDirectionalMovement_PlayStepSound:         ; CODE XREF: Player_RenderDirectionalMovement+34   j  ; was: loc_16F72
                 move.b  #$D6,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; Selects both frame streams and submits their sprite pieces
 Player_RenderDirectionalMovement_SubmitFrame:           ; CODE XREF: Player_RenderDirectionalMovement+3A   j  ; was: loc_16F7C
                 movea.l Player_DirectionalMovementPrimaryFrames(pc,d1.w),a1
@@ -85,7 +85,7 @@ Player_UpdateWeaponAnim_CheckSoundFrame:                ; CODE XREF: Player_Upda
                 bne.s   Player_SetWeaponAnimationData
 Player_UpdateWeaponAnim_PlayFrameSound:                 ; CODE XREF: Player_UpdateWeaponAnim+24   j  ; was: loc_17018
                 move.b  #$D6,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; Sets weapon animation frame data and sprite parameters
 Player_SetWeaponAnimationData:                          ; CODE XREF: Player_UpdateWeaponAnim+8   j  ; was: loc_17022
                                         ; Player_UpdateWeaponAnim+2A   j
@@ -235,7 +235,7 @@ Player_CycleDashAnimation:                              ; CODE XREF: Player_Rend
                 bne.s   Player_SetDashAnimationData
 Player_CycleDashAnimation_PlayFrameSound:               ; CODE XREF: Player_CycleDashAnimation+1E   j  ; was: loc_171A0
                 move.b  #$D6,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; Sets dash animation frame data and sprite tile parameters
 Player_SetDashAnimationData:                            ; CODE XREF: Player_CycleDashAnimation+8   j  ; was: loc_171AA
                                         ; Player_CycleDashAnimation+24   j
@@ -421,5 +421,5 @@ Player_CreateCounterForceEffect_ApplyPosition:          ; CODE XREF: Player_Crea
                 move.w  d1,$14(a0)
                 move.l  d2,$18(a0)
                 move.b  #$43,d0                         ; 'C'
-                jmp     (Sound_PlaySFX).l
+                jmp     (Sound_QueueSFXRequest).l
 ; End of function Player_CreateCounterForceEffect

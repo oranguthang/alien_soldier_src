@@ -22,7 +22,7 @@ WeaponSetup_CommitShootingModeInput:                    ; CODE XREF: WeaponSetup
                 beq.s   WeaponSetup_CheckShootingModeAdvance
                 move.w  d1,(ShootingMode).w
                 move.b  #$DB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 WeaponSetup_CheckShootingModeAdvance:                   ; CODE XREF: WeaponSetup_HandleShootingModeInput+32   j  ; was: loc_1F1F4
                 move.b  (ControllerPressedState).w,d0
                 btst    #1,d0
@@ -33,7 +33,7 @@ WeaponSetup_AdvanceFromShootingMode:                    ; CODE XREF: WeaponSetup
                 addq.w  #2,(SetupTransitionIndex).w
                 subi.w  #$10,(WeaponSetupScrollTarget).w
                 move.b  #$AD,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bra.w   WeaponSetup_RenderShootingModeOptions
 ; ---------------------------------------------------------------------------
 WeaponSetup_CheckShootingModeReturn:                    ; CODE XREF: WeaponSetup_HandleShootingModeInput+50   j  ; was: loc_1F21C
@@ -69,7 +69,7 @@ WeaponSetup_CommitControlTypeInput:                     ; CODE XREF: WeaponSetup
                 beq.s   WeaponSetup_CheckControlTypeAdvance
                 move.w  d1,(WeaponSetupControlIndex).w
                 move.b  #$DB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 WeaponSetup_CheckControlTypeAdvance:                    ; CODE XREF: WeaponSetup_HandleControlTypeInput+38   j  ; was: loc_1F280
                 move.b  (ControllerPressedState).w,d0
                 btst    #1,d0
@@ -81,7 +81,7 @@ WeaponSetup_AdvanceFromControlType:                     ; CODE XREF: WeaponSetup
                 addq.w  #2,(SetupTransitionIndex).w
                 subi.w  #$10,(WeaponSetupScrollTarget).w
                 move.b  #$AD,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bra.w   WeaponSetup_RenderControlTypePage
 ; ---------------------------------------------------------------------------
 WeaponSetup_CheckControlTypeReturn:                     ; CODE XREF: WeaponSetup_HandleControlTypeInput+56   j  ; was: loc_1F2AE
@@ -246,7 +246,7 @@ WeaponSetup_HandleLoadoutInput:                         ; CODE XREF: WeaponSetup
                 beq.s   WeaponSetup_CheckPreviousSlotInput
                 move.w  #$E,(WeaponSetupHighlight).w
                 move.b  #$DF,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 addq.w  #2,(WeaponSlotOffset).w
                 cmpi.w  #8,(WeaponSlotOffset).w
                 bmi.s   WeaponSetup_CheckPreviousSlotInput
@@ -262,7 +262,7 @@ WeaponSetup_CheckPreviousSlotInput:                     ; CODE XREF: WeaponSetup
                 beq.s   WeaponSetup_HandleForceDirectionInput
                 move.w  #$E,(WeaponSetupHighlight).w
                 move.b  #$DE,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 subq.w  #2,(WeaponSlotOffset).w
                 bpl.s   WeaponSetup_LoadPreviousSlotSelection
                 clr.w   (WeaponSlotOffset).w
@@ -327,7 +327,7 @@ WeaponSetup_CommitForceSelection:                       ; CODE XREF: WeaponSetup
                 tst.w   d2
                 beq.s   WeaponSetup_RenderLoadout
                 move.b  #$DB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 clr.w   (WeaponFireCooldown).w
                 jsr     (Weapon_AdvanceCurrentState).l
 WeaponSetup_RenderLoadout:                              ; CODE XREF: WeaponSetup_HandleShootingModeInput+8   j  ; was: loc_1F5AE

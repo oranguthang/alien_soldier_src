@@ -258,7 +258,7 @@ Entity_StartValkirieBattleStateC:                       ; CODE XREF: Entity_Upda
                 move.l  #$FFFE0000,d0
                 bsr.w   Entity_SetValkirieHorizontalVelocityByFacing
                 move.b  #$5A,d0                         ; 'Z'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Entity_UpdateValkirieBattleStateA
 ; Decelerate the state-$C rise until animation event zero returns to state $A
 Entity_UpdateValkirieBattleStateC:                      ; DATA XREF: ROM:000557C6   o  ; was: sub_55A68
@@ -278,7 +278,7 @@ Entity_CompleteValkirieBattleStateC:                    ; CODE XREF: Entity_Upda
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.b  #$5A,d0                         ; 'Z'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bra.w   Entity_UpdateValkirieBattleStateA
 ; End of function Entity_UpdateValkirieBattleStateC
 ; Start state $22 with both active-part pointers set to $CEC0
@@ -336,7 +336,7 @@ Entity_StartValkirieBattleStateE:                       ; CODE XREF: Entity_Upda
                 move.w  a5,d1
                 bsr.w   Entity_SelectValkirieActivePartPair
                 move.b  #$5A,d0                         ; 'Z'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 cmpi.w  #$120,(PlayerYPosition).w
                 bmi.s   Entity_ValkirieBattleStateECheckMidPattern
                 tst.w   (PlayerYVelocity).w
@@ -388,7 +388,7 @@ Entity_AdvanceValkirieAirborneState:                    ; CODE XREF: Entity_Star
                 nop
                 bsr.w   Entity_ApplyValkiriePartMotionCommands
                 move.b  #$D1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Entity_StartValkirieBattleStateE
 ; Converge detached-part velocity and handle state-$10 animation events
 Entity_UpdateValkirieBattleState10:                     ; DATA XREF: ROM:000557CA   o  ; was: sub_55BF0
@@ -482,7 +482,7 @@ Entity_CheckValkirieState14SoundEvent:                  ; CODE XREF: Entity_Upda
                 bclr    #0,$23E(a5)
                 beq.s   Entity_UpdateValkirieState14Timer
                 move.b  #$4F,d0                         ; 'O'
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Entity_UpdateValkirieState14Timer:                      ; CODE XREF: Entity_UpdateValkirieBattleState14+22   j  ; was: loc_55D04
                 subq.w  #1,$11C(a5)
                 bne.s   Entity_RenderValkirieBattleState14
@@ -566,7 +566,7 @@ Entity_UpdateValkirieBattleState12:                     ; DATA XREF: ROM:000557C
                 nop
                 bsr.w   Entity_ApplyValkiriePartMotionCommands
                 move.b  #$C6,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Entity_CheckValkirieState12ExitEvent:                   ; CODE XREF: Entity_UpdateValkirieBattleState12+6   j  ; was: loc_55DEC
                 bclr    #1,$23E(a5)
                 beq.s   Entity_RenderValkirieBattleState12
@@ -697,7 +697,7 @@ Entity_AdvanceValkirieBattleState1C:                    ; CODE XREF: Entity_Upda
                 clr.w   $11C(a5)
                 move.w  #3,(PlaneAShakeLevel).w
                 move.b  #$A0,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 bsr.w   Entity_StartValkirieState1CPartFlash
 ; End of function Entity_UpdateValkirieBattleState18
 ; Raise two part offsets during state $1C
@@ -730,7 +730,7 @@ Entity_AdvanceValkirieBattleState20:                    ; CODE XREF: Entity_Upda
                 move.w  $2F2(a5),$2F4(a5)
                 move.w  $352(a5),$354(a5)
                 move.b  #$F1,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 ; End of function Entity_UpdateValkirieBattleState1C
 ; Hold the terminal animation in state $20 until it finishes
 Entity_UpdateValkirieBattleState20:                     ; DATA XREF: ROM:000557DA   o  ; was: sub_55F96

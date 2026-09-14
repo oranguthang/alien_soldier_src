@@ -60,7 +60,7 @@ Sys_VBlankHandler:                                      ; CODE XREF: VBLANK+74  
 Sys_VBlankHandler_RunUpdate:                            ; CODE XREF: Sys_VBlankHandler+4   j  ; was: loc_B2E
                                         ; Sys_VBlankHandler+A   j
                 clr.b   (VBlankUpdateReady).w
-                bsr.w   Sound_AcquireZ80Bus
+                bsr.w   Input_PollBothControllersWithZ80BusLock
                 bsr.w   Gfx_RunVBlankTransfers
                 bsr.w   Gfx_ApplyVDPRegisterShadows
                 jsr     (RasterBuffer_CopySelectedLayout).l

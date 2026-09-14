@@ -119,7 +119,7 @@ Enemy_Stage10WaspController:                            ; DATA XREF: ROM:Entity_
                 btst    #4,$22(a5)
                 bne.w   Enemy_ConvertStage10WaspToDefeatDebris
                 move.b  #$BC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.l  #SharedCombatSpriteAnimation00,8(a5)
@@ -273,7 +273,7 @@ Enemy_UpdateStage10WaspDefeatDebris:                    ; DATA XREF: ROM:Entity_
                 bpl.s   Enemy_UpdateStage10WaspDefeatDebris_Blink
                 jsr     (Effect_SpawnExplosionA).l
                 move.b  #$BC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 moveq   #7,d0
                 jmp     Pickup_SpawnRandomFromCurrentObject
 ; ---------------------------------------------------------------------------

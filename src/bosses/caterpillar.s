@@ -504,7 +504,7 @@ Boss_CaterpillarShipBeginDefeatState:                   ; DATA XREF: ROM:0003D55
                 bsr.w   Boss_CaterpillarUpdateShipSteering
                 jsr     (Effect_SpawnExplosionB).l
                 move.b  #$BC,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
                 andi.w  #$7FFF,2(a5)
                 move.w  #$10,$48(a5)
                 move.w  a5,$4A(a5)
@@ -541,7 +541,7 @@ Boss_CaterpillarShipDismantlePartsState:                ; DATA XREF: ROM:0003D55
                 move.w  $10(a4),$10(a0)
                 move.w  $14(a4),$14(a0)
                 move.b  #$BB,d0
-                jsr     (Sound_PlaySFX).l
+                jsr     (Sound_QueueSFXRequest).l
 Boss_CaterpillarShipDismantlePartsReturn:               ; CODE XREF: Boss_CaterpillarShipDismantlePartsState+8   j  ; was: locret_3D782
                                         ; Boss_CaterpillarShipDismantlePartsState+3A   j
                 rts
