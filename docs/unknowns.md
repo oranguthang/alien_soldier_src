@@ -7620,3 +7620,28 @@ the subsequent projection-cutscene initializer is confirmed unchanged.
 The eight new exact-address records raise the audit registry from 13,327 to
 13,335. The reproducible semantic-review queue falls from 3,016 to 3,008 and
 its actionable upper bound from 2,503 to 2,495; provenance remains 16,051.
+
+The first five-name-module package audits the ten pending entries in
+`bosses/valkirie_force.s` and `credits/entry.s`. Valkirie Force's type-`$3FC`
+main dispatch and two-state initializer are confirmed. Its former generic
+`AnimUpdate` and `Anim_*` wrappers are narrowed to the boss-owned pose stream,
+nineteen-channel delta calculation, and delay loading proved by their shared
+metasprite source, channel count, and interpolation workspace. The delay loader
+remains explicitly documented as unreferenced.
+
+Credits initialization is confirmed as a two-phase game-mode handler. Its
+second entry becomes `Credits_ActivateScreen`, and the update handler now names
+both operations it actually performs: palette fading and transition-buffer
+updates. The six-record asset list and four-longword tilemap transfer tuple are
+retained with exact consumer evidence.
+
+This pass also repairs a module boundary: the eight-word
+`Boss_MissiraySegmentObjectPointers` table was the unrelated tail of
+`valkirie_force.s`, although only three Missiray routines consume it. Moving it
+to the beginning of `missiray_core.s` preserves ROM order at `0x0537A8` while
+making both modules semantically self-contained; `rom_layout.json` and the
+source map now enforce that boundary.
+
+Ten new exact-address records raise the audit registry from 13,335 to 13,345.
+The reproducible semantic-review queue falls from 3,008 to 2,998 and its
+actionable upper bound from 2,495 to 2,485; provenance remains 16,051.

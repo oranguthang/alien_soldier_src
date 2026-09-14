@@ -55,17 +55,17 @@ Boss_ValkirieForcePreparePoseUpdate:                    ; CODE XREF: Boss_Valkir
                 bra.w   *+4
 ; ---------------------------------------------------------------------------
 Boss_ValkirieForceRenderFrame:                          ; CODE XREF: Boss_ValkirieForceInit+86   j  ; was: loc_535B2
-                bsr.w   Boss_ValkirieForceAnimUpdate
+                bsr.w   Boss_ValkirieForceUpdatePose
                 moveq   #$19,d7
                 jmp     Sprite_BeginMetaspritePartTraversal
 ; End of function Boss_ValkirieForceInit
-; Updates boss animation sequence with interpolation and applies rotation angles to all segments
-Boss_ValkirieForceAnimUpdate:                           ; CODE XREF: Boss_ValkirieForceInit:Boss_ValkirieForceRenderFrame   p  ; was: sub_535BE
+; Interprets the pose stream and applies interpolated angles to all linked parts
+Boss_ValkirieForceUpdatePose:                           ; CODE XREF: Boss_ValkirieForceInit:Boss_ValkirieForceRenderFrame   p  ; was: sub_535BE
                 clr.b   $23E(a5)
                 tst.w   $C(a5)
                 bpl.s   Boss_ValkirieForceAdvancePoseInterpolation
-Boss_ValkirieForceReadPoseCommand:                      ; CODE XREF: Boss_ValkirieForceAnimUpdate+24   j  ; was: loc_535C8
-                                        ; Boss_ValkirieForceAnimUpdate+44   j
+Boss_ValkirieForceReadPoseCommand:                      ; CODE XREF: Boss_ValkirieForceUpdatePose+24   j  ; was: loc_535C8
+                                        ; Boss_ValkirieForceUpdatePose+44   j
                 move.w  $58(a5),d0
                 bmi.w   Boss_ValkirieForceApplyInterpolatedPartAngles
                 cmpi.b  #$80,(a1,d0.w)
@@ -74,28 +74,28 @@ Boss_ValkirieForceReadPoseCommand:                      ; CODE XREF: Boss_Valkir
                 addq.w  #2,$58(a5)
                 bra.s   Boss_ValkirieForceReadPoseCommand
 ; ---------------------------------------------------------------------------
-Boss_ValkirieForceHandlePoseControlWord:                ; CODE XREF: Boss_ValkirieForceAnimUpdate+18   j  ; was: loc_535E4
+Boss_ValkirieForceHandlePoseControlWord:                ; CODE XREF: Boss_ValkirieForceUpdatePose+18   j  ; was: loc_535E4
                 move.w  (a1,d0.w),d3
                 cmpi.w  #$FFFE,d3
                 bne.s   Boss_ValkirieForceHandlePoseLoopCommand
                 move.w  d3,$58(a5)
                 rts
 ; ---------------------------------------------------------------------------
-Boss_ValkirieForceHandlePoseLoopCommand:                ; CODE XREF: Boss_ValkirieForceAnimUpdate+2E   j  ; was: loc_535F4
+Boss_ValkirieForceHandlePoseLoopCommand:                ; CODE XREF: Boss_ValkirieForceUpdatePose+2E   j  ; was: loc_535F4
                 cmpi.w  #$FFFF,d3
                 bne.s   Boss_ValkirieForceBeginPoseInterpolation
                 clr.w   $58(a5)
                 clr.w   $29C(a5)
                 bra.s   Boss_ValkirieForceReadPoseCommand
 ; ---------------------------------------------------------------------------
-Boss_ValkirieForceBeginPoseInterpolation:               ; CODE XREF: Boss_ValkirieForceAnimUpdate+3A   j  ; was: loc_53604
+Boss_ValkirieForceBeginPoseInterpolation:               ; CODE XREF: Boss_ValkirieForceUpdatePose+3A   j  ; was: loc_53604
                 move.w  d3,(PoseCommandWord).w
                 andi.w  #$FF,d3
                 move.w  2(a1,d0.w),d0
                 ext.l   d0
                 addi.l  #Boss_ValkirieForcePoseKeyframeData,d0
                 movea.l d0,a0
-                bsr.w   Anim_ValkirieForceCalculateDeltas
+                bsr.w   Boss_ValkirieForceCalculatePoseDeltas
                 moveq   #0,d0
                 move.b  (PoseDurationByte).w,d0
                 move.w  d0,$C(a5)
@@ -103,13 +103,13 @@ Boss_ValkirieForceBeginPoseInterpolation:               ; CODE XREF: Boss_Valkir
                 addq.w  #1,$29C(a5)
                 tst.w   $C(a5)
                 bmi.s   Boss_ValkirieForceApplyInterpolatedPartAngles
-Boss_ValkirieForceAdvancePoseInterpolation:             ; CODE XREF: Boss_ValkirieForceAnimUpdate+8   j  ; was: loc_53636
+Boss_ValkirieForceAdvancePoseInterpolation:             ; CODE XREF: Boss_ValkirieForceUpdatePose+8   j  ; was: loc_53636
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$12,d7
                 jsr     (Anim_ApplyInterpolationStep).l
-Boss_ValkirieForceApplyInterpolatedPartAngles:          ; CODE XREF: Boss_ValkirieForceAnimUpdate+E   j  ; was: loc_53646
-                                        ; Boss_ValkirieForceAnimUpdate+76   j
+Boss_ValkirieForceApplyInterpolatedPartAngles:          ; CODE XREF: Boss_ValkirieForceUpdatePose+E   j  ; was: loc_53646
+                                        ; Boss_ValkirieForceUpdatePose+76   j
                 move.w  #$1FE,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 move.b  (a0),d0
@@ -202,29 +202,24 @@ Boss_ValkirieForceApplyInterpolatedPartAngles:          ; CODE XREF: Boss_Valkir
                 and.w   d7,d0
                 move.w  d0,$9B6(a5)
                 rts
-; End of function Boss_ValkirieForceAnimUpdate
-; Calculates animation interpolation deltas for Valkirie Force transformations
-Anim_ValkirieForceCalculateDeltas:                      ; CODE XREF: Boss_ValkirieForceAnimUpdate+5C   p  ; was: sub_53758
+; End of function Boss_ValkirieForceUpdatePose
+; Calculates nineteen-channel interpolation deltas for the next pose keyframe
+Boss_ValkirieForceCalculatePoseDeltas:                  ; CODE XREF: Boss_ValkirieForceUpdatePose+5C   p  ; was: sub_53758
                 lea     (Boss_ZLeoValkirieForceSharedMetaspriteData).l,a1
                 moveq   #$12,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 jmp     Anim_CalculateInterpolationDeltas
-; End of function Anim_ValkirieForceCalculateDeltas
-; Loads frame delay data for Valkirie Force animations
-Anim_ValkirieForceLoadDelays:
-                moveq   #$12,d7                         ; was: sub_5376E
+; End of function Boss_ValkirieForceCalculatePoseDeltas
+; Unreferenced wrapper that loads nineteen pose-channel delays
+Boss_ValkirieForceLoadPoseDelays:                       ; was: sub_5376E
+                moveq   #$12,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 jmp     Anim_LoadFrameDelays
-; End of function Anim_ValkirieForceLoadDelays
+; End of function Boss_ValkirieForceLoadPoseDelays
 ; ---------------------------------------------------------------------------
 Boss_ValkirieForceInteractivePose:  dc.w    $2020, 0, $2020, $12, $FFFF  ; was: word_5377A
                                         ; DATA XREF: Boss_ValkirieForceInit+80   o
 Boss_ValkirieForcePoseKeyframeData: dc.w    $4000, $C094, $C010, $EC40, $F060, $F020, $2020, $10E0, $E000, $4000, $C094, $C010, $EC40, $F060, $F020, $2020  ; was: word_53784
-                                        ; DATA XREF: Boss_ValkirieForceAnimUpdate+54   o
+                                        ; DATA XREF: Boss_ValkirieForceUpdatePose+54   o
                 dc.w    $10E0, $E000
-Boss_MissiraySegmentObjectPointers: dc.w    $C680, $C6E0, $C740, $C7A0, $C800, $C860, $C8C0, $C920  ; was: word_537A8
-                                        ; DATA XREF: Boss_MissirayUpdateTimedSegmentPairSeparation+1A   o
-                                        ; Boss_MissirayArmRandomSegment+A   o
-
-; Main boss handler

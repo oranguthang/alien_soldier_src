@@ -1,3 +1,9 @@
+; RAM object pointers for Missiray's eight linked segments
+Boss_MissiraySegmentObjectPointers: dc.w    $C680, $C6E0, $C740, $C7A0, $C800, $C860, $C8C0, $C920  ; was: word_537A8
+                                        ; DATA XREF: Boss_MissirayUpdateTimedSegmentPairSeparation+1A   o
+                                        ; Boss_MissirayArmRandomSegment+A   o
+
+; Main boss handler
 Boss_MissirayMain:                                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_537B8
                 tst.w   4(a5)
                 beq.w   Boss_MissirayDispatchState

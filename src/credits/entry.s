@@ -1,7 +1,7 @@
 ; Initializes credits screen
 Credits_InitializeScreen:                               ; DATA XREF: Sys_DispatchGameState+B6   o  ; was: sub_1E16C
                 tst.w   (GameSubstateIndex).w
-                bne.s   Credits_InitializeScreen_Activate
+                bne.s   Credits_ActivateScreen
                 addq.w  #2,(GameSubstateIndex).w
                 jsr     (Sys_InitGameMode).l
                 lea     Credits_IntroAssetLoadList(pc),a0
@@ -18,7 +18,8 @@ Credits_InitializeScreen:                               ; DATA XREF: Sys_Dispatc
                 move.b  #0,(VDPReg18Shadow+1).w
                 rts
 ; ---------------------------------------------------------------------------
-Credits_InitializeScreen_Activate:                      ; CODE XREF: Credits_InitializeScreen+4   j  ; was: loc_1E1BE
+; Activates the loaded credits screen and configures its raster transition
+Credits_ActivateScreen:                                 ; CODE XREF: Credits_InitializeScreen+4   j  ; was: loc_1E1BE
                 addq.w  #4,(GameModeIndex).w
                 jsr     (Gfx_FadePaletteTransition).l
                 movea.l #Credits_IntroVRAMTransferParameters,a0
@@ -58,9 +59,9 @@ Credits_IntroAssetLoadList: dc.w    7                   ; field_0  ; was: stru_1
 Credits_IntroVRAMTransferParameters:    dc.l    $FFFF7000, $FFFF6000, $FFFF4000, $4000  ; was: dword_1E236
                                         ; DATA XREF: Credits_InitializeScreen+5C   o
 
-; Updates credits palette effects
-Credits_UpdateEffects:                                  ; DATA XREF: Sys_DispatchGameState+BA   o  ; was: sub_1E246
+; Updates the credits fade and transition raster buffers
+Credits_UpdateFadeAndTransitionBuffers:                 ; DATA XREF: Sys_DispatchGameState+BA   o  ; was: sub_1E246
                 jsr     (Gfx_FadePaletteTransition).l
                 jsr     (TransitionEffect_UpdateBuffers).l
                 rts
-; End of function Credits_UpdateEffects
+; End of function Credits_UpdateFadeAndTransitionBuffers

@@ -197,7 +197,7 @@ Sys_GameStateHandlers:  dc.l    Sys_CheckRegionLock     ; was: off_C7C
                 dc.l    RetryPrompt_Initialize
                 dc.l    RetryPrompt_Update
                 dc.l    Credits_InitializeScreen
-                dc.l    Credits_UpdateEffects
+                dc.l    Credits_UpdateFadeAndTransitionBuffers
                 dc.l    Sys_TransitionToStageInit
                 dc.l    Sys_StageTransitionUpdate
                 dc.l    WeaponSetup_InitializeScreen
