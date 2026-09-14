@@ -44,7 +44,7 @@ ResultsPostStageCompletionTilemapRows:  dc.b    $69, 0, $20, 0, $F, 0, 1, 2, 3, 
 ; Waits for post-stage confirmation and starts the exit fade
 Results_WaitForPostStageConfirmation:                   ; was: sub_1DCDA
                 addq.w  #1,(FrameCounter).w
-                jsr     (Results_CheckSkipButton).l
+                jsr     (Results_UpdateHistoryDisplayAndHandleExtendedExit).l
                 bsr.w   Results_RenderHighScore
                 bsr.w   Results_RenderScore
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
@@ -230,7 +230,7 @@ Results_UpdateFinalSummary:                             ; was: sub_1DF3A
                 addq.w  #1,(FrameCounter).w
                 tst.w   (GameSubstateIndex).w
                 bne.s   Results_UpdateFinalSummary_Frame
-                jsr     (Results_CheckSkipButton).l
+                jsr     (Results_UpdateHistoryDisplayAndHandleExtendedExit).l
                 bsr.w   Results_RenderHighScore
                 bsr.w   Results_RenderScore
 Results_UpdateFinalSummary_Frame:                       ; was: loc_1DF52

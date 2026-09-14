@@ -790,7 +790,7 @@ repeats the resulting four-word group into `HorizontalScrollProfile`.
 |---|---:|---|
 | `GameOverRasterBuffer` | `$FFFF9000` | The Game Over perspective projector writes four interleaved words per row from this base; the raster-layout copier expands fourteen 64-byte blocks into `HScrollBuffer`. |
 | `SharedPatternWorkBuffer` (`TransitionPatternRow2`, `ShieldViperBranchParity` overlays) | `$FFFF9440` | Transition masking treats this address as the third 32-byte pattern row; Shield Viper separately toggles its first word between zero and one to alternate the optional post-tracking branch. |
-| `SharedPatternWorkWord1` (`ResultsLayoutModeCopy` overlay) | `$FFFF9442` | Results copies and clears `ResultsExtendedLayout` here, then uses the copy for skip-button eligibility and extended scroll bounds; transition masking reuses the same bytes inside its third pattern row. |
+| `SharedPatternWorkWord1` (`ResultsLayoutModeCopy` overlay) | `$FFFF9442` | Results copies and clears `ResultsExtendedLayout` here, then uses the copy to enable the controller-bit-seven frontend restart and select the extended automatic-scroll target; transition masking reuses the same bytes inside its third pattern row. |
 | `SharedPatternWorkWord2` (`Epsilon1TileBandIndex` overlay) | `$FFFF9444` | Epsilon 1 seeds this word with zero, two, or four and advances it while submitting paired animated tile bands; transition masking reuses the same bytes inside its third pattern row. |
 | `SharedPatternStateLong0-2` (`Epsilon1RingPhaseTable`, `ResultsStageRowBuffer`, `ShieldViperEffectStepA-C` overlays) | `$FFFF944E-$FFFF9459` | Epsilon 1 addresses a twelve-word ring phase table from the first longword; Results begins its variable-length stage rows at base plus two; Shield Viper advances three overlapping 16.16 effect steps at offsets `+$02`, `+$06`, and `+$0A`. |
 | `SharedPatternStateWord0-2` (`ShieldViperEffectPhaseA-C` overlays) | `$FFFF945C-$FFFF9461` | Shield Viper accumulates and wraps three pattern range phases at `$30`; Epsilon 1 independently reaches these words through later indices of its ring phase table, while Results uses them inside its stage-row records. |
@@ -1520,8 +1520,15 @@ contextual aliases rather than claiming ownership of the physical addresses.
 
 | Physical range | Contextual alias | Static evidence |
 |---|---|---|
-| `SharedPatternRow0Long0` through `SharedPatternRow0Long7` (`$FFFF9400-$FFFF941F`) | `TransitionPatternRow0`; base also exposed as `TransitionPatternBuffer` | `Effect_ApplyTransitionMask` advances across two longwords per iteration for four iterations, consuming exactly eight longwords. Transition initialization and byte-mask helpers build and mutate the larger buffer from the same base. |
-| `SharedPatternRow1Long0` through `SharedPatternRow1Long7` (`$FFFF9420-$FFFF943F`) | `TransitionPatternRow1` | The same four-iteration mask loop consumes the second row in lockstep with rows zero and two, proving its 32-byte extent and element width. |
+| `SharedPatternRow0Long0` through `SharedPatternRow0Long7` (`$FFFF9400-$FFFF941F`) | `TransitionPatternRow0`; base also exposed as `TransitionPatternBuffer` | `Effect_ApplyTransitionMask` advances across two longwords per iteration for four iterations, consuming exactly eight longwords. Transition initialization and byte-mask helpers build and mutate the larger buffer from the same base. Results independently overlays display state, row counters and offsets, scroll state, selected-row state, and packed-BCD operands. |
+| `SharedPatternRow1Long0` through `SharedPatternRow1Long7` (`$FFFF9420-$FFFF943F`) | `TransitionPatternRow1` | The same four-iteration mask loop consumes the second row in lockstep with rows zero and two, proving its 32-byte extent and element width. Results independently overlays its current-row pointer, completion-music latch, three aggregate BCD values, two aggregate counters, navigation latch, and vertical bounds. |
+
+The results-history code exposes exact contextual aliases for those two rows:
+`ResultsDisplayState`, rendered-row and row-offset fields, scroll target and
+steps, selected-row fields, BCD start/end operands, aggregate time/visit
+fields, and viewport bounds. These aliases are used only by
+`ui/results_scrolling.s` and `ui/results_data.s`; the neutral physical names
+remain authoritative for other mutually exclusive users of the workspace.
 
 ## Reviewed shared transfer workspace at `$FFFF8058-$FFFF8061`
 

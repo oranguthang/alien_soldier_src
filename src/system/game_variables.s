@@ -132,7 +132,7 @@ Stage_LoadTimeLimit:                                    ; CODE XREF: StageIntro_
 ; ---------------------------------------------------------------------------
 StageTimeLimitTable:    dc.w    $200, $240, $300, $330, $330  ; was: word_1CE4C
                                         ; DATA XREF: Stage_LoadTimeLimit   o
-                                        ; Results_InitializeDataDisplay+4E   o
+                                        ; Results_InitializeHistoryDisplay+4E   o
                 dc.w    $210, $220, $300, $340, $300
                 dc.w    $320, $410, $200, $200, $240
                 dc.w    $340, $300, $400, $220, $950

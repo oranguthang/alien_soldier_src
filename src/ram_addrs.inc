@@ -507,6 +507,35 @@ SharedPatternWorkWord2  equ     $FFFF9444               ; was: word_FF9444
 TransitionPatternRow2   equ     SharedPatternWorkBuffer
 ShieldViperBranchParity equ     SharedPatternWorkBuffer
 ResultsLayoutModeCopy   equ     SharedPatternWorkWord1
+ResultsDisplayState     equ     SharedPatternRow0Long0
+ResultsRenderedRowCount equ     SharedPatternRow0Long0+2
+ResultsRowTileOffset    equ     SharedPatternRow0Long1
+ResultsRowBufferOffset  equ     SharedPatternRow0Long1+2
+ResultsHighlightPalette equ     SharedPatternRow0Long1+2
+ResultsScrollTargetY    equ     SharedPatternRow0Long2
+ResultsStageTimeScratch equ     SharedPatternRow0Long2+2
+ResultsPhaseTimeScratch equ     SharedPatternRow0Long3
+ResultsEndTimeScratch   equ     SharedPatternRow0Long3+2
+ResultsBCDEndTime       equ     SharedPatternRow0Long4
+ResultsBCDStartTime     equ     SharedPatternRow0Long4+2
+ResultsViewportRow      equ     SharedPatternRow0Long5
+ResultsSelectedRowData  equ     SharedPatternRow0Long5+2
+ResultsSelectedRowTile  equ     SharedPatternRow0Long6
+ResultsHorizontalStep   equ     SharedPatternRow0Long6+2
+ResultsVerticalStep     equ     SharedPatternRow0Long7
+ResultsDetailTextOffset equ     SharedPatternRow0Long7+2
+ResultsSelectedTextPos  equ     SharedPatternRow1Long0
+ResultsCurrentRowPtr    equ     SharedPatternRow1Long0+2
+ResultsMusicQueuedFlag  equ     SharedPatternRow1Long1
+ResultsTotalTimeBCD     equ     SharedPatternRow1Long2
+ResultsTotalClearBCD    equ     SharedPatternRow1Long3
+ResultsTotalVisitsBCD   equ     SharedPatternRow1Long4
+ResultsLimitTimeSeconds equ     SharedPatternRow1Long5
+ResultsClearTimeSeconds equ     SharedPatternRow1Long5+2
+ResultsTotalVisitCount  equ     SharedPatternRow1Long6
+ResultsHorizontalActive equ     SharedPatternRow1Long6+2
+ResultsLowerScrollBound equ     SharedPatternRow1Long7
+ResultsLastScrollRow    equ     SharedPatternRow1Long7+2
 Epsilon1TileBandIndex   equ     SharedPatternWorkWord2
 Epsilon1TileDMARecord   equ     $FFFF9446               ; was: word_FF9446
 SharedPatternStateLong0 equ     $FFFF944E               ; was: dword_FF944E

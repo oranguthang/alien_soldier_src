@@ -8233,3 +8233,27 @@ pending queue falls from 2,758 to 2,745 and its actionable upper bound from
 2,245 to 2,232; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. The weapon-selection object module now
 has zero pending current names.
+
+The thirteen pending entrypoints in `ui/results_scrolling.s` are audited as a
+single stage-history display state machine. The former `CheckSkipButton`
+entrypoint actually performs every display-state update, mirrors horizontal
+camera position, and only then permits controller bit seven to restart the
+frontend when the copied extended-layout flag is set. Its six dispatch targets
+now distinguish row construction, the initial ten-row render, viewport entry,
+the additional six-row render, automatic scrolling, and interactive browsing.
+
+This audit also rejects twelve already registered but weak Sonnet names in the
+same range. The alleged weapon-selection paths read only
+`StageTimeLimitTable`; the alleged stage count comes from
+`StageResultVisits`; and the generic second-interval clear targets exactly the
+25-word `StageCompletionTimes` array. The packed-BCD helpers are results-row
+writers with fixed operands and a 60-second borrow, rather than generic UI or
+math utilities. Exact Results aliases replace the otherwise unreadable
+`SharedPatternRow0Long*` and `SharedPatternRow1Long*` accesses while retaining
+the neutral physical RAM owners for other scenes.
+
+Thirteen exact-address records raise the registry from 13,597 to 13,610. The
+pending queue falls from 2,745 to 2,732 and its actionable upper bound from
+2,232 to 2,219; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `ui/results_scrolling.s` now has zero
+pending current names.
