@@ -1,14 +1,14 @@
 ; Gusthead root mappings alternate every eight frames
-Boss_GustheadRootMappings:  dc.l    Boss_GustheadRootMappingA  ; DATA XREF: Boss_GustheadMain+20   o  ; was: off_3F198
+Boss_GustheadRootMappings:  dc.l    Boss_GustheadRootMappingA  ; DATA XREF: Boss_GustheadUpdateAndDispatchState+20   o  ; was: off_3F198
                 dc.l    Boss_GustheadRootMappingB
 
-; Wrapper for Gusthead boss main
-Boss_GustheadMainWrapper:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3F1A0
-                bsr.s   Boss_GustheadMain
+; Entity-table entry for the Gusthead root controller
+Boss_GustheadUpdateEntry:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3F1A0
+                bsr.s   Boss_GustheadUpdateAndDispatchState
                 rts
-; End of function Boss_GustheadMainWrapper
-; Main Gusthead boss handler
-Boss_GustheadMain:                                      ; CODE XREF: Boss_GustheadMainWrapper   p  ; was: sub_3F1A4
+; End of function Boss_GustheadUpdateEntry
+; Updates the Gusthead root and dispatches its current state
+Boss_GustheadUpdateAndDispatchState:                    ; CODE XREF: Boss_GustheadUpdateEntry   p  ; was: sub_3F1A4
                 tst.w   4(a5)
                 beq.w   Boss_GustheadDispatchState
                 move.w  (FrameCounter).w,d0
@@ -20,23 +20,23 @@ Boss_GustheadMain:                                      ; CODE XREF: Boss_Gusthe
                 lea     Boss_GustheadRootMappings(pc),a1
                 move.l  (a1,d0.w),8(a5)
                 clr.w   $C(a5)
-Boss_GustheadAfterRootMappingToggle:                    ; CODE XREF: Boss_GustheadMain+10   j  ; was: loc_3F1D2
+Boss_GustheadAfterRootMappingToggle:                    ; CODE XREF: Boss_GustheadUpdateAndDispatchState+10   j  ; was: loc_3F1D2
                 tst.w   (GustheadFinalPhaseFlag).w
                 beq.s   Boss_GustheadSelectDebrisDrift
                 move.l  (GustheadArenaVelocity).w,d0
                 add.l   d0,$10(a5)
-Boss_GustheadSelectDebrisDrift:                         ; CODE XREF: Boss_GustheadMain+32   j  ; was: loc_3F1E0
+Boss_GustheadSelectDebrisDrift:                         ; CODE XREF: Boss_GustheadUpdateAndDispatchState+32   j  ; was: loc_3F1E0
                 cmpi.w  #$50,4(a5)                      ; 'P'
                 bcc.s   Boss_GustheadUseArenaMotionDebrisDrift
                 move.l  (StageMotionXDelta).w,(SharedPatternRow1Long2).w
                 bra.s   Boss_GustheadCheckStageExit
 ; ---------------------------------------------------------------------------
-Boss_GustheadUseArenaMotionDebrisDrift:                 ; CODE XREF: Boss_GustheadMain+42   j  ; was: loc_3F1F0
+Boss_GustheadUseArenaMotionDebrisDrift:                 ; CODE XREF: Boss_GustheadUpdateAndDispatchState+42   j  ; was: loc_3F1F0
                 move.l  (GustheadArenaVelocity).w,d0
                 asr.l   #1,d0
                 neg.l   d0
                 move.l  d0,(SharedPatternRow1Long2).w
-Boss_GustheadCheckStageExit:                            ; CODE XREF: Boss_GustheadMain+4A   j  ; was: loc_3F1FC
+Boss_GustheadCheckStageExit:                            ; CODE XREF: Boss_GustheadUpdateAndDispatchState+4A   j  ; was: loc_3F1FC
                 btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_GustheadUpdatePaletteAndScreenX
                 btst    #1,(BossColorEffectFlags).w
@@ -48,24 +48,24 @@ Boss_GustheadCheckStageExit:                            ; CODE XREF: Boss_Gusthe
                 clr.l   (StageMotionXDelta).w
                 move.w  #$5C,4(a5)                      ; '\'
                 bset    #0,(StageTimerPauseFlag).w
-Boss_GustheadUpdatePaletteAndScreenX:                   ; CODE XREF: Boss_GustheadMain+5E   j  ; was: loc_3F22E
-                                        ; Boss_GustheadMain+66   j
+Boss_GustheadUpdatePaletteAndScreenX:                   ; CODE XREF: Boss_GustheadUpdateAndDispatchState+5E   j  ; was: loc_3F22E
+                                        ; Boss_GustheadUpdateAndDispatchState+66   j
                 jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  $10(a5),d0
                 add.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$5C(a5)
-Boss_GustheadDispatchState:                             ; CODE XREF: Boss_GustheadMain+4   j  ; was: loc_3F240
+Boss_GustheadDispatchState:                             ; CODE XREF: Boss_GustheadUpdateAndDispatchState+4   j  ; was: loc_3F240
                 move.w  4(a5),d0
                 lea     Boss_GustheadStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Boss_GustheadMain
+; End of function Boss_GustheadUpdateAndDispatchState
 ; ---------------------------------------------------------------------------
-Boss_GustheadStates:    dc.w    Boss_GustheadInitBattle-*  ; DATA XREF: Boss_GustheadMain+A0   o  ; was: off_3F24C
-                dc.w    Boss_GustheadSetupParts-*
-                dc.w    Boss_GustheadStartIntro-*
-                dc.w    Boss_GustheadIntroFlicker-*
-                dc.w    Boss_GustheadIntroReveal-*
+Boss_GustheadStates:    dc.w    Boss_GustheadWaitForAssetsAndClearArena-*  ; DATA XREF: Boss_GustheadUpdateAndDispatchState+A0   o  ; was: off_3F24C
+                dc.w    Boss_GustheadInitializeRootAndParts-*
+                dc.w    Boss_GustheadBeginIntroFlicker-*
+                dc.w    Boss_GustheadUpdateSlowIntroFlicker-*
+                dc.w    Boss_GustheadUpdateFastIntroFlickerAndStartMotion-*
                 dc.w    Boss_GustheadRetractSegmentsForBattleState-*
                 dc.w    Boss_GustheadStopBattleEntrySpinState-*
                 dc.w    Boss_GustheadWaitForBattleBannerState-*
@@ -116,17 +116,17 @@ Boss_GustheadStates:    dc.w    Boss_GustheadInitBattle-*  ; DATA XREF: Boss_Gus
                 dc.w    Boss_GustheadDefeatWait-*
                 dc.w    Boss_GustheadDefeatFinalize-*
 
-; Initializes Gusthead battle
-Boss_GustheadInitBattle:                                ; DATA XREF: ROM:Boss_GustheadStates   o  ; was: sub_3F2B8
+; Waits for asset loading, then clears the arena for Gusthead setup
+Boss_GustheadWaitForAssetsAndClearArena:                ; DATA XREF: ROM:Boss_GustheadStates   o  ; was: sub_3F2B8
                 tst.w   (DataLoaderControl).w
                 bmi.w   Boss_GustheadUpdateSegmentPositionsReturn
                 addq.w  #2,4(a5)
                 move.w  #$1B0,d0
                 moveq   #0,d1
                 jmp     Object_ClearAllExceptTypes
-; End of function Boss_GustheadInitBattle
-; Sets up boss parts and tentacles
-Boss_GustheadSetupParts:                                ; DATA XREF: ROM:0003F24E   o  ; was: sub_3F2D0
+; End of function Boss_GustheadWaitForAssetsAndClearArena
+; Initializes the Gusthead root, four four-segment arms, and trailing effect object
+Boss_GustheadInitializeRootAndParts:                    ; DATA XREF: ROM:0003F24E   o  ; was: sub_3F2D0
                 addq.w  #2,4(a5)
                 clr.l   (SharedPatternRow0Long0).w
                 clr.l   (SharedPatternRow0Long1).w
@@ -155,10 +155,10 @@ Boss_GustheadSetupParts:                                ; DATA XREF: ROM:0003F24
                 movea.w a5,a0
                 lea     $60(a0),a0
                 clr.b   d5
-Boss_GustheadSetupArmLoop:                              ; CODE XREF: Boss_GustheadSetupParts+DA   j  ; was: loc_3F35C
+Boss_GustheadSetupArmLoop:                              ; CODE XREF: Boss_GustheadInitializeRootAndParts+DA   j  ; was: loc_3F35C
                 move.w  #3,d6
                 clr.b   d0
-Boss_GustheadSetupSegmentLoop:                          ; CODE XREF: Boss_GustheadSetupParts+D2   j  ; was: loc_3F362
+Boss_GustheadSetupSegmentLoop:                          ; CODE XREF: Boss_GustheadInitializeRootAndParts+D2   j  ; was: loc_3F362
                 move.w  #$1BC,(a0)
                 move.w  #$4C00,2(a0)
                 move.w  #$B00,$E(a0)
@@ -168,9 +168,9 @@ Boss_GustheadSetupSegmentLoop:                          ; CODE XREF: Boss_Gusthe
                 move.w  #$28,$48(a0)                    ; '('
                 bra.s   Boss_GustheadStoreSegmentRadius
 ; ---------------------------------------------------------------------------
-Boss_GustheadUseInnerSegmentRadius:                     ; CODE XREF: Boss_GustheadSetupParts+AC   j  ; was: loc_3F386
+Boss_GustheadUseInnerSegmentRadius:                     ; CODE XREF: Boss_GustheadInitializeRootAndParts+AC   j  ; was: loc_3F386
                 move.w  #$18,$48(a0)
-Boss_GustheadStoreSegmentRadius:                        ; CODE XREF: Boss_GustheadSetupParts+B4   j  ; was: loc_3F38C
+Boss_GustheadStoreSegmentRadius:                        ; CODE XREF: Boss_GustheadInitializeRootAndParts+B4   j  ; was: loc_3F38C
                 move.w  #$80,d1
                 add.w   d1,$48(a0)
                 move.b  d5,$4B(a0)
@@ -185,36 +185,36 @@ Boss_GustheadStoreSegmentRadius:                        ; CODE XREF: Boss_Gusthe
                 move.l  #SharedCombatSpriteAnimation12,8(a0)
                 move.w  #$480,$E(a0)
                 rts
-; End of function Boss_GustheadSetupParts
-; Starts boss intro sequence
-Boss_GustheadStartIntro:                                ; DATA XREF: ROM:0003F250   o  ; was: sub_3F3C8
+; End of function Boss_GustheadInitializeRootAndParts
+; Starts the 32-tick slow intro flicker
+Boss_GustheadBeginIntroFlicker:                         ; DATA XREF: ROM:0003F250   o  ; was: sub_3F3C8
                 addq.w  #2,4(a5)
                 move.w  #$20,$48(a5)                    ; ' '
                 rts
-; End of function Boss_GustheadStartIntro
-; Intro flicker animation
-Boss_GustheadIntroFlicker:                              ; DATA XREF: ROM:0003F252   o  ; was: sub_3F3D4
+; End of function Boss_GustheadBeginIntroFlicker
+; Toggles visibility every four frames during the slow intro flicker
+Boss_GustheadUpdateSlowIntroFlicker:                    ; DATA XREF: ROM:0003F252   o  ; was: sub_3F3D4
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
-                bne.s   Boss_GustheadIntroFlickerCountDown
+                bne.s   Boss_GustheadSlowIntroFlickerCountDown
                 eori.w  #$8000,2(a5)
-Boss_GustheadIntroFlickerCountDown:                     ; CODE XREF: Boss_GustheadIntroFlicker+8   j  ; was: loc_3F3E4
+Boss_GustheadSlowIntroFlickerCountDown:                 ; CODE XREF: Boss_GustheadUpdateSlowIntroFlicker+8   j  ; was: loc_3F3E4
                 subq.w  #1,$48(a5)
-                bne.s   Boss_GustheadIntroFlickerReturn
+                bne.s   Boss_GustheadSlowIntroFlickerReturn
                 addq.w  #2,4(a5)
                 move.w  #$20,$48(a5)                    ; ' '
-Boss_GustheadIntroFlickerReturn:                        ; CODE XREF: Boss_GustheadIntroFlicker+14   j  ; was: locret_3F3F4
+Boss_GustheadSlowIntroFlickerReturn:                    ; CODE XREF: Boss_GustheadUpdateSlowIntroFlicker+14   j  ; was: locret_3F3F4
                 rts
-; End of function Boss_GustheadIntroFlicker
-; Reveals boss with tentacle setup
-Boss_GustheadIntroReveal:                               ; DATA XREF: ROM:0003F254   o  ; was: sub_3F3F6
+; End of function Boss_GustheadUpdateSlowIntroFlicker
+; Toggles visibility every two frames, then starts joint and vertical motion
+Boss_GustheadUpdateFastIntroFlickerAndStartMotion:      ; DATA XREF: ROM:0003F254   o  ; was: sub_3F3F6
                 move.w  (FrameCounter).w,d0
                 andi.w  #1,d0
-                bne.s   Boss_GustheadIntroRevealCountDown
+                bne.s   Boss_GustheadFastIntroFlickerCountDown
                 eori.w  #$8000,2(a5)
-Boss_GustheadIntroRevealCountDown:                      ; CODE XREF: Boss_GustheadIntroReveal+8   j  ; was: loc_3F406
+Boss_GustheadFastIntroFlickerCountDown:                 ; CODE XREF: Boss_GustheadUpdateFastIntroFlickerAndStartMotion+8   j  ; was: loc_3F406
                 subq.w  #1,$48(a5)
-                bne.s   Boss_GustheadIntroRevealReturn
+                bne.s   Boss_GustheadFastIntroFlickerReturn
                 addq.w  #2,4(a5)
                 move.w  #$40,$48(a5)                    ; '@'
                 move.w  #$10,(SharedPatternRow0Long3).w
@@ -226,9 +226,9 @@ Boss_GustheadIntroRevealCountDown:                      ; CODE XREF: Boss_Gusthe
                 bsr.w   Boss_GustheadAdvanceJointAngles
                 bsr.w   Boss_GustheadUpdateSegmentPositions
                 bsr.w   Boss_GustheadUpdateVerticalBounce
-Boss_GustheadIntroRevealReturn:                         ; CODE XREF: Boss_GustheadIntroReveal+14   j  ; was: locret_3F44A
+Boss_GustheadFastIntroFlickerReturn:                    ; CODE XREF: Boss_GustheadUpdateFastIntroFlickerAndStartMotion+14   j  ; was: locret_3F44A
                 rts
-; End of function Boss_GustheadIntroReveal
+; End of function Boss_GustheadUpdateFastIntroFlickerAndStartMotion
 ; Retracts all segment radii before the battle-entry banner
 Boss_GustheadRetractSegmentsForBattleState:             ; DATA XREF: ROM:0003F256   o  ; was: sub_3F44C
                 move.w  #3,d7
@@ -435,7 +435,7 @@ Boss_GustheadMoveTowardUpperTarget:                     ; CODE XREF: Boss_Gusthe
                 subi.w  #1,$14(a5)
 ; End of function Boss_GustheadMoveTowardPatternTarget
 ; Updates boss vertical bounce
-Boss_GustheadUpdateVerticalBounce:                      ; CODE XREF: Boss_GustheadIntroReveal+50   p  ; was: sub_3F6AE
+Boss_GustheadUpdateVerticalBounce:                      ; CODE XREF: Boss_GustheadUpdateFastIntroFlickerAndStartMotion+50   p  ; was: sub_3F6AE
                                         ; Boss_GustheadRetractSegmentsForBattleState+28   p
                 tst.l   $4C(a5)
                 beq.s   Boss_GustheadUpdateVerticalBounceReturn

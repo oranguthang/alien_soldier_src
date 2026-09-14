@@ -107,7 +107,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Proj
                 dc.l    Effect_UpdateExplosionB
                 dc.l    Projectile_FallWithGravity
                 dc.l    Projectile_FallWithGravity_Update
-                dc.l    Boss_GustheadMainWrapper
+                dc.l    Boss_GustheadUpdateEntry
                 dc.l    OrphanedFloatingOscillator
                 dc.l    Stage12_YachtControllerMain
                 dc.l    Boss_GustheadSegmentMain

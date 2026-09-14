@@ -7743,6 +7743,24 @@ queue falls from 2,955 to 2,947 and its actionable upper bound from 2,442 to
 2,434; provenance and the 513 classified binary-backed end aliases remain
 unchanged.
 
+The seven pending entry points at the start of `bosses/gusthead_core.s` are
+audited against the root entity handler and the first five slots of the
+55-entry Gusthead state table. Generated names based on source shape are
+replaced by behavioral contracts: the former main wrapper becomes
+`Boss_GustheadUpdateEntry`, and the called routine becomes
+`Boss_GustheadUpdateAndDispatchState` because it performs the root update and
+field-four state dispatch.
+
+The first five states now document their sequence directly: wait for asset
+loading and clear the arena, initialize the root and four four-segment arms,
+start the slow flicker, update that four-frame flicker, then update the
+two-frame flicker and seed joint and vertical motion. Four already-audited
+internal countdown/return labels are synchronized with the slow/fast flicker
+distinction. Seven new exact-address records raise the registry from 13,396 to
+13,403. The queue falls from 2,947 to 2,940 and its actionable upper bound from
+2,434 to 2,427; provenance and the 513 classified binary-backed end aliases
+remain unchanged.
+
 The six pending `bosses/destroyer_proto_core.s` entries are audited from the
 type-$3B8 subtype table, root state table, six consecutive part records, and
 all combat callers. `Boss_DestroyerProtoMain` is confirmed as the root

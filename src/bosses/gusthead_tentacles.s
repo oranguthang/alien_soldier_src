@@ -383,7 +383,7 @@ Boss_GustheadStoreArenaScrollVelocity:                  ; CODE XREF: Boss_Gusthe
                 rts
 ; End of function Boss_GustheadUpdateArenaScrollVelocity
 ; Advances the three shared fixed-point joint angles
-Boss_GustheadAdvanceJointAngles:                        ; CODE XREF: Boss_GustheadIntroReveal+48   p  ; was: sub_405A8
+Boss_GustheadAdvanceJointAngles:                        ; CODE XREF: Boss_GustheadUpdateFastIntroFlickerAndStartMotion+48   p  ; was: sub_405A8
                                         ; Boss_GustheadBattleStart+20   p
                 tst.l   (SharedPatternRow0Long3).w
                 beq.s   Boss_GustheadAdvanceMiddleJoint
@@ -452,7 +452,7 @@ Boss_GustheadSeedFirstArmJointAngleLoop:                ; CODE XREF: Boss_Gusthe
                 rts
 ; End of function Boss_GustheadSeedFirstArmJointAngles
 ; Recomputes all four arms of four linked segment positions
-Boss_GustheadUpdateSegmentPositions:                    ; CODE XREF: Boss_GustheadIntroReveal+4C   p  ; was: sub_4065A
+Boss_GustheadUpdateSegmentPositions:                    ; CODE XREF: Boss_GustheadUpdateFastIntroFlickerAndStartMotion+4C   p  ; was: sub_4065A
                                         ; Boss_GustheadBattleStart+24   p
                 move.l  $10(a5),$670(a5)
                 move.l  $14(a5),$674(a5)
@@ -550,7 +550,7 @@ Boss_GustheadStoreSegmentFrame:                         ; CODE XREF: Boss_Gusthe
                 dbf     d0,Boss_GustheadUpdateSegmentLoop
                 subq.w  #1,$5C(a5)
                 bne.w   Boss_GustheadUpdateArmLoop
-Boss_GustheadUpdateSegmentPositionsReturn:              ; CODE XREF: Boss_GustheadInitBattle+4   j  ; was: locret_4076C
+Boss_GustheadUpdateSegmentPositionsReturn:              ; CODE XREF: Boss_GustheadWaitForAssetsAndClearArena+4   j  ; was: locret_4076C
                                         ; Boss_GustheadBeginOscillationPattern+56   j
                 rts
 ; End of function Boss_GustheadUpdateSegmentPositions
