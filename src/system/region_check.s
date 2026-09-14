@@ -14,7 +14,7 @@ Sys_EnterInitialGameModeAfterRegionCheck:               ; CODE XREF: Sys_CheckRe
 ; End of function Sys_CheckRegionLock
 RegionRestricted:                                       ; CODE XREF: Sys_CheckRegionLock+14   j
                 clr.w   (PaletteFillColor).w
-                jsr     (Sys_InitFullGame).l
+                jsr     (Sys_ResetForRegionLockDisplay).l
                 move.b  #4,d0
                 jsr     (Sound_QueueRequest).l
                 bclr    #6,(VDPReg1Shadow+1).w

@@ -11,7 +11,7 @@ Input_InitializeControllerPorts:                        ; CODE XREF: Reset+21E  
                 rts
 ; End of function Input_InitializeControllerPorts
 ; Clears exactly the lower 32 KiB of 68000 work RAM at $FFFF0000-$FFFF7FFF
-Sys_ClearLowerRAM32KiB:                                 ; CODE XREF: Sys_InitSubsystems+8   p  ; was: sub_2EBC
+Sys_ClearLowerRAM32KiB:                                 ; CODE XREF: Sys_ClearSceneVideoAndRAM+8   p  ; was: sub_2EBC
                 lea     (M68K_RAM).l,a0
                 moveq   #0,d0
                 move.w  #$7FF,d1
@@ -37,7 +37,7 @@ UnreferencedSys_ClearLowerRAM8KiB_Loop:                 ; CODE XREF: Unreference
                 rts
 ; End of function UnreferencedSys_ClearLowerRAM8KiB
 ; Clears the 8 KiB gameplay-state region at $FFFF8000-$FFFF9FFF
-Sys_ClearGameplayStateRegion8KiB:                       ; CODE XREF: Sys_InitFullGame+24   p  ; was: sub_2EF0
+Sys_ClearGameplayStateRegion8KiB:                       ; CODE XREF: Sys_ResetForRegionLockDisplay+24   p  ; was: sub_2EF0
                                         ; Sys_InitGameMode+20   p
                 lea     (GameplayStateBuffer).w,a0
                 moveq   #0,d0
@@ -51,7 +51,7 @@ Sys_ClearGameplayStateRegion8KiB_Loop:                  ; CODE XREF: Sys_ClearGa
                 rts
 ; End of function Sys_ClearGameplayStateRegion8KiB
 ; Clears the 256-byte frame-state block and 256-byte shared sprite scratch
-Sys_ClearFrameAndSpriteScratch:                         ; CODE XREF: Sys_InitFullGame+20   p  ; was: sub_2F08
+Sys_ClearFrameAndSpriteScratch:                         ; CODE XREF: Sys_ResetForRegionLockDisplay+20   p  ; was: sub_2F08
                                         ; Sys_InitGameMode+1C   p
                 lea     (FrameCounter).w,a0
                 moveq   #0,d0
@@ -74,7 +74,7 @@ Sys_ClearSharedSpriteScratchLoop:                       ; CODE XREF: Sys_ClearFr
                 rts
 ; End of function Sys_ClearFrameAndSpriteScratch
 ; Clears the 128-byte global gameplay-state block
-Sys_ClearGameplayStateBlock:                            ; CODE XREF: Sys_InitFullGame+1C   p  ; was: sub_2F36
+Sys_ClearGameplayStateBlock:                            ; CODE XREF: Sys_ResetForRegionLockDisplay+1C   p  ; was: sub_2F36
                 lea     (GameplayStateBlock).w,a0
                 moveq   #0,d0
                 move.w  #7,d1
@@ -100,7 +100,7 @@ UnreferencedSys_ClearVBlankModeStateRegion128_Loop:     ; CODE XREF: Unreference
                 rts
 ; End of function UnreferencedSys_ClearVBlankModeStateRegion128
 ; Clears main object data buffer with zero fill
-Sys_ClearObjectBuffer:                                  ; CODE XREF: Sys_InitFullGame+28   j  ; was: sub_2F66
+Sys_ClearObjectBuffer:                                  ; CODE XREF: Sys_ResetForRegionLockDisplay+28   j  ; was: sub_2F66
                                         ; Sys_InitGameMode+24   j
                 lea     (PlayerObjectType).w,a0
                 moveq   #0,d0
@@ -162,7 +162,7 @@ Sys_ClearFirstRecordEachHalf_SecondHalfLoop:            ; CODE XREF: Sys_ClearFi
                 rts
 ; End of function Sys_ClearFirstRecordEachHalf
 ; Clears the 256-byte area containing the orphaned object-shaped record
-Sys_ClearOrphanedObjectArea:                            ; CODE XREF: Sys_InitGraphicsChain+4   p  ; was: sub_2FDC
+Sys_ClearOrphanedObjectArea:                            ; CODE XREF: Sys_ClearObjectAndSpriteState+4   p  ; was: sub_2FDC
                 lea     (OrphanedObjectType).w,a0
                 moveq   #0,d0
                 move.w  #$F,d1
@@ -188,7 +188,7 @@ Sys_ClearOrphanedObjectRecord_Loop:                     ; CODE XREF: Sys_ClearOr
                 rts
 ; End of function Sys_ClearOrphanedObjectRecord
 ; Clears 256 bytes of camera, stage-scene, and debug-input state
-Sys_ClearCameraStageAndDebugStateRegion256:             ; CODE XREF: Sys_InitSubsystems+C   p  ; was: sub_300C
+Sys_ClearCameraStageAndDebugStateRegion256:             ; CODE XREF: Sys_ClearSceneVideoAndRAM+C   p  ; was: sub_300C
                 lea     (PrimaryCameraXPosition).w,a0
                 moveq   #0,d0
                 move.w  #$F,d1
@@ -214,7 +214,7 @@ UnreferencedClearWorkBuffer512_Loop:                    ; CODE XREF: Unreference
                 rts
 ; End of function UnreferencedClearWorkBuffer512
 ; Clears the shared 1 KiB graphics staging buffer at $FFFFB400
-Gfx_ClearGraphicsStagingBuffer:                         ; CODE XREF: Gfx_InitVideoMode   p  ; was: sub_303C
+Gfx_ClearGraphicsStagingBuffer:                         ; CODE XREF: Gfx_ClearStagingAndFirst48KiBVRAM   p  ; was: sub_303C
                 lea     (GraphicsStagingBuffer).w,a0
                 moveq   #0,d0
                 move.w  #$3F,d1                         ; '?'
@@ -227,7 +227,7 @@ Gfx_ClearGraphicsStagingBuffer_Loop:                    ; CODE XREF: Gfx_ClearGr
                 rts
 ; End of function Gfx_ClearGraphicsStagingBuffer
 ; Clears a 192-byte work area during game-buffer initialization
-Sys_ClearWorkBuffer192:                                 ; CODE XREF: Sys_ClearGameBuffers+8   p  ; was: sub_3054
+Sys_ClearWorkBuffer192:                                 ; CODE XREF: Sys_ResetTransferAndInputState+8   p  ; was: sub_3054
                 lea     (ClearedWorkBuffer192).w,a0
                 moveq   #0,d0
                 move.w  #$B,d1
@@ -240,7 +240,7 @@ Sys_ClearWorkBuffer192_Loop:                            ; CODE XREF: Sys_ClearWo
                 rts
 ; End of function Sys_ClearWorkBuffer192
 ; Clears the OAM-build counters and priority-bucket workspace at $FFBE00-$FFBFBF
-Sprite_ClearOAMBuildState:                              ; CODE XREF: Sys_InitGraphicsChain+8   p  ; was: sub_306C
+Sprite_ClearOAMBuildState:                              ; CODE XREF: Sys_ClearObjectAndSpriteState+8   p  ; was: sub_306C
                 lea     (SpriteOAMEntryCount).w,a0
                 moveq   #0,d0
                 move.w  #$1B,d1
@@ -253,7 +253,7 @@ Sprite_ClearOAMBuildState_Loop:                         ; CODE XREF: Sprite_Clea
                 rts
 ; End of function Sprite_ClearOAMBuildState
 ; Clears three selected object records and all 77 shared-effect/entity records
-Sys_ClearInitializationObjectPools:                     ; CODE XREF: Sys_InitGraphicsChain   p  ; was: sub_3084
+Sys_ClearInitializationObjectPools:                     ; CODE XREF: Sys_ClearObjectAndSpriteState   p  ; was: sub_3084
                 bsr.w   Sys_ClearFirstRecordEachHalf
                 bsr.w   Sys_ClearOrphanedObjectRecord
                 lea     (SharedEffectObjectPool).w,a0
@@ -281,7 +281,7 @@ Effect_ClearFirstEightObjects_Loop:                     ; CODE XREF: Effect_Clea
                 rts
 ; End of function Effect_ClearFirstEightObjects
 ; Clears the 624-byte used prefix of the sprite table uploaded to VRAM $F400 each VBlank
-Sprite_ClearOAMBuffer:                                  ; CODE XREF: Sys_InitGraphicsChain+C   p  ; was: sub_30BC
+Sprite_ClearOAMBuffer:                                  ; CODE XREF: Sys_ClearObjectAndSpriteState+C   p  ; was: sub_30BC
                 lea     (SpriteOAMBuffer).w,a0
                 moveq   #0,d0
                 move.w  #$26,d1                         ; '&'
@@ -307,7 +307,7 @@ Palette_ClearBuffers_Loop:                              ; CODE XREF: Palette_Cle
                 rts
 ; End of function Palette_ClearBuffers
 ; Clears the 2,048-byte horizontal-scroll workspace in 128 iterations
-Gfx_ClearHScrollBuffer:                                 ; CODE XREF: Sys_InitSubsystems+10   p  ; was: sub_30EC
+Gfx_ClearHScrollBuffer:                                 ; CODE XREF: Sys_ClearSceneVideoAndRAM+10   p  ; was: sub_30EC
                 lea     (HScrollBuffer).w,a0
                 moveq   #0,d0
                 move.w  #$7F,d1
@@ -320,7 +320,7 @@ Gfx_ClearHScrollBuffer_Loop:                            ; CODE XREF: Gfx_ClearHS
                 rts
 ; End of function Gfx_ClearHScrollBuffer
 ; Clears the 160-byte vertical-scroll workspace in ten iterations
-Gfx_ClearVScrollBuffer:                                 ; CODE XREF: Sys_InitSubsystems+18   p  ; was: sub_3104
+Gfx_ClearVScrollBuffer:                                 ; CODE XREF: Sys_ClearSceneVideoAndRAM+18   p  ; was: sub_3104
                 lea     (VScrollBuffer).w,a0
                 moveq   #0,d0
                 move.w  #9,d1
@@ -333,7 +333,7 @@ Gfx_ClearVScrollBuffer_Loop:                            ; CODE XREF: Gfx_ClearVS
                 rts
 ; End of function Gfx_ClearVScrollBuffer
 ; Clears the combined sprite and VDP-queue staging region through $FFFFF6FF
-Sys_ClearSpriteVDPStagingBuffer:                        ; CODE XREF: Sys_ClearGameBuffers+4   p  ; was: sub_311C
+Sys_ClearSpriteVDPStagingBuffer:                        ; CODE XREF: Sys_ResetTransferAndInputState+4   p  ; was: sub_311C
                 lea     (SpriteVDPStagingBuffer).w,a0
                 moveq   #0,d0
                 move.w  #$6F,d1                         ; 'o'

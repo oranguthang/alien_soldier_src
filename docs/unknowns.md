@@ -8257,3 +8257,43 @@ pending queue falls from 2,745 to 2,732 and its actionable upper bound from
 2,232 to 2,219; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `ui/results_scrolling.s` now has zero
 pending current names.
+
+The complete `system/game_initialization.s` queue and the first 24 VDP-clear
+entries in `system/memory_clearing.s` are audited together because the caller
+chain proves their hardware roles. The routine formerly called
+`Sys_InitFullGame` is exclusive to the region-lock warning path; the common
+game-mode reset has a separate entry. The former subsystem and graphics-chain
+names are narrowed to the scene-video/RAM and object/sprite state they actually
+clear. Likewise, the two table loaders only populate VDP register shadows;
+only the reset-time initializer writes the same command words to `VDP_CTRL`.
+
+Decoding the preserved VDP commands rejects several especially misleading
+Sonnet names. The generic clear chain targets Plane A tilemap VRAM
+`$C000-$CFFF`, window tilemap VRAM `$D000-$DFFF`, Plane B tilemap VRAM
+`$E000-$EFFF`, HScroll-table VRAM `$F000-$F3FF`, and the 640-byte sprite table
+at `$F400-$F67F`. The alleged `Boss_ZLeoClearVRAM` is therefore the common
+HScroll-table clear. Commands `$40000010` and `$C0000000` clear all 80 VSRAM
+bytes and all 128 CRAM bytes respectively, while the formerly whole-VRAM clear
+at `$00317C` covers exactly the first 48 KiB.
+
+Thirty-eight exact-address records raise the registry from 13,610 to 13,648.
+The pending queue falls from 2,732 to 2,694 and its actionable upper bound from
+2,219 to 2,181; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `system/game_initialization.s` now has
+zero pending current names; only the three later generic memory helpers remain
+in `system/memory_clearing.s`.
+
+The final three entries in `system/memory_clearing.s` are audited as neutral
+fixed-size memory primitives because no direct static caller establishes a
+narrower owner. The former `Sys_ClearMemoryBlockX7` name was wrong in both
+operation and size: D1 is an arbitrary fill value, and after seven 128-byte
+subroutine calls execution falls through the same writer for an eighth pass.
+It therefore fills exactly 1 KiB and advances A1 by `$400`. The adjacent writer
+performs 32 longword stores, while `Data_Copy16Bytes` correctly describes its
+four-longword copy and is retained.
+
+Three exact-address records raise the registry from 13,648 to 13,651. The
+pending queue falls from 2,694 to 2,691 and its actionable upper bound from
+2,181 to 2,178; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `system/memory_clearing.s` now has zero
+pending current names.

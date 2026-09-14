@@ -1,4 +1,4 @@
-Input_InitializeControllerState:                        ; CODE XREF: Sys_ClearGameBuffers+C   p  ; was: sub_33A4
+Input_InitializeControllerState:                        ; CODE XREF: Sys_ResetTransferAndInputState+C   p  ; was: sub_33A4
                 clr.b   (GameplayControlFlags).w
                 move.w  #$FFFF,(ControllerHeldState).w
                 move.w  #0,(ControllerPressedState).w

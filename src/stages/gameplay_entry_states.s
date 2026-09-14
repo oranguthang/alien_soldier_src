@@ -8,8 +8,8 @@ Stage_UpdateGameplayEntry:                              ; DATA XREF: Sys_Dispatc
                 bne.s   Stage_StreamGameplayEntryPrimaryPlane
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
-                jsr     (Sys_InitGraphicsChain).l
-                jsr     (Gfx_LoadVDPRegisters).l
+                jsr     (Sys_ClearObjectAndSpriteState).l
+                jsr     (Gfx_LoadGameVDPRegisterShadows).l
                 jsr     (Stage_DispatchVisualAssetLoader).l
                 jsr     (Sys_InitStageState).l
                 addq.w  #2,(GameSubstateIndex).w
@@ -106,8 +106,8 @@ XiTigerStage_UpdateGameplayEntry:                       ; DATA XREF: Sys_Dispatc
                 beq.w   XiTigerStage_StreamSecondaryPlane
                 move.w  (GameSubstateIndex).w,d0
                 bne.s   XiTigerStage_StreamPrimaryPlane
-                jsr     (Sys_InitGraphicsChain).l
-                jsr     (Gfx_LoadVDPRegisters).l
+                jsr     (Sys_ClearObjectAndSpriteState).l
+                jsr     (Gfx_LoadGameVDPRegisterShadows).l
                 jsr     (Stage_InitializeXiTigerState).l
                 move.w  #$8004,(PaletteFadeMode).w
                 move.w  #$10,(PaletteFadeColorOffset).w
