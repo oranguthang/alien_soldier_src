@@ -1278,7 +1278,7 @@ structural `PrimaryEntity` names rather than a boss name.
 | Symbol | Address | Record/offset | Static evidence |
 |---|---:|---:|---|
 | `Entity58Type` | `$FFFFDB80` | 58/`$00` | Shared Valkirie, Z-Leo, transition, and arena-boundary record. |
-| `Entity58YPos` | `$FFFFDB94` | 58/`$14` | Integer Y coordinate written by Valkirie projectile growth. |
+| `Entity58YPos` | `$FFFFDB94` | 58/`$14` | Integer Y coordinate of the companion created by the Stage 24 scene transition; the scene-object growth state also writes it directly. |
 | `Entity59Type` | `$FFFFDBE0` | 59/`$00` | Shared transition and arena-boundary record type. |
 | `Entity59State` | `$FFFFDBE4` | 59/`$04` | Even object state advanced by Sharpssteel. |
 | `Entity59XPos` | `$FFFFDBF0` | 59/`$10` | Integer X coordinate computed by Sharpssteel. |

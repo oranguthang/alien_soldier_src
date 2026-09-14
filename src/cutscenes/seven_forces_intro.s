@@ -72,7 +72,7 @@ Entity_InitSevenForcesIntro:                            ; CODE XREF: Entity_Seve
                 move.w  #$E900,2(a5)
                 move.w  #$2300,$E(a5)
                 move.b  #$14,$20(a5)
-                move.l  #Entity_ValkirieProjectileSpriteAnimation,8(a5)
+                move.l  #Stage24SceneObject_SpriteAnimation,8(a5)
                 clr.w   $C(a5)
                 move.w  #$40,$48(a5)                    ; '@'
                 move.w  #$60,$10(a5)                    ; '`'
@@ -289,7 +289,7 @@ Entity_SevenForcesSwitchTransformationFrameState6:      ; DATA XREF: ROM:00054B9
                 bmi.s   Entity_SevenForcesSwitchTransformationFrameReturn
                 addq.w  #2,4(a5)
                 move.w  #8,$48(a5)
-                move.l  #Entity_ValkirieProjectileCompositeSpriteFrame,8(a5)
+                move.l  #Stage24SceneObject_CompositeSpriteFrame,8(a5)
                 clr.w   $C(a5)
                 clr.l   $18(a5)
 Entity_SevenForcesSwitchTransformationFrameReturn:      ; CODE XREF: Entity_SevenForcesSwitchTransformationFrameState6+6   j  ; was: locret_54F6A

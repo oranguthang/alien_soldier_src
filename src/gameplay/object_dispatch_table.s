@@ -259,7 +259,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Proj
                 dc.l    Projectile_MissirayProximityShotMain
                 dc.l    Projectile_WolfGaropaOrbShot
                 dc.l    Boss_ZLeoStageScrollControlNoOp
-                dc.l    Entity_ValkirieProjectileDispatcher
+                dc.l    Stage24SceneObject_DispatchState
                 dc.l    Projectile_SharpssteelBladeShotMain
                 dc.l    Effect_WolfGaropaBoundaryMain
                 dc.l    Stage23_UpdateWolfGaropaArenaBoundary

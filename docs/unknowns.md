@@ -1984,27 +1984,28 @@ state. The trailing eight-word table was also misplaced semantically: only
 Missiray code consumes its `$C680-$C920` RAM addresses, so it is now
 `Boss_MissiraySegmentObjectPointers`.
 
-The Seven Forces Valkirie projectile pass reduced the address-derived unknown
-count from 6,051 to 6,037 and raised provenance to 9,786 mappings. All 14
-anonymous definitions in `projectiles/seven_forces_valkirie.s` and two
-incorrect existing semantic labels now have exact static audit records, taking
-the registry to 5,556 entries. The module now has zero live address-derived
-definitions.
+The range once grouped as a Seven Forces/Valkirie projectile module reduced
+the address-derived unknown count from 6,051 to 6,037 and raised provenance to
+9,786 mappings. Its initial audit correctly described the instructions but
+inherited an unsupported Valkirie owner from nearby code. Later whole-program
+reference analysis established two independent owners.
 
-The setup loop initializes nine consecutive `$60`-byte sub-entities, and the
-position updater anchors one plus four helpers to the primary object and four
-to its `$180`-offset companion. The projectile itself uses an eight-state
-relative dispatcher whose single-return base is also reused as a deliberate
-wait target by the Valkirie and top-level Seven Forces handlers. Its shared
-shadow at `FFDB80` follows with offsets X `$0B` and Y `$10`; growth and shrink
-states use field `$48` to select five 10-byte tile-transfer descriptors.
+The first two routines have no reconstructed caller. They initialize nine
+consecutive `$60`-byte auxiliary sprite records and position one sprite at the
+primary anchor, four from its signed offset bytes, and four from the companion
+record at `a5+$180`; they now form
+`actors/unreferenced_nine_auxiliary_sprites.s` without claiming a boss.
 
-Two Sonnet names were structurally wrong. `Boss_ValkirieApplyGravity` modifies
-horizontal velocity `$18`, subtracting `$C00` during the leftward states, so it
-is now `Entity_ValkirieProjectileAccelerateLeft`. The former
-`Boss_ValkirieDMATransferTable` is executable code rather than data; it is now
-`Entity_ValkirieProjectileTransferAnimationTiles`, separate from the actual
-five-pointer descriptor table that follows it.
+The following type-`$410` eight-state object is created only by
+`StageTransition_InitializeStage24SceneObjects`. It moves vertically while
+keeping Entity58 at X+$0B/Y+$10, expands and shrinks five streamed tile frames,
+moves left, launches the companion upward, and sets `SceneSequenceFlags` on
+completion. It is therefore `stages/stage_24_scene_object.s`, not a Valkirie
+projectile. The former `Boss_ValkirieApplyGravity` was also axis-wrong: it
+subtracts `$C00` from horizontal velocity. The former
+`Boss_ValkirieDMATransferTable` is executable descriptor-selection code rather
+than data. The corrected Stage 24 names retain every former IDA identity in
+their provenance and exact-address audit records.
 
 The alternate Valkirie pass reduced the address-derived unknown count from
 6,037 to 6,024 and raised provenance to 9,799 mappings. All 13 anonymous
@@ -8034,3 +8035,27 @@ defeat contract. Ten new exact-address records raise the registry from 13,483
 to 13,493. The queue falls from 2,859 to 2,849 and its actionable upper bound
 from 2,346 to 2,336; provenance and the 513 classified binary-backed end
 aliases remain unchanged.
+
+The Stage 24 scene-object correction rejects the remaining inherited
+Valkirie-projectile ownership across `$0548EE-$054B83`. Whole-program type
+writes prove that `StageTransition_InitializeStage24SceneObjects` is the only
+reconstructed creator of type `$410`, whose eight-state controller occupies
+`$0549E2-$054B83`. It moves to two vertical thresholds, synchronizes Entity58
+at X+$0B/Y+$10, expands and shrinks five streamed tile frames, accelerates
+left, launches the companion upward, and signals the waiting transition.
+
+The two preceding routines at `$0548EE-$0549E1` have no reconstructed caller.
+They initialize and position nine auxiliary sprite records, so assigning them
+to Valkirie would remain unsupported. The former mixed projectile module is
+therefore replaced by the natural 62-line
+`actors/unreferenced_nine_auxiliary_sprites.s` and 150-line
+`stages/stage_24_scene_object.s` modules. Their below-target lengths reflect
+complete independent procedure families rather than fixed-size slicing.
+
+All 34 inherited semantic definitions affected by the ownership correction
+retain their legacy provenance. Eleven newly reviewed entrypoints raise the
+exact-address registry from 13,493 to 13,504; 23 connected existing audit
+records are corrected in place. The queue falls from 2,849 to 2,838 and its
+actionable upper bound from 2,336 to 2,325; provenance and the 513 classified
+binary-backed end aliases remain unchanged. The layout now contains 378
+modules with a 314.3-line mean and a 986-line maximum, with no waiver active.

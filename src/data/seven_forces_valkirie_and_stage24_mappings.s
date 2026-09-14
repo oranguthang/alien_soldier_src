@@ -1,4 +1,4 @@
-; Shared Seven Forces directional mappings followed by Valkirie projectile data
+; Shared Seven Forces directional mappings followed by Stage 24 scene-object data
 ; Rotation-frame suffixes preserve ROM order across the eight-direction pointer tables
 
 SevenForcesRotationSpriteFrame00:   dc.w    $4E, 0, $FAE7  ; DATA XREF: ROM:SevenForcesRotationFrameTable0   o  ; was: word_ECC86
@@ -96,7 +96,7 @@ SevenForcesRotationSpriteFrame38:   dc.w    $9115, $500, $F9FA  ; DATA XREF: ROM
 SevenForcesRotationSpriteFrame39:   dc.w    $9119, $500, $F9F9  ; DATA XREF: ROM:00059E5E   o  ; was: word_ECDC4
                                         ; ROM:SevenForcesRotationFrameTable8   o
 ; ---------------------------------------------------------------------------
-; Valkirie transition metasprite and projectile mappings
+; Valkirie transition metasprite followed by Stage 24 scene-object mappings
 Boss_ValkirieMetaspriteFrame:   dc.w    $961, $100, $4EC  ; DATA XREF: Entity_InitSevenForcesTransitionSprite+10   o  ; was: word_ECDCA
                                         ; ROM:Boss_ValkirieMetaspritePartDescriptors   o
                 dc.w    $956, $200, $ECEC
@@ -105,49 +105,49 @@ Boss_ValkirieMetaspriteFrame:   dc.w    $961, $100, $4EC  ; DATA XREF: Entity_In
                 dc.w    $4800, $600, $E0F8
                 dc.w    $4806, $900, $F8F8
                 dc.w    $C80C, $600, $8F8
-Entity_ValkirieProjectileSpriteFrame00: dc.w    $4824, 0, $1007  ; DATA XREF: ROM:Entity_ValkirieProjectileSpriteAnimation   o  ; was: word_ECDF4
+Stage24SceneObject_SpriteFrame00:   dc.w    $4824, 0, $1007  ; DATA XREF: ROM:Stage24SceneObject_SpriteAnimation   o  ; was: word_ECDF4
                 dc.w    $4825, $C00, $18EF
                 dc.w    $481E, $600, $F7
                 dc.w    $481C, $400, $FFF7
                 dc.w    $4818, $C00, $F7EF
                 dc.w    $C812, $600, $DFF7
-Entity_ValkirieProjectileSpriteFrame01: dc.w    $483C, $100, $10F2  ; DATA XREF: ROM:000ECE94   o  ; was: word_ECE18
+Stage24SceneObject_SpriteFrame01:   dc.w    $483C, $100, $10F2  ; DATA XREF: ROM:000ECE94   o  ; was: word_ECE18
                 dc.w    $4834, $700, $FA
                 dc.w    $4832, $400, $FBF6
                 dc.w    $C82A, $700, $DBF6
-Entity_ValkirieProjectileSpriteFrame02: dc.w    $4848, $700, $FA  ; DATA XREF: ROM:000ECE98   o  ; was: word_ECE30
+Stage24SceneObject_SpriteFrame02:   dc.w    $4848, $700, $FA  ; DATA XREF: ROM:000ECE98   o  ; was: word_ECE30
                 dc.w    $4846, $400, $FBF6
                 dc.w    $C83E, $700, $DBF6
-Entity_ValkirieProjectileSpriteFrame03: dc.w    $4861, $C00, $18F1  ; DATA XREF: ROM:000ECE9C   o  ; was: word_ECE42
+Stage24SceneObject_SpriteFrame03:   dc.w    $4861, $C00, $18F1  ; DATA XREF: ROM:000ECE9C   o  ; was: word_ECE42
                 dc.w    $485B, $600, $F9
                 dc.w    $4859, $400, $F6
                 dc.w    $4856, $800, $F8F6
                 dc.w    $C850, $600, $E0F6
-Entity_ValkirieProjectileSpriteFrame04: dc.w    $4869, $800, $18F4  ; DATA XREF: ROM:000ECEA0   o  ; was: word_ECE60
+Stage24SceneObject_SpriteFrame04:   dc.w    $4869, $800, $18F4  ; DATA XREF: ROM:000ECEA0   o  ; was: word_ECE60
                 dc.w    $4867, $400, $10F4
                 dc.w    $4865, $100, $FC
                 dc.w    $4846, $400, $FBF6
                 dc.w    $C83E, $700, $DBF6
-Entity_ValkirieProjectileSpriteFrame05: dc.w    $486C, $700, $F8  ; DATA XREF: ROM:000ECEA4   o  ; was: word_ECE7E
+Stage24SceneObject_SpriteFrame05:   dc.w    $486C, $700, $F8  ; DATA XREF: ROM:000ECEA4   o  ; was: word_ECE7E
                 dc.w    $4832, $400, $FBF6
                 dc.w    $C82A, $700, $DBF6
-Entity_ValkirieProjectileSpriteAnimation:   dc.w    Entity_ValkirieProjectileSpriteFrame00-*  ; DATA XREF: Entity_ValkirieProjectileWaitTimer+C   o  ; was: off_ECE90
+Stage24SceneObject_SpriteAnimation: dc.w    Stage24SceneObject_SpriteFrame00-*  ; DATA XREF: Stage24SceneObject_HoldExpandedFrame+C   o  ; was: off_ECE90
                                         ; Entity_InitSevenForcesIntro+18   o
                 dc.w    9
-                dc.w    Entity_ValkirieProjectileSpriteFrame01-*
+                dc.w    Stage24SceneObject_SpriteFrame01-*
                 dc.w    8
-                dc.w    Entity_ValkirieProjectileSpriteFrame02-*
+                dc.w    Stage24SceneObject_SpriteFrame02-*
                 dc.w    8
-                dc.w    Entity_ValkirieProjectileSpriteFrame03-*
+                dc.w    Stage24SceneObject_SpriteFrame03-*
                 dc.w    9
-                dc.w    Entity_ValkirieProjectileSpriteFrame04-*
+                dc.w    Stage24SceneObject_SpriteFrame04-*
                 dc.w    8
-                dc.w    Entity_ValkirieProjectileSpriteFrame05-*
+                dc.w    Stage24SceneObject_SpriteFrame05-*
                 dc.w    8
-                dc.w    Entity_ValkirieProjectileSpriteAnimation-*
+                dc.w    Stage24SceneObject_SpriteAnimation-*
                 dc.w    0
-Entity_ValkirieProjectileCompositeSpriteFrame:  dc.w    $FF36, $FF, $3A  ; DATA XREF: Entity_ValkirieProjectileInit+1E   o  ; was: word_ECEAC
-                                        ; Entity_ValkirieProjectileCleanup+4   o
+Stage24SceneObject_CompositeSpriteFrame:    dc.w    $FF36, $FF, $3A  ; DATA XREF: Stage24SceneObject_Initialize+1E   o  ; was: word_ECEAC
+                                        ; Stage24SceneObject_SignalSequenceCompletion+4   o
                 dc.w    $400, $FF0, $83A
                 dc.w    $400, $F00, $32
                 dc.w    $700, $EFF0, $8832
