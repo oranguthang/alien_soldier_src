@@ -5,7 +5,7 @@ Boss_UnidentifiedSevenForceMain:                        ; DATA XREF: ROM:Entity_
                 tst.w   8(a5)
                 beq.s   Boss_UnidentifiedSevenForceDispatchState
                 lea     (PaletteFade_SevenForcesEntryOffsets).l,a2
-                jsr     (Gfx_ProcessColorFade).l
+                jsr     (Gfx_UpdateBossPaletteColorFade).l
                 moveq   #$18,d0
                 jsr     (Gfx_UpdateSevenForcesBattlePalette).l
 Boss_UnidentifiedSevenForceDispatchState:               ; CODE XREF: Boss_UnidentifiedSevenForceMain+4   j  ; was: loc_58C84

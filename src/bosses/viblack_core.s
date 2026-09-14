@@ -46,7 +46,7 @@ Boss_ViblackMain:                                       ; DATA XREF: ROM:Entity_
                 addq.w  #1,$4E(a5)
                 lea     Boss_ViblackPaletteCycleEntries(pc),a2
                 nop
-                jsr     (Gfx_ProcessColorFade).l
+                jsr     (Gfx_UpdateBossPaletteColorFade).l
                 move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$5E(a5)

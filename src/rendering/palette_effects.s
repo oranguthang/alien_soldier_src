@@ -238,10 +238,10 @@ Palette_UpdatePairedEntryLists:                         ; DATA XREF: Palette_Upd
                                         ; ROM:Palette_SecondaryEffectOffsets   o
                 movea.l (PaletteEntryLists).w,a2
                 move.w  (PaletteEffectControl).w,d0
-                bsr.w   Gfx_FadeRGBColor
+                bsr.w   Gfx_ApplyRGBDeltaToPaletteEntries
                 move.w  (PaletteEffectControl).w,d0
                 neg.w   d0
-                bsr.w   Gfx_FadeRGBColor
+                bsr.w   Gfx_ApplyRGBDeltaToPaletteEntries
                 btst    #0,(FrameCounter+1).w
                 bne.s   Palette_UpdatePairedEntryLists_Return
                 subq.w  #1,(PaletteEffectControl).w
@@ -253,7 +253,7 @@ Palette_UpdatePairedEntryLists_Return:                  ; CODE XREF: Palette_Upd
 ; End of function Palette_UpdatePairedEntryLists
 ; Applies the shared full-palette RGB adjustment before the midgame color cycles
 Palette_UpdateMidgameAdjustedColors:                    ; DATA XREF: ROM:00004332   o  ; was: sub_4360
-                bsr.w   Gfx_ApplyRGBColorAdjust
+                bsr.w   Gfx_UpdateFullPaletteRGBAdjustment
                 bra.w   Palette_UpdateMidgameColors
 ; End of function Palette_UpdateMidgameAdjustedColors
 ; Advances the full-palette fade parameter, then updates the midgame color cycles

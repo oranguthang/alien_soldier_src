@@ -16,7 +16,7 @@ Boss_UpdateArtemis:                                     ; DATA XREF: ROM:Entity_
 Boss_UpdateArtemisBattleEffects:                        ; CODE XREF: Boss_UpdateArtemis+14   j  ; was: loc_57EEA
                                         ; Boss_UpdateArtemis+1C   j
                 lea     (PaletteFade_SevenForcesEntryOffsets).l,a2
-                jsr     (Gfx_ProcessColorFade).l
+                jsr     (Gfx_UpdateBossPaletteColorFade).l
                 moveq   #$12,d0
                 jsr     (Gfx_UpdateSevenForcesBattlePalette).l
                 move.w  (PrimaryCameraXPosition).w,d0

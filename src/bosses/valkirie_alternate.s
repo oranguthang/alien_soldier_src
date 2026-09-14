@@ -15,7 +15,7 @@ Boss_ValkirieAlternateMain:                             ; DATA XREF: ROM:Entity_
 Boss_ValkirieAlternateUpdatePalette:                    ; CODE XREF: Boss_ValkirieAlternateMain+14   j  ; was: loc_5901A
                                         ; Boss_ValkirieAlternateMain+1C   j
                 lea     (PaletteFade_SevenForcesEntryOffsets).l,a2
-                jsr     (Gfx_ProcessColorFade).l
+                jsr     (Gfx_UpdateBossPaletteColorFade).l
                 moveq   #$1E,d0
                 jsr     (Gfx_UpdateSevenForcesBattlePalette).l
 Boss_ValkirieAlternateDispatchState:                    ; CODE XREF: Boss_ValkirieAlternateMain+4   j  ; was: loc_5902E

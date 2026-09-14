@@ -4970,7 +4970,7 @@ changes a camera bound: it fills 128 raster words from the negated secondary
 horizontal offset and 72 from the negated primary camera. It is now
 `Stage4_FillShiperHorizontalRasterOffsets`. The former
 `Stage_UpdateScrollOffset` derives two countdown-scaled arguments and
-tail-calls `Gfx_FadeRGBColor_LoadEntryCount`; it is now the Terobuster intro
+tail-calls `Gfx_ApplyRGBDeltaToPaletteEntries_LoadEntryCount`; it is now the Terobuster intro
 fade helper. The post-Shellshogun four-longword payload is named only as the
 staged-row source selected by its producer and consumer; its internal format
 is intentionally not claimed.
@@ -7678,3 +7678,22 @@ Six new exact-address records raise the registry from 13,350 to 13,356. The
 queue falls from 2,993 to 2,987 and its actionable upper bound from 2,480 to
 2,474; the 513 binary-backed end aliases and 16,051 provenance mappings remain
 unchanged.
+
+The six pending entries in `rendering/color_fades.s` are checked against
+their palette-list inputs, shadow/active buffer accesses, shared control
+fields, and boss callers. The state clearer is confirmed unchanged. Four
+generic generated names are narrowed to their actual contracts:
+`Gfx_UpdateBossPaletteColorFade` consumes boss color-effect requests,
+`Gfx_ApplyRGBDeltaToPaletteEntries` applies one signed delta to a counted
+entry list, `Gfx_StepPaletteEntriesToColor` moves that list toward one common
+color, and `Gfx_UpdateFullPaletteRGBAdjustment` rebuilds all 64 active colors
+while reducing the shared adjustment level.
+
+The former `Palette_ProcessFadeEffect` name incorrectly implied that the
+routine controlled timing. Its Flying Neo caller provides the sixteen-frame
+cadence; the routine itself walks parallel entry and target lists. The complete
+family therefore becomes `Gfx_StepPaletteEntriesToTargetList`, and seven
+earlier internal-label records are corrected with it. Six new records raise the
+registry from 13,356 to 13,362. The queue falls from 2,987 to 2,981 and its
+actionable upper bound from 2,474 to 2,468; provenance and the 513 classified
+binary-backed end aliases remain unchanged.

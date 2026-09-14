@@ -19,7 +19,7 @@ Boss_UpdateSirene:                                      ; DATA XREF: ROM:Entity_
 Boss_UpdateSireneBattleEffects:                         ; CODE XREF: Boss_UpdateSirene+14   j  ; was: loc_574D4
                                         ; Boss_UpdateSirene+1C   j
                 lea     (PaletteFade_SevenForcesEntryOffsets).l,a2
-                jsr     (Gfx_ProcessColorFade).l
+                jsr     (Gfx_UpdateBossPaletteColorFade).l
                 moveq   #$C,d0
                 jsr     (Gfx_UpdateSevenForcesBattlePalette).l
 Boss_DispatchSireneState:                               ; CODE XREF: Boss_UpdateSirene+4   j  ; was: loc_574E8

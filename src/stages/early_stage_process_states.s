@@ -546,7 +546,7 @@ Stage7_ApplyTerobusterFadeParameters:                   ; CODE XREF: Stage7_Upda
                 moveq   #0,d1
                 asl.w   #4,d2
                 asl.w   #8,d3
-                jmp     (Gfx_FadeRGBColor_LoadEntryCount).l
+                jmp     (Gfx_ApplyRGBDeltaToPaletteEntries_LoadEntryCount).l
 ; End of function Stage7_UpdateTerobusterIntroFade
 ; Post-intro transition clearing flags and advancing phase
 Stage7_UpdatePostTerobusterIntro:                       ; DATA XREF: ROM:0000C890   o  ; was: sub_CD90

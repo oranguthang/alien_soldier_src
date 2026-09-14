@@ -8,7 +8,7 @@ Boss_FlyingNeoMain:                                     ; DATA XREF: ROM:Entity_
 Boss_FlyingNeoProcessMainColorFade:                     ; CODE XREF: Boss_FlyingNeoMain+C   j  ; was: loc_3C00C
                                         ; Boss_FlyingNeoMain+E   j
                 lea     (PaletteFade_FlyingNeoEntryOffsets).l,a2
-                jsr     (Gfx_ProcessColorFade).l
+                jsr     (Gfx_UpdateBossPaletteColorFade).l
                 tst.w   8(a5)
                 beq.s   Boss_FlyingNeoStateDispatch
                 btst    #1,(BossColorEffectFlags).w
@@ -23,7 +23,7 @@ Boss_FlyingNeoProcessMainColorFade:                     ; CODE XREF: Boss_Flying
                 bne.s   Boss_FlyingNeoCheckDefeat
                 move.w  #$620,d0
                 lea     (PaletteFade_FlyingNeoEntryOffsets).l,a2
-                jsr     (Gfx_FadeToTargetColor).l
+                jsr     (Gfx_StepPaletteEntriesToColor).l
                 bne.s   Boss_FlyingNeoCheckDefeat
                 move.w  #$FFFF,$23C(a5)
                 bra.s   Boss_FlyingNeoCheckDefeat

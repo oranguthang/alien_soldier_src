@@ -3,7 +3,7 @@ Boss_BugmaxMain:                                        ; DATA XREF: ROM:Entity_
                 tst.w   4(a5)
                 beq.w   Boss_BugmaxDispatchMainState
                 lea     (PaletteFade_BugmaxEntryOffsets).l,a2
-                jsr     (Gfx_ProcessColorFade).l
+                jsr     (Gfx_UpdateBossPaletteColorFade).l
                 move.w  $10(a5),d0
                 add.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$58(a5)

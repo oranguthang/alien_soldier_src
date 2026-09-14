@@ -15,7 +15,7 @@ Boss_UpdateMedusa:                                      ; DATA XREF: ROM:Entity_
 Boss_UpdateMedusaBattleEffects:                         ; CODE XREF: Boss_UpdateMedusa+14   j  ; was: loc_569C8
                                         ; Boss_UpdateMedusa+1C   j
                 lea     (PaletteFade_SevenForcesEntryOffsets).l,a2
-                jsr     (Gfx_ProcessColorFade).l
+                jsr     (Gfx_UpdateBossPaletteColorFade).l
                 moveq   #6,d0
                 jsr     (Gfx_UpdateSevenForcesBattlePalette).l
                 bsr.w   Entity_UpdateMedusaScriptedSpawnSequence

@@ -308,7 +308,7 @@ Boss_FlyingNeoUpdatePaletteFade:                        ; CODE XREF: Boss_Flying
                 lea     (PaletteFade_FlyingNeoEntryOffsets).l,a2
                 lea     Boss_FlyingNeoDefeatPaletteFadeParameters(pc),a3
                 nop
-                jmp     (Palette_ProcessFadeEffect).l
+                jmp     (Gfx_StepPaletteEntriesToTargetList).l
 ; End of function Boss_FlyingNeoUpdatePaletteFade
 ; ---------------------------------------------------------------------------
 Boss_FlyingNeoDefeatPaletteFadeParameters:  dc.w    2, $CEE, 0, 0, $866, $200, $422, 6, $2A, $26E  ; was: word_3CB5C

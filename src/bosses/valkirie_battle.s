@@ -15,7 +15,7 @@ Entity_UpdateValkirieBattle:                            ; DATA XREF: ROM:Entity_
 Entity_UpdateValkirieBattleActive:                      ; CODE XREF: Entity_UpdateValkirieBattle+14   j  ; was: loc_5578A
                                         ; Entity_UpdateValkirieBattle+1C   j
                 lea     (PaletteFade_SevenForcesEntryOffsets).l,a2
-                jsr     (Gfx_ProcessColorFade).l
+                jsr     (Gfx_UpdateBossPaletteColorFade).l
                 moveq   #0,d0
                 jsr     Gfx_UpdateSevenForcesBattlePalette(pc)  ; (pc)
                 nop
