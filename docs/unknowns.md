@@ -7698,6 +7698,29 @@ registry from 13,356 to 13,362. The queue falls from 2,987 to 2,981 and its
 actionable upper bound from 2,474 to 2,468; provenance and the 513 classified
 binary-backed end aliases remain unchanged.
 
+The seven pending `rendering/vblank_effects.s` entries are audited through
+the 23-entry raster handler table, every matching `RasterEffectIndex`
+producer, the installed HBlank payload, VDP destination, register-10 interval,
+and selected RAM buffer. The cohesive 460-line module remains unchanged in
+scope.
+
+The former `Effect_InitTransitionFade` and
+`VBlank_InitFadeTransition` names are rejected: neither routine touches
+palette data. They install the standard and alternate HBlank VScroll2 writers
+and become `VBlank_InitTransitionVScroll2Effect` and
+`VBlank_InitAlternateTransitionVScroll2Effect`. The fly-corridor,
+Flying Neo, and Sunset Sting handlers now state whether their installed writer
+targets VScroll0 or VScroll2. The generic story and scroll names become
+`VBlank_InitStoryDisplayEffect` and
+`VBlank_InitGameOverVScrollPairEffect`; the latter ownership is proven
+by the sole table-index producer in Game Over initialization.
+
+Fourteen definitions and 45 references are renamed across the seven entry and
+select-buffer pairs. Seven new exact-address records and seven synchronized
+internal records raise the registry from 13,381 to 13,388. The queue falls from
+2,962 to 2,955 and its actionable upper bound from 2,449 to 2,442; provenance
+and the 513 classified binary-backed end aliases remain unchanged.
+
 The six pending `bosses/destroyer_proto_core.s` entries are audited from the
 type-$3B8 subtype table, root state table, six consecutive part records, and
 all combat callers. `Boss_DestroyerProtoMain` is confirmed as the root

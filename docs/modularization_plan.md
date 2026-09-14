@@ -75,7 +75,7 @@ data are checked.
 | `0x000D12` | `Gfx_RunVBlankTransfers` | VBlank sprite/palette/command/scroll transfers |
 | `0x000EF4` | `Palette_UpdateFullScreenFade` | full-screen palette fade and adjacent VDP control helpers |
 | `0x001356` | `VBlank_DispatchRasterEffect` | VBlank/HBlank raster-effect dispatcher |
-| `0x0015BC` | `Effect_InitTransitionFade` | transition effects |
+| `0x0015BC` | `VBlank_InitTransitionVScroll2Effect` | transition effects |
 | `0x00195C` | `VBlank_Epsilon1ScrollEffect` | HBlank/scroll effects |
 | `0x001D32` | `Gfx_QueueHeaderedZeroStreamDMA` | DMA command queue |
 | `0x002016` | `Sys_ProcessObjectList` | object update engine |
