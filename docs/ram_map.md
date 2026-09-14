@@ -1037,9 +1037,10 @@ object update and rendering machinery.
 
 ## Reviewed primary entity record
 
-`Entity_ObjectPool` begins with a 96-byte record whose concrete owner changes
-between stages, bosses, cutscenes, and credits. Absolute references to that
-record therefore use structural `PrimaryEntity` names rather than a boss name.
+`Entity_ObjectPool` is the base of 60 consecutive 96-byte records ending at
+`$FFDC9F`. The first record's concrete owner changes between stages, bosses,
+cutscenes, and credits. Absolute references to that record therefore use
+structural `PrimaryEntity` names rather than a boss name.
 
 | Symbol | Address | Offset | Static evidence |
 |---|---:|---:|---|

@@ -6371,7 +6371,7 @@ Sunset Sting. The late records' fixed layout is independently exercised by
 Valkirie, Z-Leo, stage transitions, Sharpssteel, Seven Forces, Flying Neo,
 Artemis, Sylpheed, and Wolf Garopa. Their proven fields cover type, state,
 integer coordinate halves, signed 16.16 velocities, and one Valkirie shadow Y
-coordinate. The entire 61-record `Entity_ObjectPool` now contains no live
+coordinate. The entire 60-record `Entity_ObjectPool` now contains no live
 address-derived aliases.
 
 All nineteen fields receive exact-address audit records and RAM-map entries.
@@ -7795,6 +7795,26 @@ records are synchronized with the three object families. Eight new
 exact-address records raise the registry from 13,411 to 13,419. The queue falls
 from 2,932 to 2,924 and its actionable upper bound from 2,419 to 2,411;
 provenance and the 513 classified binary-backed end aliases remain unchanged.
+
+The final seven unaudited semantic RAM definitions are checked against their
+full static consumers. `StageTableIndex`, `GameModeIndex`, and
+`GameSubstateIndex` are retained as the shared stage, top-level mode, and
+mode-local state selectors. Their values are stored as direct byte offsets
+into word- or longword-entry tables, a representation recorded explicitly in
+the evidence rather than hidden by the word index.
+
+`Entity_ObjectPool` is confirmed as the base of 60 consecutive `$60`-byte
+records: `Sys_ClearEntityObjectPool` clears `$1680` bytes from `$FFC620` to
+`$FFDC9F`, and the collision scan executes its `DBF #$3B` loop 60 times. This
+corrects an older documentation claim of 61 records. `DifficultyMode`,
+`MessageMode`, and `SoundDisableFlags` retain their established option and
+runtime names; the unresolved route to every message-mode value remains
+explicitly documented instead of being promoted to stronger evidence.
+
+Seven exact-address records raise the registry from 13,419 to 13,426. The
+queue falls from 2,924 to 2,917 and its actionable upper bound from 2,411 to
+2,404; provenance and the 513 classified binary-backed end aliases remain
+unchanged. No assembly source changes in this RAM audit package.
 
 The six pending `bosses/destroyer_proto_core.s` entries are audited from the
 type-$3B8 subtype table, root state table, six consecutive part records, and
