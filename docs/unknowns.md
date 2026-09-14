@@ -7697,3 +7697,21 @@ earlier internal-label records are corrected with it. Six new records raise the
 registry from 13,356 to 13,362. The queue falls from 2,987 to 2,981 and its
 actionable upper bound from 2,474 to 2,468; provenance and the 513 classified
 binary-backed end aliases remain unchanged.
+
+The six pending `bosses/destroyer_proto_core.s` entries are audited from the
+type-$3B8 subtype table, root state table, six consecutive part records, and
+all combat callers. `Boss_DestroyerProtoMain` is confirmed as the root
+palette/arena-effect, defeat-gate, and state-dispatch entry.
+
+Five generated names are made more explicit. The first two states become
+`Boss_DestroyerProtoInitializeIntro` and
+`Boss_DestroyerProtoIntroApproachState`; the former constructs the root and
+six linked parts, while the latter advances circular motion until the battle
+threshold. The former open/close helpers are progressive radius operations and
+become `Boss_DestroyerProtoExpandPartRadii` and
+`Boss_DestroyerProtoContractPartRadii`. The shared-angle helper receives the
+missing boss identity as `Boss_DestroyerProtoSynchronizePartAngles`, and its
+five already audited internal loop labels are updated consistently. Six new
+records raise the registry from 13,362 to 13,368. The queue falls from 2,981 to
+2,975 and its actionable upper bound from 2,468 to 2,462; provenance and binary
+end-alias counts remain unchanged.

@@ -3715,7 +3715,7 @@
     {
       "address": "0x0315FA",
       "previous_name": "loc_315FA",
-      "current_name": "Boss_DestroyerProtoInitNextPart",
+      "current_name": "Boss_DestroyerProtoInitializeNextPart",
       "legacy_name": "loc_315FA",
       "evidence": "static",
       "basis": ["This six-entry loop initializes consecutive entity slots with part angles, radii, parent links, subtypes, and mappings."]
@@ -3771,7 +3771,7 @@
     {
       "address": "0x031792",
       "previous_name": "loc_31792",
-      "current_name": "Boss_DestroyerProtoCloseNextPart",
+      "current_name": "Boss_DestroyerProtoContractNextPartRadius",
       "legacy_name": "loc_31792",
       "evidence": "static",
       "basis": ["This six-entry loop subtracts eight from each nonzero part radius."]
@@ -3779,7 +3779,7 @@
     {
       "address": "0x03179E",
       "previous_name": "loc_3179E",
-      "current_name": "Boss_DestroyerProtoContinueCloseParts",
+      "current_name": "Boss_DestroyerProtoContinueContractPartRadii",
       "legacy_name": "loc_3179E",
       "evidence": "static",
       "basis": ["Zero and contracted-radius paths converge here before advancing to the next part slot."]
@@ -3787,7 +3787,7 @@
     {
       "address": "0x0317B4",
       "previous_name": "loc_317B4",
-      "current_name": "Boss_DestroyerProtoOpenNextPart",
+      "current_name": "Boss_DestroyerProtoExpandNextPartRadius",
       "legacy_name": "loc_317B4",
       "evidence": "static",
       "basis": ["This six-entry loop compares each radius with its configured target and adds eight until it matches."]
@@ -3795,7 +3795,7 @@
     {
       "address": "0x0317C8",
       "previous_name": "loc_317C8",
-      "current_name": "Boss_DestroyerProtoContinueOpenParts",
+      "current_name": "Boss_DestroyerProtoContinueExpandPartRadii",
       "legacy_name": "loc_317C8",
       "evidence": "static",
       "basis": ["Matched and expanded-radius paths converge here before advancing to the next part slot."]
@@ -17371,6 +17371,12 @@
     {"address":"0x003E5A","previous_name":"Gfx_FadeRGBColor","current_name":"Gfx_ApplyRGBDeltaToPaletteEntries","legacy_name":"sub_3E5A","evidence":"static","basis":["Palette_UpdatePairedEntryLists calls this routine twice with one counted palette-entry list after the other and opposite values in D0.","The routine expands D0 into signed RGB channel deltas, clamps each shadow-buffer source color, and writes the corresponding active palette entry."]},
     {"address":"0x003F3E","previous_name":"Gfx_FadeToTargetColor","current_name":"Gfx_StepPaletteEntriesToColor","legacy_name":"sub_3F3E","evidence":"static","basis":["Flying Neo passes one target color in D0 and a counted palette-entry list in A2.","Each RGB channel of every listed active and shadow entry moves by one hardware color step toward that common target, and D4 reports whether any channel changed."]},
     {"address":"0x003FB6","previous_name":"Palette_ProcessFadeEffect","current_name":"Gfx_StepPaletteEntriesToTargetList","legacy_name":"sub_3FB6","evidence":"static","basis":["Boss_FlyingNeoUpdatePaletteFade supplies a counted palette-entry list in A2 and an equally ordered target-color list in A3.","The routine steps each listed active and shadow entry toward its own target and contains no timing logic; the caller enforces the sixteen-frame cadence."]},
-    {"address":"0x004030","previous_name":"Gfx_ApplyRGBColorAdjust","current_name":"Gfx_UpdateFullPaletteRGBAdjustment","legacy_name":"sub_4030","evidence":"static","basis":["Palette_UpdateMidgameAdjustedColors calls this routine before the normal midgame color cycles.","It derives selected RGB deltas from PaletteRGBAdjustLevel and PaletteRGBChannelMask, rebuilds all 64 active entries from the shadow palette, then reduces the level by PaletteRGBAdjustStep toward zero."]}
+    {"address":"0x004030","previous_name":"Gfx_ApplyRGBColorAdjust","current_name":"Gfx_UpdateFullPaletteRGBAdjustment","legacy_name":"sub_4030","evidence":"static","basis":["Palette_UpdateMidgameAdjustedColors calls this routine before the normal midgame color cycles.","It derives selected RGB deltas from PaletteRGBAdjustLevel and PaletteRGBChannelMask, rebuilds all 64 active entries from the shadow palette, then reduces the level by PaletteRGBAdjustStep toward zero."]},
+    {"address":"0x0314D8","previous_name":"Boss_DestroyerProtoMain","current_name":"Boss_DestroyerProtoMain","legacy_name":"sub_314D8","evidence":"static","basis":["Entity_StoredSubtypeHandlers selects this entry for subtype zero of type $3B8, which the Destroyer Proto initializer installs on the root.","It updates the shared boss palette and arena colors, enters state $2E when health reaches zero, and dispatches field 4 through Boss_DestroyerProtoStates."]},
+    {"address":"0x031594","previous_name":"Boss_DestroyerProtoIntroInit","current_name":"Boss_DestroyerProtoInitializeIntro","legacy_name":"sub_31594","evidence":"static","basis":["The first Boss_DestroyerProtoStates slot selects this entry.","After the data loader finishes, it initializes root rendering/collision fields and six consecutive type-$3B8 linked parts from the private angle, radius, parent, subtype, and mapping tables."]},
+    {"address":"0x0316C4","previous_name":"Boss_DestroyerProtoIntroMove","current_name":"Boss_DestroyerProtoIntroApproachState","legacy_name":"sub_316C4","evidence":"static","basis":["The second Boss_DestroyerProtoStates slot selects this handler after intro initialization.","It advances circular velocity and part angles, updates viewport offsets, and remains active until root X crosses $160, then starts boss message three and advances state."]},
+    {"address":"0x03178A","previous_name":"Boss_DestroyerProtoCloseParts","current_name":"Boss_DestroyerProtoContractPartRadii","legacy_name":"sub_3178A","evidence":"static","basis":["Attack-selection and retreat states call this routine once per update.","It walks exactly six linked records and subtracts eight from each nonzero radius field $42, proving a progressive radius contraction rather than an immediate generic close."]},
+    {"address":"0x0317A8","previous_name":"Boss_DestroyerProtoOpenParts","current_name":"Boss_DestroyerProtoExpandPartRadii","legacy_name":"sub_317A8","evidence":"static","basis":["Movement and attack-opening states call this routine once per update.","It walks the six linked records beside Boss_DestroyerProtoPartRadiusTable and adds eight to each field-$42 radius until it equals its configured target."]},
+    {"address":"0x0317D2","previous_name":"Boss_DestroyerSyncPartAngles","current_name":"Boss_DestroyerProtoSynchronizePartAngles","legacy_name":"sub_317D2","evidence":"static","basis":["All three post-attack retreat paths call this helper after updating root movement.","It copies the secondary part angle to two adjacent parts and their paired angle fields, derives the opposite angle by adding $100 modulo $200, and copies that value to the remaining three parts."]}
   ]
 }

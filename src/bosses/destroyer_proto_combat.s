@@ -35,7 +35,7 @@ Boss_DestroyerProtoMovementTargetTable: dc.w    $C0, $C0, $120, $C0, $180, $C0, 
 
 ; Accelerates toward the selected target while opening the six parts
 Boss_DestroyerProtoMoveToTarget:                        ; DATA XREF: ROM:00031516   o  ; was: sub_318AC
-                bsr.w   Boss_DestroyerProtoOpenParts
+                bsr.w   Boss_DestroyerProtoExpandPartRadii
                 bsr.w   Boss_DestroyerProtoUpdateCircularVelocity
                 move.w  #$C,d0
                 move.w  #$10,d1
@@ -55,7 +55,7 @@ Boss_DestroyerProtoMoveToTarget:                        ; DATA XREF: ROM:0003151
 ; Chooses the next twin-shot, spread, or aimed-stream attack
 Boss_DestroyerProtoChooseAttack:                        ; DATA XREF: ROM:00031518   o  ; was: sub_318EC
                 bsr.w   Boss_DestroyerProtoUpdateCircularVelocity
-                bsr.w   Boss_DestroyerProtoCloseParts
+                bsr.w   Boss_DestroyerProtoContractPartRadii
                 move.w  #$C,d0
                 move.w  #$10,d1
                 bsr.w   Boss_DestroyerProtoUpdatePartAngles
@@ -99,7 +99,7 @@ Boss_DestroyerProtoSelectSpreadAttack:                  ; CODE XREF: Boss_Destro
 ; End of function Boss_DestroyerProtoChooseAttack
 ; Opens all parts and waits before the twin-shot flash
 Boss_DestroyerProtoOpenPartsForTwinShot:                ; DATA XREF: ROM:0003151A   o  ; was: sub_3198C
-                bsr.w   Boss_DestroyerProtoOpenParts
+                bsr.w   Boss_DestroyerProtoExpandPartRadii
                 subq.w  #1,$4A(a5)
                 bne.w   Entity_UpdateReturn
                 addq.w  #2,4(a5)
@@ -141,19 +141,19 @@ Boss_DestroyerProtoWaitAfterTwinShots:                  ; DATA XREF: ROM:0003152
 ; Closes the parts and returns to movement-target selection
 Boss_DestroyerProtoRetreatAfterTwinShots:               ; DATA XREF: ROM:00031522   o  ; was: sub_31A00
                 bsr.w   Boss_DestroyerProtoUpdateCircularVelocity
-                bsr.w   Boss_DestroyerProtoCloseParts
+                bsr.w   Boss_DestroyerProtoContractPartRadii
                 move.w  #$C,d0
                 move.w  #$10,d1
                 bsr.w   Boss_DestroyerProtoUpdatePartAngles
                 bsr.w   Boss_DestroyerProtoUpdateViewportOffset
                 subq.w  #1,$4A(a5)
                 bne.w   Entity_UpdateReturn
-                bsr.w   Boss_DestroyerSyncPartAngles
+                bsr.w   Boss_DestroyerProtoSynchronizePartAngles
                 bra.w   Boss_DestroyerProtoChooseNextMovementTarget
 ; End of function Boss_DestroyerProtoRetreatAfterTwinShots
 ; Opens the parts while rotating them in opposite directions
 Boss_DestroyerProtoOpenPartsForSpread:                  ; DATA XREF: ROM:00031524   o  ; was: sub_31A28
-                bsr.w   Boss_DestroyerProtoOpenParts
+                bsr.w   Boss_DestroyerProtoExpandPartRadii
                 move.w  #$FFF8,d0
                 move.w  #$20,d1                         ; ' '
                 bsr.w   Boss_DestroyerProtoUpdatePartAngles
@@ -256,14 +256,14 @@ Boss_DestroyerProtoRecoverSpread:                       ; DATA XREF: ROM:0003152
 ; Closes the parts and returns from the spread attack
 Boss_DestroyerProtoRetreatAfterSpread:                  ; DATA XREF: ROM:0003152C   o  ; was: sub_31B9A
                 bsr.w   Boss_DestroyerProtoUpdateCircularVelocity
-                bsr.w   Boss_DestroyerProtoCloseParts
+                bsr.w   Boss_DestroyerProtoContractPartRadii
                 move.w  #$FFF8,d0
                 move.w  #$20,d1                         ; ' '
                 bsr.w   Boss_DestroyerProtoUpdatePartAngles
                 bsr.w   Boss_DestroyerProtoUpdateViewportOffset
                 subq.w  #1,$4A(a5)
                 bne.w   Entity_UpdateReturn
-                bsr.w   Boss_DestroyerSyncPartAngles
+                bsr.w   Boss_DestroyerProtoSynchronizePartAngles
                 bra.w   Boss_DestroyerProtoChooseNextMovementTarget
 ; End of function Boss_DestroyerProtoRetreatAfterSpread
 ; Aims the core and all six parts at the player
@@ -285,7 +285,7 @@ Boss_DestroyerProtoAimAllPartsAtPlayer:                 ; CODE XREF: Boss_Destro
 ; End of function Boss_DestroyerProtoAimAllPartsAtPlayer
 ; Opens all parts before the aimed stream
 Boss_DestroyerProtoOpenPartsForStream:                  ; DATA XREF: ROM:0003152E   o  ; was: sub_31BFE
-                bsr.w   Boss_DestroyerProtoOpenParts
+                bsr.w   Boss_DestroyerProtoExpandPartRadii
                 subq.w  #1,$4A(a5)
                 bne.w   Entity_UpdateReturn
                 addq.w  #2,4(a5)
@@ -401,13 +401,13 @@ Boss_DestroyerProtoWaitAfterStream:                     ; DATA XREF: ROM:0003153
 ; Closes the parts and returns from the aimed stream
 Boss_DestroyerProtoRetreatAfterStream:                  ; DATA XREF: ROM:0003153A   o  ; was: sub_31D72
                 bsr.w   Boss_DestroyerProtoUpdateCircularVelocity
-                bsr.w   Boss_DestroyerProtoCloseParts
+                bsr.w   Boss_DestroyerProtoContractPartRadii
                 move.w  #$C,d0
                 move.w  #$10,d1
                 bsr.w   Boss_DestroyerProtoUpdatePartAngles
                 bsr.w   Boss_DestroyerProtoUpdateViewportOffset
                 subq.w  #1,$4A(a5)
                 bne.w   Entity_UpdateReturn
-                bsr.w   Boss_DestroyerSyncPartAngles
+                bsr.w   Boss_DestroyerProtoSynchronizePartAngles
                 bra.w   Boss_DestroyerProtoChooseNextMovementTarget
 ; End of function Boss_DestroyerProtoRetreatAfterStream

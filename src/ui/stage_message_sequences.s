@@ -550,7 +550,7 @@ BattleBanner_MovingSpriteLine:  dc.l    $C6AA00FF       ; DATA XREF: BattleBanne
                 dc.l    $680B0006
 
 ; Start the boss-message sequence and publish its wait gate
-BossMessage_Start:                                      ; CODE XREF: Boss_DestroyerProtoIntroMove+28   p  ; was: sub_B44E
+BossMessage_Start:                                      ; CODE XREF: Boss_DestroyerProtoIntroApproachState+28   p  ; was: sub_B44E
                                         ; Boss_VictorFlyIn+1E   p
                 bclr    #1,(StageRouteFlags).w
                 bne.s   BossMessage_StartReadyFightBanner
