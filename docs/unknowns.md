@@ -7660,3 +7660,21 @@ and right-up leaf retain their names after their exact returned frame ranges are
 verified. Five new exact-address records raise the audit registry from 13,345
 to 13,350. The queue falls from 2,998 to 2,993 and its actionable upper bound
 from 2,485 to 2,480; provenance remains 16,051.
+
+The six-name debug/control package separates the former mixed
+`debug/player_controls.s` range into three ROM-ordered modules. The live
+gameplay-loop caller and the paired plane level/offset fields confirm
+`Effect_ScreenShakeUpdate` and its return in the dedicated
+`effects/plane_shake.s` module.
+
+No reconstructed reference reaches the adjacent timing-toggle or fixed-OAM
+wrappers. The first only toggles `FrameTimingDebugFlag` after a control-flag
+and controller-button chord, while the second appends exactly two fixed OAM
+entries. Their former generic input and claimed debug-marker names therefore
+become `UnreferencedToggleFrameTimingMarkers`,
+`UnreferencedAppendFixedOAMEntries`, and
+`UnreferencedFixedOAMEntries` without inventing a live owner or visual role.
+Six new exact-address records raise the registry from 13,350 to 13,356. The
+queue falls from 2,993 to 2,987 and its actionable upper bound from 2,480 to
+2,474; the 513 binary-backed end aliases and 16,051 provenance mappings remain
+unchanged.
