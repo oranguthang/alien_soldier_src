@@ -21,70 +21,70 @@ UI_InitWeaponSelectionObject:                           ; CODE XREF: UI_WeaponSe
 UI_UpdateWeaponSelectionObject:                         ; CODE XREF: UI_WeaponSelectionObject:loc_2BCF8   j  ; was: sub_2BBC0
                 move.b  #$7C,$20(a5)                    ; '|'
                 btst    #0,(FrameCounter+1).w
-                bne.s   UI_UpdateWeaponSelectionObject_UpdateFrameTimer
+                bne.s   UI_UpdateWeaponSelectionObject_UpdateAnimationHoldTimer
                 clr.b   $20(a5)
-UI_UpdateWeaponSelectionObject_UpdateFrameTimer:        ; CODE XREF: UI_UpdateWeaponSelectionObject+C   j  ; was: loc_2BBD2
+UI_UpdateWeaponSelectionObject_UpdateAnimationHoldTimer:  ; CODE XREF: UI_UpdateWeaponSelectionObject+C   j  ; was: loc_2BBD2
                 tst.w   $4C(a5)
-                bmi.s   UI_UpdateWeaponSelectionObject_AdvanceFrame
+                bmi.s   UI_UpdateWeaponSelectionObject_AdvanceAnimationPhase
                 subq.w  #1,$4C(a5)
                 btst    #0,$4D(a5)
-                bne.s   UI_UpdateWeaponSelectionObject_SelectFrame
+                bne.s   UI_UpdateWeaponSelectionObject_SelectAnimatedMapping
                 btst    #7,$22(a5)
-                beq.s   UI_UpdateWeaponSelectionObject_UseIdleFrame
+                beq.s   UI_UpdateWeaponSelectionObject_UseIdleMapping
                 btst    #4,$22(a5)
-                beq.s   UI_UpdateWeaponSelectionObject_SelectFrame
-UI_UpdateWeaponSelectionObject_UseIdleFrame:            ; CODE XREF: UI_UpdateWeaponSelectionObject+2A   j  ; was: loc_2BBF4
+                beq.s   UI_UpdateWeaponSelectionObject_SelectAnimatedMapping
+UI_UpdateWeaponSelectionObject_UseIdleMapping:          ; CODE XREF: UI_UpdateWeaponSelectionObject+2A   j  ; was: loc_2BBF4
                 move.l  #WeaponSelect_IdleSpriteMapping,8(a5)
-                bra.s   UI_UpdateWeaponSelectionObject_ProcessFlags
+                bra.s   UI_UpdateWeaponSelectionObject_RefreshPreviewFromActiveSlot
 ; ---------------------------------------------------------------------------
-UI_UpdateWeaponSelectionObject_AdvanceFrame:            ; CODE XREF: UI_UpdateWeaponSelectionObject+16   j  ; was: loc_2BBFE
+UI_UpdateWeaponSelectionObject_AdvanceAnimationPhase:   ; CODE XREF: UI_UpdateWeaponSelectionObject+16   j  ; was: loc_2BBFE
                 addq.w  #1,$48(a5)
-UI_UpdateWeaponSelectionObject_SelectFrame:             ; CODE XREF: UI_UpdateWeaponSelectionObject+22   j  ; was: loc_2BC02
+UI_UpdateWeaponSelectionObject_SelectAnimatedMapping:   ; CODE XREF: UI_UpdateWeaponSelectionObject+22   j  ; was: loc_2BC02
                                         ; UI_UpdateWeaponSelectionObject+32   j
                 move.w  $48(a5),d1
                 asr.w   #4,d1
                 andi.w  #$1C,d1
                 cmpi.w  #$18,d1
-                bmi.s   UI_UpdateWeaponSelectionObject_LoadAnimatedFrame
+                bmi.s   UI_UpdateWeaponSelectionObject_LoadSelectedAnimatedMapping
                 moveq   #0,d1
                 move.w  d1,$48(a5)
-UI_UpdateWeaponSelectionObject_LoadAnimatedFrame:       ; CODE XREF: UI_UpdateWeaponSelectionObject+50   j  ; was: loc_2BC18
+UI_UpdateWeaponSelectionObject_LoadSelectedAnimatedMapping:  ; CODE XREF: UI_UpdateWeaponSelectionObject+50   j  ; was: loc_2BC18
                 lea     (WeaponSelect_SpriteFramePointers).l,a0
                 move.l  (a0,d1.w),8(a5)
-UI_UpdateWeaponSelectionObject_ProcessFlags:            ; CODE XREF: UI_UpdateWeaponSelectionObject+3C   j  ; was: loc_2BC24
+UI_UpdateWeaponSelectionObject_RefreshPreviewFromActiveSlot:  ; CODE XREF: UI_UpdateWeaponSelectionObject+3C   j  ; was: loc_2BC24
                 bclr    #3,$22(a5)
-                beq.s   UI_UpdateWeaponSelectionObject_CheckConfirm
+                beq.s   UI_UpdateWeaponSelectionObject_HandleCommitFlag
                 btst    #4,$22(a5)
-                bne.w   UI_UpdateWeaponSelectionObject_CheckConfirm
+                bne.w   UI_UpdateWeaponSelectionObject_HandleCommitFlag
                 jsr     (Weapon_GetStateDisplayIndex).l
-                beq.s   UI_UpdateWeaponSelectionObject_CheckConfirm
+                beq.s   UI_UpdateWeaponSelectionObject_HandleCommitFlag
                 movea.w (WeaponSlotOffset).w,a0
                 adda.w  #(WeaponSlotConfig0-M68K_RAM),a0
                 move.w  (a0),d0
                 asl.w   #5,d0
                 move.w  d0,$48(a5)
                 move.w  #$18,$4C(a5)
-UI_UpdateWeaponSelectionObject_CheckConfirm:            ; CODE XREF: UI_UpdateWeaponSelectionObject+6A   j  ; was: loc_2BC54
+UI_UpdateWeaponSelectionObject_HandleCommitFlag:        ; CODE XREF: UI_UpdateWeaponSelectionObject+6A   j  ; was: loc_2BC54
                                         ; UI_UpdateWeaponSelectionObject+72   j
                 bclr    #7,$22(a5)
-                beq.w   UI_UpdateWeaponSelectionObject_ClearInputFlags
+                beq.w   UI_UpdateWeaponSelectionObject_ClearInteractionFlags
                 bclr    #4,$22(a5)
-                bne.w   UI_UpdateWeaponSelectionObject_ClearInputFlags
+                bne.w   UI_UpdateWeaponSelectionObject_ClearInteractionFlags
                 move.b  #$A7,d0
                 jsr     (Sound_QueueSFXRequest).l
                 jsr     (Weapon_GetStateDisplayIndex).l
-                beq.s   UI_UpdateWeaponSelectionObject_Hide
+                beq.s   UI_UpdateWeaponSelectionObject_RetireWhenStateHasNoDisplay
                 movea.w (WeaponSlotOffset).w,a0
                 adda.w  #(WeaponSlotConfig0-M68K_RAM),a0
                 move.w  $48(a5),d1
                 asr.w   #5,d1
                 andi.w  #$E,d1
                 cmpi.w  #$C,d1
-                bmi.s   UI_UpdateWeaponSelectionObject_ApplySelection
+                bmi.s   UI_UpdateWeaponSelectionObject_ApplyWeaponTypeOrIncreaseAmmoCapacity
                 moveq   #0,d1
-UI_UpdateWeaponSelectionObject_ApplySelection:          ; CODE XREF: UI_UpdateWeaponSelectionObject+D0   j  ; was: loc_2BC94
+UI_UpdateWeaponSelectionObject_ApplyWeaponTypeOrIncreaseAmmoCapacity:  ; CODE XREF: UI_UpdateWeaponSelectionObject+D0   j  ; was: loc_2BC94
                 cmp.w   (a0),d1
-                beq.s   UI_UpdateWeaponSelectionObject_IncreaseValue
+                beq.s   UI_UpdateWeaponSelectionObject_IncreaseSelectedAmmoCapacity
                 move.w  d1,(a0)
                 clr.w   8(a0)
                 addq.w  #2,d1
@@ -94,24 +94,24 @@ UI_UpdateWeaponSelectionObject_ApplySelection:          ; CODE XREF: UI_UpdateWe
                 jsr     (Weapon_ClearRuntimeParameters).l
                 jsr     (Sys_ClearObjectBlocks16).l
                 jsr     (UI_QueueSelectedWeaponIconTransfer).l
-                bra.s   UI_UpdateWeaponSelectionObject_SyncValue
+                bra.s   UI_UpdateWeaponSelectionObject_RefillSelectedAmmoAndCommit
 ; ---------------------------------------------------------------------------
-UI_UpdateWeaponSelectionObject_IncreaseValue:           ; CODE XREF: UI_UpdateWeaponSelectionObject+D6   j  ; was: loc_2BCBE
+UI_UpdateWeaponSelectionObject_IncreaseSelectedAmmoCapacity:  ; CODE XREF: UI_UpdateWeaponSelectionObject+D6   j  ; was: loc_2BCBE
                 addi.w  #$FA,$18(a0)
                 cmpi.w  #$7D0,$18(a0)
-                bmi.s   UI_UpdateWeaponSelectionObject_SyncValue
+                bmi.s   UI_UpdateWeaponSelectionObject_RefillSelectedAmmoAndCommit
                 move.w  #$7D0,$18(a0)
-UI_UpdateWeaponSelectionObject_SyncValue:               ; CODE XREF: UI_UpdateWeaponSelectionObject+FC   j  ; was: loc_2BCD2
+UI_UpdateWeaponSelectionObject_RefillSelectedAmmoAndCommit:  ; CODE XREF: UI_UpdateWeaponSelectionObject+FC   j  ; was: loc_2BCD2
                                         ; UI_UpdateWeaponSelectionObject+10A   j
                 move.w  $18(a0),$10(a0)
                 move.w  #$330,(a5)
                 clr.b   $21(a5)
-UI_UpdateWeaponSelectionObject_ClearInputFlags:         ; CODE XREF: UI_UpdateWeaponSelectionObject+9A   j  ; was: loc_2BCE0
+UI_UpdateWeaponSelectionObject_ClearInteractionFlags:   ; CODE XREF: UI_UpdateWeaponSelectionObject+9A   j  ; was: loc_2BCE0
                                         ; UI_UpdateWeaponSelectionObject+A4   j
                 clr.b   $22(a5)
                 rts
 ; ---------------------------------------------------------------------------
-UI_UpdateWeaponSelectionObject_Hide:                    ; CODE XREF: UI_UpdateWeaponSelectionObject+B8   j  ; was: loc_2BCE6
+UI_UpdateWeaponSelectionObject_RetireWhenStateHasNoDisplay:  ; CODE XREF: UI_UpdateWeaponSelectionObject+B8   j  ; was: loc_2BCE6
                 bset    #4,2(a5)
                 rts
 ; End of function UI_UpdateWeaponSelectionObject

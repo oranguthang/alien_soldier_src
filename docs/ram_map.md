@@ -923,10 +923,10 @@ regeneration delay, current ammunition, and maximum ammunition.
 | `WeaponSlotAmmo1` | `$FFFFA262` | Second current-ammunition word. |
 | `WeaponSlotAmmo2` | `$FFFFA264` | Third current-ammunition word. |
 | `WeaponSlotAmmo3` | `$FFFFA266` | Fourth current-ammunition word. |
-| `WeaponSlotAmmoMax0` | `$FFFFA268` | First regeneration ceiling and stage-entry source for `WeaponSlotAmmo0`. |
-| `WeaponSlotAmmoMax1` | `$FFFFA26A` | Second regeneration ceiling and stage-entry source for `WeaponSlotAmmo1`. |
-| `WeaponSlotAmmoMax2` | `$FFFFA26C` | Third regeneration ceiling and stage-entry source for `WeaponSlotAmmo2`. |
-| `WeaponSlotAmmoMax3` | `$FFFFA26E` | Fourth regeneration ceiling and stage-entry source for `WeaponSlotAmmo3`. |
+| `WeaponSlotAmmoMax0` | `$FFFFA268` | First regeneration ceiling and stage-entry source for `WeaponSlotAmmo0`; recommitting the same selected weapon adds 250 up to 2000 and refills current ammunition from the result. |
+| `WeaponSlotAmmoMax1` | `$FFFFA26A` | Second regeneration ceiling; the same selected-weapon commit path can raise and refill slot one. |
+| `WeaponSlotAmmoMax2` | `$FFFFA26C` | Third regeneration ceiling; the same selected-weapon commit path can raise and refill slot two. |
+| `WeaponSlotAmmoMax3` | `$FFFFA26E` | Fourth regeneration ceiling; the same selected-weapon commit path can raise and refill slot three. |
 
 The previously generated “slot animation” names were incorrect. The loop
 does not touch sprite-frame state: it reloads a delay from the configuration-

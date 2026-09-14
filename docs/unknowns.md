@@ -7921,7 +7921,7 @@ object, and requests SFX `$1B`. These eight contiguous definitions now form
 the honest `actors/max_health_upgrade.s` module.
 
 The adjacent entry at `$2BB70` is not a Stage 25 death effect. Type `$330` is
-written only by `UI_UpdateWeaponSelectionObject_SyncValue`, and its handler
+written only by `UI_UpdateWeaponSelectionObject_RefillSelectedAmmoAndCommit`, and its handler
 freezes play, retires the committed selection object, and requests SFX `$1C`.
 It is therefore named `UI_WeaponSelectionCommitFeedback` and moved to the
 front of the immediately following ROM-ordered `ui/weapon_selection_object.s`
@@ -8207,3 +8207,29 @@ pending queue falls from 2,771 to 2,758 and its actionable upper bound from
 2,258 to 2,245; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. The shared enemy-helper module now has
 zero pending current names.
+
+The thirteen remaining local entries in `ui/weapon_selection_object.s` are
+audited against the active-slot arrays, weapon-state display helper, mapping
+table, object dispatch table, and the already identified type-`$330` commit
+feedback handler. The animation state has two distinct quantities: field `$48`
+is the phase accumulator, while field `$4C` is a temporary hold timer. The
+renamed paths now distinguish phase advancement, mapping selection, direct idle
+mapping, and the active-slot preview refresh.
+
+The generated `ApplySelection`, `IncreaseValue`, and `SyncValue` names hid the
+most important behavior. With A0 based at the selected `WeaponSlotConfig`
+entry, offsets `$10` and `$18` select that slot's current and maximum
+ammunition. Recommitting the same weapon adds 250 to its maximum, clamps at
+2000, and refills current ammunition; committing a different type resets its
+regeneration timer and weapon runtime first. Both paths then install type
+`$330`, whose handler performs the freeze, retirement, and feedback sound.
+
+Interaction bits three and seven are named only by their proven effects:
+active-slot preview refresh and selection commit. The no-display branch is no
+longer called `Hide`, because it sets the object retirement flag. Twelve source
+names are corrected and the final initialized-object update entry is retained.
+Thirteen exact-address records raise the registry from 13,584 to 13,597. The
+pending queue falls from 2,758 to 2,745 and its actionable upper bound from
+2,245 to 2,232; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. The weapon-selection object module now
+has zero pending current names.

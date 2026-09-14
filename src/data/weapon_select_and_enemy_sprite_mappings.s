@@ -1,4 +1,4 @@
-WeaponSelect_IdleSpriteMapping: dc.w    $4480, $A00, $F4F4  ; DATA XREF: UI_UpdateWeaponSelectionObject:UI_UpdateWeaponSelectionObject_UseIdleFrame   o  ; was: word_E9952
+WeaponSelect_IdleSpriteMapping: dc.w    $4480, $A00, $F4F4  ; DATA XREF: UI_UpdateWeaponSelectionObject:UI_UpdateWeaponSelectionObject_UseIdleMapping   o  ; was: word_E9952
                 dc.w    $47F0, $500, $F8F0
                 dc.w    $CFF0, $500, $F8FF
 WeaponSelect_AnimatedSpriteMapping00:   dc.w    $47F0, $500, $F8F0  ; DATA XREF: ROM:WeaponSelect_SpriteFramePointers   o  ; was: word_E9964
