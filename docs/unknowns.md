@@ -7721,6 +7721,28 @@ internal records raise the registry from 13,381 to 13,388. The queue falls from
 2,962 to 2,955 and its actionable upper bound from 2,449 to 2,442; provenance
 and the 513 classified binary-backed end aliases remain unchanged.
 
+The eight pending `system/region_check.s` definitions are audited without
+altering the canonical hardware gate. `Sys_CheckRegionLock` remains the
+first startup game-state handler: on substate zero it reads `IO_PCBVER+1`,
+accepts bit-seven-clear or bit-six-set hardware, and otherwise initializes the
+persistent restriction screen. The accepted branch becomes
+`Sys_EnterInitialGameModeAfterRegionCheck` because it writes game mode
+four and clears the substate rather than maintaining a generic flag set. The
+shared return receives the matching `Sys_CheckRegionLock_Return` scope.
+
+The five rendered byte strings are decoded through the established font
+indices. They read DEVELOPED FOR USE ONLY WITH, NTSC MEGA DRIVE, AND, PAL AND
+FRENCH SECAM MEGA DRIVE, and SYSTEMS followed by two exclamation marks. Three
+names are expanded or corrected to match those literal payloads, while
+`RegionLock_AndText` and `RegionLock_SystemsText` are confirmed.
+The stale claim at the end of `system/boot.s` that this active check was
+disabled is removed.
+
+Eight new exact-address records raise the registry from 13,388 to 13,396. The
+queue falls from 2,955 to 2,947 and its actionable upper bound from 2,442 to
+2,434; provenance and the 513 classified binary-backed end aliases remain
+unchanged.
+
 The six pending `bosses/destroyer_proto_core.s` entries are audited from the
 type-$3B8 subtype table, root state table, six consecutive part records, and
 all combat callers. `Boss_DestroyerProtoMain` is confirmed as the root

@@ -223,5 +223,3 @@ endless_loop:                                           ; CODE XREF: ShowRedScre
 ShowRedScreen_HaltLoop:                                 ; CODE XREF: ShowRedScreen:ShowRedScreen_HaltLoop   j  ; was: loc_4B8
                 bra.s   ShowRedScreen_HaltLoop
 ; End of function ShowRedScreen
-
-; Checks console region via IO_PCBVER and sets up region flags (region check disabled in this code)
