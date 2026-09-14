@@ -8,7 +8,7 @@ Sys_InitFullGame:                                       ; CODE XREF: RegionRestr
                 bsr.w   Sys_ClearGameBuffers
                 bsr.w   Sys_ClearGameplayStateBlock
                 bsr.w   Sys_ClearFrameAndSpriteScratch
-                bsr.w   Sys_ClearObjectRAM
+                bsr.w   Sys_ClearGameplayStateRegion8KiB
                 bra.w   Sys_ClearObjectBuffer
 ; End of function Sys_InitFullGame
 ; Full game mode initialization sequence
@@ -22,7 +22,7 @@ Sys_InitGameMode:                                       ; CODE XREF: EndingSeque
                 bsr.w   Gfx_InitVideoMode
                 bsr.w   Sys_ClearGameBuffers
                 bsr.w   Sys_ClearFrameAndSpriteScratch
-                bsr.w   Sys_ClearObjectRAM
+                bsr.w   Sys_ClearGameplayStateRegion8KiB
                 bra.w   Sys_ClearObjectBuffer
 ; End of function Sys_InitGameMode
 ; Initializes core subsystems and memory structures
@@ -30,8 +30,8 @@ Sys_InitSubsystems:                                     ; CODE XREF: Sys_InitFul
                                         ; Sys_InitGameMode+8   p
                 bsr.w   Gfx_ClearCRAM
                 bsr.w   Gfx_ClearVRAMPlane
-                bsr.w   Sys_ClearRAM
-                bsr.w   Sys_ClearScrollBuffer
+                bsr.w   Sys_ClearLowerRAM32KiB
+                bsr.w   Sys_ClearCameraStageAndDebugStateRegion256
                 bsr.w   Gfx_ClearHScrollBuffer
                 bsr.w   Boss_ZLeoClearVRAM
                 bsr.w   Gfx_ClearVScrollBuffer
@@ -40,7 +40,7 @@ Sys_InitSubsystems:                                     ; CODE XREF: Sys_InitFul
 ; Initializes graphics subsystem chain
 Sys_InitGraphicsChain:                                  ; CODE XREF: Sys_InitFullGame+C   p  ; was: sub_2DB4
                                         ; Sys_InitGameMode+C   p
-                bsr.w   Gfx_InitializeChain
+                bsr.w   Sys_ClearInitializationObjectPools
                 bsr.w   Sys_ClearOrphanedObjectArea
                 bsr.w   Sprite_ClearOAMBuildState
                 bsr.w   Sprite_ClearOAMBuffer

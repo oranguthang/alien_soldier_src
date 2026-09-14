@@ -143,7 +143,7 @@ Reset_ClearMainRAMLoop:                                 ; CODE XREF: Reset+214  
                 move.l  d0,(a0)+
                 dbf     d1,Reset_ClearMainRAMLoop
                 jsr     (Gfx_InitVDPRegisters).l
-                jsr     (Input_InitControllers).l
+                jsr     (Input_InitializeControllerPorts).l
                 jsr     (Sys_ClearGameBuffers).l
 Reset_AcquireZ80Bus:                                    ; CODE XREF: Reset+232   j  ; was: loc_42A
                 bset    #0,(IO_Z80BUS).l

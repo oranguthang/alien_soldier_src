@@ -83,10 +83,10 @@ data are checked.
 | `0x00263E` | `LoadObjData` | object data loading |
 | `0x002A58` | `TileCodec_ClearDecodeBuffer` | tile codec and DMA preparation |
 | `0x002D40` | `Sys_InitFullGame` | game initialization |
-| `0x002E7E` | `Input_InitControllers` | memory and controller initialization |
+| `0x002E7E` | `Input_InitializeControllerPorts` | memory and controller initialization |
 | `0x003134` | `Sys_ClearVDPCommandBuffer` | VDP clearing and command buffers |
 | `0x00339A` | `Data_Copy16Bytes` | ownership unresolved; audit before move |
-| `0x0033A4` | `Input_InitControllerState` | controller input family |
+| `0x0033A4` | `Input_InitializeControllerState` | controller input family |
 | `0x00354A` | `Math_CalculateAngleToPlayer` | angle/vector math |
 | `0x003954` | `Score_AddPackedBCD` | packed-BCD score arithmetic and shared PRNG |
 | `0x0039AA` | `Gfx_FadePaletteTransition` | palette transitions |

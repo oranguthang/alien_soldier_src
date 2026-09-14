@@ -1,4 +1,5 @@
-Input_InitControllers:                                  ; CODE XREF: Reset+21E   p  ; was: sub_2E7E
+; Configures the controller and expansion port registers, then clears boot state
+Input_InitializeControllerPorts:                        ; CODE XREF: Reset+21E   p  ; was: sub_2E7E
                 move.b  #0,(IO_CT1_SMODE+1).l
                 move.b  #0,(IO_CT2_SMODE+1).l
                 move.b  #0,(IO_EXT_SMODE+1).l
@@ -8,47 +9,47 @@ Input_InitControllers:                                  ; CODE XREF: Reset+21E  
                 move.b  #$40,(IO_CT1_DATA+1).l          ; '@'
                 clr.l   (SystemStateBlock).w
                 rts
-; End of function Input_InitControllers
-; Clears 32KB RAM block to zero
-Sys_ClearRAM:                                           ; CODE XREF: Sys_InitSubsystems+8   p  ; was: sub_2EBC
+; End of function Input_InitializeControllerPorts
+; Clears exactly the lower 32 KiB of 68000 work RAM at $FFFF0000-$FFFF7FFF
+Sys_ClearLowerRAM32KiB:                                 ; CODE XREF: Sys_InitSubsystems+8   p  ; was: sub_2EBC
                 lea     (M68K_RAM).l,a0
                 moveq   #0,d0
                 move.w  #$7FF,d1
-Sys_ClearRAM_Loop:                                      ; CODE XREF: Sys_ClearRAM+14   j  ; was: loc_2EC8
+Sys_ClearLowerRAM32KiB_Loop:                            ; CODE XREF: Sys_ClearLowerRAM32KiB+14   j  ; was: loc_2EC8
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearRAM_Loop
+                dbf     d1,Sys_ClearLowerRAM32KiB_Loop
                 rts
-; End of function Sys_ClearRAM
-; Clears first 8KB of RAM (partial clear)
-Sys_ClearRAMPartial:
+; End of function Sys_ClearLowerRAM32KiB
+; Unreferenced entry that clears the lower 8 KiB of 68000 work RAM
+UnreferencedSys_ClearLowerRAM8KiB:
                 lea     (M68K_RAM).l,a0                 ; was: sub_2ED6
                 moveq   #0,d0
                 move.w  #$1FF,d1
-Sys_ClearRAMPartial_Loop:                               ; CODE XREF: Sys_ClearRAMPartial+14   j  ; was: loc_2EE2
+UnreferencedSys_ClearLowerRAM8KiB_Loop:                 ; CODE XREF: UnreferencedSys_ClearLowerRAM8KiB+14   j  ; was: loc_2EE2
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearRAMPartial_Loop
+                dbf     d1,UnreferencedSys_ClearLowerRAM8KiB_Loop
                 rts
-; End of function Sys_ClearRAMPartial
-; Clears object RAM area at FF8000
-Sys_ClearObjectRAM:                                     ; CODE XREF: Sys_InitFullGame+24   p  ; was: sub_2EF0
+; End of function UnreferencedSys_ClearLowerRAM8KiB
+; Clears the 8 KiB gameplay-state region at $FFFF8000-$FFFF9FFF
+Sys_ClearGameplayStateRegion8KiB:                       ; CODE XREF: Sys_InitFullGame+24   p  ; was: sub_2EF0
                                         ; Sys_InitGameMode+20   p
                 lea     (GameplayStateBuffer).w,a0
                 moveq   #0,d0
                 move.w  #$1FF,d1
-Sys_ClearObjectRAM_Loop:                                ; CODE XREF: Sys_ClearObjectRAM+12   j  ; was: loc_2EFA
+Sys_ClearGameplayStateRegion8KiB_Loop:                  ; CODE XREF: Sys_ClearGameplayStateRegion8KiB+12   j  ; was: loc_2EFA
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearObjectRAM_Loop
+                dbf     d1,Sys_ClearGameplayStateRegion8KiB_Loop
                 rts
-; End of function Sys_ClearObjectRAM
+; End of function Sys_ClearGameplayStateRegion8KiB
 ; Clears the 256-byte frame-state block and 256-byte shared sprite scratch
 Sys_ClearFrameAndSpriteScratch:                         ; CODE XREF: Sys_InitFullGame+20   p  ; was: sub_2F08
                                         ; Sys_InitGameMode+1C   p
@@ -85,19 +86,19 @@ Sys_ClearGameplayStateBlock_Loop:                       ; CODE XREF: Sys_ClearGa
                 dbf     d1,Sys_ClearGameplayStateBlock_Loop
                 rts
 ; End of function Sys_ClearGameplayStateBlock
-; Clears the VBlank counter and the following timer/state buffer
-Sys_ClearTimerBuffer:
+; Unreferenced entry that clears 128 bytes of VBlank, mode, and setup state
+UnreferencedSys_ClearVBlankModeStateRegion128:
                 lea     (VBlankFrameCounter).w,a0       ; was: sub_2F4E
                 moveq   #0,d0
                 move.w  #7,d1
-Sys_ClearTimerBuffer_Loop:                              ; CODE XREF: Sys_ClearTimerBuffer+12   j  ; was: loc_2F58
+UnreferencedSys_ClearVBlankModeStateRegion128_Loop:     ; CODE XREF: UnreferencedSys_ClearVBlankModeStateRegion128+12   j  ; was: loc_2F58
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearTimerBuffer_Loop
+                dbf     d1,UnreferencedSys_ClearVBlankModeStateRegion128_Loop
                 rts
-; End of function Sys_ClearTimerBuffer
+; End of function UnreferencedSys_ClearVBlankModeStateRegion128
 ; Clears main object data buffer with zero fill
 Sys_ClearObjectBuffer:                                  ; CODE XREF: Sys_InitFullGame+28   j  ; was: sub_2F66
                                         ; Sys_InitGameMode+24   j
@@ -139,7 +140,7 @@ Sys_ClearObjectBufferSecondHalf_Loop:                   ; CODE XREF: Sys_ClearOb
                 rts
 ; End of function Sys_ClearObjectBufferSecondHalf
 ; Clears the first 96-byte object-shaped record in each buffer half
-Sys_ClearFirstRecordEachHalf:                           ; CODE XREF: Gfx_InitializeChain   p  ; was: sub_2FAE
+Sys_ClearFirstRecordEachHalf:                           ; CODE XREF: Sys_ClearInitializationObjectPools   p  ; was: sub_2FAE
                 lea     (PlayerObjectType).w,a0
                 moveq   #0,d0
                 move.w  #5,d1
@@ -174,7 +175,7 @@ Sys_ClearOrphanedObjectArea_Loop:                       ; CODE XREF: Sys_ClearOr
                 rts
 ; End of function Sys_ClearOrphanedObjectArea
 ; Clears the 96-byte orphaned object-shaped record
-Sys_ClearOrphanedObjectRecord:                          ; CODE XREF: Gfx_InitializeChain+4   p  ; was: sub_2FF4
+Sys_ClearOrphanedObjectRecord:                          ; CODE XREF: Sys_ClearInitializationObjectPools+4   p  ; was: sub_2FF4
                 lea     (OrphanedObjectType).w,a0
                 moveq   #0,d0
                 move.w  #5,d1
@@ -186,19 +187,19 @@ Sys_ClearOrphanedObjectRecord_Loop:                     ; CODE XREF: Sys_ClearOr
                 dbf     d1,Sys_ClearOrphanedObjectRecord_Loop
                 rts
 ; End of function Sys_ClearOrphanedObjectRecord
-; Clears scroll position buffer for stage initialization
-Sys_ClearScrollBuffer:                                  ; CODE XREF: Sys_InitSubsystems+C   p  ; was: sub_300C
+; Clears 256 bytes of camera, stage-scene, and debug-input state
+Sys_ClearCameraStageAndDebugStateRegion256:             ; CODE XREF: Sys_InitSubsystems+C   p  ; was: sub_300C
                 lea     (PrimaryCameraXPosition).w,a0
                 moveq   #0,d0
                 move.w  #$F,d1
-Sys_ClearScrollBuffer_Loop:                             ; CODE XREF: Sys_ClearScrollBuffer+12   j  ; was: loc_3016
+Sys_ClearCameraStageAndDebugStateRegion256_Loop:        ; CODE XREF: Sys_ClearCameraStageAndDebugStateRegion256+12   j  ; was: loc_3016
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearScrollBuffer_Loop
+                dbf     d1,Sys_ClearCameraStageAndDebugStateRegion256_Loop
                 rts
-; End of function Sys_ClearScrollBuffer
+; End of function Sys_ClearCameraStageAndDebugStateRegion256
 ; Clears an otherwise unreferenced 512-byte work area
 UnreferencedClearWorkBuffer512:
                 lea     (ClearedWorkBuffer512).w,a0     ; was: sub_3024
@@ -251,21 +252,21 @@ Sprite_ClearOAMBuildState_Loop:                         ; CODE XREF: Sprite_Clea
                 dbf     d1,Sprite_ClearOAMBuildState_Loop
                 rts
 ; End of function Sprite_ClearOAMBuildState
-; Initializes graphics chain with RAM clear operations
-Gfx_InitializeChain:                                    ; CODE XREF: Sys_InitGraphicsChain   p  ; was: sub_3084
+; Clears three selected object records and all 77 shared-effect/entity records
+Sys_ClearInitializationObjectPools:                     ; CODE XREF: Sys_InitGraphicsChain   p  ; was: sub_3084
                 bsr.w   Sys_ClearFirstRecordEachHalf
                 bsr.w   Sys_ClearOrphanedObjectRecord
                 lea     (SharedEffectObjectPool).w,a0
                 moveq   #0,d0
                 move.w  #$1CD,d1
-Gfx_InitializeChain_Loop:                               ; CODE XREF: Gfx_InitializeChain+1A   j  ; was: loc_3096
+Sys_ClearInitializationObjectPools_SharedAndEntityPoolLoop:  ; CODE XREF: Sys_ClearInitializationObjectPools+1A   j  ; was: loc_3096
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Gfx_InitializeChain_Loop
+                dbf     d1,Sys_ClearInitializationObjectPools_SharedAndEntityPoolLoop
                 rts
-; End of function Gfx_InitializeChain
+; End of function Sys_ClearInitializationObjectPools
 ; Clears the first eight 96-byte objects in the shared effect pool
 Effect_ClearFirstEightObjects:
                 lea     (SharedEffectObjectPool).w,a0   ; was: sub_30A4

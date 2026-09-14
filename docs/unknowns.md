@@ -8154,3 +8154,28 @@ pending queue falls from 2,797 to 2,784 and its actionable upper bound from
 remain unchanged. The layout rises from 378 to 379 modules, with a 313.4-line
 mean, the unchanged 986-line maximum, and no waiver. Both new module ranges
 have zero pending current names.
+
+The thirteen pending entries in `system/memory_initialization.s` are audited
+by their exact start addresses, loop counts, store widths, callers, and RAM
+boundaries. `Sys_ClearRAM` was too broad: the called routine clears only the
+lower 32 KiB at `$FFFF0000-$FFFF7FFF`; its otherwise unreferenced companion
+clears only the lower 8 KiB. `Sys_ClearObjectRAM` was actively misleading
+because object records begin later: its 512 sixteen-byte iterations clear the
+8 KiB gameplay-state region at `$FFFF8000-$FFFF9FFF`.
+
+Two further generic owners are corrected. The former scroll-buffer clear spans
+all `$FFFFA900-$FFFFA9FF`, including camera, stage-scene, and debug-input state.
+The former `Gfx_InitializeChain` performs no graphics operation: it clears the
+first record of both main object-buffer halves, the orphaned object-shaped
+record, and then all 77 consecutive 96-byte shared-effect/entity records from
+`$FFFFBFC0` through `$FFFFDC9F`. Its name now records initialization-time
+object-pool clearing rather than inheriting the subsystem name of its caller.
+
+The controller-port initializer is narrowed to the I/O registers it actually
+configures. The 128-byte VBlank/mode-state clear and the lower-8-KiB clear have
+no reconstructed caller and are explicitly marked unreferenced rather than
+silently presented as live initialization paths. Thirteen exact-address
+records raise the registry from 13,558 to 13,571. The pending queue falls from
+2,784 to 2,771 and its actionable upper bound from 2,271 to 2,258; provenance,
+the 513 classified binary-backed end aliases, and the 379-module layout remain
+unchanged. `system/memory_initialization.s` now has zero pending current names.

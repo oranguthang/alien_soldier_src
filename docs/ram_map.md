@@ -1035,6 +1035,12 @@ object update and rendering machinery.
 | `PlayerEffectAllocStart` | `$FFFFC320` | One record after the player-effect base; free-slot allocation scans seven records from here, and weapon selection uses the first four as indicators. |
 | `PlayerSpecialObjectSlot` | `$FFFFC5C0` | Dedicated record initialized or cleared by player dash, teleport, projectile, impact, and Seven Forces paths and checked separately for special-attack collisions. |
 
+`Sys_ClearInitializationObjectPools` first clears one 96-byte record at each
+of `$FFFFA400`, `$FFFFA600`, and `$FFFFA800`, then clears 77 consecutive
+96-byte records from `SharedEffectObjectPool` through `Entity60` at
+`$FFFFDC9F`. The name deliberately records object-pool ownership rather than
+the graphics subsystem of its caller.
+
 ## Reviewed primary entity record
 
 `Entity_ObjectPool` is the base of 60 consecutive 96-byte records ending at
@@ -1294,7 +1300,7 @@ structural `PrimaryEntity` names rather than a boss name.
 
 | Symbol | Address | Static evidence |
 |---|---:|---|
-| `GameplayStateBuffer` | `$FFFF8000` | Full initialization clears 2 KiB from this base, while the explicit broad reset clears the complete 8 KiB state block. |
+| `GameplayStateBuffer` | `$FFFF8000` | Full initialization and the separate broad clear helper each clear the complete 8 KiB state region at `$FFFF8000-$FFFF9FFF`. |
 | `WeaponTargetOrFrame` | `$FFFF801C` | Targeting modes store an object pointer here; icon mode reuses the word as its even frame counter. |
 | `WeaponIconFrameTile` | `$FFFF801E` | State-twelve icon animation copies the selected frame's tile word here after clearing it with the other runtime parameters. |
 | `WeaponAnimationDataPtr` | `$FFFF8020` | Circle-attack setup and weapon icon mode install and consume an animation-data pointer here. |
