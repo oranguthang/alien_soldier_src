@@ -390,7 +390,7 @@ Boss_JampanDefeatFallState:                             ; DATA XREF: ROM:0004922
                 addi.l  #$200,$1C(a5)
                 bsr.w   Boss_JampanUpdateShieldFormationGeometry
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
-                jsr     (Boss_SpawnExplosionDebris).l
+                jsr     (Boss_UpdateDefeatExplosionAndSpawnDebris).l
                 cmpi.w  #$110,$14(a5)
                 bcs.s   Boss_JampanDefeatFallReturn
                 bsr.w   Boss_JampanDisableShields
@@ -405,7 +405,7 @@ Boss_JampanDefeatFallReturn:                            ; CODE XREF: Boss_Jampan
 ; Holds the explosion sequence, then creates the type-$23C shield object
 Boss_JampanDefeatExplosionHoldState:                    ; DATA XREF: ROM:0004922C   o  ; was: sub_49E64
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
-                jsr     (Boss_SpawnExplosionDebris).l
+                jsr     (Boss_UpdateDefeatExplosionAndSpawnDebris).l
                 subq.w  #1,$48(a5)
                 bne.s   Boss_JampanDefeatExplosionHoldReturn
                 move.w  #$40,$48(a5)                    ; '@'
@@ -420,7 +420,7 @@ Boss_JampanDefeatExplosionHoldReturn:                   ; CODE XREF: Boss_Jampan
 ; End of function Boss_JampanDefeatExplosionHoldState
 ; Waits for the shield object to descend to Y $60
 Boss_JampanWaitForDefeatShieldDescentState:             ; DATA XREF: ROM:0004922E   o  ; was: sub_49E9A
-                jsr     (Boss_SpawnExplosionDebris).l
+                jsr     (Boss_UpdateDefeatExplosionAndSpawnDebris).l
                 cmpi.w  #$60,(TwentyNinthEntityYPos).w  ; '`'
                 bcc.s   Boss_JampanWaitForDefeatShieldDescentReturn
                 clr.l   (TwentyNinthEntityYVel).w

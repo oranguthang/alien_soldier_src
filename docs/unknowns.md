@@ -8017,3 +8017,20 @@ operations. Twelve new exact-address records raise the registry from 13,471
 to 13,483. The queue falls from 2,871 to 2,859 and its actionable upper bound
 from 2,358 to 2,346; provenance and the 513 classified binary-backed end
 aliases remain unchanged.
+
+The ten remaining top-level entries in the contiguous Gusthead defeat block
+are audited against the state table, arena-velocity thresholds, palette-step
+counters, object clearing, and every caller of the shared explosion helper.
+The resulting sequence now reads directly as begin defeat, decelerate the
+arena, fall while exploding, advance and hold the palette fade, reverse it and
+clear objects, align and stop the arena, then remove Gusthead after a delay.
+
+This corrects the false `DefeatStopScroll` name: that state never writes arena
+velocity and only advances the palette step. The former generic
+`Gfx_ApplyBossPaletteFade` is Gusthead-only and is named for its defeat step.
+Conversely, the explosion/debris helper is genuinely shared by Gusthead,
+Victor, Epsilon 1, Jampan, and Missiray, so its new name records that broader
+defeat contract. Ten new exact-address records raise the registry from 13,483
+to 13,493. The queue falls from 2,859 to 2,849 and its actionable upper bound
+from 2,346 to 2,336; provenance and the 513 classified binary-backed end
+aliases remain unchanged.

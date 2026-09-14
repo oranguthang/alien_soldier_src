@@ -207,7 +207,7 @@ Boss_VictorUpdateDefeatExplosion:                       ; DATA XREF: ROM:0003244
                 move.w  #$E0,(PaletteRGBAdjustLevel).w
                 move.b  #$20,(PaletteRGBChannelMask).w  ; ' '
                 move.b  #8,(PaletteRGBAdjustStep).w
-                jsr     (Boss_SpawnExplosionDebris).l
+                jsr     (Boss_UpdateDefeatExplosionAndSpawnDebris).l
                 cmpi.w  #$88,(a0)
                 bne.s   Boss_VictorWaitForDefeatExplosion
                 ori.w   #$8000,$E(a0)

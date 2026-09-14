@@ -232,7 +232,7 @@ Boss_Epsilon1WaitForRingDestructionCompleteReturn:      ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1WaitForRingDestructionCompleteState
 ; Emits defeat debris during the post-ring delay
 Boss_Epsilon1DefeatDebrisDelayState:                    ; DATA XREF: ROM:00045D5E   o  ; was: sub_46A80
-                jsr     (Boss_SpawnExplosionDebris).l
+                jsr     (Boss_UpdateDefeatExplosionAndSpawnDebris).l
                 subq.w  #1,$48(a5)
                 bne.s   Boss_Epsilon1DefeatDebrisDelayReturn
                 addq.w  #2,4(a5)
@@ -241,7 +241,7 @@ Boss_Epsilon1DefeatDebrisDelayReturn:                   ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1DefeatDebrisDelayState
 ; Emits debris and advances the fade selector once every four global ticks
 Boss_Epsilon1AdvanceDefeatFadeState:                    ; DATA XREF: ROM:00045D60   o  ; was: sub_46A92
-                jsr     (Boss_SpawnExplosionDebris).l
+                jsr     (Boss_UpdateDefeatExplosionAndSpawnDebris).l
                 bsr.s   Boss_Epsilon1ApplyTimedPaletteFade
                 btst    #0,(FrameCounter+1).w
                 bne.s   Boss_Epsilon1AdvanceDefeatFadeReturn

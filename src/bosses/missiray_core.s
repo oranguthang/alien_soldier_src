@@ -494,7 +494,7 @@ Boss_MissiraySegmentDefeatTimers:   dc.w    $40, $30, $20, $10, $10, $20, $30, $
 
 ; Spawns defeat debris and waits before starting vertical motion
 Boss_MissiraySpawnDefeatDebrisAndWait:                  ; DATA XREF: ROM:000538D6   o  ; was: sub_53D2A
-                jsr     (Boss_SpawnExplosionDebris).l
+                jsr     (Boss_UpdateDefeatExplosionAndSpawnDebris).l
                 subq.w  #1,$48(a5)
                 bne.s   Boss_MissirayDefeatDebrisWaitReturn
                 addq.w  #2,4(a5)
@@ -509,7 +509,7 @@ Boss_MissirayDefeatDebrisWaitReturn:                    ; CODE XREF: Boss_Missir
 ; End of function Boss_MissiraySpawnDefeatDebrisAndWait
 ; Accelerates the defeat motion until its threshold
 Boss_MissirayAccelerateDefeatMotion:                    ; DATA XREF: ROM:000538D8   o  ; was: sub_53D50
-                jsr     (Boss_SpawnExplosionDebris).l
+                jsr     (Boss_UpdateDefeatExplosionAndSpawnDebris).l
                 addi.l  #$800,$1C(a5)
                 btst    #7,$1C(a5)
                 bne.s   Boss_MissirayAccelerateDefeatMotionReturn
@@ -523,7 +523,7 @@ Boss_MissirayAccelerateDefeatMotionReturn:              ; CODE XREF: Boss_Missir
 ; End of function Boss_MissirayAccelerateDefeatMotion
 ; Advances the frame-gated defeat palette fade
 Boss_MissirayAdvanceDefeatPaletteFade:                  ; DATA XREF: ROM:000538DA   o  ; was: sub_53D7A
-                jsr     (Boss_SpawnExplosionDebris).l
+                jsr     (Boss_UpdateDefeatExplosionAndSpawnDebris).l
                 bsr.s   Boss_MissirayApplyDefeatPaletteFade
                 btst    #0,(FrameCounter+1).w
                 bne.s   Boss_MissirayAdvanceDefeatPaletteFadeReturn

@@ -372,47 +372,47 @@ Boss_GustheadFinalBattleLoopState:                      ; DATA XREF: ROM:0003F2A
 Boss_GustheadFinalBattleLoopReturn:                     ; CODE XREF: Boss_GustheadFinalBattleLoopState+1C   j  ; was: locret_3FEF0
                 rts
 ; End of function Boss_GustheadFinalBattleLoopState
-; Initializes defeat phase
-Boss_GustheadDefeatInitPhase:                           ; DATA XREF: ROM:0003F2A8   o  ; was: sub_3FEF2
+; Hide Gusthead, clear vertical velocity, and enter the defeat sequence
+Boss_GustheadBeginDefeatState:                          ; DATA XREF: ROM:0003F2A8   o  ; was: sub_3FEF2
                 clr.b   $21(a5)
                 clr.l   $1C(a5)
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_GustheadDefeatInitPhase
-; Slows scroll during defeat
-Boss_GustheadDefeatSlowScroll:                          ; DATA XREF: ROM:0003F2AA   o  ; was: sub_3FF00
-                bsr.w   Boss_SpawnExplosionDebris
+; End of function Boss_GustheadBeginDefeatState
+; Emit defeat effects while decelerating the rotating arena
+Boss_GustheadDecelerateArenaDuringDefeatState:          ; DATA XREF: ROM:0003F2AA   o  ; was: sub_3FF00
+                bsr.w   Boss_UpdateDefeatExplosionAndSpawnDebris
                 cmpi.l  #$E800,(GustheadArenaVelocity).w
-                bmi.s   Boss_GustheadFinishDefeatScroll
+                bmi.s   Boss_GustheadFinishDefeatArenaDeceleration
                 subi.l  #$200,(GustheadArenaVelocity).w
                 rts
 ; ---------------------------------------------------------------------------
-Boss_GustheadFinishDefeatScroll:                        ; CODE XREF: Boss_GustheadDefeatSlowScroll+C   j  ; was: loc_3FF18
+Boss_GustheadFinishDefeatArenaDeceleration:             ; CODE XREF: Boss_GustheadDecelerateArenaDuringDefeatState+C   j  ; was: loc_3FF18
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_GustheadDefeatSlowScroll
-; Boss falling defeat animation
-Boss_GustheadDefeatFall:                                ; DATA XREF: ROM:0003F2AC   o  ; was: sub_3FF1E
+; End of function Boss_GustheadDecelerateArenaDuringDefeatState
+; Accelerate Gusthead downward while emitting defeat explosions
+Boss_GustheadFallAndExplodeDuringDefeatState:           ; DATA XREF: ROM:0003F2AC   o  ; was: sub_3FF1E
                 addi.l  #$1000,$1C(a5)
-                bsr.w   Boss_SpawnExplosionDebris
+                bsr.w   Boss_UpdateDefeatExplosionAndSpawnDebris
                 eori.w  #$8000,2(a5)
                 cmpi.w  #$180,$14(a5)
-                blt.s   Boss_GustheadDefeatFallReturn
+                blt.s   Boss_GustheadFallAndExplodeDuringDefeatReturn
                 addq.w  #2,4(a5)
                 clr.l   $1C(a5)
                 clr.w   $48(a5)
-Boss_GustheadDefeatFallReturn:                          ; CODE XREF: Boss_GustheadDefeatFall+18   j  ; was: locret_3FF44
+Boss_GustheadFallAndExplodeDuringDefeatReturn:          ; CODE XREF: Boss_GustheadFallAndExplodeDuringDefeatState+18   j  ; was: locret_3FF44
                 rts
-; End of function Boss_GustheadDefeatFall
-; Spawns debris during boss explosion
-Boss_SpawnExplosionDebris:                              ; CODE XREF: Boss_VictorUpdateDefeatExplosion+12   p  ; was: sub_3FF46
-                                        ; sub_3FF00   p
+; End of function Boss_GustheadFallAndExplodeDuringDefeatState
+; Update the shared boss defeat explosion and spawn one randomized debris object
+Boss_UpdateDefeatExplosionAndSpawnDebris:               ; CODE XREF: Boss_VictorUpdateDefeatExplosion+12   p  ; was: sub_3FF46
+                                        ; Boss_GustheadDecelerateArenaDuringDefeatState   p
                 jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #4,(PlaneBShakeLevel).w
                 jsr     (Projectile_UpdateWithExplosionSound).l
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   Boss_SpawnExplosionDebrisReturn
+                bne.s   Boss_UpdateDefeatExplosionAndSpawnDebrisReturn
                 jsr     (Projectile_InitType88).l
                 clr.b   $20(a0)
                 move.w  #$FFFA,$1C(a0)
@@ -435,12 +435,12 @@ Boss_SpawnExplosionDebris:                              ; CODE XREF: Boss_Victor
                 andi.w  #7,d0
                 add.w   d0,d0
                 add.w   d0,d0
-                move.l  Boss_ExplosionDebrisMappings(pc,d0.w),8(a0)
-Boss_SpawnExplosionDebrisReturn:                        ; CODE XREF: Boss_SpawnExplosionDebris+1E   j  ; was: locret_3FFC2
+                move.l  Boss_DefeatExplosionDebrisAnimations(pc,d0.w),8(a0)
+Boss_UpdateDefeatExplosionAndSpawnDebrisReturn:         ; CODE XREF: Boss_UpdateDefeatExplosionAndSpawnDebris+1E   j  ; was: locret_3FFC2
                 rts
-; End of function Boss_SpawnExplosionDebris
+; End of function Boss_UpdateDefeatExplosionAndSpawnDebris
 ; ---------------------------------------------------------------------------
-Boss_ExplosionDebrisMappings:   dc.l    SharedCombatSpriteAnimation00  ; DATA XREF: Boss_SpawnExplosionDebris+76   r  ; was: off_3FFC4
+Boss_DefeatExplosionDebrisAnimations:   dc.l    SharedCombatSpriteAnimation00  ; DATA XREF: Boss_UpdateDefeatExplosionAndSpawnDebris+76   r  ; was: off_3FFC4
                 dc.l    SharedCombatSpriteAnimation03
                 dc.l    SharedCombatSpriteAnimation01
                 dc.l    SharedCombatSpriteAnimation04
@@ -449,39 +449,39 @@ Boss_ExplosionDebrisMappings:   dc.l    SharedCombatSpriteAnimation00  ; DATA XR
                 dc.l    SharedCombatSpriteAnimation02
                 dc.l    SharedCombatSpriteAnimation06
 
-; Stops scroll for defeat
-Boss_GustheadDefeatStopScroll:                          ; DATA XREF: ROM:0003F2AE   o  ; was: sub_3FFE4
-                bsr.s   Gfx_ApplyBossPaletteFade
+; Advance Gusthead's defeat palette step and start its four-frame hold
+Boss_GustheadAdvanceDefeatPaletteFadeState:             ; DATA XREF: ROM:0003F2AE   o  ; was: sub_3FFE4
+                bsr.s   Boss_GustheadApplyDefeatPaletteStep
                 addq.w  #1,(SharedPatternRow1Long1).w
                 cmpi.w  #$F,(SharedPatternRow1Long1).w
-                bne.s   Boss_GustheadDefeatStopScrollReturn
+                bne.s   Boss_GustheadAdvanceDefeatPaletteFadeReturn
                 move.w  #4,(SharedPatternRow1Long1+2).w
                 addq.w  #2,4(a5)
-Boss_GustheadDefeatStopScrollReturn:                    ; CODE XREF: Boss_GustheadDefeatStopScroll+C   j  ; was: locret_3FFFC
+Boss_GustheadAdvanceDefeatPaletteFadeReturn:            ; CODE XREF: Boss_GustheadAdvanceDefeatPaletteFadeState+C   j  ; was: locret_3FFFC
                 rts
-; End of function Boss_GustheadDefeatStopScroll
-; Applies palette fade effect to boss using specific fade parameters
-Gfx_ApplyBossPaletteFade:                               ; CODE XREF: Boss_GustheadDefeatStopScroll   p  ; was: sub_3FFFE
-                                        ; sub_40018   p
+; End of function Boss_GustheadAdvanceDefeatPaletteFadeState
+; Apply the current Gusthead defeat step to the complete active palette
+Boss_GustheadApplyDefeatPaletteStep:                    ; CODE XREF: Boss_GustheadAdvanceDefeatPaletteFadeState   p  ; was: sub_3FFFE
+                                        ; Boss_GustheadHoldDefeatPaletteState   p
                 move.w  (SharedPatternRow1Long1).w,d0
                 andi.w  #$E,d0
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
                 lea     (PaletteActiveBuffer).w,a0
                 jmp     (Gfx_ApplyPaletteFade).l
-; End of function Gfx_ApplyBossPaletteFade
-; Checks if defeat sequence complete
-Boss_GustheadDefeatCheck:                               ; DATA XREF: ROM:0003F2B0   o  ; was: sub_40018
-                bsr.s   Gfx_ApplyBossPaletteFade
+; End of function Boss_GustheadApplyDefeatPaletteStep
+; Hold the terminal defeat palette for four frames
+Boss_GustheadHoldDefeatPaletteState:                    ; DATA XREF: ROM:0003F2B0   o  ; was: sub_40018
+                bsr.s   Boss_GustheadApplyDefeatPaletteStep
                 subq.w  #1,(SharedPatternRow1Long1+2).w
                 bne.s   Boss_GustheadDefeatPaletteHoldReturn
                 addq.w  #2,4(a5)
-Boss_GustheadDefeatPaletteHoldReturn:                   ; CODE XREF: Boss_GustheadDefeatCheck+6   j  ; was: locret_40024
+Boss_GustheadDefeatPaletteHoldReturn:                   ; CODE XREF: Boss_GustheadHoldDefeatPaletteState+6   j  ; was: locret_40024
                 rts
-; End of function Boss_GustheadDefeatCheck
-; Exits defeat sequence
-Boss_GustheadDefeatExit:                                ; DATA XREF: ROM:0003F2B2   o  ; was: sub_40026
-                bsr.s   Gfx_ApplyBossPaletteFade
+; End of function Boss_GustheadHoldDefeatPaletteState
+; Reverse the defeat palette step, then clear non-preserved objects
+Boss_GustheadReverseDefeatPaletteAndClearObjectsState:  ; DATA XREF: ROM:0003F2B2   o  ; was: sub_40026
+                bsr.s   Boss_GustheadApplyDefeatPaletteStep
                 subq.w  #1,(SharedPatternRow1Long1).w
                 bpl.s   Boss_GustheadDefeatPaletteReverseReturn
                 addq.w  #2,4(a5)
@@ -489,32 +489,32 @@ Boss_GustheadDefeatExit:                                ; DATA XREF: ROM:0003F2B
                 moveq   #0,d1
                 jmp     Object_ClearAllExceptTypes
 ; ---------------------------------------------------------------------------
-Boss_GustheadDefeatPaletteReverseReturn:                ; CODE XREF: Boss_GustheadDefeatExit+6   j  ; was: locret_4003E
+Boss_GustheadDefeatPaletteReverseReturn:                ; CODE XREF: Boss_GustheadReverseDefeatPaletteAndClearObjectsState+6   j  ; was: locret_4003E
                 rts
-; End of function Boss_GustheadDefeatExit
-; Waits during defeat sequence
-Boss_GustheadDefeatWait:                                ; DATA XREF: ROM:0003F2B4   o  ; was: sub_40040
+; End of function Boss_GustheadReverseDefeatPaletteAndClearObjectsState
+; Stop the arena only at an aligned camera boundary, then start removal delay
+Boss_GustheadStopArenaAtAlignedBoundaryState:           ; DATA XREF: ROM:0003F2B4   o  ; was: sub_40040
                 tst.l   (GustheadArenaVelocity).w
-                beq.s   Boss_GustheadBeginDefeatRemovalDelay
+                beq.s   Boss_GustheadBeginPostDefeatRemovalDelay
                 move.w  (PrimaryCameraXPosition).w,d0
                 andi.w  #$7F,d0
-                bne.s   Boss_GustheadDefeatWaitReturn
+                bne.s   Boss_GustheadStopArenaAtAlignedBoundaryReturn
                 clr.l   (GustheadArenaVelocity).w
-Boss_GustheadBeginDefeatRemovalDelay:                   ; CODE XREF: Boss_GustheadDefeatWait+4   j  ; was: loc_40054
+Boss_GustheadBeginPostDefeatRemovalDelay:               ; CODE XREF: Boss_GustheadStopArenaAtAlignedBoundaryState+4   j  ; was: loc_40054
                 move.w  #$40,$48(a5)                    ; '@'
                 addq.w  #2,4(a5)
-Boss_GustheadDefeatWaitReturn:                          ; CODE XREF: Boss_GustheadDefeatWait+E   j  ; was: locret_4005E
+Boss_GustheadStopArenaAtAlignedBoundaryReturn:          ; CODE XREF: Boss_GustheadStopArenaAtAlignedBoundaryState+E   j  ; was: locret_4005E
                 rts
-; End of function Boss_GustheadDefeatWait
-; Finalizes defeat and cleanup
-Boss_GustheadDefeatFinalize:                            ; DATA XREF: ROM:0003F2B6   o  ; was: sub_40060
+; End of function Boss_GustheadStopArenaAtAlignedBoundaryState
+; Remove Gusthead after the post-defeat delay
+Boss_GustheadRemoveAfterDefeatDelayState:               ; DATA XREF: ROM:0003F2B6   o  ; was: sub_40060
                 subq.w  #1,$48(a5)
-                bne.s   Boss_GustheadDefeatFinalizeReturn
+                bne.s   Boss_GustheadRemoveAfterDefeatDelayReturn
                 clr.w   (a5)
                 bset    #4,2(a5)
-Boss_GustheadDefeatFinalizeReturn:                      ; CODE XREF: Boss_GustheadDefeatFinalize+4   j  ; was: locret_4006E
+Boss_GustheadRemoveAfterDefeatDelayReturn:              ; CODE XREF: Boss_GustheadRemoveAfterDefeatDelayState+4   j  ; was: locret_4006E
                 rts
-; End of function Boss_GustheadDefeatFinalize
+; End of function Boss_GustheadRemoveAfterDefeatDelayState
 ; Updates attached Gusthead segments or dispatches detached-segment motion
 Boss_GustheadSegmentMain:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_40070
                 btst    #7,(PrimaryEntityWork4A).w

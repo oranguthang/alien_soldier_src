@@ -107,14 +107,14 @@ Boss_GustheadStates:    dc.w    Boss_GustheadWaitForAssetsAndClearArena-*  ; DAT
                 dc.w    Boss_GustheadWaitForFinalBattleScrollState-*
                 dc.w    Boss_GustheadFinalBattleAttackState-*
                 dc.w    Boss_GustheadFinalBattleLoopState-*
-                dc.w    Boss_GustheadDefeatInitPhase-*
-                dc.w    Boss_GustheadDefeatSlowScroll-*
-                dc.w    Boss_GustheadDefeatFall-*
-                dc.w    Boss_GustheadDefeatStopScroll-*
-                dc.w    Boss_GustheadDefeatCheck-*
-                dc.w    Boss_GustheadDefeatExit-*
-                dc.w    Boss_GustheadDefeatWait-*
-                dc.w    Boss_GustheadDefeatFinalize-*
+                dc.w    Boss_GustheadBeginDefeatState-*
+                dc.w    Boss_GustheadDecelerateArenaDuringDefeatState-*
+                dc.w    Boss_GustheadFallAndExplodeDuringDefeatState-*
+                dc.w    Boss_GustheadAdvanceDefeatPaletteFadeState-*
+                dc.w    Boss_GustheadHoldDefeatPaletteState-*
+                dc.w    Boss_GustheadReverseDefeatPaletteAndClearObjectsState-*
+                dc.w    Boss_GustheadStopArenaAtAlignedBoundaryState-*
+                dc.w    Boss_GustheadRemoveAfterDefeatDelayState-*
 
 ; Waits for asset loading, then clears the arena for Gusthead setup
 Boss_GustheadWaitForAssetsAndClearArena:                ; DATA XREF: ROM:Boss_GustheadStates   o  ; was: sub_3F2B8
