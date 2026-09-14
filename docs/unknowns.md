@@ -7715,3 +7715,20 @@ five already audited internal loop labels are updated consistently. Six new
 records raise the registry from 13,362 to 13,368. The queue falls from 2,981 to
 2,975 and its actionable upper bound from 2,468 to 2,462; provenance and binary
 end-alias counts remain unchanged.
+
+The six pending `bosses/caterpillar.s` entries are checked against the
+two-entry wave-controller state table, the fifteen segment descriptors, the
+generated phase and vertical-scroll buffers, and the eight-state ship table.
+The main entry, its initialization and recurring wave update, the complete
+segment setup path, and ship initialization all retain their established
+Caterpillar ownership and operation names.
+
+One generated singular name is corrected. The former
+`Boss_CaterpillarInitSegment` is entered with loop counts zero and thirteen;
+each iteration advances by one `$60`-byte entity record and consumes one
+three-word descriptor. It therefore becomes
+`Boss_CaterpillarInitializeSegmentBatch`, describing the batches of one and
+fourteen records actually initialized by its two paths. Six new exact-address
+records raise the registry from 13,368 to 13,374. The queue falls from 2,975
+to 2,969 and its actionable upper bound from 2,462 to 2,456; provenance and
+the 513 classified binary-backed end aliases remain unchanged.

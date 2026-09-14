@@ -81,13 +81,13 @@ Boss_CaterpillarInitSegments:                           ; CODE XREF: Boss_Caterp
                 lea     Boss_CaterpillarSegmentDescriptors(pc),a1
                 nop
                 moveq   #0,d7
-                bsr.s   Boss_CaterpillarInitSegment
+                bsr.s   Boss_CaterpillarInitializeSegmentBatch
                 lea     $2A0(a0),a0
                 moveq   #$D,d7
 ; End of function Boss_CaterpillarInitSegments
-; Initializes single segment with sprite parameters
-Boss_CaterpillarInitSegment:                            ; CODE XREF: Boss_CaterpillarInitSegments+A   p  ; was: sub_3D16C
-                                        ; Boss_CaterpillarInitSegment+28   j
+; Initializes a caller-sized batch of consecutive segment records
+Boss_CaterpillarInitializeSegmentBatch:                 ; CODE XREF: Boss_CaterpillarInitSegments+A   p  ; was: sub_3D16C
+                                        ; Boss_CaterpillarInitializeSegmentBatch+28   j
                 lea     $60(a0),a0
                 move.w  #$C300,$E(a0)
                 clr.w   4(a0)
@@ -97,9 +97,9 @@ Boss_CaterpillarInitSegment:                            ; CODE XREF: Boss_Caterp
                 move.w  (a1)+,(a0)
                 move.w  (a1)+,$58(a0)
                 move.w  (a1)+,$5A(a0)
-                dbf     d7,Boss_CaterpillarInitSegment
+                dbf     d7,Boss_CaterpillarInitializeSegmentBatch
                 rts
-; End of function Boss_CaterpillarInitSegment
+; End of function Boss_CaterpillarInitializeSegmentBatch
 ; ---------------------------------------------------------------------------
 Boss_CaterpillarSegmentDescriptors: dc.w    $288, $3D8, $28  ; DATA XREF: Boss_CaterpillarInitSegments+2   o  ; was: word_3D19A
                 dc.w    $13C, $4D8, $48
