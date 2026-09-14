@@ -9,7 +9,7 @@ Enemy_PhasePatternController:                           ; DATA XREF: ROM:Entity_
                 clr.w   6(a5)
 Enemy_PhasePatternController_UpdateState:               ; CODE XREF: Enemy_PhasePatternController+4   j  ; was: loc_2D040
                 bsr.s   Enemy_DispatchPhasePatternState
-                bra.w   Enemy_UpdatePhasePatternAnimation
+                bra.w   Enemy_ApplyPhasePatternAnimationSelector
 ; End of function Enemy_PhasePatternController
 ; Dispatches the phase-pattern enemy's current state
 Enemy_DispatchPhasePatternState:                        ; CODE XREF: Enemy_PhasePatternController:Enemy_PhasePatternController_UpdateState   p  ; was: sub_2D046
@@ -148,7 +148,7 @@ Enemy_ResetPhasePattern:                                ; CODE XREF: Enemy_Phase
 ; End of function Enemy_ResetPhasePattern
 ; Updates the bouncing defeat-debris object and emits randomized child particles
 Enemy_UpdateBouncingDebrisSpawner:                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2D1AC
-                bsr.w   Enemy_ToggleSpriteVisibility
+                bsr.w   Enemy_UpdateBlinkVisibility
                 tst.l   $1C(a5)
                 beq.s   Enemy_UpdateBouncingDebrisSpawner_SpawnParticle
                 cmpi.l  #$80000,$1C(a5)

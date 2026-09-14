@@ -8179,3 +8179,31 @@ records raise the registry from 13,558 to 13,571. The pending queue falls from
 2,784 to 2,771 and its actionable upper bound from 2,271 to 2,258; provenance,
 the 513 classified binary-backed end aliases, and the 379-module layout remain
 unchanged. `system/memory_initialization.s` now has zero pending current names.
+
+All thirteen pending entries in `enemies/shared_enemy_helpers.s` are audited
+against their callers, object-field writes, player-delta outputs, phase-state
+transitions, and animation data. `Enemy_FacePlayer` and its right-facing branch
+survive review: `Physics_GetPlayerDelta` returns signed player-minus-enemy X in
+D1, and the helper writes horizontal-flip bit three from that sign.
+
+Several inherited names did not survive the same check. The velocity helper is
+not valid for an arbitrary signed input: its sole caller seeds leftward
+`-$18000`, after which the helper preserves or negates that value according to
+facing. The gravity helper is not a strict post-update clamp either; a value
+just below `$7C000` receives `$6000` and can overshoot for one update before
+the next call clamps it. Their new names state those narrower contracts.
+
+The former visibility toggle is deterministic rather than state-relative: it
+sets display bit 15 on even frames and clears it on odd frames for the two
+defeat-debris users. The phase-pattern tail stores common collision and setup
+fields rather than only attributes, and its four-byte constant is therefore
+kept neutral as setup field bytes. Finally, the animation helper merely applies
+a nonzero field-`$5C` selector at phase changes; it does not advance animation
+each frame. Eleven source names are corrected and two are retained with static
+evidence.
+
+Thirteen exact-address records raise the registry from 13,571 to 13,584. The
+pending queue falls from 2,771 to 2,758 and its actionable upper bound from
+2,258 to 2,245; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. The shared enemy-helper module now has
+zero pending current names.

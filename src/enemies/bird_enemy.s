@@ -421,7 +421,7 @@ Enemy_ConvertBirdToDefeatDebris:                        ; CODE XREF: Enemy_BirdC
 ; End of function Enemy_ConvertBirdToDefeatDebris
 ; Updates falling bird defeat debris, emits particles, then creates a pickup
 Enemy_UpdateBirdDefeatDebris:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2DEFE
-                bsr.w   Enemy_ToggleSpriteVisibility
+                bsr.w   Enemy_UpdateBlinkVisibility
                 addi.l  #$2000,$1C(a5)
                 tst.w   4(a5)
                 bne.s   Enemy_UpdateBirdDefeatDebris_EmitParticles

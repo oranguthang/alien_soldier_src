@@ -1,4 +1,4 @@
-; Sprite mappings and animation streams selected by Enemy_PhasePatternAnimationMappings
+; Sprite mappings and animation streams selected by Enemy_PhasePatternAnimationBySelector
 ; Selector suffixes record the exact $5C value used by the caller
 
 Enemy_PhasePatternSpriteMappingA:   dc.w    $601C, $400, $1FF0  ; DATA XREF: ROM:Enemy_PhasePatternSelector08Animation   o  ; was: word_EA86C
@@ -260,7 +260,7 @@ Enemy_PhasePatternSelector0CAnimation:  dc.w    Enemy_PhasePatternSpriteMappingD
                 dc.w    2
                 dc.w    Enemy_PhasePatternSpriteMappingA-*
                 dc.w    $FF
-Enemy_PhasePatternSelector04Animation:  dc.w    Enemy_PhasePatternSpriteMappingD-*  ; DATA XREF: ROM:Enemy_PhasePatternAnimationMappings   o  ; was: off_EADEA
+Enemy_PhasePatternSelector04Animation:  dc.w    Enemy_PhasePatternSpriteMappingD-*  ; DATA XREF: ROM:Enemy_PhasePatternAnimationBySelector   o  ; was: off_EADEA
                                         ; ROM:000EAE02   o
                 dc.w    $70
                 dc.w    Enemy_PhasePatternSpriteMappingC-*

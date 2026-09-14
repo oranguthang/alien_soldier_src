@@ -143,14 +143,14 @@ Enemy_MainStateMachine_BeginLeap:                       ; CODE XREF: Enemy_MainS
                                         ; Enemy_MainStateMachine+E8   j
                 move.l  #$FFFA8000,$1C(a5)
                 move.l  #$FFFE8000,$18(a5)
-                bsr.w   Enemy_ApplyFacingToHorizontalVelocity
+                bsr.w   Enemy_OrientLeftwardVelocityByFacing
 Enemy_MainStateMachine_SetAirborneState:                ; CODE XREF: Enemy_MainStateMachine+110   j  ; was: loc_2C844
                 move.w  #6,4(a5)
                 move.w  #$14,$5C(a5)
 ; Performs terrain collision check in enemy state machine
 Enemy_MainStateMachine_TerrainCheck:                    ; DATA XREF: ROM:0002C718   o  ; was: loc_2C850
                 jsr     (Physics_EntityExtendedWallCheck).l
-                bsr.w   Enemy_ApplyCappedGravity
+                bsr.w   Enemy_ApplyGravityTowardFallSpeedLimit
                 bmi.s   Enemy_MainStateMachine_CheckRisingTerrain
                 jsr     (Physics_CheckLowerTerrainWhenDescending).l
                 btst    #0,6(a5)
