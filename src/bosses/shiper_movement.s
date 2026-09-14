@@ -1,7 +1,7 @@
 ; Runs line scroll/screen positioning, vertical bounce and sprite anchors,
 ; horizontal motion, then motion-phase integration and rotation dispatch
 Boss_ShiperUpdateMotionPipeline:                        ; CODE XREF: Boss_ShiperUpdateAttackAndSpawnProjectile   p  ; was: sub_36A1A
-                                        ; Boss_ShiperCheckHealthTransition_WaitFade   p
+                                        ; Boss_ShiperUpdateCombatCounterRefill   p
                 bsr.w   Boss_ShiperUpdatePositionAndLineScroll
                 bsr.w   Boss_ShiperUpdateBounceAndSpriteAnchors
                 bsr.w   Boss_ShiperDispatchHorizontalMotion
@@ -354,7 +354,7 @@ Boss_ShiperPositionUpdateStoreBobbingOffset:            ; CODE XREF: Boss_Shiper
 ; End of function Boss_ShiperUpdateBounceAndSpriteAnchors
 ; Updates two bounded swing angles and their direction frames, derives both
 ; endpoints, shifts five rotation-history words, then positions five chain parts
-Boss_ShiperUpdateTentaclesAndChainParts:                ; CODE XREF: Boss_ShiperSetupState+13C   p  ; was: sub_36DD0
+Boss_ShiperUpdateTentaclesAndChainParts:                ; CODE XREF: Boss_ShiperInitializeEncounterEntities+13C   p  ; was: sub_36DD0
                 move.b  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 addq.w  #1,d0

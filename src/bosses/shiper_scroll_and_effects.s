@@ -1,7 +1,7 @@
 ; Shiper destruction debris, line-scroll shaping, and angled effect spawning
 
 ; Spawns random debris particle sprites during boss destruction
-Boss_ShiperSpawnDebris:                                 ; CODE XREF: Boss_ShiperUpdateWithFade+6   p  ; was: sub_36FEE
+Boss_ShiperSpawnDebris:                                 ; CODE XREF: Boss_ShiperUpdateDefeatEffectsAndMotion+6   p  ; was: sub_36FEE
                 move.w  #3,(PlaneAShakeLevel).w
                 jsr     (Projectile_UpdateWithImpactFrames).l
                 bne.s   Boss_ShiperSpawnDebrisReturn
@@ -27,7 +27,7 @@ Boss_ShiperSpawnDebrisReturn:                           ; CODE XREF: Boss_Shiper
                 rts
 ; End of function Boss_ShiperSpawnDebris
 ; Rebuilds Shiper's line-scroll spans and derives its screen position
-Boss_ShiperUpdatePositionAndLineScroll:                 ; CODE XREF: Boss_ShiperSetupState+140   j  ; was: sub_37048
+Boss_ShiperUpdatePositionAndLineScroll:                 ; CODE XREF: Boss_ShiperInitializeEncounterEntities+140   j  ; was: sub_37048
                                         ; Boss_ShiperUpdateMotionPipeline   p
                 movea.w #(HScrollPlaneBRow32-M68K_RAM),a0
                 moveq   #$FFFFFF80,d0

@@ -8404,3 +8404,36 @@ pending queue falls from 2,649 to 2,635 and its actionable upper bound from
 2,136 to 2,122; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. The orphaned radial-particle test module
 now has zero pending current names.
+
+The 17 pending entries in `bosses/shiper_core.s` are audited together with 18
+already registered internal names whose old movement wording depended on the
+same false model. Offsets `$70/$74/$78/$7C` are the standard X, Y, X-velocity,
+and Y-velocity fields of Shiper's embedded second 96-byte entity record. They
+are distinct from the bounce position/velocity pair at `$50/$54`. The former
+`RiseState` and `DecelerateVertical` routines actually brake negative and
+positive second-entity X velocity toward zero and then wait for the separate
+bounce velocity to become nonnegative.
+
+The two following travel-cycle states consume `$28` from BossCombatCounter at
+each bounce and check mirrored camera-relative X limits before either repeating
+their braking state or preparing the next attack cycle. When the counter turns
+negative they enter a dedicated refill pair. The alleged `HealthTransition`
+and `WaitFade` names were false: those states wait for motion phase below six,
+refill BossCombatCounter by four toward `$1E0`, and contain no health read or
+fade call. The helper formerly called `InitHoverState` merely enters that
+counter-refill sequence.
+
+The initialization states are narrowed to their observed phases: waiting for
+background rows and loading the initial assets, waiting for the asset loader
+and queuing indexed tile columns, and constructing the encounter's root,
+auxiliary, chain-part, and table-driven entity records. The attack selector now
+states its exact rotation-pattern decision and the signed second-entity travel
+motion it chooses. The defeat path is likewise separated into its rotation and
+bounce gate, randomized palette/debris motion update, countdown cleanup, and
+final fade-out; the two already accurate defeat state names are retained.
+
+Seventeen exact-address records raise the registry from 13,707 to 13,724. The
+pending queue falls from 2,635 to 2,618 and its actionable upper bound from
+2,122 to 2,105; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `bosses/shiper_core.s` now has zero
+pending current names.
