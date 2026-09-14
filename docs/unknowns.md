@@ -7945,3 +7945,22 @@ falls through into state `$24`; it is now the explicit
 the audit registry from 13,443 to 13,452. The queue falls from 2,900 to 2,891
 and its actionable upper bound from 2,387 to 2,378; provenance and the 513
 classified binary-backed end aliases remain unchanged.
+
+The ten pending entries in `enemies/formation_wave.s` are audited against the
+nine-entry motion-state table, the type-`$3B4` constructor, the per-member
+initial-state table, and the shared lifetime, collision, and firing wrapper.
+The dispatcher, member spawner, and member initializer retain their generated
+names because their instruction-level contracts support them.
+
+Seven motion names are corrected. The former `FallState` writes only negative
+X velocity and becomes `Enemy_FormationWaveBeginStraightLeftMotion`; its next
+state is the exact X-`$60` deactivation boundary. The first curved path delays
+members by their formation offset and then alternates signed vertical
+acceleration at speed magnitude `$10000`, so its two entries are explicitly a
+vertical-oscillation initializer and updater. The former `SineMotion` never
+reads a sine table: it and the alternate state select positive or negative
+vertical acceleration before sharing `Enemy_FormationWaveUpdateAcceleratedPath`.
+Ten new exact-address records raise the audit registry from 13,452 to 13,462.
+The queue falls from 2,891 to 2,881 and its actionable upper bound from 2,378
+to 2,368; provenance and the 513 classified binary-backed end aliases remain
+unchanged.
