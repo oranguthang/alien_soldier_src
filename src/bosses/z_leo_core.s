@@ -104,7 +104,7 @@ Boss_ZLeoStateTable:    dc.w    Boss_ZLeoInit-Boss_ZLeoNoOp  ; was: off_51B82
                 dc.w    Boss_ZLeoRunLaserOpeningDelay-Boss_ZLeoNoOp
 
 Boss_ZLeoNoOp:                                          ; CODE XREF: Boss_ZLeoIntroInit+E   j  ; was: nullsub_120
-                                        ; Boss_ZLeoTileUpdate+16   j
+                                        ; Boss_ZLeoStreamTileChunkForCameraY+16   j
                 rts
 ; End of function Boss_ZLeoNoOp
 
@@ -126,7 +126,7 @@ Boss_ZLeoInit:                                          ; DATA XREF: ROM:Boss_ZL
                 move.w  #$A000,d0
                 moveq   #5,d7
                 jsr     (Gfx_AdjustTileIndexRows).l
-                bsr.w   Boss_ZLeoGraphicsInit1
+                bsr.w   Boss_ZLeoInitializeStageScrollControlObject
                 bsr.w   Boss_ZLeoBuildHBlankRegisterBuffer
                 bsr.w   Boss_ZLeoLoadInitialTilesAndSetCommand81
                 move.l  #Gfx_TitleAndZLeoVRAMTransferParameters,(TilemapTransferBase).w
@@ -378,15 +378,15 @@ Boss_ZLeoBeginBattlePose:                               ; CODE XREF: Boss_ZLeoRu
                 move.w  #3,(PlaneBShakeLevel).w
                 bsr.w   Boss_ZLeoLoadPrimaryTiles
 ; End of function Boss_ZLeoRunBattleEntry
-; Run the battle pose and respond to its part-enable event
+; Run the battle pose and respond to its sprite-priority event
 Boss_ZLeoRunBattlePose:                                 ; DATA XREF: ROM:00051B98   o  ; was: sub_51FAA
                 tst.w   $58(a5)
                 bmi.s   Boss_ZLeoBeginBattleReadySequence
                 bclr    #0,$23E(a5)
                 beq.s   Boss_ZLeoRenderBattlePose
-                bsr.w   Boss_ZLeoEnableParts
+                bsr.w   Boss_ZLeoSetSixPartsHighPriority
 Boss_ZLeoRenderBattlePose:                              ; CODE XREF: Boss_ZLeoRunBattlePose+C   j  ; was: loc_51FBC
-                lea     Boss_ZLeoPartActivationPose(pc),a1
+                lea     Boss_ZLeoPriorityTransitionPose(pc),a1
                 nop
                 bra.w   Boss_ZLeoRenderCompositeFrame
 ; ---------------------------------------------------------------------------
@@ -479,7 +479,7 @@ Boss_ZLeoRunDefeatFade:                                 ; DATA XREF: ROM:00051B8
                 cmpi.w  #8,$11C(a5)
                 beq.s   Boss_ZLeoBeginDefeatWhiteout
 Boss_ZLeoUpdateDefeatFade:                              ; CODE XREF: Boss_ZLeoBeginDefeatSequence+8A   j  ; was: loc_520DE
-                bsr.w   Boss_ZLeoFadeoutPalette
+                bsr.w   Boss_ZLeoUpdateDefeatPaletteFadeAndShake
                 bsr.w   Boss_ZLeoSpawnDefeatEffect
                 lea     Boss_ZLeoDefeatPose(pc),a1
                 nop
@@ -512,7 +512,7 @@ Boss_ZLeoRunDefeatWhiteout:                             ; DATA XREF: ROM:00051B8
                 cmpi.w  #$11,$11C(a5)
                 beq.s   Boss_ZLeoFinishDefeatWhiteout
 Boss_ZLeoUpdateDefeatWhiteoutFade:                      ; CODE XREF: Boss_ZLeoRunDefeatWhiteout+8   j  ; was: loc_5214E
-                bsr.w   Boss_ZLeoFadeoutPalette
+                bsr.w   Boss_ZLeoUpdateDefeatPaletteFadeAndShake
                 rts
 ; ---------------------------------------------------------------------------
 Boss_ZLeoDefeatTileLoadDescriptor:  dc.w    $4618, $2000, $300, $405, $607  ; was: word_52154
@@ -590,7 +590,7 @@ Boss_ZLeoBeginLaserOpening:                             ; CODE XREF: Boss_ZLeoBe
                 move.w  #$38,4(a5)                      ; '8'
                 bsr.w   Boss_ZLeoLoadPrimaryTiles
                 move.w  #$80,$11C(a5)
-                bsr.w   Boss_ZLeoSpawnLaser
+                bsr.w   Boss_ZLeoSpawnExpandingOrbitLaser
                 move.w  #4,$B28(a5)
                 move.w  #4,$C48(a5)
 ; Hold the laser opening, swap phase tiles, and select its pose table
@@ -728,7 +728,7 @@ Boss_ZLeoRunScrollingLaserBurst:                        ; DATA XREF: ROM:00051BA
                 movea.w #(ThirtyThirdEntityType-M68K_RAM),a4
 Boss_ZLeoSpawnScrollingLaserPair:                       ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+54   j  ; was: loc_523C2
                 move.w  #9,$48(a4)
-                bsr.w   Projectile_ZLeoSpawnLasers
+                bsr.w   Boss_ZLeoCreateScrollingLaserPair
                 subq.w  #1,$11C(a5)
                 bmi.s   Boss_ZLeoBeginScrollAcceleration
 Boss_ZLeoLoopScrollingLaserBurstPose:                   ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+48   j  ; was: loc_523D2
@@ -762,7 +762,7 @@ Boss_ZLeoApplyScrollAcceleration:                       ; CODE XREF: Boss_ZLeoRu
                 bmi.s   Boss_ZLeoRenderScrollAcceleration
                 move.w  #$180,$35C(a5)
 Boss_ZLeoRenderScrollAcceleration:                      ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+C8   j  ; was: loc_52438
-                bsr.w   Boss_ZLeoScrollUpdate
+                bsr.w   Boss_ZLeoAdvanceVerticalScrollAndQueueRow
                 lea     Boss_ZLeoScrollingLaserBurstPose(pc),a1
                 nop
                 bra.w   Boss_ZLeoRenderCompositeFrame
@@ -775,8 +775,8 @@ Boss_ZLeoRunScrollCruise:                               ; DATA XREF: ROM:00051BB
                 subq.w  #1,$11C(a5)
                 bmi.s   Boss_ZLeoBeginScrollReversal
 Boss_ZLeoUpdateScrollingAttackFrame:                    ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose:Boss_ZLeoRenderScrollingDropAttack   j  ; was: loc_52456
-                bsr.w   Boss_ZLeoScrollUpdate
-                bsr.w   Boss_ZLeoTileUpdate
+                bsr.w   Boss_ZLeoAdvanceVerticalScrollAndQueueRow
+                bsr.w   Boss_ZLeoStreamTileChunkForCameraY
                 bra.w   Boss_ZLeoBuildHBlankRegisterBuffer
 ; ---------------------------------------------------------------------------
 Boss_ZLeoBeginScrollReversal:                           ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+EC   j  ; was: loc_52462
@@ -829,7 +829,7 @@ Boss_ZLeoUpdateScrollingDropAttack:                     ; CODE XREF: Boss_ZLeoRu
                 move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 bne.s   Boss_ZLeoRenderScrollingDropAttack
-                bsr.w   Projectile_ZLeoSpawnDropProjectile
+                bsr.w   Boss_ZLeoSpawnDropAttackPair
 Boss_ZLeoRenderScrollingDropAttack:                     ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+196   j  ; was: loc_5250E
                                         ; Boss_ZLeoRunScrollingLaserEntryPose+1A0   j
                 bra.w   Boss_ZLeoUpdateScrollingAttackFrame

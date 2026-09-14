@@ -93,7 +93,7 @@ Boss_WolfGaropaFarPlayerMapping:    dc.w    $49B4, $400, $FADF  ; DATA XREF: Bos
                 dc.w    $8808, $300, $F0FC
                 dc.w    $880C, $300, $F0FC
 ; Z-Leo intro, blade-direction, shared metasprite, and projectile mappings
-Projectile_ZLeoLaserMapping:    dc.w    $10, $B00, $ECE8  ; DATA XREF: Projectile_ZLeoSpawnLasers+1A   o  ; was: word_ED382
+Projectile_ZLeoScrollingLaserMapping:   dc.w    $10, $B00, $ECE8  ; DATA XREF: Boss_ZLeoCreateScrollingLaserPair+1A   o  ; was: word_ED382
                 dc.w    $8810, $B00, $EC00
                 dc.w    $881C, $500, $F8F8
 Boss_ZLeoIntroFarSidePartMapping:   dc.w    $A820, $200, $F4FC  ; DATA XREF: Boss_ZLeoIntroInit+154   o  ; was: word_ED394
@@ -143,8 +143,8 @@ Boss_ZLeoBladeDirectionMapping3:    dc.w    $20A4, $F00, $FCFC  ; DATA XREF: ROM
                 dc.w    $A0C7, $100, $F1F7
 Boss_ZLeoIntroOuterPartMapping: dc.w    $A82B, $700, $F0F8  ; DATA XREF: Boss_ZLeoIntroInit+144   o  ; was: word_ED478
                                         ; Boss_ZLeoIntroInit+15C   o
-Projectile_ZLeoVerticalBeamMapping: dc.w    $80C, $300, $70FC  ; DATA XREF: Projectile_ZLeoSpawnLasers+60   o  ; was: word_ED47E
-                                        ; Projectile_ZLeoSpawnDropProjectile+3C   o
+Projectile_ZLeoVerticalBeamMapping: dc.w    $80C, $300, $70FC  ; DATA XREF: Boss_ZLeoCreateScrollingLaserPair+60   o  ; was: word_ED47E
+                                        ; Boss_ZLeoSpawnDropAttackPair+3C   o
                 dc.w    $808, $300, $50FC
                 dc.w    $808, $300, $30FC
                 dc.w    $808, $300, $10FC

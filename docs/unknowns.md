@@ -1778,7 +1778,7 @@ audit records; the registry contains 5,416 unique entries.
 
 State `$2A` restarts the same pose whenever it reaches `$FFFE`. Each pass
 emits event `$8001`, selects one of two anchor objects, and calls
-`Projectile_ZLeoSpawnLasers`, which creates two laser projectiles. Although
+`Boss_ZLeoCreateScrollingLaserPair`, which creates two laser objects. Although
 the counter begins at three, it is decremented before the signed-negative
 test, so the transition occurs after four events. The fourth event enters
 state `$2C`, enables the scrolling flag, clears its acceleration field, and
@@ -1842,7 +1842,7 @@ The Z-Leo tile-stream pass reduced the address-derived unknown count from
 `$0526E2-$052765` now have exact static audit records, bringing the registry
 to 5,459 entries. The rendering-module backlog fell from 40 to 29.
 
-`Boss_ZLeoTileUpdate` compares the signed stage scroll coordinate with an
+`Boss_ZLeoStreamTileChunkForCameraY` compares the signed stage scroll coordinate with an
 ordered threshold table and moves a stream index in either direction. Moving
 forward selects one of six VRAM destinations and copies a corresponding
 six-byte tile-source-index row into a generated one-row descriptor. Moving
@@ -1903,9 +1903,10 @@ The first Z-Leo projectile pass reduced the address-derived unknown count from
 `$052EFE-$053059` now have exact static audit records, bringing the registry
 to 5,499 entries and reducing the projectile backlog from 31 to 25.
 
-`Boss_ZLeoScrollUpdate` has separate positive- and negative-rate paths that
-integrate into `FFA90C`, normalize around their respective wrap boundaries,
-then pass a four-pair lookup table to the shared coordinate helper. The orb
+`Boss_ZLeoAdvanceVerticalScrollAndQueueRow` has separate positive- and
+negative-rate paths that integrate into `SecondaryCameraYPos`, normalize around
+their respective wrap boundaries, then pass a four-longword tilemap descriptor
+to the shared queued-row builder. The orb
 spawner gates itself to every fourth frame, selects one of two initial field
 values, allocates two projectile slots, and uses a segment angle to select one
 of eight signed spawn-offset pairs. The convergence label is deliberately
@@ -7964,3 +7965,55 @@ Ten new exact-address records raise the audit registry from 13,452 to 13,462.
 The queue falls from 2,891 to 2,881 and its actionable upper bound from 2,378
 to 2,368; provenance and the 513 classified binary-backed end aliases remain
 unchanged.
+
+The ten remaining current-name entries in `projectiles/z_leo.s` are checked
+against their four entity-table slots, all direct boss callers, allocation
+paths, object-type writes, sprite mappings, velocity writes, and lifetime
+transitions. The orb entrypoints retain their established names. Seven broad
+or incorrect Sonnet names are replaced with the observed object roles:
+expanding-orbit laser creation and update, scrolling-laser-pair creation, the
+upward-accelerating vertical beam, and the paired drop-attack spawner and beam.
+The former `LaserFall` description was directionally false because its only
+velocity update subtracts `$80000` from vertical velocity.
+
+The adjacent scroll helper is also corrected. Its four longwords are a
+descriptor consumed by `Tilemap_QueueRowFromDescriptor`, not a coordinate
+lookup/interpolation table. The no-op at `$052EE2` is entity type `$40C`,
+created by `Boss_ZLeoInitializeStageScrollControlObject`; because that address also closes the
+preceding binary pose data, the end label is recorded as an alias rather than
+a duplicate address record.
+
+This evidence exposes a natural module boundary. The no-op, scroll integrator,
+and private tilemap-row descriptor at `$052EE2-$052F31` move from the projectile
+module to `bosses/z_leo_rendering.s`. The rendering module is now 722 lines and
+ends at `$052F31`; `projectiles/z_leo.s` begins with the orb spawner at
+`$052F32` and is 400 lines. The 377-module count is unchanged. Nine new
+exact-address records plus the no-op alias raise the registry from 13,462 to
+13,471. The queue falls from 2,881 to 2,871 and its actionable upper bound from
+2,368 to 2,358; provenance and the 513 classified binary-backed end aliases
+remain unchanged. The Z-Leo projectile module now has zero pending current
+names.
+
+The twelve pending top-level entrypoints in `bosses/z_leo_rendering.s` are
+audited against every caller, the object records they mutate, the pose
+interpreter, and the common tilemap and animation primitives. This closes the
+combat-side Z-Leo source; only the separate credits sequence still has Z-Leo-
+prefixed entries in the global queue.
+
+Several inherited visual descriptions were not supported by the writes. The
+former part enable/disable helpers only set or clear word bit `$8000` at sprite
+attribute offset `$0E` on six records, so they are named for high priority; the
+clear operation is explicitly unreferenced. The former wing and head helpers
+only prove three rows and two columns of three sprite objects, and now use
+neutral geometry names. The no-op type-`$40C` object is initialized in
+`Entity57`; its coordinates and velocity feed the Z-Leo HBlank and defeat-
+scroll paths, so both initializer and handler are named as stage-scroll
+control rather than generic graphics.
+
+The remaining corrections name camera-threshold tile streaming, four-
+direction blade-frame selection, defeat palette/shake application, the pose
+interpreter, and its fourteen-channel delta calculator directly from their
+operations. Twelve new exact-address records raise the registry from 13,471
+to 13,483. The queue falls from 2,871 to 2,859 and its actionable upper bound
+from 2,358 to 2,346; provenance and the 513 classified binary-backed end
+aliases remain unchanged.

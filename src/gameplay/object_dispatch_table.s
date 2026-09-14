@@ -258,7 +258,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Proj
                 dc.l    Weapon_ProcessProjectileHit
                 dc.l    Projectile_MissirayProximityShotMain
                 dc.l    Projectile_WolfGaropaOrbShot
-                dc.l    Entity_EmptyState8
+                dc.l    Boss_ZLeoStageScrollControlNoOp
                 dc.l    Entity_ValkirieProjectileDispatcher
                 dc.l    Projectile_SharpssteelBladeShotMain
                 dc.l    Effect_WolfGaropaBoundaryMain
@@ -282,10 +282,10 @@ Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Proj
                 dc.l    Cutscene_XiTigerBossEntranceController
                 dc.l    CreditsGlyph_Dispatch
                 dc.l    Projectile_ZLeoOrbMain
-                dc.l    Projectile_ZLeoLaserMain
-                dc.l    Projectile_ZLeoLaserFall
-                dc.l    Projectile_ZLeoSpawnDropProjectile
-                dc.l    Projectile_ZLeoDropProjectileMain
+                dc.l    Projectile_ZLeoExpandingOrbitLaserMain
+                dc.l    Projectile_ZLeoVerticalBeamMain
+                dc.l    Boss_ZLeoSpawnDropAttackPair
+                dc.l    Projectile_ZLeoDropAttackBeamMain
                 dc.l    Entity_UpdateValkirieAuxiliaryGroup
                 dc.l    Projectile_UpdateValkirieBullet
                 dc.l    Boss_Epsilon1IntroController

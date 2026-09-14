@@ -44,7 +44,7 @@ Projectile_UpdateValkirieBulletReturn:                  ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_UpdateValkirieBullet
 ; Install the fixed tile, size, and mapping fields used by Z-Leo's falling shot
-Projectile_InitZLeoDropGraphics:                        ; CODE XREF: Projectile_ZLeoSpawnDropProjectile+84   p  ; was: sub_2A0BE
+Projectile_InitZLeoDropGraphics:                        ; CODE XREF: Boss_ZLeoSpawnDropAttackPair+84   p  ; was: sub_2A0BE
                 move.w  #$C6B4,$E(a0)
                 move.w  #$900,8(a0)
                 move.w  #$F4F8,$A(a0)

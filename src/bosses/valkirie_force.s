@@ -1,3 +1,4 @@
+; Main dispatcher for Valkirie Force boss using state-based jumptable
 Boss_ValkirieForceMain:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_53500
                 tst.w   4(a5)
                 beq.w   Boss_ValkirieForceDispatchState

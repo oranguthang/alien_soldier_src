@@ -679,7 +679,7 @@ SharedCombatSpriteAnimation31:  dc.w    SharedCombatSpriteFrame49-*  ; DATA XREF
                 dc.w    SharedCombatSpriteFrame59-*
                 dc.w    $FF
 SharedCombatSpriteAnimation32:  dc.w    SharedCombatSpriteFrame01-*  ; DATA XREF: Projectile_FragmentConvertToImpact+1A   o  ; was: off_E9850
-                                        ; Projectile_ZLeoLaserMain+120   o
+                                        ; Projectile_ZLeoExpandingOrbitLaserMain+120   o
                 dc.w    1
                 dc.w    SharedCombatSpriteFrame00-*
                 dc.w    1
