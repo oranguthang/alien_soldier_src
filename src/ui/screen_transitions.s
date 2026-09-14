@@ -94,7 +94,7 @@ FrontendTitleTransitionStateOffsets:    dc.w    Frontend_EraseTitleTransitionPat
                 dc.w    Frontend_EraseTitleTransitionPattern-*
                 dc.w    Frontend_WaitAfterSecondTitlePatternErase-*
                 dc.w    Frontend_RevealFinalOpeningPattern-*
-                dc.w    Sys_TransitionToStoryScreen-*
+                dc.w    Frontend_EnterStoryScreen-*
 
 ; Erases the current title-transition sprite-grid pattern
 Frontend_EraseTitleTransitionPattern:                   ; was: sub_1D29A

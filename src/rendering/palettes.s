@@ -36,8 +36,8 @@ ContinueScreenPaletteOffsetLists:           dc.w    $EE, $F4, $FA, $100, 0, $EE,
                                         ; DATA XREF: Continue_InitializeScreen+40   o
 ResultsScreenPaletteOffsetList: dc.w    $EE, $F4, $FA, $100, 0  ; was: word_B96E
                                         ; DATA XREF: Results_InitializeFinalSummary+6C   o
-StageTransitionPaletteOffsetLists:  dc.w    $26A, 0, $2F6, $336, 0  ; was: word_B978
-                                        ; DATA XREF: Stage_InitializeTransition+16   o
+FrontendTransitionPaletteOffsetLists:   dc.w    $26A, 0, $2F6, $336, 0  ; was: word_B978
+                                        ; DATA XREF: Frontend_InitializeTransitionScene+16   o
 CreditsAndPlanetPaletteOffsetList:  dc.w    $B14, $B54, 0  ; DATA XREF: EndingSequence_Initialize+5E   o  ; was: word_B982
                                         ; EndingPlanet_Initialize+20   o
 EarlyStagePaletteOffsetList:    dc.w    $34C, 0         ; DATA XREF: ROM:Stage1ConfigRecord   o  ; was: word_B988

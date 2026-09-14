@@ -52,20 +52,20 @@ Boss_AntroidRamAttackRebound:                           ; CODE XREF: Boss_Antroi
                 move.l  #$FFFE0000,$1C(a5)
                 rts
 ; End of function Boss_AntroidRamAttack
-; Boss death state with palette fade and timer progression
-Boss_AntroidDeathFadeState:                             ; DATA XREF: ROM:0003752E   o  ; was: sub_37E00
+; Advances Antroid's defeat fade before entering the final delay state
+Boss_AntroidDefeatFadeState:                            ; DATA XREF: ROM:0003752E   o  ; was: sub_37E00
                 jsr     (Gfx_UpdatePaletteFade).l
                 addq.w  #1,$11C(a5)
                 move.w  $11C(a5),d0
                 cmpi.w  #$A0,d0
-                bpl.s   Boss_AntroidEnterDefeatedState
+                bpl.s   Boss_AntroidEnterDefeatDelayState
                 subi.w  #$90,d0
-                bmi.s   Boss_AntroidDeathFadeUpdateEffects
-                bsr.w   Boss_AntroidSetDeathFadeParams
-Boss_AntroidDeathFadeUpdateEffects:                     ; CODE XREF: Boss_AntroidDeathFadeState+18   j  ; was: loc_37E1E
+                bmi.s   Boss_AntroidDefeatFadeUpdateEffects
+                bsr.w   Boss_AntroidSetDefeatFadeParameters
+Boss_AntroidDefeatFadeUpdateEffects:                    ; CODE XREF: Boss_AntroidDefeatFadeState+18   j  ; was: loc_37E1E
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #2,(PlaneBShakeLevel).w
-; End of function Boss_AntroidDeathFadeState
+; End of function Boss_AntroidDefeatFadeState
 ; Updates the ram-attack pose, debris, and alternating sprite flip
 Boss_AntroidUpdateRamAttackPose:                        ; CODE XREF: Boss_AntroidRamAttack+18   p  ; was: sub_37E2A
                 bsr.w   Boss_AntroidSpawnRamDebris
@@ -79,25 +79,25 @@ Boss_AntroidUpdateRamAttackPose:                        ; CODE XREF: Boss_Antroi
                 eori.w  #$800,$CE(a5)
                 rts
 ; End of function Boss_AntroidUpdateRamAttackPose
-; Transitions boss to defeated state clearing objects
-Boss_AntroidEnterDefeatedState:                         ; CODE XREF: Boss_AntroidDeathFadeState+12   j  ; was: sub_37E54
+; Enters Antroid's final defeat delay and clears unrelated objects
+Boss_AntroidEnterDefeatDelayState:                      ; CODE XREF: Boss_AntroidDefeatFadeState+12   j  ; was: sub_37E54
                 addq.w  #2,4(a5)
                 clr.w   2(a5)
                 move.w  #$14,6(a5)
                 moveq   #$30,d0                         ; '0'
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
-; Death sequence timer with fade effect
-Boss_AntroidDeathTimer:                                 ; DATA XREF: ROM:00037530   o  ; was: sub_37E6C
+; Counts down Antroid's final defeat delay while updating the fade
+Boss_AntroidDefeatDelayState:                           ; DATA XREF: ROM:00037530   o  ; was: sub_37E6C
                 subq.w  #1,6(a5)
                 move.w  6(a5),d0
-                bpl.s   Boss_AntroidDeathTimerUpdateFade
+                bpl.s   Boss_AntroidDefeatDelayUpdateFade
                 bset    #4,2(a5)
                 rts
 ; ---------------------------------------------------------------------------
-Boss_AntroidDeathTimerUpdateFade:                       ; CODE XREF: Boss_AntroidDeathTimer+8   j  ; was: loc_37E7E
+Boss_AntroidDefeatDelayUpdateFade:                      ; CODE XREF: Boss_AntroidDefeatDelayState+8   j  ; was: loc_37E7E
                 cmpi.w  #$10,d0
-                bmi.w   Boss_AntroidSetDeathFadeParams
+                bmi.w   Boss_AntroidSetDefeatFadeParameters
                 moveq   #$10,d0
-                bra.w   Boss_AntroidSetDeathFadeParams
-; End of function Boss_AntroidDeathTimer
+                bra.w   Boss_AntroidSetDefeatFadeParameters
+; End of function Boss_AntroidDefeatDelayState

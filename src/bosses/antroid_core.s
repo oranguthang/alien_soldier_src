@@ -42,8 +42,8 @@ Boss_AntroidStateHandlers:  dc.w    Boss_AntroidInitState-Boss_AntroidInitState 
                 dc.w    Boss_AntroidPhaseGateState-Boss_AntroidInitState
                 dc.w    Boss_AntroidWaitForStageReady-Boss_AntroidInitState
                 dc.w    Boss_AntroidRamAttack-Boss_AntroidInitState
-                dc.w    Boss_AntroidDeathFadeState-Boss_AntroidInitState
-                dc.w    Boss_AntroidDeathTimer-Boss_AntroidInitState
+                dc.w    Boss_AntroidDefeatFadeState-Boss_AntroidInitState
+                dc.w    Boss_AntroidDefeatDelayState-Boss_AntroidInitState
                 dc.w    Boss_AntroidIdleState-Boss_AntroidInitState
                 dc.w    Boss_AntroidJumpSlamAttack-Boss_AntroidInitState
                 dc.w    Boss_AntroidJumpSlamApplyGravity-Boss_AntroidInitState

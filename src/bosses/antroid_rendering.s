@@ -84,11 +84,11 @@ Boss_AntroidSpawnRamDebrisReturn:                       ; CODE XREF: Boss_Antroi
                 rts
 ; End of function Boss_AntroidSpawnRamDebris
 ; Attributes: thunk
-; Applies Antroid's death-sequence fade value in d0
-Boss_AntroidSetDeathFadeParams:                         ; CODE XREF: Boss_AntroidDeathFadeState+1A   p  ; was: sub_37F78
-                                        ; Boss_AntroidDeathTimer+16   j
+; Applies Antroid's defeat-sequence fade value in d0
+Boss_AntroidSetDefeatFadeParameters:                    ; CODE XREF: Boss_AntroidDefeatFadeState+1A   p  ; was: sub_37F78
+                                        ; Boss_AntroidDefeatDelayState+16   j
                 jmp     (Gfx_SetFadeParams).l
-; End of function Boss_AntroidSetDeathFadeParams
+; End of function Boss_AntroidSetDefeatFadeParameters
 ; Faces Antroid toward the player and updates its parts when facing changes
 Boss_AntroidFacePlayer:                                 ; CODE XREF: Boss_AntroidReturnToNeutral+114   j  ; was: sub_37F7E
                                         ; sub_379A0   p

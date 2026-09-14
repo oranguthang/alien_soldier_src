@@ -72,8 +72,8 @@ FrontendOpeningStateOffsets:    dc.w    Frontend_InitializeSegaScreen-Frontend_I
                 dc.w    Frontend_DispatchSegaScreenTransition-Frontend_InitializeSegaScreen
                 dc.w    Frontend_InitializeTitleTransition-Frontend_InitializeSegaScreen
                 dc.w    Frontend_DispatchTitleTransition-Frontend_InitializeSegaScreen
-                dc.w    Stage_InitializeTransition-Frontend_InitializeSegaScreen
-                dc.w    Stage_SetupScrollPlanesThunk-Frontend_InitializeSegaScreen
+                dc.w    Frontend_InitializeTransitionScene-Frontend_InitializeSegaScreen
+                dc.w    Frontend_PrepareTransitionScrollPlanes-Frontend_InitializeSegaScreen
                 dc.w    Cutscene_InitializeScene-Frontend_InitializeSegaScreen
                 dc.w    Cutscene_UpdateFrameSelectionFromInput-Frontend_InitializeSegaScreen
 

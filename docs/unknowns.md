@@ -7600,3 +7600,23 @@ Fourteen new exact-address records plus one same-address alias raise the audit
 registry from 13,313 to 13,327. The reproducible semantic-review queue falls
 from 3,031 to 3,016 and its actionable upper bound from 2,518 to 2,503;
 provenance remains 16,051.
+
+The four-name-module batch audits all eight pending definitions in Antroid's
+ram/defeat module and the frontend scene controller. Antroid's ram handler is
+confirmed from state-table ownership, motion, landing, rebound, and pose calls.
+The following three states and their already audited helper labels consistently
+use `DefeatFade` and `DefeatDelay`: the code advances from the ram state into a
+fade counter, then installs a final delay and sets entity flag bit four after
+that delay expires. This replaces six inherited `Death*` descriptions without
+claiming a stronger outcome than the state machine proves.
+
+`FrontendOpeningStateOffsets` disproves the old `Stage_*` and `Sys_*` ownership
+assigned to three scene-control entries. They now identify the frontend
+transition-scene initializer, its scroll-plane preparation state, and the final
+entry into game mode `$24` (`StoryScreen_Initialize`). The two asset and palette
+lists used exclusively by that initializer receive the same frontend ownership;
+the subsequent projection-cutscene initializer is confirmed unchanged.
+
+The eight new exact-address records raise the audit registry from 13,327 to
+13,335. The reproducible semantic-review queue falls from 3,016 to 3,008 and
+its actionable upper bound from 2,503 to 2,495; provenance remains 16,051.
