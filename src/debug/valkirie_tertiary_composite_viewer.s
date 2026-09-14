@@ -109,7 +109,7 @@ Debug_ValkirieTertiaryViewerTickPoseInterpolation:      ; CODE XREF: Debug_Valki
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$12,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Debug_ValkirieTertiaryViewerStorePoseComponents:        ; CODE XREF: Debug_ValkirieTertiaryViewerAdvancePoseScript+E   j  ; was: loc_51974
                                         ; Debug_ValkirieTertiaryViewerAdvancePoseScript+76   j
                 move.w  #$1FE,d7
@@ -211,14 +211,14 @@ Debug_ValkirieTertiaryViewerBeginPoseInterpolation:     ; CODE XREF: Debug_Valki
                 moveq   #$12,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Debug_ValkirieTertiaryViewerBeginPoseInterpolation
-; Load interpolation durations for the eighteen tertiary-viewer components
-Debug_ValkirieTertiaryViewerLoadPoseDurations:          ; was: sub_51A9C
+; Initialize the tertiary viewer's nineteen pose channels from bytes at a0
+Debug_ValkirieTertiaryViewerInitializePoseChannels:     ; was: sub_51A9C
                 moveq   #$12,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
-                jmp     Anim_LoadFrameDelays
-; End of function Debug_ValkirieTertiaryViewerLoadPoseDurations
+                jmp     Anim_InitializePoseChannelsFromBytes
+; End of function Debug_ValkirieTertiaryViewerInitializePoseChannels
 ; ---------------------------------------------------------------------------
 Debug_ValkirieTertiaryViewerPoseScript: dc.b    $20, $20, 0, 0, $20, $20, 0, $12, $FF, $FF  ; was: byte_51AA8
                                         ; DATA XREF: Debug_ValkirieTertiaryViewerUpdate+1E   o

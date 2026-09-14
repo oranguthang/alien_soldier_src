@@ -41,7 +41,7 @@ Boss_ValkirieAlternateInit:                             ; DATA XREF: Boss_Valkir
                 movea.l #Boss_ValkirieAlternateMetaspritePartDescriptors,a0
                 movea.l #Boss_ValkirieAlternateMetaspriteInitialAngles,a1
                 movea.l #Boss_ValkirieAlternateMetaspritePartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 move.l  #Boss_ValkirieAlternateMetaspritePoseAngles,$2FC(a5)
                 move.l  #Boss_ValkirieAlternatePoseKeyframeData,$35C(a5)
                 move.w  #$440,(a5)
@@ -303,7 +303,7 @@ Boss_ValkirieAlternateAdvancePoseInterpolation:         ; CODE XREF: Boss_Valkir
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$B,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Boss_ValkirieAlternatePreparePartAngleProjection:       ; CODE XREF: Boss_ValkirieAlternateUpdatePose+E   j  ; was: loc_59388
                                         ; Boss_ValkirieAlternateUpdatePose+34   j
                 move.w  #$1FE,d7
@@ -316,14 +316,14 @@ Boss_ValkirieAlternateCalculatePoseDeltas:              ; CODE XREF: Boss_Valkir
                 moveq   #$B,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Boss_ValkirieAlternateCalculatePoseDeltas
-; Load frame-delay values for the alternate 12-channel pose buffer
-Boss_ValkirieAlternateLoadFrameDelays:
+; Initialize the alternate twelve-channel pose buffer from bytes at a0
+Boss_ValkirieAlternateInitializePoseChannels:
                 moveq   #$B,d7                          ; was: sub_593A6
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
-                jmp     Anim_LoadFrameDelays
-; End of function Boss_ValkirieAlternateLoadFrameDelays
+                jmp     Anim_InitializePoseChannelsFromBytes
+; End of function Boss_ValkirieAlternateInitializePoseChannels
 ; ---------------------------------------------------------------------------
 Boss_ValkirieAlternateStatePose:    dc.w    $2020, 0, $2020, $C, $FFFF  ; was: word_593B2
                                         ; DATA XREF: Boss_ValkirieAlternateRenderState2   o

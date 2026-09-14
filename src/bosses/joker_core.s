@@ -78,7 +78,7 @@ Boss_JokerInitializeMetasprite:                         ; CODE XREF: Boss_JokerS
                 movea.l #Boss_JokerMetaspriteDescriptors,a0
                 movea.l #Boss_JokerPartRadii,a1
                 movea.l #Boss_JokerPartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 movea.w #(TwentiethEntityType-M68K_RAM),a0
                 moveq   #0,d0
                 moveq   #3,d7

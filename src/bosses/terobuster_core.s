@@ -79,7 +79,7 @@ Boss_TerobusterSetup:                                   ; DATA XREF: ROM:0003857
                 movea.l #Boss_TerobusterMetaspriteDescriptors,a0
                 movea.l #Boss_TerobusterPartRadii,a1
                 movea.l #Boss_TerobusterPartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 move.w  #$B4,(a5)
                 clr.w   $54(a5)
                 clr.w   $56(a5)

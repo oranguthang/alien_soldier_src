@@ -55,7 +55,7 @@ Boss_InitArtemisState0:                                 ; DATA XREF: Boss_Update
                 movea.l #Boss_ArtemisMetaspritePartDescriptors,a0
                 movea.l #Boss_ArtemisMetaspriteInitialAngles,a1
                 movea.l #Boss_ArtemisMetaspritePartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 move.l  #Boss_ArtemisMetaspritePoseAngles,$2FC(a5)
                 move.l  #Artemis_PoseFrameData,$35C(a5)
                 move.w  #$438,(a5)

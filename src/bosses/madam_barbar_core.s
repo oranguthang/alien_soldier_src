@@ -69,7 +69,7 @@ Boss_MadamBarbarSetupState:                             ; DATA XREF: ROM:0003A4E
                 movea.l #Boss_MadamBarbarMetaspriteDescriptors,a0
                 movea.l #Boss_MadamBarbarPartRadii,a1
                 movea.l #Boss_MadamBarbarPartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 bset    #0,$962(a5)
                 bset    #0,$9C2(a5)
                 bset    #0,$A22(a5)
@@ -490,7 +490,7 @@ Boss_MadamBarbarOffsetPositiveXNegativeYGroupB:         ; CODE XREF: Boss_MadamB
                 dbf     d7,Boss_MadamBarbarOffsetPositiveXNegativeYGroupB
                 movea.w a5,a3
                 moveq   #$1C,d7
-                jsr     (Sprite_UpdateLinkedPositions).l
+                jsr     (Sprite_ApplyAnchorOffsetToLinkedParts).l
                 bsr.w   Boss_MadamBarbarPublishScreenPosition
 ; End of function Boss_MadamBarbarUpdateParts
 ; Applies the frame-indexed wobble offsets to the root object
@@ -667,7 +667,7 @@ Boss_MadamBarbarAdvancePoseInterpolation:               ; CODE XREF: Boss_MadamB
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$B,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Boss_MadamBarbarPublishPoseAngles:                      ; CODE XREF: Boss_MadamBarbarUpdatePose+E   j  ; was: loc_3AC7A
                                         ; Boss_MadamBarbarUpdatePose+84   j
                 move.w  #$1FE,d7
@@ -772,13 +772,13 @@ Boss_MadamBarbarCalculatePoseDeltas:                    ; CODE XREF: Boss_MadamB
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #$B,d7
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Boss_MadamBarbarCalculatePoseDeltas
 ; Initializes the 12 fixed-point pose channels from the first target record
 Boss_MadamBarbarInitializePoseChannels:                 ; CODE XREF: Boss_MadamBarbarSetupState+D0   p  ; was: sub_3ADA4
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 moveq   #$B,d7
-                jmp     Anim_LoadFrameDelays
+                jmp     Anim_InitializePoseChannelsFromBytes
 ; End of function Boss_MadamBarbarInitializePoseChannels
 ; Spawns debris projectiles with random velocity and trajectory
 Boss_MadamBarbarSpawnDebris:                            ; CODE XREF: Boss_MadamBarbarSelectAttackState:Boss_MadamBarbarPlayerLeftSidePoseState   p  ; was: sub_3ADB0

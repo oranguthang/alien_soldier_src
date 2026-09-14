@@ -32,7 +32,7 @@ Debug_ValkirieViewerInitialize:                         ; DATA XREF: ROM:Debug_V
                 movea.l #Boss_ValkirieMetaspriteDescriptors,a0
                 movea.l #Boss_ValkiriePartRadii,a1
                 movea.l #Boss_ValkiriePartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 move.w  #$3EC,(a5)
                 move.w  #$CC00,2(a5)
                 clr.w   6(a5)
@@ -157,7 +157,7 @@ Debug_ValkirieViewerStoreLowerPartPairPosition:         ; CODE XREF: Debug_Valki
                 move.w  d0,$8E4(a5)
                 move.w  d0,$944(a5)
                 moveq   #$18,d7
-                jsr     (Sprite_UpdateLinkedPositions).l
+                jsr     (Sprite_ApplyAnchorOffsetToLinkedParts).l
                 bclr    #4,$54E(a5)
                 bclr    #4,$6CE(a5)
                 moveq   #6,d5
@@ -342,7 +342,7 @@ Debug_ValkirieViewerTickPoseInterpolation:              ; CODE XREF: Debug_Valki
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$10,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Debug_ValkirieViewerStorePoseComponents:                ; CODE XREF: Debug_ValkirieViewerAdvancePoseScript+E   j  ; was: loc_51442
                                         ; Debug_ValkirieViewerAdvancePoseScript+76   j
                 move.w  #$1FE,d7
@@ -420,14 +420,14 @@ Debug_ValkirieViewerBeginPoseInterpolation:             ; CODE XREF: Debug_Valki
                 moveq   #$10,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Debug_ValkirieViewerBeginPoseInterpolation
-; Load interpolation durations for the sixteen viewer pose components
-Debug_ValkirieViewerLoadPoseDurations:                  ; was: sub_5152A
+; Initialize the viewer's seventeen fixed-point pose channels from bytes at a0
+Debug_ValkirieViewerInitializePoseChannels:             ; was: sub_5152A
                 moveq   #$10,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
-                jmp     Anim_LoadFrameDelays
-; End of function Debug_ValkirieViewerLoadPoseDurations
+                jmp     Anim_InitializePoseChannelsFromBytes
+; End of function Debug_ValkirieViewerInitializePoseChannels
 ; ---------------------------------------------------------------------------
 Debug_ValkirieViewerPoseBaseValues: dc.b    $40, $C0, $80, $80, $A0, $80, $A0, $80, $80, $A0, $80, 0, $A0, $80, $80, $80  ; was: byte_51536
                                         ; DATA XREF: Debug_ValkirieViewerBeginPoseInterpolation   o

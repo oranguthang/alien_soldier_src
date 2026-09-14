@@ -38,7 +38,7 @@ Boss_TerobusterAdvancePoseInterpolation:                ; CODE XREF: Boss_Terobu
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #5,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 ; End of function Boss_TerobusterInterpolateAnimation
 ; Applies animation angles to 9 boss body parts
 Boss_TerobusterApplyAngles:                             ; CODE XREF: Boss_TerobusterDecisionState:Boss_TerobusterDecisionAnimate   p  ; was: sub_3923E
@@ -90,14 +90,14 @@ Boss_TerobusterCalculateDeltas:                         ; CODE XREF: Boss_Terobu
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #5,d7
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Boss_TerobusterCalculateDeltas
 ; Expands six packed pose-channel bytes into the interpolation buffer
 Boss_TerobusterInitializePoseChannels:                  ; CODE XREF: Boss_TerobusterSetup+120   p  ; was: sub_392C6
                                         ; Boss_TerobusterIntro+20   p
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 moveq   #5,d7
-                jmp     Anim_LoadFrameDelays
+                jmp     Anim_InitializePoseChannelsFromBytes
 ; End of function Boss_TerobusterInitializePoseChannels
 ; ---------------------------------------------------------------------------
 Boss_TerobusterFallingRockPoseCommands:         dc.w    4, 0, $FFFF  ; DATA XREF: Boss_TerobusterDecisionState:Boss_TerobusterSpawnFallingRocks   o  ; was: word_392D2

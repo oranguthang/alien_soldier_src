@@ -72,12 +72,12 @@ Boss_AntroidInitPhase:                                  ; DATA XREF: ROM:0003751
                 movea.l #Boss_AntroidPrimaryMetaspriteDescriptors,a0
                 movea.l #Boss_AntroidPrimaryPartRadii,a1
                 movea.l #Boss_AntroidPrimaryPartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 moveq   #$A,d7
                 movea.l #Boss_AntroidSecondaryMetaspriteDescriptors,a0
                 movea.l #Boss_AntroidSecondaryPartRadii,a1
                 movea.l #Boss_AntroidSecondaryPartLinks,a2
-                jsr     (Sprite_InitAdditionalMetaspriteGroup).l
+                jsr     (Sprite_InitializeAdditionalLinkedMetaspriteParts).l
                 move.w  #$30,(a5)                       ; '0'
                 move.w  #$8D00,2(a5)
                 move.w  #$C100,$962(a5)

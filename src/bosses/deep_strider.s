@@ -69,7 +69,7 @@ Boss_DeepStriderIntroRise:                              ; DATA XREF: ROM:0003E5C
                 movea.l #Boss_DeepStriderMetaspriteDescriptors,a0
                 movea.l #Boss_DeepStriderPartRadii,a1
                 movea.l #Boss_DeepStriderPartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 move.w  #$19C,(a5)
                 bset    #0,$2A2(a5)
                 move.w  #$D00,$4E2(a5)

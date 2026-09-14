@@ -75,7 +75,7 @@ Boss_BackStringerInitializeState:                       ; DATA XREF: ROM:0004471
                 movea.l #Boss_BackStringerMetaspriteDescriptors,a0
                 movea.l #Boss_BackStringerPartRadii,a1
                 movea.l #Boss_BackStringerPartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 move.w  #$314,(a5)
                 move.w  #$8D00,2(a5)
                 clr.w   6(a5)

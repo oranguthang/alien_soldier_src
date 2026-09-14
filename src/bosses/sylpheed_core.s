@@ -62,7 +62,7 @@ Boss_InitSylpheed:                                      ; DATA XREF: Boss_Update
                 movea.l #Boss_SylpheedMetaspritePartDescriptors,a0
                 movea.l #Boss_SylpheedMetaspriteInitialAngles,a1
                 movea.l #Boss_SylpheedMetaspritePartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 move.l  #Boss_SylpheedMetaspritePoseAngles,$2FC(a5)
                 move.l  #Sylpheed_PoseFrameData,$35C(a5)
                 move.w  #$444,(a5)

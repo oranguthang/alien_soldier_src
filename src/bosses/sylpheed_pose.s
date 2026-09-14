@@ -199,7 +199,7 @@ Boss_AdvanceSylpheedPoseInterpolation:                  ; CODE XREF: Boss_Update
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$B,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Boss_PrepareSylpheedPoseRender:                         ; CODE XREF: Boss_UpdateSylpheedPoseScript+E   j  ; was: loc_59BFC
                                         ; Boss_UpdateSylpheedPoseScript+34   j
                 move.w  #$1FE,d7
@@ -212,14 +212,14 @@ Boss_CalculateSylpheedPoseInterpolation:                ; CODE XREF: Boss_LoadSy
                 moveq   #$B,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Boss_CalculateSylpheedPoseInterpolation
-; Load frame-delay values for the 12-channel Sylpheed pose buffer
-Boss_LoadSylpheedPoseFrameDelays:                       ; was: sub_59C1A
+; Initialize the twelve-channel Sylpheed pose buffer from bytes at a0
+Boss_SylpheedInitializePoseChannels:                    ; was: sub_59C1A
                 moveq   #$B,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
-                jmp     Anim_LoadFrameDelays
-; End of function Boss_LoadSylpheedPoseFrameDelays
+                jmp     Anim_InitializePoseChannelsFromBytes
+; End of function Boss_SylpheedInitializePoseChannels
 ; ---------------------------------------------------------------------------
 Sylpheed_InteractiveState2PoseScript:   dc.w    $2020, $18, $2020, $24, $FFFF  ; was: word_59C26
                                         ; DATA XREF: Boss_RenderSylpheedInteractiveState2   o

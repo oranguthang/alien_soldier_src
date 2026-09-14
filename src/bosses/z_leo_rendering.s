@@ -514,7 +514,7 @@ Boss_ZLeoAdvancePoseInterpolation:                      ; CODE XREF: Boss_ZLeoUp
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$D,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Boss_ZLeoApplyInterpolatedSegmentPose:                  ; CODE XREF: Boss_ZLeoUpdateSegments+E   j  ; was: loc_52B08
                                         ; Boss_ZLeoUpdateSegments+76   j
                 moveq   #7,d6
@@ -638,14 +638,14 @@ Boss_ZLeoAnimationCalc:                                 ; CODE XREF: Boss_ZLeoUp
                 moveq   #$D,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Boss_ZLeoAnimationCalc
-; Loads animation frame delay data for Z-Leo using 13 animation channels
-Boss_ZLeoAnimationLoadDelays:
+; Initializes fourteen Z-Leo pose channels from bytes at a0
+Boss_ZLeoInitializePoseChannels:
                 moveq   #$D,d7                          ; was: sub_52C4A
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
-                jmp     Anim_LoadFrameDelays
-; End of function Boss_ZLeoAnimationLoadDelays
+                jmp     Anim_InitializePoseChannelsFromBytes
+; End of function Boss_ZLeoInitializePoseChannels
 ; ---------------------------------------------------------------------------
 Boss_ZLeoIntroDescentPose:  dc.w    $810, $E, $1010, $E, $810, $1C, $1010, $1C, $FFFF  ; was: word_52C56
                                         ; DATA XREF: Boss_ZLeoPrepareIntroDescent+4E   o

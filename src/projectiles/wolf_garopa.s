@@ -371,7 +371,7 @@ Boss_WolfGaropaTickPoseInterpolation:                   ; CODE XREF: Boss_WolfGa
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$12,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Boss_WolfGaropaStorePoseAngleGroup1:                    ; CODE XREF: Boss_WolfGaropaAdvancePoseScript+E   j  ; was: loc_5065A
                                         ; Boss_WolfGaropaAdvancePoseScript+76   j
                 move.w  #$1FE,d7
@@ -507,14 +507,14 @@ Boss_WolfGaropaBeginPoseInterpolation:                  ; CODE XREF: Boss_WolfGa
                 moveq   #$12,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Boss_WolfGaropaBeginPoseInterpolation
-; Load the 18 pose-component interpolation durations
-Anim_WolfGaropaLoadPoseDurations:                       ; was: sub_507DC
+; Initialize nineteen Wolf Garopa pose channels from bytes at a0
+Boss_WolfGaropaInitializePoseChannels:                  ; was: sub_507DC
                 moveq   #$12,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
-                jmp     Anim_LoadFrameDelays
-; End of function Anim_WolfGaropaLoadPoseDurations
+                jmp     Anim_InitializePoseChannelsFromBytes
+; End of function Boss_WolfGaropaInitializePoseChannels
 ; ---------------------------------------------------------------------------
                 dc.b    $FF, $FF
 Boss_WolfGaropaHorizontalMotionPoseA:   dc.w    $506, $36, $8089, $303, $48, $808A, $605, $5A, $808B, $205, $6C, $8004, $303, $6C, $80D, $12  ; was: word_507EA

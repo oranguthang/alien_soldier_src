@@ -249,7 +249,7 @@ Boss_JokerAdvancePoseInterpolation:                     ; CODE XREF: Boss_JokerU
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #9,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Boss_JokerPublishPoseAngles:                            ; CODE XREF: Boss_JokerUpdatePose+E   j  ; was: loc_3BD46
                                         ; Boss_JokerUpdatePose+80   j
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
@@ -317,13 +317,13 @@ Boss_JokerCalculatePoseDeltas:                          ; CODE XREF: Boss_JokerU
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #9,d7
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Boss_JokerCalculatePoseDeltas
 ; Initializes the ten fixed-point pose channels from the source record in A0
 Boss_JokerInitializePoseChannels:
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1  ; was: sub_3BE0A
                 moveq   #9,d7
-                jmp     Anim_LoadFrameDelays
+                jmp     Anim_InitializePoseChannelsFromBytes
 ; End of function Boss_JokerInitializePoseChannels
 ; Spawns Joker's descending directional-shot emitter
 Boss_JokerSpawnDescendingShotEmitter:                   ; CODE XREF: Boss_JokerDiveDescentState+42   p  ; was: sub_3BE16

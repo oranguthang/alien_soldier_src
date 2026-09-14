@@ -143,7 +143,7 @@ Boss_FlyingNeoSetup:                                    ; DATA XREF: ROM:0003C0A
                 movea.l #Boss_FlyingNeoMetaspriteDescriptors,a0
                 movea.l #Boss_FlyingNeoPartRadii,a1
                 movea.l #Boss_FlyingNeoPartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 clr.w   $54(a5)
                 clr.w   $56(a5)
                 clr.w   $58(a5)

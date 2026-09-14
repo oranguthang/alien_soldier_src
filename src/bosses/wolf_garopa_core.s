@@ -55,7 +55,7 @@ Boss_WolfGaropaInitialize:                              ; DATA XREF: Boss_WolfGa
                 movea.l #Boss_WolfGaropaMetaspriteDescriptors,a0
                 movea.l #Boss_WolfGaropaPartRadii,a1
                 movea.l #Boss_WolfGaropaPartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 move.w  #$3E8,(a5)
                 move.w  #$C00,2(a5)
                 move.w  #$1F8,$B6(a5)

@@ -149,7 +149,7 @@ Boss_ZLeoIntroInit:                                     ; DATA XREF: ROM:00051B8
                 movea.l #Boss_ZLeoValkirieForceSharedMetaspriteData,a0
                 movea.l #Boss_ZLeoPartRadii,a1
                 movea.l #Boss_ZLeoPartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 move.w  #$3F8,(a5)
                 move.w  #$C00,2(a5)
                 movea.l #SharedTilemapWorkspace,a0

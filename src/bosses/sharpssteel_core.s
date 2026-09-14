@@ -75,7 +75,7 @@ Boss_SharpssteelInitializeState:                        ; DATA XREF: ROM:00047C5
                 movea.l #Boss_SharpssteelMetaspriteDescriptors,a0
                 movea.l #Boss_SharpssteelPartRadii,a1
                 movea.l #Boss_SharpssteelPartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 move.w  #$C300,$36E(a5)
                 move.w  #$C300,$4EE(a5)
                 move.w  #$21C,(a5)
@@ -742,7 +742,7 @@ Boss_SharpssteelInitializeComplexPhase:
                 bsr.w   Boss_SharpssteelConfigureBladeGraphicsSetB
                 bsr.w   Boss_SharpssteelSetBladePartPriorityBits
                 movea.l #Boss_SharpssteelComplexPhaseInitialPose,a0
-                bsr.w   Boss_SharpssteelLoadBladePoseFrameDelays
+                bsr.w   Boss_SharpssteelInitializeBladePoseChannels
                 move.w  #$FFD8,$35E(a5)
                 move.w  #0,$3BC(a5)
                 move.w  #1,$3BE(a5)

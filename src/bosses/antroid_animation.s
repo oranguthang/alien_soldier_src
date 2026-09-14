@@ -49,7 +49,7 @@ Boss_AntroidAdvancePoseInterpolation:                   ; CODE XREF: Boss_Antroi
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$E,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Boss_AntroidApplyPoseAngles:                            ; CODE XREF: Boss_AntroidUpdatePoseAnimation+E   j  ; was: loc_381AC
                                         ; Boss_AntroidUpdatePoseAnimation+80   j
                 move.w  #$1FE,d7
@@ -154,13 +154,13 @@ Boss_AntroidBeginPoseInterpolation:                     ; CODE XREF: Boss_Antroi
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #$E,d7
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Boss_AntroidBeginPoseInterpolation
 ; Initializes all 15 Antroid pose channels from bytes at a0
 Boss_AntroidInitializePoseChannels:
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1  ; was: sub_382D2
                 moveq   #$E,d7
-                jmp     Anim_LoadFrameDelays
+                jmp     Anim_InitializePoseChannelsFromBytes
 ; End of function Boss_AntroidInitializePoseChannels
 ; Adjusts base Y so the higher of two linked parts reaches coordinate $14C
 Boss_AntroidAdjustBaseYFromLinkedParts:

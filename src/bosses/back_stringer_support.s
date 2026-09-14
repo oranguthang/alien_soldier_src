@@ -307,7 +307,7 @@ Boss_BackStringerApplyPoseInterpolation:                ; CODE XREF: Boss_BackSt
                 subq.w  #1,$C(a5)
                 movea.w #(BackStringerPoseBuffer-M68K_RAM),a0
                 moveq   #$13,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Boss_BackStringerPublishPoseAngles:                     ; CODE XREF: Boss_BackStringerAnimatePose+E   j  ; was: loc_452FE
                                         ; Boss_BackStringerAnimatePose+80   j
                 move.w  #$1FE,d7
@@ -413,14 +413,14 @@ Anim_BackStringerCalcInterpolation:                     ; CODE XREF: Boss_BackSt
                 movea.w #(BackStringerPoseBuffer-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #$13,d7
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Anim_BackStringerCalcInterpolation
-; Loads animation frame delay data
-Anim_BackStringerLoadFrameDelays:
+; Initializes Back Stringer's twenty fixed-point pose channels from bytes at a0
+Boss_BackStringerInitializePoseChannels:
                 movea.w #(BackStringerPoseBuffer-M68K_RAM),a1  ; was: sub_45426
                 moveq   #$13,d7
-                jmp     Anim_LoadFrameDelays
-; End of function Anim_BackStringerLoadFrameDelays
+                jmp     Anim_InitializePoseChannelsFromBytes
+; End of function Boss_BackStringerInitializePoseChannels
 ; ---------------------------------------------------------------------------
 Boss_BackStringerManualControlPoseScript:   dc.w    $2020, 0, $2020, $14, $FFFF  ; DATA XREF: Boss_BackStringerManualControlState+3C   o ; was: word_45432
 Boss_BackStringerOpeningDelayPoseScript:    dc.w    $2828, $28, $607, 0, $2828, $14, $607, 0, $FFFF  ; DATA XREF: Boss_BackStringerUseOpeningDelayPoseAndRender   o ; was: word_4543C

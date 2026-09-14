@@ -61,7 +61,7 @@ Entity_InitValkirieBattleState0:                        ; DATA XREF: Entity_Upda
                 movea.l #Boss_ValkirieMetaspritePartDescriptors,a0
                 movea.l #Boss_ValkirieMetaspriteInitialAngles,a1
                 movea.l #Boss_ValkirieMetaspritePartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 move.l  #Boss_ValkirieMetaspritePoseAngles,$2FC(a5)
                 move.l  #Valkirie_PoseFrameData,$35C(a5)
                 move.w  #$42C,(a5)

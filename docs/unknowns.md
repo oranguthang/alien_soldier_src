@@ -2099,7 +2099,7 @@ metasprite initialization tables for Valkirie, Medusa, Sylpheed, Artemis,
 Sirene, alternate Valkirie, and the unidentified Seven Force. It now lives at
 `rendering/seven_forces_metasprites.s`. Each form's `a0`, `a1`, and `a2`
 inputs are identified as part descriptors, initial angles, and packed parent
-links from the reads in `Sprite_InitMetaspriteComplex`; the tables stored at
+links from the reads in `Sprite_InitializeLinkedMetaspriteParts`; the tables stored at
 object offset `$2FC` are identified as pose-angle targets from their later use
 by `Anim_CalculateInterpolationDeltas`.
 
@@ -7732,3 +7732,33 @@ fourteen records actually initialized by its two paths. Six new exact-address
 records raise the registry from 13,368 to 13,374. The queue falls from 2,975
 to 2,969 and its actionable upper bound from 2,462 to 2,456; provenance and
 the 513 classified binary-backed end aliases remain unchanged.
+
+The shared `rendering/boss_metasprites.s` audit resolves its six pending
+entries and one connected Z-Leo wrapper. The 529-line module remains cohesive:
+it owns linked-metasprite construction and traversal, direction-frame
+selection, and the fixed-point pose-channel primitives used by those
+metasprites.
+
+Static instruction contracts reject two especially misleading generated
+families. `Sprite_InitMetaspriteComplex` described subjective complexity, not
+behavior; it and its internal labels now form the
+`Sprite_InitializeLinkedMetaspriteParts` family. `Anim_LoadFrameDelays`
+never reads timing data: it expands each source byte into an 8.8 current value
+and stores a zero delta. It therefore becomes
+`Anim_InitializePoseChannelsFromBytes`, with all boss/debug wrappers and
+their evidence records updated to describe pose initialization.
+
+The adjacent interpolation and rendering helpers become
+`Anim_CalculatePoseChannelDeltas`,
+`Anim_AdvancePoseChannelInterpolation`,
+`Sprite_ApplyAnchorOffsetToLinkedParts`, and
+`Sprite_SelectEightDirectionFrame`. This connected correction changes 35
+definitions and 182 source references. It also fixes five inherited off-by-one
+descriptions: the inclusive DBF loops initialize 17 primary viewer channels,
+19 secondary/tertiary viewer channels, 19 Wolf Garopa channels, and 14 Z-Leo
+channels.
+
+Seven new exact-address records and 28 synchronized existing records raise the
+registry from 13,374 to 13,381. The queue falls from 2,969 to 2,962 and its
+actionable upper bound from 2,456 to 2,449; provenance and the 513 classified
+binary-backed end aliases remain unchanged.

@@ -20,18 +20,18 @@ Boss_BackStringerUpdateSegmentChainAndLoadCount:        ; CODE XREF: Boss_BackSt
                 bra.w   Sprite_LoadMetaspritePartCount
 ; End of function Boss_BackStringerUpdateSegmentChainAndLoadCount
 ; Creates a contiguous child-object group from mapping, angle, and link tables
-Sprite_InitMetaspriteComplex:                           ; CODE XREF: Boss_AntroidInitPhase+20   p  ; was: sub_343EE
+Sprite_InitializeLinkedMetaspriteParts:                 ; CODE XREF: Boss_AntroidInitPhase+20   p  ; was: sub_343EE
                                         ; Boss_TerobusterSetup+28   p
                 move.w  a5,(MetaspriteParentPtr).w
 ; Alternate entry for a second group that reuses the saved parent address
-Sprite_InitAdditionalMetaspriteGroup:                   ; CODE XREF: Boss_AntroidInitPhase+3A   p  ; was: loc_343F2
+Sprite_InitializeAdditionalLinkedMetaspriteParts:       ; CODE XREF: Boss_AntroidInitPhase+3A   p  ; was: loc_343F2
                 moveq   #0,d0
                 move.w  d0,d1
                 move.w  d0,d2
                 move.w  d0,d3
-Sprite_InitMetaspriteComplexNextPart:                   ; CODE XREF: Sprite_InitMetaspriteComplex+108   j  ; was: loc_343FA
+Sprite_InitializeLinkedMetaspritePartsNextPart:         ; CODE XREF: Sprite_InitializeLinkedMetaspriteParts+108   j  ; was: loc_343FA
                 move.l  (a0,d1.w),d4
-                beq.w   Sprite_InitMetaspriteComplexTransform
+                beq.w   Sprite_InitializeLinkedMetaspritePartsTransform
                 move.l  d4,d5
                 move.l  d4,d6
                 movea.l d4,a3
@@ -39,16 +39,16 @@ Sprite_InitMetaspriteComplexNextPart:                   ; CODE XREF: Sprite_Init
                 andi.l  #$F0000000,d5
                 andi.l  #$8000000,d6
                 bclr    #0,d4
-                bne.s   Sprite_InitMetaspriteComplexUseInlineDescriptor
+                bne.s   Sprite_InitializeLinkedMetaspritePartsUseInlineDescriptor
                 bclr    #$16,d4
-                beq.s   Sprite_InitMetaspriteComplexUseRotationFrames
+                beq.s   Sprite_InitializeLinkedMetaspritePartsUseRotationFrames
                 move.w  #$C000,2(a4)
                 move.w  (MetaspriteBaseTileWord).w,$E(a4)
                 move.l  d4,8(a4)
                 clr.l   $4C(a4)
-                bra.s   Sprite_InitMetaspriteComplexTransform
+                bra.s   Sprite_InitializeLinkedMetaspritePartsTransform
 ; ---------------------------------------------------------------------------
-Sprite_InitMetaspriteComplexUseRotationFrames:          ; CODE XREF: Sprite_InitMetaspriteComplex+36   j  ; was: loc_3443C
+Sprite_InitializeLinkedMetaspritePartsUseRotationFrames:  ; CODE XREF: Sprite_InitializeLinkedMetaspriteParts+36   j  ; was: loc_3443C
                 move.w  #$C000,2(a4)
                 move.w  (MetaspriteBaseTileWord).w,$E(a4)
                 move.l  d4,$4C(a4)
@@ -57,9 +57,9 @@ Sprite_InitMetaspriteComplexUseRotationFrames:          ; CODE XREF: Sprite_Init
                 swap    d6
                 or.w    d6,d5
                 move.w  d5,$50(a4)
-                bra.s   Sprite_InitMetaspriteComplexTransform
+                bra.s   Sprite_InitializeLinkedMetaspritePartsTransform
 ; ---------------------------------------------------------------------------
-Sprite_InitMetaspriteComplexUseInlineDescriptor:        ; CODE XREF: Sprite_InitMetaspriteComplex+30   j  ; was: loc_3445A
+Sprite_InitializeLinkedMetaspritePartsUseInlineDescriptor:  ; CODE XREF: Sprite_InitializeLinkedMetaspriteParts+30   j  ; was: loc_3445A
                 move.w  #$8000,2(a4)
                 movem.l a3,-(sp)
                 movea.l d4,a3
@@ -71,8 +71,8 @@ Sprite_InitMetaspriteComplexUseInlineDescriptor:        ; CODE XREF: Sprite_Init
                 move.w  (MetaspriteBaseTileWord).w,d4
                 andi.w  #$8000,d4
                 or.w    d4,$E(a4)
-Sprite_InitMetaspriteComplexTransform:                  ; CODE XREF: Sprite_InitMetaspriteComplex+10   j  ; was: loc_34486
-                                        ; Sprite_InitMetaspriteComplex+4C   j
+Sprite_InitializeLinkedMetaspritePartsTransform:        ; CODE XREF: Sprite_InitializeLinkedMetaspriteParts+10   j  ; was: loc_34486
+                                        ; Sprite_InitializeLinkedMetaspriteParts+4C   j
                 move.w  d0,d4
                 move.b  (a1,d3.w),d4
                 move.w  d4,d5
@@ -81,9 +81,9 @@ Sprite_InitMetaspriteComplexTransform:                  ; CODE XREF: Sprite_Init
                 move.w  d4,$54(a4)
                 move.w  d0,$56(a4)
                 andi.w  #$80,d5
-                beq.s   Sprite_InitMetaspriteComplexPositionLink
+                beq.s   Sprite_InitializeLinkedMetaspritePartsPositionLink
                 ori.w   #$8000,$E(a4)
-Sprite_InitMetaspriteComplexPositionLink:               ; CODE XREF: Sprite_InitMetaspriteComplex+B4   j  ; was: loc_344AA
+Sprite_InitializeLinkedMetaspritePartsPositionLink:     ; CODE XREF: Sprite_InitializeLinkedMetaspriteParts+B4   j  ; was: loc_344AA
                 move.w  (a2,d2.w),d4
                 move.w  d4,d5
                 andi.w  #$3FE0,d4
@@ -107,10 +107,10 @@ Sprite_InitMetaspriteComplexPositionLink:               ; CODE XREF: Sprite_Init
                 addq.w  #2,d2
                 addq.w  #1,d3
                 lea     $60(a4),a4
-                dbf     d7,Sprite_InitMetaspriteComplexNextPart
+                dbf     d7,Sprite_InitializeLinkedMetaspritePartsNextPart
                 ori.w   #$C00,2(a5)
                 rts
-; End of function Sprite_InitMetaspriteComplex
+; End of function Sprite_InitializeLinkedMetaspriteParts
 ; Points a3 at the parent, a4 at its first child, and saves count-minus-one
 Sprite_SetMetaspriteTraversalPointers:                  ; CODE XREF: Sprite_BeginMetaspritePartTraversal   p  ; was: sub_34502
                                         ; Boss_MadamBarbarUpdateParts+6   p
@@ -406,7 +406,7 @@ Sprite_LoadMetaspritePartCount:                         ; CODE XREF: Sprite_Begi
                 addq.w  #1,d7
 ; End of function Sprite_LoadMetaspritePartCount
 ; Applies the offset between two anchor objects to each traversed child
-Sprite_UpdateLinkedPositions:                           ; CODE XREF: Boss_JetsripperRotateState+42   p  ; was: sub_3483E
+Sprite_ApplyAnchorOffsetToLinkedParts:                  ; CODE XREF: Boss_JetsripperRotateState+42   p  ; was: sub_3483E
                                         ; Boss_JetsripperUpdateMovement+A0   p
                 movea.w $48(a5),a0
                 movea.w $4A(a5),a1
@@ -414,7 +414,7 @@ Sprite_UpdateLinkedPositions:                           ; CODE XREF: Boss_Jetsri
                 sub.w   $40(a0),d0
                 move.w  $14(a1),d1
                 sub.w   $44(a1),d1
-Sprite_UpdateLinkedPositionsNextPart:                   ; CODE XREF: Sprite_UpdateLinkedPositions+30   j  ; was: loc_34856
+Sprite_ApplyAnchorOffsetToLinkedPartsNextPart:          ; CODE XREF: Sprite_ApplyAnchorOffsetToLinkedParts+30   j  ; was: loc_34856
                 move.w  d0,d2
                 add.w   $40(a3),d2
                 move.w  d2,$10(a3)
@@ -422,9 +422,9 @@ Sprite_UpdateLinkedPositionsNextPart:                   ; CODE XREF: Sprite_Upda
                 add.w   $44(a3),d2
                 move.w  d2,$14(a3)
                 lea     $60(a3),a3
-                dbf     d7,Sprite_UpdateLinkedPositionsNextPart
+                dbf     d7,Sprite_ApplyAnchorOffsetToLinkedPartsNextPart
                 rts
-; End of function Sprite_UpdateLinkedPositions
+; End of function Sprite_ApplyAnchorOffsetToLinkedParts
 ; Selects one of four directional frames and flip flags from combined angles
 Sprite_UpdateFourDirectionFrame:                        ; CODE XREF: Boss_SharpssteelUpdateCoreSpriteFrames+10   p  ; was: sub_34874
                                         ; Boss_SharpssteelUpdateCoreSpriteFrames+20   j
@@ -445,11 +445,11 @@ Sprite_UpdateFourDirectionFrameSelect:                  ; CODE XREF: Sprite_Upda
                 move.l  (a1,d0.w),8(a0)
                 rts
 ; End of function Sprite_UpdateFourDirectionFrame
-; Calculates interpolation deltas for animation blending
-Anim_CalculateInterpolationDeltas:                      ; CODE XREF: Boss_AntroidBeginPoseInterpolation+10   j  ; was: sub_348AA
+; Calculates per-update deltas from current to target pose-channel bytes
+Anim_CalculatePoseChannelDeltas:                        ; CODE XREF: Boss_AntroidBeginPoseInterpolation+10   j  ; was: sub_348AA
                                         ; Boss_TerobusterCalculateDeltas+10   j
                 move.w  #$FF,d4
-Anim_CalculateInterpolationDeltasNextChannel:           ; CODE XREF: Anim_CalculateInterpolationDeltas+1C   j  ; was: loc_348AE
+Anim_CalculatePoseChannelDeltasNextChannel:             ; CODE XREF: Anim_CalculatePoseChannelDeltas+1C   j  ; was: loc_348AE
                 move.b  (a0)+,d0
                 move.w  (a2)+,d1
                 asr.w   #8,d1
@@ -462,33 +462,33 @@ Anim_CalculateInterpolationDeltasNextChannel:           ; CODE XREF: Anim_Calcul
                 lsl.w   #8,d0
                 divs.w  d3,d0
                 move.w  d0,(a2)+
-                dbf     d7,Anim_CalculateInterpolationDeltasNextChannel
+                dbf     d7,Anim_CalculatePoseChannelDeltasNextChannel
                 rts
-; End of function Anim_CalculateInterpolationDeltas
-; Loads animation frame delays converting bytes to words
-Anim_LoadFrameDelays:                                   ; CODE XREF: Boss_AntroidInitializePoseChannels+6   j  ; was: sub_348CC
+; End of function Anim_CalculatePoseChannelDeltas
+; Initializes fixed-point pose channels from source bytes and zero deltas
+Anim_InitializePoseChannelsFromBytes:                   ; CODE XREF: Boss_AntroidInitializePoseChannels+6   j  ; was: sub_348CC
                                         ; Boss_TerobusterInitializePoseChannels+6   j
                 moveq   #0,d1
-Anim_LoadFrameDelaysNextChannel:                        ; CODE XREF: Anim_LoadFrameDelays+A   j  ; was: loc_348CE
+Anim_InitializePoseChannelsFromBytesNextChannel:        ; CODE XREF: Anim_InitializePoseChannelsFromBytes+A   j  ; was: loc_348CE
                 move.b  (a0)+,d0
                 asl.w   #8,d0
                 move.w  d0,(a1)+
                 move.w  d1,(a1)+
-                dbf     d7,Anim_LoadFrameDelaysNextChannel
+                dbf     d7,Anim_InitializePoseChannelsFromBytesNextChannel
                 rts
-; End of function Anim_LoadFrameDelays
-; Applies single interpolation step to animation values
-Anim_ApplyInterpolationStep:                            ; CODE XREF: Boss_AntroidUpdatePoseAnimation+8C   p  ; was: sub_348DC
+; End of function Anim_InitializePoseChannelsFromBytes
+; Advances each fixed-point pose channel by its stored delta
+Anim_AdvancePoseChannelInterpolation:                   ; CODE XREF: Boss_AntroidUpdatePoseAnimation+8C   p  ; was: sub_348DC
                                         ; Boss_TerobusterInterpolateAnimation+6C   p
                 movea.l a0,a1
-Anim_ApplyInterpolationStepNextChannel:                 ; CODE XREF: Anim_ApplyInterpolationStep+A   j  ; was: loc_348DE
+Anim_AdvancePoseChannelInterpolationNextChannel:        ; CODE XREF: Anim_AdvancePoseChannelInterpolation+A   j  ; was: loc_348DE
                 move.w  (a0)+,d1
                 add.w   (a0)+,d1
                 move.w  d1,(a1)
                 addq.w  #4,a1
-                dbf     d7,Anim_ApplyInterpolationStepNextChannel
+                dbf     d7,Anim_AdvancePoseChannelInterpolationNextChannel
                 rts
-; End of function Anim_ApplyInterpolationStep
+; End of function Anim_AdvancePoseChannelInterpolation
 ; Clears the seventeen-longword animation interpolation work buffer
 Anim_ClearInterpolationBuffer:                          ; was: sub_348EC
                 move.w  #$10,d7
@@ -500,7 +500,7 @@ Anim_ClearInterpolationBufferNextLongword:              ; CODE XREF: Anim_ClearI
                 rts
 ; End of function Anim_ClearInterpolationBuffer
 ; Selects an eight-direction mapping frame and applies rotation-dependent flip flags
-Sprite_UpdateRotatedFrame:                              ; CODE XREF: Projectile_BackStringerChainFalling:Projectile_BackStringerUpdateFallingChainFrame   j  ; was: sub_34900
+Sprite_SelectEightDirectionFrame:                       ; CODE XREF: Projectile_BackStringerChainFalling:Projectile_BackStringerUpdateFallingChainFrame   j  ; was: sub_34900
                 movea.l $4C(a5),a0
                 move.w  $E(a5),d2
                 move.w  $56(a5),d1
@@ -509,13 +509,13 @@ Sprite_UpdateRotatedFrame:                              ; CODE XREF: Projectile_
                 andi.w  #$1FE,d1
                 ori.w   #$1800,d2
                 cmpi.w  #$100,d1
-                bpl.s   Sprite_UpdateRotatedFrameOrientFrame
+                bpl.s   Sprite_SelectEightDirectionFrameOrientFrame
                 andi.w  #$E7FF,d2
-Sprite_UpdateRotatedFrameOrientFrame:                   ; CODE XREF: Sprite_UpdateRotatedFrame+20   j  ; was: loc_34926
+Sprite_SelectEightDirectionFrameOrientFrame:            ; CODE XREF: Sprite_SelectEightDirectionFrame+20   j  ; was: loc_34926
                 cmpi.w  #$100,d3
-                bmi.s   Sprite_UpdateRotatedFrameSelectFrame
+                bmi.s   Sprite_SelectEightDirectionFrameSelectFrame
                 eori.w  #$800,d2
-Sprite_UpdateRotatedFrameSelectFrame:                   ; CODE XREF: Sprite_UpdateRotatedFrame+2A   j  ; was: loc_34930
+Sprite_SelectEightDirectionFrameSelectFrame:            ; CODE XREF: Sprite_SelectEightDirectionFrame+2A   j  ; was: loc_34930
                 asr.w   #3,d1
                 andi.w  #$1C,d1
                 move.l  (a0,d1.w),8(a5)
@@ -524,5 +524,5 @@ Sprite_UpdateRotatedFrameSelectFrame:                   ; CODE XREF: Sprite_Upda
                 eor.w   d1,d2
                 move.w  d2,$E(a5)
                 rts
-; End of function Sprite_UpdateRotatedFrame
+; End of function Sprite_SelectEightDirectionFrame
 ; ---------------------------------------------------------------------------

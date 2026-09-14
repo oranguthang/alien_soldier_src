@@ -240,7 +240,7 @@ Boss_AdvanceArtemisPoseInterpolation:                   ; CODE XREF: Boss_Update
                 beq.s   Boss_ApplyArtemisPoseInterpolation
                 addq.w  #1,d7
 Boss_ApplyArtemisPoseInterpolation:                     ; CODE XREF: Boss_LoadArtemisPoseFrame+4E   j  ; was: loc_58746
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Boss_PrepareArtemisPoseRender:                          ; CODE XREF: Boss_UpdateArtemisPoseScript+E   j  ; was: loc_5874C
                                         ; Boss_UpdateArtemisPoseScript+34   j
                 move.w  #$1FE,d7
@@ -257,18 +257,18 @@ Boss_CalculateArtemisPoseInterpolation:                 ; CODE XREF: Boss_LoadAr
 Boss_PrepareArtemisPoseInterpolationBuffer:             ; CODE XREF: Boss_CalculateArtemisPoseInterpolation+A   j  ; was: loc_58764
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Boss_CalculateArtemisPoseInterpolation
-; Load the initial Artemis pose-frame delays into the interpolation buffer
-Boss_LoadArtemisPoseFrameDelays:                        ; was: sub_58772
+; Initialize twenty or twenty-one Artemis pose channels from bytes at a0
+Boss_ArtemisInitializePoseChannels:                     ; was: sub_58772
                 moveq   #$13,d7
                 tst.b   $3BD(a5)
-                beq.s   Boss_LoadArtemisPoseFrameDelayBuffer
+                beq.s   Boss_ArtemisInitializePoseChannelBuffer
                 addq.w  #1,d7
-Boss_LoadArtemisPoseFrameDelayBuffer:                   ; CODE XREF: Boss_LoadArtemisPoseFrameDelays+6   j  ; was: loc_5877C
+Boss_ArtemisInitializePoseChannelBuffer:                ; CODE XREF: Boss_ArtemisInitializePoseChannels+6   j  ; was: loc_5877C
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
-                jmp     Anim_LoadFrameDelays
-; End of function Boss_LoadArtemisPoseFrameDelays
+                jmp     Anim_InitializePoseChannelsFromBytes
+; End of function Boss_ArtemisInitializePoseChannels
 ; ---------------------------------------------------------------------------
 Artemis_State2And4PoseScript:   dc.w    $1010, $50, $4040, $64, $FFFE  ; was: word_58786
                                         ; DATA XREF: Boss_UpdateArtemisState2+1E   o

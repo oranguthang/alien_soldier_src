@@ -52,7 +52,7 @@ Boss_InitMedusaState0:                                  ; DATA XREF: Boss_Update
                 movea.l #Boss_MedusaMetaspritePartDescriptors,a0
                 movea.l #Boss_MedusaMetaspriteInitialAngles,a1
                 movea.l #Boss_MedusaMetaspritePartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 move.l  #Boss_MedusaMetaspritePoseAngles,$2FC(a5)
                 move.l  #Medusa_PoseFrameData,$35C(a5)
                 move.w  #$430,(a5)
@@ -107,9 +107,9 @@ Boss_EnterMedusaState4:                                 ; CODE XREF: Boss_InitMe
                 move.w  #$FFFF,$C(a5)
                 move.w  #$100,$50(a5)
                 move.w  #$100,$47C(a5)
-                lea     Medusa_InitialPoseFrameDelays(pc),a0
+                lea     Medusa_InitialPoseChannelValues(pc),a0
                 nop
-                bsr.w   Boss_LoadMedusaPoseFrameDelays
+                bsr.w   Boss_MedusaInitializePoseChannels
 ; End of function Boss_EnterMedusaState4
 ; State four advances its pose script before opening the active battle phase
 Boss_UpdateMedusaState4:                                ; DATA XREF: ROM:000569F4   o  ; was: sub_56B16
@@ -615,7 +615,7 @@ Boss_AdvanceMedusaPoseInterpolation:                    ; CODE XREF: Boss_Update
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #7,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Boss_PrepareMedusaPoseRender:                           ; CODE XREF: Boss_UpdateMedusaPoseScript+E   j  ; was: loc_570CE
                                         ; Boss_UpdateMedusaPoseScript+34   j
                 move.w  #$1FE,d7
@@ -628,14 +628,14 @@ Boss_CalculateMedusaPoseInterpolation:                  ; CODE XREF: Boss_LoadMe
                 moveq   #7,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Boss_CalculateMedusaPoseInterpolation
-; Load the initial interpolation delays for the Medusa pose channels
-Boss_LoadMedusaPoseFrameDelays:                         ; CODE XREF: Boss_EnterMedusaState4+2E   p  ; was: sub_570EC
+; Initialize Medusa's eight fixed-point pose channels from bytes at a0
+Boss_MedusaInitializePoseChannels:                      ; CODE XREF: Boss_EnterMedusaState4+2E   p  ; was: sub_570EC
                 moveq   #7,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
-                jmp     Anim_LoadFrameDelays
-; End of function Boss_LoadMedusaPoseFrameDelays
+                jmp     Anim_InitializePoseChannelsFromBytes
+; End of function Boss_MedusaInitializePoseChannels
 ; ---------------------------------------------------------------------------
 Medusa_State2PoseScript:    dc.w    $2020, 0, $FFFF     ; DATA XREF: Boss_UpdateMedusaState2:Boss_RenderMedusaState2   o  ; was: word_570F8
 Medusa_State4PoseScript:    dc.w    $3060, 0, $2020, 0, $FFFE  ; was: word_570FE
@@ -657,7 +657,7 @@ Medusa_PoseFrameData:   dc.w    $401C, $1402, $14, 0, $C01C, $1402, $10  ; was: 
                 dc.w    $28, $1000, 0, 0, $FC00, 0, $401C
                 dc.w    $1402, 0, 0, $5018, $8F0, $1E0, 0
                 dc.w    $4018, $20F0, $238, $1800
-Medusa_InitialPoseFrameDelays:  dc.w    0, 0, $7090, 0  ; DATA XREF: Boss_EnterMedusaState4+28   o  ; was: word_57172
+Medusa_InitialPoseChannelValues:    dc.w    0, 0, $7090, 0  ; DATA XREF: Boss_EnterMedusaState4+28   o  ; was: word_57172
 
 ; Synchronize the falling part X coordinate and dispatch its three states
 Entity_UpdateMedusaFallingPart:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_5717A

@@ -80,7 +80,7 @@ Boss_XiTigerSetup:                                      ; DATA XREF: ROM:0003D88
                 movea.l #Boss_XiTigerMetaspriteDescriptors,a0
                 movea.l #Boss_XiTigerPartRadii,a1
                 movea.l #Boss_XiTigerPartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 bset    #0,2(a5)
                 bset    #0,$6C2(a5)
                 bset    #0,$902(a5)
@@ -843,7 +843,7 @@ Boss_XiTigerAdvancePoseInterpolation:                   ; CODE XREF: Boss_XiTige
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$F,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Boss_XiTigerApplyPoseAngles:                            ; CODE XREF: Boss_XiTigerUpdatePoseAnimation+E   j  ; was: loc_3E2B2
                                         ; Boss_XiTigerUpdatePoseAnimation+84   j
                 move.w  #$1FE,d7
@@ -938,13 +938,13 @@ Boss_XiTigerBeginPoseInterpolation:                     ; CODE XREF: Boss_XiTige
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #$F,d7
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Boss_XiTigerBeginPoseInterpolation
 ; Initializes all 16 Xi-Tiger pose channels from bytes at a0
 Boss_XiTigerInitializePoseChannels:                     ; CODE XREF: Boss_XiTigerSetup+E8   p  ; was: sub_3E3C6
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 moveq   #$F,d7
-                jmp     Anim_LoadFrameDelays
+                jmp     Anim_InitializePoseChannelsFromBytes
 ; End of function Boss_XiTigerInitializePoseChannels
 ; ---------------------------------------------------------------------------
 Boss_XiTigerIdlePoseCommands:   dc.w    $F510, 0, $15, 0, $80DC, $F510, $10, $15, $10, $80DC, $FFFF  ; was: word_3E3D2

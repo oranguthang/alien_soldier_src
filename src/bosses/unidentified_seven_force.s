@@ -31,7 +31,7 @@ Boss_UnidentifiedSevenForceInit:                        ; DATA XREF: Boss_Uniden
                 movea.l #Boss_UnidentifiedSevenForceMetaspritePartDescriptors,a0
                 movea.l #Boss_UnidentifiedSevenForceMetaspriteInitialAngles,a1
                 movea.l #Boss_UnidentifiedSevenForceMetaspritePartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 move.l  #Boss_UnidentifiedSevenForceMetaspritePoseAngles,$2FC(a5)
                 move.l  #Boss_UnidentifiedSevenForcePoseKeyframeData,$35C(a5)
                 move.w  #$43C,(a5)
@@ -271,7 +271,7 @@ Boss_UnidentifiedSevenForceAdvancePoseInterpolation:    ; CODE XREF: Boss_Uniden
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$11,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Boss_UnidentifiedSevenForcePreparePartAngleProjection:  ; CODE XREF: Boss_UnidentifiedSevenForceUpdatePose+E   j  ; was: loc_58F96
                                         ; Boss_UnidentifiedSevenForceUpdatePose+34   j
                 move.w  #$1FE,d7
@@ -284,14 +284,14 @@ Boss_UnidentifiedSevenForceCalculatePoseDeltas:         ; CODE XREF: Boss_Uniden
                 moveq   #$11,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Boss_UnidentifiedSevenForceCalculatePoseDeltas
-; Load frame delays for the unidentified form's 18-channel pose buffer
-Boss_UnidentifiedSevenForceLoadFrameDelays:
+; Initialize the unidentified form's eighteen pose channels from bytes at a0
+Boss_UnidentifiedSevenForceInitializePoseChannels:
                 moveq   #$11,d7                         ; was: sub_58FB4
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
-                jmp     Anim_LoadFrameDelays
-; End of function Boss_UnidentifiedSevenForceLoadFrameDelays
+                jmp     Anim_InitializePoseChannelsFromBytes
+; End of function Boss_UnidentifiedSevenForceInitializePoseChannels
 ; ---------------------------------------------------------------------------
 Boss_UnidentifiedSevenForceSharedPose:  dc.w    $2020, 0, $2020, $12, $FFFF  ; was: word_58FC0
                                         ; DATA XREF: Boss_UnidentifiedSevenForceInteractiveState2+1E   o

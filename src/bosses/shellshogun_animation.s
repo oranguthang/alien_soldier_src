@@ -62,7 +62,7 @@ Boss_ShellshogunAdvancePoseInterpolation:               ; CODE XREF: Boss_Shells
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$E,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Boss_ShellshogunPublishPoseAngles:                      ; CODE XREF: Boss_ShellshogunUpdatePose+E   j  ; was: loc_3A1E4
                                         ; Boss_ShellshogunUpdatePose+60   j
                 move.w  #$1FE,d7
@@ -150,7 +150,7 @@ Boss_ShellshogunCalculatePoseDeltas:                    ; CODE XREF: Boss_Shells
                 move.w  d3,$C(a5)
                 subq.w  #1,$C(a5)
                 moveq   #$E,d7
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Boss_ShellshogunCalculatePoseDeltas
 ; ---------------------------------------------------------------------------
 Boss_ShellshogunDecisionPoseCommands:   dc.w    $10, $F, $18, 0, $FFFF  ; was: word_3A2E6

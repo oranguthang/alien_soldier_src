@@ -211,7 +211,7 @@ Boss_JetsripperUpdateSegmentDisplay:                    ; CODE XREF: Boss_Jetsri
                 move.w  #$C740,$48(a5)
                 movea.w a5,a3
                 moveq   #$11,d7
-                jsr     (Sprite_UpdateLinkedPositions).l
+                jsr     (Sprite_ApplyAnchorOffsetToLinkedParts).l
                 bsr.w   Boss_JetsripperUpdateAllSprites
                 cmpi.w  #$144,$14(a5)
                 bmi.s   Boss_JetsripperSegmentDisplayReturn
@@ -422,7 +422,7 @@ Boss_JetsripperMovementUpdateSegmentDisplay:            ; CODE XREF: Boss_Jetsri
                 move.w  #$C980,$48(a5)
                 movea.w a5,a3
                 moveq   #$11,d7
-                jsr     (Sprite_UpdateLinkedPositions).l
+                jsr     (Sprite_ApplyAnchorOffsetToLinkedParts).l
                 bsr.w   Boss_JetsripperUpdateAllSprites
                 cmpi.w  #$144,$14(a5)
                 bmi.s   Boss_JetsripperSelectSprite
@@ -529,7 +529,7 @@ Boss_JetsripperDiveUpdateWindupSegments:                ; CODE XREF: Boss_Jetsri
                 move.w  a5,$4A(a5)
                 movea.w a5,a3
                 moveq   #$11,d7
-                jsr     (Sprite_UpdateLinkedPositions).l
+                jsr     (Sprite_ApplyAnchorOffsetToLinkedParts).l
                 bsr.w   Boss_JetsripperUpdateAllSprites
                 move.l  #Boss_JetsripperSpriteMapping06,8(a5)
                 move.w  $E(a5),d0
@@ -608,7 +608,7 @@ Boss_JetsripperProcessSegmentChain:                     ; CODE XREF: Boss_Jetsri
                 move.w  a5,$4A(a5)
                 movea.w a5,a3
                 moveq   #$11,d7
-                jsr     (Sprite_UpdateLinkedPositions).l
+                jsr     (Sprite_ApplyAnchorOffsetToLinkedParts).l
                 bra.w   Boss_JetsripperUpdateAllSprites
 ; End of function Boss_JetsripperProcessSegmentChain
 ; Initializes Jetsripper death sequence with particles

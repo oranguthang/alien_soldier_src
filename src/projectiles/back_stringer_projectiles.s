@@ -257,5 +257,5 @@ Projectile_BackStringerUpdateFallingChain:              ; CODE XREF: Projectile_
                 bra.w   Boss_BackStringerSelectPartFrameFromAngle
 ; ---------------------------------------------------------------------------
 Projectile_BackStringerUpdateFallingChainFrame:         ; CODE XREF: Projectile_BackStringerChainFalling+24   j  ; was: loc_45ACA
-                jmp     Sprite_UpdateRotatedFrame
+                jmp     Sprite_SelectEightDirectionFrame
 ; End of function Projectile_BackStringerChainFalling

@@ -529,7 +529,7 @@ Boss_SharpssteelApplyBladePoseInterpolationStep:        ; CODE XREF: Boss_Sharps
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #7,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Boss_SharpssteelUpdateBladeAnglesFromPose:              ; CODE XREF: Boss_SharpssteelWaitForComplexAlignmentState+E   p
                                         ; Boss_SharpssteelRunBladePoseCommands+E   j
                 move.w  #$1FE,d7
@@ -632,14 +632,14 @@ Boss_SharpssteelInitializeBladePoseInterpolation:       ; CODE XREF: Boss_Sharps
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #7,d7
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Boss_SharpssteelInitializeBladePoseInterpolation
-; Loads animation frame delays for 8 frames
-Boss_SharpssteelLoadBladePoseFrameDelays:               ; CODE XREF: Boss_SharpssteelInitializeComplexPhase+48   p  ; was: sub_48B9A
+; Initializes eight Sharpssteel blade pose channels from bytes at a0
+Boss_SharpssteelInitializeBladePoseChannels:            ; CODE XREF: Boss_SharpssteelInitializeComplexPhase+48   p  ; was: sub_48B9A
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
                 moveq   #7,d7
-                jmp     Anim_LoadFrameDelays
-; End of function Boss_SharpssteelLoadBladePoseFrameDelays
+                jmp     Anim_InitializePoseChannelsFromBytes
+; End of function Boss_SharpssteelInitializeBladePoseChannels
 ; ---------------------------------------------------------------------------
 Boss_SharpssteelManualControlPoseCommands:  dc.b    $20, $20, 0, $10, $20, $20, 0, $18, $FF, $FF
                                         ; DATA XREF: Boss_SharpssteelManualControlState+36   o

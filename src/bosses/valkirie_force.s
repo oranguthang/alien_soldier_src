@@ -26,7 +26,7 @@ Boss_ValkirieForceInit:                                 ; DATA XREF: Boss_Valkir
                 movea.l #Boss_ZLeoValkirieForceSharedMetaspriteData,a0
                 movea.l #Boss_ZLeoValkirieForceSharedMetaspriteData,a1
                 movea.l #Boss_ZLeoValkirieForceSharedMetaspriteData,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 move.w  #$3FC,(a5)
                 move.w  #$CC00,2(a5)
                 clr.w   6(a5)
@@ -107,7 +107,7 @@ Boss_ValkirieForceAdvancePoseInterpolation:             ; CODE XREF: Boss_Valkir
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$12,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Boss_ValkirieForceApplyInterpolatedPartAngles:          ; CODE XREF: Boss_ValkirieForceUpdatePose+E   j  ; was: loc_53646
                                         ; Boss_ValkirieForceUpdatePose+76   j
                 move.w  #$1FE,d7
@@ -209,14 +209,14 @@ Boss_ValkirieForceCalculatePoseDeltas:                  ; CODE XREF: Boss_Valkir
                 moveq   #$12,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Boss_ValkirieForceCalculatePoseDeltas
-; Unreferenced wrapper that loads nineteen pose-channel delays
-Boss_ValkirieForceLoadPoseDelays:                       ; was: sub_5376E
+; Unreferenced wrapper that initializes nineteen pose channels from bytes at a0
+Boss_ValkirieForceInitializePoseChannels:               ; was: sub_5376E
                 moveq   #$12,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
-                jmp     Anim_LoadFrameDelays
-; End of function Boss_ValkirieForceLoadPoseDelays
+                jmp     Anim_InitializePoseChannelsFromBytes
+; End of function Boss_ValkirieForceInitializePoseChannels
 ; ---------------------------------------------------------------------------
 Boss_ValkirieForceInteractivePose:  dc.w    $2020, 0, $2020, $12, $FFFF  ; was: word_5377A
                                         ; DATA XREF: Boss_ValkirieForceInit+80   o

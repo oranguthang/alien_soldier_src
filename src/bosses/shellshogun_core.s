@@ -82,7 +82,7 @@ Boss_ShellshogunSetupPhase:                             ; DATA XREF: ROM:0003952
                 movea.l #Boss_ShellshogunMetaspriteDescriptors,a0
                 movea.l #Boss_ShellshogunPartRadii,a1
                 movea.l #Boss_ShellshogunPartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 bset    #7,$6E(a5)
                 bset    #7,$CE(a5)
                 bset    #7,$4EE(a5)

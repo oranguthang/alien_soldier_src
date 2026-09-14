@@ -157,7 +157,7 @@ Anim_AdvanceValkiriePoseInterpolation:                  ; CODE XREF: Anim_Update
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #$12,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Anim_PrepareValkiriePosePartTraversal:                  ; CODE XREF: Anim_UpdateValkiriePoseScript+E   j  ; was: loc_5621A
                                         ; Anim_UpdateValkiriePoseScript+34   j
                 move.w  #$1FE,d7
@@ -170,14 +170,14 @@ Anim_CalculateValkiriePoseDeltas:                       ; CODE XREF: Anim_Proces
                 moveq   #$12,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Anim_CalculateValkiriePoseDeltas
-; Load 19 pose-frame delay values into the $FF9400 interpolation buffer
-Anim_LoadValkiriePoseFrameDelays:                       ; was: sub_56238
+; Initialize nineteen Valkirie pose channels from bytes at a0
+Boss_ValkirieInitializePoseChannels:                    ; was: sub_56238
                 moveq   #$12,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
-                jmp     Anim_LoadFrameDelays
-; End of function Anim_LoadValkiriePoseFrameDelays
+                jmp     Anim_InitializePoseChannelsFromBytes
+; End of function Boss_ValkirieInitializePoseChannels
 ; ---------------------------------------------------------------------------
 Valkirie_State2PoseScript:  dc.w    $A0F, $190, $606, $190, $1C1C, $1A4, $8002, $A0F, $1B8, $606, $1B8, $1C1C, $1CC, $8001, $FFFF  ; was: word_56244
                                         ; DATA XREF: Entity_UpdateValkirieBattleState2:Entity_RenderValkirieBattleState2   o
@@ -231,7 +231,7 @@ Entity_ClearValkirieAuxiliaryGroupLoop:                 ; CODE XREF: Entity_Init
                 movea.l #Boss_ValkirieAuxiliaryMetaspritePartDescriptors,a0
                 movea.l #Boss_ValkirieAuxiliaryMetaspriteInitialAngles,a1
                 movea.l #Boss_ValkirieAuxiliaryMetaspritePartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 move.w  #$47C,(a5)
                 move.w  #$8C00,2(a5)
                 move.w  #$65,$206(a5)                   ; 'e'

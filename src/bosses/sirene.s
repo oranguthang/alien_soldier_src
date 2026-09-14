@@ -60,7 +60,7 @@ Boss_InitSireneMetasprite:                              ; CODE XREF: Boss_InitSi
                 movea.l #Boss_SireneMetaspritePartDescriptors,a0
                 movea.l #Boss_SireneMetaspriteInitialAngles,a1
                 movea.l #Boss_SireneMetaspritePartLinks,a2
-                jsr     (Sprite_InitMetaspriteComplex).l
+                jsr     (Sprite_InitializeLinkedMetaspriteParts).l
                 move.l  #Boss_SireneMetaspritePoseAngles,$2FC(a5)
                 move.l  #Sirene_PoseFrameData,$35C(a5)
                 move.w  #$434,(a5)
@@ -112,7 +112,7 @@ Boss_EnterSireneState4:                                 ; CODE XREF: Boss_InitSi
                 move.w  #$C680,$4A(a5)
                 move.w  #$80,$11C(a5)
                 movea.l #Sirene_PoseFrameData,a0
-                bsr.w   Boss_LoadSirenePoseFrameDelays
+                bsr.w   Boss_SireneInitializePoseChannels
 ; End of function Boss_UpdateSireneState2
 ; State four tracks the shared effect coordinates during its opening delay
 Boss_UpdateSireneState4:                                ; DATA XREF: ROM:000574FC   o  ; was: sub_5761C
@@ -639,7 +639,7 @@ Boss_AdvanceSirenePoseInterpolation:                    ; CODE XREF: Boss_Update
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #9,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Boss_PrepareSirenePoseRender:                           ; CODE XREF: Boss_UpdateSirenePoseScript+E   j  ; was: loc_57C70
                                         ; Boss_UpdateSirenePoseScript+34   j
                 move.w  #$1FE,d7
@@ -652,14 +652,14 @@ Boss_CalculateSirenePoseInterpolation:                  ; CODE XREF: Boss_LoadSi
                 moveq   #9,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Boss_CalculateSirenePoseInterpolation
-; Load the initial interpolation delays for the Sirene pose channels
-Boss_LoadSirenePoseFrameDelays:                         ; CODE XREF: Boss_EnterSireneState4   p  ; was: sub_57C8E
+; Initialize Sirene's ten fixed-point pose channels from bytes at a0
+Boss_SireneInitializePoseChannels:                      ; CODE XREF: Boss_EnterSireneState4   p  ; was: sub_57C8E
                 moveq   #9,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1
-                jmp     Anim_LoadFrameDelays
-; End of function Boss_LoadSirenePoseFrameDelays
+                jmp     Anim_InitializePoseChannelsFromBytes
+; End of function Boss_SireneInitializePoseChannels
 ; ---------------------------------------------------------------------------
 Sirene_State2PoseScript:    dc.w    $810, 0, $1010, 0, $810, $A, $1010, $A  ; was: word_57C9A
                                         ; DATA XREF: Boss_UpdateSireneState2+1E   o

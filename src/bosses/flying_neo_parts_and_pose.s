@@ -172,7 +172,7 @@ Boss_FlyingNeoAdvancePoseInterpolation:                 ; CODE XREF: Boss_Flying
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #3,d7
-                jsr     (Anim_ApplyInterpolationStep).l
+                jsr     (Anim_AdvancePoseChannelInterpolation).l
 Boss_FlyingNeoApplyPoseAngles:                          ; CODE XREF: Boss_FlyingNeoUpdatePoseAnimation+E   j  ; was: loc_3CF9C
                                         ; Boss_FlyingNeoUpdatePoseAnimation+80   j
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
@@ -207,13 +207,13 @@ Boss_FlyingNeoBeginPoseInterpolation:                   ; CODE XREF: Boss_Flying
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #3,d7
-                jmp     Anim_CalculateInterpolationDeltas
+                jmp     Anim_CalculatePoseChannelDeltas
 ; End of function Boss_FlyingNeoBeginPoseInterpolation
 ; Initializes all four Flying Neo pose channels from bytes at a0
 Boss_FlyingNeoInitializePoseChannels:
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a1  ; was: sub_3CFFE
                 moveq   #3,d7
-                jmp     Anim_LoadFrameDelays
+                jmp     Anim_InitializePoseChannelsFromBytes
 ; End of function Boss_FlyingNeoInitializePoseChannels
 ; ---------------------------------------------------------------------------
 Boss_FlyingNeoNeutralPoseCommands:  dc.w    $408, 0, $808, 0, $408, 4, $808, 4  ; was: word_3D00A
