@@ -61,7 +61,7 @@ OrphanedTerrainTileAnimationReveal:
                 bne.s   OrphanedTerrainTileAnimationReturn
                 bset    #4,2(a5)
                 clr.w   $4C(a5)
-                bra.w   TerrainTileAnimation_TransferIfScheduled
+                bra.w   TerrainTileAnimation_TransferOnSelectedFramePhase
 ; End of function OrphanedTerrainTileAnimationReveal
 ; Orphaned DMA state for the terrain-tile animation companion
 OrphanedTerrainTileAnimationTransfer:

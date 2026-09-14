@@ -16,11 +16,12 @@ TerrainTileAnimation_SetFramePhase:                     ; CODE XREF: TerrainTile
                 cmpi.w  #4,d0
                 beq.s   TerrainTileAnimation_DispatchState
                 cmpi.w  #$70,$10(a5)                    ; 'p'
-                bpl.s   TerrainTileAnimation_DispatchStateNoOp
+                bpl.s   TerrainTileAnimation_DispatchWithoutForcedFinish
                 move.w  #4,4(a5)
                 bra.s   TerrainTileAnimation_DispatchState
 ; ---------------------------------------------------------------------------
-TerrainTileAnimation_DispatchStateNoOp:                 ; CODE XREF: TerrainTileAnimation_OddFrameHandler+24   j  ; was: loc_2F3C8
+; Preserves the current active state while the controller remains at or past X=$70
+TerrainTileAnimation_DispatchWithoutForcedFinish:       ; CODE XREF: TerrainTileAnimation_OddFrameHandler+24   j  ; was: loc_2F3C8
                 nop
 ; Dispatches the terrain-tile animation state
 TerrainTileAnimation_DispatchState:                     ; CODE XREF: TerrainTileAnimation_OddFrameHandler+16   j  ; was: loc_2F3CA
@@ -52,7 +53,7 @@ TerrainTileAnimation_Initialize:                        ; DATA XREF: TerrainTile
                 move.b  #0,$54(a5)
                 move.b  #1,$55(a5)
 TerrainTileAnimation_Return:                            ; CODE XREF: TerrainTileAnimation_Finish+18   j  ; was: locret_2F418
-                                        ; TerrainTileAnimation_TransferIfScheduled+4   j
+                                        ; TerrainTileAnimation_TransferOnSelectedFramePhase+4   j
                 rts
 ; End of function TerrainTileAnimation_Initialize
 ; ---------------------------------------------------------------------------
@@ -123,7 +124,8 @@ TerrainTileAnimation_Complete:                          ; CODE XREF: TerrainTile
                 clr.w   $4C(a5)
                 bra.w   *+4
 ; ---------------------------------------------------------------------------
-TerrainTileAnimation_TransferIfScheduled:               ; CODE XREF: TerrainTileAnimation_Finish+10   j  ; was: loc_2F4DC
+; Transfers only on the frame phase selected by the even/odd entity handler
+TerrainTileAnimation_TransferOnSelectedFramePhase:      ; CODE XREF: TerrainTileAnimation_Finish+10   j  ; was: loc_2F4DC
                                         ; OrphanedTerrainTileAnimationReveal+10   j
                 tst.w   $48(a5)
                 bne.w   TerrainTileAnimation_Return

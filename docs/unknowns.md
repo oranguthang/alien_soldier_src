@@ -8059,3 +8059,26 @@ records are corrected in place. The queue falls from 2,849 to 2,838 and its
 actionable upper bound from 2,336 to 2,325; provenance and the 513 classified
 binary-backed end aliases remain unchanged. The layout now contains 378
 modules with a 314.3-line mean and a 986-line maximum, with no waiver active.
+
+The remaining eleven names in `effects/stage_environment.s` are audited as one
+terrain-animation and ambient-particle family. The even/odd type handlers XOR
+their selector with `FrameCounter` bit zero and use field `$48` to choose which
+frames may change the layout. Field `$5E` selects one of eight layout bases;
+field `$4C` walks five packed pattern words forward and backward for five
+cycles, with a type-`$2B0` cue object and SFX `$45` at activation. The final
+states mark the controller for removal and restore pattern zero through the
+same selected-phase transfer gate.
+
+Two inherited labels are narrowed. The former
+`TerrainTileAnimation_DispatchStateNoOp` is the X≥`$70` path that preserves an
+active state instead of forcing state four, so it is now
+`TerrainTileAnimation_DispatchWithoutForcedFinish`. The former
+`TerrainTileAnimation_TransferIfScheduled` does not consult a schedule: it
+transfers only when the even/odd handler's field-`$48` phase is zero, so it is
+now `TerrainTileAnimation_TransferOnSelectedFramePhase`. The adjacent ambient
+loop is confirmed to initialize exactly six `$60`-byte type-`$208` records.
+
+Eleven exact-address records raise the registry from 13,504 to 13,515. The
+queue falls from 2,838 to 2,827 and its actionable upper bound from 2,325 to
+2,314; provenance and the 513 classified binary-backed end aliases remain
+unchanged. The module now has zero pending current names.
