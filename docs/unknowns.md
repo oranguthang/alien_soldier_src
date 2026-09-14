@@ -7928,3 +7928,20 @@ module. The module count remains 377 while the layout boundary changes from
 from 13,434 to 13,443. The queue falls from 2,909 to 2,900 and its actionable
 upper bound from 2,396 to 2,387; provenance and the 513 classified binary-backed
 end aliases remain unchanged.
+
+The remaining nine pending definitions in `bosses/antroid_core.s` are checked
+against Antroid's 26-entry state table, the root entity-table slot, linked-part
+initializers, pose streams, and every transition between the audited states.
+The main handler, dispatcher, idle state, battle decision, and two mirrored
+leap states retain their established meanings.
+
+Three generated initialization names are corrected. State zero is specifically
+`Boss_AntroidClearOtherObjectsState`; state two constructs both metasprite
+groups, the subordinate object group, root fields, facing, and the first attack
+preparation, so it becomes `Boss_AntroidInitializeBattleState`. The former
+`Boss_AntroidInitPosition` has no reconstructed call or table reference and
+falls through into state `$24`; it is now the explicit
+`UnreferencedInitializeAntroidIdleState`. Nine new exact-address records raise
+the audit registry from 13,443 to 13,452. The queue falls from 2,900 to 2,891
+and its actionable upper bound from 2,387 to 2,378; provenance and the 513
+classified binary-backed end aliases remain unchanged.

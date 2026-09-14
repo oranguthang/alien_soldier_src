@@ -80,7 +80,7 @@ Object_InitGroupFromTable_StoreEntry:                   ; CODE XREF: Object_Init
 ; End of function Object_InitGroupFromTable
 ; ---------------------------------------------------------------------------
 Boss_AntroidObjectInitTable:    dc.w    $C620, $1050, $F010, $F010, 0, 0, $80  ; was: word_1B9E4
-                                        ; DATA XREF: Boss_AntroidInitPhase+60   o
+                                        ; DATA XREF: Boss_AntroidInitializeBattleState+60   o
                 dc.w    $C680, $5028, $F010, $F010, $F808, $F808, $2A00
                 dc.w    $C6E0, $103C, $F808, $F808, 0, 0, 4
                 dc.w    $C9E0, $5008, $F808, $F808, $FC04, $FC04, $2A04

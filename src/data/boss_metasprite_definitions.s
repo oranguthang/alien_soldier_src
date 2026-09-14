@@ -24,11 +24,11 @@ Boss_AntroidInlineSpriteDescriptorD:        dc.w    $337, $A00, $F4F4  ; DATA XR
 Boss_AntroidInlineSpriteDescriptorE:        dc.w    $32E, $A00, $F4F4  ; DATA XREF: ROM:000349E2   o  ; was: word_349A4
 Boss_AntroidInlineSpriteDescriptorF:        dc.w    $300, $500, $F8F8  ; DATA XREF: ROM:000349CE   o  ; was: word_349AA
 Boss_AntroidInlineSpriteDescriptorG:        dc.w    $304, 0, $FCFC  ; DATA XREF: ROM:000349EA   o  ; was: word_349B0
-Boss_AntroidPrimaryMetaspriteDescriptors:   dc.l    Boss_AntroidInlineSpriteDescriptorB+1  ; DATA XREF: Boss_AntroidInitPhase+E   o  ; was: off_349B6
+Boss_AntroidPrimaryMetaspriteDescriptors:   dc.l    Boss_AntroidInlineSpriteDescriptorB+1  ; DATA XREF: Boss_AntroidInitializeBattleState+E   o  ; was: off_349B6
                 dc.l    Boss_AntroidInlineSpriteDescriptorA+1
                 dc.l    Boss_AntroidSpriteMapping01+$400000
                 dc.l    Boss_AntroidInlineSpriteDescriptorC+1
-Boss_AntroidSecondaryMetaspriteDescriptors: dc.l    Boss_AntroidInlineSpriteDescriptorD+1  ; DATA XREF: Boss_AntroidInitPhase+28   o  ; was: off_349C6
+Boss_AntroidSecondaryMetaspriteDescriptors: dc.l    Boss_AntroidInlineSpriteDescriptorD+1  ; DATA XREF: Boss_AntroidInitializeBattleState+28   o  ; was: off_349C6
                 dc.l    Boss_AntroidPrimaryRotationFrames
                 dc.l    Boss_AntroidInlineSpriteDescriptorF+1
                 dc.l    Boss_AntroidPrimaryRotationFrames
@@ -40,16 +40,16 @@ Boss_AntroidSecondaryMetaspriteDescriptors: dc.l    Boss_AntroidInlineSpriteDesc
                 dc.l    Boss_AntroidInlineSpriteDescriptorG+1
                 dc.l    Boss_AntroidSecondaryRotationFrames-$18000000
 Boss_AntroidPrimaryPartRadii:   dc.b    $00, $12, $14, $13  ; was: off_349F2
-Boss_AntroidSecondaryPartRadii: dc.w    $80C, $D0C, $1A06  ; DATA XREF: Boss_AntroidInitPhase+2E   o  ; was: word_349F6
+Boss_AntroidSecondaryPartRadii: dc.w    $80C, $D0C, $1A06  ; DATA XREF: Boss_AntroidInitializeBattleState+2E   o  ; was: word_349F6
                 dc.w    $101E, $1222, $600
 Boss_AntroidPrimaryPartLinks:   dc.w    $C009, $C008, $4067  ; was: word_34A02
-                                        ; DATA XREF: Boss_AntroidInitPhase+1A   o
+                                        ; DATA XREF: Boss_AntroidInitializeBattleState+1A   o
                 dc.w    $C009, $C064, $4185
                 dc.w    $C1E4, $4245, $4244
                 dc.w    $120, $4366, $C365
                 dc.w    $4425, $C426, $44E5
 Boss_AntroidSecondaryPartLinks: dc.w    $C069, $45AA, $C609  ; was: word_34A20
-                                        ; DATA XREF: Boss_AntroidInitPhase+34   o
+                                        ; DATA XREF: Boss_AntroidInitializeBattleState+34   o
                 dc.w    $466A, $4669, $120
                 dc.w    $478A, $C789, $4849
                 dc.w    $C84A, $4909

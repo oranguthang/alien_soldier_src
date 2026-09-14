@@ -20,11 +20,11 @@ Boss_BackStringerUpdateSegmentChainAndLoadCount:        ; CODE XREF: Boss_BackSt
                 bra.w   Sprite_LoadMetaspritePartCount
 ; End of function Boss_BackStringerUpdateSegmentChainAndLoadCount
 ; Creates a contiguous child-object group from mapping, angle, and link tables
-Sprite_InitializeLinkedMetaspriteParts:                 ; CODE XREF: Boss_AntroidInitPhase+20   p  ; was: sub_343EE
+Sprite_InitializeLinkedMetaspriteParts:                 ; CODE XREF: Boss_AntroidInitializeBattleState+20   p  ; was: sub_343EE
                                         ; Boss_TerobusterSetup+28   p
                 move.w  a5,(MetaspriteParentPtr).w
 ; Alternate entry for a second group that reuses the saved parent address
-Sprite_InitializeAdditionalLinkedMetaspriteParts:       ; CODE XREF: Boss_AntroidInitPhase+3A   p  ; was: loc_343F2
+Sprite_InitializeAdditionalLinkedMetaspriteParts:       ; CODE XREF: Boss_AntroidInitializeBattleState+3A   p  ; was: loc_343F2
                 moveq   #0,d0
                 move.w  d0,d1
                 move.w  d0,d2

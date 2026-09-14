@@ -103,8 +103,8 @@ Boss_AntroidFacePlayerCompare:                          ; CODE XREF: Boss_Antroi
                 beq.w   Boss_AntroidFacingUpdateReturn
 ; Facing changes fall through so all part attributes are updated immediately
 ; Applies Antroid's facing bit to each linked metasprite part
-Boss_AntroidApplyFacingToParts:                         ; CODE XREF: Boss_AntroidInitPhase+78   p  ; was: sub_37FA0
-                                        ; Boss_AntroidInitPosition+1E   p
+Boss_AntroidApplyFacingToParts:                         ; CODE XREF: Boss_AntroidInitializeBattleState+78   p  ; was: sub_37FA0
+                                        ; UnreferencedInitializeAntroidIdleState+1E   p
                 moveq   #3,d0
                 tst.w   $54(a5)
                 bne.s   Boss_AntroidApplyMirroredFacing

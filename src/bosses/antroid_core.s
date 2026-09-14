@@ -21,40 +21,40 @@ Boss_AntroidStateDispatch:                              ; CODE XREF: Boss_Antroi
                                         ; Boss_AntroidMainHandler+C   j
                 move.w  4(a5),d0
                 movea.w Boss_AntroidStateHandlers(pc,d0.w),a0
-                adda.l  #Boss_AntroidInitState,a0
+                adda.l  #Boss_AntroidClearOtherObjectsState,a0
                 jmp     (a0)
 ; End of function Boss_AntroidMainHandler
 ; ---------------------------------------------------------------------------
-Boss_AntroidStateHandlers:  dc.w    Boss_AntroidInitState-Boss_AntroidInitState  ; was: off_3750E
+Boss_AntroidStateHandlers:  dc.w    Boss_AntroidClearOtherObjectsState-Boss_AntroidClearOtherObjectsState  ; was: off_3750E
                                         ; DATA XREF: Boss_AntroidMainHandler+3C   r
-                dc.w    Boss_AntroidInitPhase-Boss_AntroidInitState
-                dc.w    Boss_AntroidNeutralState-Boss_AntroidInitState
-                dc.w    Boss_AntroidBattleDecision-Boss_AntroidInitState
-                dc.w    Boss_AntroidPrepareLeapAttackA-Boss_AntroidInitState
-                dc.w    Boss_AntroidLeapAttackA-Boss_AntroidInitState
-                dc.w    Boss_AntroidPrepareLeapAttackB-Boss_AntroidInitState
-                dc.w    Boss_AntroidLeapAttackB-Boss_AntroidInitState
-                dc.w    Boss_AntroidPrepareJumpAttack-Boss_AntroidInitState
-                dc.w    Boss_AntroidJumpAttackApplyGravity-Boss_AntroidInitState
-                dc.w    Boss_AntroidJumpAttackLandingState-Boss_AntroidInitState
-                dc.w    Boss_AntroidWaitState-Boss_AntroidInitState
-                dc.w    Boss_AntroidWaitCountdown-Boss_AntroidInitState
-                dc.w    Boss_AntroidPhaseGateState-Boss_AntroidInitState
-                dc.w    Boss_AntroidWaitForStageReady-Boss_AntroidInitState
-                dc.w    Boss_AntroidRamAttack-Boss_AntroidInitState
-                dc.w    Boss_AntroidDefeatFadeState-Boss_AntroidInitState
-                dc.w    Boss_AntroidDefeatDelayState-Boss_AntroidInitState
-                dc.w    Boss_AntroidIdleState-Boss_AntroidInitState
-                dc.w    Boss_AntroidJumpSlamAttack-Boss_AntroidInitState
-                dc.w    Boss_AntroidJumpSlamApplyGravity-Boss_AntroidInitState
-                dc.w    Boss_AntroidJumpSlamDecelerateHorizontal-Boss_AntroidInitState
-                dc.w    Boss_AntroidJumpSlamApplySecondArcGravity-Boss_AntroidInitState
-                dc.w    Boss_AntroidJumpSlamImpactDelay-Boss_AntroidInitState
-                dc.w    Boss_AntroidJumpSlamRetryWait-Boss_AntroidInitState
-                dc.w    Boss_AntroidHealthRecoveryState-Boss_AntroidInitState
+                dc.w    Boss_AntroidInitializeBattleState-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidNeutralState-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidBattleDecision-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidPrepareLeapAttackA-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidLeapAttackA-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidPrepareLeapAttackB-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidLeapAttackB-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidPrepareJumpAttack-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidJumpAttackApplyGravity-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidJumpAttackLandingState-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidWaitState-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidWaitCountdown-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidPhaseGateState-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidWaitForStageReady-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidRamAttack-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidDefeatFadeState-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidDefeatDelayState-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidIdleState-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidJumpSlamAttack-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidJumpSlamApplyGravity-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidJumpSlamDecelerateHorizontal-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidJumpSlamApplySecondArcGravity-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidJumpSlamImpactDelay-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidJumpSlamRetryWait-Boss_AntroidClearOtherObjectsState
+                dc.w    Boss_AntroidHealthRecoveryState-Boss_AntroidClearOtherObjectsState
 
-; Initializes boss state clearing objects
-Boss_AntroidInitState:                                  ; DATA XREF: Boss_AntroidMainHandler+40   o  ; was: sub_37542
+; Advances initialization after clearing every object type below Antroid's type
+Boss_AntroidClearOtherObjectsState:                     ; DATA XREF: Boss_AntroidMainHandler+40   o  ; was: sub_37542
                                         ; ROM:Boss_AntroidStateHandlers   o
                 addq.w  #2,4(a5)
                 clr.w   8(a5)
@@ -62,9 +62,9 @@ Boss_AntroidInitState:                                  ; DATA XREF: Boss_Antroi
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
                 rts
-; End of function Boss_AntroidInitState
-; Initializes Antroid boss phase with metasprite setup
-Boss_AntroidInitPhase:                                  ; DATA XREF: ROM:00037510   o  ; was: sub_37558
+; End of function Boss_AntroidClearOtherObjectsState
+; Builds Antroid's linked parts and enters the first battle preparation state
+Boss_AntroidInitializeBattleState:                      ; DATA XREF: ROM:00037510   o  ; was: sub_37558
                 addq.w  #1,8(a5)
                 movea.w a5,a4
                 move.w  #$8300,(MetaspriteBaseTileWord).w
@@ -103,7 +103,7 @@ Boss_AntroidPhaseGateState:                             ; DATA XREF: ROM:0003752
                 jsr     (BossMessage_Start).l
                 bra.w   Boss_AntroidUpdateDecisionAnimation
 ; ---------------------------------------------------------------------------
-Boss_AntroidPhaseGateAdvance:                           ; CODE XREF: Boss_AntroidInitPhase+90   j  ; was: loc_375FA
+Boss_AntroidPhaseGateAdvance:                           ; CODE XREF: Boss_AntroidInitializeBattleState+90   j  ; was: loc_375FA
                 addq.w  #2,4(a5)
 ; Waits for the stage-ready flag before restoring battle state
 Boss_AntroidWaitForStageReady:                          ; DATA XREF: ROM:0003752A   o  ; was: loc_375FE
@@ -116,20 +116,20 @@ Boss_AntroidWaitForStageReady:                          ; DATA XREF: ROM:0003752
                 move.w  #$30,$11C(a5)                   ; '0'
                 bra.w   Boss_AntroidBattleDecision
 ; ---------------------------------------------------------------------------
-Boss_AntroidWaitForStageReadyAnimate:                   ; CODE XREF: Boss_AntroidInitPhase+AA   j  ; was: loc_37622
+Boss_AntroidWaitForStageReadyAnimate:                   ; CODE XREF: Boss_AntroidInitializeBattleState+AA   j  ; was: loc_37622
                 bra.w   Boss_AntroidUpdateDecisionAnimation
-; End of function Boss_AntroidInitPhase
-; Initializes Antroid boss position and physics parameters at start of battle
-Boss_AntroidInitPosition:
-                move.w  #$24,4(a5)                      ; '$'  ; was: sub_37626
+; End of function Boss_AntroidInitializeBattleState
+; Orphaned entry that initializes an idle pose and falls through to state $24
+UnreferencedInitializeAntroidIdleState:                 ; was: sub_37626
+                move.w  #$24,4(a5)                      ; '$'
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
                 move.w  #$120,$10(a5)
                 move.w  #$F0,$14(a5)
                 clr.w   $54(a5)
                 bsr.w   Boss_AntroidApplyFacingToParts
-; End of function Boss_AntroidInitPosition
-; Updates Antroid boss idle animation and sprite rendering
+; Falls through to the ordinary state-$24 updater
+; Updates Antroid's idle pose and linked sprites without advancing state
 Boss_AntroidIdleState:                                  ; DATA XREF: ROM:00037532   o  ; was: sub_37648
                 lea     Boss_AntroidIdlePoseCommands(pc),a1
                 nop
@@ -179,7 +179,7 @@ Boss_AntroidFinishNeutralAnimation:                     ; CODE XREF: Boss_Antroi
                 addq.w  #2,d0
                 move.w  d0,$11C(a5)
 ; Battle decision logic choosing attack based on distance and random
-Boss_AntroidBattleDecision:                             ; CODE XREF: Boss_AntroidInitPhase+C6   j  ; was: loc_376D0
+Boss_AntroidBattleDecision:                             ; CODE XREF: Boss_AntroidInitializeBattleState+C6   j  ; was: loc_376D0
                                         ; DATA XREF: ROM:00037514   o
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_AntroidUpdateDecisionAnimation
@@ -216,7 +216,7 @@ Boss_AntroidScheduleLeapAttackB:                        ; CODE XREF: Boss_Antroi
                 move.w  d0,$11C(a5)
                 bra.w   Boss_AntroidEnterLeapAttackBPreparation
 ; ---------------------------------------------------------------------------
-Boss_AntroidUpdateDecisionAnimation:                    ; CODE XREF: Boss_AntroidInitPhase+9E   j  ; was: loc_3773E
+Boss_AntroidUpdateDecisionAnimation:                    ; CODE XREF: Boss_AntroidInitializeBattleState+9E   j  ; was: loc_3773E
                                         ; sub_37558:Boss_AntroidWaitForStageReadyAnimate   j
                 lea     Boss_AntroidDecisionPoseCommandsA(pc),a1
                 nop
@@ -256,7 +256,7 @@ Boss_AntroidHealthRecoveryState:                        ; DATA XREF: ROM:0003754
                 bra.w   Boss_AntroidSelectBlinkMetasprite
 ; End of function Boss_AntroidHealthRecoveryState
 ; Selects the first attack preparation state and falls through to its handler
-Boss_AntroidEnterLeapAttackAPreparation:                ; CODE XREF: Boss_AntroidInitPhase+7C   j  ; was: sub_377C4
+Boss_AntroidEnterLeapAttackAPreparation:                ; CODE XREF: Boss_AntroidInitializeBattleState+7C   j  ; was: sub_377C4
                                         ; Boss_AntroidLeapAttackB+3C   j
                 moveq   #8,d0
                 bsr.w   Boss_AntroidEnterStateWithFirstPartSlot
