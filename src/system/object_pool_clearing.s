@@ -21,7 +21,8 @@ Sys_ClearObjectBlocks8:
 Sys_ClearObjectBlocks96:                                ; CODE XREF: Player_InitSpecialAttack+46   p  ; was: sub_1925A
                                         ; Sys_ClearObjectBlocks17+6   j
                 moveq   #0,d0
-Sys_ClearObjectBlocks96_Loop:                           ; CODE XREF: Sys_ClearObjectBlocks96+32   j  ; was: loc_1925C
+; Clears the next 96-byte object block in the requested span
+Sys_ClearNextObjectBlock96:                             ; CODE XREF: Sys_ClearObjectBlocks96+32   j  ; was: loc_1925C
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
@@ -46,6 +47,6 @@ Sys_ClearObjectBlocks96_Loop:                           ; CODE XREF: Sys_ClearOb
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d7,Sys_ClearObjectBlocks96_Loop
+                dbf     d7,Sys_ClearNextObjectBlock96
                 rts
 ; End of function Sys_ClearObjectBlocks96

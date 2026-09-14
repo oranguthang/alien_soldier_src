@@ -7575,3 +7575,28 @@ and initializer dispatch. The fourteen exact-address records raise the audit
 registry from 13,299 to 13,313. The reproducible semantic-review queue falls
 from 3,045 to 3,031 and its actionable upper bound from 2,532 to 2,518;
 provenance remains 16,051.
+
+The three-name-module semantic batch audits all fifteen pending names in
+`flying_neo_rendering.s`, `medusa.s`, `shiper_scroll_and_effects.s`,
+`game_variables.s`, and `object_pool_clearing.s`. Flying Neo's render wrapper,
+metasprite entry, and defeat fade, Medusa's two frame-gated sound helpers,
+Shiper's debris emitter, and the fixed-count object-pool clearing entries are
+confirmed from their callers and field effects. The Medusa binclude-end symbol
+is recorded as an alias of the following state-$A schedule at the same address,
+not as a duplicate audit record.
+
+Static control flow rejects six pending Sonnet descriptions. Shiper's scroll
+helper also derives boss position, so it becomes
+`Boss_ShiperUpdatePositionAndLineScroll`. The purported Shiper angled-shot
+helper has no code or data references; only its type-$94 allocation and random
+sine-table velocity are proved, so it becomes
+`Orphaned_SpawnType94RandomAngle`. The three `UI_*` entries are actually the
+password-selected, fresh-game, and shared game-session initialization paths,
+and the 96-byte clearing loop label denotes one object-block iteration. The
+already audited return label of the orphaned helper is corrected at the same
+time, removing its unsupported Shiper ownership.
+
+Fourteen new exact-address records plus one same-address alias raise the audit
+registry from 13,313 to 13,327. The reproducible semantic-review queue falls
+from 3,031 to 3,016 and its actionable upper bound from 2,518 to 2,503;
+provenance remains 16,051.

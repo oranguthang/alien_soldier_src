@@ -185,7 +185,7 @@ Boss_ShiperSetupNextChainPart:                          ; CODE XREF: Boss_Shiper
                 movea.l #Boss_ShiperObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l
                 bsr.w   Boss_ShiperTentaclePosition
-                bra.w   Boss_ShiperScrollUpdate
+                bra.w   Boss_ShiperUpdatePositionAndLineScroll
 ; End of function Boss_ShiperSetupState
 ; ---------------------------------------------------------------------------
 Boss_ShiperAuxiliaryPartDescriptors:    dc.w    $C6E0, $63B7, $500, $F8F8, $C7A0, $63BB, $900, $F4F8, $C740, $63C1  ; was: word_366BC

@@ -1,15 +1,16 @@
-; Sets the password confirmation flag and continues shared initialization
-UI_SetPasswordConfirmFlag:                              ; CODE XREF: PasswordMenu_HandleInput+284   j  ; was: sub_1CCEC
+; Initializes a password-selected session while preserving stage and difficulty
+Password_InitializeSelectedStage:                       ; CODE XREF: PasswordMenu_HandleInput+284   j  ; was: sub_1CCEC
                 bset    #0,(StageRouteFlags).w
-                bra.s   UI_InitializeGameVariables_Common
-; End of function UI_SetPasswordConfirmFlag
-; Initializes game state variables for menu/title screen
-UI_InitializeGameVariables:                             ; CODE XREF: TitleScreen_Update+8A   p  ; was: sub_1CCF4
+                bra.s   Game_InitializeSessionState
+; End of function Password_InitializeSelectedStage
+; Initializes a fresh stage-zero game session
+Game_InitializeNewSession:                              ; CODE XREF: TitleScreen_Update+8A   p  ; was: sub_1CCF4
                                         ; TitleScreen_Update+BA   j
                 clr.w   (StageTableIndex).w
                 move.w  #2,(ShootingMode).w
                 clr.b   (StageRouteFlags).w
-UI_InitializeGameVariables_Common:                      ; CODE XREF: UI_SetPasswordConfirmFlag+6   j  ; was: loc_1CD02
+; Resets session-wide health, score, counters, history, and palette state
+Game_InitializeSessionState:                            ; CODE XREF: Password_InitializeSelectedStage+6   j  ; was: loc_1CD02
                 move.w  #$200,(PlayerHealth).w
                 move.w  #$200,(PlayerMaxHealth).w
                 clr.l   (ScoreValueBCD).w
@@ -23,7 +24,7 @@ UI_InitializeGameVariables_Common:                      ; CODE XREF: UI_SetPassw
                 clr.b   (MessageDisplayFlags).w
                 bsr.w   Results_InitializeStageHistory
                 bra.s   UI_ResetPaletteAndMessageMode_Clear
-; End of function UI_InitializeGameVariables
+; End of function Game_InitializeNewSession
 ; Initializes gameplay state for a selected stage and restores weapon ammo
 StageEntry_InitializeGameplayState:                     ; was: sub_1CD3A
                 move.w  (PlayerMaxHealth).w,(PlayerHealth).w
@@ -109,7 +110,7 @@ Results_IncrementStageVisitCountReturn:                 ; CODE XREF: Results_Inc
                 rts
 ; End of function Results_IncrementStageVisitCount
 ; Initializes the contiguous per-stage results history to missing values
-Results_InitializeStageHistory:                         ; CODE XREF: UI_InitializeGameVariables+40   p  ; was: sub_1CE26
+Results_InitializeStageHistory:                         ; CODE XREF: Game_InitializeNewSession+40   p  ; was: sub_1CE26
                 movea.w #(StagePhaseSplitTimes-M68K_RAM),a0
                 move.w  #$FFFF,d0
                 move.w  #$BF,d7

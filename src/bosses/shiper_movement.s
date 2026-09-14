@@ -1,6 +1,6 @@
 Boss_ShiperUpdateMain:                                  ; CODE XREF: Boss_ShiperUpdateAttackAndSpawnProjectile   p  ; was: sub_36A1A
                                         ; Boss_ShiperCheckHealthTransition_WaitFade   p
-                bsr.w   Boss_ShiperScrollUpdate
+                bsr.w   Boss_ShiperUpdatePositionAndLineScroll
                 bsr.w   Boss_ShiperPositionUpdate
                 bsr.w   Boss_ShiperStateDispatcher
                 bra.w   Boss_ShiperPhysicsHandler

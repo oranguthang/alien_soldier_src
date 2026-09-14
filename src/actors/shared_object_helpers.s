@@ -299,7 +299,7 @@ Sprite_InitType94Default:
                 rts
 ; End of function Sprite_InitType94Default
 ; Initializes sprite type $94 from initialization table
-Sprite_InitType94FromTable:                             ; CODE XREF: Boss_ShiperSpawnAngledProjectile+16   p  ; was: sub_2A674
+Sprite_InitType94FromTable:                             ; CODE XREF: Orphaned_SpawnType94RandomAngle+16   p  ; was: sub_2A674
                 bsr.w   Sprite_InitFromTable
                 move.w  #$94,(a0)
                 rts

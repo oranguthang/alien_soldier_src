@@ -27,19 +27,19 @@ Boss_ShiperSpawnDebrisReturn:                           ; CODE XREF: Boss_Shiper
                 rts
 ; End of function Boss_ShiperSpawnDebris
 ; Rebuilds Shiper's line-scroll spans and derives its screen position
-Boss_ShiperScrollUpdate:                                ; CODE XREF: Boss_ShiperSetupState+140   j  ; was: sub_37048
+Boss_ShiperUpdatePositionAndLineScroll:                 ; CODE XREF: Boss_ShiperSetupState+140   j  ; was: sub_37048
                                         ; Boss_ShiperUpdateMain   p
                 movea.w #(HScrollPlaneBRow32-M68K_RAM),a0
                 moveq   #$FFFFFF80,d0
                 move.w  #$BF,d7
-Boss_ShiperScrollInitializeLineOffsets:                 ; CODE XREF: Boss_ShiperScrollUpdate+E   j  ; was: loc_37052
+Boss_ShiperScrollInitializeLineOffsets:                 ; CODE XREF: Boss_ShiperUpdatePositionAndLineScroll+E   j  ; was: loc_37052
                 move.w  d0,(a0)
                 addq.w  #4,a0
                 dbf     d7,Boss_ShiperScrollInitializeLineOffsets
                 move.w  $50(a5),d0
                 bmi.s   Boss_ShiperScrollUpdateCoordinates
                 moveq   #0,d0
-Boss_ShiperScrollUpdateCoordinates:                     ; CODE XREF: Boss_ShiperScrollUpdate+16   j  ; was: loc_37062
+Boss_ShiperScrollUpdateCoordinates:                     ; CODE XREF: Boss_ShiperUpdatePositionAndLineScroll+16   j  ; was: loc_37062
                 add.w   $74(a5),d0
                 subi.w  #$3A,d0                         ; ':'
                 move.w  d0,$14(a5)
@@ -58,7 +58,7 @@ Boss_ShiperScrollUpdateCoordinates:                     ; CODE XREF: Boss_Shiper
                 addi.w  #-$1BFE,d2
                 movea.w d2,a1
                 moveq   #$32,d7                         ; '2'
-Boss_ShiperScrollFillUpperSpan:                         ; CODE XREF: Boss_ShiperScrollUpdate+5C   j  ; was: loc_370A0
+Boss_ShiperScrollFillUpperSpan:                         ; CODE XREF: Boss_ShiperUpdatePositionAndLineScroll+5C   j  ; was: loc_370A0
                 move.w  d6,(a1)
                 subq.w  #4,a1
                 dbf     d7,Boss_ShiperScrollFillUpperSpan
@@ -75,7 +75,7 @@ Boss_ShiperScrollFillUpperSpan:                         ; CODE XREF: Boss_Shiper
                 move.w  #0,d1
                 asr.l   #4,d1
                 subq.w  #1,d7
-Boss_ShiperScrollInterpolateSpan:                       ; CODE XREF: Boss_ShiperScrollUpdate+90   j  ; was: loc_370CE
+Boss_ShiperScrollInterpolateSpan:                       ; CODE XREF: Boss_ShiperUpdatePositionAndLineScroll+90   j  ; was: loc_370CE
                 move.w  d6,(a1)
                 subq.w  #4,a1
                 swap    d6
@@ -91,18 +91,18 @@ Boss_ShiperScrollInterpolateSpan:                       ; CODE XREF: Boss_Shiper
                 move.w  $10(a5),d6
                 subi.w  #$A8,d6
                 moveq   #$45,d7                         ; 'E'
-Boss_ShiperScrollFillLowerSpan:                         ; CODE XREF: Boss_ShiperScrollUpdate+B6   j  ; was: loc_370FA
+Boss_ShiperScrollFillLowerSpan:                         ; CODE XREF: Boss_ShiperUpdatePositionAndLineScroll+B6   j  ; was: loc_370FA
                 move.w  d6,(a1)
                 subq.w  #4,a1
                 dbf     d7,Boss_ShiperScrollFillLowerSpan
                 rts
-; End of function Boss_ShiperScrollUpdate
-; Spawns angled projectile with sine/cosine calculated velocity
-Boss_ShiperSpawnAngledProjectile:
-                btst    #0,(FrameCounter+1).w           ; was: sub_37104
-                bne.s   Boss_ShiperSpawnAngledProjectileReturn
+; End of function Boss_ShiperUpdatePositionAndLineScroll
+; Unreferenced helper that spawns a type-$94 object at a random table angle
+Orphaned_SpawnType94RandomAngle:                        ; was: sub_37104
+                btst    #0,(FrameCounter+1).w
+                bne.s   Orphaned_SpawnType94RandomAngleReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   Boss_ShiperSpawnAngledProjectileReturn
+                bne.s   Orphaned_SpawnType94RandomAngleReturn
                 movea.l #Projectile_SpawnSpriteFrames,a1
                 jsr     (Sprite_InitType94FromTable).l
                 move.w  (RandomNumberState).w,d0
@@ -120,7 +120,7 @@ Boss_ShiperSpawnAngledProjectile:
                 move.b  #$40,$21(a0)                    ; '@'
                 move.l  #$F808F808,$2C(a0)
                 move.w  #$14,$26(a0)
-Boss_ShiperSpawnAngledProjectileReturn:                 ; CODE XREF: Boss_ShiperSpawnAngledProjectile+6   j  ; was: locret_3715E
-                                        ; Boss_ShiperSpawnAngledProjectile+E   j
+Orphaned_SpawnType94RandomAngleReturn:                  ; CODE XREF: Orphaned_SpawnType94RandomAngle+6   j  ; was: locret_3715E
+                                        ; Orphaned_SpawnType94RandomAngle+E   j
                 rts
-; End of function Boss_ShiperSpawnAngledProjectile
+; End of function Orphaned_SpawnType94RandomAngle

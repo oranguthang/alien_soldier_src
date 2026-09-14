@@ -342,7 +342,7 @@ PasswordValidation_RenderMatch:                         ; CODE XREF: PasswordMen
                 jsr     (Sound_QueueRequest).l
                 move.w  #$70,(GameModeIndex).w          ; 'p'
                 clr.w   (GameSubstateIndex).w
-                jmp     UI_SetPasswordConfirmFlag
+                jmp     Password_InitializeSelectedStage
 ; ---------------------------------------------------------------------------
 PasswordInput_WaitForConfirm:                           ; CODE XREF: PasswordMenu_HandleInput+25C   j  ; was: locret_A7DA
                                         ; PasswordMenu_HandleInput+2A0   j

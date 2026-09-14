@@ -247,7 +247,7 @@ WeaponSetup_UpdateScreen_HandleExit:                    ; CODE XREF: WeaponSetup
                 move.w  #$34,(GameModeIndex).w          ; '4'
                 clr.w   (GameSubstateIndex).w
                 jsr     (Sound_QueueStageBGMOrStop).l
-                jmp     UI_InitializeGameVariables
+                jmp     Game_InitializeNewSession
 ; ---------------------------------------------------------------------------
 ; Leaves weapon setup through the continue-screen route
 WeaponSetup_ExitToContinueScreen:                       ; CODE XREF: WeaponSetup_UpdateScreen+78   j  ; was: loc_1F11C

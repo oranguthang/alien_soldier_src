@@ -118,7 +118,7 @@ TitleScreen_CheckConfirm:                               ; CODE XREF: TitleScreen
                 tst.w   (DemoPlaybackActive).w
                 beq.s   TitleScreen_DispatchSelection
                 move.w  #$70,(GameModeIndex).w          ; 'p'
-                jsr     (UI_InitializeGameVariables).l
+                jsr     (Game_InitializeNewSession).l
                 move.w  (DemoStageTableIndex).w,(StageTableIndex).w
                 rts
 ; ---------------------------------------------------------------------------
@@ -138,7 +138,7 @@ TitleScreen_OpenPassword:                               ; CODE XREF: TitleScreen
 ; ---------------------------------------------------------------------------
 TitleScreen_StartGame:                                  ; CODE XREF: TitleScreen_Update+A2   j  ; was: loc_952C
                 move.w  #$70,(GameModeIndex).w          ; 'p'
-                jmp     UI_InitializeGameVariables
+                jmp     Game_InitializeNewSession
 ; ---------------------------------------------------------------------------
 TitleScreen_UpdateAndRender:                            ; CODE XREF: TitleScreen_Update+4   j  ; was: loc_9538
                                         ; TitleScreen_Update+68   j
