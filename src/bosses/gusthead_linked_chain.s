@@ -226,7 +226,7 @@ Boss_GustheadLinkedChainTerminalWaitAndFire:            ; DATA XREF: ROM:000313C
 ; Duplicate of Math_LookupSineCosinePair used by later enemy code
 ; In: d0.w = even angle-table offset. Out: d0.w = cosine, d1.w = sine
 Math_LookupSineCosinePairDuplicate:                     ; CODE XREF: Stage18_SegmentedWormEmitParticle+42   p  ; was: sub_3133A
-                                        ; Stage18_SegmentedWormRandomizeVelocity+E   p
+                                        ; Stage18_SegmentedWormGetRandomScatterVelocity+E   p
                 lea     (Math_QuarterSineTable).l,a0
                 move.w  (a0,d0.w),d1
                 addi.w  #$80,d0

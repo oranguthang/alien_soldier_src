@@ -224,15 +224,15 @@ Stage18_SegmentedWormEnableSegmentCollision:            ; CODE XREF: Stage18_Seg
                 dbf     d7,Stage18_SegmentedWormEnableSegmentCollision
                 clr.w   $44(a1)
                 clr.w   $54(a5)
-                bsr.w   Stage18_SegmentedWormInitSegment
+                bsr.w   Stage18_SegmentedWormActivateSegment
                 move.l  #Stage18_SegmentedWormSpriteMapping00,8(a5)
                 bra.w   Stage18_SegmentedWormSetLaunchVelocity
 ; End of function Stage18_SegmentedWormSpawnSegments
-; Advances a newly created worm segment to its active state
-Stage18_SegmentedWormInitSegment:                       ; CODE XREF: Stage18_SegmentedWormSpawnSegments+B4   p  ; was: sub_2FFE0
+; Advances a newly created worm segment from state zero to active state two
+Stage18_SegmentedWormActivateSegment:                   ; CODE XREF: Stage18_SegmentedWormSpawnSegments+B4   p  ; was: sub_2FFE0
                                         ; sub_304A4   j
                 addq.w  #2,4(a5)
-; End of function Stage18_SegmentedWormInitSegment
+; End of function Stage18_SegmentedWormActivateSegment
 ; Initializes shared collision and display fields for a worm segment
 Stage18_SegmentedWormInitCollision:                     ; CODE XREF: Stage18_SegmentedWormSpawnSegments   p  ; was: sub_2FFE4
                 move.w  #$CD00,2(a5)
@@ -423,7 +423,7 @@ Stage18_SegmentedWormAdvanceFollower:                   ; CODE XREF: Stage18_Seg
 ; End of function Stage18_SegmentedWormAdvanceFollower
 ; Scatters the twelve linked worm segments and emits reward particles
 Stage18_SegmentedWormScatterSegments:                   ; DATA XREF: ROM:0002FF18   o  ; was: sub_302CC
-                bsr.w   Stage18_SegmentedWormRandomizeVelocity
+                bsr.w   Stage18_SegmentedWormGetRandomScatterVelocity
                 move.l  d0,$18(a5)
                 move.l  d1,$1C(a5)
                 clr.w   $56(a5)
@@ -441,7 +441,7 @@ Stage18_SegmentedWormScatterNextSegment:                ; CODE XREF: Stage18_Seg
                 move.w  $10(a4),$10(a0)
                 move.w  $14(a4),$14(a0)
 Stage18_SegmentedWormConfigureScatteredSegment:         ; CODE XREF: Stage18_SegmentedWormScatterSegments+30   j
-                bsr.w   Stage18_SegmentedWormRandomizeVelocity
+                bsr.w   Stage18_SegmentedWormGetRandomScatterVelocity
                 move.l  d0,$18(a4)
                 move.l  d1,$1C(a4)
                 move.w  d5,$56(a4)
@@ -455,8 +455,8 @@ Stage18_SegmentedWormConfigureScatteredSegment:         ; CODE XREF: Stage18_Seg
                 addq.w  #2,4(a5)
                 rts
 ; End of function Stage18_SegmentedWormScatterSegments
-; Calculates random velocity at angle toward player
-Stage18_SegmentedWormRandomizeVelocity:                 ; CODE XREF: Stage18_SegmentedWormScatterSegments   p  ; was: sub_3034A
+; Returns a randomized scatter velocity from the lower half of the angle table
+Stage18_SegmentedWormGetRandomScatterVelocity:          ; CODE XREF: Stage18_SegmentedWormScatterSegments   p  ; was: sub_3034A
                                         ; sub_302CC:Stage18_SegmentedWormConfigureScatteredSegment   p
                 jsr     (RandomNumber).l
                 andi.w  #$FE,d0
@@ -467,7 +467,7 @@ Stage18_SegmentedWormRandomizeVelocity:                 ; CODE XREF: Stage18_Seg
                 ext.l   d1
                 asl.l   #3,d1
                 rts
-; End of function Stage18_SegmentedWormRandomizeVelocity
+; End of function Stage18_SegmentedWormGetRandomScatterVelocity
 ; Updates falling entity that periodically spawns projectiles
 Stage18_SegmentedWormUpdateFallingSegment:              ; DATA XREF: ROM:0002FF1A   o  ; was: sub_30366
                                         ; ROM:000304A2   o
@@ -515,14 +515,14 @@ Stage18_SegmentedWormAdvanceSpinFrame:                  ; CODE XREF: Stage18_Seg
 ; Selects a directional animation frame from the segment velocity
 Stage18_SegmentedWormGetDirectionFrame:                 ; CODE XREF: Stage18_SegmentedWormUpdateHead+10   p  ; was: sub_303F0
                                         ; Stage18_SegmentedWormUpdateFollower+18   p
-                bsr.w   Stage18_SegmentedWormClassifyRightwardMotion
+                bsr.w   Stage18_SegmentedWormClassifyVelocityDirection
                 tst.l   $18(a5)
                 bpl.w   Entity_UpdateReturn
                 addi.w  #$20,d0                         ; ' '
                 rts
 ; End of function Stage18_SegmentedWormGetDirectionFrame
-; Classifies vertical motion when horizontal velocity is nonnegative
-Stage18_SegmentedWormClassifyRightwardMotion:           ; CODE XREF: Stage18_SegmentedWormGetDirectionFrame   p  ; was: sub_30402
+; Classifies horizontal and vertical velocity into a directional frame index
+Stage18_SegmentedWormClassifyVelocityDirection:         ; CODE XREF: Stage18_SegmentedWormGetDirectionFrame   p  ; was: sub_30402
                 move.l  $1C(a5),d1
                 move.l  $18(a5),d0
                 bmi.s   Stage18_SegmentedWormClassifyLeftwardMotion
@@ -535,19 +535,19 @@ Stage18_SegmentedWormClassifyRightwardMotion:           ; CODE XREF: Stage18_Seg
                 bcc.s   Stage18_SegmentedWormFrameRightUp
                 bra.s   Stage18_SegmentedWormFrameRightLevel
 ; ---------------------------------------------------------------------------
-Stage18_SegmentedWormClassifyRightwardDownMotion:       ; CODE XREF: Stage18_SegmentedWormClassifyRightwardMotion+C   j
+Stage18_SegmentedWormClassifyRightwardDownMotion:       ; CODE XREF: Stage18_SegmentedWormClassifyVelocityDirection+C   j
                 cmpi.l  #$40000,d1
                 bcc.s   Stage18_SegmentedWormFrameSteepDown
                 cmpi.l  #$10000,d1
                 bcc.s   Stage18_SegmentedWormFrameRightDown
                 bra.s   Stage18_SegmentedWormFrameRightLevel
-; End of function Stage18_SegmentedWormClassifyRightwardMotion
+; End of function Stage18_SegmentedWormClassifyVelocityDirection
 Stage18_SegmentedWormUnusedReturn:
                 rts
 ; End of function Stage18_SegmentedWormUnusedReturn
 
 ; Classifies vertical motion when horizontal velocity is negative
-Stage18_SegmentedWormClassifyLeftwardMotion:            ; CODE XREF: Stage18_SegmentedWormClassifyRightwardMotion+8   j  ; was: sub_30438
+Stage18_SegmentedWormClassifyLeftwardMotion:            ; CODE XREF: Stage18_SegmentedWormClassifyVelocityDirection+8   j  ; was: sub_30438
                 tst.l   d1
                 bpl.s   Stage18_SegmentedWormClassifyLeftwardDownMotion
                 neg.l   d1
@@ -564,16 +564,16 @@ Stage18_SegmentedWormClassifyLeftwardDownMotion:        ; CODE XREF: Stage18_Seg
                 bcc.s   Stage18_SegmentedWormFrameLeftDown
                 bra.s   Stage18_SegmentedWormFrameLeftLevel
 ; ---------------------------------------------------------------------------
-Stage18_SegmentedWormFrameRightLevel:                   ; CODE XREF: Stage18_SegmentedWormClassifyRightwardMotion+20   j
-                                        ; Stage18_SegmentedWormClassifyRightwardMotion+32   j
+Stage18_SegmentedWormFrameRightLevel:                   ; CODE XREF: Stage18_SegmentedWormClassifyVelocityDirection+20   j
+                                        ; Stage18_SegmentedWormClassifyVelocityDirection+32   j
                 move.w  #0,d0
                 rts
 ; ---------------------------------------------------------------------------
-Stage18_SegmentedWormFrameRightDown:                    ; CODE XREF: Stage18_SegmentedWormClassifyRightwardMotion+30   j
+Stage18_SegmentedWormFrameRightDown:                    ; CODE XREF: Stage18_SegmentedWormClassifyVelocityDirection+30   j
                 move.w  #4,d0
                 rts
 ; ---------------------------------------------------------------------------
-Stage18_SegmentedWormFrameSteepDown:                    ; CODE XREF: Stage18_SegmentedWormClassifyRightwardMotion+28   j
+Stage18_SegmentedWormFrameSteepDown:                    ; CODE XREF: Stage18_SegmentedWormClassifyVelocityDirection+28   j
                                         ; Stage18_SegmentedWormClassifyLeftwardMotion+1E   j
                 move.w  #8,d0
                 rts
@@ -591,13 +591,13 @@ Stage18_SegmentedWormFrameLeftUp:                       ; CODE XREF: Stage18_Seg
                 move.w  #$14,d0
                 rts
 ; ---------------------------------------------------------------------------
-Stage18_SegmentedWormFrameSteepUp:                      ; CODE XREF: Stage18_SegmentedWormClassifyRightwardMotion+16   j
+Stage18_SegmentedWormFrameSteepUp:                      ; CODE XREF: Stage18_SegmentedWormClassifyVelocityDirection+16   j
                                         ; Stage18_SegmentedWormClassifyLeftwardMotion+C   j
                 move.w  #$18,d0
                 rts
 ; End of function Stage18_SegmentedWormClassifyLeftwardMotion
 ; Returns the rightward/upward directional frame index
-Stage18_SegmentedWormFrameRightUp:                      ; CODE XREF: Stage18_SegmentedWormClassifyRightwardMotion+1E   j  ; was: sub_3048C
+Stage18_SegmentedWormFrameRightUp:                      ; CODE XREF: Stage18_SegmentedWormClassifyVelocityDirection+1E   j  ; was: sub_3048C
                 move.w  #$1C,d0
                 rts
 ; End of function Stage18_SegmentedWormFrameRightUp
@@ -616,7 +616,7 @@ Stage18_SegmentedWormSegmentStateTable: dc.w    Stage18_SegmentedWormSegmentInit
 ; Attributes: thunk
 ; Initializes a linked worm segment
 Stage18_SegmentedWormSegmentInit:                       ; DATA XREF: ROM:Stage18_SegmentedWormSegmentStateTable   o  ; was: sub_304A4
-                bra.w   Stage18_SegmentedWormInitSegment
+                bra.w   Stage18_SegmentedWormActivateSegment
 ; End of function Stage18_SegmentedWormSegmentInit
 ; Skips follower propagation when horizontal velocity is zero
 Stage18_SegmentedWormSegmentFollow:                     ; DATA XREF: ROM:000304A0   o  ; was: sub_304A8

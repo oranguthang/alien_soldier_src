@@ -7645,3 +7645,18 @@ source map now enforce that boundary.
 Ten new exact-address records raise the audit registry from 13,335 to 13,345.
 The reproducible semantic-review queue falls from 3,008 to 2,998 and its
 actionable upper bound from 2,495 to 2,485; provenance remains 16,051.
+
+The remaining five-name module, `enemies/stage_18.s`, receives a focused audit
+of its segmented-worm motion helpers. The state-zero helper only advances field
+4 to active state two, so it becomes `Stage18_SegmentedWormActivateSegment`.
+The scatter helper selects a random lower-half-table angle and never reads the
+player, so it becomes `Stage18_SegmentedWormGetRandomScatterVelocity` and its
+misleading "toward player" comment is removed.
+
+The former rightward classifier is the common entry for both horizontal signs:
+it loads X/Y velocity and branches internally to the leftward half. It therefore
+becomes `Stage18_SegmentedWormClassifyVelocityDirection`. The leftward branch
+and right-up leaf retain their names after their exact returned frame ranges are
+verified. Five new exact-address records raise the audit registry from 13,345
+to 13,350. The queue falls from 2,998 to 2,993 and its actionable upper bound
+from 2,485 to 2,480; provenance remains 16,051.
