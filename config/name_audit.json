@@ -1305,7 +1305,7 @@
       "legacy_name": "sub_2BCFE",
       "evidence": "static",
       "basis": [
-        "The routine selects pickup variant zero and enters the common initializer, which installs entity type 0x194 and the small resource amount and sprite mapping.",
+        "The routine selects pickup variant zero and enters the common initializer, which installs entity type 0x194 and the small health-restoration amount and sprite mapping.",
         "It does not render a sprite or merely clear a register; its callers invoke it when combat objects are destroyed."
       ]
     },
@@ -1317,7 +1317,7 @@
       "evidence": "static",
       "basis": [
         "The routine selects pickup variant one before the common type-0x194 initializer.",
-        "Variant one uses the larger resource amount, pickup sound, and pickup sprite mapping; no explosion controller is created."
+        "Variant one uses the larger health-restoration amount, pickup sound, and pickup sprite mapping; no explosion controller is created."
       ]
     },
     {
@@ -1339,7 +1339,7 @@
       "evidence": "static",
       "basis": [
         "Entity type 0x194 is installed by the pickup initializer and maps to this update handler.",
-        "On collection the handler plays the pickup sound, adds 500 BCD score, increases the player's resource up to its maximum, and starts the transient value display."
+        "On collection the handler plays the pickup sound, adds 500 BCD score, increases PlayerHealth up to PlayerMaxHealth, and starts the transient value display."
       ]
     },
     {
@@ -17536,6 +17536,24 @@
     {"address":"0x0133A0","previous_name":"UI_AppendHUDSpriteList_AppendDynamicStrip","current_name":"UI_AppendHUDSpriteList_AppendDynamicStrip","legacy_name":"loc_133A0","evidence":"static","basis":["The setup selects starting Y=$A0, size/link=$0700, the HUDDynamicStripTileAttr tile word, and X=$60 plus HUDDynamicStripXOffset, then seeds a six-iteration DBF loop."]},
     {"address":"0x0133B2","previous_name":"UI_AppendHUDSpriteList_DynamicStripLoop","current_name":"UI_AppendHUDSpriteList_DynamicStripLoop","legacy_name":"loc_133B2","evidence":"static","basis":["Each iteration emits one complete four-word OAM descriptor, advances only Y by $20, and retains the shared tile and X fields; D7 starts at five, so exactly six vertically spaced entries are written."]},
     {"address":"0x0133C2","previous_name":"UI_SubmitHUDSpriteList","current_name":"UI_SubmitHUDSpriteList","legacy_name":"loc_133C2","evidence":"static","basis":["Both dynamic-strip exit paths converge here; the entry writes the $FFFF list terminator at A1 and tail-jumps to Sprite_AppendOAMEntries with the list start still in A0."]},
-    {"address":"0x0133CC","previous_name":"UI_WeaponIndicatorXTable","current_name":"UI_WeaponIndicatorXTable","legacy_name":"word_133CC","evidence":"static","basis":["UI_AppendHUDSpriteList_UseSelectedWeaponIndicatorX indexes these four words with WeaponSlotOffset values zero, two, four, and six; the values $160, $178, $190, and $1A8 are emitted as the weapon indicator's X coordinate."]}
+    {"address":"0x0133CC","previous_name":"UI_WeaponIndicatorXTable","current_name":"UI_WeaponIndicatorXTable","legacy_name":"word_133CC","evidence":"static","basis":["UI_AppendHUDSpriteList_UseSelectedWeaponIndicatorX indexes these four words with WeaponSlotOffset values zero, two, four, and six; the values $160, $178, $190, and $1A8 are emitted as the weapon indicator's X coordinate."]},
+    {"address":"0x02BCFC","previous_name":"Entity_EmptyState6","current_name":"Entity_Type164NoOp","legacy_name":"nullsub_6","evidence":"static","basis":["Entity_UpdateHandlerTable stores this sole RTS at table offset $164, so it is the no-op handler for object type $164.","The former State6 suffix merely repeated the imported nullsub ordinal and did not describe a game state."]},
+    {"address":"0x02BD00","previous_name":"Pickup_SpawnSmall","current_name":"Pickup_SpawnSmall","legacy_name":"loc_2BD00","evidence":"static","basis":["This target-object entry sets variant index D7 to zero and enters the common type-$194 initializer, selecting health amount $1E, sound $46, and SharedCombatSpriteAnimation28."]},
+    {"address":"0x02BD06","previous_name":"Pickup_SpawnSmallFromCurrentObjectAlt","current_name":"UnreferencedPickup_SpawnSmallFromCurrentObjectViaThunk","legacy_name":"sub_2BD06","evidence":"static","basis":["No reconstructed instruction or table refers to this entrypoint.","It copies A5 to the target pointer, selects variant zero, and branches through the one-branch initializer thunk, making its equivalence and unreferenced status explicit."]},
+    {"address":"0x02BD0E","previous_name":"Pickup_SpawnLargeFromCurrentObject","current_name":"UnreferencedPickup_SpawnLargeFromCurrentObject","legacy_name":"sub_2BD0E","evidence":"static","basis":["No reconstructed instruction or table refers to this entrypoint.","It copies A5 to A0 and falls directly into Pickup_SpawnLarge, which selects variant one before common initialization."]},
+    {"address":"0x02BD16","previous_name":"Pickup_SpawnLargeFromCurrentObjectAlt","current_name":"UnreferencedPickup_SpawnLargeFromCurrentObjectViaThunk","legacy_name":"sub_2BD16","evidence":"static","basis":["No reconstructed instruction or table refers to this entrypoint.","It copies A5 to A0, falls into the variant-one selector, and reaches common initialization through the explicit thunk."]},
+    {"address":"0x02BD18","previous_name":"Pickup_SelectLargeSize","current_name":"Pickup_SelectLargeSize","legacy_name":"loc_2BD18","evidence":"static","basis":["Random selection and direct Artemis projectile callers enter here; it sets variant index D7 to one and branches through the common initializer thunk."]},
+    {"address":"0x02BD20","previous_name":"Pickup_SelectRandomSize","current_name":"Pickup_SelectRandomSize","legacy_name":"loc_2BD20","evidence":"static","basis":["The entry defaults D7 to the small variant, ANDs RandomNumberState with the caller's D0 mask, and selects the large variant only when that result is zero."]},
+    {"address":"0x02BD2E","previous_name":"Pickup_SpawnSelectedSize","current_name":"Pickup_InitializeSelectedSizeThunk","legacy_name":"sub_2BD2E","evidence":"static","basis":["The entry contains only a short branch to Pickup_InitializeSelectedSize and is targeted by the two unreferenced alternate current-object wrappers; it neither selects nor spawns a size itself."]},
+    {"address":"0x02BD30","previous_name":"Pickup_SpawnSelectedSizeIfResourceNeeded","current_name":"UnreferencedPickup_InitializeSelectedSizeIfHealthNeeded","legacy_name":"sub_2BD30","evidence":"static","basis":["No reconstructed instruction or table refers to this entrypoint.","It compares PlayerHealth directly with PlayerMaxHealth, initializes the selected pickup only when they differ, and otherwise falls through to deactivate the target; the former generic resource wording was unsupported."]},
+    {"address":"0x02BD3A","previous_name":"Pickup_DeactivateTargetObject","current_name":"Pickup_DeactivateTargetObject","legacy_name":"loc_2BD3A","evidence":"static","basis":["Both the full-health guard and the active-pickup limit converge here; it assigns type $10 to the target record, sets object flag bit four, and returns without installing pickup data."]},
+    {"address":"0x02BD46","previous_name":"Pickup_InitializeSelectedSize","current_name":"Pickup_InitializeSelectedSize","legacy_name":"loc_2BD46","evidence":"static","basis":["The initializer rejects creation when ActivePickupCountMinus1 is at least six, otherwise installs type $194, collision/display fields, lifetime $A0, and the sound, health amount, and mapping selected by D7."]},
+    {"address":"0x02BDA2","previous_name":"Pickup_SoundIds","current_name":"Pickup_SoundIds","legacy_name":"byte_2BDA2","evidence":"static","basis":["The common initializer indexes these bytes with unscaled variant index zero or one and stores sound IDs $46 or $47 in pickup field $4C for collection playback."]},
+    {"address":"0x02BDA4","previous_name":"Pickup_ResourceAmounts","current_name":"Pickup_HealthRestoreAmounts","legacy_name":"word_2BDA4","evidence":"static","basis":["After scaling variant index to a word offset, the initializer stores $1E or $64 in pickup field $48; Pickup_Update adds that field only to PlayerHealth and caps it at PlayerMaxHealth."]},
+    {"address":"0x02BDA8","previous_name":"Pickup_SpriteMappings","current_name":"Pickup_SpriteMappings","legacy_name":"off_2BDA8","evidence":"static","basis":["The twice-scaled variant index selects SharedCombatSpriteAnimation28 for the small pickup or SharedCombatSpriteAnimation27 for the large pickup, and the initializer stores that pointer in object field eight."]},
+    {"address":"0x02BDD2","previous_name":"Pickup_CheckCollection","current_name":"Pickup_CheckCollection","legacy_name":"loc_2BDD2","evidence":"static","basis":["The update reaches this path before and during the final blinking lifetime; only the required pair of collision-flag outcomes enters sound, score, and health restoration, while other outcomes continue motion."]},
+    {"address":"0x02BE0E","previous_name":"Pickup_StoreResourceValue","current_name":"Pickup_StoreHealthAndStartDeltaDisplay","legacy_name":"loc_2BE0E","evidence":"static","basis":["Dead-player and capped-health branches converge here with D0 holding the value to preserve or store in PlayerHealth.","The path also copies the pickup's nominal health amount to HealthDeltaDisplayValue and starts its display timer at $30; no generic resource is accessed."]},
+    {"address":"0x02BE1E","previous_name":"Pickup_Remove","current_name":"Pickup_Remove","legacy_name":"loc_2BE1E","evidence":"static","basis":["Lifetime expiry and successful collection converge here; the sole operation sets object flag bit four before returning."]},
+    {"address":"0x02BE26","previous_name":"Pickup_UpdateMotion","current_name":"Pickup_UpdateFlipAndStageMotion","legacy_name":"loc_2BE26","evidence":"static","basis":["This non-collection tail cycles horizontal and vertical sprite flip bits from FrameCounter, then adds StageMotionXDelta and StageMotionYDelta to the pickup's 16.16 position fields."]}
   ]
 }

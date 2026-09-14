@@ -88,7 +88,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Proj
                 dc.l    Projectile_AntroidUpdate
                 dc.l    Boss_JokerMain
                 dc.l    Physics_CheckHeightBoundary
-                dc.l    Entity_EmptyState6
+                dc.l    Entity_Type164NoOp
                 dc.l    UI_DebugSpritePositionEditor
                 dc.l    Object_ClearInactiveTypes12CAnd134
                 dc.l    Entity_UpdateFlyingNeoGravity

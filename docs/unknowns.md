@@ -175,7 +175,7 @@ The weapon-selection object pass reduced the count to 10,106 by replacing its
 that `0x02BB86--0x02BCFB` manages weapon-selection animation, input, counters,
 and palette refresh rather than enemy or boss AI. The block therefore moved to
 `src/ui/weapon_selection_object.s`; the following resource-pickup runtime begins
-at the next dispatch-table handler in `src/actors/resource_pickups.s`.
+at the next dispatch-table handler in `src/actors/health_pickups.s`.
 The three corrected generated function claims are recorded in the name audit.
 
 The pickup and explosion pass reduced the count to 10,077 by replacing all 29
@@ -183,7 +183,7 @@ address-derived definitions across the former shared-combat and
 Snake/Bugmax blocks. Object type `$194` adds score and player resource on
 collection; types `$1A0` and `$1A4` are the two explosion controllers created
 by the adjacent spawn routines. That evidence produced three cohesive modules:
-`resource_pickups.s` (145 lines), `explosion_patterns.s` (363 lines), and
+`health_pickups.s` (145 lines), `explosion_patterns.s` (363 lines), and
 `bugmax_debris_spawner.s` (98 lines). Generated boss-state, enemy-health, and
 Snake-projectile claims were removed and recorded in the name audit.
 
@@ -8102,3 +8102,28 @@ Twelve new exact-address records raise the registry from 13,515 to 13,527. The
 queue falls from 2,827 to 2,815 and its actionable upper bound from 2,314 to
 2,302; provenance and the 513 classified binary-backed end aliases remain
 unchanged. The HUD sprite-list module now has zero pending current names.
+
+The eighteen remaining entries in the former `actors/resource_pickups.s` are
+audited against the entity dispatch table, every reconstructed caller, the
+variant tables, collision flags, and the only state values modified on
+collection. The family restores `PlayerHealth` and caps it at
+`PlayerMaxHealth`; it does not manipulate an abstract resource. The module is
+therefore renamed to `actors/health_pickups.s`, and the amount table and final
+store path now state their health-specific roles.
+
+The imported `Entity_EmptyState6` name is also rejected. Its sole RTS occupies
+offset `$164` in `Entity_UpdateHandlerTable`, so `Entity_Type164NoOp` records
+the actual structural identity instead of preserving IDA's sixth-nullsub
+ordinal as a fictional state number. Three duplicate current-object wrappers
+have no reconstructed callers and are marked unreferenced; their alternate
+paths are distinguished by the one-branch initializer thunk rather than an
+unsupported `Alt` suffix. The remaining entries explicitly cover small/large
+selection, the six-active-pickup ceiling, type-`$194` initialization, the two
+health amounts, collection, expiry, flip cycling, and stage-relative motion.
+
+Nine source renames retain semantic history in the exact-address audit while
+the 16,051 legacy provenance mappings remain unchanged. Eighteen records raise
+the audit registry from 13,527 to 13,545. The pending queue falls from 2,815 to
+2,797 and its actionable upper bound from 2,302 to 2,284; the 513 classified
+binary-backed end aliases remain unchanged. The health-pickup module now has
+zero pending current names.

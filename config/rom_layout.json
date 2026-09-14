@@ -243,7 +243,7 @@
     { "file": "src/projectiles/proximity_and_falling_hazards.s", "subsystem": "projectiles", "start": "0x02B6D4", "end": "0x02BAB3" },
     { "file": "src/actors/max_health_upgrade.s", "subsystem": "actors", "start": "0x02BAB4", "end": "0x02BB6F" },
     { "file": "src/ui/weapon_selection_object.s", "subsystem": "ui", "start": "0x02BB70", "end": "0x02BCFB" },
-    { "file": "src/actors/resource_pickups.s", "subsystem": "actors", "start": "0x02BCFC", "end": "0x02BE55" },
+    { "file": "src/actors/health_pickups.s", "subsystem": "actors", "start": "0x02BCFC", "end": "0x02BE55" },
     { "file": "src/effects/explosion_patterns.s", "subsystem": "effects", "start": "0x02BE56", "end": "0x02C253" },
     { "file": "src/projectiles/bugmax_debris_spawner.s", "subsystem": "projectiles", "start": "0x02C254", "end": "0x02C339" },
     { "file": "src/enemies/spawn_and_movement.s", "subsystem": "enemies", "start": "0x02C33A", "end": "0x02C6A7" },

@@ -156,7 +156,7 @@
                 include "src/projectiles/proximity_and_falling_hazards.s"
                 include "src/actors/max_health_upgrade.s"
                 include "src/ui/weapon_selection_object.s"
-                include "src/actors/resource_pickups.s"
+                include "src/actors/health_pickups.s"
                 include "src/effects/explosion_patterns.s"
                 include "src/projectiles/bugmax_debris_spawner.s"
                 include "src/enemies/spawn_and_movement.s"
