@@ -28,7 +28,7 @@ Boss_ShiperSpawnDebrisReturn:                           ; CODE XREF: Boss_Shiper
 ; End of function Boss_ShiperSpawnDebris
 ; Rebuilds Shiper's line-scroll spans and derives its screen position
 Boss_ShiperUpdatePositionAndLineScroll:                 ; CODE XREF: Boss_ShiperSetupState+140   j  ; was: sub_37048
-                                        ; Boss_ShiperUpdateMain   p
+                                        ; Boss_ShiperUpdateMotionPipeline   p
                 movea.w #(HScrollPlaneBRow32-M68K_RAM),a0
                 moveq   #$FFFFFF80,d0
                 move.w  #$BF,d7

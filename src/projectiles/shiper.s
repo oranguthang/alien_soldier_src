@@ -120,7 +120,7 @@ Projectile_ShiperOscillatingShotApplyRightAcceleration:  ; CODE XREF: Projectile
                 rts
 ; End of function Projectile_ShiperOscillatingShot
 ; Spawns four projectiles in circular pattern with angle calculation
-Boss_ShiperSpawnCircleShot:                             ; CODE XREF: Boss_ShiperSpinAttack+52   p  ; was: sub_37370
+Boss_ShiperSpawnCircleShot:                             ; CODE XREF: Boss_ShiperUpdateSpinShotCycle+52   p  ; was: sub_37370
                 moveq   #0,d5
                 moveq   #$FFFFFFE0,d6
                 moveq   #3,d7

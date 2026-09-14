@@ -184,7 +184,7 @@ Boss_ShiperSetupNextChainPart:                          ; CODE XREF: Boss_Shiper
                 move.w  #$10,(a0)
                 movea.l #Boss_ShiperObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l
-                bsr.w   Boss_ShiperTentaclePosition
+                bsr.w   Boss_ShiperUpdateTentaclesAndChainParts
                 bra.w   Boss_ShiperUpdatePositionAndLineScroll
 ; End of function Boss_ShiperSetupState
 ; ---------------------------------------------------------------------------
@@ -210,7 +210,7 @@ Boss_ShiperAttackDecisionResetMotion:                   ; CODE XREF: Boss_Shiper
 ; Updates boss state and spawns projectiles during attack phase
 Boss_ShiperUpdateAttackAndSpawnProjectile:              ; CODE XREF: Boss_ShiperAttackDecision+6   j  ; was: loc_3671E
                                         ; DATA XREF: ROM:000364A4   o
-                bsr.w   Boss_ShiperUpdateMain
+                bsr.w   Boss_ShiperUpdateMotionPipeline
                 bsr.w   Boss_ShiperSpawnOscillatingShot
                 cmpi.w  #2,$174(a5)
                 bne.s   Boss_ShiperAttackDecisionReturn
@@ -267,7 +267,7 @@ Boss_ShiperCheckHealthTransition:                       ; DATA XREF: ROM:000364B
 ; Waits for palette fade to reach threshold before transitioning
 Boss_ShiperCheckHealthTransition_WaitFade:              ; CODE XREF: Boss_ShiperCheckHealthTransition+6   j  ; was: loc_367CC
                                         ; DATA XREF: ROM:000364C0   o
-                bsr.w   Boss_ShiperUpdateMain
+                bsr.w   Boss_ShiperUpdateMotionPipeline
                 addi.w  #4,(BossCombatCounter).w
                 cmpi.w  #$1E0,(BossCombatCounter).w
                 bmi.s   Boss_ShiperCheckHealthTransitionReturn
@@ -290,7 +290,7 @@ Boss_ShiperInitHoverState:                              ; CODE XREF: Boss_Shiper
 ; Boss rising movement state with upward velocity accumulation
 Boss_ShiperRiseState:                                   ; DATA XREF: ROM:000364A6   o  ; was: sub_36804
                                         ; ROM:000364AE   o
-                bsr.w   Boss_ShiperUpdateMain
+                bsr.w   Boss_ShiperUpdateMotionPipeline
                 addi.l  #$1E00,$78(a5)
                 bmi.s   Boss_ShiperRiseStateCheckPosition
                 clr.l   $78(a5)
@@ -305,7 +305,7 @@ Boss_ShiperRiseStateReturn:                             ; CODE XREF: Boss_Shiper
 ; Boss hovering state with conditional movement based on timer and flags
 Boss_ShiperHoverState:                                  ; DATA XREF: ROM:000364A8   o  ; was: sub_36826
                                         ; ROM:000364B0   o
-                bsr.w   Boss_ShiperUpdateMain
+                bsr.w   Boss_ShiperUpdateMotionPipeline
                 btst    #0,$5E(a5)
                 beq.s   Boss_ShiperHoverStateReturn
                 cmpi.w  #$E,4(a5)
@@ -331,7 +331,7 @@ Boss_ShiperHoverStateReturn:                            ; CODE XREF: Boss_Shiper
 ; End of function Boss_ShiperHoverState
 ; Decreases vertical velocity and transitions when Y position negative
 Boss_ShiperDecelerateVertical:                          ; DATA XREF: ROM:000364AA   o  ; was: sub_36874
-                bsr.w   Boss_ShiperUpdateMain
+                bsr.w   Boss_ShiperUpdateMotionPipeline
                 subi.l  #$2000,$78(a5)
                 bpl.s   Boss_ShiperDecelerateVerticalCheckPosition
                 clr.l   $78(a5)
@@ -345,7 +345,7 @@ Boss_ShiperDecelerateVerticalReturn:                    ; CODE XREF: Boss_Shiper
 ; End of function Boss_ShiperDecelerateVertical
 ; Handles retreat logic with timer checks and position validation
 Boss_ShiperRetreatLogic:                                ; DATA XREF: ROM:000364AC   o  ; was: sub_36896
-                bsr.w   Boss_ShiperUpdateMain
+                bsr.w   Boss_ShiperUpdateMotionPipeline
                 btst    #0,$5E(a5)
                 beq.s   Boss_ShiperRetreatLogicReturn
                 subi.w  #$28,(BossCombatCounter).w      ; '('
@@ -361,7 +361,7 @@ Boss_ShiperRetreatLogicReturn:                          ; CODE XREF: Boss_Shiper
 ; End of function Boss_ShiperRetreatLogic
 ; Waits until the accumulated motion coordinate drops below six
 Boss_ShiperWaitForMotionThreshold:                      ; DATA XREF: ROM:000364B2   o  ; was: sub_368CC
-                bsr.w   Boss_ShiperUpdateMain
+                bsr.w   Boss_ShiperUpdateMotionPipeline
                 cmpi.w  #6,$16C(a5)
                 bpl.s   Boss_ShiperWaitForMotionThresholdReturn
                 addq.w  #2,4(a5)
@@ -372,7 +372,7 @@ Boss_ShiperWaitForMotionThresholdReturn:                ; CODE XREF: Boss_Shiper
 ; End of function Boss_ShiperWaitForMotionThreshold
 ; Count down to the shared boss-message gate while updating Shiper
 Boss_ShiperBossMessageDelayState:                       ; DATA XREF: ROM:000364B4   o  ; was: sub_368E8
-                bsr.w   Boss_ShiperUpdateMain
+                bsr.w   Boss_ShiperUpdateMotionPipeline
                 subq.w  #1,$5A(a5)
                 bpl.s   Boss_ShiperBossMessageDelayReturn
                 addq.w  #2,4(a5)
@@ -384,7 +384,7 @@ Boss_ShiperBossMessageDelayReturn:                      ; CODE XREF: Boss_Shiper
 ; End of function Boss_ShiperBossMessageDelayState
 ; Wait for the boss message and motion flags before returning to retreat
 Boss_ShiperWaitForBossMessageState:                     ; DATA XREF: ROM:000364B6   o  ; was: sub_36900
-                bsr.w   Boss_ShiperUpdateMain
+                bsr.w   Boss_ShiperUpdateMotionPipeline
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_ShiperWaitForBossMessageReturn
                 btst    #0,$5E(a5)
@@ -429,7 +429,7 @@ Boss_ShiperUpdateWithFade:                              ; CODE XREF: Boss_Shiper
                                         ; Boss_ShiperPhaseCheck+1C   j
                 jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 bsr.w   Boss_ShiperSpawnDebris
-                bra.w   Boss_ShiperUpdateMain
+                bra.w   Boss_ShiperUpdateMotionPipeline
 ; End of function Boss_ShiperUpdateWithFade
 ; Handles boss defeat sequence with sprite cleanup and screen effects
 Boss_ShiperDefeatSequence:                              ; DATA XREF: ROM:000364BA   o  ; was: sub_36990

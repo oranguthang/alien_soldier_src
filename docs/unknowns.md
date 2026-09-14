@@ -8349,3 +8349,35 @@ pending queue falls from 2,676 to 2,662 and its actionable upper bound from
 2,163 to 2,149; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. The Bugmax debris-spawner module now
 has zero pending current names.
+
+The 13 pending top-level entries in `bosses/shiper_movement.s` are audited as
+one ordered movement pipeline. Each active caller first updates line scroll and
+screen position, then runs the vertical bounce and auxiliary sprite anchors,
+dispatches horizontal motion through field `$5C`, and finally integrates
+motion phase `$16C` from derivative `$178` before dispatching rotation state
+`$174`. The former generic `UpdateMain`, `StateDispatcher`, and
+`PhysicsHandler` names hid these narrower responsibilities.
+
+The old grounded/airborne comments were unsupported. Boundary crossing in the
+vertical integrator sets bounce flag `$5E.0`; the horizontal dispatcher uses
+that event to toggle direction bit `$5E.1`. Modes A and B seed motion field
+`$4C` to `+$10000` or `-$10000` on a bounce, then select the sign of their
+`$D000` adjustment from the high word of vertical velocity `$54`.
+
+The rotation entries are likewise separated by proven state behavior. The
+initializer clears derivative and oscillator controls, the two acceleration
+families use `$4000` and `$6000` derivative steps with distinct phase limits,
+and the motion cycle applies timer- and sign-sensitive angle steps. The final
+spin-shot cycle targets angles `$110` and `$3A0`, sets Plane A shake to eight,
+queues SFX `$A1`, spawns the circle shot, subtracts `$12C` from
+`BossCombatCounter`, and resets rotation. No broader attack or damage meaning
+is assigned to the shared motion fields.
+
+The final routine updates two bounded tentacle swing angles and their direction
+frames, derives both endpoints, shifts a five-word rotation history, and
+positions five consecutive chain-part records with Y clamped at `$144`.
+Thirteen exact-address records raise the registry from 13,680 to 13,693. The
+pending queue falls from 2,662 to 2,649 and its actionable upper bound from
+2,149 to 2,136; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `bosses/shiper_movement.s` now has zero
+pending current names.
