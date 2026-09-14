@@ -7761,6 +7761,25 @@ distinction. Seven new exact-address records raise the registry from 13,396 to
 2,434 to 2,427; provenance and the 513 classified binary-backed end aliases
 remain unchanged.
 
+The eight pending entry points in `stages/stage_21_asteroids.s` are audited
+against the four-state field controller, asteroid collision states, ambient
+object flag, and four-state delayed-debris table. The field-controller names
+now distinguish the negative V-scroll gate, speed-derived spawn delay, and
+the delayed schedule/RNG coordinate selection; the former claim that spawn
+points were difficulty-selected is removed because that state never reads
+`DifficultyMode`.
+
+The object-side names now state that ambient rocks publish two half-speed
+drift velocities and expire, that either the upper or left boundary
+deactivates an asteroid, and that the shared initializer serves both colliding
+asteroids and ambient rocks. The delayed debris states explicitly begin and
+update the bobbing delay before converting to an explosion within 16
+horizontal pixels of the player. Seven connected internal labels are updated
+with their owning state names. Eight new exact-address records raise the
+registry from 13,403 to 13,411. The queue falls from 2,940 to 2,932 and its
+actionable upper bound from 2,427 to 2,419; provenance and the 513 classified
+binary-backed end aliases remain unchanged.
+
 The six pending `bosses/destroyer_proto_core.s` entries are audited from the
 type-$3B8 subtype table, root state table, six consecutive part records, and
 all combat callers. `Boss_DestroyerProtoMain` is confirmed as the root

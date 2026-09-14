@@ -28,9 +28,9 @@ Stage21_AsteroidFieldSpawnAndDispatch:                  ; CODE XREF: Stage21_Ast
 ; End of function Stage21_AsteroidFieldControllerMain
 ; ---------------------------------------------------------------------------
 Stage21_AsteroidFieldStates:    dc.w    Stage21_AsteroidFieldInit-*  ; DATA XREF: Stage21_AsteroidFieldControllerMain+3C   o  ; was: off_330EA
-                dc.w    Stage21_AsteroidFieldWaitForScroll-*
+                dc.w    Stage21_AsteroidFieldWaitForNegativeVScroll-*
                 dc.w    Stage21_AsteroidFieldSpawnRock-*
-                dc.w    Stage21_AsteroidFieldAdvanceSpawnPoint-*
+                dc.w    Stage21_AsteroidFieldWaitThenSelectSpawnPoint-*
 
 ; Initializes the Stage 21 asteroid-field controller
 Stage21_AsteroidFieldInit:                              ; DATA XREF: ROM:Stage21_AsteroidFieldStates   o  ; was: sub_330F2
@@ -44,24 +44,24 @@ Stage21_AsteroidFieldInit:                              ; DATA XREF: ROM:Stage21
                 andi.w  #3,$5C(a5)
                 rts
 ; End of function Stage21_AsteroidFieldInit
-; Waits for the required scroll direction before spawning the first rock
-Stage21_AsteroidFieldWaitForScroll:                     ; DATA XREF: ROM:000330EC   o  ; was: sub_33124
+; Waits for the negative V-scroll direction and a speed of at least four pixels
+Stage21_AsteroidFieldWaitForNegativeVScroll:            ; DATA XREF: ROM:000330EC   o  ; was: sub_33124
                 btst    #0,(SharedPatternRow0Long4).w
-                bne.s   Stage21_AsteroidFieldReturn
+                bne.s   Stage21_AsteroidFieldWaitForNegativeVScroll_Return
                 cmpi.w  #$FFFC,(AsteroidVScrollSpeed).w
-                bgt.s   Stage21_AsteroidFieldReturn
+                bgt.s   Stage21_AsteroidFieldWaitForNegativeVScroll_Return
                 addq.w  #2,4(a5)
-Stage21_AsteroidFieldReturn:                            ; CODE XREF: Stage21_AsteroidFieldWaitForScroll+6   j  ; was: locret_33138
-                                        ; Stage21_AsteroidFieldWaitForScroll+E   j
+Stage21_AsteroidFieldWaitForNegativeVScroll_Return:     ; CODE XREF: Stage21_AsteroidFieldWaitForNegativeVScroll+6   j  ; was: locret_33138
+                                        ; Stage21_AsteroidFieldWaitForNegativeVScroll+E   j
                 rts
-; End of function Stage21_AsteroidFieldWaitForScroll
+; End of function Stage21_AsteroidFieldWaitForNegativeVScroll
 ; Allocates the next large or small asteroid according to the variant schedule
 Stage21_AsteroidFieldSpawnRock:                         ; DATA XREF: ROM:000330EE   o  ; was: sub_3313A
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Stage21_AsteroidFieldSpawnReturn
                 addq.w  #2,4(a5)
-                bsr.w   Stage21_AsteroidFieldUpdateSpawnInterval
-                bsr.w   Stage21_AsteroidInitSprite
+                bsr.w   Stage21_AsteroidFieldSetSpawnDelayFromVScrollSpeed
+                bsr.w   Stage21_InitializeAsteroidObject
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 addq.w  #1,$5C(a5)
@@ -95,25 +95,25 @@ Stage21_AsteroidVariantSchedule:    dc.w    1, 0, 0, 0, 1, 0, 0, 0  ; was: word_
                 dc.w    0, 0, 1, 0, 0, 0, 1, 0
                 dc.w    0, 0, 1, 0, 0, 0, 1, 0
 
-; Derives the next asteroid spawn interval from horizontal scroll speed
-Stage21_AsteroidFieldUpdateSpawnInterval:               ; CODE XREF: Stage21_AsteroidFieldSpawnRock+C   p  ; was: sub_3322E
+; Derives the next asteroid spawn delay from the absolute V-scroll speed
+Stage21_AsteroidFieldSetSpawnDelayFromVScrollSpeed:     ; CODE XREF: Stage21_AsteroidFieldSpawnRock+C   p  ; was: sub_3322E
                 move.l  (AsteroidVScrollSpeed).w,d0
-                bpl.s   Stage21_AsteroidFieldSelectSpawnInterval
+                bpl.s   Stage21_AsteroidFieldUseVScrollSpeedMagnitude
                 neg.l   d0
-Stage21_AsteroidFieldSelectSpawnInterval:               ; CODE XREF: Stage21_AsteroidFieldUpdateSpawnInterval+4   j  ; was: loc_33236
+Stage21_AsteroidFieldUseVScrollSpeedMagnitude:          ; CODE XREF: Stage21_AsteroidFieldSetSpawnDelayFromVScrollSpeed+4   j  ; was: loc_33236
                 swap    d0
                 andi.w  #$E,d0
                 move.w  Stage21_AsteroidSpawnIntervalTable(pc,d0.w),$48(a5)
                 rts
-; End of function Stage21_AsteroidFieldUpdateSpawnInterval
+; End of function Stage21_AsteroidFieldSetSpawnDelayFromVScrollSpeed
 ; ---------------------------------------------------------------------------
 Stage21_AsteroidSpawnIntervalTable: dc.w    $30, $20, $18, $10, $C, 8, 4, 2, 2, 2  ; was: word_33244
-                                        ; DATA XREF: Stage21_AsteroidFieldUpdateSpawnInterval+E   r
+                                        ; DATA XREF: Stage21_AsteroidFieldSetSpawnDelayFromVScrollSpeed+E   r
 
-; Advances the controller through its difficulty-selected spawn points
-Stage21_AsteroidFieldAdvanceSpawnPoint:                 ; DATA XREF: ROM:000330F0   o  ; was: sub_33258
+; Waits for the spawn delay, then selects coordinates from the schedule and RNG
+Stage21_AsteroidFieldWaitThenSelectSpawnPoint:          ; DATA XREF: ROM:000330F0   o  ; was: sub_33258
                 subq.w  #1,$48(a5)
-                bne.s   Stage21_AsteroidFieldAdvanceReturn
+                bne.s   Stage21_AsteroidFieldWaitThenSelectSpawnPoint_Return
                 lea     Stage21_AsteroidSpawnPointTable(pc),a1
                 nop
                 move.w  $5C(a5),d0
@@ -127,18 +127,18 @@ Stage21_AsteroidFieldAdvanceSpawnPoint:                 ; DATA XREF: ROM:000330F
                 move.w  (a1,d0.w),$10(a5)
                 move.w  2(a1,d0.w),$14(a5)
                 subq.w  #2,4(a5)
-Stage21_AsteroidFieldAdvanceReturn:                     ; CODE XREF: Stage21_AsteroidFieldAdvanceSpawnPoint+4   j  ; was: locret_3328E
+Stage21_AsteroidFieldWaitThenSelectSpawnPoint_Return:   ; CODE XREF: Stage21_AsteroidFieldWaitThenSelectSpawnPoint+4   j  ; was: locret_3328E
                 rts
-; End of function Stage21_AsteroidFieldAdvanceSpawnPoint
+; End of function Stage21_AsteroidFieldWaitThenSelectSpawnPoint
 ; ---------------------------------------------------------------------------
 Stage21_AsteroidSpawnPointTable:    dc.w    $B0, $170, $D0, $170, $F0, $170, $110, $170, $130, $170, $150, $170, $170, $170, $190, $170  ; was: word_33290
-                                        ; DATA XREF: Stage21_AsteroidFieldAdvanceSpawnPoint+6   o
+                                        ; DATA XREF: Stage21_AsteroidFieldWaitThenSelectSpawnPoint+6   o
                 dc.w    $1B0, $170, $1D0, $170, $1D0, $150, $1D0, $130, $1D0, $110, $1D0, $F0, $1D0, $D0, $1D0, $B0
 
 ; Updates an asteroid's acceleration, bounds, collision, or ambient-rock mode
 Stage21_AsteroidMain:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_332D0
                 btst    #0,$5F(a5)
-                bne.w   Stage21_AmbientRockFollowScroll
+                bne.w   Stage21_AmbientRockUpdateDriftAndLifetime
                 tst.w   4(a5)
                 beq.s   Stage21_AsteroidDispatchCollisionState
                 btst    #0,$5E(a5)
@@ -163,9 +163,9 @@ Stage21_AsteroidClampSmallHorizontalSpeed:              ; CODE XREF: Stage21_Ast
 Stage21_AsteroidCheckUpperBounds:                       ; CODE XREF: Stage21_AsteroidMain+32   j  ; was: loc_33332
                                         ; Stage21_AsteroidMain+3C   j
                 cmpi.w  #$60,$10(a5)                    ; '`'
-                blt.w   Stage21_AsteroidRemoveAboveArena
+                blt.w   Stage21_DeactivateAsteroidOutsideUpperLeftBounds
                 cmpi.w  #$60,$14(a5)                    ; '`'
-                blt.w   Stage21_AsteroidRemoveAboveArena
+                blt.w   Stage21_DeactivateAsteroidOutsideUpperLeftBounds
 Stage21_AsteroidDispatchCollisionState:                 ; CODE XREF: Stage21_AsteroidMain+E   j  ; was: loc_33346
                 move.w  4(a5),d0
                 lea     Stage21_AsteroidCollisionStates(pc,d0.w),a0
@@ -285,8 +285,8 @@ Stage21_AsteroidDestructionReturn:                      ; CODE XREF: Stage21_Ast
                                         ; Stage21_AsteroidSpawnDestructionResult+14   j
                 rts
 ; End of function Stage21_AsteroidSpawnDestructionResult
-; Moves an ambient rock at half the current stage scroll velocity
-Stage21_AmbientRockFollowScroll:                        ; CODE XREF: Stage21_AsteroidMain+6   j  ; was: sub_334B2
+; Updates an ambient rock from half the two scroll velocities and expires it
+Stage21_AmbientRockUpdateDriftAndLifetime:              ; CODE XREF: Stage21_AsteroidMain+6   j  ; was: sub_334B2
                 move.l  (AsteroidVScrollSpeed).w,d0
                 move.l  (AsteroidFieldVelocity).w,d1
                 asr.l   #1,d0
@@ -294,19 +294,19 @@ Stage21_AmbientRockFollowScroll:                        ; CODE XREF: Stage21_Ast
                 move.l  d0,$18(a5)
                 move.l  d1,$1C(a5)
                 subq.w  #1,$48(a5)
-                bne.s   Stage21_AmbientRockReturn
+                bne.s   Stage21_AmbientRockUpdateDriftAndLifetime_Return
                 ori.w   #$200,2(a5)
-Stage21_AmbientRockReturn:                              ; CODE XREF: Stage21_AmbientRockFollowScroll+18   j  ; was: locret_334D2
+Stage21_AmbientRockUpdateDriftAndLifetime_Return:       ; CODE XREF: Stage21_AmbientRockUpdateDriftAndLifetime+18   j  ; was: locret_334D2
                 rts
-; End of function Stage21_AmbientRockFollowScroll
-; Removes an asteroid after it crosses the upper or left arena boundary
-Stage21_AsteroidRemoveAboveArena:                       ; CODE XREF: Stage21_AsteroidMain+68   j  ; was: sub_334D4
+; End of function Stage21_AmbientRockUpdateDriftAndLifetime
+; Deactivates an asteroid after it crosses the upper or left arena boundary
+Stage21_DeactivateAsteroidOutsideUpperLeftBounds:       ; CODE XREF: Stage21_AsteroidMain+68   j  ; was: sub_334D4
                                         ; Stage21_AsteroidMain+72   j
                 move.w  #$1000,2(a5)
                 rts
-; End of function Stage21_AsteroidRemoveAboveArena
-; Initializes a type-$3B0 Stage 21 asteroid sprite
-Stage21_AsteroidInitSprite:                             ; CODE XREF: Stage21_AsteroidFieldSpawnRock+10   p  ; was: sub_334DC
+; End of function Stage21_DeactivateAsteroidOutsideUpperLeftBounds
+; Initializes fields shared by spawned Stage 21 asteroids and ambient rocks
+Stage21_InitializeAsteroidObject:                       ; CODE XREF: Stage21_AsteroidFieldSpawnRock+10   p  ; was: sub_334DC
                                         ; Stage21_AsteroidFieldSpawnAmbientRock+12   p
                 move.w  #$3B0,(a0)
                 move.w  #$CC00,2(a0)
@@ -315,7 +315,7 @@ Stage21_AsteroidInitSprite:                             ; CODE XREF: Stage21_Ast
                 move.b  #$10,$23(a0)
                 clr.w   $C(a0)
                 rts
-; End of function Stage21_AsteroidInitSprite
+; End of function Stage21_InitializeAsteroidObject
 ; Periodically creates a non-colliding ambient rock at a table-selected position
 Stage21_AsteroidFieldSpawnAmbientRock:                  ; CODE XREF: Stage21_AsteroidFieldControllerMain:Stage21_AsteroidFieldSpawnAndDispatch   p  ; was: sub_334FE
                 move.w  (FrameCounter).w,d0
@@ -323,7 +323,7 @@ Stage21_AsteroidFieldSpawnAmbientRock:                  ; CODE XREF: Stage21_Ast
                 bne.s   Stage21_AsteroidAmbientSpawnReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Stage21_AsteroidAmbientSpawnReturn
-                bsr.w   Stage21_AsteroidInitSprite
+                bsr.w   Stage21_InitializeAsteroidObject
                 move.w  #$400,$E(a0)
                 clr.b   $21(a0)
                 move.b  #$60,$20(a0)                    ; '`'
@@ -384,17 +384,17 @@ Projectile_Stage21AsteroidDebrisMain:                   ; DATA XREF: ROM:Entity_
                 jmp     (a0)
 ; End of function Projectile_Stage21AsteroidDebrisMain
 ; ---------------------------------------------------------------------------
-Projectile_Stage21AsteroidDebrisStates: dc.w    Projectile_Stage21AsteroidDebrisInitDelay-*  ; DATA XREF: Projectile_Stage21AsteroidDebrisMain+4   o  ; was: off_335FA
-                dc.w    Projectile_Stage21AsteroidDebrisDelay-*
-                dc.w    Projectile_Stage21AsteroidDebrisCheckPlayer-*
+Projectile_Stage21AsteroidDebrisStates: dc.w    Projectile_Stage21AsteroidDebrisBeginDelay-*  ; DATA XREF: Projectile_Stage21AsteroidDebrisMain+4   o  ; was: off_335FA
+                dc.w    Projectile_Stage21AsteroidDebrisUpdateDelay-*
+                dc.w    Projectile_Stage21AsteroidDebrisDetonateNearPlayer-*
                 dc.w    Projectile_Stage21AsteroidDebrisInactiveState-*
 
-; Saves the initial Y coordinate and enters the debris delay
-Projectile_Stage21AsteroidDebrisInitDelay:              ; DATA XREF: ROM:Projectile_Stage21AsteroidDebrisStates   o  ; was: sub_33602
+; Saves the initial Y coordinate and enters the bobbing debris delay
+Projectile_Stage21AsteroidDebrisBeginDelay:             ; DATA XREF: ROM:Projectile_Stage21AsteroidDebrisStates   o  ; was: sub_33602
                 move.w  $14(a5),$4A(a5)
                 addq.w  #2,4(a5)
 ; Applies sine wave vertical offset to Y position based on frame counter
-Projectile_Stage21AsteroidDebrisDelay:                  ; DATA XREF: ROM:000335FC   o  ; was: loc_3360C
+Projectile_Stage21AsteroidDebrisUpdateDelay:            ; DATA XREF: ROM:000335FC   o  ; was: loc_3360C
                 move.w  (FrameCounter).w,d0
                 asr.w   #2,d0
                 andi.w  #3,d0
@@ -403,28 +403,28 @@ Projectile_Stage21AsteroidDebrisDelay:                  ; DATA XREF: ROM:000335F
                 add.w   $4A(a5),d0
                 move.w  d0,$14(a5)
                 subq.w  #1,$48(a5)
-                bne.s   Projectile_Stage21AsteroidDebrisDelayReturn
+                bne.s   Projectile_Stage21AsteroidDebrisUpdateDelay_Return
                 move.l  $4C(a5),$18(a5)
                 move.l  $50(a5),$1C(a5)
                 addq.w  #2,4(a5)
-Projectile_Stage21AsteroidDebrisDelayReturn:            ; CODE XREF: Projectile_Stage21AsteroidDebrisInitDelay+26   j  ; was: locret_3363A
+Projectile_Stage21AsteroidDebrisUpdateDelay_Return:     ; CODE XREF: Projectile_Stage21AsteroidDebrisBeginDelay+26   j  ; was: locret_3363A
                 rts
-; End of function Projectile_Stage21AsteroidDebrisInitDelay
+; End of function Projectile_Stage21AsteroidDebrisBeginDelay
 ; ---------------------------------------------------------------------------
-Projectile_Stage21AsteroidDebrisBobTable:   dc.w    $FF00, $100  ; DATA XREF: Projectile_Stage21AsteroidDebrisInitDelay+14   r  ; was: word_3363C
+Projectile_Stage21AsteroidDebrisBobTable:   dc.w    $FF00, $100  ; DATA XREF: Projectile_Stage21AsteroidDebrisBeginDelay+14   r  ; was: word_3363C
 
-; Arms debris near the player, applies lifetime logic, and stops its movement
-Projectile_Stage21AsteroidDebrisCheckPlayer:            ; DATA XREF: ROM:000335FE   o  ; was: sub_33640
+; Converts debris into an explosion within 16 horizontal pixels of the player
+Projectile_Stage21AsteroidDebrisDetonateNearPlayer:     ; DATA XREF: ROM:000335FE   o  ; was: sub_33640
                 jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$10,d0
-                bpl.s   Projectile_Stage21AsteroidDebrisReturn
+                bpl.s   Projectile_Stage21AsteroidDebrisDetonateNearPlayer_Return
                 move.w  #$C8,$26(a5)
                 jsr     (Effect_InitSharedExplosionFromCurrent).l
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-Projectile_Stage21AsteroidDebrisReturn:                 ; CODE XREF: Projectile_Stage21AsteroidDebrisCheckPlayer+A   j  ; was: locret_33660
+Projectile_Stage21AsteroidDebrisDetonateNearPlayer_Return:  ; CODE XREF: Projectile_Stage21AsteroidDebrisDetonateNearPlayer+A   j  ; was: locret_33660
                 rts
-; End of function Projectile_Stage21AsteroidDebrisCheckPlayer
+; End of function Projectile_Stage21AsteroidDebrisDetonateNearPlayer
 Projectile_Stage21AsteroidDebrisInactiveState:          ; DATA XREF: ROM:00033600   o  ; was: nullsub_76
                 rts
 ; End of function Projectile_Stage21AsteroidDebrisInactiveState
