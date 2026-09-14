@@ -681,7 +681,7 @@ Boss_BugmaxSpawnTransitionDebrisLoop:                   ; CODE XREF: Boss_Bugmax
                 movea.w Boss_BugmaxDebrisSourceObjectTable(pc,d6.w),a1
                 move.w  $10(a1),$10(a0)
                 move.w  $14(a1),$14(a0)
-                jsr     (Projectile_InitBugmaxDebris).l
+                jsr     (Projectile_InitBugmaxDebrisSpawner).l
                 addq.w  #2,d6
                 dbf     d7,Boss_BugmaxSpawnTransitionDebrisLoop
 Boss_BugmaxTransitionDebrisSpawnReturn:                 ; CODE XREF: Boss_BugmaxSpawnTransitionDebris+C   j  ; was: locret_4C6FA

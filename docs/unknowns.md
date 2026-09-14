@@ -8324,3 +8324,28 @@ falls from 2,691 to 2,676 and its actionable upper bound from 2,178 to 2,163;
 provenance, the 513 classified binary-backed end aliases, and the 379-module
 layout remain unchanged. `gameplay/projectile_slots.s` now has zero pending
 current names.
+
+The 14 pending entries in `projectiles/bugmax_debris_spawner.s` are audited as
+one type-$348 timed emitter. Its initializer stores D0 as lifetime, D1 as the
+horizontal span, D2 as the vertical separation, and seeds a random 0-31-frame
+initial delay. State two retries allocation without advancing on failure; on
+success it creates a type-$88 particle, starts an eight-frame interval, and
+alternates with the state-four countdown until the main lifetime expires.
+
+The imported rectangle wording was too broad. X is selected throughout the
+centered power-of-two span, but Y masks the random byte with the original D2
+value rather than D2 minus one. With the observed power-of-two parameters this
+selects only `-height/2` or `+height/2`. The animation branch is likewise named
+for the exact `SharedCombatSpriteAnimation05` pointer rather than an undefined
+alternate mapping.
+
+The trailing `nullsub_61` is reached by ten branches from the two explosion
+state machines for allocation failure, active timers, and initialized ring
+states. It is now the honest shared explosion-update return instead of the
+unsupported `Object_UpdateNoOpReturn` object-handler claim.
+
+Fourteen exact-address records raise the registry from 13,666 to 13,680. The
+pending queue falls from 2,676 to 2,662 and its actionable upper bound from
+2,163 to 2,149; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. The Bugmax debris-spawner module now
+has zero pending current names.

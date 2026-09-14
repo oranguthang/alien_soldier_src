@@ -39,7 +39,7 @@ Effect_SpawnRadialParticlePattern_Next:                 ; CODE XREF: Effect_Spaw
 Effect_SpawnExplosionA:                                 ; CODE XREF: Enemy_UpdateDefeatProjectile+E   p  ; was: sub_2BEBC
                                         ; Enemy_UpdateAlternateDefeatProjectile+E   p
                 jsr     (Projectile_FindFreeSlotForward).l
-                bne.w   Object_UpdateNoOpReturn
+                bne.w   Effect_ExplosionUpdateReturn
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.w  #$1A0,(a0)
                 move.w  #6,$4A(a0)
@@ -54,7 +54,7 @@ Effect_SpawnExplosionA:                                 ; CODE XREF: Enemy_Updat
 Effect_SpawnExplosionB:                                 ; CODE XREF: Enemy_ProcessObject+10   p  ; was: sub_2BEF0
                                         ; Enemy_UpdateBouncingDebrisSpawner+9A   p
                 jsr     (Projectile_FindFreeSlotForward).l
-                bne.w   Object_UpdateNoOpReturn
+                bne.w   Effect_ExplosionUpdateReturn
                 move.w  #8,$4A(a0)
                 move.w  #$1A4,(a0)
                 move.l  #SharedCombatSpriteAnimation01,8(a0)
@@ -181,7 +181,7 @@ Effect_ExplosionA_SetSpiralVelocity:                    ; DATA XREF: ROM:0002C01
 ; Advances the explosion particle's spiral motion
 Effect_ExplosionA_UpdateSpiral:                         ; DATA XREF: ROM:0002C018   o  ; was: sub_2C058
                 subq.w  #1,$5A(a5)
-                bne.w   Object_UpdateNoOpReturn
+                bne.w   Effect_ExplosionUpdateReturn
                 cmpi.w  #3,$4C(a5)
                 beq.s   Effect_ExplosionA_RestartSpiral
                 addi.w  #-$40,$5E(a5)
@@ -208,7 +208,7 @@ Effect_ExplosionALifetimeHandlers:  dc.w    Effect_ExplosionA_SpawnParticle-*  ;
 ; Spawns one explosion particle at the parent position
 Effect_ExplosionA_SpawnParticle:                        ; DATA XREF: ROM:Effect_ExplosionALifetimeHandlers   o  ; was: sub_2C08C
                 jsr     (Projectile_FindFreeSlotForward).l
-                bne.w   Object_UpdateNoOpReturn
+                bne.w   Effect_ExplosionUpdateReturn
                 move.l  #SharedCombatSpriteAnimation01,8(a0)
                 jsr     (Sprite_InitType160).l
                 move.w  $10(a5),$10(a0)
@@ -220,7 +220,7 @@ Effect_ExplosionA_SpawnParticle:                        ; DATA XREF: ROM:Effect_
 ; Counts particles and repeats or finishes the spawn loop
 Effect_ExplosionA_UpdateParticleTimer:                  ; DATA XREF: ROM:0002C088   o  ; was: sub_2C0BC
                 subq.w  #1,$48(a5)
-                bne.w   Object_UpdateNoOpReturn
+                bne.w   Effect_ExplosionUpdateReturn
                 subq.w  #1,$4A(a5)
                 beq.s   Effect_ExplosionA_FinishParticleLoop
                 subq.w  #2,4(a5)
@@ -269,7 +269,7 @@ Effect_ExplosionBParticleLoopHandlers:
 ; Spawns one particle at a random offset from the explosion center
 Effect_ExplosionB_SpawnRandomParticle:                  ; DATA XREF: ROM:Effect_ExplosionBParticleLoopHandlers   o  ; was: sub_2C112
                 jsr     (Projectile_FindFreeSlotForward).l
-                bne.w   Object_UpdateNoOpReturn
+                bne.w   Effect_ExplosionUpdateReturn
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
                 jsr     (Sprite_InitType160).l
                 move.b  (RandomNumberState).w,d0
@@ -289,7 +289,7 @@ Effect_ExplosionB_SpawnRandomParticle:                  ; DATA XREF: ROM:Effect_
 ; Counts particles and repeats or finishes the particle loop
 Effect_ExplosionB_UpdateParticleTimer:                  ; DATA XREF: ROM:0002C10E   o  ; was: sub_2C15E
                 subq.w  #1,$48(a5)
-                bne.w   Object_UpdateNoOpReturn
+                bne.w   Effect_ExplosionUpdateReturn
                 subq.w  #1,$4A(a5)
                 bmi.w   Effect_ExplosionB_FinishParticleLoop
                 subq.w  #2,4(a5)
@@ -302,7 +302,7 @@ Effect_ExplosionB_FinishParticleLoop:                   ; CODE XREF: Effect_Expl
 ; Spawns three concentric two-particle rings
 Effect_ExplosionB_SpawnThreeRings:                      ; DATA XREF: ROM:0002C0FA   o  ; was: sub_2C17A
                 tst.w   4(a5)
-                bne.w   Object_UpdateNoOpReturn
+                bne.w   Effect_ExplosionUpdateReturn
                 move.w  (RandomNumberState).w,d2
                 andi.w  #$1FE,d2
                 move.w  d2,$58(a5)
@@ -327,7 +327,7 @@ Effect_ExplosionB_SpawnThreeRings:                      ; DATA XREF: ROM:0002C0F
 ; Spawns two concentric four-particle rings
 Effect_ExplosionB_SpawnTwoRings:                        ; DATA XREF: ROM:0002C0FC   o  ; was: sub_2C1D6
                 tst.w   4(a5)
-                bne.w   Object_UpdateNoOpReturn
+                bne.w   Effect_ExplosionUpdateReturn
                 move.w  (RandomNumberState).w,d2
                 andi.w  #$1FE,d2
                 move.w  d2,$58(a5)
@@ -349,7 +349,7 @@ Effect_ExplosionB_SpawnTwoRings:                        ; DATA XREF: ROM:0002C0F
 ; Spawns one eight-particle ring
 Effect_ExplosionB_SpawnSingleRing:                      ; DATA XREF: ROM:0002C0FE   o  ; was: sub_2C224
                 tst.w   4(a5)
-                bne.w   Object_UpdateNoOpReturn
+                bne.w   Effect_ExplosionUpdateReturn
                 move.w  (RandomNumberState).w,d2
                 andi.w  #$1FE,d2
                 move.w  d2,$58(a5)
