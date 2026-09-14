@@ -599,7 +599,7 @@ SharedCombatSpriteAnimation25:  dc.w    SharedCombatSpriteFrame18-*  ; DATA XREF
                 dc.w    1
                 dc.w    SharedCombatSpriteAnimation25-*
                 dc.w    0
-SharedCombatSpriteAnimation26:  dc.w    SharedCombatSpriteFrame19-*  ; DATA XREF: Effect_InitStage25DestructionParticle+A   o  ; was: off_E97B8
+SharedCombatSpriteAnimation26:  dc.w    SharedCombatSpriteFrame19-*  ; DATA XREF: Pickup_InitializeMaxHealthUpgrade+A   o  ; was: off_E97B8
                                         ; ROM:000E97D0   o
                 dc.w    $18
                 dc.w    SharedCombatSpriteFrame43-*

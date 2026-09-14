@@ -7,7 +7,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Proj
                 dc.l    Effect_UpdateKnockbackParticle
                 dc.l    Effect_UpdateImpactParticleSpawner
                 dc.l    Enemy_BehaviorController
-                dc.l    Effect_RunStage25DestructionParticle
+                dc.l    Pickup_MaxHealthUpgradeMain
                 dc.l    Boss_ShiperMainHandler
                 dc.l    Entity_NullUpdateHandler4
                 dc.l    Entity_NullUpdateHandler4
@@ -202,8 +202,8 @@ Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Proj
                 dc.l    Projectile_BackStringerRopeSegment
                 dc.l    Effect_BackStringerSegmentFlash
                 dc.l    Projectile_BackStringerAngledShotMain
-                dc.l    Effect_TriggerStage25Shake
-                dc.l    Effect_TriggerStage25DeathSound
+                dc.l    Pickup_MaxHealthUpgradeCollectedFeedback
+                dc.l    UI_WeaponSelectionCommitFeedback
                 dc.l    Object_RemoveOnFlagOrAnimationEnd
                 dc.l    Projectile_BugmaxHitFragmentController
                 dc.l    Projectile_BugmaxSpreadController

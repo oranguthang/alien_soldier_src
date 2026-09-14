@@ -1,3 +1,10 @@
+; Retires a committed weapon-selection object after freezing play and requesting SFX $1C
+UI_WeaponSelectionCommitFeedback:                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2BB70
+                move.w  #$30,(FrameFreezeTimer).w       ; '0'
+                bset    #4,2(a5)
+                move.b  #$1C,d0
+                jmp     (Sound_PlaySFX).l
+; End of function UI_WeaponSelectionCommitFeedback
 UI_InitWeaponSelectionObject:                           ; CODE XREF: UI_WeaponSelectionObject+6   p  ; was: sub_2BB86
                 addq.w  #2,4(a5)
                 move.w  #$C700,2(a5)

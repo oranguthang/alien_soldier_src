@@ -7909,3 +7909,22 @@ Seven new exact-address records and 28 synchronized existing records raise the
 registry from 13,374 to 13,381. The queue falls from 2,969 to 2,962 and its
 actionable upper bound from 2,456 to 2,449; provenance and the 513 classified
 binary-backed end aliases remain unchanged.
+
+The max-health-upgrade audit resolves all nine pending definitions in the
+former `effects/stage_25_destruction.s` container. The generated destruction
+and shake descriptions were not supported by the instructions: contact raises
+`PlayerMaxHealth` by `$20` up to `$400`, refills `PlayerHealth`, and converts
+the pickup to type `$32C`; that exact table slot freezes play, retires the
+object, and requests SFX `$1B`. These eight contiguous definitions now form
+the honest `actors/max_health_upgrade.s` module.
+
+The adjacent entry at `$2BB70` is not a Stage 25 death effect. Type `$330` is
+written only by `UI_UpdateWeaponSelectionObject_SyncValue`, and its handler
+freezes play, retires the committed selection object, and requests SFX `$1C`.
+It is therefore named `UI_WeaponSelectionCommitFeedback` and moved to the
+front of the immediately following ROM-ordered `ui/weapon_selection_object.s`
+module. The module count remains 377 while the layout boundary changes from
+`$2BB86` to `$2BB70`. Nine new exact-address records raise the audit registry
+from 13,434 to 13,443. The queue falls from 2,909 to 2,900 and its actionable
+upper bound from 2,396 to 2,387; provenance and the 513 classified binary-backed
+end aliases remain unchanged.
