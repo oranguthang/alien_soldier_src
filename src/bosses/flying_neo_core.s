@@ -90,7 +90,7 @@ Boss_FlyingNeoInit:                                     ; DATA XREF: Boss_Flying
                 move.w  #1,8(a5)
                 move.w  #$154,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 movea.w #(FlyingNeoSineTable-M68K_RAM),a0
                 moveq   #$C,d0
                 jsr     (Math_CalculateSineCosineTable).l
@@ -354,7 +354,7 @@ Boss_FlyingNeoDefeatParticleRainState:                  ; DATA XREF: ROM:0003C0B
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_FlyingNeoUpdateDefeatParticleRainTimer
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_FlyingNeoUpdateDefeatParticleRainTimer
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.l  #$FFFF1000,$1C(a0)

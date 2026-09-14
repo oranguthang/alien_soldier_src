@@ -284,7 +284,7 @@ Boss_ShieldViperAllocateLinkedBodyAuxiliaryRecords:     ; DATA XREF: ROM:0004E03
                 move.w  #2,d6
                 move.w  #$17,d7
 Boss_ShieldViperAllocateLinkedBodyRecordLoop:           ; CODE XREF: Boss_ShieldViperAllocateLinkedBodyAuxiliaryRecords+2E   j  ; was: loc_4E892
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_ShieldViperFinishLinkedBodyRecordAllocation
                 move.w  #$10,(a0)
                 move.w  a0,$5C(a1)
@@ -319,7 +319,7 @@ Boss_ShieldViperSpawnPatternProjectileSet:              ; DATA XREF: ROM:0004E03
                 move.w  #$20,d6                         ; ' '
                 moveq   #0,d5
 Boss_ShieldViperSpawnPatternProjectileLoop:             ; CODE XREF: Boss_ShieldViperSpawnPatternProjectileSet+64   j  ; was: loc_4E8EE
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_ShieldViperFinishPatternProjectileSpawn
                 move.w  #$378,(a0)
                 move.w  #$4C80,2(a0)
@@ -461,7 +461,7 @@ Boss_ShieldViperReleaseLinkedBodyRecordsSequentially:   ; DATA XREF: ROM:0004E05
                 bsr.w   Gfx_ShieldViperUpdateHorizontalFlipFromFrameBit
                 subq.w  #1,$48(a5)
                 bpl.s   Boss_ShieldViperSequentialLinkedRecordReleaseReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_ShieldViperSequentialLinkedRecordReleaseReturn
                 move.w  #$10,(a0)
                 movea.w $4A(a5),a1

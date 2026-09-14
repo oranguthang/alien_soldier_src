@@ -30,7 +30,7 @@ Stage15_FragmentEmitterWaveSpawn:                       ; was: sub_3051E
                 cmp.w   (a4),d0
 Stage15_FragmentEmitterWaveCheckThreshold:              ; was: loc_30520
                 bcs.w   Entity_UpdateReturn
-                jsr     (Projectile_FindFreeOrRecycleSlot).l
+                jsr     (Projectile_FindFreeOrClearReusableSlot).l
                 bne.s   Stage15_FragmentEmitterWaveSkipEntry
                 move.w  #$CD00,2(a0)
                 move.w  #$3A0,(a0)
@@ -139,7 +139,7 @@ Stage15_FragmentEmitterRetreat:                         ; was: sub_30660
 ; End of function Stage15_FragmentEmitterRetreat
 ; Spawn projectile with directional offset and sound effect
 Projectile_SpawnFragmentCluster:                        ; was: sub_30670
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Entity_UpdateReturn
                 move.w  #$ED00,2(a0)
                 move.l  #SharedCombatSpriteAnimation13,8(a0)
@@ -203,7 +203,7 @@ Projectile_FragmentClusterTrackAndSplit:                ; was: sub_30702
                 move.w  $50(a5),d4
                 move.w  $4E(a5),d3
 Projectile_FragmentClusterCreateLoop:
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Entity_UpdateReturn
                 move.w  d5,2(a0)
                 move.l  #$FF01FF01,$2C(a0)
@@ -368,7 +368,7 @@ Projectile_FragmentClusterHideLinksLoop:
                 bsr.w   Projectile_SelectFragmentImpactDirection
                 move.w  $52(a5),d3
 Projectile_FragmentClusterResponseLoop:
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Entity_UpdateReturn
                 move.w  d5,2(a0)
                 clr.b   $22(a0)
@@ -546,7 +546,7 @@ Stage15_FallingRockWaveUpdate:                          ; was: sub_30B7E
                 cmp.w   (a4)+,d0
                 bcs.w   Entity_UpdateReturn
 Stage15_FallingRockWaveSpawnGroup:
-                jsr     (Projectile_FindFreeOrRecycleSlot).l
+                jsr     (Projectile_FindFreeOrClearReusableSlot).l
                 bne.s   Stage15_FallingRockWaveSkipGroup
                 move.w  #$384,(a0)
                 move.w  (a4)+,$10(a0)

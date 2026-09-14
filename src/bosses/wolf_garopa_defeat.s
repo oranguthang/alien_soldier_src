@@ -3,7 +3,7 @@ Boss_WolfGaropaSpawnOrbitStar:                          ; CODE XREF: Boss_WolfGa
                                         ; Boss_WolfGaropaUpdateBattleStartWait+118   j
                 btst    #0,(FrameCounter+1).w
                 bne.w   Boss_WolfGaropaOrbitStarReturn
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Boss_WolfGaropaOrbitStarReturn
                 lea     (Effect_StarParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
@@ -43,7 +43,7 @@ Boss_WolfGaropaSpawnOrbitSpark:                         ; CODE XREF: Boss_WolfGa
                 subq.w  #1,$5FC(a5)
                 btst    #0,(FrameCounter+1).w
                 bne.w   Boss_WolfGaropaOrbitSparkReturn
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Boss_WolfGaropaOrbitSparkReturn
                 lea     (Boss_SharedCollisionProjectileSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
@@ -91,7 +91,7 @@ Boss_WolfGaropaCalculateOrbEmitterPosition:             ; CODE XREF: Boss_WolfGa
 ; Spawn a type-$188 explosion effect at the auxiliary orb position
 Boss_WolfGaropaSpawnOrbExplosion:                       ; CODE XREF: Boss_WolfGaropaApproachOrbAngleC0AndExplode+1E   p  ; was: sub_50C88
                                         ; DATA XREF: Boss_WolfGaropaApproachOrbAngleC0AndExplode+1E   o
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Boss_WolfGaropaOrbExplosionReturn
                 move.l  #SharedCombatSpriteAnimation07,8(a0)
                 jsr     (Effect_SpawnExplosionType188).l

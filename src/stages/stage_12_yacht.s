@@ -501,7 +501,7 @@ Stage12_TeddyBearFireDownwardShot:                      ; CODE XREF: Stage12_Ted
                 bne.s   Stage12_TeddyBearShotReturn
                 move.b  #$2C,d0                         ; ','
                 jsr     (Sound_QueueSFXRequest).l
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Stage12_TeddyBearShotReturn
                 move.w  #$188,(a0)
                 move.w  #$8500,2(a0)

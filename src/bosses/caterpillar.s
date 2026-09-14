@@ -335,7 +335,7 @@ Boss_CaterpillarApplySegmentWaveHeight:                 ; CODE XREF: Boss_Caterp
 ; Searches primary and extended ranges for a free homing-projectile slot
 Boss_CaterpillarFindFreeHomingProjectileSlot:           ; CODE XREF: Boss_CaterpillarHomingProjectileSegment:Boss_CaterpillarSpawnHomingProjectile   p  ; was: sub_3D4AC
                 movea.w #(ThirtyFourthEntityType-M68K_RAM),a0
-                jmp     Projectile_FindFreePrimarySlot_CheckExtendedRange
+                jmp     Projectile_FindFreeSlotForward20
 ; End of function Boss_CaterpillarFindFreeHomingProjectileSlot
 ; Stage ship controller with position-history trail and state dispatch
 Boss_CaterpillarShipController:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3D4B6
@@ -510,7 +510,7 @@ Boss_CaterpillarShipBeginDefeatState:                   ; DATA XREF: ROM:0003D55
                 move.w  a5,$4A(a5)
                 clr.b   $21(a5)
                 addq.w  #2,4(a5)
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_CaterpillarShipBeginDefeatReturn
                 move.w  #3,d0
                 jsr     (Pickup_SelectRandomSize).l
@@ -534,7 +534,7 @@ Boss_CaterpillarShipDismantlePartsState:                ; DATA XREF: ROM:0003D55
                 move.w  a0,$4A(a5)
                 move.w  #$A,$48(a5)
                 movea.w a0,a4
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_CaterpillarShipDismantlePartsReturn
                 move.w  #3,d0
                 jsr     (Pickup_SelectRandomSize).l

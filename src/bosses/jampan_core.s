@@ -119,7 +119,7 @@ Boss_JampanWaitForEncounterActivationState:             ; DATA XREF: ROM:Boss_Ja
                 addq.w  #2,4(a5)
                 move.w  #$218,d0
                 moveq   #0,d1
-                jmp     Object_ClearAllExceptTypes
+                jmp     Object_ClearEntityRecordsExceptTwoTypes
 ; ---------------------------------------------------------------------------
 Boss_JampanWaitForEncounterActivationReturn:            ; CODE XREF: Boss_JampanWaitForEncounterActivationState+4   j
                 rts
@@ -649,7 +649,7 @@ Boss_JampanSpawnOffsetAttackObjectState:                ; DATA XREF: ROM:000491F
                 bne.s   Boss_JampanSpawnOffsetAttackObjectReturn
                 move.w  #1,(TertiaryEntityWork52).w
                 move.w  #1,(FifthEntityWork52).w
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_JampanSpawnOffsetAttackObjectReturn
                 andi.w  #$7FFF,(SeventhEntityFlags).w
                 move.w  #$238,(a0)

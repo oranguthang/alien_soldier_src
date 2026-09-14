@@ -448,7 +448,7 @@ Projectile_SpawnValkirieBullet:                         ; CODE XREF: Entity_Star
                 moveq   #$18,d3
                 btst    #0,(FrameCounter+1).w
                 bne.s   Projectile_SpawnValkirieBulletReturn
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 beq.s   Projectile_InitValkirieBullet
 Projectile_SpawnValkirieBulletReturn:                   ; CODE XREF: Projectile_SpawnValkirieBullet+C   j  ; was: locret_55CA2
                 rts

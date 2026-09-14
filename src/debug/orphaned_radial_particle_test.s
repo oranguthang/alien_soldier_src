@@ -35,7 +35,7 @@ Debug_RadialParticleTestPrepareBurstLoop:               ; CODE XREF: Debug_Radia
                 andi.w  #$FF,d0
                 subi.w  #$80,d0
                 move.w  d0,$56(a5)
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Debug_RadialParticleTestPrepareBurstReturn
                 bsr.w   Debug_RadialParticleTestEmptySlotSetupHook
                 lea     (Math_SineTable).l,a4

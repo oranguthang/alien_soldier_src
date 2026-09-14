@@ -353,7 +353,7 @@ Boss_ZLeoSpawnParticles:                                ; CODE XREF: Boss_ZLeoIn
                 bmi.w   Boss_ZLeoSpawnParticles_Return
 Boss_ZLeoSpawnParticles_Loop:                           ; CODE XREF: Boss_ZLeoSpawnParticles+84   j  ; was: loc_224A4
                 jsr     (RandomNumber).l
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Boss_ZLeoSpawnParticles_Return
                 jsr     (Sprite_InitType160).l
                 move.b  #$60,$20(a0)                    ; '`'

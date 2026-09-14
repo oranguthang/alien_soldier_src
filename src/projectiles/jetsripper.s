@@ -1,6 +1,6 @@
 ; Creates Jetsripper projectile with trajectory
 Boss_JetsripperSpawnProjectile:                         ; CODE XREF: Boss_JetsripperUpdateMovement+6A   p  ; was: sub_362CE
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Boss_JetsripperSpawnProjectileReturn
                 move.w  #$1FC,(a0)
                 move.w  #$8D00,2(a0)
@@ -51,7 +51,7 @@ Boss_JetsripperProjectileHandleImpact:                  ; CODE XREF: Projectile_
                 beq.s   Boss_JetsripperProjectileCheckBounce
                 bclr    #4,$22(a5)
                 beq.s   Boss_JetsripperProjectileBurst
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_JetsripperProjectileBurst
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)

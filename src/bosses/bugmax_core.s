@@ -484,7 +484,7 @@ Boss_BugmaxInitializeEncounterState:                    ; DATA XREF: ROM:Boss_Bu
                 move.b  #4,(PlayerOAMBucketOffset).w
                 move.w  #$300,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 clr.w   $5E(a5)
                 move.w  #$604,d0
                 move.w  d0,$5C(a5)
@@ -671,7 +671,7 @@ Boss_BugmaxSpawnTransitionDebris:                       ; CODE XREF: Boss_Bugmax
                 clr.w   d6
 ; Initialize the requested number of transition-debris projectiles
 Boss_BugmaxSpawnTransitionDebrisLoop:                   ; CODE XREF: Boss_BugmaxSpawnTransitionDebris+38   j  ; was: loc_4C6C4
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_BugmaxTransitionDebrisSpawnReturn
                 lea     Boss_BugmaxDebrisParameterTable(pc),a2
                 nop

@@ -52,7 +52,7 @@ Boss_ShieldViperDefeatObjectAccelerationReturn:         ; CODE XREF: Boss_Shield
 ; End of function Boss_ShieldViperAccelerateDefeatObject
 ; Create a falling type-$88 burst and optionally play its sound
 Boss_ShieldViperSpawnDefeatBurst:                       ; CODE XREF: Boss_ShieldViperActivateDefeatObject+14   p  ; was: sub_4F22C
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_ShieldViperDefeatBurstReturn
                 move.l  #SharedCombatSpriteAnimation01,8(a0)
                 jsr     (Projectile_InitType88).l

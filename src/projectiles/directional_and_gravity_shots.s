@@ -1,7 +1,7 @@
 ; Find a free record in the enemy projectile-pool range
 Projectile_FindFreeEnemyPoolSlot:                       ; CODE XREF: Projectile_AllocateSelectedTwoSpeedShot   p  ; was: sub_2AFBE
                 movea.w #(EighteenthEntityType-M68K_RAM),a0
-                jmp     Projectile_FindFreePrimarySlot_CheckEnemyRange
+                jmp     Projectile_FindFreeSlotForward8
 ; End of function Projectile_FindFreeEnemyPoolSlot
 ; Allocate a record and dispatch one of the two type-$148 initializers by d1
 ; No static caller of this selector is currently known
@@ -111,7 +111,7 @@ Projectile_DeactivateEightDirectionShot:                ; CODE XREF: Projectile_
                                         ; Projectile_UpdateEightDirectionShotCollision+54   j
                 bset    #4,2(a5)
 Projectile_SpawnEightDirectionShotImpact:               ; CODE XREF: Projectile_UpdateEightDirectionShotCollision+44   j  ; was: loc_2B11A
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Projectile_EightDirectionShotReturn
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -244,7 +244,7 @@ Projectile_CheckTwoSpeedShotTerrain:                    ; CODE XREF: Projectile_
 Projectile_DeactivateTwoSpeedShot:                      ; CODE XREF: Projectile_UpdateTwoSpeedShotCollision+6C   j  ; was: loc_2B316
                 bset    #4,2(a5)
 Projectile_SpawnTwoSpeedShotImpact:                     ; CODE XREF: Projectile_UpdateTwoSpeedShotCollision+74   j  ; was: loc_2B31C
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Projectile_TwoSpeedShotReturn
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -347,7 +347,7 @@ Projectile_CheckType254TwoSpeedShotTerrain:             ; CODE XREF: Projectile_
 Projectile_DeactivateType254TwoSpeedShot:               ; CODE XREF: Projectile_UpdateType254TwoSpeedShotCollision+6C   j  ; was: loc_2B462
                 bset    #4,2(a5)
 Projectile_SpawnType254TwoSpeedShotImpact:              ; CODE XREF: Projectile_UpdateType254TwoSpeedShotCollision+74   j  ; was: loc_2B468
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Projectile_Type254TwoSpeedShotReturn
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -365,7 +365,7 @@ Projectile_SpawnType254TwoSpeedShotImpact:              ; CODE XREF: Projectile_
 ; Allocate one Destroyer MK2 projected shot at (d3,d4)
 Boss_DestroyerMK2SpawnProjectedShot:                    ; CODE XREF: Boss_DestroyerMK2UpdateProjectedSweep+18   p  ; was: sub_2B49E
                                         ; Boss_DestroyerMK2EmitFourProjectedEffects+46   p
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Boss_DestroyerMK2ProjectedShotSpawnReturn
                 move.w  d3,$10(a0)
                 move.w  d4,$14(a0)
@@ -482,7 +482,7 @@ Projectile_CheckDelayedCollisionShotTerrainDepth:       ; CODE XREF: Projectile_
 Projectile_DeactivateDelayedCollisionShot:              ; CODE XREF: Projectile_UpdateDelayedCollisionShot+74   j  ; was: loc_2B5CC
                 bset    #4,2(a5)
 Projectile_SpawnDelayedCollisionShotImpact:             ; CODE XREF: Projectile_UpdateDelayedCollisionShot+7C   j  ; was: loc_2B5D2
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Projectile_RetireDelayedCollisionShot
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)

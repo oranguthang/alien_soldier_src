@@ -8297,3 +8297,30 @@ pending queue falls from 2,694 to 2,691 and its actionable upper bound from
 2,181 to 2,178; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `system/memory_clearing.s` now has zero
 pending current names.
+
+The 15 pending entries in `gameplay/projectile_slots.s` are audited together
+with the already registered forward allocator entry. The former extended,
+enemy, and final range names were not invariant: their callers pass different
+starting records. They are exact unrolled scans of 20, eight, and four
+consecutive 96-byte records from A0. The full forward and reverse entries both
+cover 28 projectile-capable records, slots 26 through 53, in opposite orders.
+
+The alleged `Math_ClearD0D1` helper actually falls through into the entity-pool
+clear with both preserved type values set to zero. The fixed entry traverses 61
+entity records, not the previously documented 60; the initialization clear
+confirms the otherwise unnamed final record at `$FFFFDCA0-$FFFFDCFF`. Its loop
+remains separately callable with caller-provided bounds, as Sirene does for a
+27-record suffix.
+
+Finally, the allocation fallback checks reusable flag bit six in 27 records
+after a full forward scan. It clears the first matching 96-byte record and
+returns success in the same call: the last zero-valued move sets Z, while the
+following `movem` does not alter condition codes. The names now state this
+clear-and-reuse contract instead of treating it as an unspecified recycle.
+
+Fifteen new exact-address records raise the registry from 13,651 to 13,666;
+the previously audited forward entry is corrected in place. The pending queue
+falls from 2,691 to 2,676 and its actionable upper bound from 2,178 to 2,163;
+provenance, the 513 classified binary-backed end aliases, and the 379-module
+layout remain unchanged. `gameplay/projectile_slots.s` now has zero pending
+current names.

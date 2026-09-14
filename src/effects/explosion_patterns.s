@@ -14,7 +14,7 @@ Effect_SpawnRadialParticlePattern:                      ; CODE XREF: Effect_Expl
                 lsr.w   d0,d6
                 andi.w  #$1FE,d6
 Effect_SpawnRadialParticlePattern_Loop:                 ; CODE XREF: Effect_SpawnRadialParticlePattern:Effect_SpawnRadialParticlePattern_Next   j  ; was: loc_2BE72
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Effect_SpawnRadialParticlePattern_Next
                 andi.w  #$1FE,d2
                 lea     (Math_SineTable).l,a2
@@ -38,7 +38,7 @@ Effect_SpawnRadialParticlePattern_Next:                 ; CODE XREF: Effect_Spaw
 ; Creates explosion variant A and plays its sound
 Effect_SpawnExplosionA:                                 ; CODE XREF: Enemy_UpdateDefeatProjectile+E   p  ; was: sub_2BEBC
                                         ; Enemy_UpdateAlternateDefeatProjectile+E   p
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Object_UpdateNoOpReturn
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.w  #$1A0,(a0)
@@ -53,7 +53,7 @@ Effect_SpawnExplosionA:                                 ; CODE XREF: Enemy_Updat
 ; Creates explosion variant B and plays its sound
 Effect_SpawnExplosionB:                                 ; CODE XREF: Enemy_ProcessObject+10   p  ; was: sub_2BEF0
                                         ; Enemy_UpdateBouncingDebrisSpawner+9A   p
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Object_UpdateNoOpReturn
                 move.w  #8,$4A(a0)
                 move.w  #$1A4,(a0)
@@ -207,7 +207,7 @@ Effect_ExplosionALifetimeHandlers:  dc.w    Effect_ExplosionA_SpawnParticle-*  ;
 
 ; Spawns one explosion particle at the parent position
 Effect_ExplosionA_SpawnParticle:                        ; DATA XREF: ROM:Effect_ExplosionALifetimeHandlers   o  ; was: sub_2C08C
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Object_UpdateNoOpReturn
                 move.l  #SharedCombatSpriteAnimation01,8(a0)
                 jsr     (Sprite_InitType160).l
@@ -268,7 +268,7 @@ Effect_ExplosionBParticleLoopHandlers:
 
 ; Spawns one particle at a random offset from the explosion center
 Effect_ExplosionB_SpawnRandomParticle:                  ; DATA XREF: ROM:Effect_ExplosionBParticleLoopHandlers   o  ; was: sub_2C112
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Object_UpdateNoOpReturn
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
                 jsr     (Sprite_InitType160).l

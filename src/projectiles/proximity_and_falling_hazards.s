@@ -30,7 +30,7 @@ Object_UpdateProximityPickupEmitterType48_CheckPlayerProximity:  ; CODE XREF: Ob
                 move.w  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 bne.s   Object_ConvertProximityPickupEmitterToBurst
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Object_ConvertProximityPickupEmitterToBurst
                 jsr     (Pickup_SpawnLarge).l
                 move.w  $10(a5),$10(a0)
@@ -93,7 +93,7 @@ Projectile_OscillatingContactHazardVerticalOffsets: dc.b    $FF, 0, 1, 0  ; DATA
 
 ; Spawn a type-$84 arc projectile aimed horizontally toward the player
 Projectile_SpawnAimedArcFromEnemy:                      ; CODE XREF: Enemy_UpdatePeriodicShots+1E   p  ; was: sub_2B80C
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_SpawnAimedArcFromEnemy_Return
                 add.w   $10(a5),d5
                 add.w   $14(a5),d6
@@ -157,7 +157,7 @@ Projectile_UpdateGravityBounceType84_BounceAndConvertToType88:  ; CODE XREF: Pro
 ; End of function Projectile_UpdateGravityBounceType84
 ; Spawn a type-$1D0 arc hazard with the caller's horizontal velocity
 Projectile_SpawnTrailingArcHazardType1D0:               ; CODE XREF: Enemy_ProjectileAttackGroundState:Enemy_ProjectileAttackGroundState_SpawnProjectile   p  ; was: sub_2B8E0
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_SpawnTrailingArcHazardType1D0_Return
                 add.w   $10(a5),d5
                 add.w   $14(a5),d6
@@ -183,7 +183,7 @@ Projectile_UpdateTrailingArcHazardType1D0:              ; DATA XREF: ROM:Entity_
                 move.w  $48(a5),d0
                 andi.w  #3,d0
                 bne.s   Projectile_UpdateTrailingArcHazardType1D0_ApplyGravityAndCheckImpact
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_UpdateTrailingArcHazardType1D0_ApplyGravityAndCheckImpact
                 move.l  #SharedCombatSpriteAnimation08,8(a0)
                 move.w  $10(a5),$10(a0)

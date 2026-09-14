@@ -29,11 +29,11 @@ Orphaned_RisingShotPairWaitReturn:                      ; CODE XREF: Orphaned_Ri
 ; End of function Orphaned_RisingShotPairInitDelay
 ; Allocates and stores two empty slots for rising-shot members
 Orphaned_RisingShotPairAllocate:                        ; DATA XREF: ROM:000337F4   o  ; was: sub_3381C
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Orphaned_RisingShotPairAllocateReturn
                 move.w  #$10,(a0)
                 move.w  a0,$5C(a5)
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Orphaned_RisingShotPairHandleAllocationFailure
                 move.w  #$10,(a0)
                 move.w  a0,$5E(a5)
@@ -100,7 +100,7 @@ Orphaned_RisingShotPairFireFallingShot:                 ; CODE XREF: Orphaned_Ri
                 move.w  (FrameCounter).w,d7
                 andi.w  #$3F,d7                         ; '?'
                 bne.s   Orphaned_RisingShotPairFallingShotReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Orphaned_RisingShotPairFallingShotReturn
                 move.w  (RandomNumberState).w,d0
                 andi.w  #$FF,d0
@@ -119,7 +119,7 @@ Orphaned_RisingShotPairFireMissirayShot:                ; CODE XREF: Orphaned_Ri
                 move.w  (FrameCounter).w,d7
                 andi.w  #$3F,d7                         ; '?'
                 bne.s   Orphaned_RisingShotPairMissirayShotReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Orphaned_RisingShotPairMissirayShotReturn
                 move.w  (RandomNumberState).w,d0
                 andi.w  #$FF,d0

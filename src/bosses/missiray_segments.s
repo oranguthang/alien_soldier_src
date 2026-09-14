@@ -242,7 +242,7 @@ Segment_MissirayRetireAfterDefeatFlight:                ; CODE XREF: Segment_Mis
 ; End of function Segment_MissirayUpdateDefeatFlight
 ; Spawns a type-$160 defeat particle with a random animation pointer
 Segment_MissiraySpawnDefeatParticle:                    ; CODE XREF: Segment_MissirayUpdateDefeatFlight+16   p  ; was: sub_546A6
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Segment_MissiraySpawnDefeatParticleReturn
                 jsr     (RandomNumber).l
                 jsr     (Sprite_InitType160).l
@@ -355,7 +355,7 @@ Boss_MissirayProximityShotPairReturn:                   ; CODE XREF: Boss_Missir
 Boss_MissiraySpawnAttachedProximityShot:                ; CODE XREF: Boss_MissiraySpawnFirstAndConfigureSecondShot   p  ; was: sub_547D8
                                         ; Boss_MissiraySpawnSecondProximityShot   p
                                         ; DATA XREF:
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_MissiraySpawnAttachedProximityShotReturn
                 move.w  #$404,(a0)
                 move.w  #$EC00,2(a0)
@@ -400,7 +400,7 @@ Projectile_MissirayProximityShotTrackOwnerAndLaunch:    ; DATA XREF: ROM:Project
                 subq.w  #1,$46(a5)
                 bne.s   Projectile_MissirayProximityShotTrackReturn
                 move.w  #$1000,2(a5)
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_MissirayProximityShotTrackReturn
                 move.w  #$404,(a0)
                 move.w  #$8E00,2(a0)

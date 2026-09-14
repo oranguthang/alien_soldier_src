@@ -13,7 +13,7 @@ Enemy_FormationWaveMain:                                ; DATA XREF: ROM:Entity_
 Enemy_FormationWavePrepareAimedShot:                    ; CODE XREF: Enemy_FormationWaveMain+1A   j  ; was: loc_32F04
                 jsr     (Math_CalculateAngleToPlayer).l
                 move.w  d2,d6
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Enemy_FormationWaveFinishUpdate
                 moveq   #9,d7
                 moveq   #0,d0
@@ -55,7 +55,7 @@ Enemy_FormationWaveSpawnMembers:                        ; DATA XREF: ROM:Enemy_F
                 moveq   #0,d6
 Enemy_FormationWaveInitNextMember:                      ; CODE XREF: Enemy_FormationWaveSpawnMembers+1E   j  ; was: loc_32F74
                 bsr.w   Enemy_FormationWaveInitMember
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 dbne    d7,Enemy_FormationWaveInitNextMember
                 rts
 ; End of function Enemy_FormationWaveSpawnMembers

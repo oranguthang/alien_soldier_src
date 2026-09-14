@@ -122,7 +122,7 @@ Boss_Epsilon1FallWithDefeatDebrisState:                 ; DATA XREF: ROM:00045D5
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_Epsilon1FallWithDefeatDebrisReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_Epsilon1FallWithDefeatDebrisReturn
                 jsr     (Projectile_InitType88).l
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
@@ -273,7 +273,7 @@ Boss_Epsilon1ClearObjectsAfterDefeatFadeState:          ; DATA XREF: ROM:00045D6
                 bmi.s   Boss_Epsilon1ClearObjectsAfterDefeatFadeReturn
                 move.w  #$264,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 addq.w  #2,4(a5)
 Boss_Epsilon1ClearObjectsAfterDefeatFadeReturn:         ; CODE XREF: Boss_Epsilon1ClearObjectsAfterDefeatFadeState+6   j  ; was: locret_46AF0
                 rts
@@ -512,7 +512,7 @@ Boss_Epsilon1WaitForLinkedPartExplosionReturn:          ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1WaitForLinkedPartExplosionState
 ; Spawns one debris object from the part or battle center
 Boss_Epsilon1SpawnLinkedPartDebrisState:                ; DATA XREF: ROM:00046C8A   o  ; was: sub_46D04
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_Epsilon1SpawnLinkedPartDebrisReturn
                 move.l  #SharedCombatSpriteAnimation05,8(a0)
                 jsr     (Projectile_InitType88).l

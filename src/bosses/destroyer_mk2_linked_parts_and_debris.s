@@ -136,7 +136,7 @@ Object_DestroyerMK2UpdateFallingCentralPart:            ; DATA XREF: ROM:0004B75
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Object_DestroyerMK2CheckFallingCentralPartBounds
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Object_DestroyerMK2CheckFallingCentralPartBounds
                 move.l  #SharedCombatSpriteAnimation05,8(a0)
                 move.b  $20(a5),$20(a0)
@@ -725,7 +725,7 @@ Projectile_DestroyerMK2DebrisMain:                      ; CODE XREF: Boss_Destro
                 jsr     (Projectile_UpdateWithExplosionSound).l
                 move.w  #2,(PlaneBShakeLevel).w
                 move.w  #4,(PlaneAShakeLevel).w
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_DestroyerMK2DebrisSpawnReturn
                 jsr     (Sprite_InitType160).l
                 clr.b   $20(a0)

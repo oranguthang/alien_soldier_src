@@ -414,7 +414,7 @@ Boss_JetsripperSegmentPhysicsBeginFall:                 ; CODE XREF: Boss_Jetsri
                 move.w  #$CF00,2(a5)
                 move.w  #4,(PlaneAShakeLevel).w
                 move.l  #$FFFC0000,$1C(a5)
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_JetsripperSegmentPhysicsReturn
                 move.l  #SharedCombatSpriteAnimation01,8(a0)
                 jsr     (Projectile_InitType88).l

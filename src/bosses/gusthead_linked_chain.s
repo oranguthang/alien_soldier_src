@@ -27,7 +27,7 @@ Boss_GustheadLinkedChainSpawnSegments:                  ; DATA XREF: ROM:000310F
                 move.w  #7,d7
                 move.w  a5,$44(a5)
 Boss_GustheadLinkedChainSpawnNextSegment:               ; CODE XREF: Boss_GustheadLinkedChainSpawnSegments+44   j  ; was: loc_31120
-                jsr     (Projectile_FindFreeOrRecycleSlot).l
+                jsr     (Projectile_FindFreeOrClearReusableSlot).l
                 bne.s   Boss_GustheadLinkedChainHandleAllocationFailure
                 movea.w $44(a5),a1
                 move.w  $10(a1),$10(a0)
@@ -301,7 +301,7 @@ Boss_GustheadLinkedChainTerminalFallAndFire:            ; DATA XREF: ROM:000313C
                 move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Entity_UpdateReturn
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Entity_UpdateReturn
                 bsr.w   Projectile_SpawnRandomAngleShot
                 asl     $18(a4)
@@ -316,7 +316,7 @@ Boss_GustheadLinkedChainSegmentFallAndFire:             ; DATA XREF: ROM:000311A
                 move.w  (VBlankFrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   Entity_UpdateReturn
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Entity_UpdateReturn
 ; End of function Boss_GustheadLinkedChainSegmentFallAndFire
 ; Spawns projectile with sound BBh at calculated angle toward player with offset positioning

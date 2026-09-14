@@ -285,7 +285,7 @@ Boss_Epsilon1ClearAngleHistoryRowLoop:                  ; CODE XREF: Boss_Epsilo
                 move.b  #4,(PlayerOAMBucketOffset).w
                 move.w  #$264,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 move.w  #$120,$10(a5)
                 move.w  #$F0,$14(a5)
                 move.w  $10(a5),(SharedPatternRow0Long3).w

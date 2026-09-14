@@ -29,7 +29,7 @@ Boss_WolfGaropaSpawnFiniteRewardPickups:                ; DATA XREF: ROM:00032E0
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   Entity_UpdateReturn
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Entity_UpdateReturn
                 subq.w  #1,$48(a5)
                 move.w  #$F,d0
@@ -52,7 +52,7 @@ Boss_WolfGaropaSpawnTimedRewardPickups:                 ; DATA XREF: ROM:00032E0
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   Entity_UpdateReturn
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Boss_WolfGaropaAdvanceRewardCountdown
                 move.w  #$F,d0
                 jsr     (Pickup_SelectRandomSize).l

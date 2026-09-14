@@ -8,12 +8,12 @@ Boss_ShiperSpawnOscillatingShot:                        ; CODE XREF: Boss_Shiper
                 movea.w #(FortySixthEntityType-M68K_RAM),a0
                 tst.w   (DifficultyMode).w
                 bne.s   Boss_ShiperSpawnOscillatingShotUseEnemySlots
-                jsr     (Projectile_FindFreePrimarySlot_CheckFinalRange).l
+                jsr     (Projectile_FindFreeSlotForward4).l
                 beq.s   Boss_ShiperSpawnOscillatingShotInitialize
                 rts
 ; ---------------------------------------------------------------------------
 Boss_ShiperSpawnOscillatingShotUseEnemySlots:           ; CODE XREF: Boss_ShiperSpawnOscillatingShot+14   j  ; was: loc_37208
-                jsr     (Projectile_FindFreePrimarySlot_CheckEnemyRange).l
+                jsr     (Projectile_FindFreeSlotForward8).l
                 bne.s   Boss_ShiperSpawnOscillatingShotReturn
 Boss_ShiperSpawnOscillatingShotInitialize:              ; CODE XREF: Boss_ShiperSpawnOscillatingShot+1C   j  ; was: loc_37210
                 move.w  #$98,(a0)
@@ -53,7 +53,7 @@ Projectile_ShiperOscillatingShotUpdate:                 ; CODE XREF: Projectile_
                 bpl.s   Projectile_ShiperOscillatingShotBurst
                 tst.w   $24(a5)
                 bpl.s   Projectile_ShiperOscillatingShotSteer
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_ShiperOscillatingShotBurst
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -125,7 +125,7 @@ Boss_ShiperSpawnCircleShot:                             ; CODE XREF: Boss_Shiper
                 moveq   #$FFFFFFE0,d6
                 moveq   #3,d7
 Boss_ShiperSpawnCircleShotNext:                         ; CODE XREF: Boss_ShiperSpawnCircleShot+A0   j  ; was: loc_37376
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Boss_ShiperSpawnCircleShotReturn
                 move.w  #$35C,(a0)
                 move.w  #$8D00,2(a0)

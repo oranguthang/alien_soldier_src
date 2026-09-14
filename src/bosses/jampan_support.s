@@ -238,7 +238,7 @@ Boss_JampanPrepareShieldShotBurstReturn:                ; CODE XREF: Boss_Jampan
 Boss_JampanFireShieldShotBurstState:                    ; DATA XREF: ROM:0004A21E   o  ; was: sub_4A2B2
                 subq.w  #1,$48(a5)
                 bne.s   Boss_JampanFireShieldShotBurstReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_JampanResetShieldShotTimer
                 move.l  #SharedCombatSpriteAnimation03,8(a0)
                 move.l  $10(a5),$10(a0)

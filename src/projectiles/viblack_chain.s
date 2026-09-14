@@ -15,7 +15,7 @@ Boss_ViblackAllocateChainObjects:                       ; CODE XREF: Boss_Viblac
                 move.w  a0,(a1)+
                 moveq   #9,d6
 Boss_ViblackAllocateChainObjectLoop:                    ; CODE XREF: Boss_ViblackSpawnChain+44   j  ; was: loc_443D2
-                jsr     (Projectile_FindFreeOrRecycleSlot).l
+                jsr     (Projectile_FindFreeOrClearReusableSlot).l
                 bne.w   Boss_ViblackSpawnChainReturn
                 move.w  #$10,(a0)
                 bset    #4,2(a0)

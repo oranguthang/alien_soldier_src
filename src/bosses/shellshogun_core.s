@@ -53,7 +53,7 @@ Boss_ShellshogunInitState:                              ; DATA XREF: Boss_Shells
                 move.w  #$40,$48(a5)                    ; '@'
                 move.w  #$F4,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 clr.w   8(a5)
                 clr.w   $A(a5)
                 move.b  #1,(SoundFadeOutDelay).w
@@ -228,7 +228,7 @@ Boss_ShellshogunDefeatLaunchState:                      ; DATA XREF: ROM:0003953
                 move.w  #$FEB0,(SecondaryCameraXPos).w
                 move.w  #$F4,d0
                 moveq   #0,d1
-                jmp     Object_ClearAllExceptTypes
+                jmp     Object_ClearEntityRecordsExceptTwoTypes
 ; ---------------------------------------------------------------------------
 Boss_ShellshogunUpdateDefeatLaunch:                     ; CODE XREF: Boss_ShellshogunDefeatLaunchState+A   j  ; was: loc_39802
                                         ; Boss_ShellshogunDefeatLaunchState+1C   j

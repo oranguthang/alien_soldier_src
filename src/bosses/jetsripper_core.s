@@ -102,7 +102,7 @@ Boss_JetsripperInitState:                               ; DATA XREF: Boss_Jetsri
                 move.w  a5,$48(a5)
                 move.w  #$E4,d0
                 moveq   #0,d1
-                jmp     Object_ClearAllExceptTypes
+                jmp     Object_ClearEntityRecordsExceptTwoTypes
 ; End of function Boss_JetsripperInitState
 ; Initializes 18 body segments with physics parameters
 Boss_JetsripperInitBody:                                ; DATA XREF: ROM:000356DA   o  ; was: sub_3570E
@@ -618,7 +618,7 @@ Boss_JetsripperDeathInit:                               ; DATA XREF: ROM:000356F
                 jsr     (Sprite_ClearObjectFlags).l
                 clr.w   2(a5)
                 move.w  #$C0,$4C(a5)
-                jsr     (Projectile_FindFreeOrRecycleSlot).l
+                jsr     (Projectile_FindFreeOrClearReusableSlot).l
                 bne.s   Boss_JetsripperDeathInitSegmentEffects
                 move.w  #$EC,(a0)
                 clr.w   4(a0)
@@ -651,7 +651,7 @@ Boss_JetsripperDeathFade:                               ; DATA XREF: ROM:000356F
                 bpl.s   Boss_JetsripperDeathStateReturn
                 moveq   #0,d0
                 moveq   #0,d1
-                jmp     Object_ClearAllExceptTypes
+                jmp     Object_ClearEntityRecordsExceptTwoTypes
 ; End of function Boss_JetsripperDeathFade
 ; Adjusts radius parameter toward target value 0xC0
 Boss_JetsripperAdjustRadius:                            ; CODE XREF: Boss_JetsripperRotateState   p  ; was: sub_35DF2

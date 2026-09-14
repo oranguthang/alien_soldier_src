@@ -254,7 +254,7 @@ Enemy_Stage12TurretDelayState_Return:                   ; CODE XREF: Enemy_Stage
 ; End of function Enemy_Stage12TurretDelayState
 ; Allocates a dormant object slot for the next launcher
 Enemy_Stage12TurretAllocateLauncherState:               ; DATA XREF: ROM:0002E510   o  ; was: sub_2E54C
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Enemy_Stage12TurretAllocateLauncherState_Return
                 move.w  #$10,(a0)
                 move.w  a0,$4A(a5)
@@ -306,7 +306,7 @@ Enemy_Stage12TurretSpawnPeriodicShot_CheckSlowInterval:  ; CODE XREF: Enemy_Stag
                 andi.w  #$1FF,d7
                 bne.s   Enemy_Stage12TurretSpawnPeriodicShot_Return
 Enemy_Stage12TurretSpawnPeriodicShot_Spawn:             ; CODE XREF: Enemy_Stage12TurretSpawnPeriodicShot+14   j  ; was: loc_2E5C8
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Enemy_Stage12TurretSpawnPeriodicShot_Return
                 move.w  #$90,(a0)
                 move.w  #1,$5E(a0)

@@ -1,210 +1,215 @@
-; Finds the first free slot in the forward projectile/object pool
-Projectile_FindFreePrimarySlot:                         ; CODE XREF: ShipSequence_SpawnStarParticle   p  ; was: sub_1C050
-                                        ; Projectile_FindFreeOrRecycleSlot+4   p
+; Scans 28 projectile-capable records forward from slot 26 through slot 53
+; Returns A0 at the first zero type word and reports success with Z set
+Projectile_FindFreeSlotForward:                         ; CODE XREF: ShipSequence_SpawnStarParticle   p  ; was: sub_1C050
+                                        ; Projectile_FindFreeOrClearReusableSlot+4   p
                 movea.w #(TwentySixthEntityType-M68K_RAM),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
-Projectile_FindFreePrimarySlot_CheckExtendedRange:      ; CODE XREF: Boss_CaterpillarFindFreeHomingProjectileSlot+4   j  ; was: loc_1C0A4
+; Scans 20 consecutive 96-byte records forward from the caller-supplied A0
+Projectile_FindFreeSlotForward20:                       ; CODE XREF: Boss_CaterpillarFindFreeHomingProjectileSlot+4   j  ; was: loc_1C0A4
                                         ; Boss_SunsetStingInitHomingProjectile+E   p
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
-Projectile_FindFreePrimarySlot_CheckEnemyRange:         ; CODE XREF: Stage7_SpawnTerobusterIntroProjectile+C   p  ; was: loc_1C11C
+; Scans eight consecutive 96-byte records forward from the caller-supplied A0
+Projectile_FindFreeSlotForward8:                        ; CODE XREF: Stage7_SpawnTerobusterIntroProjectile+C   p  ; was: loc_1C11C
                                         ; Projectile_FindFreeEnemyPoolSlot+4   j
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
-Projectile_FindFreePrimarySlot_CheckFinalRange:         ; CODE XREF: Boss_ShiperSpawnOscillatingShot+16   p  ; was: loc_1C144
+; Scans four consecutive 96-byte records forward from the caller-supplied A0
+Projectile_FindFreeSlotForward4:                        ; CODE XREF: Boss_ShiperSpawnOscillatingShot+16   p  ; was: loc_1C144
                                         ; Boss_TerobusterSpawnHomingMissile+22   p
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreePrimarySlot_Return
+                beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
                 beq.w   *+4
-Projectile_FindFreePrimarySlot_Return:                  ; CODE XREF: Projectile_FindFreePrimarySlot+6   j  ; was: locret_1C168
-                                        ; Projectile_FindFreePrimarySlot+10   j
+Projectile_FindFreeSlotForward_Return:                  ; CODE XREF: Projectile_FindFreeSlotForward+6   j  ; was: locret_1C168
+                                        ; Projectile_FindFreeSlotForward+10   j
                 rts
-; End of function Projectile_FindFreePrimarySlot
-; Finds free slot in projectile buffer unrolled search
-Projectile_FindFreeSlot:                                ; CODE XREF: Projectile_SpawnType1A8AtAngle   p  ; was: sub_1C16A
+; End of function Projectile_FindFreeSlotForward
+; Scans the same 28 projectile-capable records in reverse, from slot 53 to 26
+Projectile_FindFreeSlotReverse:                         ; CODE XREF: Projectile_SpawnType1A8AtAngle   p  ; was: sub_1C16A
                                         ; sub_2A0D6   p
                 movea.w #(FiftyThirdEntityType-M68K_RAM),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   Projectile_FindFreeSlot_Return
+                beq.w   Projectile_FindFreeSlotReverse_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
                 beq.w   *+4
-Projectile_FindFreeSlot_Return:                         ; CODE XREF: Projectile_FindFreeSlot+6   j  ; was: locret_1C282
-                                        ; Projectile_FindFreeSlot+10   j
+Projectile_FindFreeSlotReverse_Return:                  ; CODE XREF: Projectile_FindFreeSlotReverse+6   j  ; was: locret_1C282
+                                        ; Projectile_FindFreeSlotReverse+10   j
                 rts
-; End of function Projectile_FindFreeSlot
-; Clear registers d0 and d1
-Math_ClearD0D1:
+; End of function Projectile_FindFreeSlotReverse
+; Clears all 61 entity records by selecting no preserved active type
+Object_ClearEntityRecords:
                 moveq   #0,d0                           ; was: sub_1C284
                 moveq   #0,d1
-; End of function Math_ClearD0D1
-; Clears all objects except specified types
-Object_ClearAllExceptTypes:                             ; CODE XREF: ShipSequence_Update+26   j  ; was: sub_1C288
+; Falls through to the two-type-preserving entry with both types set to zero
+; End of function Object_ClearEntityRecords
+; Clears active records in the 61-record entity pool except types D0 and D1
+Object_ClearEntityRecordsExceptTwoTypes:                ; CODE XREF: ShipSequence_Update+26   j  ; was: sub_1C288
                                         ; Stage9_UpdateCaterpillarShipTraversal+A0   p
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 moveq   #0,d3
                 moveq   #$3C,d7                         ; '<'
-Object_ClearAllExceptTypes_Loop:                        ; CODE XREF: Object_ClearAllExceptTypes+76   j  ; was: loc_1C290
+Object_ClearRecordsExceptTwoTypes_Loop:                 ; CODE XREF: Object_ClearEntityRecordsExceptTwoTypes+76   j  ; was: loc_1C290
                                         ; Boss_UpdateSireneState4+74   p
                 move.w  (a0),d2
-                beq.s   Object_ClearAllExceptTypes_Next
+                beq.s   Object_ClearRecordsExceptTwoTypes_Next
                 cmp.w   d0,d2
-                beq.s   Object_ClearAllExceptTypes_Next
+                beq.s   Object_ClearRecordsExceptTwoTypes_Next
                 cmp.w   d1,d2
-                beq.s   Object_ClearAllExceptTypes_Next
+                beq.s   Object_ClearRecordsExceptTwoTypes_Next
                 move.l  d3,(a0)
                 move.l  d3,4(a0)
                 move.l  d3,8(a0)
@@ -229,34 +234,35 @@ Object_ClearAllExceptTypes_Loop:                        ; CODE XREF: Object_Clea
                 move.l  d3,$54(a0)
                 move.l  d3,$58(a0)
                 move.l  d3,$5C(a0)
-Object_ClearAllExceptTypes_Next:                        ; CODE XREF: Object_ClearAllExceptTypes+A   j  ; was: loc_1C2FA
-                                        ; Object_ClearAllExceptTypes+E   j
+Object_ClearRecordsExceptTwoTypes_Next:                 ; CODE XREF: Object_ClearEntityRecordsExceptTwoTypes+A   j  ; was: loc_1C2FA
+                                        ; Object_ClearEntityRecordsExceptTwoTypes+E   j
                 lea     $60(a0),a0
-                dbf     d7,Object_ClearAllExceptTypes_Loop
+                dbf     d7,Object_ClearRecordsExceptTwoTypes_Loop
                 rts
-; End of function Object_ClearAllExceptTypes
-; Finds free projectile slot and clears
-Projectile_FindFreeOrRecycleSlot:                       ; CODE XREF: Projectile_SpawnFourDirectionalShots_Loop   p  ; was: sub_1C304
+; End of function Object_ClearEntityRecordsExceptTwoTypes
+; Finds a free forward slot; if full, clears the first reusable slot among 27
+; candidates and returns that cleared record as successful allocation
+Projectile_FindFreeOrClearReusableSlot:                 ; CODE XREF: Projectile_SpawnFourDirectionalShots_Loop   p  ; was: sub_1C304
                                         ; sub_2FF1C:loc_2FF62   p
                 movem.l d7,-(sp)
-                jsr     Projectile_FindFreePrimarySlot(pc)  ; (pc)
-                beq.s   Projectile_FindFreeOrRecycleSlot_Return
+                jsr     Projectile_FindFreeSlotForward(pc)  ; (pc)
+                beq.s   Projectile_FindFreeOrClearReusableSlot_Return
                 movea.w #(TwentySixthEntityType-M68K_RAM),a0
                 moveq   #$1A,d7
-Projectile_FindFreeOrRecycleSlot_Scan:                  ; CODE XREF: Projectile_FindFreeOrRecycleSlot+20   j  ; was: loc_1C314
+Projectile_ScanReusableSlots:                           ; CODE XREF: Projectile_FindFreeOrClearReusableSlot+20   j  ; was: loc_1C314
                 move.w  (a0),d0
-                beq.s   Projectile_FindFreeOrRecycleSlot_Return
+                beq.s   Projectile_FindFreeOrClearReusableSlot_Return
                 btst    #6,3(a0)
-                bne.s   Projectile_FindFreeOrRecycleSlot_Clear
+                bne.s   Projectile_ClearReusableSlot
                 lea     $60(a0),a0
-                dbf     d7,Projectile_FindFreeOrRecycleSlot_Scan
+                dbf     d7,Projectile_ScanReusableSlots
                 moveq   #1,d7
-Projectile_FindFreeOrRecycleSlot_Return:                ; CODE XREF: Projectile_FindFreeOrRecycleSlot+8   j  ; was: loc_1C32A
-                                        ; Projectile_FindFreeOrRecycleSlot+12   j
+Projectile_FindFreeOrClearReusableSlot_Return:          ; CODE XREF: Projectile_FindFreeOrClearReusableSlot+8   j  ; was: loc_1C32A
+                                        ; Projectile_FindFreeOrClearReusableSlot+12   j
                 movem.l (sp)+,d7
                 rts
 ; ---------------------------------------------------------------------------
-Projectile_FindFreeOrRecycleSlot_Clear:                 ; CODE XREF: Projectile_FindFreeOrRecycleSlot+1A   j  ; was: loc_1C330
+Projectile_ClearReusableSlot:                           ; CODE XREF: Projectile_FindFreeOrClearReusableSlot+1A   j  ; was: loc_1C330
                 moveq   #0,d7
                 move.l  d7,(a0)
                 move.l  d7,4(a0)
@@ -285,9 +291,9 @@ Projectile_FindFreeOrRecycleSlot_Clear:                 ; CODE XREF: Projectile_
                 moveq   #0,d7
                 movem.l (sp)+,d7
                 rts
-; End of function Projectile_FindFreeOrRecycleSlot
-; Clear 96 bytes of object data
-Object_Clear96Bytes:                                    ; CODE XREF: Entity_InitValkirieAuxiliaryGroup:Entity_ClearValkirieAuxiliaryGroupLoop   p  ; was: sub_1C398
+; End of function Projectile_FindFreeOrClearReusableSlot
+; Clears one complete 96-byte object record at A0
+Object_ClearRecord96Bytes:                              ; CODE XREF: Entity_InitValkirieAuxiliaryGroup:Entity_ClearValkirieAuxiliaryGroupLoop   p  ; was: sub_1C398
                 moveq   #0,d3
                 move.l  d3,(a0)
                 move.l  d3,4(a0)
@@ -314,4 +320,4 @@ Object_Clear96Bytes:                                    ; CODE XREF: Entity_Init
                 move.l  d3,$58(a0)
                 move.l  d3,$5C(a0)
                 rts
-; End of function Object_Clear96Bytes
+; End of function Object_ClearRecord96Bytes

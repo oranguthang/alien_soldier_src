@@ -124,7 +124,7 @@ Boss_BackStringerSpawnDualAngledShots:                  ; CODE XREF: Boss_BackSt
 ; End of function Boss_BackStringerSpawnDualAngledShots
 ; Creates one transformation shot with caller-provided angle parameters
 Projectile_SpawnBackStringerAngledShot:                 ; CODE XREF: Boss_BackStringerSpawnDualAngledShots+14   p  ; was: sub_458F6
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_SpawnBackStringerAngledShotReturn
                 move.w  #$328,(a0)
                 move.w  #$CC80,2(a0)
@@ -150,7 +150,7 @@ Projectile_BackStringerAngledShotMain:                  ; DATA XREF: ROM:Entity_
                 beq.s   Projectile_BackStringerUpdateAngledShotFlight
                 bclr    #4,$22(a5)
                 beq.s   Projectile_BackStringerConvertAngledShotToImpact
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Projectile_BackStringerConvertAngledShotToImpact
                 jsr     (Pickup_SpawnLarge).l
                 move.w  $10(a5),$10(a0)
@@ -195,7 +195,7 @@ Projectile_BackStringerUpdateAngledShotSpin:            ; CODE XREF: Projectile_
                 move.l  d0,$18(a5)
                 btst    #0,(FrameCounter+1).w
                 bne.s   Projectile_BackStringerAngledShotReturn
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Projectile_BackStringerAngledShotReturn
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)

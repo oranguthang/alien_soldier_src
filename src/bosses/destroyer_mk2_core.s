@@ -107,7 +107,7 @@ Boss_DestroyerMK2ClearScrollBuffersLoop:                ; CODE XREF: Boss_Destro
                 bset    #3,$4C(a5)
                 move.w  #$240,d0
                 move.w  #$3DC,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 move.w  #$C0,d0
                 sub.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$10(a5)

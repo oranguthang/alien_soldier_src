@@ -123,7 +123,7 @@ Boss_GustheadWaitForAssetsAndClearArena:                ; DATA XREF: ROM:Boss_Gu
                 addq.w  #2,4(a5)
                 move.w  #$1B0,d0
                 moveq   #0,d1
-                jmp     Object_ClearAllExceptTypes
+                jmp     Object_ClearEntityRecordsExceptTwoTypes
 ; End of function Boss_GustheadWaitForAssetsAndClearArena
 ; Initializes the Gusthead root, four four-segment arms, and trailing effect object
 Boss_GustheadInitializeRootAndParts:                    ; DATA XREF: ROM:0003F24E   o  ; was: sub_3F2D0
@@ -624,7 +624,7 @@ Boss_GustheadSpawnFourWayArcVolley:                     ; CODE XREF: Boss_Gusthe
                 move.w  #3,d7
                 move.w  #$150,d6
 Boss_GustheadFourWayArcVolleyLoop:                      ; CODE XREF: Boss_GustheadSpawnFourWayArcVolley+66   j  ; was: loc_3F8C4
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_GustheadFourWayArcVolleyReturn
                 move.w  #$10,(a0)
                 jsr     (Projectile_InitType88).l

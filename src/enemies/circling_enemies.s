@@ -95,7 +95,7 @@ Enemy_UpdateCircularMotionAndFire:                      ; CODE XREF: Enemy_Circl
                 jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$20,d0                         ; ' '
                 bcs.s   Enemy_UpdateCircularMotionAndFire_Return
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Enemy_UpdateCircularMotionAndFire_Return
                 move.w  a0,$56(a5)
                 jsr     (Math_CalculateAngleToPlayer).l
@@ -318,7 +318,7 @@ Enemy_ResetCirclingState:                               ; CODE XREF: Enemy_Circl
 Enemy_SpawnDifficultyProjectilePattern:                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2D640
                 tst.w   (DifficultyMode).w
                 beq.s   Enemy_SpawnDifficultyProjectilePattern_Base
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Enemy_SpawnDifficultyProjectilePattern_Base
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)

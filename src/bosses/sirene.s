@@ -151,7 +151,7 @@ Boss_EnterSireneState8:                                 ; CODE XREF: Boss_Update
                 moveq   #0,d3
                 moveq   #$1A,d7
                 movea.w #(SecondaryEntityType-M68K_RAM),a0
-                jsr     (Object_ClearAllExceptTypes_Loop).l
+                jsr     (Object_ClearRecordsExceptTwoTypes_Loop).l
                 clr.w   2(a5)
                 clr.w   8(a5)
                 bset    #2,(PlayerModeFlags).w
@@ -706,7 +706,7 @@ Boss_SpawnSirenePeriodicProjectile:                     ; CODE XREF: Boss_Update
                 andi.w  #$1F,d0
                 bne.s   Boss_SpawnSirenePeriodicProjectileReturn
                 movea.w #(FiftiethEntityType-M68K_RAM),a0
-                jsr     (Projectile_FindFreePrimarySlot_CheckFinalRange).l
+                jsr     (Projectile_FindFreeSlotForward4).l
                 bne.s   Boss_SpawnSirenePeriodicProjectileReturn
                 move.w  #$490,(a0)
                 move.w  #$E100,2(a0)
@@ -755,7 +755,7 @@ Projectile_ProcessSireneHomingInBounds:                 ; CODE XREF: Projectile_
                 move.w  (FrameCounter).w,d0
                 andi.w  #$50,d0                         ; 'P'
                 bne.s   Projectile_ConvertSireneHomingToParticle
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Projectile_ConvertSireneHomingToParticle
                 moveq   #1,d0
                 tst.w   (DifficultyMode).w

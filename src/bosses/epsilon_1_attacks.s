@@ -167,7 +167,7 @@ Boss_Epsilon1WaitForSpreadRingReadyReturn:              ; CODE XREF: Boss_Epsilo
 ; Reserves the first projectile slot used by the spread pair
 Boss_Epsilon1ReserveFirstSpreadSlotState:               ; DATA XREF: ROM:00045D10   o  ; was: sub_4634E
                 bsr.w   Boss_Epsilon1UpdateBattleCenterMotion
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_Epsilon1ReserveFirstSpreadSlotReturn
                 move.w  #$10,(a0)
                 move.w  a0,(SharedPatternRow0Long7).w
@@ -178,7 +178,7 @@ Boss_Epsilon1ReserveFirstSpreadSlotReturn:              ; CODE XREF: Boss_Epsilo
 ; Reserves the second projectile slot used by the spread pair
 Boss_Epsilon1ReserveSecondSpreadSlotState:              ; DATA XREF: ROM:00045D12   o  ; was: sub_46368
                 bsr.w   Boss_Epsilon1UpdateBattleCenterMotion
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_Epsilon1ReserveSecondSpreadSlotReturn
                 move.w  #$10,(a0)
                 move.w  a0,(SharedPatternRow0Long7+2).w
@@ -361,7 +361,7 @@ Boss_Epsilon1MoveToUpperSweepHeightReturn:              ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1MoveToUpperSweepHeightState
 ; Reserves the two spread slots used after the vertical sweep
 Boss_Epsilon1ReserveSweepSpreadSlotsState:              ; DATA XREF: ROM:00045D2C   o  ; was: sub_46560
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_Epsilon1ReserveSweepSpreadSlotsReturn
                 move.w  #$10,(a0)
                 lea     (SharedPatternRow0Long7).w,a1
@@ -379,7 +379,7 @@ Boss_Epsilon1ReserveSweepSpreadSlotsReturn:             ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1ReserveSweepSpreadSlotsState
 ; Allocates one companion projectile for each of the twelve ring objects
 Boss_Epsilon1AttachRingProjectilesState:                ; DATA XREF: ROM:00045D2E   o  ; was: sub_46590
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_Epsilon1AttachRingProjectilesReturn
                 move.w  $48(a5),d0
                 add.w   d0,d0

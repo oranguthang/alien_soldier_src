@@ -413,7 +413,7 @@ Boss_ZLeoApplyDefeatPaletteFade:                        ; CODE XREF: Boss_ZLeoUp
 Boss_ZLeoSpawnDefeatEffect:                             ; CODE XREF: Boss_ZLeoBeginDefeatSequence+68   p  ; was: sub_529CE
                                         ; Boss_ZLeoBeginDefeatSequence+9C   p
                 jsr     (Projectile_UpdateWithExplosionSound).l
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Boss_ZLeoSpawnDefeatEffectReturn
                 move.w  (RandomNumberState).w,d0
                 andi.w  #7,d0

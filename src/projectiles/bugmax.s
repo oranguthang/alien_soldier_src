@@ -12,7 +12,7 @@ Projectile_BugmaxEmitPeriodicTrailParticle:             ; CODE XREF: Boss_Bugmax
                 add.w   (FrameCounter).w,d7
                 andi.w  #7,d7
                 bne.s   Projectile_BugmaxTrailParticleEmissionReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_BugmaxTrailParticleEmissionReturn
                 jsr     (Projectile_InitType88).l
                 move.w  $10(a5),$10(a0)
@@ -218,7 +218,7 @@ Projectile_BugmaxUpdateSpreadFlight:                    ; DATA XREF: ROM:Project
                 clr.w   $5C(a5)
                 clr.b   $21(a5)
                 addq.w  #2,4(a5)
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_BugmaxSpreadFlightReturn
                 jsr     (Projectile_InitType88).l
                 move.w  $10(a5),$10(a0)
@@ -480,7 +480,7 @@ Boss_BugmaxAcceleratePositiveHitFragmentSpawnOffset:    ; CODE XREF: Boss_Bugmax
 Boss_BugmaxAllocateHitFragment:                         ; CODE XREF: Boss_BugmaxEmitHitFragmentFromCurrentPart+28   j  ; was: loc_4D948
                                         ; Boss_BugmaxEmitHitFragmentFromCurrentPart+32   j
                 lea     (TwentySixthEntityType).w,a0
-                jsr     (Projectile_FindFreePrimarySlot_CheckExtendedRange).l
+                jsr     (Projectile_FindFreeSlotForward20).l
                 bne.w   Boss_BugmaxHitFragmentEmissionReturn
                 move.w  #$338,(a0)
                 move.w  (PrimaryEntityXPos).w,$10(a0)

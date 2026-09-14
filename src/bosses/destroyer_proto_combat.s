@@ -195,7 +195,7 @@ Boss_DestroyerProtoSpawnSpreadProjectile:               ; CODE XREF: Boss_Destro
                 move.w  $4A(a5),d0
                 andi.w  #1,d0
                 bne.w   Entity_UpdateReturn
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Entity_UpdateReturn
                 lea     Projectile_DestroyerProtoVelocityXTable(pc),a1
                 nop

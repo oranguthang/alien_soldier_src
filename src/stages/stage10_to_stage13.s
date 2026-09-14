@@ -320,7 +320,7 @@ Stage12To13_AdvanceTeleportFadeDelay:                   ; CODE XREF: Stage12To13
                 clr.b   (PlaneAScrollModeFlags).w
                 moveq   #0,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 bset    #6,(CameraMotionLockFlags).w
                 move.w  #$50,(PlayerStateOffset).w      ; 'P'
                 clr.l   (StageMotionXDelta).w

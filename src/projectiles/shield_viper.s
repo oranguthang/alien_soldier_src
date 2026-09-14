@@ -1,6 +1,6 @@
 ; Convert the controller, body records, and linked visuals into staggered defeat objects
 Boss_ShieldViperBeginStaggeredDefeat:                   ; DATA XREF: ROM:0004E056   o  ; was: sub_4EC5E
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_ShieldViperConfigureStaggeredDefeatRecords
                 bsr.w   Gfx_ShieldViperForceHorizontalFlip
                 move.w  #$37C,(a0)

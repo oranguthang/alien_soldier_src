@@ -101,7 +101,7 @@ Boss_ShiperScrollFillLowerSpan:                         ; CODE XREF: Boss_Shiper
 Orphaned_SpawnType94RandomAngle:                        ; was: sub_37104
                 btst    #0,(FrameCounter+1).w
                 bne.s   Orphaned_SpawnType94RandomAngleReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Orphaned_SpawnType94RandomAngleReturn
                 movea.l #Projectile_SpawnSpriteFrames,a1
                 jsr     (Sprite_InitType94FromTable).l

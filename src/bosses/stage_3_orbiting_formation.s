@@ -306,7 +306,7 @@ Boss_Stage3OrbitingFormationFireHomingShot:             ; DATA XREF: ROM:0003419
                 bpl.w   Boss_Stage3OrbitingFormationWaitForOrbitAlignment
                 jsr     (Math_CalculateAngleToPlayer).l
                 move.w  d2,d6
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Boss_Stage3OrbitingFormationReturn
                 move.w  #$FFE8,d0
                 clr.w   d1
@@ -333,7 +333,7 @@ Boss_Stage3OrbitingFormationFirePartRadialShots:        ; DATA XREF: ROM:0003419
                 lea     (SecondaryEntityType).w,a5
                 move.w  #7,d4
 Boss_Stage3OrbitingFormationFireFromNextPart:           ; CODE XREF: Boss_Stage3OrbitingFormationFirePartRadialShots+52   j  ; was: loc_3436A
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_Stage3OrbitingFormationFinishPartRadialShots
                 clr.w   d0
                 clr.w   d1

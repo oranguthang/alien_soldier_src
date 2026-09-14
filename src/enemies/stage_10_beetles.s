@@ -20,7 +20,7 @@ Stage10_BeetleWaveInitState:                            ; DATA XREF: ROM:Stage10
 ; End of function Stage10_BeetleWaveInitState
 ; Creates the next beetle at a randomized vertical offset and screen edge
 Stage10_BeetleWaveSpawnState:                           ; DATA XREF: ROM:0002E6DC   o  ; was: sub_2E6EE
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Stage10_BeetleWaveSpawnState_Return
                 jsr     (RandomNumber).l
                 move.w  a0,$4C(a5)

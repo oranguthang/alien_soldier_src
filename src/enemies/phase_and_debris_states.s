@@ -166,7 +166,7 @@ Enemy_UpdateBouncingDebrisSpawner_ApplyGravity:         ; CODE XREF: Enemy_Updat
                 jsr     (Physics_AlignToTerrain).l
 Enemy_UpdateBouncingDebrisSpawner_SpawnParticle:        ; CODE XREF: Enemy_UpdateBouncingDebrisSpawner+8   j  ; was: loc_2D1EA
                                         ; Enemy_UpdateBouncingDebrisSpawner+2A   j
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Enemy_UpdateBouncingDebrisSpawner_Return
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0

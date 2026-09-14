@@ -411,7 +411,7 @@ Boss_UpdateDefeatExplosionAndSpawnDebris:               ; CODE XREF: Boss_Victor
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #4,(PlaneBShakeLevel).w
                 jsr     (Projectile_UpdateWithExplosionSound).l
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_UpdateDefeatExplosionAndSpawnDebrisReturn
                 jsr     (Projectile_InitType88).l
                 clr.b   $20(a0)
@@ -487,7 +487,7 @@ Boss_GustheadReverseDefeatPaletteAndClearObjectsState:  ; DATA XREF: ROM:0003F2B
                 addq.w  #2,4(a5)
                 move.w  #$1B0,d0
                 moveq   #0,d1
-                jmp     Object_ClearAllExceptTypes
+                jmp     Object_ClearEntityRecordsExceptTwoTypes
 ; ---------------------------------------------------------------------------
 Boss_GustheadDefeatPaletteReverseReturn:                ; CODE XREF: Boss_GustheadReverseDefeatPaletteAndClearObjectsState+6   j  ; was: locret_4003E
                 rts

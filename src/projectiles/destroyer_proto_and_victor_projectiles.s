@@ -260,7 +260,7 @@ Projectile_HitReactiveShotSpawnImpact:                  ; CODE XREF: Boss_Victor
                 move.b  #$20,(PaletteRGBChannelMask).w  ; ' '
                 move.b  #8,(PaletteRGBAdjustStep).w
 Projectile_HitReactiveShotAllocateImpact:               ; CODE XREF: Projectile_HitReactiveShotMain+22   j  ; was: loc_323B8
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Projectile_HitReactiveShotRemove
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)

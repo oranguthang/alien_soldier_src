@@ -116,7 +116,7 @@ Boss_ZLeoInit:                                          ; DATA XREF: ROM:Boss_ZL
                 bset    #0,(PlayerRestrictionFlags).w
                 move.w  #$3F8,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 move.w  #$54,(RasterEffectIndex).w      ; 'T'
                 clr.w   (RasterEffectInitState).w
                 move.w  #$18,(RasterLayoutOffset).w
@@ -524,7 +524,7 @@ Boss_ZLeoFinishDefeatWhiteout:                          ; CODE XREF: Boss_ZLeoRu
                 move.w  #$120,$48(a5)
                 move.w  #$3F8,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 movea.w #(PaletteShadowBuffer-M68K_RAM),a0
                 move.w  #$EEE,d0
                 moveq   #$3F,d7                         ; '?'

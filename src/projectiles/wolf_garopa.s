@@ -583,7 +583,7 @@ Boss_WolfGaropaOrbAngleReached:                         ; CODE XREF: Boss_WolfGa
 Boss_WolfGaropaSpawnOrbProjectilePair:                  ; CODE XREF: Boss_WolfGaropaUpdateBattleStartWait+132   j  ; was: sub_50A14
                 move.w  #1,(PlaneAShakeLevel).w
                 move.w  #1,(PlaneBShakeLevel).w
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Boss_WolfGaropaOrbProjectilePairReturn
                 movea.l #Weapon_SpreadShotInitialSpriteFrame,a1
                 jsr     (Sprite_InitFromTable).l
@@ -591,7 +591,7 @@ Boss_WolfGaropaSpawnOrbProjectilePair:                  ; CODE XREF: Boss_WolfGa
                 move.w  #$8040,2(a0)
                 movea.w a0,a3
                 move.w  #$1C,$53C(a5)
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Boss_WolfGaropaOrbProjectilePairReturn
                 move.b  #$36,d0                         ; '6'
                 jsr     (Sound_QueueSFXRequest).l

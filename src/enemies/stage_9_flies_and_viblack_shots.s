@@ -268,7 +268,7 @@ Stage9_FlyFormationDelayState_Return:                   ; CODE XREF: Stage9_FlyF
 ; End of function Stage9_FlyFormationDelayState
 ; Allocates four dormant object slots for the next fly wave
 Stage9_FlyFormationAllocateSlotsState:                  ; DATA XREF: ROM:0002D8F8   o  ; was: sub_2D92A
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Stage9_FlyFormationAllocateSlotsState_Return
                 move.w  #$10,(a0)
                 lea     $4C(a5),a1
@@ -340,7 +340,7 @@ Projectile_ViblackSideShotSequenceStateOffsets: dc.w    Projectile_ViblackSideSh
 
 ; Creates the next linked Viblack side shot and starts the inter-shot delay
 Projectile_ViblackSideShotSequenceSpawnState:           ; DATA XREF: ROM:Projectile_ViblackSideShotSequenceStateOffsets   o  ; was: sub_2D9E0
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_ViblackSideShotSequenceSpawnState_Return
                 move.w  #$2F4,(a0)
                 move.w  $10(a5),$10(a0)

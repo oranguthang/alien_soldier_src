@@ -75,7 +75,7 @@ Projectile_Epsilon1SpreadProjectileDelayReturn:         ; CODE XREF: Projectile_
 ; End of function Projectile_Epsilon1SpreadProjectileDelayState
 ; Emits one clone at the current spread offset and advances that offset
 Projectile_Epsilon1EmitSpreadCloneState:                ; DATA XREF: ROM:0004719A   o  ; was: sub_471AA
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_Epsilon1EmitSpreadCloneReturn
                 move.w  #1,$5E(a0)
                 move.w  #$27C,(a0)
@@ -208,7 +208,7 @@ Projectile_Epsilon1EmitBarrageRowState:                 ; DATA XREF: ROM:000472D
                 move.w  #$60,d6                         ; '`'
                 clr.w   d5
 Projectile_Epsilon1EmitBarrageRowLoop:                  ; CODE XREF: Projectile_Epsilon1EmitBarrageRowState+34   j
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_Epsilon1FinishBarrageRowEmission
                 bsr.s   Projectile_Epsilon1InitializeBarrageRowProjectile
                 move.w  $10(a5),$10(a0)
@@ -411,7 +411,7 @@ Boss_Epsilon1SelectRingLaunchAngleSample:               ; CODE XREF: Boss_Epsilo
                 move.w  #2,$48(a5)
                 addq.w  #2,4(a5)
                 bsr.w   Boss_Epsilon1PositionRingObjectFromSamples
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_Epsilon1WaitForRingLaunchWindowReturn
                 jsr     (Sprite_InitType160).l
                 move.l  #SharedCombatSpriteAnimation04,8(a0)
@@ -419,7 +419,7 @@ Boss_Epsilon1SelectRingLaunchAngleSample:               ; CODE XREF: Boss_Epsilo
                 move.w  $10(a5),$10(a0)
                 addi.w  #8,$10(a0)
                 move.w  $14(a5),$14(a0)
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_Epsilon1WaitForRingLaunchWindowReturn
                 jsr     (Sprite_InitType160).l
                 move.l  #SharedCombatSpriteAnimation04,8(a0)
@@ -548,7 +548,7 @@ Boss_Epsilon1SpawnRingObjectDefeatDebris:               ; CODE XREF: Boss_Epsilo
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_Epsilon1UpdateRingObjectDefeatFallReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_Epsilon1UpdateRingObjectDefeatFallReturn
                 jsr     (Projectile_InitType88).l
                 move.w  $10(a5),$10(a0)

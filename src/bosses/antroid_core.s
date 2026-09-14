@@ -60,7 +60,7 @@ Boss_AntroidClearOtherObjectsState:                     ; DATA XREF: Boss_Antroi
                 clr.w   8(a5)
                 move.w  #$30,d0                         ; '0'
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 rts
 ; End of function Boss_AntroidClearOtherObjectsState
 ; Builds Antroid's linked parts and enters the first battle preparation state

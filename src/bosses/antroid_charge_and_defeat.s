@@ -86,7 +86,7 @@ Boss_AntroidEnterDefeatDelayState:                      ; CODE XREF: Boss_Antroi
                 move.w  #$14,6(a5)
                 moveq   #$30,d0                         ; '0'
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
 ; Counts down Antroid's final defeat delay while updating the fade
 Boss_AntroidDefeatDelayState:                           ; DATA XREF: ROM:00037530   o  ; was: sub_37E6C
                 subq.w  #1,6(a5)

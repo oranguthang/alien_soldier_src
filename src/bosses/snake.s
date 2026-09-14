@@ -219,7 +219,7 @@ Boss_SnakeBeginDefeatState:                             ; DATA XREF: ROM:0004084
                 move.w  a5,$4A(a5)
                 clr.b   $21(a5)
                 addq.w  #2,4(a5)
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_SnakeBeginDefeatReturn
                 moveq   #3,d0
                 jsr     (Pickup_SelectRandomSize).l
@@ -271,7 +271,7 @@ Boss_SnakeCheckSegmentDestruction:                      ; CODE XREF: Boss_SnakeS
                 move.w  #4,4(a5)
                 jsr     (Effect_SpawnExplosionB).l
                 andi.w  #$7FFF,2(a5)
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_SnakeSegmentDispatch
                 moveq   #3,d0
                 jsr     (Pickup_SelectRandomSize).l
@@ -297,7 +297,7 @@ Boss_SnakeSegmentFireState:                             ; DATA XREF: ROM:Boss_Sn
                 cmpi.w  #$160,$14(a5)
                 bgt.s   Boss_SnakeSegmentFireReturn
                 lea     (TwentySixthEntityType).w,a0
-                jsr     (Projectile_FindFreePrimarySlot_CheckEnemyRange).l
+                jsr     (Projectile_FindFreeSlotForward8).l
                 bne.s   Boss_SnakeSegmentFireReturn
                 jsr     (Projectile_InitType88).l
                 bsr.s   Boss_SnakeConfigureShot

@@ -39,7 +39,7 @@ Boss_SunsetStingSetupArena:                             ; DATA XREF: ROM:Boss_Su
                 move.b  #6,(BossColorEffectFlags).w
                 move.w  #$1C0,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 addq.w  #2,4(a5)
                 move.b  #$80,$4B(a5)
                 clr.w   (PrimaryEntityWork5E).w
@@ -395,7 +395,7 @@ Boss_SunsetStingWobbleAngleDeltas:
 
 ; Spawns multiple projectile debris with randomized trajectories
 Boss_SunsetStingSpawnDebris:                            ; CODE XREF: Boss_SunsetStingSpawnDebris+5E   j  ; was: sub_411C0
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_SunsetStingFinishDebrisSpawn
                 move.w  #$1C4,(a0)
                 ori.w   #$CD00,2(a0)

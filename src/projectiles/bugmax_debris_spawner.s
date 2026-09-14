@@ -43,7 +43,7 @@ Projectile_BugmaxDebrisSpawner_WaitInitialDelay_Return:  ; CODE XREF: Projectile
 ; End of function Projectile_BugmaxDebrisSpawner_WaitInitialDelay
 ; Spawns one debris particle and schedules the next one
 Projectile_BugmaxDebrisSpawner_SpawnParticle:           ; DATA XREF: ROM:0002C29C   o  ; was: sub_2C2AC
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_BugmaxDebrisSpawner_SpawnParticle_Return
                 jsr     (RandomNumber).l
                 btst    #0,(RandomNumberState).w

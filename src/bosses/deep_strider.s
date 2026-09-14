@@ -58,7 +58,7 @@ Boss_DeepStriderInit:                                   ; DATA XREF: Boss_DeepSt
 Boss_DeepStriderClearStageObjects:                      ; CODE XREF: Boss_DeepStriderDefeatRiseState+38   p  ; was: sub_3E5FC
                 move.w  #$19C,d0
                 move.w  #$208,d1
-                jmp     Object_ClearAllExceptTypes
+                jmp     Object_ClearEntityRecordsExceptTwoTypes
 ; End of function Boss_DeepStriderClearStageObjects
 ; Boss intro rise sequence
 Boss_DeepStriderIntroRise:                              ; DATA XREF: ROM:0003E5CC   o  ; was: sub_3E60A
@@ -575,7 +575,7 @@ Boss_DeepStriderSpawnDefeatDebris:                      ; CODE XREF: Boss_DeepSt
                 move.w  #1,(PlaneBShakeLevel).w
                 btst    #0,(FrameCounter+1).w
                 bne.s   Boss_DeepStriderSpawnDefeatDebrisReturn
-                jsr     (Projectile_FindFreeOrRecycleSlot).l
+                jsr     (Projectile_FindFreeOrClearReusableSlot).l
                 bne.s   Boss_DeepStriderSpawnDefeatDebrisReturn
                 jsr     (Sprite_InitType160).l
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
@@ -832,7 +832,7 @@ Boss_DeepStriderFireAngleProjectile:                    ; CODE XREF: Boss_DeepSt
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   Boss_DeepStriderFireAngleProjectileReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Boss_DeepStriderFireAngleProjectileReturn
                 move.w  #$350,(a0)
                 move.w  #$AD80,2(a0)

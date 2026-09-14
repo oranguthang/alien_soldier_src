@@ -57,7 +57,7 @@ Stage21_AsteroidFieldWaitForNegativeVScroll_Return:     ; CODE XREF: Stage21_Ast
 ; End of function Stage21_AsteroidFieldWaitForNegativeVScroll
 ; Allocates the next large or small asteroid according to the variant schedule
 Stage21_AsteroidFieldSpawnRock:                         ; DATA XREF: ROM:000330EE   o  ; was: sub_3313A
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Stage21_AsteroidFieldSpawnReturn
                 addq.w  #2,4(a5)
                 bsr.w   Stage21_AsteroidFieldSetSpawnDelayFromVScrollSpeed
@@ -233,7 +233,7 @@ Stage21_AsteroidSpawnDestructionResult:                 ; CODE XREF: Stage21_Ast
                 tst.w   $48(a5)
                 bne.w   Stage21_AsteroidDestructionReturn
                 move.w  #1,$48(a5)
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Stage21_AsteroidDestructionReturn
                 tst.w   (DifficultyMode).w
                 beq.s   Stage21_AsteroidUseDenseRewardMask
@@ -321,7 +321,7 @@ Stage21_AsteroidFieldSpawnAmbientRock:                  ; CODE XREF: Stage21_Ast
                 move.w  (FrameCounter).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 bne.s   Stage21_AsteroidAmbientSpawnReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Stage21_AsteroidAmbientSpawnReturn
                 bsr.w   Stage21_InitializeAsteroidObject
                 move.w  #$400,$E(a0)

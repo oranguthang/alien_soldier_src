@@ -422,7 +422,7 @@ XiTigerCutscene_SpawnMarkerPair:                        ; CODE XREF: XiTigerCuts
                 neg.w   d7
 ; Spawns one animated marker sprite at X = $120 + d7
 XiTigerCutscene_SpawnMarker:                            ; CODE XREF: XiTigerCutscene_SpawnMarkerPair   p  ; was: sub_1ED3C
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   XiTigerCutscene_Return
                 move.w  #$120,$10(a0)
                 add.w   d7,$10(a0)
@@ -442,7 +442,7 @@ XiTigerCutscene_UpdateMarker:                           ; DATA XREF: ROM:Entity_
 ; End of function XiTigerCutscene_UpdateMarker
 ; Spawns one randomly positioned particle used during the opening hold
 XiTigerCutscene_SpawnRandomParticle:                    ; CODE XREF: XiTigerCutscene_WaitBeforeReveal:XiTigerCutscene_UpdateWaitingFrame   p  ; was: sub_1ED7C
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   XiTigerCutscene_Return
                 move.b  (RandomNumberState).w,d0
                 andi.w  #$FF,d0

@@ -222,7 +222,7 @@ Entity_InitValkirieAuxiliaryGroup:                      ; CODE XREF: Entity_Init
                 movea.w #(TwentySeventhEntityType-M68K_RAM),a0
                 moveq   #5,d7
 Entity_ClearValkirieAuxiliaryGroupLoop:                 ; CODE XREF: Entity_InitValkirieAuxiliaryGroup+C   j  ; was: loc_566BC
-                jsr     (Object_Clear96Bytes).l
+                jsr     (Object_ClearRecord96Bytes).l
                 dbf     d7,Entity_ClearValkirieAuxiliaryGroupLoop
                 movea.w #(TwentySeventhEntityType-M68K_RAM),a5
                 movea.w a5,a4

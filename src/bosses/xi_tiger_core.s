@@ -65,7 +65,7 @@ Boss_XiTigerInit:                                       ; DATA XREF: Boss_XiTige
                 move.w  #2,(MidgameLightningMode).w
                 move.w  #$114,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 addq.w  #1,8(a5)
 Boss_XiTigerInitReturn:                                 ; CODE XREF: Boss_XiTigerSetup+4   j  ; was: locret_3D8CC
                 rts
@@ -598,7 +598,7 @@ Boss_XiTigerDefeatFadeState:                            ; DATA XREF: ROM:0003D8A
                 move.w  #$FEB0,(SecondaryCameraXPos).w
                 move.w  #$114,d0
                 moveq   #0,d1
-                jmp     Object_ClearAllExceptTypes
+                jmp     Object_ClearEntityRecordsExceptTwoTypes
 ; ---------------------------------------------------------------------------
 Boss_XiTigerUpdateDefeatFadePose:                       ; CODE XREF: Boss_XiTigerDefeatFadeState+14   j  ; was: loc_3E00C
                 lea     Boss_XiTigerDefeatPoseCommands(pc),a1

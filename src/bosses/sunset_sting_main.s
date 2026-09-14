@@ -82,7 +82,7 @@ Boss_SunsetStingInit:                                   ; DATA XREF: ROM:off_42A
                 bmi.w   Boss_SunsetStingReturn
                 move.w  #$1EC,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 move.b  #1,(SoundFadeOutDelay).w
                 move.w  #$1E0,$10(a5)
                 move.w  #$D8,$14(a5)
@@ -626,7 +626,7 @@ Boss_SunsetStingDefeatWobbleUpdate:                     ; CODE XREF: Boss_Sunset
 ; Spawns debris rain projectiles
 Boss_SunsetStingSpawnDebrisRain:                        ; CODE XREF: Boss_SunsetStingDefeatWobbleState:Boss_SunsetStingDefeatWobbleUpdate   p  ; was: sub_431C2
                                         ; sub_43226:loc_43232   p
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Boss_SunsetStingReturn
                 jsr     (Projectile_InitType88).l
                 move.w  (RandomNumberState).w,d0
@@ -664,7 +664,7 @@ Boss_SunsetStingFinalDefeatUpdate:                      ; CODE XREF: Boss_Sunset
                 bne.w   Boss_SunsetStingReturn
                 move.w  #$1EC,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 jsr     (TransitionEffect_SpawnAtOwner).l
                 clr.w   (ScrollPlaneBufferOffset).w
                 clr.l   $1C(a5)

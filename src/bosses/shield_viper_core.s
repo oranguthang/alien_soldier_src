@@ -237,7 +237,7 @@ Boss_ShieldViperInitialize:                             ; DATA XREF: ROM:Boss_Sh
                 addq.w  #2,4(a5)
                 move.w  #$34C,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 clr.w   (SharedPatternRow0Long1).w
                 move.b  #4,(PlayerOAMBucketOffset).w
                 move.w  #$50,(SharedPatternRow0Long6).w  ; 'P'
@@ -650,7 +650,7 @@ Boss_ShieldViperEmitOrbitShotBurst:                     ; DATA XREF: ROM:0004E01
                 bsr.w   Gfx_ShieldViperUpdateHorizontalFlipFromFrameBit
                 subq.w  #1,$48(a5)
                 bpl.s   Boss_ShieldViperOrbitShotBurstReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_ShieldViperOrbitShotBurstReturn
                 jsr     Projectile_InitShieldViperOrbitShot(pc)  ; (pc)
                 nop

@@ -92,7 +92,7 @@ Boss_SunsetStingSegmentFlightState:                     ; DATA XREF: ROM:0004337
                 jsr     (Effect_SpawnExplosionA).l
                 bclr    #4,$22(a5)
                 beq.s   Boss_SunsetStingSegmentDestroyedReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_SunsetStingSegmentDestroyedReturn
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -514,7 +514,7 @@ Projectile_SunsetStingSegmentShotFallAndDisable:        ; DATA XREF: ROM:Entity_
 ; End of function Projectile_SunsetStingSegmentShotFallAndDisable
 ; Spawns a projectile from the attached segment with upward velocity
 Projectile_SpawnSunsetStingSegmentShot:                 ; CODE XREF: Boss_SunsetStingSegmentAttachedToPlayer+C   p  ; was: sub_438E6
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Boss_SunsetStingReturn
                 move.w  #$1F8,(a0)
                 move.w  #$CD00,2(a0)

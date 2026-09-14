@@ -151,7 +151,7 @@ Orphaned_RisingShotEmitHomingReturn:                    ; CODE XREF: Orphaned_Ri
 ; Spawns a type-$88 child at the current object's position
 Projectile_RisingShotEmitShot:                          ; CODE XREF: Projectile_MissirayFallingShotApplyGravity+48   p  ; was: sub_33B14
                                         ; Projectile_RisingShotEmitOnInterval+8   j
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_RisingShotEmitReturn
                 jsr     (Projectile_InitType88).l
                 andi.w  #$FEFF,2(a0)
@@ -266,7 +266,7 @@ Projectile_Stage24RisingShotEmitTopEdgeTrail:           ; DATA XREF: ROM:00033A6
                 bne.s   Projectile_Stage24RisingShotTrailReturn
                 subq.w  #1,$4C(a5)
                 beq.s   Projectile_Stage24RisingShotFinishTopEdgeBurst
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_Stage24RisingShotResetTrailDelay
                 move.w  #$10,(a0)
                 move.l  #SharedCombatSpriteAnimation05,8(a0)
@@ -313,7 +313,7 @@ Projectile_Stage24RisingShotSpawnNextRadialParticle:    ; CODE XREF: Projectile_
 ; End of function Projectile_Stage24RisingShotSpawnRadialBurst
 ; Spawns one radial type-$160 burst particle with the supplied velocity
 Projectile_Stage24RisingShotSpawnBurstParticle:         ; CODE XREF: Projectile_Stage24RisingShotSpawnRadialBurst+20   p  ; was: sub_33D26
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_Stage24RisingShotSpawnBurstParticleReturn
                 jsr     (Sprite_InitType160).l
                 move.b  #$60,$20(a0)                    ; '`'
@@ -451,11 +451,11 @@ Projectile_MissirayBulletEmitImpactBurst:               ; DATA XREF: ROM:00033DF
                 eori.w  #$8000,2(a5)
                 subq.w  #1,$48(a5)
                 bne.s   Projectile_MissirayBulletImpactBurstReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_MissirayBulletAdvanceImpactBurst
                 move.w  $4C(a5),d0
                 bsr.w   Projectile_MissirayBulletSpawnImpactParticle
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_MissirayBulletAdvanceImpactBurst
                 move.w  $4C(a5),d0
                 neg.w   d0

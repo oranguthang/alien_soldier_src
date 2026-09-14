@@ -485,7 +485,7 @@ Projectile_BackStringerSpawnFallingDrops:               ; CODE XREF: Boss_BackSt
                 move.w  #7,$47C(a5)
                 move.w  #$B,$47E(a5)
 Projectile_BackStringerSpawnNextFallingDrop:            ; CODE XREF: Projectile_BackStringerSpawnFallingDrops+16   j  ; was: loc_45716
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Projectile_BackStringerSpawnFallingDropsReturn
                 subq.w  #1,$47C(a5)
                 move.w  #$318,(a0)

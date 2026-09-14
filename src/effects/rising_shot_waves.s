@@ -17,7 +17,7 @@ Effect_RisingShotWaveInit:                              ; DATA XREF: ROM:Effect_
                 clr.w   $4A(a5)
                 cmpi.w  #$3E0,(Entity57Type).w
                 beq.s   Effect_RisingShotWaveSkipFishController
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Effect_RisingShotWaveBeginDelay
                 move.w  #$454,(a0)
                 move.w  a0,$40(a5)
@@ -49,7 +49,7 @@ Effect_RisingShotWaveAllocateMembers:                   ; DATA XREF: ROM:0003367
                 move.w  #9,d7
                 lea     $4C(a5),a1
 Effect_RisingShotWaveAllocateNextMember:                ; CODE XREF: Effect_RisingShotWaveAllocateMembers+2C   j  ; was: loc_336D2
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Effect_RisingShotWaveFinishAllocation
                 move.w  #$10,(a0)
                 move.w  a0,(a1)+

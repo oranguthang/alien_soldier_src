@@ -66,7 +66,7 @@ ShipSequence_Update:                                    ; DATA XREF: ROM:0000870
                 bclr    #0,(SceneSequenceFlags).w
                 moveq   #0,d0
                 moveq   #0,d1
-                jmp     Object_ClearAllExceptTypes
+                jmp     Object_ClearEntityRecordsExceptTwoTypes
 ; ---------------------------------------------------------------------------
 ShipSequence_UpdateReturn:                              ; CODE XREF: ShipSequence_Update+1A   j  ; was: locret_87EE
                 rts
@@ -400,7 +400,7 @@ ShipSequence_Complete:                                  ; DATA XREF: ROM:0000882
 
 ; Spawns one radial star particle around the moving pattern center
 ShipSequence_SpawnStarParticle:                         ; CODE XREF: ShipSequence_InitializePatternReveal+6C   p  ; was: sub_8C42
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Cutscene_Return
                 lea     (Effect_StarParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l

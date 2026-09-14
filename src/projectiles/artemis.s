@@ -8,7 +8,7 @@ Boss_SpawnArtemisRadialEmitter:                         ; CODE XREF: Boss_EnterA
                 andi.w  #$1FE,d7
                 neg.l   d5
 Boss_InitArtemisRadialEmitter:                          ; CODE XREF: Boss_SpawnArtemisRadialEmitter+4   j  ; was: loc_589FC
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Boss_SpawnArtemisRadialEmitterReturn
                 move.w  #$488,(a0)
                 move.w  #$C100,2(a0)
@@ -101,7 +101,7 @@ Projectile_HandleArtemisEmitterCollision:               ; CODE XREF: Projectile_
                 beq.s   Projectile_ReflectArtemisEmitter
                 bclr    #4,$22(a5)
                 beq.s   Projectile_ConvertArtemisEmitterToEffect
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Projectile_ConvertArtemisEmitterToEffect
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -145,7 +145,7 @@ Projectile_SpawnArtemisRadialShot:                      ; CODE XREF: Projectile_
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Projectile_SpawnArtemisRadialShotReturn
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Projectile_SpawnArtemisRadialShotReturn
                 lea     (Projectile_BombAndRadialSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
@@ -170,7 +170,7 @@ Projectile_SpawnArtemisRadialShotReturn:                ; CODE XREF: Projectile_
 Projectile_SpawnArtemisReflectedShot:                   ; CODE XREF: Projectile_UpdateArtemisRadialEmitter+13E   j  ; was: sub_58C02
                 btst    #0,(FrameCounter+1).w
                 bne.s   Projectile_SpawnArtemisReflectedShotReturn
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Projectile_SpawnArtemisReflectedShotReturn
                 lea     (Projectile_ArtemisReflectedShotSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l

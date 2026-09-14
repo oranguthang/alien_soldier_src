@@ -6,7 +6,7 @@ Enemy_UpdateBouncingObject:                             ; DATA XREF: ROM:Entity_
                 beq.s   Enemy_CheckBouncingObjectFloor
                 bclr    #4,$22(a5)
                 beq.s   Enemy_ResetBouncingObjectMotion
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Enemy_ResetBouncingObjectMotion
                 jsr     (Pickup_SpawnSmall).l
                 move.w  $10(a5),$10(a0)

@@ -59,7 +59,7 @@ Projectile_UpdateWithImpactFrames_PlaySound:            ; CODE XREF: Projectile_
                 jsr     (Sound_QueueSFXRequest).l
 Projectile_UpdateWithImpactFrames_Update:               ; CODE XREF: Projectile_UpdateAfterGlobalDelay+4   j  ; was: loc_2A3C0
                                         ; Projectile_UpdateWithImpactFrames+10   j
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Projectile_UpdateWithImpactFrames_Return
                 movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 move.w  (RandomNumberState).w,d6
@@ -115,7 +115,7 @@ Projectile_SpawnFourDirectional:
                 move.w  #$150,d6
                 moveq   #3,d7
 Projectile_SpawnFourDirectional_Loop:                   ; CODE XREF: Projectile_SpawnFourDirectional+4A   j  ; was: loc_2A45C
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Projectile_SpawnFourDirectional_Return
                 movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 bsr.w   Sprite_InitType58FromTable
@@ -163,7 +163,7 @@ Effect_SpawnParticleLoop:                               ; DATA XREF: ROM:Entity_
                 bpl.s   Effect_SpawnParticleLoop_Spawn
                 bset    #4,2(a5)
 Effect_SpawnParticleLoop_Spawn:                         ; CODE XREF: Effect_SpawnParticleLoop+10   j  ; was: loc_2A506
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Effect_SpawnParticleLoop_Return
                 movea.l #Effect_ParticleLoopSpriteFrames,a1
                 bsr.w   Sprite_InitTypeA4FromTable
@@ -206,7 +206,7 @@ Projectile_FallingSpawner:                              ; DATA XREF: ROM:Entity_
                 subq.w  #1,$48(a5)
                 bpl.s   Projectile_FallingSpawner_Return
                 move.w  #2,$48(a5)
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_FallingSpawner_Return
                 move.l  #SharedCombatSpriteAnimation04,8(a0)
                 move.w  $10(a5),$10(a0)
@@ -231,7 +231,7 @@ Enemy_SpawnQuadProjectiles:                             ; CODE XREF: Enemy_Spawn
                 moveq   #3,d7
 ; Updates quad projectile spawn with trajectory calculation
 Projectile_UpdateQuadSpawn:                             ; CODE XREF: Enemy_SpawnQuadProjectiles+48   j  ; was: loc_2A5D6
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Enemy_SpawnQuadProjectiles_Return
                 move.l  #SharedCombatSpriteAnimation03,8(a0)
                 move.w  $10(a5),$10(a0)

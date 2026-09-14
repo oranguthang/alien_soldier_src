@@ -128,7 +128,7 @@ Boss_Epsilon1CreateSpreadAimMarkerState:                ; DATA XREF: ROM:00046DB
                 eori.w  #$8000,2(a5)
                 subq.w  #1,$48(a5)
                 bpl.w   Boss_Epsilon1CreateSpreadAimMarkerReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_Epsilon1CreateSpreadAimMarkerReturn
                 move.w  a0,(SharedPatternRow1Long0).w
                 move.w  #$10,(a0)
@@ -253,7 +253,7 @@ Boss_Epsilon1ShuffleBarrageRingOrderReturn:             ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1ShuffleBarrageRingOrderState
 ; Reserves an inert projectile slot for the next barrage position
 Boss_Epsilon1ReserveBarrageEmitterState:                ; DATA XREF: ROM:00046F74   o  ; was: sub_46FE0
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Projectile_Epsilon1SpreadOrBarrageReturn
                 move.w  #$10,(a0)
                 move.w  a0,$4C(a5)

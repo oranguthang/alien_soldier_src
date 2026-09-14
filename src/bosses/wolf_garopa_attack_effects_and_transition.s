@@ -140,7 +140,7 @@ Boss_WolfGaropaAdvanceDefeatTimer:                      ; CODE XREF: Boss_WolfGa
                 move.w  #$FEB0,(SecondaryCameraXPos).w
                 move.w  #$3E8,d0
                 move.w  #$41C,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 moveq   #$1C,d0
                 jmp     (Gfx_ApplyFullActivePaletteFade).l
 ; ---------------------------------------------------------------------------
@@ -167,7 +167,7 @@ Boss_WolfGaropaEmitDefeatDebris:                        ; CODE XREF: Boss_WolfGa
 Boss_WolfGaropaTrySpawnDefeatDebris:                    ; CODE XREF: Boss_WolfGaropaUpdateDefeatTransition+6A   j  ; was: loc_50ED4
                 btst    #0,(FrameCounter+1).w
                 bne.s   Boss_WolfGaropaDefeatTransitionReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_WolfGaropaDefeatTransitionReturn
                 move.b  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'

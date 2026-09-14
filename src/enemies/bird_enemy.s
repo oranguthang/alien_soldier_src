@@ -384,7 +384,7 @@ Enemy_BirdSpawnShot:                                    ; CODE XREF: Enemy_BirdF
                 move.w  (FrameCounter).w,d0
                 andi.w  #$1F,d0
                 bne.s   Enemy_BirdSpawnShot_Return
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 move.w  #$2BC,(a0)
                 move.b  $20(a5),$20(a0)
                 addq.b  #4,$20(a0)
@@ -433,7 +433,7 @@ Enemy_UpdateBirdDefeatDebris_EmitParticles:             ; CODE XREF: Enemy_Updat
                 move.w  (FrameCounter).w,d7
                 andi.w  #7,d7
                 bne.s   Enemy_UpdateBirdDefeatDebris_Return
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Enemy_UpdateBirdDefeatDebris_Return
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)

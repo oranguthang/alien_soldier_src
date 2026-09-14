@@ -198,7 +198,7 @@ Stage18_SegmentedWormCreateChain:                       ; CODE XREF: Stage18_Seg
                 move.w  #$1000,2(a5)
                 move.w  #$B,d7
 Stage18_SegmentedWormCreateNextSegment:                 ; CODE XREF: Stage18_SegmentedWormSpawnSegments+8E   j
-                jsr     (Projectile_FindFreeOrRecycleSlot).l
+                jsr     (Projectile_FindFreeOrClearReusableSlot).l
                 bne.w   Entity_UpdateReturn
                 move.w  #$1000,2(a0)
                 move.w  #$448,(a0)
@@ -382,7 +382,7 @@ Stage18_SegmentedWormLaunchLeft:                        ; CODE XREF: Stage18_Seg
 Stage18_SegmentedWormEmitParticle:                      ; CODE XREF: Stage18_SegmentedWormUpdateHead   p  ; was: sub_30230
                 tst.w   $52(a5)
                 beq.w   Entity_UpdateReturn
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Entity_UpdateReturn
                 move.l  #Stage18_SegmentedWormParticleSpriteAnimation,8(a0)
                 movea.w a0,a4
@@ -434,7 +434,7 @@ Stage18_SegmentedWormScatterSegments:                   ; DATA XREF: ROM:0002FF1
                 movea.w $44(a5),a4
                 move.w  #$B,d6
 Stage18_SegmentedWormScatterNextSegment:                ; CODE XREF: Stage18_SegmentedWormScatterSegments+6A   j
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Stage18_SegmentedWormConfigureScatteredSegment
                 move.w  #$FF,d0
                 jsr     (Pickup_SelectRandomSize).l
@@ -482,7 +482,7 @@ Stage18_SegmentedWormUpdateFallingSegment:              ; DATA XREF: ROM:0002FF1
                 andi.w  #$1F,d0
                 bne.w   Entity_UpdateReturn
 Stage18_SegmentedWormEmitFallingParticle:               ; CODE XREF: Stage18_SegmentedWormUpdateFallingSegment+4E   j
-                jsr     (Projectile_FindFreeOrRecycleSlot).l
+                jsr     (Projectile_FindFreeOrClearReusableSlot).l
                 bne.w   Entity_UpdateReturn
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
                 movea.w a0,a4

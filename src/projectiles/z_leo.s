@@ -5,7 +5,7 @@ Boss_ZLeoSpawnOrb:                                      ; CODE XREF: Boss_ZLeoWa
                 bne.w   Boss_ZLeoSpawnOrbReturn
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #1,(PlaneBShakeLevel).w
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Boss_ZLeoSpawnOrbReturn
                 move.w  #$C000,$59E(a5)
                 btst    #0,(RandomNumberState).w
@@ -18,7 +18,7 @@ Boss_ZLeoFinishOrbVelocitySelection:                    ; CODE XREF: Boss_ZLeoSp
                 move.b  #4,$20(a0)
                 move.w  #$8040,2(a0)
                 movea.w a0,a3
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Boss_ZLeoSpawnOrbReturn
                 move.b  #$36,d0                         ; '6'
                 jsr     (Sound_QueueSFXRequest).l
@@ -128,7 +128,7 @@ Projectile_ZLeoOrbNoOpState:                            ; was: nullsub_122
 Boss_ZLeoSpawnExpandingOrbitLaser:                      ; CODE XREF: Boss_ZLeoBeginAttackSelection+58   p  ; was: sub_530EE
                 move.w  (RandomNumberState).w,d7
                 andi.w  #$100,d7
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Boss_ZLeoSpawnExpandingOrbitLaserReturn
                 move.w  #8,$4DC(a5)
                 move.w  #$8000,$4DE(a5)
@@ -245,7 +245,7 @@ Projectile_ZLeoHorizontalLaserTrySpawnTrail:            ; CODE XREF: Projectile_
                 andi.w  #3,d0
                 bne.s   Projectile_ZLeoLaserReturn
 Projectile_ZLeoLaserSpawnTrailParticle:                 ; CODE XREF: Projectile_ZLeoExpandingOrbitLaserMain+B2   j  ; was: loc_532BA
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Projectile_ZLeoLaserReturn
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
                 jsr     (Projectile_InitType88).l
@@ -273,7 +273,7 @@ Projectile_ZLeoLaserReturn:                             ; CODE XREF: Projectile_
 ; End of function Projectile_ZLeoExpandingOrbitLaserMain
 ; Spawn the two scrolling-attack laser objects from the selected anchor
 Boss_ZLeoCreateScrollingLaserPair:                      ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+60   p  ; was: sub_53318
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Boss_ZLeoCreateScrollingLaserPairReturn
                 move.w  #$188,(a0)
                 move.w  #$C480,2(a0)
@@ -285,7 +285,7 @@ Boss_ZLeoCreateScrollingLaserPair:                      ; CODE XREF: Boss_ZLeoRu
                 move.w  $14(a4),$14(a0)
                 addi.w  #-$40,$14(a0)
                 move.w  #2,$48(a0)
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Boss_ZLeoCreateScrollingLaserPairReturn
                 move.w  #$470,(a0)
                 move.w  #$C480,2(a0)
@@ -320,7 +320,7 @@ Projectile_ZLeoVerticalBeamApplyUpwardAcceleration:     ; CODE XREF: Projectile_
 ; Spawn the paired drop-attack objects and select horizontal velocity by position
 Boss_ZLeoSpawnDropAttackPair:                           ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+1A2   p  ; was: sub_533D6
                                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Boss_ZLeoSpawnDropAttackPairReturn
                 move.w  #$6000,$4DE(a5)
                 move.w  #3,$4DC(a5)
@@ -339,7 +339,7 @@ Boss_ZLeoSpawnDropAttackPair:                           ; CODE XREF: Boss_ZLeoRu
                 move.l  #$9070F808,$2C(a0)
                 move.w  #$4E0,$14(a0)
                 movea.w a0,a3
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Boss_ZLeoSpawnDropAttackPairReturn
                 move.w  #$424,(a0)
                 move.w  #$8080,2(a0)

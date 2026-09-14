@@ -13,7 +13,7 @@ Boss_SharpssteelSpawnTenFallingShots:                   ; CODE XREF: Boss_Sharps
 ; Emits one configured group using sine-derived velocities and fixed spawn offsets
 Projectile_SharpssteelEmitFallingShotLoop:              ; CODE XREF: Boss_SharpssteelSpawnTenFallingShots+E   p  ; was: sub_48DB4
                                         ; Projectile_SharpssteelEmitFallingShotLoop+70   j
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Projectile_SharpssteelEmitFallingShotReturn
                 move.w  #$364,(a0)
                 move.w  #$EC00,2(a0)
@@ -89,7 +89,7 @@ Projectile_SharpssteelCheckFallingShotDurability:       ; CODE XREF: Projectile_
                 tst.w   $24(a5)
                 bpl.s   Projectile_SharpssteelHandleFallingShotLowerBoundary
 Projectile_SharpssteelSpawnPickupFromFallingShot:       ; CODE XREF: Projectile_SharpssteelFallingShotMain+60   j
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_SharpssteelConvertFallingShotToDebris
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -203,7 +203,7 @@ Effect_SharpssteelApplyDefeatFragmentFlashPhase:        ; CODE XREF: Effect_Shar
                 move.b  #$BC,d0
                 jsr     (Sound_QueueSFXRequest).l
 Effect_SharpssteelTryEmitDefeatFragmentDebris:          ; CODE XREF: Effect_SharpssteelDefeatFragmentMain+34   j
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Effect_SharpssteelUpdateDefeatFragmentVelocity
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -237,7 +237,7 @@ Boss_SharpssteelSpawnSixBladeShotsLoop:                 ; CODE XREF: Boss_Sharps
 ; End of function Boss_SharpssteelSpawnSixBladeShots
 ; Initializes one blade shot with the caller-provided vertical velocity
 Projectile_SharpssteelInitializeBladeShot:              ; CODE XREF: Boss_SharpssteelSpawnSixBladeShots:Boss_SharpssteelSpawnSixBladeShotsLoop   p  ; was: sub_490A6
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_SharpssteelInitializeBladeShotReturn
                 move.w  #$414,(a0)
                 move.w  #$C480,2(a0)

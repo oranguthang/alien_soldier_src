@@ -27,7 +27,7 @@ Projectile_ViblackMissileSpawnerStates: dc.w    Projectile_SpawnViblackMissile-*
 ; Spawns missile projectile at entity position
 Projectile_SpawnViblackMissile:                         ; DATA XREF: ROM:Projectile_ViblackMissileSpawnerStates   o  ; was: sub_43956
                                         ; ROM:00043954   o
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Boss_SunsetStingReturn
                 move.w  #$210,(a0)
                 move.w  #$ED00,2(a0)
@@ -270,7 +270,7 @@ Boss_ViblackRadialShotAttackState:                      ; DATA XREF: ROM:000439E
                 moveq   #1,d5
 Boss_ViblackSpawnShotPairLoop:                          ; CODE XREF: Boss_ViblackRadialShotAttackState+CA   j  ; was: loc_43CAE
                                         ; Boss_ViblackRadialShotAttackState+D6   j
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Boss_ViblackStateReturn
                 cmpi.w  #$A0,$48(a5)
                 bpl.s   Boss_ViblackInitializeStandardRadialShot

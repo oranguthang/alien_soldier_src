@@ -1037,14 +1037,16 @@ object update and rendering machinery.
 
 `Sys_ClearInitializationObjectPools` first clears one 96-byte record at each
 of `$FFFFA400`, `$FFFFA600`, and `$FFFFA800`, then clears 77 consecutive
-96-byte records from `SharedEffectObjectPool` through `Entity60` at
-`$FFFFDC9F`. The name deliberately records object-pool ownership rather than
-the graphics subsystem of its caller.
+96-byte records from `SharedEffectObjectPool` through `$FFFFDCFF`. This span
+contains 16 shared-effect records and 61 entity records; the last entity record
+at `$FFFFDCA0` currently has no dedicated absolute-field references. The name
+deliberately records object-pool ownership rather than the graphics subsystem
+of its caller.
 
 ## Reviewed primary entity record
 
-`Entity_ObjectPool` is the base of 60 consecutive 96-byte records ending at
-`$FFDC9F`. The first record's concrete owner changes between stages, bosses,
+`Entity_ObjectPool` is the base of 61 consecutive 96-byte records ending at
+`$FFDCFF`. The first record's concrete owner changes between stages, bosses,
 cutscenes, and credits. Absolute references to that record therefore use
 structural `PrimaryEntity` names rather than a boss name.
 

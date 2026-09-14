@@ -69,7 +69,7 @@ Stage15_InitializeSunsetStingEncounter:                 ; DATA XREF: ROM:0000D9A
                 move.w  #$660,(CameraXUpperBound).w
                 moveq   #0,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 lea     (Boss_SunsetStingAssetSet).l,a1
                 bra.w   Boss_LoadAssetSet
 ; End of function Stage15_InitializeSunsetStingEncounter

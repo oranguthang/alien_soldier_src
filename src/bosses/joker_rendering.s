@@ -330,7 +330,7 @@ Boss_JokerSpawnDescendingShotEmitter:                   ; CODE XREF: Boss_JokerD
                 tst.w   $35C(a5)
                 bne.s   Boss_JokerSpawnDescendingShotEmitterReturn
                 movea.w #(FortySixthEntityType-M68K_RAM),a0
-                jsr     (Projectile_FindFreePrimarySlot_CheckFinalRange).l
+                jsr     (Projectile_FindFreeSlotForward4).l
                 bne.s   Boss_JokerSpawnDescendingShotEmitterReturn
                 subi.w  #$14,(BossCombatCounter).w
                 move.w  #$198,(a0)
@@ -373,7 +373,7 @@ Projectile_JokerDescendingShotEmitterUpdateTimer:       ; CODE XREF: Projectile_
                 subq.w  #1,$48(a5)
                 bpl.s   Projectile_JokerDescendingShotEmitterUpdatePreShotJitter
                 movea.w #(ThirtyEighthEntityType-M68K_RAM),a0
-                jsr     (Projectile_FindFreePrimarySlot_CheckFinalRange).l
+                jsr     (Projectile_FindFreeSlotForward4).l
                 bne.s   Projectile_JokerDescendingShotEmitterCountEmission
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)

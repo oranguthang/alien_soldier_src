@@ -61,7 +61,7 @@ Boss_TerobusterInit:                                    ; DATA XREF: ROM:Boss_Te
                 move.w  #1,8(a5)
                 move.w  #$B4,d0
                 move.w  #$12C,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 move.w  #$80,$48(a5)
 Boss_TerobusterSetupReturn:                             ; CODE XREF: Boss_TerobusterSetup+4   j  ; was: locret_385C8
                                         ; Boss_TerobusterSetup+A   j

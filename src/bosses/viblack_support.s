@@ -224,7 +224,7 @@ Boss_ViblackSetRandomTarget:                            ; CODE XREF: Boss_Viblac
 Boss_ViblackSpawnNearbyDefeatParticle:                  ; CODE XREF: Boss_ViblackUpdateDefeatEffectsAndParticles+C   j  ; was: sub_44128
                 btst    #0,(FrameCounter+1).w
                 bne.s   Boss_ViblackSpawnNearbyDefeatParticleReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_ViblackSpawnNearbyDefeatParticleReturn
                 move.b  (RandomNumberState).w,d0
                 andi.w  #$F,d0
@@ -253,7 +253,7 @@ Boss_ViblackSpawnNearbyDefeatParticleReturn:            ; CODE XREF: Boss_Viblac
 ; End of function Boss_ViblackSpawnNearbyDefeatParticle
 ; Emits a type-$88 defeat particle across a wider horizontal range
 Boss_ViblackSpawnWideDefeatParticle:                    ; CODE XREF: Boss_ViblackUpdateTransitionEffects   p  ; was: sub_4418E
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_ViblackSpawnWideDefeatParticleReturn
                 move.b  (RandomNumberState).w,d0
                 andi.w  #$F,d0
@@ -284,7 +284,7 @@ Boss_ViblackSpawnWideDefeatParticleReturn:              ; CODE XREF: Boss_Viblac
 Boss_ViblackSpawnTransitionDebris:                      ; CODE XREF: Boss_ViblackFinishTransitionState   p  ; was: sub_441EC
                 btst    #0,(FrameCounter+1).w
                 bne.w   Boss_ViblackSpawnTransitionDebrisReturn
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Boss_ViblackSpawnTransitionDebrisReturn
                 move.w  (RandomNumberState).w,d0
                 andi.w  #7,d0
@@ -328,7 +328,7 @@ Boss_ViblackSpawnTransitionDebrisReturn:                ; CODE XREF: Boss_Viblac
 Boss_ViblackSpawnDefeatParticle:                        ; CODE XREF: Boss_ViblackUpdateDefeatSoundAndParticles+4   p  ; was: sub_4427C
                 btst    #0,(FrameCounter+1).w
                 bne.w   Boss_ViblackStateReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Boss_ViblackStateReturn
                 move.b  (RandomNumberState).w,d0
                 andi.w  #$FF,d0
@@ -418,7 +418,7 @@ Boss_ViblackSpawnSideShot:                              ; CODE XREF: Boss_Viblac
                 bpl.w   Boss_ViblackStateReturn
                 andi.w  #$F,d0
                 bne.w   Boss_ViblackStateReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Boss_ViblackStateReturn
                 move.w  #$6F0,d0
                 btst    #0,(FrameCounter).w

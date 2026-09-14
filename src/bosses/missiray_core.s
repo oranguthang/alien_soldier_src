@@ -123,7 +123,7 @@ Boss_MissirayInitialize:                                ; DATA XREF: ROM:Boss_Mi
                 move.b  #4,(PlayerOAMBucketOffset).w
                 move.w  #$3D0,d0
                 move.w  #$3E0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 move.b  #2,(PlaneBScrollModeFlags).w
                 clr.w   (SharedPatternRow0Long1).w
                 move.w  #$A0,(SharedPatternRow0Long1+2).w
@@ -534,7 +534,7 @@ Boss_MissirayAdvanceDefeatPaletteFade:                  ; DATA XREF: ROM:000538D
                 bne.s   Boss_MissirayAdvanceDefeatPaletteFadeReturn
                 move.w  #$3D0,d0
                 move.w  #$3E0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 move.w  #4,$4A(a5)
                 addq.w  #2,4(a5)
 Boss_MissirayAdvanceDefeatPaletteFadeReturn:            ; CODE XREF: Boss_MissirayAdvanceDefeatPaletteFade+E   j  ; was: locret_53DB6

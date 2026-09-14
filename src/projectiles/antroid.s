@@ -4,7 +4,7 @@
 Boss_AntroidSpawnWaitProjectile:                        ; CODE XREF: Boss_AntroidWaitState:Boss_AntroidWaitSpawnProjectileAndAnimate   p  ; was: sub_37FEC
                 btst    #0,(FrameCounter+1).w
                 bne.w   Boss_AntroidSpawnWaitProjectileReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Boss_AntroidSpawnWaitProjectileReturn
                 move.w  #$158,(a0)
                 move.w  #$8D00,2(a0)

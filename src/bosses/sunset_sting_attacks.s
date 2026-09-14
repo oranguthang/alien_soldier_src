@@ -64,7 +64,7 @@ Boss_SunsetStingSecondFormInitializeState:              ; DATA XREF: ROM:Boss_Su
                 clr.b   (SecondaryEntityWork5C).w
                 move.w  #$1C8,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 addq.w  #2,4(a5)
                 move.b  #$80,$4B(a5)
                 clr.w   (PrimaryEntityWork5E).w
@@ -404,7 +404,7 @@ Boss_SunsetStingInitHomingProjectile:                   ; CODE XREF: Boss_Sunset
                 subi.b  #$40,d0                         ; '@'
                 move.w  d0,-(sp)
                 movea.w #(ThirtyFourthEntityType-M68K_RAM),a0
-                jsr     (Projectile_FindFreePrimarySlot_CheckExtendedRange).l
+                jsr     (Projectile_FindFreeSlotForward20).l
                 bne.s   Boss_SunsetStingInitHomingProjectileReturn
                 move.w  (sp)+,d6
                 add.w   d6,d6

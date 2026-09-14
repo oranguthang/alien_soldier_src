@@ -8,7 +8,7 @@ Projectile_SpawnFourDirectionalShotsWithSubtypeInD3:    ; CODE XREF: Boss_Sharps
                 lea     Projectile_FourDirectionalShotVelocities(pc),a4
                 nop
 Projectile_SpawnFourDirectionalShots_Loop:              ; CODE XREF: Projectile_SpawnFourDirectionalShots+48   j  ; was: loc_E294
-                jsr     (Projectile_FindFreeOrRecycleSlot).l
+                jsr     (Projectile_FindFreeOrClearReusableSlot).l
                 bne.s   Projectile_SpawnFourDirectionalShots_Return
                 jsr     (Projectile_InitType1A8).l
                 move.l  #SharedProjectileDuration4Animation,8(a0)
@@ -34,7 +34,7 @@ Projectile_FourDirectionalShotVelocities:   dc.l    $FFFDC000, $FFFF4000  ; was:
 ; Spawn one type-$1A8 projectile with velocity selected from the sine table
 Projectile_SpawnType1A8AtAngle:                         ; CODE XREF: Stage11_RisingHazardReactToHit+26   p  ; was: sub_E2F6
                                         ; Boss_GustheadLinkedChainBeginAttackCycle+34   j
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Projectile_SpawnType1A8AtAngle_Return
                 jsr     (Projectile_InitType1A8).l
                 clr.b   $21(a0)

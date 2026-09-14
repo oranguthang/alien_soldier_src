@@ -617,7 +617,7 @@ Entity_SevenForcesSpawnRandomExplosion:                 ; CODE XREF: Entity_Seve
                 move.w  #2,(PlaneAShakeLevel).w
                 move.w  #2,(PlaneBShakeLevel).w
                 jsr     (Projectile_UpdateWithExplosionSound).l
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Entity_SevenForcesSpawnRandomExplosionReturn
                 jsr     (Sprite_InitType160).l
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
@@ -773,7 +773,7 @@ Entity_InitSevenForcesTransitionSprite:                 ; CODE XREF: Entity_Star
 ; Spawn a randomized particle during the final Seven Forces transition
 Effect_SpawnSevenForcesTransitionParticle:              ; CODE XREF: Entity_SevenForcesFinalFadeState3C   p  ; was: sub_5554C
                                         ; sub_5543A   p
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Effect_SpawnSevenForcesTransitionParticleReturn
                 move.w  #$188,(a0)
                 move.w  #$8400,2(a0)
@@ -845,7 +845,7 @@ Entity_StartSevenForcesMedusaTransition:                ; DATA XREF: ROM:000555E
                 bsr.w   Entity_InitSevenForcesTransitionSprite
                 move.w  #$428,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 move.w  #$FFF4,$5E(a5)
                 bsr.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
                 move.b  #$30,d0                         ; '0'
@@ -857,7 +857,7 @@ Entity_StartSevenForcesSylpheedTransition:              ; DATA XREF: ROM:000555E
                 bsr.w   Entity_InitSevenForcesTransitionSprite
                 move.w  #$428,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 lea     (SevenForcesSylpheedTransitionPaletteCommand).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 move.w  #$FFF2,$5E(a5)
@@ -875,7 +875,7 @@ Entity_StartSevenForcesArtemisTransition:               ; DATA XREF: ROM:000555E
                 bsr.w   Entity_InitSevenForcesTransitionSprite
                 move.w  #$428,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 lea     (SevenForcesArtemisTransitionPaletteCommands).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 move.w  #$FFF2,$5E(a5)
@@ -889,7 +889,7 @@ Entity_StartSevenForcesSireneTransition:                ; DATA XREF: ROM:000555E
                 bsr.w   Entity_InitSevenForcesTransitionSprite
                 move.w  #$428,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 move.w  #$FFF2,$5E(a5)
                 bsr.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
                 move.b  #$30,d0                         ; '0'
@@ -901,7 +901,7 @@ Entity_ResumeSevenForcesIntroState24:                   ; DATA XREF: ROM:000555F
                 move.b  #1,(SceneSequenceFlags).w
                 move.w  #$428,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 move.b  #$30,d0                         ; '0'
                 jmp     (Sound_QueueSFXRequest).l
 ; End of function Entity_ResumeSevenForcesIntroState24
@@ -911,7 +911,7 @@ Entity_ResumeSevenForcesIntroState26:                   ; DATA XREF: ROM:000555F
                 move.b  #1,(SceneSequenceFlags).w
                 move.w  #$428,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 move.b  #$30,d0                         ; '0'
                 jmp     (Sound_QueueSFXRequest).l
 ; End of function Entity_ResumeSevenForcesIntroState26
@@ -928,7 +928,7 @@ Entity_StartSevenForcesFinalTransition:                 ; DATA XREF: ROM:000555F
                 move.b  #1,(SceneSequenceFlags).w
                 move.w  #$428,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 move.w  #$FFF2,$5E(a5)
                 bsr.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
                 rts

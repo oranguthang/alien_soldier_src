@@ -273,7 +273,7 @@ Enemy_HomingAttackBurstState:                           ; DATA XREF: ROM:0002CE4
                 subq.w  #1,$4A(a5)
                 bmi.w   Enemy_HomingAttack_BeginWait
                 bsr.w   Enemy_CalculateDirectionalSprite
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Enemy_HomingAttack_Return
                 move.w  d3,d0
                 move.w  d4,d1

@@ -746,7 +746,7 @@ Entity_ProcessMedusaSpawnSequenceEntry:                 ; CODE XREF: Entity_Upda
                 tst.w   d5
                 bmi.s   Entity_UpdateMedusaSpawnSequenceReturn
 Entity_SpawnMedusaSequenceObject:                       ; CODE XREF: Entity_UpdateMedusaScriptedSpawnSequence+52   j  ; was: loc_57264
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Entity_UpdateMedusaSpawnSequenceReturn
                 move.w  (a4,d1.w),d2
                 sub.w   d4,d2

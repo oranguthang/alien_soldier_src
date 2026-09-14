@@ -43,7 +43,7 @@ Boss_GustheadSpawnScrollingDebris:                      ; CODE XREF: Boss_Gusthe
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   Boss_GustheadUpdateSegmentPositionsReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Boss_GustheadUpdateSegmentPositionsReturn
                 move.w  (FrameCounter).w,d0
                 andi.w  #$3F,d0                         ; '?'
@@ -116,7 +116,7 @@ Boss_GustheadSpawnEdgeDebris:                           ; CODE XREF: Boss_Gusthe
                 bne.s   Boss_GustheadSpawnEdgeDebrisReturn
                 tst.l   (StageMotionXDelta).w
                 beq.s   Boss_GustheadSpawnEdgeDebrisReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_GustheadSpawnEdgeDebrisReturn
                 move.w  #$1E8,(a0)
                 move.w  #$ED00,2(a0)
@@ -247,7 +247,7 @@ Boss_GustheadSpawnFourWayDebris:                        ; CODE XREF: Boss_Gusthe
                 move.w  #3,d7
                 move.w  #$120,d6
 Boss_GustheadFourWayDebrisLoop:                         ; CODE XREF: Boss_GustheadSpawnFourWayDebris+76   j  ; was: loc_403FE
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_GustheadFourWayDebrisReturn
                 move.w  (a1,d6.w),d0
                 ext.l   d0
@@ -559,7 +559,7 @@ Boss_GustheadReleaseDebrisAsPickup:                     ; CODE XREF: Boss_Gusthe
                                         ; sub_4046C:Boss_GustheadFourWayDebrisBeginPickupRelease   j
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_GustheadSpawnPickupFromDebris
                 jsr     (Projectile_InitType88).l
                 move.l  #SharedCombatSpriteAnimation05,8(a0)

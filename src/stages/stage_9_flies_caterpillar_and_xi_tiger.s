@@ -199,7 +199,7 @@ Stage9_CheckCaterpillarShipTransition:                  ; CODE XREF: Stage9_Upda
                 clr.w   (SecondaryCameraYPos).w
                 moveq   #0,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 move.w  #$6000,(TilemapTransferBase).w
                 move.w  #$1F,(TilemapRowCountdown).w
                 move.w  #0,(TilemapRowXOrFillWord).w

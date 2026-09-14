@@ -279,7 +279,7 @@ Enemy_DecelerateHorizontal_Stop:                        ; CODE XREF: Enemy_Decel
 ; End of function Enemy_DecelerateHorizontal
 ; Initializes homing projectile that tracks player with angle calculation
 Enemy_SpawnTrackedProjectile:                           ; CODE XREF: Enemy_MainStateMachine+1B6   j  ; was: sub_2C5EA
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 beq.s   Enemy_SpawnTrackedProjectile_Initialize
                 rts
 ; ---------------------------------------------------------------------------

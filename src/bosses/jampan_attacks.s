@@ -456,7 +456,7 @@ Boss_JampanResetAfterDefeatFadeState:                   ; DATA XREF: ROM:0004923
                 bsr.s   Boss_JampanApplyDefeatPaletteFade
                 move.w  #$218,d0
                 move.w  #$23C,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 jsr     (TransitionEffect_SpawnAtOwner).l
                 move.b  #4,(PlaneAScrollModeFlags).w
                 addq.w  #2,4(a5)

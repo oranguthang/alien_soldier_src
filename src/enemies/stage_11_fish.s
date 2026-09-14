@@ -26,7 +26,7 @@ Stage11_FishWaveSpawnState:                             ; DATA XREF: ROM:0002EA0
                 adda.w  $4C(a5),a4
                 tst.w   (a4)
                 bmi.s   Stage11_FishWaveSpawnState_Finish
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Stage11_FishWaveSpawnState_ResetDelay
                 move.w  a0,(a4)
                 bsr.s   Stage11_SpawnFish
@@ -74,7 +74,7 @@ Stage11_FishWaveMaintainPopulationState_Return:         ; CODE XREF: Stage11_Fis
                 rts
 ; ---------------------------------------------------------------------------
 Stage11_FishWaveMaintainPopulationState_Spawn:          ; CODE XREF: Stage11_FishWaveMaintainPopulationState+A   j  ; was: loc_2EAB0
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Stage11_FishWaveMaintainPopulationState_Return
                 move.w  a0,(a4)
                 bsr.s   Stage11_SpawnFish
@@ -151,7 +151,7 @@ Enemy_Stage11FishStateOffsets:  dc.w    Enemy_Stage11FishInitEmitterState-*  ; D
 
 ; Allocates and attaches the fish's inert projectile-origin sprite
 Enemy_Stage11FishInitEmitterState:                      ; DATA XREF: ROM:Enemy_Stage11FishStateOffsets   o  ; was: sub_2EB94
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Enemy_Stage11FishInitEmitterState_Return
                 move.w  #$10,(a0)
                 move.w  #$CC00,2(a0)
@@ -253,7 +253,7 @@ Enemy_Stage11FishFireVolleyState:                       ; DATA XREF: ROM:0002EB8
                 bsr.w   Enemy_SetStage11FishEmitterXOffset
                 subq.w  #1,$48(a5)
                 bne.s   Enemy_Stage11FishFireVolleyState_Return
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Enemy_Stage11FishFireVolleyState_Finish
                 movem.w a5,-(sp)
                 movea.w $5C(a5),a5

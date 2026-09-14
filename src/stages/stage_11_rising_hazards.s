@@ -54,7 +54,7 @@ Stage11_RisingHazardLauncherRise:                       ; was: sub_30E1C
 ; End of function Stage11_RisingHazardLauncherRise
 ; Boss part spawns projectile
 Stage11_RisingHazardLauncherEmit:                       ; was: sub_30E3C
-                jsr     (Projectile_FindFreeOrRecycleSlot).l
+                jsr     (Projectile_FindFreeOrClearReusableSlot).l
                 bne.s   Stage11_RisingHazardLauncherBeginDescent
                 move.w  #$8F00,2(a0)
                 move.w  #$38C,(a0)
@@ -157,7 +157,7 @@ Stage11_RisingHazardLauncherFireUpward:                 ; was: sub_30F7E
                 move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Entity_UpdateReturn
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Entity_UpdateReturn
                 bsr.w   Projectile_SpawnRandomAngleShot
                 tst.l   $1C(a4)

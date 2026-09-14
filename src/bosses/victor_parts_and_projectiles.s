@@ -136,7 +136,7 @@ Boss_VictorSpawnSplitShotWave:                          ; CODE XREF: Boss_Victor
                 bne.s   Boss_VictorPrepareLowerSplitShots
                 clr.w   d6
 Boss_VictorSpawnUpperSplitShots:                        ; CODE XREF: Boss_VictorSpawnSplitShotWave+3C   j  ; was: loc_32B56
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Entity_UpdateReturn
                 bsr.w   Projectile_InitSharedHitReactiveShot
                 bsr.w   Projectile_VictorInitSplitShot
@@ -148,7 +148,7 @@ Boss_VictorSpawnUpperSplitShots:                        ; CODE XREF: Boss_Victor
 Boss_VictorPrepareLowerSplitShots:                      ; CODE XREF: Boss_VictorSpawnSplitShotWave+20   j  ; was: loc_32B72
                 move.w  #4,d6
 Boss_VictorSpawnLowerSplitShots:                        ; CODE XREF: Boss_VictorSpawnSplitShotWave+5C   j  ; was: loc_32B76
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Entity_UpdateReturn
                 bsr.w   Projectile_InitSharedHitReactiveShot
                 bsr.w   Projectile_VictorInitSplitShot
@@ -374,7 +374,7 @@ Entity_RemoveWithExplosionWhenEnabled:                  ; CODE XREF: Projectile_
                                         ; sub_32382   p
                 tst.w   (SharedPatternRow0Long5+2).w
                 beq.w   Entity_UpdateReturn
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Entity_RemoveAfterExplosionAttempt
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)

@@ -40,7 +40,7 @@ Boss_MissirayPrepareRandomSegmentAttackReturn:          ; CODE XREF: Boss_Missir
 ; End of function Boss_MissirayPrepareRandomSegmentAttack
 ; Allocates the projectile record used by the next randomly selected segment
 Boss_MissirayAllocateRandomSegmentProjectile:           ; DATA XREF: ROM:00053E76   o  ; was: sub_53EBE
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_MissiraySkipFailedRandomSegmentShot
                 move.w  #$10,(a0)
                 move.w  a0,(SharedPatternRow0Long5).w
@@ -593,7 +593,7 @@ Boss_MissirayClearNextProjectilePointer:                ; CODE XREF: Boss_Missir
                 move.w  #7,d7
                 lea     (SharedPatternRow0Long5).w,a3
 Boss_MissirayAllocateNextSegmentProjectile:             ; CODE XREF: Boss_MissirayAllocateSegmentProjectileSet+26   j  ; was: loc_54424
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_MissirayCleanUpFailedProjectileSet
                 move.w  #$10,(a0)
                 move.w  a0,(a3)+

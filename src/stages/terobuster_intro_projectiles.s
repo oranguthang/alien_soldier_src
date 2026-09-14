@@ -11,7 +11,7 @@ Stage7_SpawnTerobusterIntroProjectile:                  ; CODE XREF: Stage7_Chec
                 btst    #0,(FrameCounter+1).w
                 bne.s   Stage7_SpawnTerobusterIntroProjectile_Return
                 movea.w #(FortySixthEntityType-M68K_RAM),a0
-                jsr     (Projectile_FindFreePrimarySlot_CheckEnemyRange).l
+                jsr     (Projectile_FindFreeSlotForward8).l
                 bne.s   Stage7_SpawnTerobusterIntroProjectile_Return
                 move.w  #$178,(a0)
                 move.w  #$8100,2(a0)

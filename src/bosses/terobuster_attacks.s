@@ -49,7 +49,7 @@ Boss_TerobusterTrySpawnDefeatDebris:                    ; CODE XREF: Boss_Terobu
                                         ; Boss_TerobusterDefeatDebrisState+20   j
                 move.w  #2,(PlaneAShakeLevel).w
                 move.w  #2,(PlaneBShakeLevel).w
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_TerobusterDefeatDebrisReturn
                 movea.l #Projectile_SpawnSpriteFrames,a1
                 btst    #1,(FrameCounter+1).w
@@ -93,7 +93,7 @@ Boss_TerobusterDefeatFadeState:                         ; DATA XREF: ROM:0003858
                 move.b  #4,(PlaneAScrollModeFlags).w
                 move.w  #$B4,d0
                 move.w  #$12C,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 jsr     (AlternateTransition_SpawnAtOwner).l
                 move.w  $10(a5),d0
                 move.w  $14(a5),d1
@@ -195,7 +195,7 @@ Boss_TerobusterSpawnProjectile:                         ; CODE XREF: Boss_Terobu
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Boss_TerobusterSpawnProjectileReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_TerobusterSpawnProjectileReturn
                 movea.l #Boss_TerobusterProjectileSpriteFrames,a1
                 jsr     (Sprite_InitTypeA4FromTable).l
@@ -232,7 +232,7 @@ Boss_TerobusterTrySpawnHomingMissile:                   ; CODE XREF: Boss_Terobu
                 andi.w  #$1F,d0
                 bne.s   Boss_TerobusterSpawnHomingMissileReturn
                 movea.w #(FiftiethEntityType-M68K_RAM),a0
-                jsr     (Projectile_FindFreePrimarySlot_CheckFinalRange).l
+                jsr     (Projectile_FindFreeSlotForward4).l
                 bne.s   Boss_TerobusterSpawnHomingMissileReturn
                 move.w  #$138,(a0)
                 move.w  #$8D00,2(a0)

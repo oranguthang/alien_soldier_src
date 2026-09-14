@@ -169,7 +169,7 @@ Boss_DestroyerMK2InitializeTripleProjectilePattern:     ; DATA XREF: ROM:Boss_De
                 addq.w  #2,(SharedPatternRow0Long7).w
 ; Allocate and initialize the next type-$258 projectile
 Boss_DestroyerMK2SpawnNextTripleProjectile:             ; DATA XREF: ROM:0004B1A8   o  ; was: loc_4B1B6
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Boss_DestroyerMK2FinishTripleProjectileSpawn
                 move.w  #$258,(a0)
                 move.w  #$CD00,2(a0)
@@ -220,7 +220,7 @@ Boss_DestroyerMK2SpawnTenProjectileSpread:              ; DATA XREF: ROM:Boss_De
 Boss_DestroyerMK2InitializeProjectileSpreadLoop:        ; DATA XREF: Boss_DestroyerMK2SpawnTenProjectileSpread   o  ; was: loc_4B252
                 moveq   #0,d6
 Boss_DestroyerMK2ProjectileSpreadSpawnLoop:             ; CODE XREF: Boss_DestroyerMK2SpawnTenProjectileSpread:Boss_DestroyerMK2AdvanceProjectileSpreadLoop   j  ; was: loc_4B254
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Boss_DestroyerMK2AdvanceProjectileSpreadLoop
                 move.w  #$258,(a0)
                 move.w  #$CD00,2(a0)
@@ -351,7 +351,7 @@ Boss_DestroyerMK2ClearObjectsForNextEncounter:          ; DATA XREF: ROM:0004A93
                 bsr.s   Gfx_DestroyerMK2ApplyTransitionPaletteFade
                 move.w  #$240,d0
                 move.w  #$3DC,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 move.b  #4,(PlaneAScrollModeFlags).w
                 addq.w  #2,4(a5)
                 rts
@@ -510,7 +510,7 @@ Object_DestroyerMK2SpawnProjectile:                     ; DATA XREF: ROM:0004B4A
                 subq.w  #1,$48(a5)
                 bpl.w   Object_DestroyerMK2ProjectileSpawnReturn
                 addq.w  #2,4(a5)
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Object_DestroyerMK2ProjectileSpawnReturn
                 move.w  #$248,(a0)
                 move.b  #$40,$21(a0)                    ; '@'

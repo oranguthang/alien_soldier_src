@@ -54,7 +54,7 @@ Boss_JokerInit:                                         ; DATA XREF: Boss_JokerM
                 move.w  #4,$4A(a5)
                 move.w  #$15C,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
 Boss_JokerInitializationReturn:                         ; CODE XREF: Boss_JokerSetup+4   j  ; was: locret_3B32E
                 rts
 ; End of function Boss_JokerInit
@@ -219,7 +219,7 @@ Boss_JokerFadeOutState:                                 ; DATA XREF: ROM:0003B30
                 clr.w   8(a5)
                 move.w  #$15C,d0
                 moveq   #0,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 move.b  #4,(PlaneAScrollModeFlags).w
                 jsr     (TransitionEffect_SpawnAtOwner).l
                 addi.w  #$10,$14(a0)
@@ -283,7 +283,7 @@ Boss_JokerCleanupReturn:                                ; CODE XREF: Boss_JokerC
 ; Spawns a randomized debris or type-$160 effect during the defeat fall
 Boss_JokerSpawnDefeatEffect:                            ; CODE XREF: Boss_JokerDefeatFallDelayState:Boss_JokerUpdateDefeatFall   p  ; was: sub_3B602
                 jsr     (Projectile_UpdateWithExplosionSound).l
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Boss_JokerSpawnDefeatEffectReturn
                 move.w  (RandomNumberState).w,d0
                 andi.w  #7,d0

@@ -3,7 +3,7 @@ TransitionEffect_ReplaceOwnerAndClearObjects:           ; CODE XREF: EndingSeque
                 clr.w   4(a5)
                 move.w  #$150,d0
                 moveq   #0,d1
-                jmp     Object_ClearAllExceptTypes
+                jmp     Object_ClearEntityRecordsExceptTwoTypes
 ; End of function TransitionEffect_ReplaceOwnerAndClearObjects
 ; Spawns the alternate transition object at the current object's position
 AlternateTransition_SpawnAtOwner:                       ; CODE XREF: Boss_ShiperDefeatSequence+58   p  ; was: sub_2690E

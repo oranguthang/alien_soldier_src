@@ -54,7 +54,7 @@ Projectile_InitZLeoDropGraphics:                        ; CODE XREF: Boss_ZLeoSp
 ; Allocate and initialize Wolf Garopa's timed type-$424 effect
 Projectile_SpawnWolfGaropaType424:                      ; CODE XREF: Boss_WolfGaropaBeginUpperType424Sequence+6   p  ; was: sub_2A0D6
                                         ; Boss_WolfGaropaBeginLowerType424Sequence+6   p
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Projectile_SpawnWolfGaropaType424Return
                 move.w  #$424,(a0)
                 move.w  #$C6B4,$E(a0)
@@ -124,12 +124,12 @@ Projectile_UpdateDirectionalSpawner:                    ; DATA XREF: ROM:Entity_
                 tst.b   $48(a5)
                 bmi.s   Projectile_UpdateDirectionalSpawnerMotion
                 subq.w  #1,$48(a5)
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_UpdateDirectionalSpawnerDelayReturn
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Projectile_UpdateDirectionalSpawnerDelayReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_UpdateDirectionalSpawnerDelayReturn
                 movea.l #Projectile_SpawnSpriteFrames,a1
                 bsr.w   Sprite_InitFromTable
@@ -170,7 +170,7 @@ Projectile_SpawnDirectionalSpawnerTrail:                ; CODE XREF: Projectile_
                                         ; Projectile_UpdateDirectionalSpawner+76   j
                 btst    #0,(FrameCounter+1).w
                 bne.s   Projectile_UpdateDirectionalSpawnerReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_UpdateDirectionalSpawnerReturn
                 movea.l #Projectile_SpawnSpriteFrames,a1
                 bsr.w   Sprite_InitFromTable

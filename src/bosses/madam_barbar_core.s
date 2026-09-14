@@ -53,7 +53,7 @@ Boss_MadamBarbarInitializeState:                        ; DATA XREF: Boss_MadamB
                 clr.w   8(a5)
                 move.w  #$118,d0
                 move.w  #$12C,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 move.b  #1,(SoundFadeOutDelay).w
 Boss_MadamBarbarInitializationReturn:                   ; CODE XREF: Boss_MadamBarbarSetupState+4   j  ; was: locret_3A51A
                 rts
@@ -192,7 +192,7 @@ Boss_MadamBarbarPostBarrageCleanupState:                ; DATA XREF: ROM:0003A4F
                 bpl.s   Boss_MadamBarbarUpdatePostBarrageParts
                 moveq   #0,d0
                 move.w  #$12C,d1
-                jmp     Object_ClearAllExceptTypes
+                jmp     Object_ClearEntityRecordsExceptTwoTypes
 ; ---------------------------------------------------------------------------
 Boss_MadamBarbarUpdatePostBarrageParts:                 ; CODE XREF: Boss_MadamBarbarPostBarrageCleanupState+4   j  ; was: loc_3A708
                 bsr.w   Boss_MadamBarbarUpdateParts
@@ -787,7 +787,7 @@ Boss_MadamBarbarSpawnDebris:                            ; CODE XREF: Boss_MadamB
                 andi.w  #$3F,d0                         ; '?'
                 bne.s   Boss_MadamBarbarSpawnDebrisReturn
                 movea.w #(FortySixthEntityType-M68K_RAM),a0
-                jsr     (Projectile_FindFreePrimarySlot_CheckEnemyRange).l
+                jsr     (Projectile_FindFreeSlotForward8).l
                 bne.s   Boss_MadamBarbarSpawnDebrisReturn
                 move.w  #$120,(a0)
                 clr.w   4(a0)

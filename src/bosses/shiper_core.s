@@ -70,7 +70,7 @@ Boss_ShiperBeginEncounter:                              ; DATA XREF: Boss_Shiper
                 move.w  #$13,(TilemapRowCountdown).w
                 move.w  #$24,d0                         ; '$'
                 move.w  #$134,d1
-                jmp     Object_ClearAllExceptTypes
+                jmp     Object_ClearEntityRecordsExceptTwoTypes
 ; End of function Boss_ShiperBeginEncounter
 Boss_ShiperNoOp:
                 rts                                     ; was: nullsub_77
@@ -454,7 +454,7 @@ Boss_ShiperDefeatSequenceBeginCleanup:                  ; CODE XREF: Boss_Shiper
                 move.b  #4,(PlaneBScrollModeFlags).w
                 move.w  #$24,d0                         ; '$'
                 move.w  #$134,d1
-                jsr     (Object_ClearAllExceptTypes).l
+                jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 jsr     (AlternateTransition_SpawnAtOwner).l
                 moveq   #$1C,d0
                 jmp     (Gfx_ApplyFullActivePaletteFade).l

@@ -16,7 +16,7 @@ Boss_ShieldViperEmitOrbitShotOnFrameGate:               ; CODE XREF: Boss_Shield
                 bsr.w   Gfx_ShieldViperUpdateHorizontalFlipFromFrameBit
                 btst    #0,(FrameCounter+1).w
                 bne.s   Boss_ShieldViperOrbitShotFrameGateReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_ShieldViperOrbitShotFrameGateReturn
                 jsr     Projectile_InitShieldViperOrbitShot(pc)  ; (pc)
                 move.b  $20(a5),$20(a0)

@@ -35,7 +35,7 @@ Projectile_TerobusterHomingMissileTrySpawnTrail:        ; CODE XREF: Projectile_
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Projectile_TerobusterHomingMissileUpdateVelocity
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Projectile_TerobusterHomingMissileUpdateVelocity
                 movea.l #Projectile_HomingAndRockSpriteFrames,a1
                 jsr     (Sprite_InitTypeA4FromTable).l
@@ -136,7 +136,7 @@ Boss_TerobusterSpawnMultiDirectional:                   ; CODE XREF: Boss_Terobu
                 andi.w  #3,d0
                 bne.s   Boss_TerobusterSpawnMultiDirectionalReturn
                 move.w  #$14,$23C(a5)
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_TerobusterSpawnMultiDirectionalReturn
                 move.w  (a4)+,d0
                 move.w  (a4)+,d1
@@ -144,7 +144,7 @@ Boss_TerobusterSpawnMultiDirectional:                   ; CODE XREF: Boss_Terobu
                 jsr     (Projectile_InitializeEightDirectionShot).l
                 move.b  #$BB,d0
                 jsr     (Sound_QueueSFXRequest).l
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_TerobusterSpawnMultiDirectionalReturn
                 move.w  #1,$1C(a0)
                 moveq   #0,d0
@@ -169,7 +169,7 @@ Boss_TerobusterFallingRockParametersB:  dc.w    $30, $FFC4, $10, $FFD0, $C  ; wa
 Boss_TerobusterSpawnFallingRock:                        ; CODE XREF: Boss_TerobusterDecisionState+27A   p  ; was: sub_3909A
                 btst    #0,(FrameCounter+1).w
                 bne.s   Boss_TerobusterSpawnFallingRockReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_TerobusterSpawnFallingRockReturn
                 move.b  (RandomNumberState).w,d1
                 andi.w  #7,d1

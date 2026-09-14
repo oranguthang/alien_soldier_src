@@ -346,7 +346,7 @@ Boss_BugmaxSpreadVolleyApproachReturn:                  ; CODE XREF: Boss_Bugmax
 Boss_BugmaxSpawnSpreadProjectile:                       ; DATA XREF: ROM:0004C404   o  ; was: sub_4CDFE
                 bsr.w   Boss_BugmaxUpdateBattleMovement
                 bsr.w   Boss_BugmaxUpdateHorizontalSteering
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_BugmaxSpreadProjectileSpawnReturn
                 bsr.w   Projectile_InitBugmaxSpread
                 move.w  #$10,$48(a5)
@@ -670,7 +670,7 @@ Boss_BugmaxSineVolleyPreparationReturn:                 ; CODE XREF: Boss_Bugmax
 Boss_BugmaxSpawnSineProjectile:                         ; DATA XREF: ROM:0004C426   o  ; was: sub_4D19C
                 bsr.w   Boss_BugmaxUpdateBattleMovement
                 bsr.w   Boss_BugmaxUpdateVerticalBandSteering
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_BugmaxSineProjectileSpawnReturn
                 bsr.w   Projectile_InitBugmaxSine
                 move.w  #8,$48(a5)
@@ -801,7 +801,7 @@ Boss_BugmaxRiseWithFinalParticles:                      ; DATA XREF: ROM:0004C43
                 move.w  #$40,(SharedPatternRow0Long3+2).w  ; '@'
                 move.w  #$80,$48(a5)
                 addq.w  #2,4(a5)
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_BugmaxFinalRiseReturn
                 jsr     (Projectile_InitType88).l
                 move.w  $10(a5),$10(a0)

@@ -164,7 +164,7 @@ Projectile_MadamBarbarProbeVerticalOffset:              ; CODE XREF: Projectile_
 ; Spawns a type-$38 animation effect at a randomized nearby position
 Boss_MadamBarbarSpawnAnimationEffect:                   ; CODE XREF: Boss_MadamBarbarWaitForPlayerSequence   p  ; was: sub_3B01E
                                         ; Boss_MadamBarbarIdleProgressState+1A   p
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_MadamBarbarSpawnObjectReturn
                 movea.l #Boss_MadamBarbarAnimationEffectFrames,a1
                 jsr     (Sprite_InitFromTable).l
@@ -190,7 +190,7 @@ Boss_MadamBarbarSpawnDropProjectile:                    ; CODE XREF: Boss_MadamB
                 move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 bne.s   Boss_MadamBarbarSpawnObjectReturn
-                jsr     (Projectile_FindFreePrimarySlot).l
+                jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_MadamBarbarSpawnObjectReturn
                 move.w  #$11C,(a0)
                 clr.w   4(a0)
@@ -254,7 +254,7 @@ Projectile_MadamBarbarDropHandleFinalTerrainContact:    ; CODE XREF: Projectile_
                 move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 bne.s   Projectile_MadamBarbarDropConvertToExplosion
-                jsr     (Projectile_FindFreeSlot).l
+                jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Projectile_MadamBarbarDropConvertToExplosion
                 jsr     (Pickup_SpawnLarge).l
                 bset    #2,2(a0)
