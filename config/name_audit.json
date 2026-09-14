@@ -2080,6 +2080,17 @@
       ]
     },
     {
+      "address": "0x02F1B2",
+      "previous_name": "Debug_RadialParticleTestStateTable",
+      "current_name": "Debug_RadialParticleTestStateTable",
+      "legacy_name": "off_2F1B2",
+      "evidence": "static",
+      "basis": [
+        "Debug_RadialParticleTestController indexes this two-entry relative table with its state field 4.",
+        "The entries select only the fixed-position initializer and randomized burst-preparation state."
+      ]
+    },
+    {
       "address": "0x02F1B6",
       "previous_name": "Boss_XiTigerAttackInit",
       "current_name": "Debug_RadialParticleTestInit",
@@ -2099,6 +2110,58 @@
       "basis": [
         "The routine calculates randomized radial motion for up to eight free slots and stores a parent pointer and angular offsets.",
         "Its post-allocation setup hook is an RTS and it never installs an entity type, so the released code only prepares candidate slots rather than spawning functional Xi-Tiger projectiles."
+      ]
+    },
+    {
+      "address": "0x02F1D8",
+      "previous_name": "Debug_RadialParticleTestPrepareBurstLoop",
+      "current_name": "Debug_RadialParticleTestPrepareBurstLoop",
+      "legacy_name": "loc_2F1D8",
+      "evidence": "static",
+      "basis": [
+        "The state initializes D7 to seven and loops here with DBF, preparing at most eight free slots.",
+        "Each iteration randomizes one base angle and two angular offsets before attempting allocation."
+      ]
+    },
+    {
+      "address": "0x02F278",
+      "previous_name": "Debug_RadialParticleTestStoreSlotMotion",
+      "current_name": "Debug_RadialParticleTestStoreSlotMotion",
+      "legacy_name": "loc_2F278",
+      "evidence": "static",
+      "basis": [
+        "Nonzero radial components converge here to store the controller pointer, angular offsets, full motion values, and their one-sixteenth follow deltas in the allocated slot."
+      ]
+    },
+    {
+      "address": "0x02F29C",
+      "previous_name": "Debug_RadialParticleTestNextBurstSlot",
+      "current_name": "Debug_RadialParticleTestNextBurstSlot",
+      "legacy_name": "loc_2F29C",
+      "evidence": "static",
+      "basis": [
+        "Both zero-motion rejection and successful slot preparation reach this DBF instruction before the next of at most eight attempts."
+      ]
+    },
+    {
+      "address": "0x02F2A0",
+      "previous_name": "Debug_RadialParticleTestPrepareBurstReturn",
+      "current_name": "Debug_RadialParticleTestPrepareBurstReturn",
+      "legacy_name": "locret_2F2A0",
+      "evidence": "static",
+      "basis": [
+        "The burst state returns here after all eight iterations or immediately when no free projectile slot is available."
+      ]
+    },
+    {
+      "address": "0x02F2A2",
+      "previous_name": "Debug_RadialParticleTestEmptySlotSetupHook",
+      "current_name": "Debug_RadialParticleTestEmptySlotSetupHook",
+      "legacy_name": "nullsub_69",
+      "evidence": "static",
+      "basis": [
+        "The burst loop calls this single-RTS entry immediately after successful slot allocation.",
+        "Because it performs no setup, the released orphaned path never assigns an entity type or sprite handler to the candidate slot."
       ]
     },
     {
@@ -2124,6 +2187,26 @@
       ]
     },
     {
+      "address": "0x02F2DE",
+      "previous_name": "Debug_AdjustRadialParticleRadius_CheckLeft",
+      "current_name": "Debug_AdjustRadialParticleRadius_CheckLeft",
+      "legacy_name": "loc_2F2DE",
+      "evidence": "static",
+      "basis": [
+        "Whether or not held-right input incremented the radius, execution reaches this block to test held-left input and optionally decrement it."
+      ]
+    },
+    {
+      "address": "0x02F2EA",
+      "previous_name": "Debug_AdjustRadialParticleRadius_Return",
+      "current_name": "Debug_AdjustRadialParticleRadius_Return",
+      "legacy_name": "locret_2F2EA",
+      "evidence": "static",
+      "basis": [
+        "The inactive-left and completed-decrement paths share this return from the controller-input helper."
+      ]
+    },
+    {
       "address": "0x02F2EC",
       "previous_name": "Boss_ApplyVelocityDispatch",
       "current_name": "Debug_RadialTestParticleController",
@@ -2132,6 +2215,17 @@
       "basis": [
         "No object-table entry, source reference or absolute ROM pointer reaches this updater, and the pinned 90,000-frame TAS did not execute it.",
         "It applies one slot's velocity and dispatches only the radial test's initial-motion and parent-angle-following states, so the generated generic boss ownership was unsupported."
+      ]
+    },
+    {
+      "address": "0x02F308",
+      "previous_name": "Debug_RadialTestParticleStateTable",
+      "current_name": "Debug_RadialTestParticleStateTable",
+      "legacy_name": "off_2F308",
+      "evidence": "static",
+      "basis": [
+        "Debug_RadialTestParticleController indexes this two-entry relative table with particle state field 4.",
+        "Its entries select the initial eight-frame motion state and the subsequent parent-angle-following state."
       ]
     },
     {
@@ -2146,6 +2240,16 @@
       ]
     },
     {
+      "address": "0x02F322",
+      "previous_name": "Debug_RadialTestParticleInitialMotionState_Return",
+      "current_name": "Debug_RadialTestParticleInitialMotionState_Return",
+      "legacy_name": "locret_2F322",
+      "evidence": "static",
+      "basis": [
+        "The active eight-frame timer and its transition to the 128-frame follow-parent state share this return."
+      ]
+    },
+    {
       "address": "0x02F324",
       "previous_name": "Boss_SyncPositionToParent",
       "current_name": "Debug_RadialTestParticleFollowParentState",
@@ -2154,6 +2258,47 @@
       "basis": [
         "The state reads the retained parent pointer and recomputes each motion component from stored radial amplitudes, angular offsets and the parent's changing angle fields.",
         "It belongs exclusively to the orphaned radial-test particle table and expires the slot after 128 frames; no live boss ownership is established."
+      ]
+    },
+    {
+      "address": "0x02F356",
+      "previous_name": "Debug_RadialTestParticleFollowParentState_UpdateY",
+      "current_name": "Debug_RadialTestParticleFollowParentState_UpdateY",
+      "legacy_name": "loc_2F356",
+      "evidence": "static",
+      "basis": [
+        "After the optional first-angle motion update, this block compares the parent's second angle and recomputes the second motion component only when it changed."
+      ]
+    },
+    {
+      "address": "0x02F386",
+      "previous_name": "Debug_RadialTestParticleFollowParentState_CheckLifetime",
+      "current_name": "Debug_RadialTestParticleFollowParentState_CheckLifetime",
+      "legacy_name": "loc_2F386",
+      "evidence": "static",
+      "basis": [
+        "Unchanged and recomputed parent-angle paths converge here to decrement the 128-frame lifetime and deactivate the slot on expiry."
+      ]
+    },
+    {
+      "address": "0x02F392",
+      "previous_name": "Debug_RadialTestParticleFollowParentState_Return",
+      "current_name": "Debug_RadialTestParticleFollowParentState_Return",
+      "legacy_name": "locret_2F392",
+      "evidence": "static",
+      "basis": [
+        "Active-lifetime and expired-slot paths share this return from the follow-parent state."
+      ]
+    },
+    {
+      "address": "0x02F394",
+      "previous_name": "Debug_RadialParticleTestTrailingNoOp",
+      "current_name": "Debug_RadialParticleTestTrailingNoOp",
+      "legacy_name": "nullsub_70",
+      "evidence": "static",
+      "basis": [
+        "This single-RTS entry follows the orphaned radial-particle state and has no source caller, table entry, or identified absolute pointer.",
+        "The name records its physical association without claiming a runtime role."
       ]
     },
     {

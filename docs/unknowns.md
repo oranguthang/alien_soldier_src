@@ -8381,3 +8381,26 @@ pending queue falls from 2,662 to 2,649 and its actionable upper bound from
 2,149 to 2,136; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `bosses/shiper_movement.s` now has zero
 pending current names.
+
+The remaining 14 internal boundaries in
+`debug/orphaned_radial_particle_test.s` are audited against the controller and
+particle state machines. The two tables each contain exactly two relative
+states. Burst preparation performs at most eight allocation attempts, aborts
+on the first unavailable slot, and stores a controller pointer, two angular
+offsets, full motion components, and one-sixteenth follow deltas only when at
+least one component is nonzero.
+
+The post-allocation hook at `0x02F2A2` is a single RTS, so this released path
+never assigns the candidate slot an entity type or handler. The separate
+sprite setup and particle controller remain unreferenced, consistent with the
+existing orphaned classification rather than the discarded Xi-Tiger attack
+claim. In the second particle state, changes to each of the parent's two angle
+fields independently recompute one motion component; all paths then count down
+the established 128-frame lifetime. The trailing no-op also has no identified
+caller, table entry, or absolute pointer.
+
+Fourteen exact-address records raise the registry from 13,693 to 13,707. The
+pending queue falls from 2,649 to 2,635 and its actionable upper bound from
+2,136 to 2,122; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. The orphaned radial-particle test module
+now has zero pending current names.
