@@ -8082,3 +8082,23 @@ Eleven exact-address records raise the registry from 13,504 to 13,515. The
 queue falls from 2,838 to 2,827 and its actionable upper bound from 2,325 to
 2,314; provenance and the 513 classified binary-backed end aliases remain
 unchanged. The module now has zero pending current names.
+
+The twelve remaining entries in `ui/hud_sprite_list.s` are audited against
+both callers, the eight-byte OAM record format, weapon-slot state, diagnostic
+controls, and the final sprite-list consumer. The secondary entry conditionally
+builds the fixed diagnostic pair or zero through three frame-skip markers,
+then appends the weapon-slot indicator, a left-edge entry carrying the incoming
+D0 tile word, and the optional six-sprite vertical strip.
+
+Seven inherited generic names are replaced with these observed roles. The
+weapon indicator uses one of four X coordinates indexed by `WeaponSlotOffset`
+and blinks off-screen at X=1. The dynamic strip begins at Y=$A0, advances Y by
+$20 for each of six entries, and holds X at `$60` plus the signed shared
+offset. That word was therefore incorrectly named `HUDDynamicStripYOffset`;
+it is now `HUDDynamicStripXOffset` in source, the RAM map, and its corrected
+existing audit record.
+
+Twelve new exact-address records raise the registry from 13,515 to 13,527. The
+queue falls from 2,827 to 2,815 and its actionable upper bound from 2,314 to
+2,302; provenance and the 513 classified binary-backed end aliases remain
+unchanged. The HUD sprite-list module now has zero pending current names.

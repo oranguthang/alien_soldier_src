@@ -617,7 +617,7 @@ by their verified byte order rather than receiving invented codec meanings.
 | `WaveParameterIndex` | `$FFFF8102` | Wave routines use this even word to index parameter, step, and start-offset tables and move it in two-byte increments. |
 | `WaveStateOffset` | `$FFFF8104` | The wave controller uses this byte offset to select a longword handler; states move it by four bytes. |
 | `HUDDynamicStripTileAttr` | `$FFFF8110` | The HUD builder emits this word as the tile attribute of all six entries in the optional dynamic strip. |
-| `HUDDynamicStripYOffset` | `$FFFF8112` | The HUD builder adds this signed word to the strip's base Y coordinate; Caterpillar and Viblack flows move or remove the strip through it. |
+| `HUDDynamicStripXOffset` | `$FFFF8112` | The HUD builder adds this signed word to the fourth OAM word, moving the six-entry vertical strip horizontally; Caterpillar and Viblack flows move or remove the strip through it. |
 | `EnemySpawnDirectorState` | `$FFFF8114` | The enemy-spawn director uses this even word to select its idle, start, or timed-update handler. |
 | `EnemySpawnDelayTimer` | `$FFFF8116` | The director counts down its low word and reloads it with a randomized `$20`--`$9F` delay; reset clears the containing longword. |
 | `StageSpawnCountdown` | `$FFFF808C` | The object spawner decrements nonnegative values toward the normal negative state; enemy and projectile handlers reset or suppress themselves while the countdown is active. |

@@ -3,7 +3,7 @@ Sys_GameplayMainLoop:                                   ; DATA XREF: Sys_Dispatc
                 tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_UpdateCamera
                 move.w  #$C7F0,(HUDDynamicStripTileAttr).w
-                move.w  #$20,(HUDDynamicStripYOffset).w  ; ' '
+                move.w  #$20,(HUDDynamicStripXOffset).w  ; ' '
 Sys_GameplayMainLoop_UpdateCamera:                      ; CODE XREF: Sys_GameplayMainLoop+8   j  ; was: loc_1C672
                 tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_ApplyCameraMotion

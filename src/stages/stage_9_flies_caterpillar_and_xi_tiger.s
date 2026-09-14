@@ -148,7 +148,7 @@ Stage9_InitializeCaterpillarEncounter:                  ; CODE XREF: Stage9_Init
                 move.w  #$8000,(GlobalSpritePriorityBit).w
                 move.w  #$128,(Entity_ObjectPool).w
                 move.w  #$C470,(HUDDynamicStripTileAttr).w
-                clr.w   (HUDDynamicStripYOffset).w
+                clr.w   (HUDDynamicStripXOffset).w
                 move.b  #9,(PlaneAScrollModeFlags).w
                 move.b  #$24,(PlaneBScrollModeFlags).w  ; '$'
                 bra.s   Stage9_UpdateCaterpillarShipTraversal_Camera
@@ -159,9 +159,9 @@ Stage9_UpdateCaterpillarShipTraversal:                  ; DATA XREF: ROM:0000C8B
 Stage9_UpdateCaterpillarShipTraversal_Camera:           ; CODE XREF: Stage9_InitializeCaterpillarEncounter+2E   j  ; was: loc_D2BC
                 tst.b   (DataLoaderControl).w
                 bmi.s   Stage9_UpdateCaterpillarShipTraversal_Position
-                cmpi.w  #$20,(HUDDynamicStripYOffset).w  ; ' '
+                cmpi.w  #$20,(HUDDynamicStripXOffset).w  ; ' '
                 bpl.s   Stage9_UpdateCaterpillarShipTraversal_Position
-                addq.w  #2,(HUDDynamicStripYOffset).w
+                addq.w  #2,(HUDDynamicStripXOffset).w
 Stage9_UpdateCaterpillarShipTraversal_Position:         ; CODE XREF: Stage9_UpdateCaterpillarShipTraversal+A   j  ; was: loc_D2CE
                                         ; Stage9_UpdateCaterpillarShipTraversal+12   j
                 move.l  (PrimaryCameraXPosition).w,(Stage9CameraXSnapshot).w
@@ -223,7 +223,7 @@ Stage9_XiTigerEntranceTileAssetLoadList:    dc.w    7   ; field_0  ; was: stru_D
 
 ; Scroll the Caterpillar ship out, then select the Xi-Tiger transition route
 Stage9_UpdateCaterpillarShipExit:                       ; DATA XREF: ROM:0000C8B6   o  ; was: sub_D3A6
-                subq.w  #1,(HUDDynamicStripYOffset).w
+                subq.w  #1,(HUDDynamicStripXOffset).w
                 jsr     (Tilemap_QueueNextConstantRow).l
                 addi.l  #-$10000,(PrimaryCameraXPosition).w
                 bsr.w   Stage9_UpdateCaterpillarOscillationAndRasterRows

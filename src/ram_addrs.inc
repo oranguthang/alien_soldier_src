@@ -323,7 +323,7 @@ WaveControlWord         equ     SharedTransitionControl
 WaveParameterIndex      equ     $FFFF8102               ; was: word_FF8102
 WaveStateOffset         equ     $FFFF8104               ; was: word_FF8104
 HUDDynamicStripTileAttr equ     $FFFF8110               ; was: word_FF8110
-HUDDynamicStripYOffset  equ     $FFFF8112               ; was: word_FF8112
+HUDDynamicStripXOffset  equ     $FFFF8112               ; was: word_FF8112
 EnemySpawnDirectorState equ     $FFFF8114               ; was: word_FF8114
 EnemySpawnDelayTimer    equ     $FFFF8116               ; was: dword_FF8116
 EnemySpawnClearedLongA  equ     $FFFF811A               ; was: dword_FF811A

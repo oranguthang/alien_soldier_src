@@ -89,7 +89,7 @@ Boss_ViblackInit:                                       ; DATA XREF: Boss_Viblac
                                         ; ROM:Boss_ViblackStates   o
                 addq.w  #2,4(a5)
                 move.w  #$C2F8,(HUDDynamicStripTileAttr).w
-                move.w  #$20,(HUDDynamicStripYOffset).w  ; ' '
+                move.w  #$20,(HUDDynamicStripXOffset).w  ; ' '
                 move.b  #4,(VDPReg11Shadow+1).w
                 move.b  #8,(PlaneAScrollModeFlags).w
                 move.b  #$20,(PlaneBScrollModeFlags).w  ; ' '
@@ -358,7 +358,7 @@ Boss_ViblackDefeatWaitState:                            ; DATA XREF: ROM:000439E
                 subq.w  #1,$48(a5)
                 bpl.s   Boss_ViblackDefeatWaitReturn
                 move.w  #$14,4(a5)
-                clr.w   (HUDDynamicStripYOffset).w
+                clr.w   (HUDDynamicStripXOffset).w
 Boss_ViblackDefeatWaitReturn:                           ; CODE XREF: Boss_ViblackDefeatWaitState+8   j  ; was: locret_43DBE
                 rts
 ; End of function Boss_ViblackDefeatWaitState
