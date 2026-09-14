@@ -120,8 +120,8 @@ Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Proj
                 dc.l    Enemy_UpdateAlternateDefeatProjectile
                 dc.l    Enemy_UpdateBirdDefeatDebris
                 dc.l    Enemy_HomingAttackController
-                dc.l    Enemy_GustheadDebrisMain
-                dc.l    Enemy_GustheadDebrisPhysicsMain
+                dc.l    Boss_GustheadUpdateScrollingDebris
+                dc.l    Boss_GustheadEdgeDebrisMain
                 dc.l    Boss_SunsetStingMain
                 dc.l    Boss_SunsetStingSegmentMain
                 dc.l    Boss_SunsetStingSecondarySegmentMain
@@ -132,7 +132,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Proj
                 dc.l    Midgame_UpdateAmbientParticle
                 dc.l    Boss_SunsetStingDefeatCoreMain
                 dc.l    Projectile_ViblackMissileMain
-                dc.l    Boss_GustheadDebrisUpdate
+                dc.l    Boss_GustheadUpdateFourWayDebris
                 dc.l    Boss_JampanMain
                 dc.l    Boss_SharpssteelMain
                 dc.l    Boss_JampanRadialLinkedObjectMain

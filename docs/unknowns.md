@@ -7780,6 +7780,22 @@ registry from 13,403 to 13,411. The queue falls from 2,940 to 2,932 and its
 actionable upper bound from 2,427 to 2,419; provenance and the 513 classified
 binary-backed end aliases remain unchanged.
 
+The eight pending debris entry points in `bosses/gusthead_tentacles.s` are
+audited by matching their entity-table slots to the only three Gusthead
+spawners: type `$1E4` scrolling debris, type `$1E8` edge debris, and type
+`$214` four-way debris. The former mixed `Enemy_GustheadDebris*` family is
+therefore separated into explicit scrolling, edge, and four-way handlers under
+Gusthead ownership.
+
+The shared random-mapping, vertical-flip, floor-conversion, and pickup-release
+helpers are named for their common contracts. The floor helper does more than
+bounce: at Y `$150` it converts either moving debris type into a type-`$88`
+effect with fixed upward velocity. Twenty-one existing internal/helper audit
+records are synchronized with the three object families. Eight new
+exact-address records raise the registry from 13,411 to 13,419. The queue falls
+from 2,932 to 2,924 and its actionable upper bound from 2,419 to 2,411;
+provenance and the 513 classified binary-backed end aliases remain unchanged.
+
 The six pending `bosses/destroyer_proto_core.s` entries are audited from the
 type-$3B8 subtype table, root state table, six consecutive part records, and
 all combat callers. `Boss_DestroyerProtoMain` is confirmed as the root
