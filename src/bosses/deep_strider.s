@@ -508,7 +508,7 @@ Boss_DeepStriderBeginDefeat:                            ; CODE XREF: Boss_DeepSt
 ; Fades the palette and emits debris while the defeated boss falls
 Boss_DeepStriderDefeatFallState:                        ; CODE XREF: Boss_DeepStriderBeginDefeat+5E   j  ; was: loc_3EC2E
                                         ; DATA XREF: ROM:0003E5E8   o
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 bsr.w   Boss_DeepStriderSpawnDefeatDebris
                 addi.w  #$10,$56(a5)
                 addi.l  #$2000,$4FC(a5)
@@ -525,7 +525,7 @@ Boss_DeepStriderDefeatFallState:                        ; CODE XREF: Boss_DeepSt
 ; End of function Boss_DeepStriderBeginDefeat
 ; Raises the defeated boss before clearing the remaining stage objects
 Boss_DeepStriderDefeatRiseState:                        ; DATA XREF: ROM:0003E5EA   o  ; was: sub_3EC7A
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 addi.w  #$10,$56(a5)
                 addi.l  #$2000,$4FC(a5)
                 cmpi.w  #$180,$4F4(a5)
@@ -539,7 +539,7 @@ Boss_DeepStriderDefeatRiseState:                        ; DATA XREF: ROM:0003E5E
 ; End of function Boss_DeepStriderDefeatRiseState
 ; Emits the final vertical burst after the defeat hold timer
 Boss_DeepStriderDefeatBurstState:                       ; DATA XREF: ROM:0003E5EC   o  ; was: sub_3ECB6
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 subq.w  #1,$48(a5)
                 bpl.w   Boss_DeepStriderMotionStateReturn
                 addq.w  #2,4(a5)

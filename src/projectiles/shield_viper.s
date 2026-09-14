@@ -57,7 +57,7 @@ Boss_ShieldViperStaggeredDefeatWaitReturn:              ; CODE XREF: Boss_Shield
 ; End of function Boss_ShieldViperWaitForStaggeredDefeat
 ; Run the palette cycle for $80 frames before entering the final fade
 Boss_ShieldViperRunPostDefeatPaletteCycle:              ; DATA XREF: ROM:0004E05A   o  ; was: sub_4ED14
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 subq.w  #1,$48(a5)
                 bne.s   Boss_ShieldViperPostDefeatPaletteCycleReturn
                 clr.w   $48(a5)

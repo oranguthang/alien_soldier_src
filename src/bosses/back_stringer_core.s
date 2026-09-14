@@ -742,7 +742,7 @@ Boss_BackStringerCheckDefeatPhaseThreshold:             ; CODE XREF: Boss_BackSt
                 bne.s   Boss_BackStringerUpdateDefeatFade
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
 Boss_BackStringerUpdateDefeatFade:                      ; CODE XREF: Boss_BackStringerDefeatFadeOutState+24   j  ; was: loc_44F3E
-                jmp     (Gfx_UpdatePaletteFade).l
+                jmp     (Gfx_UpdateRandomizedPaletteRange).l
 ; ---------------------------------------------------------------------------
 Boss_BackStringerCompleteDefeat:                        ; CODE XREF: Boss_BackStringerDefeatFadeOutState+A   j  ; was: loc_44F44
                 bset    #4,2(a5)

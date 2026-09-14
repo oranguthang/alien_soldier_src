@@ -427,7 +427,7 @@ Boss_ShiperPhaseCheckActiveFlag:                        ; CODE XREF: Boss_Shiper
 ; Updates boss with palette fade effect during phase transitions
 Boss_ShiperUpdateWithFade:                              ; CODE XREF: Boss_ShiperPhaseCheck+E   j  ; was: sub_36982
                                         ; Boss_ShiperPhaseCheck+1C   j
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 bsr.w   Boss_ShiperSpawnDebris
                 bra.w   Boss_ShiperUpdateMain
 ; End of function Boss_ShiperUpdateWithFade
@@ -440,7 +440,7 @@ Boss_ShiperDefeatSequence:                              ; DATA XREF: ROM:000364B
                 bpl.w   Boss_ShiperDefeatFlowReturn
                 moveq   #$1C,d0
                 sub.w   $5A(a5),d0
-                jmp     (Gfx_SetFadeParams).l
+                jmp     (Gfx_ApplyFullActivePaletteFade).l
 ; ---------------------------------------------------------------------------
 Boss_ShiperDefeatSequenceBeginCleanup:                  ; CODE XREF: Boss_ShiperDefeatSequence+8   j  ; was: loc_369B0
                 addq.w  #2,4(a5)
@@ -457,14 +457,14 @@ Boss_ShiperDefeatSequenceBeginCleanup:                  ; CODE XREF: Boss_Shiper
                 jsr     (Object_ClearAllExceptTypes).l
                 jsr     (AlternateTransition_SpawnAtOwner).l
                 moveq   #$1C,d0
-                jmp     (Gfx_SetFadeParams).l
+                jmp     (Gfx_ApplyFullActivePaletteFade).l
 ; End of function Boss_ShiperDefeatSequence
 ; Handles boss defeat fade out countdown before final transition
 Boss_ShiperDefeatFadeOut:                               ; DATA XREF: ROM:000364BC   o  ; was: sub_369F6
                 move.w  $5A(a5),d0
                 subi.w  #$30,d0                         ; '0'
                 bmi.s   Boss_ShiperDefeatFadeOutTick
-                jsr     (Gfx_SetFadeParams).l
+                jsr     (Gfx_ApplyFullActivePaletteFade).l
 Boss_ShiperDefeatFadeOutTick:                           ; CODE XREF: Boss_ShiperDefeatFadeOut+8   j  ; was: loc_36A06
                 subq.w  #1,$5A(a5)
                 bpl.s   Boss_ShiperDefeatFlowReturn

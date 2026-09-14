@@ -244,7 +244,7 @@ PaletteFade_SevenForcesEntryOffsets:    dc.w    5       ; DATA XREF: Entity_Upda
 ; Applies a packed signed RGB delta to a counted palette-entry list
 Gfx_ApplyRGBDeltaToPaletteEntries:                      ; CODE XREF: Palette_UpdatePairedEntryLists+8   p  ; was: sub_3E5A
                                         ; Palette_UpdatePairedEntryLists+12   p
-                bsr.w   Gfx_PrepareRGBComponents
+                bsr.w   Gfx_ExpandColorAdjustmentToRGBChannels
 Gfx_ApplyRGBDeltaToPaletteEntries_LoadEntryCount:       ; CODE XREF: Gfx_ProcessColorFadeEffect+1A   j  ; was: loc_3E5E
                                         ; Gfx_ProcessColorFadeEffect+66   j
                 move.w  (a2)+,d5

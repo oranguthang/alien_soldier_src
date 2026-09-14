@@ -7816,6 +7816,35 @@ queue falls from 2,924 to 2,917 and its actionable upper bound from 2,411 to
 2,404; provenance and the 513 classified binary-backed end aliases remain
 unchanged. No assembly source changes in this RAM audit package.
 
+The eight pending entry points in `rendering/palette_transitions.s` are audited
+against their callers, register contracts, palette-buffer pairing, and CRAM
+channel operations. `Gfx_FadePaletteTransition` and
+`Gfx_ApplyPaletteFade` retain their established names: the former advances the
+global transition state and rebuilds all 64 active colors from the shadow
+palette, while the latter applies a caller-selected adjustment to a counted
+destination range from its paired source range.
+
+Six generated names are corrected. The recurring boss effect becomes
+`Gfx_UpdateRandomizedPaletteRange`, and its frame/RNG selector becomes
+`Gfx_SelectRandomizedColorAdjustment`; the latter returns values rather than
+storing persistent fade parameters. The former `Gfx_SetFadeParams` immediately
+applies its caller-provided adjustment to all 64 active colors and therefore
+becomes `Gfx_ApplyFullActivePaletteFade`. Its Antroid and Terobuster wrappers
+are synchronized with that apply contract. The RGB helper is named
+`Gfx_ExpandColorAdjustmentToRGBChannels` for the three shifted register values
+it produces.
+
+Neither of the two remaining helpers has a reconstructed source call or table
+reference. Their names now preserve that fact while stating only their visible
+contracts: `UnreferencedAdjustAndMirrorPaletteRange` writes the same clamped
+result to paired ranges, whereas
+`UnreferencedAddWrappingColorAdjustmentToPairedEntry` masks wrapping channel
+results and writes to the paired entry at A0-$80. Three connected internal
+labels and existing caller evidence are updated consistently. Eight new
+exact-address records raise the registry from 13,426 to 13,434. The queue falls
+from 2,917 to 2,909 and its actionable upper bound from 2,404 to 2,396;
+provenance and the 513 classified binary-backed end aliases remain unchanged.
+
 The six pending `bosses/destroyer_proto_core.s` entries are audited from the
 type-$3B8 subtype table, root state table, six consecutive part records, and
 all combat callers. `Boss_DestroyerProtoMain` is confirmed as the root

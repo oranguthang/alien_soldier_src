@@ -407,7 +407,7 @@ Boss_GustheadDefeatFallReturn:                          ; CODE XREF: Boss_Gusthe
 ; Spawns debris during boss explosion
 Boss_SpawnExplosionDebris:                              ; CODE XREF: Boss_VictorUpdateDefeatExplosion+12   p  ; was: sub_3FF46
                                         ; sub_3FF00   p
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #4,(PlaneBShakeLevel).w
                 jsr     (Projectile_UpdateWithExplosionSound).l

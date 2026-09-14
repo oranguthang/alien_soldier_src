@@ -336,12 +336,12 @@ Stage12To13_ApplyTeleportFadeLevel:                     ; CODE XREF: Stage12To13
                 bmi.s   Stage12To13_ClampAndApplyTeleportFadeLevel
                 moveq   #$1C,d0
 Stage12To13_ClampAndApplyTeleportFadeLevel:             ; CODE XREF: Stage12To13_UpdateTeleportFadeIn+72   j  ; was: loc_DC6A
-                jmp     (Gfx_SetFadeParams).l
+                jmp     (Gfx_ApplyFullActivePaletteFade).l
 ; End of function Stage12To13_UpdateTeleportFadeIn
 ; Decrease the teleport fade level while advancing the transition scroll
 Stage12To13_UpdateTeleportFadeOut:                      ; DATA XREF: ROM:0000D984   o  ; was: sub_DC70
                 move.w  (Stage12TeleportFade).w,d0
-                jsr     (Gfx_SetFadeParams).l
+                jsr     (Gfx_ApplyFullActivePaletteFade).l
                 addq.w  #6,(PrimaryCameraXPosition).w
                 subq.w  #1,(Stage12TeleportFade).w
                 bpl.s   Stage12To13_UpdateTeleportScroll

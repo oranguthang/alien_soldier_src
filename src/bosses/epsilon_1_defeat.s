@@ -175,7 +175,7 @@ Boss_Epsilon1BeginRingDestructionState:                 ; DATA XREF: ROM:00045D5
                 addq.w  #2,4(a5)
 ; Waits for the selected ring pair to reach state $0C, then advances both
 Boss_Epsilon1WaitForRingPairReadyState:                 ; DATA XREF: ROM:00045D58   o  ; was: loc_469E0
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 move.w  $4A(a5),d0
                 add.w   d0,d0
                 lea     Boss_Epsilon1DefeatRingObjectSlots(pc),a0
@@ -201,7 +201,7 @@ Boss_Epsilon1DefeatRingObjectSlots: dc.w    $C800, $C860, $C8C0, $C920, $C980, $
 
 ; Steps backward through the ring pairs, or advances after the first pair
 Boss_Epsilon1AdvanceRingDestructionPairState:           ; DATA XREF: ROM:00045D5A   o  ; was: sub_46A36
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 subq.w  #1,$48(a5)
                 bne.s   Boss_Epsilon1AdvanceRingDestructionPairReturn
                 subq.w  #1,$4A(a5)
@@ -216,7 +216,7 @@ Boss_Epsilon1AdvanceRingDestructionPairReturn:          ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1AdvanceRingDestructionPairState
 ; Waits until the two synchronized ring groups reach terminal state $12
 Boss_Epsilon1WaitForRingDestructionCompleteState:       ; DATA XREF: ROM:00045D5C   o  ; was: sub_46A54
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 lea     Boss_Epsilon1DefeatRingObjectSlots(pc),a0
                 movea.w (a0),a1
                 movea.w $C(a0),a2

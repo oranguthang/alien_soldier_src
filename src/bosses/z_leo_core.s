@@ -460,7 +460,7 @@ Boss_ZLeoRunDefeatTransition:                           ; DATA XREF: ROM:00051B8
                 bmi.s   Boss_ZLeoBeginDefeatFade
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #1,(PlaneBShakeLevel).w
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 bsr.w   Boss_ZLeoSpawnDefeatEffect
                 bsr.w   Boss_ZLeoUpdateDefeatStageScroll
                 lea     Boss_ZLeoDefeatPose(pc),a1

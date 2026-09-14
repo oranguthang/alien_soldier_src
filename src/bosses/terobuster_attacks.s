@@ -83,7 +83,7 @@ Boss_TerobusterDefeatDebrisReturn:                      ; CODE XREF: Boss_Terobu
 ; End of function Boss_TerobusterDefeatDebrisState
 ; Advances the defeat fade, then replaces debris with the main explosion
 Boss_TerobusterDefeatFadeState:                         ; DATA XREF: ROM:00038584   o  ; was: sub_38C66
-                bsr.w   Boss_TerobusterSetFadeParams
+                bsr.w   Boss_TerobusterApplyDefeatPaletteFade
                 addq.w  #1,6(a5)
                 cmpi.w  #$F,6(a5)
                 bmi.w   Boss_TerobusterUpdateDefeatDebris
@@ -110,7 +110,7 @@ Boss_TerobusterDefeatTimer:                             ; DATA XREF: ROM:0003859
                 addq.w  #2,4(a5)
                 move.w  #$C0,$48(a5)
 Boss_TerobusterDefeatTimerUpdateFade:                   ; CODE XREF: Boss_TerobusterDefeatTimer+4   j  ; was: loc_38CCE
-                bra.w   Boss_TerobusterSetFadeParams
+                bra.w   Boss_TerobusterApplyDefeatPaletteFade
 ; End of function Boss_TerobusterDefeatTimer
 ; Completes defeat sequence removing boss entity
 Boss_TerobusterDefeatComplete:                          ; DATA XREF: ROM:0003859A   o  ; was: sub_38CD2
@@ -121,15 +121,15 @@ Boss_TerobusterDefeatComplete:                          ; DATA XREF: ROM:0003859
 ; ---------------------------------------------------------------------------
 Boss_TerobusterDefeatCompleteUpdateFade:                ; CODE XREF: Boss_TerobusterDefeatComplete+4   j  ; was: loc_38CE0
                 subq.w  #1,6(a5)
-                bpl.w   Boss_TerobusterSetFadeParams
+                bpl.w   Boss_TerobusterApplyDefeatPaletteFade
                 rts
 ; End of function Boss_TerobusterDefeatComplete
 ; Sets graphics fade parameters using boss state value for death sequence
-Boss_TerobusterSetFadeParams:                           ; CODE XREF: Boss_TerobusterDefeatFadeState   p  ; was: sub_38CEA
+Boss_TerobusterApplyDefeatPaletteFade:                  ; CODE XREF: Boss_TerobusterDefeatFadeState   p  ; was: sub_38CEA
                                         ; Boss_TerobusterDefeatTimer:Boss_TerobusterDefeatTimerUpdateFade   j
                 move.w  6(a5),d0
-                jmp     (Gfx_SetFadeParams).l
-; End of function Boss_TerobusterSetFadeParams
+                jmp     (Gfx_ApplyFullActivePaletteFade).l
+; End of function Boss_TerobusterApplyDefeatPaletteFade
 ; Publishes a symmetric eight-step oscillation to two shared part values
 Boss_TerobusterUpdateSharedOscillation:                 ; CODE XREF: Boss_TerobusterUpdateMetaspriteAndProjectile+C   p  ; was: sub_38CF4
                 move.w  (FrameCounter).w,d0

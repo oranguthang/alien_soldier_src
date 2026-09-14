@@ -232,7 +232,7 @@ Boss_JokerDefeatFallDelayState:                         ; CODE XREF: Boss_JokerB
                 bpl.s   Boss_JokerUpdateDefeatPaletteFade
                 addq.w  #2,4(a5)
 Boss_JokerUpdateDefeatPaletteFade:                      ; CODE XREF: Boss_JokerDefeatFallDelayState+4   j  ; was: loc_3B574
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
 Boss_JokerUpdateDefeatFall:                             ; CODE XREF: Boss_JokerFadeOutState+E   j  ; was: loc_3B57A
                 bsr.w   Boss_JokerSpawnDefeatEffect
                 move.w  #4,(PlaneAShakeLevel).w
@@ -325,7 +325,7 @@ Boss_JokerApplyFadeCounter:                             ; CODE XREF: Boss_JokerF
                                         ; Boss_JokerFadeInState:Boss_JokerApplyFadeInLevel   j
                 move.w  $A(a5),d0
                 asr.w   #1,d0
-                jmp     (Gfx_SetFadeParams).l
+                jmp     (Gfx_ApplyFullActivePaletteFade).l
 ; End of function Boss_JokerApplyFadeCounter
 ; Selects the next state from shared progress, player distance, and RNG
 Boss_JokerSelectNextState:                              ; CODE XREF: Boss_JokerPhaseGateCompletionDelayState+1A   j  ; was: sub_3B69A

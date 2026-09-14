@@ -213,7 +213,7 @@ Results_FadeSelectedPaletteRanges:                      ; was: sub_1D8EA
 Results_FadeSelectedPaletteRanges_NextFirstColor:       ; was: loc_1D8F4
                 move.w  (a1)+,d6
                 move.w  (ResultsFirstColorOffset).w,d0
-                jsr     (Gfx_PrepareRGBComponents).l
+                jsr     (Gfx_ExpandColorAdjustmentToRGBChannels).l
                 moveq   #$FFFFFFFF,d0
                 jsr     (Gfx_AdjustSelectedColorChannels).l
                 move.w  d6,(a2)+
@@ -235,7 +235,7 @@ Results_FadeSelectedPaletteRanges_NextFirstColor:       ; was: loc_1D8F4
 Results_FadePaletteRange:                               ; was: sub_1D930
                 move.w  (a1)+,d6
                 move.w  (ResultsOtherColorOffset).w,d0
-                jsr     (Gfx_PrepareRGBComponents).l
+                jsr     (Gfx_ExpandColorAdjustmentToRGBChannels).l
                 moveq   #$FFFFFFFF,d0
                 jsr     (Gfx_AdjustSelectedColorChannels).l
                 move.w  d6,(a2)+

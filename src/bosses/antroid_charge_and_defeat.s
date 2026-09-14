@@ -29,7 +29,7 @@ Boss_AntroidRamAttack:                                  ; DATA XREF: ROM:0003752
                 subq.w  #8,$56(a5)
                 andi.w  #$1FE,$56(a5)
 Boss_AntroidRamAttackUpdate:                            ; CODE XREF: Boss_AntroidRamAttack+6   j  ; was: loc_37DAC
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 bsr.w   Boss_AntroidUpdateRamAttackPose
                 addi.l  #$4000,$1C(a5)
                 bmi.s   Boss_AntroidRamAttackReturn
@@ -54,14 +54,14 @@ Boss_AntroidRamAttackRebound:                           ; CODE XREF: Boss_Antroi
 ; End of function Boss_AntroidRamAttack
 ; Advances Antroid's defeat fade before entering the final delay state
 Boss_AntroidDefeatFadeState:                            ; DATA XREF: ROM:0003752E   o  ; was: sub_37E00
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 addq.w  #1,$11C(a5)
                 move.w  $11C(a5),d0
                 cmpi.w  #$A0,d0
                 bpl.s   Boss_AntroidEnterDefeatDelayState
                 subi.w  #$90,d0
                 bmi.s   Boss_AntroidDefeatFadeUpdateEffects
-                bsr.w   Boss_AntroidSetDefeatFadeParameters
+                bsr.w   Boss_AntroidApplyDefeatPaletteFade
 Boss_AntroidDefeatFadeUpdateEffects:                    ; CODE XREF: Boss_AntroidDefeatFadeState+18   j  ; was: loc_37E1E
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #2,(PlaneBShakeLevel).w
@@ -97,7 +97,7 @@ Boss_AntroidDefeatDelayState:                           ; DATA XREF: ROM:0003753
 ; ---------------------------------------------------------------------------
 Boss_AntroidDefeatDelayUpdateFade:                      ; CODE XREF: Boss_AntroidDefeatDelayState+8   j  ; was: loc_37E7E
                 cmpi.w  #$10,d0
-                bmi.w   Boss_AntroidSetDefeatFadeParameters
+                bmi.w   Boss_AntroidApplyDefeatPaletteFade
                 moveq   #$10,d0
-                bra.w   Boss_AntroidSetDefeatFadeParameters
+                bra.w   Boss_AntroidApplyDefeatPaletteFade
 ; End of function Boss_AntroidDefeatDelayState

@@ -721,7 +721,7 @@ Gfx_DestroyerMK2UpdateForegroundScrollRowsLoop:         ; CODE XREF: Gfx_Destroy
 ; Update the controller debris effect and emit one randomized sprite particle
 Projectile_DestroyerMK2DebrisMain:                      ; CODE XREF: Boss_DestroyerMK2RunDebrisTransitionTimer   p  ; was: sub_4BE16
                                         ; DATA XREF: Boss_DestroyerMK2RunDebrisTransitionTimer   o
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 jsr     (Projectile_UpdateWithExplosionSound).l
                 move.w  #2,(PlaneBShakeLevel).w
                 move.w  #4,(PlaneAShakeLevel).w

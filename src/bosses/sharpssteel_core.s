@@ -129,7 +129,7 @@ Boss_SharpssteelApplyManualAngle:                       ; CODE XREF: Boss_Sharps
 ; End of function Boss_SharpssteelManualControlState
 ; Updates the final fade and removes the controller when its timer expires
 Boss_SharpssteelDefeatFadeAndRemovalState:              ; DATA XREF: ROM:00047C7A   o  ; was: sub_47D80
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 subq.w  #1,$48(a5)
                 bpl.s   Boss_SharpssteelDefeatFadeAndRemovalReturn
                 bset    #4,2(a5)

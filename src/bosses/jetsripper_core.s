@@ -646,7 +646,7 @@ Boss_JetsripperDeathStateReturn:                        ; CODE XREF: Boss_Jetsri
 ; End of function Boss_JetsripperDeathInit
 ; Handles Jetsripper death fade animation
 Boss_JetsripperDeathFade:                               ; DATA XREF: ROM:000356F8   o  ; was: sub_35DDC
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 subq.w  #1,$4C(a5)
                 bpl.s   Boss_JetsripperDeathStateReturn
                 moveq   #0,d0

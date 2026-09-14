@@ -266,6 +266,6 @@ Palette_UpdateMidgameFadeAndColors:                     ; DATA XREF: ROM:0000433
 Palette_UpdateMidgameFadeAndColors_Apply:               ; CODE XREF: Palette_UpdateMidgameFadeAndColors+6   j  ; was: loc_437A
                                         ; Palette_UpdateMidgameFadeAndColors+C   j
                 move.w  (MidgameFadeLevel).w,d0
-                jsr     Gfx_SetFadeParams(pc)           ; (pc)
+                jsr     Gfx_ApplyFullActivePaletteFade(pc)  ; (pc)
                 bra.w   Palette_UpdateMidgameColors
 ; End of function Palette_UpdateMidgameFadeAndColors

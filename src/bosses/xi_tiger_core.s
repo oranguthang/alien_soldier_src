@@ -530,7 +530,7 @@ Boss_XiTigerApplyDefeatLeapFacing:                      ; CODE XREF: Boss_XiTige
 ; End of function Boss_XiTigerBeginDefeatLeap
 ; Applies gravity until the scripted defeat leap reaches the floor
 Boss_XiTigerDefeatLeapState:                            ; DATA XREF: ROM:0003D8A4   o  ; was: sub_3DF12
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 addi.l  #$4000,$1C(a5)
                 bmi.s   Boss_XiTigerUpdateDefeatLeapPose
                 move.w  $914(a5),d0
@@ -557,7 +557,7 @@ Boss_XiTigerUpdateDefeatLeapPose:                       ; CODE XREF: Boss_XiTige
 ; End of function Boss_XiTigerDefeatLeapState
 ; Holds the landing pose, decelerates, and emits scripted projectiles
 Boss_XiTigerDefeatLandingDelayState:                    ; DATA XREF: ROM:0003D8A6   o  ; was: sub_3DF7C
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_XiTigerDecelerateDefeatLanding
                 addq.w  #2,4(a5)
@@ -586,7 +586,7 @@ Boss_XiTigerUpdateDefeatPoseAndProjectile:              ; CODE XREF: Boss_XiTige
 ; End of function Boss_XiTigerDefeatLandingDelayState
 ; Fades the defeated boss for 32 frames before clearing stage objects
 Boss_XiTigerDefeatFadeState:                            ; DATA XREF: ROM:0003D8A8   o  ; was: sub_3DFD2
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 bsr.w   Boss_ApplyDefeatPaletteFade
                 addq.w  #1,6(a5)
                 cmpi.w  #$20,6(a5)                      ; ' '

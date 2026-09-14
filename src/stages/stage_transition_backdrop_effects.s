@@ -72,7 +72,7 @@ StageTransition_ApplyBossBackdropPaletteFade:           ; CODE XREF: StageTransi
                 move.w  #$E000,d7
                 move.w  (BossBackdropFadeLevel).w,d0
                 moveq   #$3F,d5                         ; '?'
-                jsr     (Gfx_SetFadeParams).l
+                jsr     (Gfx_ApplyFullActivePaletteFade).l
                 moveq   #0,d0
                 sub.w   (BossBackdropFadeLevel).w,d0
                 movea.w #(PaletteActiveColor32-M68K_RAM),a0

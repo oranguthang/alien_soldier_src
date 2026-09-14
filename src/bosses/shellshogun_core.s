@@ -215,7 +215,7 @@ Boss_ShellshogunBeginDefeat:                            ; CODE XREF: Boss_Shells
 ; End of function Boss_ShellshogunBeginDefeat
 ; Updates the launched boss during the first defeat state
 Boss_ShellshogunDefeatLaunchState:                      ; DATA XREF: ROM:00039534   o  ; was: sub_397C4
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 tst.w   $BC(a5)
                 bpl.s   Boss_ShellshogunUpdateDefeatLaunch
                 jsr     (Boss_ApplyDefeatPaletteFade).l
@@ -268,7 +268,7 @@ Boss_ShellshogunRenderDefeatLaunch:                     ; CODE XREF: Boss_Shells
 ; End of function Boss_ShellshogunDefeatLaunchState
 ; Advances the palette phase and starts the post-boss player effect
 Boss_ShellshogunDefeatPaletteState:                     ; DATA XREF: ROM:00039536   o  ; was: sub_3987C
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 subq.w  #1,$BC(a5)
                 bpl.s   Boss_ShellshogunApplyDefeatPaletteFade
                 addq.w  #2,4(a5)

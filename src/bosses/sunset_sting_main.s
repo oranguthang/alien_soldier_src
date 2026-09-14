@@ -571,7 +571,7 @@ Boss_SunsetStingBeginDefeatState:                       ; DATA XREF: ROM:00042AA
                 move.b  #1,(SoundFadeOutDelay).w
                 clr.b   $21(a5)
                 clr.b   $23(a5)
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 bset    #7,4(a5)
                 bne.s   Boss_SunsetStingBeginDefeatMoveIntoPosition
                 clr.b   (PlaneAScrollModeFlags).w
@@ -618,7 +618,7 @@ Boss_SunsetStingDefeatWobbleState:                      ; DATA XREF: ROM:00042AB
                 neg.l   $1C(a5)
 Boss_SunsetStingDefeatWobbleUpdate:                     ; CODE XREF: Boss_SunsetStingDefeatWobbleState+6   j  ; was: loc_431B0
                 bsr.s   Boss_SunsetStingSpawnDebrisRain
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 subq.w  #1,$4A(a5)
                 beq.w   Boss_SunsetStingNextState
                 rts

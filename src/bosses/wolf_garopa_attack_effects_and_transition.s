@@ -142,7 +142,7 @@ Boss_WolfGaropaAdvanceDefeatTimer:                      ; CODE XREF: Boss_WolfGa
                 move.w  #$41C,d1
                 jsr     (Object_ClearAllExceptTypes).l
                 moveq   #$1C,d0
-                jmp     (Gfx_SetFadeParams).l
+                jmp     (Gfx_ApplyFullActivePaletteFade).l
 ; ---------------------------------------------------------------------------
 Boss_WolfGaropaUpdateDefeatFade:                        ; CODE XREF: Boss_WolfGaropaUpdateDefeatTransition+C   j  ; was: loc_50E98
                 cmpi.w  #$20,6(a5)                      ; ' '
@@ -153,11 +153,11 @@ Boss_WolfGaropaUpdateDefeatFade:                        ; CODE XREF: Boss_WolfGa
                 bmi.s   Boss_WolfGaropaClampDefeatFadeStep
                 moveq   #$1C,d0
 Boss_WolfGaropaClampDefeatFadeStep:                     ; CODE XREF: Boss_WolfGaropaUpdateDefeatTransition+4E   j  ; was: loc_50EB0
-                jsr     (Gfx_SetFadeParams).l
+                jsr     (Gfx_ApplyFullActivePaletteFade).l
                 bra.w   Boss_WolfGaropaEmitDefeatDebris
 ; ---------------------------------------------------------------------------
 Boss_WolfGaropaAdvanceDefeatPaletteFade:                ; CODE XREF: Boss_WolfGaropaUpdateDefeatTransition+40   j  ; was: loc_50EBA
-                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Gfx_UpdateRandomizedPaletteRange).l
 Boss_WolfGaropaEmitDefeatDebris:                        ; CODE XREF: Boss_WolfGaropaUpdateDefeatTransition+58   j  ; was: loc_50EC0
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
@@ -218,7 +218,7 @@ Boss_WolfGaropaUpdatePostDefeatFade:                    ; CODE XREF: Boss_WolfGa
                 bpl.s   Boss_WolfGaropaApplyPostDefeatFade
                 moveq   #0,d0
 Boss_WolfGaropaApplyPostDefeatFade:                     ; CODE XREF: Boss_WolfGaropaUpdatePostDefeatDelay+24   j  ; was: loc_50F7C
-                jmp     (Gfx_SetFadeParams).l
+                jmp     (Gfx_ApplyFullActivePaletteFade).l
 ; End of function Boss_WolfGaropaUpdatePostDefeatDelay
 ; Move the auxiliary orb's palette-pulse value toward zero
 Boss_WolfGaropaUpdateOrbPalettePulse:                   ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+C   p  ; was: sub_50F82
