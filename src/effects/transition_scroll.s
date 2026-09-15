@@ -2,14 +2,14 @@ Effect_SetupScrollPointers:
                 bra.s   TransitionEffect_SetOutputBufferPointers  ; was: sub_26C58
 ; End of function Effect_SetupScrollPointers
 ; Sets d5 to alternate sine table address FFFF9B00 and branches to common scroll processing
-Effect_ScrollSineTable1:
+Orphaned_ScrollSineTable1:
                 move.l  #$FFFF9B00,d5                   ; was: sub_26C5A
-                bra.s   Effect_BuildSineScrollBuffer
-; End of function Effect_ScrollSineTable1
+                bra.s   Orphaned_BuildSineScrollBuffer
+; End of function Orphaned_ScrollSineTable1
 ; Processes scroll effect using sine table at Effect_TransitionSineTable, interpolating 63 values based on TransitionProgress
-Effect_ScrollSineTable2:
+Orphaned_ScrollSineTable2:
                 move.l  #Effect_TransitionSineTable,d5  ; was: sub_26C62
-Effect_BuildSineScrollBuffer:                           ; CODE XREF: Effect_ScrollSineTable1+6   j  ; was: loc_26C68
+Orphaned_BuildSineScrollBuffer:                         ; CODE XREF: Orphaned_ScrollSineTable1+6   j  ; was: loc_26C68
                 movea.w #(TransitionRampBuffer-M68K_RAM),a0
                 movea.w #(TransitionRampBuffer-M68K_RAM),a2
                 moveq   #$FFFFFFFE,d6
@@ -18,17 +18,17 @@ Effect_BuildSineScrollBuffer:                           ; CODE XREF: Effect_Scro
                 asl.w   #8,d1
                 moveq   #0,d3
                 move.w  (TransitionProgress).w,d2
-                beq.s   Effect_BuildSineScrollBuffer_BeginLoop
+                beq.s   Orphaned_BuildSineScrollBuffer_BeginLoop
                 move.l  #$8000,d3
                 divu.w  d2,d3
                 andi.l  #$FFFF,d3
                 asl.l   #1,d3
                 asl.l   #8,d3
-Effect_BuildSineScrollBuffer_BeginLoop:                 ; CODE XREF: Effect_ScrollSineTable2+1E   j  ; was: loc_26C94
+Orphaned_BuildSineScrollBuffer_BeginLoop:               ; CODE XREF: Orphaned_ScrollSineTable2+1E   j  ; was: loc_26C94
                 moveq   #0,d2
-Effect_BuildSineScrollBuffer_Loop:                      ; CODE XREF: Effect_ScrollSineTable2+56   j  ; was: loc_26C96
+Orphaned_BuildSineScrollBuffer_Loop:                    ; CODE XREF: Orphaned_ScrollSineTable2+56   j  ; was: loc_26C96
                 cmpi.l  #$FE0000,d2
-                bpl.s   Effect_BuildSineScrollBuffer_StoreSample
+                bpl.s   Orphaned_BuildSineScrollBuffer_StoreSample
                 add.l   d3,d2
                 move.l  d2,d4
                 swap    d4
@@ -37,18 +37,18 @@ Effect_BuildSineScrollBuffer_Loop:                      ; CODE XREF: Effect_Scro
                 sub.l   d4,d0
                 and.l   d6,d0
                 movea.l d0,a1
-Effect_BuildSineScrollBuffer_StoreSample:               ; CODE XREF: Effect_ScrollSineTable2+3A   j  ; was: loc_26CAE
+Orphaned_BuildSineScrollBuffer_StoreSample:             ; CODE XREF: Orphaned_ScrollSineTable2+3A   j  ; was: loc_26CAE
                 move.w  (a1),d0
                 muls.w  d1,d0
                 swap    d0
                 move.w  d0,-(a0)
                 move.w  d0,(a2)+
-                dbf     d7,Effect_BuildSineScrollBuffer_Loop
+                dbf     d7,Orphaned_BuildSineScrollBuffer_Loop
                 movea.w #(TransitionPatternBuffer-M68K_RAM),a0
                 movea.w #(TransitionHScrollBuffer-M68K_RAM),a2
                 movea.w #(TransitionVScrollBuffer-M68K_RAM),a3
                 rts
-; End of function Effect_ScrollSineTable2
+; End of function Orphaned_ScrollSineTable2
 ; Fills scroll buffer starting at offset -6C00 with value from TransitionOriginXY+2, repeating TransitionMaskStep times
 Effect_FillScrollBuffer:                                ; CODE XREF: TransitionEffect_UpdateMode3Buffers+12   p  ; was: sub_26CCA
                 move.w  (TransitionProgress).w,d0
@@ -66,63 +66,63 @@ Effect_FillScrollBuffer_Loop:                           ; CODE XREF: Effect_Fill
                 rts
 ; End of function Effect_FillScrollBuffer
 ; Processes vertical scroll values for 127 entries, clamping to 0-160 range and computing scroll offsets
-Effect_ProcessVerticalScroll:
+Orphaned_ProcessVerticalScroll:
                 moveq   #1,d1                           ; was: sub_26CF4
                 move.w  #$FE,d2
                 move.w  #$FFFE,d3
                 move.w  #$120,d4
                 moveq   #$7E,d7                         ; '~'
-Effect_ProcessVerticalScroll_Loop:                      ; CODE XREF: Effect_ProcessVerticalScroll+56   j  ; was: loc_26D04
+Orphaned_ProcessVerticalScroll_Loop:                    ; CODE XREF: Orphaned_ProcessVerticalScroll+56   j  ; was: loc_26D04
                 move.w  (a0)+,d0
                 asl.w   #1,d0
                 move.w  d4,d5
                 sub.w   d0,d5
                 and.w   d3,d5
-                bpl.s   Effect_ProcessVerticalScroll_CheckUpperBound
+                bpl.s   Orphaned_ProcessVerticalScroll_CheckUpperBound
                 asr.w   #1,d5
                 add.w   d5,d0
-                bpl.s   Effect_ProcessVerticalScroll_ClampLow
+                bpl.s   Orphaned_ProcessVerticalScroll_ClampLow
                 moveq   #0,d0
-Effect_ProcessVerticalScroll_ClampLow:                  ; CODE XREF: Effect_ProcessVerticalScroll+20   j  ; was: loc_26D18
+Orphaned_ProcessVerticalScroll_ClampLow:                ; CODE XREF: Orphaned_ProcessVerticalScroll+20   j  ; was: loc_26D18
                 moveq   #0,d5
-                bra.s   Effect_ProcessVerticalScroll_Store
+                bra.s   Orphaned_ProcessVerticalScroll_Store
 ; ---------------------------------------------------------------------------
-Effect_ProcessVerticalScroll_CheckUpperBound:           ; CODE XREF: Effect_ProcessVerticalScroll+1A   j  ; was: loc_26D1C
+Orphaned_ProcessVerticalScroll_CheckUpperBound:         ; CODE XREF: Orphaned_ProcessVerticalScroll+1A   j  ; was: loc_26D1C
                 cmpi.w  #$140,d5
-                bmi.s   Effect_ProcessVerticalScroll_AdjustCenter
+                bmi.s   Orphaned_ProcessVerticalScroll_AdjustCenter
                 moveq   #0,d5
                 moveq   #0,d0
-                bra.s   Effect_ProcessVerticalScroll_Store
+                bra.s   Orphaned_ProcessVerticalScroll_Store
 ; ---------------------------------------------------------------------------
-Effect_ProcessVerticalScroll_AdjustCenter:              ; CODE XREF: Effect_ProcessVerticalScroll+2C   j  ; was: loc_26D28
+Orphaned_ProcessVerticalScroll_AdjustCenter:            ; CODE XREF: Orphaned_ProcessVerticalScroll+2C   j  ; was: loc_26D28
                 move.w  d0,d6
                 add.w   d5,d6
                 cmpi.w  #$A0,d6
-                bmi.s   Effect_ProcessVerticalScroll_Store
+                bmi.s   Orphaned_ProcessVerticalScroll_Store
                 subi.w  #$A0,d0
                 add.w   d5,d0
-                bpl.s   Effect_ProcessVerticalScroll_Store
+                bpl.s   Orphaned_ProcessVerticalScroll_Store
                 moveq   #0,d5
                 moveq   #0,d0
-Effect_ProcessVerticalScroll_Store:                     ; CODE XREF: Effect_ProcessVerticalScroll+26   j  ; was: loc_26D3E
-                                        ; Effect_ProcessVerticalScroll+32   j
+Orphaned_ProcessVerticalScroll_Store:                   ; CODE XREF: Orphaned_ProcessVerticalScroll+26   j  ; was: loc_26D3E
+                                        ; Orphaned_ProcessVerticalScroll+32   j
                 move.w  d5,(a3)+
                 move.w  d5,(a3)+
                 sub.w   d1,d0
                 and.w   d2,d0
                 move.w  d0,(a2)+
                 addq.w  #2,d1
-                dbf     d7,Effect_ProcessVerticalScroll_Loop
+                dbf     d7,Orphaned_ProcessVerticalScroll_Loop
                 rts
-; End of function Effect_ProcessVerticalScroll
+; End of function Orphaned_ProcessVerticalScroll
 ; Processes horizontal scroll data for 127 scanlines, calculating doubled scroll offsets with 160-pixel wraparound
-Effect_ProcessHorizontalScroll:
+Orphaned_ProcessHorizontalScroll:
                 moveq   #1,d1                           ; was: sub_26D50
                 move.w  #$FE,d2
                 move.w  #$FFFE,d3
                 move.w  #$A0,d4
                 moveq   #$7E,d7                         ; '~'
-Effect_ProcessHorizontalScroll_Loop:                    ; CODE XREF: Effect_ProcessHorizontalScroll+2A   j  ; was: loc_26D60
+Orphaned_ProcessHorizontalScroll_Loop:                  ; CODE XREF: Orphaned_ProcessHorizontalScroll+2A   j  ; was: loc_26D60
                 move.w  (a0),d0
                 sub.w   d1,d0
                 asl.w   #1,d0
@@ -136,9 +136,9 @@ Effect_ProcessHorizontalScroll_Loop:                    ; CODE XREF: Effect_Proc
                 move.w  d5,(a3)+
                 move.w  d5,(a3)+
                 addq.w  #1,d1
-                dbf     d7,Effect_ProcessHorizontalScroll_Loop
+                dbf     d7,Orphaned_ProcessHorizontalScroll_Loop
                 rts
-; End of function Effect_ProcessHorizontalScroll
+; End of function Orphaned_ProcessHorizontalScroll
 ; Processes scroll with conditional vertical calculation based on TransitionOriginXY flag, quadruples values if enabled
 Effect_ProcessConditionalScroll:                        ; CODE XREF: TransitionEffect_UpdateMode2Buffers+8   p  ; was: sub_26D80
                 moveq   #1,d1
@@ -204,14 +204,14 @@ Effect_Copy32ByteBlocks:                                ; CODE XREF: Effect_Copy
                 rts
 ; End of function Effect_Copy32ByteBlocks
 ; Applies sine wave modulation to scroll buffer using Effect_LinearScrollBaseTable table and Math_QuarterSineTable multiplier data
-Effect_ApplySineWaveScroll:
+Orphaned_ApplySineWaveScroll:
                 movea.l #Effect_LinearScrollBaseTable,a0  ; was: sub_26DF6
                 movea.w #(TransitionRasterWork-M68K_RAM),a1
                 movea.l #Math_QuarterSineTable,a2
                 moveq   #$7F,d7
                 move.w  (TransitionOriginXY).w,d1
                 andi.w  #$1FE,d1
-Effect_ApplySineWaveScroll_Loop:                        ; CODE XREF: Effect_ApplySineWaveScroll+2C   j  ; was: loc_26E10
+Orphaned_ApplySineWaveScroll_Loop:                      ; CODE XREF: Orphaned_ApplySineWaveScroll+2C   j  ; was: loc_26E10
                 move.w  (a0)+,d2
                 mulu.w  (a2,d1.w),d2
                 asl.l   #3,d2
@@ -219,26 +219,26 @@ Effect_ApplySineWaveScroll_Loop:                        ; CODE XREF: Effect_Appl
                 move.w  d2,(a1)+
                 addq.w  #1,d1
                 andi.w  #$FE,d1
-                dbf     d7,Effect_ApplySineWaveScroll_Loop
+                dbf     d7,Orphaned_ApplySineWaveScroll_Loop
                 rts
-; End of function Effect_ApplySineWaveScroll
+; End of function Orphaned_ApplySineWaveScroll
 ; Applies linear interpolation to scroll buffer using accumulator from TransitionOriginXY added to Effect_LinearScrollBaseTable base values
-Effect_ApplyLinearScroll:
+Orphaned_ApplyLinearScroll:
                 movea.l #Effect_LinearScrollBaseTable,a0  ; was: sub_26E28
                 movea.w #(TransitionRasterWork-M68K_RAM),a1
                 moveq   #$7F,d7
                 moveq   #0,d0
                 move.l  (TransitionOriginXY).w,d1
-Effect_ApplyLinearScroll_Loop:                          ; CODE XREF: Effect_ApplyLinearScroll+1E   j  ; was: loc_26E3A
+Orphaned_ApplyLinearScroll_Loop:                        ; CODE XREF: Orphaned_ApplyLinearScroll+1E   j  ; was: loc_26E3A
                 add.l   d1,d0
                 swap    d0
                 move.w  (a0)+,d2
                 add.w   d0,d2
                 swap    d0
                 move.w  d2,(a1)+
-                dbf     d7,Effect_ApplyLinearScroll_Loop
+                dbf     d7,Orphaned_ApplyLinearScroll_Loop
                 rts
-; End of function Effect_ApplyLinearScroll
+; End of function Orphaned_ApplyLinearScroll
 ; Updates scroll position for effect
 Effect_UpdateScrollPosition:                            ; CODE XREF: AlternateTransition_Update   p  ; was: sub_26E4C
                                         ; TransitionEffect_Update   p
@@ -411,7 +411,7 @@ Effect_BuildTransitionPattern:                          ; CODE XREF: TransitionE
                 move.l  d0,d3
                 move.l  d1,d4
                 move.l  d2,d5
-Effect_BuildTransitionPattern_Write:                    ; CODE XREF: Effect_ScrollMaskPattern1+38   j  ; was: loc_272D2
+Effect_BuildTransitionPattern_Write:                    ; CODE XREF: Orphaned_ScrollMaskPattern1+38   j  ; was: loc_272D2
                 movea.w #(TransitionPatternBuffer-M68K_RAM),a0
                 moveq   #3,d7
 Effect_BuildTransitionPattern_PrefixLoop:               ; CODE XREF: Effect_BuildTransitionPattern+1E   j  ; was: loc_272D8
@@ -459,16 +459,16 @@ Effect_InitDefeatScroll_SuffixLoop:                     ; CODE XREF: Effect_Init
                 bra.w   Effect_QueueTransitionVdpRegisters
 ; End of function Effect_InitDefeatScroll
 ; Masks individual scroll buffer byte based on TransitionMaskStep timer, using lookup table to select byte offset
-Effect_MaskScrollByte:
+Orphaned_MaskScrollByte:
                 movea.w #(TransitionPatternBuffer-M68K_RAM),a0  ; was: sub_27332
                 lea     Effect_TransitionMaskByteOffsets(pc),a1
                 nop
                 move.b  #$F,d3
                 move.w  (TransitionMaskStep).w,d0
                 cmpi.w  #$20,d0                         ; ' '
-                bmi.s   Effect_MaskScrollByte_SelectNibble
+                bmi.s   Orphaned_MaskScrollByte_SelectNibble
                 move.b  #$F0,d3
-Effect_MaskScrollByte_SelectNibble:                     ; CODE XREF: Effect_MaskScrollByte+16   j  ; was: loc_2734E
+Orphaned_MaskScrollByte_SelectNibble:                   ; CODE XREF: Orphaned_MaskScrollByte+16   j  ; was: loc_2734E
                 andi.w  #$1F,d0
                 moveq   #0,d2
                 move.b  (a1,d0.w),d2
@@ -492,10 +492,10 @@ Effect_QueueTransitionVdpRegisters:                     ; CODE XREF: Effect_Clea
                 move.l  #$94009330,-(a1)
                 move.w  a1,(VDPCommandQueueHead).w
                 rts
-; End of function Effect_MaskScrollByte
+; End of function Orphaned_MaskScrollByte
 ; ---------------------------------------------------------------------------
 Effect_TransitionMaskByteOffsets:   dc.w    $10, $111, $212, $313, $414, $515, $616, $717, $818, $919, $A1A, $B1B, $C1C, $D1D, $E1E, $F1F  ; was: word_2739C
-                                        ; DATA XREF: Effect_MaskScrollByte+4   o
+                                        ; DATA XREF: Orphaned_MaskScrollByte+4   o
 
 ; Applies the current transition mask to three pattern-buffer rows
 Effect_ApplyTransitionMask:                             ; CODE XREF: AlternateTransition_Update+1A   j  ; was: sub_273BC
@@ -541,7 +541,7 @@ Effect_TransitionMaskPatternsA: dc.l    $FFFFFFFF, $FFFFFFFF, $FFFFFFFF, $FFF0FF
                 dc.l    $F0F0F0F0, $F0F0F0F0, $F0F0F0F0, $F000F000
 
 ; Applies masked scroll pattern using time-based lookup from Effect_TransitionMaskPatternsB table, creates layered effect masks
-Effect_ScrollMaskPattern1:
+Orphaned_ScrollMaskPattern1:
                 lea     Effect_TransitionMaskPatternsB(pc),a1  ; was: sub_2744E
                 nop
                 move.w  (TransitionProgress).w,d2
@@ -562,10 +562,10 @@ Effect_ScrollMaskPattern1:
                 and.l   d7,d4
                 and.l   d7,d5
                 bra.w   Effect_BuildTransitionPattern_Write
-; End of function Effect_ScrollMaskPattern1
+; End of function Orphaned_ScrollMaskPattern1
 ; ---------------------------------------------------------------------------
 Effect_TransitionMaskPatternsB: dc.l    $FFFFFFFF, $FFFFFFF, $FFF0FFF, $F0F0FFF  ; was: dword_2748A
-                                        ; DATA XREF: Effect_ScrollMaskPattern1   o
+                                        ; DATA XREF: Orphaned_ScrollMaskPattern1   o
                 dc.l    $F0F0F0F, $F0F0F, $F000F, $F
                 dc.l    $FFFFFFFF, $FFFFFFF0, $FFF0FFF0, $FFF0F0F0
                 dc.l    $F0F0F0F0, $F0F0F000, $F000F000, $F0000000

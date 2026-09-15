@@ -10184,3 +10184,61 @@ Sixty-one records, sixty new and one corrected in place, raise the registry from
 upper bound from 534 to 474; provenance, the 513 classified binary-backed end
 aliases, and the 379-module layout remain unchanged. `enemies/bird_enemy.s` now
 has zero pending current names, leaving 7 modules in the queue.
+
+`effects/transition_scroll.s` contains the largest block of dead code this audit
+has found: eight entry points, twenty-one labels in all, with no reference of
+any kind.
+
+The module reads as a library of interchangeable scroll processors, and the
+control module next to it uses only some of them. `TransitionEffect_BufferModeOffsets`
+has five slots, and the handlers behind them call `Effect_ClearScrollBuffer`,
+`Effect_FillScrollBuffer`, `Effect_ProcessConditionalScroll`,
+`Effect_ProcessSimpleScroll` and `Effect_GenerateTransitionBuffers`. Nothing
+calls the other eight. `Effect_ScrollSineTable1` and `Effect_ScrollSineTable2`
+are two entry points into one shared sine buffer builder;
+`Effect_ProcessVerticalScroll` and `Effect_ProcessHorizontalScroll` are a
+`$120`-bound and an `$A0`-bound pair shaped exactly like the two live
+processors; `Effect_ApplySineWaveScroll` and `Effect_ApplyLinearScroll` are a
+modulated and an unmodulated reader of the same base table; and
+`Effect_MaskScrollByte` and `Effect_ScrollMaskPattern1` are the unused halves of
+the masking pair. Each is preceded by an `rts`, a `bra`, or data, so none can be
+reached by fall-through, and none has a ROM absolute-address match. All twenty-one
+labels take the `Orphaned_` prefix.
+
+Two of them are tangled with live code in ways worth recording.
+`Orphaned_MaskScrollByte` has a live tail: `Effect_QueueTransitionVdpRegisters`
+sits inside its body and is entered by four other routines, so only the masking
+above that label is dead. And `Orphaned_ScrollMaskPattern1` ends by branching
+into `Effect_BuildTransitionPattern_Write`, a live label, which is why that
+label carries a cross-reference from dead code.
+
+One live routine is misnamed in a way the dead cluster made easy to miss.
+`Effect_UpdateScrollPosition` writes no scroll value at all. It writes one
+palette colour, at `PaletteActiveColor62` and again `$80` bytes further on, so
+it drives the two shadow copies of a single entry. Before the transition passes
+`$40` that colour flickers between `$EEE` and `$8CE` on frames where two
+independent low bits agree — a two-source dither rather than a timed blink —
+and after `$40` it comes from a sixteen-entry ramp that runs white to near
+black. The name is left as it stands for now and the record says what the code
+does, because renaming it would touch the two callers in the control module and
+this package is already large; it is flagged here as the next correction due in
+this area.
+
+`Effect_SetupScrollPointers` looked like a ninth orphan and is not. It is a
+two-byte thunk reached only by falling off the end of
+`TransitionEffect_BuildSymmetricRamp_FillConstantLoop` in the neighbouring
+module: that loop sits at `$26C50` and its three instructions occupy exactly the
+eight bytes before this label. A fall-through across a module boundary is the
+one case the reference scan cannot see, which is why every orphan in this
+package was also checked against the instruction that precedes it.
+
+A process note. The duplicate-provenance helper over-stripped this time: it
+removed a genuine `; was: word_26EBC_End` marker alongside the eight duplicates
+the renamer had added, and the provenance count falling from 16,053 to 16,052
+is what exposed it. The marker was restored and the count is back to 16,053.
+
+Sixty-two exact-address records raise the registry from 15,357 to 15,419. The
+pending queue falls from 987 to 925 and its actionable upper bound from 474 to
+412; provenance, the 513 classified binary-backed end aliases, and the
+379-module layout remain unchanged. `effects/transition_scroll.s` now has zero
+pending current names, leaving 6 modules in the queue.
