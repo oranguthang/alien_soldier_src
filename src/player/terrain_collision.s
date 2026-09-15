@@ -46,7 +46,7 @@ Physics_CheckLowerTerrain_CheckRightOuter:              ; CODE XREF: Physics_Che
 Physics_CheckLowerTerrain_Return:                       ; CODE XREF: Physics_CheckLowerTerrain+5C   j  ; was: locret_1475E
                 rts
 ; End of function Physics_CheckLowerTerrain
-; Probes lower terrain and resolves it only while the entity is descending
+; Probes lower terrain; only the centre and outer probes require descent
 Physics_CheckLowerTerrainWhenDescending:                ; CODE XREF: Physics_DescendingTerrainCheckWrapper+10   j  ; was: sub_14760
                                         ; Enemy_MainStateMachine+13E   p
                 lea     (M68K_RAM).l,a0
@@ -151,7 +151,7 @@ Physics_CheckUpperTerrain_CheckRightOuter:              ; CODE XREF: Physics_Che
 Physics_CheckUpperTerrain_Return:                       ; CODE XREF: Physics_CheckUpperTerrain+5C   j  ; was: locret_14838
                 rts
 ; End of function Physics_CheckUpperTerrain
-; Probes upper terrain and resolves it only while the entity is rising
+; Probes upper terrain; only the centre and outer probes require ascent
 Physics_CheckUpperTerrainWhenRising:                    ; CODE XREF: Physics_RisingTerrainCheckWrapper+10   j  ; was: sub_1483A
                                         ; sub_2C71E:Enemy_MainStateMachine_CheckRisingTerrain   j
                 lea     (M68K_RAM).l,a0

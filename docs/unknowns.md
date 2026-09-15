@@ -9593,3 +9593,60 @@ to 1,587 and its actionable upper bound from 1,120 to 1,074; provenance, the 513
 classified binary-backed end aliases, and the 379-module layout remain
 unchanged. `player/fall_and_special_attack.s` now has zero pending current
 names, leaving 18 modules in the queue.
+
+`player/terrain_collision.s` is the first module of the audit whose pending
+names all survived verification unchanged. It is worth recording why, and what
+the verification turned up that the names do not carry.
+
+The module is ten probe families, five lower and five upper, in one fixed order:
+left inner, right inner, centre, left outer, right outer. The offsets confirm
+the names. The lower probes sit at `(-8, +$18)`, `(+8, +$18)`, `(0, +$20)`,
+`(-8, +$20)` and `(+8, +$20)`, and the upper ones negate the vertical. So inner
+and outer name the vertical depth, not a horizontal spread: both pairs are at
+x±8 and the outer pair is eight pixels further from the entity centre. The two
+inner probes are called with `bsr` so the scan continues past them, while the
+centre and outer probes are tail branches, so a hit there ends the scan.
+
+`Physics_CheckLowerTerrainWhenDescending` and
+`Physics_CheckUpperTerrainWhenRising` are instruction for instruction their
+unguarded counterparts with one addition: the centre and both outer probes test
+the sign of `$1C` and return instead of resolving. The inner probes are
+unguarded in both. The two comments that said these routines resolve terrain
+"only while descending" and "only while rising" therefore overstated the guard,
+and are corrected.
+
+The dispatch chain is unusual enough to record. Each handler masks the tile
+angle and indexes a response table, and every table's entries are measured not
+from the table itself but from the routine that immediately follows it — the
+lower centre table from `Physics_HandleLowerLeftInnerTerrain`, that one from
+`Physics_HandleLowerRightInnerTerrain`, and so on. The chain runs through all
+ten families, crosses from the lower group into the upper group at
+`Physics_LowerRightOuterResponseTable`, and crosses the module boundary at
+`Physics_UpperLeftOuterResponseTable`, whose base
+`Physics_HandleUpperRightOuterTerrain` is the first routine of
+`player/terrain_responses.s`. Only the last table in the chain, in that module,
+is based on `Physics_TerrainEmptyHandler` instead.
+
+One open question comes out of this and is not resolved here. Every one of the
+nine response tables in this module holds exactly 24 words, which covers index
+`$00` to `$2E`. The dispatches admit more: the lower handlers mask the angle to
+`$7E` and reject only `$40` and above, and the upper handlers subtract `$40`
+after the same mask, so both can produce an index as high as `$3E`. An index
+from `$30` up would read the first opcode words of the routine that follows the
+table and jump to whatever address they encode. Whether such an angle occurs is
+data, not code: the angle byte comes from `TerrainCollisionBuffer` at
+`$FFFF7800`, which the asset loader fills per stage, so the invariant that keeps
+the masked angle below `$30` on these paths cannot be checked from the source
+alone. It is recorded here as an unknown rather than asserted either way.
+
+A second observation is cheaper to state: the last twelve entries of both upper
+inner tables and of the upper left outer table are all
+`Physics_TerrainEmptyHandler`, so half of the upper index range resolves to
+nothing even within the twenty-four slots that exist.
+
+Forty-eight exact-address records raise the registry from 14,755 to 14,803 with
+no renames. The pending queue falls from 1,587 to 1,539 and its actionable upper
+bound from 1,074 to 1,026; provenance, the 513 classified binary-backed end
+aliases, and the 379-module layout remain unchanged.
+`player/terrain_collision.s` now has zero pending current names, leaving 17
+modules in the queue.
