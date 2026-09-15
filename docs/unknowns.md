@@ -8779,3 +8779,29 @@ pending queue falls from 2,449 to 2,427 and its actionable upper bound from
 1,936 to 1,914; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `bosses/destroyer_proto_combat.s` now
 has zero pending current names, leaving 42 modules in the queue.
+
+The 23 pending entries in `cutscenes/xi_tiger_entrance_sequences.s` all hold.
+The module carries two `Entity_UpdateHandlerTable` entries that share one actor
+setup helper and differ only in where they place him and what starts the jump.
+The train entrance pins him to the primary camera Y plus `$A8` and runs a fixed
+timer chain, while the boss entrance pins him to camera Y plus `$128` and waits
+for `SecondaryCameraXPos` to turn negative. Both launches use the same
+`$FFFA0000` vertical velocity and differ only in sign and size of the horizontal
+component, `$FFFC` against `2`.
+
+Both jump updaters share a shape worth recording: they skip the terrain probe
+entirely while the vertical velocity is still negative, so the landing test runs
+only on the way down, and the rising and no-contact paths converge on the same
+single gravity step.
+
+One comment named the wrong axis. The boss-entrance trigger reads
+`SecondaryCameraXPos`, the horizontal position, not a vertical scroll value, so
+the comment was corrected while the name `Cutscene_XiTigerBossEntranceWaitForScroll`
+stayed. The terminal `Cutscene_XiTigerBossEntranceHoldPose` advances no state at
+all; it only tracks the camera until something else removes the actor.
+
+Twenty-three exact-address records raise the registry from 13,915 to 13,938. The
+pending queue falls from 2,427 to 2,404 and its actionable upper bound from
+1,914 to 1,891; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `cutscenes/xi_tiger_entrance_sequences.s`
+now has zero pending current names, leaving 41 modules in the queue.

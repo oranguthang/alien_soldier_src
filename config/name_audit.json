@@ -2005,6 +2005,7 @@
         "The object uses Xi-Tiger's palette and sprite frames, then performs his delayed jump from the train roof and releases the stage gate."
       ]
     },
+    { "address": "0x02EF42", "previous_name": "off_2EF42", "current_name": "Cutscene_XiTigerTrainEntranceStateTable", "legacy_name": "off_2EF42", "evidence": "static", "basis": ["Six self-relative words naming the train-entrance states in order: init, wait, prepare jump, switch to the airborne pose, update the jump, and finish."] },
     {
       "address": "0x02EF4E",
       "previous_name": "Entity_TrainEndInit",
@@ -2027,6 +2028,7 @@
         "Besides loading byte_C1C2, it initializes display flags, collision bounds and sprite parameters, so it is neither train-end-specific nor only a palette loader."
       ]
     },
+    { "address": "0x02EFBA", "previous_name": "sub_2EFBA", "current_name": "Cutscene_XiTigerAlignToTrainRoof", "legacy_name": "sub_2EFBA", "evidence": "static", "basis": ["The helper rewrites the actor's Y as the primary camera Y plus $A8 every frame, which is what keeps him on the roof while the stage scrolls; the init state and the wait state both call it."] },
     {
       "address": "0x02EFC8",
       "previous_name": "Entity_TransitionAnimationState",
@@ -2038,6 +2040,11 @@
         "It does not update animation frames; on expiry it selects one fixed mapping and starts the 16-frame pre-jump delay."
       ]
     },
+    { "address": "0x02EFE8", "previous_name": "locret_2EFE8", "current_name": "Cutscene_XiTigerTrainEntranceWait_Return", "legacy_name": "locret_2EFE8", "evidence": "static", "basis": ["The wait state returns here on every frame before its $80-tick timer expires."] },
+    { "address": "0x02EFEA", "previous_name": "sub_2EFEA", "current_name": "Cutscene_XiTigerTrainEntrancePrepareJump", "legacy_name": "sub_2EFEA", "evidence": "static", "basis": ["After a further $10 ticks in the second pose the state restores the grounded mapping and launches the actor with vertical velocity $FFFA0000 and horizontal velocity $FFFC, so the jump goes up and to the left."] },
+    { "address": "0x02F018", "previous_name": "locret_2F018", "current_name": "Cutscene_XiTigerTrainEntrancePrepareJump_Return", "legacy_name": "locret_2F018", "evidence": "static", "basis": ["The pre-jump state returns here while its timer is still running."] },
+    { "address": "0x02F01A", "previous_name": "sub_2F01A", "current_name": "Cutscene_XiTigerTrainEntranceSwitchAirbornePose", "legacy_name": "sub_2F01A", "evidence": "static", "basis": ["The previous state armed a four-tick timer, so this state swaps to the airborne mapping exactly four frames after the launch."] },
+    { "address": "0x02F030", "previous_name": "locret_2F030", "current_name": "Cutscene_XiTigerTrainEntranceSwitchAirbornePose_Return", "legacy_name": "locret_2F030", "evidence": "static", "basis": ["The three frames before the pose change return here."] },
     {
       "address": "0x02F032",
       "previous_name": "Entity_TrainJumpFall",
@@ -2049,6 +2056,8 @@
         "It applies gravity throughout both ascent and descent, checks terrain only while descending, and advances the entrance sequence on landing."
       ]
     },
+    { "address": "0x02F048", "previous_name": "loc_2F048", "current_name": "Cutscene_XiTigerTrainEntranceApplyGravity", "legacy_name": "loc_2F048", "evidence": "static", "basis": ["Both the rising path, which skips the terrain probe while the vertical velocity is negative, and the falling path that found no contact converge here to add one gravity step to $1C."] },
+    { "address": "0x02F052", "previous_name": "loc_2F052", "current_name": "Cutscene_XiTigerTrainEntranceOnLanding", "legacy_name": "loc_2F052", "evidence": "static", "basis": ["Contact clears the horizontal velocity, restores the grounded mapping, and arms the $80-tick departure delay."] },
     {
       "address": "0x02F06E",
       "previous_name": "Entity_TrainJumpComplete",
@@ -2060,6 +2069,9 @@
         "Those writes complete the entire Stage 8 entrance sequence, not merely the jump operation."
       ]
     },
+    { "address": "0x02F08A", "previous_name": "locret_2F08A", "current_name": "Cutscene_XiTigerTrainEntranceFinish_Return", "legacy_name": "locret_2F08A", "evidence": "static", "basis": ["The departure delay returns here until it expires, after which the actor is removed, the player script gate is cleared, and the stage palette is reloaded."] },
+    { "address": "0x02F08C", "previous_name": "sub_2F08C", "current_name": "Cutscene_XiTigerBossEntranceController", "legacy_name": "sub_2F08C", "evidence": "static", "basis": ["The second Entity_UpdateHandlerTable entry for this module clears the contact flags and dispatches through its own six-entry state table."] },
+    { "address": "0x02F09C", "previous_name": "off_2F09C", "current_name": "Cutscene_XiTigerBossEntranceStateTable", "legacy_name": "off_2F09C", "evidence": "static", "basis": ["Six self-relative words naming the boss-entrance states: init, wait for the scroll trigger, update the jump, landing delay, cycle the landing frames, and hold."] },
     {
       "address": "0x02F0A8",
       "previous_name": "Entity_XiTigerIntroDispatcher",
@@ -2082,6 +2094,17 @@
         "Its only operation sets the actor Y coordinate to vertical stage scroll plus 0x128, so classifying it as state 1 was structurally incorrect."
       ]
     },
+    { "address": "0x02F0CA", "previous_name": "sub_2F0CA", "current_name": "Cutscene_XiTigerBossEntranceWaitForScroll", "legacy_name": "sub_2F0CA", "evidence": "static", "basis": ["The state pins the actor at X $60 and tracks the camera until SecondaryCameraXPos turns negative, then launches him with vertical velocity $FFFA0000 and horizontal velocity 2 and switches to the airborne mapping."] },
+    { "address": "0x02F0F4", "previous_name": "locret_2F0F4", "current_name": "Cutscene_XiTigerBossEntranceWaitForScroll_Return", "legacy_name": "locret_2F0F4", "evidence": "static", "basis": ["Every frame before the trigger returns here."] },
+    { "address": "0x02F0F6", "previous_name": "sub_2F0F6", "current_name": "Cutscene_XiTigerBossEntranceUpdateJump", "legacy_name": "sub_2F0F6", "evidence": "static", "basis": ["The boss-entrance jump uses the same shape as the train jump: it skips the terrain probe while rising and otherwise tests the lower-terrain contact flag."] },
+    { "address": "0x02F10C", "previous_name": "loc_2F10C", "current_name": "Cutscene_XiTigerBossEntranceApplyGravity", "legacy_name": "loc_2F10C", "evidence": "static", "basis": ["The rising and no-contact paths converge here to add one gravity step."] },
+    { "address": "0x02F116", "previous_name": "loc_2F116", "current_name": "Cutscene_XiTigerBossEntranceOnLanding", "legacy_name": "loc_2F116", "evidence": "static", "basis": ["Contact clears the horizontal velocity, installs the landing mapping, and arms a $10-tick pose delay."] },
+    { "address": "0x02F132", "previous_name": "sub_2F132", "current_name": "Cutscene_XiTigerBossEntranceLandingDelay", "legacy_name": "sub_2F132", "evidence": "static", "basis": ["When the pose delay expires the state restores the grounded mapping, arms a $20-tick timer, clears the frame cursor at $4A, and plays SFX $20."] },
+    { "address": "0x02F160", "previous_name": "locret_2F160", "current_name": "Cutscene_XiTigerBossEntranceLandingDelay_Return", "legacy_name": "locret_2F160", "evidence": "static", "basis": ["The frames before the delay expires return here."] },
+    { "address": "0x02F162", "previous_name": "sub_2F162", "current_name": "Cutscene_XiTigerBossEntranceCycleLandingFrames", "legacy_name": "sub_2F162", "evidence": "static", "basis": ["Each time the timer expires the state loads the next of the two landing mappings, rearms a four-tick timer, and advances the cursor; it moves on only once the cursor reaches two, so exactly two frames play."] },
+    { "address": "0x02F192", "previous_name": "locret_2F192", "current_name": "Cutscene_XiTigerBossEntranceCycleLandingFrames_Return", "legacy_name": "locret_2F192", "evidence": "static", "basis": ["Both the mid-timer path and the first of the two frames return here."] },
+    { "address": "0x02F194", "previous_name": "off_2F194", "current_name": "Cutscene_XiTigerBossEntranceLandingFrameTable", "legacy_name": "off_2F194", "evidence": "static", "basis": ["The two long mapping pointers that the landing cursor selects."] },
+    { "address": "0x02F19C", "previous_name": "sub_2F19C", "current_name": "Cutscene_XiTigerBossEntranceHoldPose", "legacy_name": "sub_2F19C", "evidence": "static", "basis": ["The terminal state advances no further; it only keeps the actor at the camera-relative Y offset until something else removes it."] },
     {
       "address": "0x02F1A2",
       "previous_name": "Boss_XiTigerAttackMain",

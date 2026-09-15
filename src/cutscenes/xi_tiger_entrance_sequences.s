@@ -147,7 +147,7 @@ Cutscene_XiTigerBossEntranceUpdateY:                    ; CODE XREF: Cutscene_Xi
                 addi.w  #$128,$14(a5)
                 rts
 ; End of function Cutscene_XiTigerBossEntranceUpdateY
-; Waits for the vertical-scroll trigger, then launches Xi-Tiger into view
+; Waits for the secondary camera X to go negative, then launches Xi-Tiger up
 Cutscene_XiTigerBossEntranceWaitForScroll:              ; DATA XREF: ROM:0002F09E   o  ; was: sub_2F0CA
                 move.w  #$60,$10(a5)                    ; '`'
                 bsr.w   Cutscene_XiTigerBossEntranceUpdateY
