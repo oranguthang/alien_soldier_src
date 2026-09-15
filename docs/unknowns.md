@@ -9069,3 +9069,31 @@ pending queue falls from 2,179 to 2,145 and its actionable upper bound from
 1,666 to 1,632; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `effects/explosion_patterns.s` now has
 zero pending current names, leaving 32 modules in the queue.
+
+The 36 pending entries in `enemies/stage_10_beetles.s` hold, with one
+unreachable duplicate separated out. `Enemy_Stage10BeetleConvertIfActive` has no
+caller and no absolute address in the ROM, while both of the module's handlers
+are found in `Entity_UpdateHandlerTable` by the same scan. Its body duplicates
+the defeat half of `Enemy_ConvertStage10BeetleToDefeatDebris` instruction for
+instruction but omits that routine's recycling branch, so it becomes
+`Orphaned_Stage10BeetleConvertIfActive` together with its return label.
+
+The live converter is worth stating because one name covers two outcomes. A
+beetle that was actually hit stops, plays SFX `$BC` and becomes the shared
+type-`$88` effect, whereas one retired because the stage spawn countdown expired
+is recycled in place as type-`$2D8` debris with an upward kick. The wave
+controller depends on that difference: it watches the spawned record's type word
+and only advances once it stops being `$2D4`.
+
+Two behaviours were measured rather than assumed. The wave is a single beetle at
+a time, not a group, because the controller spawns one, waits for it, pauses
+`$40` frames and repeats. And the beetle's walk rhythm is not random: the
+sixteen delays in `Enemy_Stage10BeetleMoveDelays` are consumed cyclically with a
+cursor that wraps at `$20`, so only the direction is randomized while the timing
+repeats every sixteen changes.
+
+Thirty-six exact-address records raise the registry from 14,197 to 14,233. The
+pending queue falls from 2,145 to 2,109 and its actionable upper bound from
+1,632 to 1,596; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `enemies/stage_10_beetles.s` now has
+zero pending current names, leaving 31 modules in the queue.

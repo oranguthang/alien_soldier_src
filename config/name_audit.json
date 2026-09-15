@@ -1950,6 +1950,8 @@
         "Entity type 0x2D4 maps to Enemy_Stage10BeetleController, and no bomber sprite, projectile payload or flight state is initialized."
       ]
     },
+    { "address": "0x02E6DA", "previous_name": "off_2E6DA", "current_name": "Stage10_BeetleWaveStateOffsets", "legacy_name": "off_2E6DA", "evidence": "static", "basis": ["Four self-relative words naming the wave controller's init, spawn, wait and delay states."] },
+    { "address": "0x02E6E2", "previous_name": "sub_2E6E2", "current_name": "Stage10_BeetleWaveInitState", "legacy_name": "sub_2E6E2", "evidence": "static", "basis": ["The controller is pinned to a fixed position every frame by its caller, and this state only installs the invisible flag word before advancing."] },
     {
       "address": "0x02E6EE",
       "previous_name": "Enemy_Stage10BomberSpawn",
@@ -1961,6 +1963,28 @@
         "The installed type dispatches to the beetle controller, so this is a beetle-wave spawn state rather than a bomber projectile spawn."
       ]
     },
+    { "address": "0x02E734", "previous_name": "loc_2E734", "current_name": "Stage10_BeetleWaveSpawnState_PlaceAtLeftEdge", "legacy_name": "loc_2E734", "evidence": "static", "basis": ["One random bit decides the entry side, placing the new beetle at X $78 here or at $1C8 on the other branch."] },
+    { "address": "0x02E73A", "previous_name": "locret_2E73A", "current_name": "Stage10_BeetleWaveSpawnState_Return", "legacy_name": "locret_2E73A", "evidence": "static", "basis": ["A failed slot allocation returns here and the spawn is retried next frame."] },
+    { "address": "0x02E73C", "previous_name": "sub_2E73C", "current_name": "Stage10_BeetleWaveWaitForBeetleState", "legacy_name": "sub_2E73C", "evidence": "static", "basis": ["The controller keeps the spawned record's address in $4C and waits until that record's type word stops being $2D4, which happens when the beetle converts itself to debris."] },
+    { "address": "0x02E750", "previous_name": "locret_2E750", "current_name": "Stage10_BeetleWaveWaitForBeetleState_Return", "legacy_name": "locret_2E750", "evidence": "static", "basis": ["Every frame the beetle is still alive returns here."] },
+    { "address": "0x02E752", "previous_name": "sub_2E752", "current_name": "Stage10_BeetleWaveDelayState", "legacy_name": "sub_2E752", "evidence": "static", "basis": ["After a $40-frame gap the controller returns to the spawn state, so the wave is a single beetle at a time rather than a group."] },
+    { "address": "0x02E766", "previous_name": "locret_2E766", "current_name": "Stage10_BeetleWaveDelayState_Return", "legacy_name": "locret_2E766", "evidence": "static", "basis": ["The frames before the gap expires return here."] },
+    { "address": "0x02E768", "previous_name": "loc_2E768", "current_name": "Stage10_BeetleWaveDelayState_FinishSpecialStage", "legacy_name": "loc_2E768", "evidence": "static", "basis": ["The controller removes itself instead of respawning when the shared entity slot holds type $1B8, which is the special-stage variant of this sequence."] },
+    { "address": "0x02E770", "previous_name": "sub_2E770", "current_name": "Enemy_Stage10BeetleInit", "legacy_name": "sub_2E770", "evidence": "static", "basis": ["The setup reads three bytes from Enemy_Stage10BeetleSpriteParameters at the caller's index and scales the last by sixteen into field $5A, the same shape the circling-enemy setup uses."] },
+    { "address": "0x02E7C8", "previous_name": "word_2E7C8", "current_name": "Enemy_Stage10BeetleSpriteParameters", "legacy_name": "word_2E7C8", "evidence": "static", "basis": ["One three-byte record packed into two words; only index zero is ever passed."] },
+    { "address": "0x02E7CC", "previous_name": "sub_2E7CC", "current_name": "Enemy_Stage10BeetleController", "legacy_name": "sub_2E7CC", "evidence": "static", "basis": ["Entity_UpdateHandlerTable installs this handler. It converts the beetle to debris on negative health or when the stage spawn countdown expires, and otherwise steps the random generator once per frame."] },
+    { "address": "0x02E7EC", "previous_name": "loc_2E7EC", "current_name": "Enemy_Stage10BeetleController_UpdateState", "legacy_name": "loc_2E7EC", "evidence": "static", "basis": ["After the state runs, the facing is taken from the sign of the horizontal velocity, and a zero vertical velocity restores the walking animation, so the walk resumes automatically after every bounce."] },
+    { "address": "0x02E804", "previous_name": "locret_2E804", "current_name": "Enemy_Stage10BeetleController_Return", "legacy_name": "locret_2E804", "evidence": "static", "basis": ["Airborne frames keep their current animation and return here."] },
+    { "address": "0x02E806", "previous_name": "sub_2E806", "current_name": "Enemy_DispatchStage10BeetleState", "legacy_name": "sub_2E806", "evidence": "static", "basis": ["The dispatcher indexes the five self-relative words of Enemy_Stage10BeetleStateOffsets."] },
+    { "address": "0x02E812", "previous_name": "off_2E812", "current_name": "Enemy_Stage10BeetleStateOffsets", "legacy_name": "off_2E812", "evidence": "static", "basis": ["Five self-relative words naming the init, initial delay, roam, bounce and exit states."] },
+    { "address": "0x02E81C", "previous_name": "sub_2E81C", "current_name": "Enemy_Stage10BeetleInitState", "legacy_name": "sub_2E81C", "evidence": "static", "basis": ["The first state installs the sprite and picks the initial direction from which half of the screen the beetle spawned on, so it always walks inward."] },
+    { "address": "0x02E83C", "previous_name": "loc_2E83C", "current_name": "Enemy_Stage10BeetleInitState_MoveLeft", "legacy_name": "loc_2E83C", "evidence": "static", "basis": ["A beetle spawned at or beyond the midpoint takes the leftward velocity."] },
+    { "address": "0x02E842", "previous_name": "loc_2E842", "current_name": "Enemy_Stage10BeetleInitialDelayState", "legacy_name": "loc_2E842", "evidence": "static", "basis": ["After the $40-frame delay the state resets the timing-table cursor, loads the first move delay, and arms the $100-frame roam budget."] },
+    { "address": "0x02E85A", "previous_name": "locret_2E85A", "current_name": "Enemy_Stage10BeetleInitialDelayState_Return", "legacy_name": "locret_2E85A", "evidence": "static", "basis": ["The frames before that delay expires return here."] },
+    { "address": "0x02E85C", "previous_name": "sub_2E85C", "current_name": "Enemy_Stage10BeetleRoamState", "legacy_name": "sub_2E85C", "evidence": "static", "basis": ["The roam budget is spent only while bit 0 of field $5F is set, so the beetle leaves the roam only in one of the two configurations that flag distinguishes."] },
+    { "address": "0x02E86A", "previous_name": "loc_2E86A", "current_name": "Enemy_Stage10BeetleRoamState_UpdateMotion", "legacy_name": "loc_2E86A", "evidence": "static", "basis": ["Whenever the move delay expires the beetle takes the next cyclic delay and a fresh randomized horizontal velocity from the sine table."] },
+    { "address": "0x02E890", "previous_name": "locret_2E890", "current_name": "Enemy_Stage10BeetleRoamState_Return", "legacy_name": "locret_2E890", "evidence": "static", "basis": ["The frames inside the current move delay return here."] },
+    { "address": "0x02E892", "previous_name": "loc_2E892", "current_name": "Enemy_Stage10BeetleRoamState_BeginBounce", "legacy_name": "loc_2E892", "evidence": "static", "basis": ["Leaving the roam clears the horizontal velocity, launches the beetle upward, and arms exactly three bounces."] },
     {
       "address": "0x02E8AA",
       "previous_name": "Enemy_Stage10BeetleDelayTable",
@@ -1972,17 +1996,26 @@
         "It advances and wraps the table index before returning, so the previous name incorrectly classified code as data."
       ]
     },
+    { "address": "0x02E8C4", "previous_name": "locret_2E8C4", "current_name": "Enemy_Stage10BeetleLoadNextMoveDelay_Return", "legacy_name": "locret_2E8C4", "evidence": "static", "basis": ["The cursor wraps at $20, which is the full sixteen-word span of the delay table."] },
+    { "address": "0x02E8C6", "previous_name": "word_2E8C6", "current_name": "Enemy_Stage10BeetleMoveDelays", "legacy_name": "word_2E8C6", "evidence": "static", "basis": ["Sixteen delays between 4 and $40 frames, consumed cyclically so the beetle's walk rhythm repeats every sixteen direction changes."] },
+    { "address": "0x02E8E6", "previous_name": "sub_2E8E6", "current_name": "Enemy_Stage10BeetleBounceState", "legacy_name": "sub_2E8E6", "evidence": "static", "basis": ["Gravity is applied until a terrain contact, which aligns the beetle and reverses it upward, and the counter armed at three is spent on each landing before the exit state follows."] },
+    { "address": "0x02E92A", "previous_name": "locret_2E92A", "current_name": "Enemy_Stage10BeetleBounceState_Return", "legacy_name": "locret_2E92A", "evidence": "static", "basis": ["Rising frames and non-final landings share this return."] },
+    { "address": "0x02E92C", "previous_name": "sub_2E92C", "current_name": "Enemy_Stage10BeetleExitState", "legacy_name": "sub_2E92C", "evidence": "static", "basis": ["The exit repeats the same gravity but has no terrain test, so the beetle falls through the floor and is converted once it passes Y $150."] },
+    { "address": "0x02E946", "previous_name": "locret_2E946", "current_name": "Enemy_Stage10BeetleExitState_Return", "legacy_name": "locret_2E946", "evidence": "static", "basis": ["Frames above the boundary return here."] },
+    { "address": "0x02E948", "previous_name": "sub_2E948", "current_name": "Enemy_ConvertStage10BeetleToDefeatDebris", "legacy_name": "sub_2E948", "evidence": "static", "basis": ["The converter has two outcomes. A beetle that was actually hit stops, plays SFX $BC and becomes the shared type-$88 effect, while one retired by the spawn countdown is recycled as type-$2D8 debris with an upward kick."] },
+    { "address": "0x02E97A", "previous_name": "loc_2E97A", "current_name": "Enemy_ConvertStage10BeetleToDefeatDebris_Activate", "legacy_name": "loc_2E97A", "evidence": "static", "basis": ["The recycling branch clears the state, health and both collision bytes so the record can run as debris."] },
+    { "address": "0x02E99E", "previous_name": "sub_2E99E", "current_name": "Enemy_UpdateStage10BeetleDefeatDebris", "legacy_name": "sub_2E99E", "evidence": "static", "basis": ["Entity_UpdateHandlerTable installs the debris handler, which falls for $10 frames and then raises an explosion and drops a random pickup."] },
+    { "address": "0x02E9BA", "previous_name": "loc_2E9BA", "current_name": "Enemy_UpdateStage10BeetleDefeatDebris_Blink", "legacy_name": "loc_2E9BA", "evidence": "static", "basis": ["While falling, the visibility bit is toggled on alternate frames from bit 0 of the timer's low byte, which is what makes the debris blink."] },
+    { "address": "0x02E9CE", "previous_name": "locret_2E9CE", "current_name": "Enemy_UpdateStage10BeetleDefeatDebris_Return", "legacy_name": "locret_2E9CE", "evidence": "static", "basis": ["The visible half of the blink returns here."] },
     {
       "address": "0x02E9D0",
-      "previous_name": "Enemy_BeetleDeathCheck",
-      "current_name": "Enemy_Stage10BeetleConvertIfActive",
+      "previous_name": "Enemy_Stage10BeetleConvertIfActive",
+      "current_name": "Orphaned_Stage10BeetleConvertIfActive",
       "legacy_name": "sub_2E9D0",
       "evidence": "static",
-      "basis": [
-        "The routine returns when health is already negative or the inactive flag is set.",
-        "Only a still-active object plays the sound, selects the shared effect mapping and enters Projectile_InitType88FromCurrent, so the old death-check description inverted the operative condition."
-      ]
+      "basis": ["The routine has no caller and its absolute address does not occur in the ROM, while the two handlers in the same module are both found in Entity_UpdateHandlerTable by that scan. Its body duplicates the defeat half of Enemy_ConvertStage10BeetleToDefeatDebris instruction for instruction, without that routine's recycling branch."]
     },
+    { "address": "0x02E9FA", "previous_name": "Enemy_Stage10BeetleConvertIfActive_Return", "current_name": "Orphaned_Stage10BeetleConvertIfActiveReturn", "legacy_name": "locret_2E9FA", "evidence": "static", "basis": ["The return of the unreachable copy; both of its guard tests branch here."] },
     {
       "address": "0x02E9FC",
       "previous_name": "Enemy_FlyerMain",

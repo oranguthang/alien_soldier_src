@@ -273,19 +273,19 @@ Enemy_UpdateStage10BeetleDefeatDebris_Blink:            ; CODE XREF: Enemy_Updat
 Enemy_UpdateStage10BeetleDefeatDebris_Return:           ; CODE XREF: Enemy_UpdateStage10BeetleDefeatDebris+28   j  ; was: locret_2E9CE
                 rts
 ; End of function Enemy_UpdateStage10BeetleDefeatDebris
-; Converts a still-active beetle object to the shared type-$88 effect
-Enemy_Stage10BeetleConvertIfActive:
+; Unreachable copy of the defeat-conversion half of the live converter above
+Orphaned_Stage10BeetleConvertIfActive:
                 tst.w   $24(a5)                         ; was: sub_2E9D0
-                bmi.s   Enemy_Stage10BeetleConvertIfActive_Return
+                bmi.s   Orphaned_Stage10BeetleConvertIfActiveReturn
                 btst    #4,$22(a5)
-                bne.s   Enemy_Stage10BeetleConvertIfActive_Return
+                bne.s   Orphaned_Stage10BeetleConvertIfActiveReturn
                 move.b  #$BC,d0
                 jsr     (Sound_QueueSFXRequest).l
                 move.l  #SharedCombatSpriteAnimation00,8(a5)
                 clr.w   $C(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
-Enemy_Stage10BeetleConvertIfActive_Return:              ; CODE XREF: Enemy_Stage10BeetleConvertIfActive+4   j  ; was: locret_2E9FA
-                                        ; Enemy_Stage10BeetleConvertIfActive+C   j
+Orphaned_Stage10BeetleConvertIfActiveReturn:            ; CODE XREF: Orphaned_Stage10BeetleConvertIfActive+4   j  ; was: locret_2E9FA
+                                        ; Orphaned_Stage10BeetleConvertIfActive+C   j
                 rts
-; End of function Enemy_Stage10BeetleConvertIfActive
+; End of function Orphaned_Stage10BeetleConvertIfActive
