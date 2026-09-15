@@ -287,7 +287,7 @@ Credits_SegaAssetLoadList:  dc.w    7                   ; field_0  ; was: stru_2
                 dc.l    Credits_SegaMappingData         ; field_2
                 dc.w    $C61C                           ; field_6
                 dc.w    $FFFF
-Credits_XiTigerSpriteFrames:    dc.w    $580, $F0F, $A0F0  ; DATA XREF: Credits_InitXiTiger+122   o  ; was: word_21A32
+Credits_XiTigerSpriteFrame: dc.w    $580, $F0F, $A0F0   ; DATA XREF: Credits_InitXiTiger+122   o  ; was: word_21A32
                                         ; Credits_InitXiTiger+158   o
                 dc.w    $580, $F0F, $C0F0
                 dc.w    $580, $F0F, $E0F0

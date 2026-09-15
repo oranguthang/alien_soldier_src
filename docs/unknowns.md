@@ -9650,3 +9650,50 @@ bound from 1,074 to 1,026; provenance, the 513 classified binary-backed end
 aliases, and the 379-module layout remain unchanged.
 `player/terrain_collision.s` now has zero pending current names, leaving 17
 modules in the queue.
+
+`credits/palette_data.s` is forty-nine names of which forty are a single
+formula, so the audit here is about proving the formula rather than reading
+code.
+
+The scene numbers are the pointer table's order, not the data's. Every one of
+the twenty scenes carries a palette label and an asset list label, and each
+label's own reference address confirms its number exactly: the palette of scene
+N is referenced from `$214C8` plus eight times N minus one, and its asset list
+four bytes after that, with no exception across all forty labels. The data
+itself sits in ROM in the order 6, 7, 14, 5, 1, 9, 2, 3, 10, 4, 8, 11, 12, 13
+and then 15 to 20, so the layout and the play order genuinely differ and the
+numbering could not have been read off the addresses. Every scene palette is
+exactly sixteen words, one line, which is what `Data_Copy32Bytes` stages.
+
+The two scenes outside the table are consistent with the routines that load
+them. `Credits_TreasurePaletteData` is forty-eight words, three lines, matching
+the three 32-byte copies in `Credits_PrepareSpecialScenePalette`;
+`Credits_SegaPalette` is a single line, which is not a contradiction because
+that preparer stages from `PaletteActiveColor16` in RAM rather than from either
+ROM table.
+
+One name was wrong. `Credits_XiTigerSpriteFrames` is twenty-one words, which
+reads as seven frames only if the record length is unknown. It is seven
+three-word sprite pieces of the same shape `SharedCombatSpriteFrame06` uses, and
+the third word of each is a signed offset pair whose high byte steps `$A0`,
+`$C0`, `$E0`, `$00`, `$20`, `$40`, `$60` — that is -96 to +96 in 32-pixel steps
+— with a constant -16 in the low byte. Seven pieces in a horizontal row 224
+pixels wide. Bit 15 of the first word is set on the seventh piece and on no
+other, which is the same last-piece marker the player mappings use, where
+`$0800`, `$0803` and `$8805` end a three-piece mapping. So the seven pieces are
+one frame, and the label becomes `Credits_XiTigerSpriteFrame`. Its four call
+sites install it in field 8 of two type-`$10` objects at x `$90` and x `$1B0`,
+and type `$10` dispatches to `Entity_NullUpdateHandler4`, so those objects never
+update and this single frame is all that is ever drawn from the pointer.
+
+`Data_Copy32Bytes` keeps its generic name because it is accurate — eight
+unrolled long moves, exactly one palette line — but it is worth recording that
+all nine of its call sites are in `credits/main.s`, so it is not a shared
+utility despite the prefix.
+
+Forty-nine exact-address records raise the registry from 14,803 to 14,852. The
+pending queue falls from 1,539 to 1,490 and its actionable upper bound from
+1,026 to 977; provenance, the 513 classified binary-backed end aliases, and the
+379-module layout remain unchanged. `credits/palette_data.s` now has zero
+pending current names, leaving 16 modules in the queue, and the actionable
+backlog is under a thousand names for the first time.

@@ -60,7 +60,7 @@ Credits_InitXiTiger_InitVerticalScrollLoop:             ; CODE XREF: Credits_Ini
                 lea     (SecondaryEntityType).w,a5
                 move.w  #$CC00,SecondaryEntityFlags-SecondaryEntityType(a5)
                 move.w  #$10,(a5)
-                move.l  #Credits_XiTigerSpriteFrames,8(a5)
+                move.l  #Credits_XiTigerSpriteFrame,8(a5)
                 move.w  #$8000,$E(a5)
                 move.w  #$90,$10(a5)
                 move.w  #$E0,$14(a5)
@@ -70,7 +70,7 @@ Credits_InitXiTiger_InitVerticalScrollLoop:             ; CODE XREF: Credits_Ini
                 lea     (TertiaryEntityType).w,a5
                 move.w  #$CC00,TertiaryEntityFlags-TertiaryEntityType(a5)
                 move.w  #$10,(a5)
-                move.l  #Credits_XiTigerSpriteFrames,8(a5)
+                move.l  #Credits_XiTigerSpriteFrame,8(a5)
                 move.w  #$8000,$E(a5)
                 move.w  #$1B0,$10(a5)
                 move.w  #$E0,$14(a5)
@@ -429,7 +429,7 @@ Credits_InitializeSceneSequence:                        ; DATA XREF: ROM:Credits
                 lea     (SecondaryEntityType).w,a5
                 move.w  #$CC00,SecondaryEntityFlags-SecondaryEntityType(a5)
                 move.w  #$10,(a5)
-                move.l  #Credits_XiTigerSpriteFrames,8(a5)
+                move.l  #Credits_XiTigerSpriteFrame,8(a5)
                 move.w  #$8000,$E(a5)
                 move.w  #$90,$10(a5)
                 move.w  #$E0,$14(a5)
@@ -439,7 +439,7 @@ Credits_InitializeSceneSequence:                        ; DATA XREF: ROM:Credits
                 lea     (TertiaryEntityType).w,a5
                 move.w  #$CC00,TertiaryEntityFlags-TertiaryEntityType(a5)
                 move.w  #$10,(a5)
-                move.l  #Credits_XiTigerSpriteFrames,8(a5)
+                move.l  #Credits_XiTigerSpriteFrame,8(a5)
                 move.w  #$8000,$E(a5)
                 move.w  #$1B0,$10(a5)
                 move.w  #$E0,$14(a5)
