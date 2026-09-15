@@ -66,7 +66,7 @@ Player_CeilingDashState_Render:                         ; CODE XREF: Player_Ceil
                                         ; Player_CeilingDashState+5E   j
                 btst    #4,$69(a5)
                 beq.w   Player_RenderMotionPose
-                bra.w   Player_RenderWithWeapon
+                bra.w   Player_RenderCeilingMotionWithWeapon
 ; End of function Player_CeilingDashState
 ; Enters state $1E, which brakes the player to a stop while held to the ceiling
 Player_InitCeilingDecelerateState:                      ; CODE XREF: Player_CeilingLandingState+68   j  ; was: sub_165A4
@@ -106,7 +106,7 @@ Player_CeilingDecelerateState:                          ; DATA XREF: ROM:0001508
 ; Selects the rendering path while still sliding along the ceiling
 Player_CeilingDecelerateState_Render:                   ; CODE XREF: Player_CeilingDecelerateState+3E   j  ; was: loc_1661A
                 btst    #4,$69(a5)
-                bne.w   Player_RenderGroundedFrame
+                bne.w   Player_RenderCeilingMotionFrame
                 movea.l #Player_CommonPrimarySpriteMapping,a1
                 movea.l #Player_CommonMovementSecondarySpriteMapping,a2
                 moveq   #0,d5
@@ -167,7 +167,7 @@ Player_CeilingLandingState_Render:                      ; CODE XREF: Player_Ceil
                                         ; Player_CeilingLandingState+52   j
                 btst    #4,$69(a5)
                 beq.w   Player_RenderMotionPose
-                bra.w   Player_RenderWithWeapon
+                bra.w   Player_RenderCeilingMotionWithWeapon
 ; End of function Player_CeilingLandingState
 ; Opens ceiling weapon selection with A, or toggles shooting mode with up+A
 Player_CheckCeilingWeaponSelectInput:                   ; CODE XREF: Player_CeilingIdleState+1A   p  ; was: sub_166EA
@@ -294,12 +294,12 @@ Player_CeilingMovementState_Accelerate:                 ; CODE XREF: Player_Ceil
                 beq.s   Player_CeilingMovementState_CheckRightFacing
                 btst    #3,$E(a5)
                 beq.w   Player_InitCeilingAirControlState
-                bra.w   Player_RenderDashSprite
+                bra.w   Player_RenderCeilingDashPose
 ; ---------------------------------------------------------------------------
 Player_CeilingMovementState_CheckRightFacing:           ; CODE XREF: Player_CeilingMovementState+6C   j  ; was: loc_1686A
                 btst    #3,$E(a5)
                 bne.w   Player_InitCeilingAirControlState
-                bra.w   Player_RenderDashSprite
+                bra.w   Player_RenderCeilingDashPose
 ; ---------------------------------------------------------------------------
 Player_InitCeilingAirControlState:                      ; CODE XREF: Player_InitCeilingMovementState+2E   j  ; was: loc_16878
                                         ; Player_InitCeilingMovementState+44   j
@@ -329,7 +329,7 @@ Player_CeilingAirControlState:                          ; DATA XREF: ROM:0001507
                 bne.w   Player_InitDashState
                 btst    #4,$69(a5)
                 beq.w   Player_InitCeilingMovementAnimation
-                bsr.w   Player_RenderWeaponSprite
+                bsr.w   Player_RenderCeilingWeaponPose
                 btst    #2,$69(a5)
                 beq.s   Player_CeilingAirControlState_CheckRightFacing
                 btst    #3,$E(a5)

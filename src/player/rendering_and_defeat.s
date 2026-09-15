@@ -51,24 +51,24 @@ Player_DirectionalMovementSecondaryFrames:  dc.l    Player_DirectionalSecondaryS
                 dc.l    Player_DirectionalSecondarySpriteMapping06
                 dc.l    Player_DirectionalSecondarySpriteMapping07
 
-; Renders player weapon sprite with animation update
-Player_RenderWeaponSprite:                              ; CODE XREF: Player_CeilingAirControlState+40   p  ; was: sub_16FCC
+; Renders the armed weapon pose for ceiling states, using muzzle offset set 2
+Player_RenderCeilingWeaponPose:                         ; CODE XREF: Player_CeilingAirControlState+40   p  ; was: sub_16FCC
                 bsr.s   Player_UpdateWeaponAnim
                 moveq   #1,d5
                 addq.w  #3,d6
                 lea     (Player_AlternateLayoutMuzzleOffsets2).l,a4
                 bra.w   Player_PrepareSpriteRendering
-; End of function Player_RenderWeaponSprite
-; Prepares player weapon sprite for rendering with animation data
-Player_PrepareWeaponSprite:                             ; CODE XREF: Player_GroundWeaponState+34   p  ; was: sub_16FDC
+; End of function Player_RenderCeilingWeaponPose
+; Renders the same armed weapon pose for ground states, using muzzle offset set 0
+Player_RenderGroundWeaponPose:                          ; CODE XREF: Player_GroundWeaponState+34   p  ; was: sub_16FDC
                 bsr.s   Player_UpdateWeaponAnim
                 moveq   #1,d5
                 addq.w  #3,d6
                 lea     (Player_AlternateLayoutMuzzleOffsets0).l,a4
                 bra.w   Player_PrepareSpriteRendering
-; End of function Player_PrepareWeaponSprite
+; End of function Player_RenderGroundWeaponPose
 ; Updates player weapon animation cycle with sound effects on key frames
-Player_UpdateWeaponAnim:                                ; CODE XREF: Player_RenderWeaponSprite   p  ; was: sub_16FEC
+Player_UpdateWeaponAnim:                                ; CODE XREF: Player_RenderCeilingWeaponPose   p  ; was: sub_16FEC
                                         ; sub_16FDC   p
                 move.w  $48(a5),d1
                 subq.w  #1,$C(a5)
@@ -104,10 +104,10 @@ Player_WeaponAnimationFrames:   dc.l    Player_WeaponAnimationSpriteMapping00  ;
                 dc.l    Player_WeaponAnimationSpriteMapping04
                 dc.l    Player_DashSecondarySpriteMapping
 
-; Updates player dash sprite
-Player_UpdateDashSprite:                                ; CODE XREF: Player_CeilingIdleState+66   j  ; was: sub_17052
+; Renders the armed idle pose for the ceiling idle state, offset set 2
+Player_RenderCeilingArmedIdle:                          ; CODE XREF: Player_CeilingIdleState+66   j  ; was: sub_17052
                 tst.w   (ShootingMode).w
-                beq.s   Player_UpdateDashSprite_UseDefaultVariant
+                beq.s   Player_RenderCeilingArmedIdle_UseDefaultVariant
                 lea     (Player_AlternateLayoutMuzzleOffsets2).l,a4
                 moveq   #0,d5
                 moveq   #0,d6
@@ -116,17 +116,17 @@ Player_UpdateDashSprite:                                ; CODE XREF: Player_Ceil
                 movea.l #Player_IdleSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering_WithTables
 ; ---------------------------------------------------------------------------
-Player_UpdateDashSprite_UseDefaultVariant:              ; CODE XREF: Player_UpdateDashSprite+4   j  ; was: loc_17072
+Player_RenderCeilingArmedIdle_UseDefaultVariant:        ; CODE XREF: Player_RenderCeilingArmedIdle+4   j  ; was: loc_17072
                 lea     (Player_PrimaryLayoutMuzzleOffsets2).l,a4
                 moveq   #$FFFFFFFF,d5
                 moveq   #4,d6
                 movea.l #Player_DashSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering
-; End of function Player_UpdateDashSprite
-; Renders player special weapon sprite with conditional positioning
-Player_RenderSpecialWeapon:                             ; CODE XREF: Player_GroundIdleState+64   j  ; was: sub_17086
+; End of function Player_RenderCeilingArmedIdle
+; Renders the armed idle pose for the ground idle state, offset set 0
+Player_RenderGroundArmedIdle:                           ; CODE XREF: Player_GroundIdleState+64   j  ; was: sub_17086
                 tst.w   (ShootingMode).w
-                beq.s   Player_RenderSpecialWeapon_UseDefaultVariant
+                beq.s   Player_RenderGroundArmedIdle_UseDefaultVariant
                 lea     (Player_AlternateLayoutMuzzleOffsets0).l,a4
                 moveq   #0,d5
                 moveq   #0,d6
@@ -135,20 +135,20 @@ Player_RenderSpecialWeapon:                             ; CODE XREF: Player_Grou
                 movea.l #Player_IdleSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering_WithTables
 ; ---------------------------------------------------------------------------
-Player_RenderSpecialWeapon_UseDefaultVariant:           ; CODE XREF: Player_RenderSpecialWeapon+4   j  ; was: loc_170A6
+Player_RenderGroundArmedIdle_UseDefaultVariant:         ; CODE XREF: Player_RenderGroundArmedIdle+4   j  ; was: loc_170A6
                 lea     (Player_PrimaryLayoutMuzzleOffsets0).l,a4
                 moveq   #$FFFFFFFF,d5
                 moveq   #4,d6
                 movea.l #Player_DashSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering
-; End of function Player_RenderSpecialWeapon
-; Renders player sprite with weapon state and metasprite selection
-Player_RenderWithWeapon:                                ; CODE XREF: Player_CeilingDashState+74   j  ; was: sub_170BA
+; End of function Player_RenderGroundArmedIdle
+; Renders the armed motion pose for ceiling states, offset set 3
+Player_RenderCeilingMotionWithWeapon:                   ; CODE XREF: Player_CeilingDashState+74   j  ; was: sub_170BA
                                         ; Player_CeilingLandingState+76   j
                 tst.w   $48(a5)
-                bpl.w   Player_RenderGroundedFrame
+                bpl.w   Player_RenderCeilingMotionFrame
                 tst.w   (ShootingMode).w
-                beq.s   Player_RenderWithWeapon_UseDefaultVariant
+                beq.s   Player_RenderCeilingMotionWithWeapon_UseDefaultVariant
                 lea     (Player_AlternateLayoutMuzzleOffsets3).l,a4
                 moveq   #0,d5
                 moveq   #$11,d6
@@ -157,19 +157,19 @@ Player_RenderWithWeapon:                                ; CODE XREF: Player_Ceil
                 movea.l #Player_MotionPoseSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering_WithTables
 ; ---------------------------------------------------------------------------
-Player_RenderWithWeapon_UseDefaultVariant:              ; CODE XREF: Player_RenderWithWeapon+C   j  ; was: loc_170E2
+Player_RenderCeilingMotionWithWeapon_UseDefaultVariant:  ; CODE XREF: Player_RenderCeilingMotionWithWeapon+C   j  ; was: loc_170E2
                 lea     (Player_PrimaryLayoutMuzzleOffsets3).l,a4
                 moveq   #$FFFFFFFF,d5
                 moveq   #$13,d6
                 movea.l #Player_WeaponSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering
 ; ---------------------------------------------------------------------------
-Player_RenderAirborneWithWeapon:                        ; CODE XREF: Player_GroundCrouchState+62   j  ; was: loc_170F6
+Player_RenderGroundMotionWithWeapon:                    ; CODE XREF: Player_GroundCrouchState+62   j  ; was: loc_170F6
                                         ; Player_HandleLandingState+7A   j
                 tst.w   $48(a5)
-                bpl.w   Player_RenderFallingSprite
+                bpl.w   Player_RenderGroundMotionFrame
                 tst.w   (ShootingMode).w
-                beq.s   Player_RenderAirborneWithWeapon_UseDefaultVariant
+                beq.s   Player_RenderGroundMotionWithWeapon_UseDefaultVariant
                 lea     (Player_AlternateLayoutMuzzleOffsets1).l,a4
                 moveq   #0,d5
                 moveq   #$11,d6
@@ -178,50 +178,50 @@ Player_RenderAirborneWithWeapon:                        ; CODE XREF: Player_Grou
                 movea.l #Player_MotionPoseSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering_WithTables
 ; ---------------------------------------------------------------------------
-Player_RenderAirborneWithWeapon_UseDefaultVariant:      ; CODE XREF: Player_RenderWithWeapon+48   j  ; was: loc_1711E
+Player_RenderGroundMotionWithWeapon_UseDefaultVariant:  ; CODE XREF: Player_RenderCeilingMotionWithWeapon+48   j  ; was: loc_1711E
                 lea     (Player_PrimaryLayoutMuzzleOffsets1).l,a4
                 moveq   #0,d5
                 moveq   #$13,d6
                 movea.l #Player_WeaponSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering
 ; ---------------------------------------------------------------------------
-Player_RenderGroundedFrame:                             ; CODE XREF: Player_CeilingDecelerateState+5E   j  ; was: loc_17132
-                                        ; Player_RenderWithWeapon+4   j
+Player_RenderCeilingMotionFrame:                        ; CODE XREF: Player_CeilingDecelerateState+5E   j  ; was: loc_17132
+                                        ; Player_RenderCeilingMotionWithWeapon+4   j
                 movea.l #Player_CommonMovementSecondarySpriteMapping,a2
                 moveq   #0,d5
                 moveq   #$C,d6
                 lea     (Player_PrimaryLayoutMuzzleOffsets2).l,a4
                 bra.w   Player_PrepareSpriteRendering
-; End of function Player_RenderWithWeapon
-; Prepares player falling/airborne sprite for rendering
-Player_RenderFallingSprite:                             ; CODE XREF: Player_GroundDecelerateState+5C   j  ; was: sub_17146
-                                        ; Player_RenderWithWeapon+40   j
+; End of function Player_RenderCeilingMotionWithWeapon
+; Unarmed motion frame for ground states, offset set 0
+Player_RenderGroundMotionFrame:                         ; CODE XREF: Player_GroundDecelerateState+5C   j  ; was: sub_17146
+                                        ; Player_RenderCeilingMotionWithWeapon+40   j
                 movea.l #Player_CommonMovementSecondarySpriteMapping,a2
                 moveq   #0,d5
                 moveq   #$C,d6
                 lea     (Player_PrimaryLayoutMuzzleOffsets0).l,a4
                 bra.w   Player_PrepareSpriteRendering
-; End of function Player_RenderFallingSprite
-; Renders player dash animation sprite with cycling animation
-Player_RenderDashSprite:                                ; CODE XREF: Player_CeilingMovementState+78   j  ; was: sub_1715A
+; End of function Player_RenderGroundMotionFrame
+; Renders the cycling dash pose for ceiling movement, offset set 2
+Player_RenderCeilingDashPose:                           ; CODE XREF: Player_CeilingMovementState+78   j  ; was: sub_1715A
                                         ; Player_CeilingMovementState+86   j
                 bsr.s   Player_CycleDashAnimation
                 moveq   #$FFFFFFFF,d5
                 addq.w  #3,d6
                 lea     (Player_PrimaryLayoutMuzzleOffsets2).l,a4
                 bra.w   Player_PrepareSpriteRendering
-; End of function Player_RenderDashSprite
-; Renders player dash sprite with offset and table
-Player_RenderDashEffect:                                ; CODE XREF: Player_GroundedMovementState+76   j  ; was: sub_1716A
+; End of function Player_RenderCeilingDashPose
+; Renders the cycling dash pose for ground movement, offset set 0
+Player_RenderGroundDashPose:                            ; CODE XREF: Player_GroundedMovementState+76   j  ; was: sub_1716A
                                         ; Player_GroundedMovementState+84   j
                 bsr.s   Player_CycleDashAnimation
                 moveq   #$FFFFFFFF,d5
                 addq.w  #3,d6
                 lea     (Player_PrimaryLayoutMuzzleOffsets0).l,a4
                 bra.w   Player_PrepareSpriteRendering
-; End of function Player_RenderDashEffect
+; End of function Player_RenderGroundDashPose
 ; Cycles dash animation frames with sound effects
-Player_CycleDashAnimation:                              ; CODE XREF: Player_RenderDashSprite   p  ; was: sub_1717A
+Player_CycleDashAnimation:                              ; CODE XREF: Player_RenderCeilingDashPose   p  ; was: sub_1717A
                                         ; sub_1716A   p
                 move.w  $48(a5),d1
                 subq.w  #1,$C(a5)
@@ -318,7 +318,7 @@ Player_WriteDeathParticleSprite:                        ; CODE XREF: Player_Rend
 ; End of function Player_WriteDeathParticleSprite
 ; Prepares player sprite for rendering with palette
 Player_PrepareSpriteRendering:                          ; CODE XREF: Player_HandleFallingState+158   j  ; was: sub_17274
-                                        ; Player_RenderWeaponSprite+C   j
+                                        ; Player_RenderCeilingWeaponPose+C   j
                 lea     Player_PrimaryAnimationLayoutTable(pc),a0
                 nop
 Player_PrepareSpriteRendering_WithTables:               ; CODE XREF: Player_HandleSpecialAttack+D2   j  ; was: loc_1727A

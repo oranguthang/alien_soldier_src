@@ -30,12 +30,12 @@ Player_GroundedMovementState_Accelerate:                ; CODE XREF: Player_Grou
                 beq.s   Player_GroundedMovementState_CheckRightFacing
                 btst    #3,$E(a5)
                 beq.w   Player_InitGroundWeaponState
-                bra.w   Player_RenderDashEffect
+                bra.w   Player_RenderGroundDashPose
 ; ---------------------------------------------------------------------------
 Player_GroundedMovementState_CheckRightFacing:          ; CODE XREF: Player_GroundedMovementState+6A   j  ; was: loc_15732
                 btst    #3,$E(a5)
                 bne.w   Player_InitGroundWeaponState
-                bra.w   Player_RenderDashEffect
+                bra.w   Player_RenderGroundDashPose
 ; ---------------------------------------------------------------------------
 ; Initializes state 0x04 for weapon movement on lower terrain
 Player_InitGroundWeaponState:                           ; CODE XREF: Player_SelectGroundDirectionState+2E   j  ; was: loc_15740
@@ -63,7 +63,7 @@ Player_GroundWeaponState:                               ; DATA XREF: ROM:0001506
                 bne.w   Player_InitGroundCrouchState
                 btst    #4,$69(a5)
                 beq.w   Player_InitGroundedMovementState
-                bsr.w   Player_PrepareWeaponSprite
+                bsr.w   Player_RenderGroundWeaponPose
                 btst    #2,$69(a5)
                 beq.s   Player_GroundWeaponState_CheckRightFacing
                 btst    #3,$E(a5)

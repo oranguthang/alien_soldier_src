@@ -9423,3 +9423,39 @@ This is the second methodological correction of the pass, after the
 absolute-address false positive, and it points the same way: a name is only as
 good as the premise used to confirm it, so a confirmation made before a
 neighbouring family was understood has to be revisited once that family changes.
+
+The 42 pending entries in `player/rendering_and_defeat.s` are dominated by seven
+renderer families, and mapping each one to the muzzle offset table it loads
+exposed the axis they are organised on. Offset sets 2 and 3 are loaded only by
+routines whose callers are ceiling states, and sets 0 and 1 only by routines
+whose callers are ground states. The correspondence is exact across all
+fourteen entry points, with no exception.
+
+That settles three names the grounded-state correction had already put in
+doubt. `Player_RenderAirborneWithWeapon` is called by the grounded crouch and
+the grounded landing and loads set 1, so it becomes
+`Player_RenderGroundMotionWithWeapon`. `Player_RenderGroundedFrame` is called by
+the ceiling deceleration state and loads set 2, the exact opposite of its name,
+so it becomes `Player_RenderCeilingMotionFrame`. `Player_RenderFallingSprite`
+renders no fall at all: it is the unarmed ground fallback, loading set 0, and
+becomes `Player_RenderGroundMotionFrame`.
+
+The same evidence resolves four pairs whose names described no difference
+between their members. `Player_RenderWeaponSprite` and
+`Player_PrepareWeaponSprite` differ only in orientation, as do
+`Player_UpdateDashSprite` and `Player_RenderSpecialWeapon`, which render an
+armed idle pose rather than a dash or a special weapon, and the two dash poses.
+All fourteen are renamed around `Player_RenderCeiling…` and
+`Player_RenderGround…`, so the module now reads as seven mirrored pairs.
+
+Three shared animation cycles are recorded with their measured shapes: the walk
+and the dash both advance every fourth frame inside the `$1C` mask and play SFX
+`$D6` on indices 0 and `$10`, while the weapon cycle advances every fifth frame,
+wraps at `$18`, and uses indices 0 and `$C`. The dash reuses the walk cycle's
+secondary frame table outright and differs only in its tile offsets.
+
+Forty-two exact-address records raise the registry from 14,580 to 14,622. The
+pending queue falls from 1,762 to 1,720 and its actionable upper bound from
+1,249 to 1,207; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `player/rendering_and_defeat.s` now has
+zero pending current names, leaving 21 modules in the queue.

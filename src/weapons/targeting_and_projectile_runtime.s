@@ -180,22 +180,22 @@ Player_AlternateLayoutMuzzleOffsets0:   dc.w    $E2E8, $F4E8, $E2E6, $FCE6, $ECF
                                         ; DATA XREF: Player_HandleSpecialAttack:loc_16086   o
                                         ; sub_16116:Player_RenderSpecialMoveRecovery_WithWeapon   o
 Player_AlternateLayoutMuzzleOffsets1:   dc.w    $E2E8, $F4E8, $E2E6, $FCE6, $FD0D, $120D, $FDEB, $E3EB  ; was: word_198C2
-                                        ; DATA XREF: Player_RenderWithWeapon+4A   o
+                                        ; DATA XREF: Player_RenderCeilingMotionWithWeapon+4A   o
 Player_PrimaryLayoutMuzzleOffsets0: dc.w    $E6F2, $FAF2, $E6EC, $FCEC, $ECFC, $1FC, $ECDA, $D2DA  ; was: word_198D2
                                         ; DATA XREF: Player_HandleFallingState+14E   o
-                                        ; sub_17086:Player_RenderSpecialWeapon_UseDefaultVariant   o
+                                        ; sub_17086:Player_RenderGroundArmedIdle_UseDefaultVariant   o
 Player_PrimaryLayoutMuzzleOffsets1: dc.w    $E6F2, $FAF2, $E6EC, $FCEC, $FD0D, $120D, $FDEB, $E3EB  ; was: word_198E2
-                                        ; DATA XREF: Player_RenderWithWeapon:Player_RenderAirborneWithWeapon_UseDefaultVariant   o
+                                        ; DATA XREF: Player_RenderCeilingMotionWithWeapon:Player_RenderGroundMotionWithWeapon_UseDefaultVariant   o
 Player_AlternateLayoutMuzzleOffsets2:   dc.w    $E2E6, $FCE6, $E2E8, $F4E8, $1226, $2E26, $1204, 4  ; was: word_198F2
-                                        ; DATA XREF: Player_RenderWeaponSprite+6   o
-                                        ; Player_UpdateDashSprite+6   o
+                                        ; DATA XREF: Player_RenderCeilingWeaponPose+6   o
+                                        ; Player_RenderCeilingArmedIdle+6   o
 Player_AlternateLayoutMuzzleOffsets3:   dc.w    $E2E6, $FCE6, $E2E8, $F4E8, $115, $1D15, $1F3, $EFF3  ; was: word_19902
-                                        ; DATA XREF: Player_RenderWithWeapon+E   o
+                                        ; DATA XREF: Player_RenderCeilingMotionWithWeapon+E   o
 Player_PrimaryLayoutMuzzleOffsets2: dc.w    $E6EC, $FCEC, $E6F2, $FAF2, $1226, $2E26, $1204, 4  ; was: word_19912
-                                        ; DATA XREF: Player_UpdateDashSprite:Player_UpdateDashSprite_UseDefaultVariant   o
-                                        ; Player_RenderWithWeapon+82   o
+                                        ; DATA XREF: Player_RenderCeilingArmedIdle:Player_RenderCeilingArmedIdle_UseDefaultVariant   o
+                                        ; Player_RenderCeilingMotionWithWeapon+82   o
 Player_PrimaryLayoutMuzzleOffsets3: dc.w    $E6EC, $FCEC, $E6F2, $FAF2, $115, $1D15, $1F3, $EFF3  ; was: word_19922
-                                        ; DATA XREF: Player_RenderWithWeapon:Player_RenderWithWeapon_UseDefaultVariant   o
+                                        ; DATA XREF: Player_RenderCeilingMotionWithWeapon:Player_RenderCeilingMotionWithWeapon_UseDefaultVariant   o
 Weapon_CircleAttackDirectionalFrames0:  dc.l    Weapon_CircleAttackSpriteArtSet0Direction0  ; DATA XREF: ROM:Weapon_CircleAttackAnimationPointers   o  ; was: off_19932
                 dc.l    Weapon_CircleAttackSpriteArtSet0Direction1
                 dc.l    Weapon_CircleAttackSpriteArtSet0Direction2

@@ -276,7 +276,7 @@ Player_GroundIdleState_CheckMovementInput:              ; CODE XREF: Player_Grou
 Player_GroundIdleState_Render:                          ; CODE XREF: Player_GroundIdleState+3A   j  ; was: loc_15278
                 btst    #4,$69(a5)
                 beq.w   Player_RenderIdleFrame
-                bra.w   Player_RenderSpecialWeapon
+                bra.w   Player_RenderGroundArmedIdle
 ; ---------------------------------------------------------------------------
 ; Starts grounded Counter Force recoil, effect, and animation timing
 Player_StartGroundCounterForce:                         ; CODE XREF: Player_GroundIdleState+2A   j  ; was: loc_15286
@@ -441,7 +441,7 @@ Player_GroundCrouchState_Render:                        ; CODE XREF: Player_Grou
                                         ; Player_GroundCrouchState+4C   j
                 btst    #4,$69(a5)
                 beq.w   Player_RenderMotionPose
-                bra.w   Player_RenderAirborneWithWeapon
+                bra.w   Player_RenderGroundMotionWithWeapon
 ; End of function Player_GroundCrouchState
 ; Enters state $0A, the grounded deceleration
 Player_InitGroundDecelerateState:                       ; CODE XREF: Player_HandleLandingState+6C   j  ; was: sub_1546E
@@ -480,7 +480,7 @@ Player_GroundDecelerateState:                           ; DATA XREF: ROM:0001506
 ; Renders the grounded deceleration while the player is still sliding
 Player_GroundDecelerateState_Render:                    ; CODE XREF: Player_GroundDecelerateState+3C   j  ; was: loc_154E2
                 btst    #4,$69(a5)
-                bne.w   Player_RenderFallingSprite
+                bne.w   Player_RenderGroundMotionFrame
                 movea.l #Player_CommonPrimarySpriteMapping,a1
                 movea.l #Player_CommonMovementSecondarySpriteMapping,a2
                 moveq   #0,d5
@@ -540,7 +540,7 @@ Player_HandleLandingState_Render:                       ; CODE XREF: Player_Hand
                                         ; Player_HandleLandingState+56   j
                 btst    #4,$69(a5)
                 beq.w   Player_RenderMotionPose
-                bra.w   Player_RenderAirborneWithWeapon
+                bra.w   Player_RenderGroundMotionWithWeapon
 ; End of function Player_HandleLandingState
 ; Opens weapon selection with A, or toggles shooting mode with down+A
 Player_CheckWeaponSelectInput:                          ; CODE XREF: Player_GroundIdleState+18   p  ; was: sub_155B0

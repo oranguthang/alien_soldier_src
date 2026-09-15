@@ -323,7 +323,7 @@ Player_CeilingIdleState_CheckDashInput:                 ; CODE XREF: Player_Ceil
 Player_CeilingIdleState_Render:                         ; CODE XREF: Player_CeilingIdleState+3C   j  ; was: loc_1645E
                 btst    #4,$69(a5)
                 beq.w   Player_RenderIdleFrame
-                bra.w   Player_UpdateDashSprite
+                bra.w   Player_RenderCeilingArmedIdle
 ; ---------------------------------------------------------------------------
 ; Starts ceiling Counter Force recoil, effect, and animation timing
 Player_StartCeilingCounterForce:                        ; CODE XREF: Player_CeilingIdleState+2C   j  ; was: loc_1646C

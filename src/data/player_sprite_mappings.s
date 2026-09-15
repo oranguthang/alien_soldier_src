@@ -257,7 +257,7 @@ Player_DirectionalSecondarySpriteMapping06: dc.w    $800  ; DATA XREF: ROM:00016
                 dc.l    Player_DirectionalSecondarySpriteArt06Piece04+$9000000
                 dc.w    $F1F7
 Player_IdleSecondarySpriteMapping:  dc.w    $800        ; DATA XREF: Player_RenderIdleFrame+18   o  ; was: word_E8942
-                                        ; Player_UpdateDashSprite+16   o
+                                        ; Player_RenderCeilingArmedIdle+16   o
                 dc.l    Player_IdleSecondarySpriteArtPiece00+$4000000
                 dc.w    $F0F8
                 dc.w    $802
@@ -289,7 +289,7 @@ Player_CommonPrimarySpriteMapping:  dc.w    $800        ; DATA XREF: Player_Grou
                 dc.l    Player_IdleSecondarySpriteArtPiece00+$4000000
                 dc.w    $F0F8
 Player_DashSecondarySpriteMapping:  dc.w    $800        ; DATA XREF: ROM:0001704E   o  ; was: word_E8992
-                                        ; Player_UpdateDashSprite+2A   o
+                                        ; Player_RenderCeilingArmedIdle+2A   o
                 dc.l    Player_DashSecondarySpriteArtPiece00
                 dc.w    $18E5
                 dc.w    $801
@@ -326,8 +326,8 @@ Player_CommonMovementSecondarySpriteMapping:    dc.w    $800  ; DATA XREF: Playe
                 dc.w    $8810
                 dc.l    Player_CommonMovementSecondarySpriteArtPiece05+$A000000
                 dc.w    $F8F7
-Player_WeaponSecondarySpriteMapping:    dc.w    $800    ; DATA XREF: Player_RenderWithWeapon+32   o  ; was: word_E89F2
-                                        ; Player_RenderWithWeapon+6E   o
+Player_WeaponSecondarySpriteMapping:    dc.w    $800    ; DATA XREF: Player_RenderCeilingMotionWithWeapon+32   o  ; was: word_E89F2
+                                        ; Player_RenderCeilingMotionWithWeapon+6E   o
                 dc.l    Player_WeaponSecondarySpriteArtPiece00+$D000000
                 dc.w    $10F2
                 dc.w    $808
@@ -820,7 +820,7 @@ Player_TeleportDashTrailSpriteMapping:  dc.w    0       ; DATA XREF: Player_Init
                 dc.l    Player_TeleportDashTrailSpriteArtPiece09+$6000000
                 dc.w    $F4D0
 Player_MotionPoseSecondarySpriteMapping:    dc.w    $800  ; DATA XREF: Player_RenderMotionPose+1E   o  ; was: word_E8F0A
-                                        ; Player_RenderWithWeapon+1E   o
+                                        ; Player_RenderCeilingMotionWithWeapon+1E   o
                 dc.l    Player_AirborneWeaponSecondarySpriteArtPiece00
                 dc.w    3
                 dc.w    $801
