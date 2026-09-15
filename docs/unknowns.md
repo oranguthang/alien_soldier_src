@@ -9155,3 +9155,35 @@ pending queue falls from 2,073 to 2,036 and its actionable upper bound from
 1,560 to 1,523; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `enemies/spawn_and_movement.s` now has
 zero pending current names, leaving 29 modules in the queue.
+
+The 37 pending entries in `enemies/stage_10_wasp_and_falling_shot.s` all hold,
+and the wasp's attack cycle is recorded because the state names describe its
+parts without showing how they close.
+
+The cycle runs on two counters, both seeded at three. The wait state is the loop
+head: while the outer counter is positive it spends one inner repetition and
+enters the attack, and an exhausted inner counter diverts to the cooldown, which
+spends one outer loop, rearms the inner counter and steps back into the attack
+preparation rather than to flight. One comment claimed a return to flight and
+was corrected. The dive itself has a detail the names cannot carry: it picks its
+horizontal direction from the player's side but negates that direction while the
+outer counter is zero, so the last pass of the cycle dives away from the player.
+
+Two probe patterns are worth stating. Flight checks walls every frame but tests
+the floor only while descending and the ceiling only while rising, so each probe
+runs in the half of the arc where it can matter. And the falling shot has two
+bounds regimes: while the shared entity slot holds type `$1B8` it uses that
+object's own position as its bounds and converts past Y `$150`, and otherwise it
+probes the terrain buffer directly beneath itself.
+
+The wasp controller also has three retirement paths rather than one. Negative
+health and an expired stage spawn countdown both convert it to falling debris,
+while bit 7 of the contact byte turns it into the shared type-`$88` effect
+instead, unless bit 4 is set as well.
+
+Thirty-seven exact-address records raise the registry from 14,306 to 14,343. The
+pending queue falls from 2,036 to 1,999 and its actionable upper bound from
+1,523 to 1,486; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged.
+`enemies/stage_10_wasp_and_falling_shot.s` now has zero pending current names,
+leaving 28 modules in the queue.

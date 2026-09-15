@@ -238,7 +238,7 @@ Enemy_Stage10WaspDiveAttackState_Return:                ; CODE XREF: Enemy_Stage
                                         ; Enemy_Stage10WaspDiveAttackState+38   j
                 rts
 ; End of function Enemy_Stage10WaspDiveAttackState
-; Counts down the remaining attack loops before returning to flight
+; Spends one outer attack loop, rearms the inner counter, and re-enters the attack
 Enemy_Stage10WaspCooldownState:                         ; DATA XREF: ROM:0002E138   o  ; was: sub_2E22C
                 subq.w  #1,$48(a5)
                 bpl.s   Enemy_Stage10WaspCooldownState_Return
