@@ -9292,3 +9292,39 @@ pending queue falls from 1,925 to 1,885 and its actionable upper bound from
 the 379-module layout remain unchanged.
 `weapons/special_firing_and_feedback.s` now has zero pending current names,
 leaving 25 modules in the queue.
+
+The 41 pending entries in `collision/terrain_and_combat.s` hold, and this module
+forced a refinement of the reachability method that earlier packages should be
+read against.
+
+The absolute-address scan can report a false positive. `Collision_CheckScreenBounds`
+has no caller anywhere in the source, yet the scan reports one match at
+`$02AECC`. That address is the first long of `Projectile_CollisionSpriteFrames`,
+audited earlier in this pass, and the value `$000144D6` stored there is
+sprite-frame data rather than a pointer. The match is a coincidence, and the
+routine is unreachable. From here a scan hit counts as evidence only once the
+matching location is shown to be code or a pointer table. No earlier record is
+affected: every previous `Orphaned_` decision rested on a scan finding nothing,
+which is the safe direction, and the hits used as control groups were either
+numerous or inside `Entity_UpdateHandlerTable`.
+
+`Physics_AlignToWallSurface` is unreachable on the same evidence, and its case is
+sharper because the two vertical alignment helpers immediately above it are found
+at seven and several sites by the identical scan.
+
+Three mechanisms are recorded because the names carry only their outline. The
+projectile tile probe inverts the wall check's test, treating a height of `$80`
+or more as no contact, so projectiles pass through exactly the surfaces that stop
+entities. `Physics_GetTerrainTileData` adds 8 to the height for tile bit 11 and
+`$40` for bit 12, independently, which is how sloped and doubled tiles are
+encoded. And the three platform handlers differ only in which vertical
+directions they accept: landing resolves only while descending, the clamping
+variant attaches a descending player but merely clamps a rising one, and the
+underside handler accepts a stationary player and widens its range when the
+player is already inverted.
+
+Forty-one exact-address records raise the registry from 14,457 to 14,498. The
+pending queue falls from 1,885 to 1,844 and its actionable upper bound from
+1,372 to 1,331; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `collision/terrain_and_combat.s` now has
+zero pending current names, leaving 24 modules in the queue.

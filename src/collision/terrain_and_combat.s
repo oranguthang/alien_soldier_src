@@ -292,8 +292,8 @@ Collision_GetEntityPosition:                            ; CODE XREF: Projectile_
                 move.w  $14(a5),d1
                 bra.s   Collision_CheckTerrainTile
 ; End of function Collision_GetEntityPosition
-; Checks if entity Y is within screen
-Collision_CheckScreenBounds:
+; Unreachable: would return zero tile data above screen Y $A0, else probe terrain
+Orphaned_CollisionCheckScreenBounds:
                 add.w   $10(a5),d0                      ; was: sub_144D6
                 add.w   $14(a5),d1
                 cmpi.w  #$A0,d1
@@ -301,7 +301,7 @@ Collision_CheckScreenBounds:
                 moveq   #0,d2
                 moveq   #0,d3
                 rts
-; End of function Collision_CheckScreenBounds
+; End of function Orphaned_CollisionCheckScreenBounds
 ; Adds offset to entity position for collision coordinate calculation
 Physics_AddEntityOffset:                                ; CODE XREF: UI_DebugSpritePositionEditor+50   p  ; was: sub_144EA
                                         ; UI_DebugSpritePositionEditor+68   p
@@ -310,7 +310,7 @@ Physics_AddEntityOffset:                                ; CODE XREF: UI_DebugSpr
 ; End of function Physics_AddEntityOffset
 ; Checks collision with terrain by reading tilemap and height data
 Collision_CheckTerrainTile:                             ; CODE XREF: Collision_GetEntityPosition+8   j  ; was: sub_144F2
-                                        ; Collision_CheckScreenBounds+C   j
+                                        ; Orphaned_CollisionCheckScreenBounds+C   j
                 movea.l #$FFFF0000,a0
                 movea.l #$FFFF7800,a1
                 move.w  d0,d2
@@ -352,17 +352,17 @@ Physics_AlignToTerrainTop:                              ; CODE XREF: Enemy_Phase
                 clr.l   $1C(a5)
                 rts
 ; End of function Physics_AlignToTerrainTop
-; Aligns entity horizontally to wall
-Physics_AlignToWallSurface:
+; Unreachable: would snap the entity to the eight-pixel wall grid by travel direction
+Orphaned_PhysicsAlignToWallSurface:
                 tst.w   $18(a5)                         ; was: sub_14560
-                bmi.s   Physics_AlignToWallSurface_AdjustOppositeDirection
+                bmi.s   Orphaned_PhysicsAlignToWallSurfaceAdjustOpposite
                 move.w  d0,d4
                 add.w   (PrimaryCameraXPosition).w,d4
                 andi.w  #7,d4
                 sub.w   d4,$10(a5)
                 rts
 ; ---------------------------------------------------------------------------
-Physics_AlignToWallSurface_AdjustOppositeDirection:     ; CODE XREF: Physics_AlignToWallSurface+4   j  ; was: loc_14576
+Orphaned_PhysicsAlignToWallSurfaceAdjustOpposite:       ; CODE XREF: Orphaned_PhysicsAlignToWallSurface+4   j  ; was: loc_14576
                 move.w  d0,d4
                 add.w   (PrimaryCameraXPosition).w,d4
                 neg.w   d4
@@ -370,7 +370,7 @@ Physics_AlignToWallSurface_AdjustOppositeDirection:     ; CODE XREF: Physics_Ali
                 andi.w  #7,d4
                 add.w   d4,$10(a5)
                 rts
-; End of function Physics_AlignToWallSurface
+; End of function Orphaned_PhysicsAlignToWallSurface
 ; Initializes collision buffer pointers
 Collision_InitBufferPointers:                           ; CODE XREF: Enemy_PhasePatternAirborneState:Enemy_PhasePatternAirborneState_CheckTerrain   p  ; was: sub_1458A
                                         ; Enemy_UpdateBouncingDebrisSpawner+22   p

@@ -214,6 +214,15 @@
         "That object is initialized by player dash, projectile, and Z-Leo impact code; the routine performs no OAM writes."
       ]
     },
+    { "address": "0x014190", "previous_name": "sub_14190", "current_name": "Collision_PlayerWeaponVsEnemy", "legacy_name": "sub_14190", "evidence": "static", "basis": ["The routine walks the player weapon list against the collision target list, testing a fixed sixteen-pixel box around each weapon against each target's own four stored bounds at $30 through $36."] },
+    { "address": "0x01419E", "previous_name": "loc_1419E", "current_name": "Collision_PlayerWeaponVsEnemy_WeaponLoop", "legacy_name": "loc_1419E", "evidence": "static", "basis": ["Each weapon's box is rebuilt once per weapon rather than per target, so the inner loop only compares."] },
+    { "address": "0x0141C4", "previous_name": "loc_141C4", "current_name": "Collision_PlayerWeaponVsEnemy_TargetLoop", "legacy_name": "loc_141C4", "evidence": "static", "basis": ["Bit 4 of the target's collision byte selects between the boss damage path and the ordinary one, which is the only thing that distinguishes them."] },
+    { "address": "0x0141E8", "previous_name": "loc_141E8", "current_name": "Collision_PlayerWeaponVsEnemy_NextTarget", "legacy_name": "loc_141E8", "evidence": "static", "basis": ["Every rejection and every completed hit converges here, so one weapon can damage several targets in the same pass."] },
+    { "address": "0x0141F0", "previous_name": "locret_141F0", "current_name": "Collision_PlayerWeaponVsEnemy_Return", "legacy_name": "locret_141F0", "evidence": "static", "basis": ["An empty weapon list and an empty target list share this return."] },
+    { "address": "0x0141F2", "previous_name": "loc_141F2", "current_name": "Collision_PlayerWeaponVsEnemy_ResolveFlaggedTarget", "legacy_name": "loc_141F2", "evidence": "static", "basis": ["A boss target is skipped entirely once BossHealth reaches zero, unless bit 2 of BossColorEffectFlags marks the defeat sequence as already running."] },
+    { "address": "0x014202", "previous_name": "loc_14202", "current_name": "Collision_PlayerWeaponVsEnemy_ApplyFlaggedDamage", "legacy_name": "loc_14202", "evidence": "static", "basis": ["Boss damage is the weapon's own power multiplied by the target's multiplier at $24, subtracted from BossHealth and clamped at zero, and the same block clears the counter and maximum fields on the killing hit."] },
+    { "address": "0x014278", "previous_name": "loc_14278", "current_name": "Collision_PlayerWeaponVsEnemy_ApplyStandardDamage", "legacy_name": "loc_14278", "evidence": "static", "basis": ["Ordinary targets subtract the weapon power directly from their own health at $24 and are skipped when that field is already negative."] },
+    { "address": "0x0142C6", "previous_name": "loc_142C6", "current_name": "Collision_PlayerWeaponVsEnemy_FinishStandardDefeat", "legacy_name": "loc_142C6", "evidence": "static", "basis": ["Bit 7 of the target's flags suppresses the destroyed-enemy counter, and bit 6 makes the target also spend one unit of the separate special-target count."] },
     {
       "address": "0x0142D8",
       "previous_name": "Collision_CheckAllEnemies",
@@ -225,6 +234,8 @@
         "Each entry dispatches one of three player-to-moving-platform contact handlers."
       ]
     },
+    { "address": "0x0142E2", "previous_name": "loc_142E2", "current_name": "Collision_PlayerPlatformLoop", "legacy_name": "loc_142E2", "evidence": "static", "basis": ["Each registered platform is dispatched individually, so a single frame can resolve contact with several."] },
+    { "address": "0x0142EA", "previous_name": "locret_142EA", "current_name": "Collision_CheckPlayerPlatforms_Return", "legacy_name": "locret_142EA", "evidence": "static", "basis": ["An empty platform list returns here, and the platform handler table also names this label as its no-contact mode."] },
     {
       "address": "0x0142EC",
       "previous_name": "Collision_ShipCollisionDispatcher",
@@ -236,6 +247,7 @@
         "The handlers place the player on a platform top or underside and are not limited to a ship."
       ]
     },
+    { "address": "0x0142FC", "previous_name": "off_142FC", "current_name": "Collision_PlatformHandlerOffsets", "legacy_name": "off_142FC", "evidence": "static", "basis": ["Four words measured from Collision_PlayerLandOnPlatform: a no-op mode, landing on top, contact with the underside, and the clamping variant."] },
     {
       "address": "0x014304",
       "previous_name": "Collision_PlayerShipCollision",
@@ -247,6 +259,7 @@
         "No ship-specific state or data is accessed."
       ]
     },
+    { "address": "0x014384", "previous_name": "locret_14384", "current_name": "Collision_PlayerLandOnPlatform_Return", "legacy_name": "locret_14384", "evidence": "static", "basis": ["A rising player and every failed bounds test share this return, so landing resolves only while descending."] },
     {
       "address": "0x014386",
       "previous_name": "Boss_ZLeoPlayerCollision",
@@ -258,6 +271,8 @@
         "It is selected from the generic platform handler table and contains no Z-Leo-specific reference."
       ]
     },
+    { "address": "0x0143EA", "previous_name": "loc_143EA", "current_name": "Collision_PlayerClampToPlatformTop_Attach", "legacy_name": "loc_143EA", "evidence": "static", "basis": ["A descending player is attached and carried by the platform's own horizontal delta, while a rising one is only clamped, which is what makes this variant different from the landing handler."] },
+    { "address": "0x014414", "previous_name": "locret_14414", "current_name": "Collision_PlayerClampToPlatformTop_Return", "legacy_name": "locret_14414", "evidence": "static", "basis": ["The four bounds tests and the already-above case share this return."] },
     {
       "address": "0x014416",
       "previous_name": "Enemy_Stage17Init",
@@ -269,6 +284,9 @@
         "It initializes neither a stage nor an enemy."
       ]
     },
+    { "address": "0x014424", "previous_name": "loc_14424", "current_name": "Collision_PlayerHitPlatformUnderside_CheckBounds", "legacy_name": "loc_14424", "evidence": "static", "basis": ["The underside handler accepts a stationary player as well as a rising one, which the zero test before it allows."] },
+    { "address": "0x014476", "previous_name": "loc_14476", "current_name": "Collision_PlayerHitPlatformUnderside_Attach", "legacy_name": "loc_14476", "evidence": "static", "basis": ["An inverted player skips the lower bound test entirely, so a ceiling-attached player latches onto the underside from a wider range."] },
+    { "address": "0x0144A4", "previous_name": "locret_144A4", "current_name": "Collision_PlayerHitPlatformUnderside_Return", "legacy_name": "locret_144A4", "evidence": "static", "basis": ["A descending player and every failed bounds test share this return."] },
     {
       "address": "0x0144A6",
       "previous_name": "UI_DecrementCounterBCD",
@@ -872,6 +890,29 @@
         "The earlier UpdatePhysicsAndHUD claim was already rejected because the routine invokes no physics, terrain, collision, or movement routine."
       ]
     },
+    { "address": "0x0144CC", "previous_name": "sub_144CC", "current_name": "Collision_GetEntityPosition", "legacy_name": "sub_144CC", "evidence": "static", "basis": ["A two-instruction entry that loads the current object's position and falls into the shared tile probe."] },
+    { "address": "0x0144D6", "previous_name": "Collision_CheckScreenBounds", "current_name": "Orphaned_CollisionCheckScreenBounds", "legacy_name": "sub_144D6", "evidence": "static", "basis": ["The routine has no caller and no reference in the ROM. The absolute-address scan does report one match, at $02AECC, but that address is the first long of Projectile_CollisionSpriteFrames and the value $000144D6 there is sprite-frame data, not a pointer, so the match is a coincidence."] },
+    { "address": "0x0144EA", "previous_name": "sub_144EA", "current_name": "Physics_AddEntityOffset", "legacy_name": "sub_144EA", "evidence": "static", "basis": ["Twelve absolute references reach this two-instruction entry, which adds the caller's offset to the object position before the shared tile probe."] },
+    { "address": "0x0144F2", "previous_name": "sub_144F2", "current_name": "Collision_CheckTerrainTile", "legacy_name": "sub_144F2", "evidence": "static", "basis": ["The shared probe converts a screen position into a layout index, reads the tile word, and returns the tile's height byte masked to even values in d2 with the raw word in d3."] },
+    { "address": "0x014534", "previous_name": "sub_14534", "current_name": "Physics_AlignToTerrain", "legacy_name": "sub_14534", "evidence": "static", "basis": ["Seven absolute references reach this helper, which snaps the object up to the eight-pixel grid and clears the vertical velocity."] },
+    { "address": "0x014548", "previous_name": "sub_14548", "current_name": "Physics_AlignToTerrainTop", "legacy_name": "sub_14548", "evidence": "static", "basis": ["The ceiling counterpart snaps downward instead, using the complement of the same three-bit remainder."] },
+    { "address": "0x014560", "previous_name": "Physics_AlignToWallSurface", "current_name": "Orphaned_PhysicsAlignToWallSurface", "legacy_name": "sub_14560", "evidence": "static", "basis": ["Unreferenced and absent from the ROM, unlike the two vertical alignment helpers directly above it, which the same scan finds at seven and several sites. It would have snapped the object horizontally to the eight-pixel grid on whichever side its travel direction implies."] },
+    { "address": "0x014576", "previous_name": "Physics_AlignToWallSurface_AdjustOppositeDirection", "current_name": "Orphaned_PhysicsAlignToWallSurfaceAdjustOpposite", "legacy_name": "loc_14576", "evidence": "static", "basis": ["The leftward half of that unreferenced pair."] },
+    { "address": "0x01458A", "previous_name": "sub_1458A", "current_name": "Collision_InitBufferPointers", "legacy_name": "sub_1458A", "evidence": "static", "basis": ["The helper loads the layout and height-table pointers and the $80 screen bias, then falls straight into the probe below, so callers get both the setup and one probe from a single call."] },
+    { "address": "0x01459A", "previous_name": "sub_1459A", "current_name": "Physics_GetTerrainTileData", "legacy_name": "sub_1459A", "evidence": "static", "basis": ["This probe differs from Collision_CheckTerrainTile in two ways: it biases by the caller's d7 rather than a fixed $80, and it adds 8 to the height for tile bit 11 and $40 for bit 12, which is how sloped and doubled tiles are encoded."] },
+    { "address": "0x0145AE", "previous_name": "loc_145AE", "current_name": "Physics_GetTerrainTileData_ReadTile", "legacy_name": "loc_145AE", "evidence": "static", "basis": ["Positions above screen Y $A0 return zero height without touching the layout at all."] },
+    { "address": "0x0145E8", "previous_name": "loc_145E8", "current_name": "Physics_GetTerrainTileData_CheckSecondTileFlag", "legacy_name": "loc_145E8", "evidence": "static", "basis": ["The two tile flags are independent, so a tile can take both adjustments."] },
+    { "address": "0x0145F2", "previous_name": "locret_145F2", "current_name": "Physics_GetTerrainTileData_Return", "legacy_name": "locret_145F2", "evidence": "static", "basis": ["An empty tile and both flag outcomes share this return."] },
+    { "address": "0x0145F4", "previous_name": "sub_145F4", "current_name": "Collision_CheckProjectileTile", "legacy_name": "sub_145F4", "evidence": "static", "basis": ["The projectile probe treats any height of $80 or more as no contact, inverting the test the wall checks use, so projectiles pass through the surfaces that stop entities."] },
+    { "address": "0x014646", "previous_name": "locret_14646", "current_name": "Collision_CheckProjectileTile_Return", "legacy_name": "locret_14646", "evidence": "static", "basis": ["The empty-tile and the too-high cases share this return with d2 zero."] },
+    { "address": "0x014648", "previous_name": "sub_14648", "current_name": "Physics_EntityWallCheck", "legacy_name": "sub_14648", "evidence": "static", "basis": ["The plain wall check probes eight pixels to each side at the object's own height and sets bit 2 or bit 3 of field 7 on contact."] },
+    { "address": "0x014670", "previous_name": "loc_14670", "current_name": "Physics_EntityWallCheck_CheckRight", "legacy_name": "loc_14670", "evidence": "static", "basis": ["The right probe runs whether or not the left one found a wall, so both sides can resolve in one call."] },
+    { "address": "0x014688", "previous_name": "locret_14688", "current_name": "Physics_EntityWallCheck_Return", "legacy_name": "locret_14688", "evidence": "static", "basis": ["Both probes converge on this return."] },
+    { "address": "0x014694", "previous_name": "loc_14694", "current_name": "Physics_EntityExtendedWallCheck_Begin", "legacy_name": "loc_14694", "evidence": "static", "basis": ["The extended check adds a second probe on each side at a vertical offset that the entry above derives from the vertical velocity, and that the facing wrapper overrides with its own choice."] },
+    { "address": "0x0146BE", "previous_name": "loc_146BE", "current_name": "Physics_EntityExtendedWallCheck_CheckOffsetLeft", "legacy_name": "loc_146BE", "evidence": "static", "basis": ["The offset probe runs only when the level probe found nothing, and it resolves the collision without setting the contact bit."] },
+    { "address": "0x0146D0", "previous_name": "loc_146D0", "current_name": "Physics_EntityExtendedWallCheck_CheckRight", "legacy_name": "loc_146D0", "evidence": "static", "basis": ["The right side repeats the same two-probe pattern."] },
+    { "address": "0x0146E8", "previous_name": "loc_146E8", "current_name": "Physics_EntityExtendedWallCheck_CheckOffsetRight", "legacy_name": "loc_146E8", "evidence": "static", "basis": ["The right offset probe likewise resolves without setting the contact bit."] },
+    { "address": "0x0146FA", "previous_name": "locret_146FA", "current_name": "Physics_EntityExtendedWallCheck_Return", "legacy_name": "locret_146FA", "evidence": "static", "basis": ["A clear right side returns here; the resolving paths tail-call out instead."] },
     {
       "address": "0x0146FC",
       "previous_name": "Player_ActionDispatcher",
