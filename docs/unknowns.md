@@ -8919,3 +8919,34 @@ pending queue falls from 2,331 to 2,304 and its actionable upper bound from
 1,818 to 1,791; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `system/vblank.s` now has zero pending
 current names, leaving 37 modules in the queue.
+
+The 29 pending entries in `enemies/phase_and_debris_states.s` hold, and the
+module contains one behaviour worth recording rather than renaming.
+`Enemy_PhasePatternWaitState` does not wait on a timer alone: it leaps as soon
+as bit 5 of `ControllerPressedState` is pressed, taking an upward velocity of
+`$FFFA0000` unless the object is already inverted. The enemy therefore reacts to
+the player's own input, which is what the inherited `PhasePattern` name was
+gesturing at, and the timeout path skips the airborne phase entirely.
+
+`Enemy_ResetPhasePattern` is a recycler rather than a remover. It rewrites the
+object's type to `$290` and clears its state, health, both collision bytes and
+its velocity instead of setting a removal flag, so the same record is reused
+when the wave restarts.
+
+One entry is unreachable. `Effect_SetRandomParticleMappingFromCurrentObject` is
+a single `movea` with no caller and no absolute address in the ROM, while the
+control handler `Enemy_UpdateBouncingDebrisSpawner` in the same region is found
+by that scan; the live helper immediately below it is reached only by a short
+branch, which is why the scan finds no address for it either. The dead entry
+becomes `Orphaned_SetRandomParticleMappingForSelf`.
+
+Five state comments were rewritten. They previously listed the literal stores,
+such as "when zero sets $5C=$14, resets timer=$20, advances state", which
+restates the instructions without saying that `$5C` is the animation request the
+dispatcher clears on every frame.
+
+Twenty-nine exact-address records raise the registry from 14,038 to 14,067. The
+pending queue falls from 2,304 to 2,275 and its actionable upper bound from
+1,791 to 1,762; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `enemies/phase_and_debris_states.s` now
+has zero pending current names, leaving 36 modules in the queue.

@@ -35,7 +35,7 @@ Enemy_PhasePatternInit:                                 ; DATA XREF: ROM:Enemy_P
                 move.w  #4,$5C(a5)
                 move.w  #$100,$48(a5)
                 addq.w  #2,4(a5)
-; Wait for timer countdown and check for movement trigger
+; Waits, and leaps when the player presses the bit-5 button
 Enemy_PhasePatternWaitState:                            ; DATA XREF: ROM:0002D058   o  ; was: loc_2D07A
                 subq.w  #1,$48(a5)
                 beq.s   Enemy_PhasePatternWaitState_Timeout
@@ -92,7 +92,7 @@ Enemy_PhasePatternAirborneState_AlignCeiling:           ; CODE XREF: Enemy_Phase
 Enemy_PhasePatternAirborneState_Return:                 ; CODE XREF: Enemy_PhasePatternAirborneState+2C   j  ; was: locret_2D11E
                 rts
 ; End of function Enemy_PhasePatternAirborneState
-; Decrements timer, when zero sets $5C=$14, resets timer=$20, advances state
+; Holds the landed pose, then selects animation $14 and advances
 Enemy_PhasePattern_WaitBeforeAttack:                    ; DATA XREF: ROM:0002D05C   o  ; was: sub_2D120
                 subq.w  #1,$48(a5)
                 bne.s   Enemy_PhasePattern_WaitBeforeAttack_Return
@@ -102,7 +102,7 @@ Enemy_PhasePattern_WaitBeforeAttack:                    ; DATA XREF: ROM:0002D05
 Enemy_PhasePattern_WaitBeforeAttack_Return:             ; CODE XREF: Enemy_PhasePattern_WaitBeforeAttack+4   j  ; was: locret_2D136
                 rts
 ; End of function Enemy_PhasePattern_WaitBeforeAttack
-; Decrements timer, when zero sets $5C=$1C, velocity=$FFFF, timer=$20, advances state
+; Starts a one-unit leftward drift and selects animation $1C
 Enemy_PhasePattern_BeginHorizontalMotion:               ; DATA XREF: ROM:0002D05E   o  ; was: sub_2D138
                 subq.w  #1,$48(a5)
                 bne.s   Enemy_PhasePattern_BeginHorizontalMotion_Return
@@ -113,7 +113,7 @@ Enemy_PhasePattern_BeginHorizontalMotion:               ; DATA XREF: ROM:0002D05
 Enemy_PhasePattern_BeginHorizontalMotion_Return:        ; CODE XREF: Enemy_PhasePattern_BeginHorizontalMotion+4   j  ; was: locret_2D154
                 rts
 ; End of function Enemy_PhasePattern_BeginHorizontalMotion
-; Decrements timer, when zero clears velocity, sets $5C=$18, timer=$20, advances state
+; Stops the drift and selects animation $18
 Enemy_PhasePattern_StopHorizontalMotion:                ; DATA XREF: ROM:0002D060   o  ; was: sub_2D156
                 subq.w  #1,$48(a5)
                 bne.s   Enemy_PhasePattern_StopHorizontalMotion_Return
@@ -124,7 +124,7 @@ Enemy_PhasePattern_StopHorizontalMotion:                ; DATA XREF: ROM:0002D06
 Enemy_PhasePattern_StopHorizontalMotion_Return:         ; CODE XREF: Enemy_PhasePattern_StopHorizontalMotion+4   j  ; was: locret_2D170
                 rts
 ; End of function Enemy_PhasePattern_StopHorizontalMotion
-; Decrements timer, when zero sets timer=$100, $5C=4, state=2
+; Rearms the long wait and returns to the waiting state
 Enemy_PhasePattern_Restart:                             ; DATA XREF: ROM:0002D062   o  ; was: sub_2D172
                 subq.w  #1,$48(a5)
                 bne.s   Enemy_PhasePattern_Restart_Return
@@ -134,7 +134,7 @@ Enemy_PhasePattern_Restart:                             ; DATA XREF: ROM:0002D06
 Enemy_PhasePattern_Restart_Return:                      ; CODE XREF: Enemy_PhasePattern_Restart+4   j  ; was: locret_2D18A
                 rts
 ; End of function Enemy_PhasePattern_Restart
-; Resets state to 0, sets ID $290, timer $40, clears velocity and flags
+; Returns the object to type $290 and its initial state when the wave ends
 Enemy_ResetPhasePattern:                                ; CODE XREF: Enemy_PhasePatternController+A   j  ; was: sub_2D18C
                                         ; Enemy_PhasePatternController+12   j
                 clr.w   4(a5)
@@ -197,10 +197,10 @@ Enemy_UpdateBouncingDebrisSpawner_Return:               ; CODE XREF: Enemy_Updat
                                         ; Enemy_UpdateBouncingDebrisSpawner+98   j
                 rts
 ; End of function Enemy_UpdateBouncingDebrisSpawner
-; Selects a randomized particle mapping for the current object
-Effect_SetRandomParticleMappingFromCurrentObject:
+; Unreachable entry that would aim the random-mapping helper at the current object
+Orphaned_SetRandomParticleMappingForSelf:
                 movea.w a5,a0                           ; was: sub_2D256
-; End of function Effect_SetRandomParticleMappingFromCurrentObject
+; End of function Orphaned_SetRandomParticleMappingForSelf
 ; Sets random animation pointer from 4-entry table based on random number bits 0-1
 Effect_SetRandomParticleMapping:                        ; CODE XREF: Enemy_UpdateBouncingDebrisSpawner:Enemy_UpdateBouncingDebrisSpawner_InitParticle   p  ; was: sub_2D258
                 move.w  (RandomNumberState).w,d0
