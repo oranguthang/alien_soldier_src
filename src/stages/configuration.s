@@ -420,5 +420,5 @@ Gfx_BuildStage3Phase2ScaleStepTable:                    ; CODE XREF: Gfx_Prepare
                 movea.l #$FFFF0000,a0
                 move.w  #$3C00,d5
                 move.l  #$93009412,d4
-                jmp     Stage22_GraphicsUpdate2
+                jmp     Gfx_DmaTransferWithZ80Halt
 ; End of function Gfx_PrepareStage3Phase2ResampledTiles

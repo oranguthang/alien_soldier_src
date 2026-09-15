@@ -18,8 +18,8 @@ Physics_GetPlayerDelta_AbsoluteX:                       ; CODE XREF: Physics_Get
                 moveq   #1,d3
                 rts
 ; End of function Physics_GetPlayerDelta
-; Calculates angle using arctan2
-Math_CalcAngleBetweenObjs:
+; Unreferenced: returns the arctan2 angle between two objects in $1FE units
+Orphaned_CalculateAngleBetweenObjects:
                 move.w  $10(a0),d0                      ; was: sub_1B42E
                 move.w  $14(a0),d1
                 sub.w   $10(a1),d0
@@ -28,7 +28,7 @@ Math_CalcAngleBetweenObjs:
                 asr.w   #7,d2
                 andi.w  #$1FE,d2
                 rts
-; End of function Math_CalcAngleBetweenObjs
+; End of function Orphaned_CalculateAngleBetweenObjects
 ; Calculates sine/cosine values in all four quadrants and stores in lookup tables
 Math_CalculateSineCosineTable:                          ; CODE XREF: Boss_ShiperLoadInitialAssetsAfterBackgroundRows+26   j  ; was: sub_1B44C
                                         ; Boss_FlyingNeoInit+1C   p
@@ -77,28 +77,28 @@ Math_QuarterSineTable:  dc.w    0, $192, $323, $4B5, $645, $7D5, $964, $AF1  ; w
 Math_SineTable: binclude "data/other/word_1B514.bin"    ; was: word_1B514
 Math_SineTable_End:                                     ; was: word_1B514_End
 
-; Loop clearing table entries
-Data_ClearTableLoop:                                    ; CODE XREF: Data_ClearTableLoop+C   j  ; was: sub_1B714
-                bsr.w   Data_CheckAndResetEntry
+; Unreferenced: marks $60-byte entity records for removal up to $DCA0
+Orphaned_MarkEntityRecordsExceptTwoTypes:               ; CODE XREF: Orphaned_MarkEntityRecordsExceptTwoTypes+C   j  ; was: sub_1B714
+                bsr.w   Orphaned_MarkEntityRecordExceptTwoTypes
                 lea     $60(a0),a0
                 cmpa.w  #$DCA0,a0
-                bmi.w   Data_ClearTableLoop
+                bmi.w   Orphaned_MarkEntityRecordsExceptTwoTypes
                 rts
-; End of function Data_ClearTableLoop
-; Check and reset table entry
-Data_CheckAndResetEntry:                                ; CODE XREF: Data_ClearTableLoop   p  ; was: sub_1B726
+; End of function Orphaned_MarkEntityRecordsExceptTwoTypes
+; Marks one record for removal unless its type is zero or one of two spared types
+Orphaned_MarkEntityRecordExceptTwoTypes:                ; CODE XREF: Orphaned_MarkEntityRecordsExceptTwoTypes   p  ; was: sub_1B726
                 cmpi.w  #0,(a0)
-                beq.w   Data_CheckAndResetEntry_Return
+                beq.w   Orphaned_MarkEntityRecordExceptTwoTypesReturn
                 cmp.w   (a0),d0
-                beq.w   Data_CheckAndResetEntry_Return
+                beq.w   Orphaned_MarkEntityRecordExceptTwoTypesReturn
                 cmp.w   (a0),d1
-                beq.w   Data_CheckAndResetEntry_Return
+                beq.w   Orphaned_MarkEntityRecordExceptTwoTypesReturn
                 move.w  #$10,(a0)
                 move.w  #$1000,2(a0)
-Data_CheckAndResetEntry_Return:                         ; CODE XREF: Data_CheckAndResetEntry+4   j  ; was: locret_1B744
-                                        ; Data_CheckAndResetEntry+A   j
+Orphaned_MarkEntityRecordExceptTwoTypesReturn:          ; CODE XREF: Orphaned_MarkEntityRecordExceptTwoTypes+4   j  ; was: locret_1B744
+                                        ; Orphaned_MarkEntityRecordExceptTwoTypes+A   j
                 rts
-; End of function Data_CheckAndResetEntry
+; End of function Orphaned_MarkEntityRecordExceptTwoTypes
 ; Clears the complete entity object pool
 Sys_ClearEntityObjectPool:                              ; CODE XREF: EndingSequence_Initialize+44   p  ; was: sub_1B746
                                         ; EndingStarfield_FadeOutAndPreparePlanet+44   p
@@ -168,14 +168,14 @@ VDP_QueueCommand_Build:                                 ; CODE XREF: StageTransi
                 move.w  a1,(VDPCommandQueueHead).w
                 rts
 ; End of function VDP_QueueCommand
-; Graphics update 2
-Stage22_GraphicsUpdate2:                                ; CODE XREF: Gfx_PrepareStage3Phase2ResampledTiles+54   j  ; was: sub_1B7DC
+; Halts the Z80, programs a DMA transfer to VDP memory, then restores both
+Gfx_DmaTransferWithZ80Halt:                             ; CODE XREF: Gfx_PrepareStage3Phase2ResampledTiles+54   j  ; was: sub_1B7DC
                 move.w  #$8F02,d3
                 move    sr,-(sp)
                 move    #$2700,sr
-Stage22_GraphicsUpdate2_RequestZ80Bus:                  ; CODE XREF: Stage22_GraphicsUpdate2+12   j  ; was: loc_1B7E6
+Gfx_DmaTransferWithZ80Halt_RequestBus:                  ; CODE XREF: Gfx_DmaTransferWithZ80Halt+12   j  ; was: loc_1B7E6
                 bset    #0,(IO_Z80BUS).l
-                bne.s   Stage22_GraphicsUpdate2_RequestZ80Bus
+                bne.s   Gfx_DmaTransferWithZ80Halt_RequestBus
                 lea     (VDP_CTRL).l,a4
                 move.w  (VDPReg1Shadow).w,d2
                 bset    #4,d2
@@ -212,49 +212,49 @@ Stage22_GraphicsUpdate2_RequestZ80Bus:                  ; CODE XREF: Stage22_Gra
                 move.w  (VDPReg1Shadow).w,d0
                 bclr    #4,d0
                 move.w  d0,(a4)
-Stage22_GraphicsUpdate2_ReleaseZ80Bus:                  ; CODE XREF: Stage22_GraphicsUpdate2+90   j  ; was: loc_1B864
+Gfx_DmaTransferWithZ80Halt_ReleaseBus:                  ; CODE XREF: Gfx_DmaTransferWithZ80Halt+90   j  ; was: loc_1B864
                 bclr    #0,(IO_Z80BUS).l
-                beq.s   Stage22_GraphicsUpdate2_ReleaseZ80Bus
+                beq.s   Gfx_DmaTransferWithZ80Halt_ReleaseBus
                 move    (sp)+,sr
                 rts
-; End of function Stage22_GraphicsUpdate2
-; Calculate tile offset mask $1C0
-Math_CalcTileOffset1:
+; End of function Gfx_DmaTransferWithZ80Halt
+; Unreferenced: rounds an arctan2 result to one of eight angle sectors
+Orphaned_QuantizeAngleToEightSectors:
                 asr.w   #7,d2                           ; was: sub_1B872
                 andi.w  #$1FE,d2
                 move.w  d2,d0
                 addi.w  #$20,d0                         ; ' '
                 andi.w  #$1C0,d0
                 rts
-; End of function Math_CalcTileOffset1
-; Calculate tile offset mask $1E0
-Math_CalcTileOffset2:
+; End of function Orphaned_QuantizeAngleToEightSectors
+; Unreferenced: rounds an arctan2 result to one of sixteen angle sectors
+Orphaned_QuantizeAngleToSixteenSectors:
                 asr.w   #7,d2                           ; was: sub_1B884
                 andi.w  #$1FE,d2
                 move.w  d2,d0
                 addi.w  #$10,d0
                 andi.w  #$1E0,d0
                 rts
-; End of function Math_CalcTileOffset2
-; Calculate tile offset mask $1F0
-Math_CalcTileOffset3:
+; End of function Orphaned_QuantizeAngleToSixteenSectors
+; Unreferenced: rounds an arctan2 result to one of thirty-two angle sectors
+Orphaned_QuantizeAngleToThirtyTwoSectors:
                 asr.w   #7,d2                           ; was: sub_1B896
                 andi.w  #$1FE,d2
                 move.w  d2,d0
                 addq.w  #8,d0
                 andi.w  #$1F0,d0
                 rts
-; End of function Math_CalcTileOffset3
-; Clear 8KB RAM buffer at FF8000
-Sys_ClearRAMBuffer8K:
+; End of function Orphaned_QuantizeAngleToThirtyTwoSectors
+; Unreferenced: clears the 8 KB gameplay state buffer
+Orphaned_ClearGameplayStateBuffer:
                 movea.w #(GameplayStateBuffer-M68K_RAM),a0  ; was: sub_1B8A6
                 moveq   #0,d0
                 move.w  #$7FF,d7
-Sys_ClearRAMBuffer8K_Loop:                              ; CODE XREF: Sys_ClearRAMBuffer8K+C   j  ; was: loc_1B8B0
+Orphaned_ClearGameplayStateBufferLoop:                  ; CODE XREF: Orphaned_ClearGameplayStateBuffer+C   j  ; was: loc_1B8B0
                 move.l  d0,(a0)+
-                dbf     d7,Sys_ClearRAMBuffer8K_Loop
+                dbf     d7,Orphaned_ClearGameplayStateBufferLoop
                 rts
-; End of function Sys_ClearRAMBuffer8K
+; End of function Orphaned_ClearGameplayStateBuffer
 ; Queue the requested BGM ID, or stop playback when BGM is disabled
 Sound_QueueBGMOrStop:                                   ; CODE XREF: Stage13_UpdateSnakeIntroTransition+24   p  ; was: sub_1B8B8
                                         ; Stage13_StartPostBugmaxTransition+1C   p

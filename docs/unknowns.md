@@ -8655,3 +8655,36 @@ pending queue falls from 2,531 to 2,511 and its actionable upper bound from
 2,018 to 1,998; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `debug/sprite_editor.s` now has zero
 pending current names, leaving 46 modules in the queue.
+
+The 20 pending entries in `gameplay/math_and_buffer_helpers.s` split sharply.
+Seven routines have no caller in the source and no absolute address anywhere in
+the ROM, while the control routines `Sys_ClearEntityObjectPool` and
+`VDP_QueueCommand`, which sit in the same address region, are both found by the
+same scan. They therefore take the `Orphaned_` prefix.
+
+Two of them were also misnamed. `Math_CalcTileOffset1`, `2` and `3` compute no
+tile offset: each scales an arctan2 result into the `$1FE` angle range and then
+rounds it with a half-step bias to the `$1C0`, `$1E0` or `$1F0` mask, leaving
+eight, sixteen or thirty-two angle sectors. They become
+`Orphaned_QuantizeAngleToEightSectors` and its two siblings. `Data_ClearTableLoop`
+and `Data_CheckAndResetEntry` are a variant of the live
+`Object_ClearEntityRecordsExceptTwoTypes` at `0x1C288`: the live routine zeroes
+61 records outright, whereas this pair only writes type `$10` and removal flag
+`$1000` into each record it does not spare, so they become
+`Orphaned_MarkEntityRecordsExceptTwoTypes` and its per-record half.
+`Math_CalcAngleBetweenObjs` and `Sys_ClearRAMBuffer8K` keep their meaning and
+gain the prefix.
+
+One live routine carried a stage attribution the call graph contradicts.
+`Stage22_GraphicsUpdate2` has a single caller,
+`Gfx_PrepareStage3Phase2ResampledTiles`, which belongs to Stage 3 rather than
+Stage 22, and the body is a general transfer: it masks interrupts, spins for the
+Z80 bus, enables the VDP DMA bit, programs the three DMA source registers from
+`a0` halved, issues the write command, then clears the bit and releases the bus.
+It becomes `Gfx_DmaTransferWithZ80Halt` with its two spin loops renamed to match.
+
+Twenty exact-address records raise the registry from 13,831 to 13,851. The
+pending queue falls from 2,511 to 2,491 and its actionable upper bound from
+1,998 to 1,978; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `gameplay/math_and_buffer_helpers.s` now
+has zero pending current names, leaving 45 modules in the queue.
