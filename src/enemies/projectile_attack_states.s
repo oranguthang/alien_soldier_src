@@ -63,7 +63,7 @@ Enemy_ProjectileAttackStateOffsets: dc.w    Enemy_ProjectileAttackInit-Enemy_Pro
                 dc.w    Enemy_DefeatFallState-Enemy_ProjectileAttackInit
                 dc.w    Enemy_ProjectileAttackGroundState-Enemy_ProjectileAttackInit
 
-; State machine for projectile movement and collision
+; Installs the sprite and health, then falls into the idle entry
 Enemy_ProjectileAttackInit:                             ; DATA XREF: Enemy_DispatchProjectileAttackState+C   o  ; was: sub_2CC34
                                         ; ROM:Enemy_ProjectileAttackStateOffsets   o
                 move.w  #$1E,$24(a5)
@@ -74,7 +74,7 @@ Enemy_ProjectileAttack_BeginIdle:                       ; CODE XREF: Enemy_Proje
                 move.w  #4,$5C(a5)
                 move.w  #$60,$48(a5)                    ; '`'
                 clr.l   $18(a5)
-; Checks for wall collision and sets bounce state
+; Holds position until the timer expires, then attacks nearby or approaches
 Enemy_ProjectileAttackIdleState:                        ; DATA XREF: ROM:0002CC28   o  ; was: loc_2CC54
                 jsr     (Physics_EntityWallCheck).l
                 jsr     (Physics_CheckLowerTerrain).l
@@ -148,7 +148,7 @@ Enemy_ProjectileAttack_BeginAirborne:                   ; CODE XREF: Enemy_Proje
                 move.l  d0,$18(a5)
                 bra.w   Enemy_ProjectileAttackAirborneState
 ; End of function Enemy_ProjectileAttack_BeginAirborne
-; Sets enemy to waiting state with specific timer and animation values
+; Enters state $C, the ground attack, with a $36-frame window
 Enemy_ProjectileAttack_BeginGroundAttack:               ; CODE XREF: Enemy_ProjectileAttackInit+4C   j  ; was: sub_2CD42
                 move.w  #$C,4(a5)
                 move.w  #$10,$5C(a5)

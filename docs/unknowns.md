@@ -9459,3 +9459,35 @@ pending queue falls from 1,762 to 1,720 and its actionable upper bound from
 1,249 to 1,207; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `player/rendering_and_defeat.s` now has
 zero pending current names, leaving 21 modules in the queue.
+
+The 43 pending entries in `enemies/projectile_attack_states.s` all hold, and the
+module supplies a useful counter-example to the defect recorded earlier in the
+weapon ammo costs. `Enemy_HomingAttackInitialDelays` and
+`Enemy_HomingAttackShotCounts` are two-word tables indexed by `DifficultyMode`
+used directly as a byte offset, so difficulty 0 yields a `$98`-frame delay and
+one shot while difficulty 2 yields `$60` and four. The word read and the direct
+index make this scaling work; the weapon costs fail only because they test the
+byte at the same address, which is the always-zero high half.
+
+Three thresholds are recorded because they are deliberate and not visible in the
+names. The idle state starts an attack when the player is within `$60` but the
+approach state returns to idle only within `$50`, leaving a gap that prevents the
+two from oscillating. The ground attack fires its single shot on the one frame
+its `$36`-frame counter equals `$1E`, and stops tracking the player once fewer
+than `$10` frames remain, so it commits to a facing before the window closes.
+
+Two structural details are worth stating. States 6 and 8 of the projectile
+attack both resolve to the same airborne handler and differ only in the
+animation the entry that set them requested, `$28` for a fall and `$24` for a
+leap. And entering the air halves the horizontal velocity, which is why a leap
+carries further than walking off an edge.
+
+Three comments described the wrong routine: the init was called a state machine,
+the idle state was described as a wall-collision check, and the ground-attack
+entry was called a waiting state.
+
+Forty-three exact-address records raise the registry from 14,622 to 14,665. The
+pending queue falls from 1,720 to 1,677 and its actionable upper bound from
+1,207 to 1,164; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `enemies/projectile_attack_states.s` now
+has zero pending current names, leaving 20 modules in the queue.

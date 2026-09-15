@@ -1880,6 +1880,7 @@
         "The routine converts that object to entity type 0x1D8, assigns falling velocity and an alternate defeat mapping, and accesses no Jetsripper idle state."
       ]
     },
+    { "address": "0x02CBC4", "previous_name": "locret_2CBC4", "current_name": "Enemy_ConvertToAlternateDefeatProjectile_Return", "legacy_name": "locret_2CBC4", "evidence": "static", "basis": ["The right-facing case keeps the default negative horizontal velocity, so the debris is always thrown backwards relative to the facing."] },
     {
       "address": "0x02CBC6",
       "previous_name": "Projectile_JetsripperFalling",
@@ -1891,6 +1892,8 @@
         "It applies gravity and blinking, then creates an explosion and resource pickup; no Jetsripper-specific data is referenced."
       ]
     },
+    { "address": "0x02CBE2", "previous_name": "loc_2CBE2", "current_name": "Enemy_UpdateAlternateDefeatProjectile_ApplyBlink", "legacy_name": "loc_2CBE2", "evidence": "static", "basis": ["The visibility bit is toggled from bit 0 of the timer's low byte, the same blink the beetle, wasp and shared defeat objects use."] },
+    { "address": "0x02CBF6", "previous_name": "locret_2CBF6", "current_name": "Enemy_UpdateAlternateDefeatProjectile_Return", "legacy_name": "locret_2CBF6", "evidence": "static", "basis": ["The visible half of the blink returns here."] },
     {
       "address": "0x02CBF8",
       "previous_name": "Enemy_ProcessProjectile",
@@ -1902,6 +1905,17 @@
         "The controller uses terrain collision, faces the player, and only spawns a projectile during one timed ground state; the controlled object is not itself a projectile."
       ]
     },
+    { "address": "0x02CC0C", "previous_name": "loc_2CC0C", "current_name": "Enemy_ProjectileAttackController_UpdateState", "legacy_name": "loc_2CC0C", "evidence": "static", "basis": ["The controller runs the state and then the shared projectile animation update, so each state only has to request an animation in $5C."] },
+    { "address": "0x02CC12", "previous_name": "sub_2CC12", "current_name": "Enemy_DispatchProjectileAttackState", "legacy_name": "sub_2CC12", "evidence": "static", "basis": ["The dispatcher clears the animation request and indexes seven words measured from Enemy_ProjectileAttackInit rather than absolute addresses."] },
+    { "address": "0x02CC26", "previous_name": "off_2CC26", "current_name": "Enemy_ProjectileAttackStateOffsets", "legacy_name": "off_2CC26", "evidence": "static", "basis": ["Seven entries over six distinct handlers: states 6 and 8 both resolve to the airborne handler and differ only in the animation the entry that set them requested, $28 for a fall and $24 for a leap."] },
+    { "address": "0x02CC34", "previous_name": "sub_2CC34", "current_name": "Enemy_ProjectileAttackInit", "legacy_name": "sub_2CC34", "evidence": "static", "basis": ["State 0 installs 30 units of health and the shared projectile sprite, then falls into the idle entry."] },
+    { "address": "0x02CC3E", "previous_name": "loc_2CC3E", "current_name": "Enemy_ProjectileAttack_BeginIdle", "legacy_name": "loc_2CC3E", "evidence": "static", "basis": ["The idle entry arms a $60-frame hold and clears the horizontal velocity; both the init and the landing path reach it."] },
+    { "address": "0x02CC54", "previous_name": "loc_2CC54", "current_name": "Enemy_ProjectileAttackIdleState", "legacy_name": "loc_2CC54", "evidence": "static", "basis": ["Losing ground contact sends the enemy airborne at any point. Otherwise, once the hold expires it faces the player and attacks when the distance is under $60 or approaches when it is not."] },
+    { "address": "0x02CC84", "previous_name": "loc_2CC84", "current_name": "Enemy_ProjectileAttack_CheckMoveTimer", "legacy_name": "loc_2CC84", "evidence": "static", "basis": ["The timer is re-tested after the facing update because Enemy_FacePlayer does not preserve it."] },
+    { "address": "0x02CC8C", "previous_name": "loc_2CC8C", "current_name": "Enemy_ProjectileAttack_ApplyFriction", "legacy_name": "loc_2CC8C", "evidence": "static", "basis": ["Every frame of the hold tail-calls the shared horizontal friction, so the enemy coasts to a stop rather than stopping instantly."] },
+    { "address": "0x02CC90", "previous_name": "loc_2CC90", "current_name": "Enemy_ProjectileAttack_BeginApproach", "legacy_name": "loc_2CC90", "evidence": "static", "basis": ["The approach is state 4 with animation 8."] },
+    { "address": "0x02CC9C", "previous_name": "loc_2CC9C", "current_name": "Enemy_ProjectileAttackApproachState", "legacy_name": "loc_2CC9C", "evidence": "static", "basis": ["The approach returns to idle once the player is within $50, which is closer than the $60 the idle state uses to start an attack, so the two thresholds leave a deliberate gap."] },
+    { "address": "0x02CCD6", "previous_name": "loc_2CCD6", "current_name": "Enemy_ProjectileAttack_BeginLeap", "legacy_name": "loc_2CCD6", "evidence": "static", "basis": ["Either wall-contact bit in field 7 converts the approach into a leap, which is state 8 with an upward $FFFA4000 velocity."] },
     {
       "address": "0x02CCEE",
       "previous_name": "Physics_BossGravityAndCollision",
@@ -1913,6 +1927,15 @@
         "It applies capped gravity and checks upper and lower terrain for the shared enemy object; no boss identity is tested."
       ]
     },
+    { "address": "0x02CD08", "previous_name": "loc_2CD08", "current_name": "Enemy_ProjectileAttack_ApplyGravity", "legacy_name": "loc_2CD08", "evidence": "static", "basis": ["Gravity is $6000 per frame and the fall is capped at $7C000."] },
+    { "address": "0x02CD12", "previous_name": "loc_2CD12", "current_name": "Enemy_ProjectileAttack_CheckGround", "legacy_name": "loc_2CD12", "evidence": "static", "basis": ["The floor probe runs only while descending, and a contact returns the enemy to the idle entry."] },
+    { "address": "0x02CD22", "previous_name": "loc_2CD22", "current_name": "Enemy_ProjectileAttack_CheckCeiling", "legacy_name": "loc_2CD22", "evidence": "static", "basis": ["The ceiling probe is the tail call of the airborne state, so it runs on every rising frame."] },
+    { "address": "0x02CD28", "previous_name": "sub_2CD28", "current_name": "Enemy_ProjectileAttack_BeginAirborne", "legacy_name": "sub_2CD28", "evidence": "static", "basis": ["Entering the air halves the horizontal velocity, which is why a leap carries further than a walk-off."] },
+    { "address": "0x02CD42", "previous_name": "sub_2CD42", "current_name": "Enemy_ProjectileAttack_BeginGroundAttack", "legacy_name": "sub_2CD42", "evidence": "static", "basis": ["The attack is state $C with a $36-frame window."] },
+    { "address": "0x02CD54", "previous_name": "sub_2CD54", "current_name": "Enemy_ProjectileAttackGroundState", "legacy_name": "sub_2CD54", "evidence": "static", "basis": ["The single shot is fired on the one frame the counter equals $1E, halfway through the window, with the muzzle offset and velocity mirrored by the facing bit."] },
+    { "address": "0x02CD90", "previous_name": "loc_2CD90", "current_name": "Enemy_ProjectileAttackGroundState_SpawnProjectile", "legacy_name": "loc_2CD90", "evidence": "static", "basis": ["Both facings converge on the type-$1D0 trailing-arc hazard spawner."] },
+    { "address": "0x02CD96", "previous_name": "loc_2CD96", "current_name": "Enemy_ProjectileAttackGroundState_UpdateMovement", "legacy_name": "loc_2CD96", "evidence": "static", "basis": ["The enemy stops tracking the player once fewer than $10 frames remain, so it commits to its final facing before the window closes."] },
+    { "address": "0x02CDA6", "previous_name": "locret_2CDA6", "current_name": "Enemy_ProjectileAttackGroundState_Return", "legacy_name": "locret_2CDA6", "evidence": "static", "basis": ["The last $10 frames return here without a facing update."] },
     {
       "address": "0x02CDA8",
       "previous_name": "Boss_JokerRecoilAttack",
@@ -1924,6 +1947,11 @@
         "The routine clears collision fields, assigns defeat animation and velocity, then enters the shared explosion-and-pickup fall state; it has no Joker attack behavior."
       ]
     },
+    { "address": "0x02CDE2", "previous_name": "loc_2CDE2", "current_name": "Enemy_DefeatFallState", "legacy_name": "loc_2CDE2", "evidence": "static", "basis": ["State $A is reached both by falling through the converter above and by the state table, so the conversion and the state share one entry."] },
+    { "address": "0x02CDFE", "previous_name": "loc_2CDFE", "current_name": "Enemy_DefeatFallState_ApplyBlink", "legacy_name": "loc_2CDFE", "evidence": "static", "basis": ["The same timer-driven blink the alternate defeat projectile uses."] },
+    { "address": "0x02CE12", "previous_name": "locret_2CE12", "current_name": "Enemy_DefeatFallState_Return", "legacy_name": "locret_2CE12", "evidence": "static", "basis": ["The visible half of the blink returns here."] },
+    { "address": "0x02CE14", "previous_name": "word_2CE14", "current_name": "Enemy_HomingAttackInitialDelays", "legacy_name": "word_2CE14", "evidence": "static", "basis": ["Two words indexed by DifficultyMode used directly as a byte offset, giving a $98-frame delay at difficulty 0 and $60 at difficulty 2. The word read and the direct index make this difficulty scaling work, unlike the byte-tested pattern in the weapon ammo costs."] },
+    { "address": "0x02CE18", "previous_name": "word_2CE18", "current_name": "Enemy_HomingAttackShotCounts", "legacy_name": "word_2CE18", "evidence": "static", "basis": ["The companion table, indexed the same way, giving one shot at difficulty 0 and four at difficulty 2."] },
     {
       "address": "0x02CE1C",
       "previous_name": "Enemy_ProcessAltProjectile",
@@ -1935,6 +1963,15 @@
         "The object has its own health and defeat conversion, so it is the homing-attack enemy controller rather than an alternative projectile."
       ]
     },
+    { "address": "0x02CE2E", "previous_name": "loc_2CE2E", "current_name": "Enemy_HomingAttackController_UpdateState", "legacy_name": "loc_2CE2E", "evidence": "static", "basis": ["The same state-then-animation shape as the projectile attack controller."] },
+    { "address": "0x02CE34", "previous_name": "sub_2CE34", "current_name": "Enemy_DispatchHomingAttackState", "legacy_name": "sub_2CE34", "evidence": "static", "basis": ["Three words measured from Enemy_HomingAttackInit."] },
+    { "address": "0x02CE48", "previous_name": "off_2CE48", "current_name": "Enemy_HomingAttackStateOffsets", "legacy_name": "off_2CE48", "evidence": "static", "basis": ["Init, wait and burst; the burst returns to the wait rather than to the init, so the delay table is consulted on every cycle."] },
+    { "address": "0x02CE4E", "previous_name": "sub_2CE4E", "current_name": "Enemy_HomingAttackInit", "legacy_name": "sub_2CE4E", "evidence": "static", "basis": ["Ten units of health and the shared projectile sprite, then the wait entry."] },
+    { "address": "0x02CE58", "previous_name": "loc_2CE58", "current_name": "Enemy_HomingAttack_BeginWait", "legacy_name": "loc_2CE58", "evidence": "static", "basis": ["The wait entry reads the difficulty-scaled delay, and the burst state branches back here when its shot count runs out."] },
+    { "address": "0x02CE72", "previous_name": "loc_2CE72", "current_name": "Enemy_HomingAttackWaitState", "legacy_name": "loc_2CE72", "evidence": "static", "basis": ["A bare countdown with no movement or probing."] },
+    { "address": "0x02CE7A", "previous_name": "loc_2CE7A", "current_name": "Enemy_HomingAttack_BeginBurst", "legacy_name": "loc_2CE7A", "evidence": "static", "basis": ["The burst entry seeds the animation counter at $80 and reads the difficulty-scaled shot count."] },
+    { "address": "0x02CE96", "previous_name": "loc_2CE96", "current_name": "Enemy_HomingAttackBurstState", "legacy_name": "loc_2CE96", "evidence": "static", "basis": ["Shots are emitted only while the animation counter stays at or above $80, so the burst is paced by the animation rather than by a separate timer."] },
+    { "address": "0x02CEC8", "previous_name": "locret_2CEC8", "current_name": "Enemy_HomingAttack_Return", "legacy_name": "locret_2CEC8", "evidence": "static", "basis": ["The off-animation frames and a full projectile pool share this return."] },
     {
       "address": "0x02CECA",
       "previous_name": "Enemy_ShipBossStateHandler",
@@ -1946,6 +1983,12 @@
         "Its two states only initialize and repeat an idle animation timer; no boss health, phase, or boss-only dispatch is present."
       ]
     },
+    { "address": "0x02CED8", "previous_name": "loc_2CED8", "current_name": "Enemy_ShipPatrolController_UpdateState", "legacy_name": "loc_2CED8", "evidence": "static", "basis": ["This controller uses the behaviour animation update rather than the projectile one, which is the only structural difference from the two above it."] },
+    { "address": "0x02CEDE", "previous_name": "sub_2CEDE", "current_name": "Enemy_DispatchShipPatrolState", "legacy_name": "sub_2CEDE", "evidence": "static", "basis": ["Two words measured from Enemy_ShipPatrolInit."] },
+    { "address": "0x02CEF2", "previous_name": "off_2CEF2", "current_name": "Enemy_ShipPatrolStateOffsets", "legacy_name": "off_2CEF2", "evidence": "static", "basis": ["The shortest state table in the module: an init and a single idle state."] },
+    { "address": "0x02CEF6", "previous_name": "sub_2CEF6", "current_name": "Enemy_ShipPatrolInit", "legacy_name": "sub_2CEF6", "evidence": "static", "basis": ["The init uses the shared behaviour sprite setup rather than the projectile one, matching its animation update."] },
+    { "address": "0x02CF04", "previous_name": "loc_2CF04", "current_name": "Enemy_ShipPatrolIdleState", "legacy_name": "loc_2CF04", "evidence": "static", "basis": ["The state only re-requests animation $10 every $38 frames; it never moves the object, so its motion comes from elsewhere."] },
+    { "address": "0x02CF16", "previous_name": "locret_2CF16", "current_name": "Enemy_ShipPatrolIdleState_Return", "legacy_name": "locret_2CF16", "evidence": "static", "basis": ["The frames between requests return here."] },
     {
       "address": "0x02CF64",
       "previous_name": "Player_UpdatePhysics",
