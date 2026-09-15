@@ -10401,3 +10401,55 @@ no renames. The pending queue falls from 800 to 735 and its actionable upper
 bound from 287 to 222; provenance, the 513 classified binary-backed end aliases,
 and the 379-module layout remain unchanged. `enemies/stage_11_fish.s` now has
 zero pending current names, leaving 3 modules in the queue.
+
+`player/terrain_responses.s` is sixty-odd tiny routines behind the ten probe
+handlers audited earlier, and once the shape is seen they reduce to four
+alignment cores and a seed.
+
+Every response does the same two things: snap to the tile boundary through
+`Physics_SnapToLowerSurface`, then add a slope adjustment built from a seed
+constant and a term derived from the sub-tile X position. The four cores differ
+only in that term:
+
+- `Physics_AlignToFloorWithOffset` subtracts `(x & 7) >> 1` plus one from the
+  seed — a half step, descending.
+- `Physics_AlignFloorEvenOffset` adds `(x & 6) >> 1` instead, and is the only
+  core whose mask is 6 rather than 7 and the only one that never produces a
+  negative adjustment.
+- `Physics_AlignFloorQuarterSubtractOffset` subtracts `(x & 7) >> 2` plus one,
+  so one adjustment step covers four pixels of travel against the half step's
+  two.
+- `Physics_AlignFloorQuarterAddOffset` is that core with the sign reversed,
+  which is why the seeds feeding it run 5, 3, 1 and -1 where the subtracting one
+  is fed 8, 6, 4 and 2.
+
+The `plus one` in three of the four is what makes an aligned entity land a pixel
+inside the tile rather than exactly on its edge.
+
+Two names described the wrong role and are corrected.
+`Physics_ApplyFloorOffset4` does only the seed and the branch, exactly like
+`Physics_PrepareVerticalOffset8`, `...6` and `...2`, so it becomes
+`Physics_PrepareVerticalOffset4` and the four seeds of that core now read alike.
+And `Physics_SnapAndAdd2` sat beside `Physics_SnapAndAdd4` as though the two
+were siblings; they are not, because `SnapAndAdd4` seeds the half-step core and
+this one the quarter-step core. It becomes `Physics_ApplyOffset8Add2` and joins
+the group it actually belongs to.
+
+Eleven more wrappers around the quarter-step subtracting core carried three
+different naming shapes between them — `Prepare8Sub10`, `Apply4Sub10` and
+`ApplyOffset2Sub10` all describe the same construct — so the first two shapes
+are brought to the third. The family now reads uniformly: four seeds named
+`Physics_PrepareVerticalOffset{8,6,4,2}` and sixteen wrappers named
+`Physics_ApplyOffset{8,6,4,2}{Sub10,Sub6,Sub2,Add2}`.
+
+One structural detail completes the picture from the earlier package.
+`Physics_UpperRightOuterResponseTable` is the only one of the ten whose entries
+are measured from `Physics_TerrainEmptyHandler` rather than from the next
+handler in the chain, because it is the end of that chain — which is what the
+`player/terrain_collision.s` package predicted from the other side.
+
+Sixty-seven exact-address records raise the registry from 15,609 to 15,676. The
+pending queue falls from 735 to 668 and its actionable upper bound from 222 to
+155; provenance, the 513 classified binary-backed end aliases, and the
+379-module layout remain unchanged. `player/terrain_responses.s` now has zero
+pending current names, leaving 2 modules in the queue.

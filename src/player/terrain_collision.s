@@ -243,7 +243,7 @@ Physics_LowerCenterResponseTable:   dc.w    Physics_TerrainEmptyHandler-Physics_
                 dc.w    Physics_TerrainEmptyHandler-Physics_HandleLowerLeftInnerTerrain
                 dc.w    Physics_PrepareVerticalOffset8-Physics_HandleLowerLeftInnerTerrain
                 dc.w    Physics_PrepareVerticalOffset6-Physics_HandleLowerLeftInnerTerrain
-                dc.w    Physics_ApplyFloorOffset4-Physics_HandleLowerLeftInnerTerrain
+                dc.w    Physics_PrepareVerticalOffset4-Physics_HandleLowerLeftInnerTerrain
                 dc.w    Physics_PrepareVerticalOffset2-Physics_HandleLowerLeftInnerTerrain
                 dc.w    Physics_PrepareQuarterAddOffset5-Physics_HandleLowerLeftInnerTerrain
                 dc.w    Physics_PrepareQuarterAddOffset3-Physics_HandleLowerLeftInnerTerrain
@@ -293,9 +293,9 @@ Physics_LowerLeftInnerResponseTable:    dc.w    Physics_TerrainEmptyHandler-Phys
                 dc.w    Physics_ApplyEvenOffset0Sub4-Physics_HandleLowerRightInnerTerrain
                 dc.w    Physics_TerrainEmptyHandler-Physics_HandleLowerRightInnerTerrain
                 dc.w    Physics_TerrainEmptyHandler-Physics_HandleLowerRightInnerTerrain
-                dc.w    Physics_Prepare8Sub10-Physics_HandleLowerRightInnerTerrain
-                dc.w    Physics_Prepare6Sub10-Physics_HandleLowerRightInnerTerrain
-                dc.w    Physics_Apply4Sub10-Physics_HandleLowerRightInnerTerrain
+                dc.w    Physics_ApplyOffset8Sub10-Physics_HandleLowerRightInnerTerrain
+                dc.w    Physics_ApplyOffset6Sub10-Physics_HandleLowerRightInnerTerrain
+                dc.w    Physics_ApplyOffset4Sub10-Physics_HandleLowerRightInnerTerrain
                 dc.w    Physics_ApplyOffset2Sub10-Physics_HandleLowerRightInnerTerrain
                 dc.w    Physics_ApplyOffset5Sub6-Physics_HandleLowerRightInnerTerrain
                 dc.w    Physics_ApplyOffset3Sub6-Physics_HandleLowerRightInnerTerrain
@@ -345,9 +345,9 @@ Physics_LowerRightInnerResponseTable:   dc.w    Physics_TerrainEmptyHandler-Phys
                 dc.w    Physics_ApplyEvenOffset0Sub12-Physics_HandleLowerLeftOuterTerrain
                 dc.w    Physics_TerrainEmptyHandler-Physics_HandleLowerLeftOuterTerrain
                 dc.w    Physics_TerrainEmptyHandler-Physics_HandleLowerLeftOuterTerrain
-                dc.w    Physics_Prepare8Sub6-Physics_HandleLowerLeftOuterTerrain
-                dc.w    Physics_Prepare6Sub6-Physics_HandleLowerLeftOuterTerrain
-                dc.w    Physics_Apply4Sub6-Physics_HandleLowerLeftOuterTerrain
+                dc.w    Physics_ApplyOffset8Sub6-Physics_HandleLowerLeftOuterTerrain
+                dc.w    Physics_ApplyOffset6Sub6-Physics_HandleLowerLeftOuterTerrain
+                dc.w    Physics_ApplyOffset4Sub6-Physics_HandleLowerLeftOuterTerrain
                 dc.w    Physics_ApplyOffset2Sub6-Physics_HandleLowerLeftOuterTerrain
                 dc.w    Physics_ApplyOffset5Sub10-Physics_HandleLowerLeftOuterTerrain
                 dc.w    Physics_ApplyOffset3Sub10-Physics_HandleLowerLeftOuterTerrain
@@ -389,9 +389,9 @@ Physics_LowerLeftOuterResponseTable:    dc.w    Physics_TerrainEmptyHandler-Phys
                 dc.w    Physics_ApplyEvenOffset0Add4-Physics_HandleLowerRightOuterTerrain
                 dc.w    Physics_TerrainEmptyHandler-Physics_HandleLowerRightOuterTerrain
                 dc.w    Physics_TerrainEmptyHandler-Physics_HandleLowerRightOuterTerrain
-                dc.w    Physics_Prepare8Sub2-Physics_HandleLowerRightOuterTerrain
-                dc.w    Physics_Prepare6Sub2-Physics_HandleLowerRightOuterTerrain
-                dc.w    Physics_Apply4Sub2-Physics_HandleLowerRightOuterTerrain
+                dc.w    Physics_ApplyOffset8Sub2-Physics_HandleLowerRightOuterTerrain
+                dc.w    Physics_ApplyOffset6Sub2-Physics_HandleLowerRightOuterTerrain
+                dc.w    Physics_ApplyOffset4Sub2-Physics_HandleLowerRightOuterTerrain
                 dc.w    Physics_ApplyOffset2Sub2-Physics_HandleLowerRightOuterTerrain
                 dc.w    Physics_ApplyOffset5Add2-Physics_HandleLowerRightOuterTerrain
                 dc.w    Physics_ApplyOffset3Add2-Physics_HandleLowerRightOuterTerrain
@@ -433,9 +433,9 @@ Physics_LowerRightOuterResponseTable:   dc.w    Physics_TerrainEmptyHandler-Phys
                 dc.w    Physics_ApplyEvenOffset0Sub4-Physics_HandleUpperCenterTerrain
                 dc.w    Physics_TerrainEmptyHandler-Physics_HandleUpperCenterTerrain
                 dc.w    Physics_TerrainEmptyHandler-Physics_HandleUpperCenterTerrain
-                dc.w    Physics_SnapAndAdd2-Physics_HandleUpperCenterTerrain
-                dc.w    Physics_Prepare6Add2-Physics_HandleUpperCenterTerrain
-                dc.w    Physics_Apply4Add2-Physics_HandleUpperCenterTerrain
+                dc.w    Physics_ApplyOffset8Add2-Physics_HandleUpperCenterTerrain
+                dc.w    Physics_ApplyOffset6Add2-Physics_HandleUpperCenterTerrain
+                dc.w    Physics_ApplyOffset4Add2-Physics_HandleUpperCenterTerrain
                 dc.w    Physics_ApplyOffset2Add2-Physics_HandleUpperCenterTerrain
                 dc.w    Physics_ApplyOffset5Sub2-Physics_HandleUpperCenterTerrain
                 dc.w    Physics_ApplyOffset3Sub2-Physics_HandleUpperCenterTerrain
@@ -479,7 +479,7 @@ Physics_UpperCenterResponseTable:   dc.w    Physics_TerrainEmptyHandler-Physics_
                 dc.w    Physics_PrepareQuarterAddOffset3-Physics_HandleUpperLeftInnerTerrain
                 dc.w    Physics_PrepareQuarterAddOffset5-Physics_HandleUpperLeftInnerTerrain
                 dc.w    Physics_PrepareVerticalOffset2-Physics_HandleUpperLeftInnerTerrain
-                dc.w    Physics_ApplyFloorOffset4-Physics_HandleUpperLeftInnerTerrain
+                dc.w    Physics_PrepareVerticalOffset4-Physics_HandleUpperLeftInnerTerrain
                 dc.w    Physics_PrepareVerticalOffset6-Physics_HandleUpperLeftInnerTerrain
                 dc.w    Physics_PrepareVerticalOffset8-Physics_HandleUpperLeftInnerTerrain
 
