@@ -205,7 +205,7 @@ Enemy_BehaviorSpriteParameters: dc.b    $18, 4, $11, 0  ; DATA XREF: Enemy_Setup
 
 ; Updates animation pointer based on current state index
 Enemy_UpdateBehaviorAnimation:                          ; CODE XREF: Enemy_BehaviorController+52   j  ; was: sub_2C53C
-                                        ; Enemy_AnimationWrapper+2   j
+                                        ; Enemy_DestructionDelayController+2   j
                 move.w  $5C(a5),d0
                 beq.s   Enemy_UpdateBehaviorAnimation_Return
                 subq.w  #4,d0

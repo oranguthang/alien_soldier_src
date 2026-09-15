@@ -10242,3 +10242,51 @@ pending queue falls from 987 to 925 and its actionable upper bound from 474 to
 412; provenance, the 513 classified binary-backed end aliases, and the
 379-module layout remain unchanged. `effects/transition_scroll.s` now has zero
 pending current names, leaving 6 modules in the queue.
+
+`enemies/jetsripper_stage_actors.s` holds three separate handler-table entries,
+and the main one turned out to be a single routine entered at six different
+points.
+
+`Enemy_BehaviorStateOffsets` has six slots, and four of them name labels *inside*
+`Enemy_MainStateMachine` rather than separate routines. What varies between the
+enemies that use it is not code but the feature bits in `$5F`: bit 0 skips the
+idle pause, bit 1 leaps at a wall instead of turning, bit 2 allows the ranged
+attack, bit 3 leaps when the player comes within `$50`, and bit 4 suppresses
+facing the player. Five bits, one state machine, and the distance thresholds
+`$78` and `$50` are tested in that order so an enemy with both attack bits set
+shoots rather than leaps in the band between them.
+
+Two of the three controllers were named for what they call rather than what they
+drive. `Enemy_AnimationWrapper` is index `$AC` of the handler table and its two
+states are the destruction delay, so it becomes
+`Enemy_DestructionDelayController`. `Enemy_ProcessObject` is index `$11` and its
+four states are the periodic-shot enemy — its animation pointers are already
+called `PeriodicShotEnemy...` — so it becomes `Enemy_PeriodicShotController`,
+with its dispatcher and state table renamed to match. Three generically named
+controllers in one file, each in fact specific, is exactly the confusion the
+contract asks to remove.
+
+The nicest piece of packing in the module is in
+`Enemy_CalculateDirectionalSprite`. Its eight-entry pointer table has `1` added
+to four of its entries, and the routine clears that bit with `bclr` before
+storing the pointer, setting the sprite flip bit when it was set. So one long
+encodes both the animation and the mirroring, and the eight directions are
+covered by six distinct animations. The angle is also rounded by adding `$20`
+before the shift, which centres each sector on its direction rather than
+starting it there.
+
+One instruction in the module does nothing. `Enemy_MainStateMachine_SelectMovement`
+ends its non-facing path with `bra.w *+4`, which targets the instruction
+immediately after the four-byte branch itself. It is recorded rather than
+explained, because nothing about the surrounding code suggests what it replaced.
+
+A smaller detail worth keeping: `Enemy_UpdateDestructionDelay` does not free its
+object when the delay expires. It retypes it to `$1C`, which is index 7 and
+therefore `Enemy_BehaviorController`, so the destruction delay hands the slot
+back to the shared behaviour machine rather than ending it.
+
+Sixty-two exact-address records raise the registry from 15,419 to 15,481. The
+pending queue falls from 925 to 863 and its actionable upper bound from 412 to
+350; provenance, the 513 classified binary-backed end aliases, and the
+379-module layout remain unchanged. `enemies/jetsripper_stage_actors.s` now has
+zero pending current names, leaving 5 modules in the queue.

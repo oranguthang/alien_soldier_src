@@ -195,13 +195,13 @@ Enemy_CheckFacePlayerTiming:                            ; CODE XREF: Enemy_MainS
                 bpl.w   Enemy_FacePlayer
                 rts
 ; End of function Enemy_MainStateMachine
-; Wrapper calling visibility check and animation update
-Enemy_AnimationWrapper:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2C8E4
+; Index $AC of the handler table: drives the two-state destruction delay
+Enemy_DestructionDelayController:                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2C8E4
                 bsr.s   Enemy_DispatchVisibilityState
                 bra.w   Enemy_UpdateBehaviorAnimation
-; End of function Enemy_AnimationWrapper
+; End of function Enemy_DestructionDelayController
 ; Dispatches the object's visibility/destruction substate
-Enemy_DispatchVisibilityState:                          ; CODE XREF: Enemy_AnimationWrapper   p  ; was: sub_2C8EA
+Enemy_DispatchVisibilityState:                          ; CODE XREF: Enemy_DestructionDelayController   p  ; was: sub_2C8EA
                 clr.w   $5C(a5)
                 move.w  4(a5),d0
                 movea.w Enemy_VisibilityStateOffsets(pc,d0.w),a0
@@ -248,7 +248,7 @@ Sprite_InitializeEnemySprite:                           ; CODE XREF: Enemy_Initi
                 rts
 ; End of function Sprite_InitializeEnemySprite
 ; Updates enemy animation frame based on state
-Anim_UpdateEnemyAnimation:                              ; CODE XREF: Enemy_ProcessObject+20   j  ; was: sub_2C970
+Anim_UpdateEnemyAnimation:                              ; CODE XREF: Enemy_PeriodicShotController+20   j  ; was: sub_2C970
                 move.w  $5C(a5),d0
                 beq.s   Anim_UpdateEnemyAnimation_Return
                 subq.w  #4,d0
@@ -262,41 +262,41 @@ PeriodicShotEnemySpriteAnimationPointers:   dc.l    PeriodicShotEnemyWaitSpriteA
                 dc.l    PeriodicShotEnemyTransitionSpriteAnimation
                 dc.l    PeriodicShotEnemyAttackSpriteAnimation
 
-; Main processing routine for enemy object
-Enemy_ProcessObject:                                    ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2C990
+; Index $11 of the handler table: drives the periodic-shot enemy
+Enemy_PeriodicShotController:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2C990
                 tst.b   $21(a5)
-                beq.s   Enemy_RunBehaviorHandler
+                beq.s   Enemy_PeriodicShotController_RunState
                 clr.w   6(a5)
                 tst.w   $24(a5)
-                bpl.s   Enemy_RunBehaviorHandler
+                bpl.s   Enemy_PeriodicShotController_RunState
                 jsr     (Effect_SpawnExplosionB).l
                 moveq   #3,d0
                 jmp     Pickup_SpawnRandomFromCurrentObject
 ; ---------------------------------------------------------------------------
-; Runs enemy behavior state handler and updates animation
-Enemy_RunBehaviorHandler:                               ; CODE XREF: Enemy_ProcessObject+4   j  ; was: loc_2C9AE
-                                        ; Enemy_ProcessObject+E   j
-                bsr.s   Enemy_RunStateHandler
+; Runs the periodic-shot state and then its animation update
+Enemy_PeriodicShotController_RunState:                  ; CODE XREF: Enemy_PeriodicShotController+4   j  ; was: loc_2C9AE
+                                        ; Enemy_PeriodicShotController+E   j
+                bsr.s   Enemy_DispatchPeriodicShotState
                 bra.w   Anim_UpdateEnemyAnimation
-; End of function Enemy_ProcessObject
-; Executes current enemy state handler
-Enemy_RunStateHandler:                                  ; CODE XREF: Enemy_ProcessObject:loc_2C9AE   p  ; was: sub_2C9B4
+; End of function Enemy_PeriodicShotController
+; Dispatches the four periodic-shot states by offset from the first
+Enemy_DispatchPeriodicShotState:                        ; CODE XREF: Enemy_PeriodicShotController:loc_2C9AE   p  ; was: sub_2C9B4
                 clr.w   $5C(a5)
                 move.w  4(a5),d0
-                movea.w Enemy_ObjectStateOffsets(pc,d0.w),a0
+                movea.w Enemy_PeriodicShotStateOffsets(pc,d0.w),a0
                 adda.l  #Enemy_InitializeWithHealth,a0
                 jmp     (a0)
-; End of function Enemy_RunStateHandler
+; End of function Enemy_DispatchPeriodicShotState
 ; ---------------------------------------------------------------------------
-Enemy_ObjectStateOffsets:   dc.w    Enemy_InitializeWithHealth-Enemy_InitializeWithHealth  ; was: off_2C9C8
-                                        ; DATA XREF: Enemy_RunStateHandler+8   r
+Enemy_PeriodicShotStateOffsets: dc.w    Enemy_InitializeWithHealth-Enemy_InitializeWithHealth  ; was: off_2C9C8
+                                        ; DATA XREF: Enemy_DispatchPeriodicShotState+8   r
                 dc.w    Enemy_InitializeWaitState-Enemy_InitializeWithHealth
                 dc.w    Enemy_AdvanceTimedState-Enemy_InitializeWithHealth
                 dc.w    Enemy_UpdatePeriodicShots-Enemy_InitializeWithHealth
 
 ; Initializes enemy with health value and sprite setup
-Enemy_InitializeWithHealth:                             ; DATA XREF: Enemy_RunStateHandler+C   o  ; was: sub_2C9D0
-                                        ; ROM:Enemy_ObjectStateOffsets   o
+Enemy_InitializeWithHealth:                             ; DATA XREF: Enemy_DispatchPeriodicShotState+C   o  ; was: sub_2C9D0
+                                        ; ROM:Enemy_PeriodicShotStateOffsets   o
                 move.w  #$62,$24(a5)                    ; 'b'
                 bsr.w   Sprite_InitializeEnemySprite
                 clr.w   $48(a5)

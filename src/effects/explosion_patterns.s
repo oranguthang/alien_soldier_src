@@ -51,7 +51,7 @@ Effect_SpawnExplosionA:                                 ; CODE XREF: Enemy_Updat
                 bra.s   Effect_InitializeExplosion
 ; End of function Effect_SpawnExplosionA
 ; Creates explosion variant B and plays its sound
-Effect_SpawnExplosionB:                                 ; CODE XREF: Enemy_ProcessObject+10   p  ; was: sub_2BEF0
+Effect_SpawnExplosionB:                                 ; CODE XREF: Enemy_PeriodicShotController+10   p  ; was: sub_2BEF0
                                         ; Enemy_UpdateBouncingDebrisSpawner+9A   p
                 jsr     (Projectile_FindFreeSlotForward).l
                 bne.w   Effect_ExplosionUpdateReturn

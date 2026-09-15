@@ -16,7 +16,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Proj
                 dc.l    Anim_UpdateSpriteFrame
                 dc.l    Player_UpdateTargetSight
                 dc.l    UI_DebugSpriteEditor
-                dc.l    Enemy_ProcessObject
+                dc.l    Enemy_PeriodicShotController
                 dc.l    Object_UpdateProximityPickupEmitterType48
                 dc.l    Projectile_UpdateEightDirectionShotCollision
                 dc.l    Projectile_ActivateEightDirectionShot
@@ -171,7 +171,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Proj
                 dc.l    Enemy_SpawnDifficultyProjectilePattern
                 dc.l    Enemy_Stage9FlyController
                 dc.l    Stage9_FlyFormationController
-                dc.l    Enemy_AnimationWrapper
+                dc.l    Enemy_DestructionDelayController
                 dc.l    Projectile_UpdateOscillatingContactHazardType2B4
                 dc.l    Boss_ViblackMain
                 dc.l    Projectile_FallingShotController

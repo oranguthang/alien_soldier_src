@@ -36,7 +36,7 @@ Pickup_SelectLargeSize:                                 ; CODE XREF: Pickup_Spaw
 ; End of function UnreferencedPickup_SpawnLargeFromCurrentObjectViaThunk
 ; Selects a pickup size randomly with the caller-provided mask
 Pickup_SpawnRandomFromCurrentObject:                    ; CODE XREF: Enemy_UpdateDefeatProjectile+26   j  ; was: sub_2BD1E
-                                        ; Enemy_ProcessObject+18   j
+                                        ; Enemy_PeriodicShotController+18   j
                 movea.w a5,a0
 Pickup_SelectRandomSize:                                ; CODE XREF: Stage18_SegmentedWormScatterSegments+36   p  ; was: loc_2BD20
                                         ; Boss_WolfGaropaSpawnFiniteRewardPickups+2A   p
