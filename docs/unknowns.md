@@ -8750,3 +8750,32 @@ pending queue falls from 2,470 to 2,449 and its actionable upper bound from
 1,957 to 1,936; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `player/input_and_status.s` now has zero
 pending current names, leaving 43 modules in the queue.
+
+The 22 pending entries in `bosses/destroyer_proto_combat.s` all survive
+unchanged, which is worth recording because it is the first module in this pass
+where every pending name matched the code. The three attack families follow one
+shape that the state table makes explicit: an opening state that expands the
+part radii and spends a timer, a charge state that ramps a palette phase to `$E`,
+a firing state, a fade state that counts the same phase back down, a pure wait,
+and a retreat that contracts the radii and returns to the movement-target
+selector. Each family is distinguished only by its palette phase, `$2000`,
+`$8000` and `$C000`, and by the angle steps it holds during the attack.
+
+The measurable details confirm the firing names rather than the reverse. The
+spread spawner returns on odd ticks, so it emits one shot every second frame,
+and it takes the dedicated spread initializer on a one-in-sixteen random draw
+and the shared hit-reactive initializer otherwise. The stream spawner is gated
+to the band between `$C` and `$40` and to every fourth tick inside it, and it
+activates one preinitialized record from each of the two cursors seeded at
+`$FFFFC8C0` and `$FFFFCEC0`, which is what makes it a pair.
+
+One comment claimed more than the code does: the aiming helper writes the
+rounded player angle into the work fields of the six parts only, so the
+reference to a core was removed. The name `Boss_DestroyerProtoAimAllPartsAtPlayer`
+was already correct.
+
+Twenty-two exact-address records raise the registry from 13,893 to 13,915. The
+pending queue falls from 2,449 to 2,427 and its actionable upper bound from
+1,936 to 1,914; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `bosses/destroyer_proto_combat.s` now
+has zero pending current names, leaving 42 modules in the queue.

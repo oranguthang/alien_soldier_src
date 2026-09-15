@@ -266,7 +266,7 @@ Boss_DestroyerProtoRetreatAfterSpread:                  ; DATA XREF: ROM:0003152
                 bsr.w   Boss_DestroyerProtoSynchronizePartAngles
                 bra.w   Boss_DestroyerProtoChooseNextMovementTarget
 ; End of function Boss_DestroyerProtoRetreatAfterSpread
-; Aims the core and all six parts at the player
+; Aims all six parts at the player and enters the stream attack
 Boss_DestroyerProtoAimAllPartsAtPlayer:                 ; CODE XREF: Boss_DestroyerProtoChooseAttack+38   j  ; was: sub_31BC2
                 jsr     (Math_CalculateAngleToPlayer).l
                 addi.w  #$10,d2
