@@ -9757,3 +9757,59 @@ pending queue falls from 1,490 to 1,439 and its actionable upper bound from 977
 to 926; provenance, the 513 classified binary-backed end aliases, and the
 379-module layout remain unchanged. `enemies/stage_12_enemies.s` now has zero
 pending current names, leaving 15 modules in the queue.
+
+`enemies/stage_9_flies_and_viblack_shots.s` produced the audit's first orphan
+pair in a long while, and a table overrun that is real but harmless.
+
+The Viblack side shot does not track Viblack. Three names and three comments
+said it did — an approach state waiting on "Viblack's stored Y position", a
+steering routine called `SteerTowardBossAltitude`, and a track state following
+"Viblack's stored altitude". Every one of those reads `PlayerCenterY`, which
+`Player_CalculateCenterPosition` computes from the player hitbox and which
+nothing else writes. The init state likewise picks its turn direction from
+`PlayerCenterX`. The steering becomes
+`Projectile_ViblackSideShotSteerTowardPlayer`: `$2000` of acceleration a frame
+toward the player centre, capped at `$20000`, which is two pixels a frame. The
+Viblack attribution itself survives, because `Projectile_InitViblackSideShot` is
+called from `Boss_ViblackSpawnSideShot`; only the tracking claim was invented.
+
+Two routines have zero references of any kind and become orphans.
+`Projectile_ViblackSideShotWaitForLinkedObject` sits in the source between the
+approach and the begin-turn states but is not in the five-entry state table, has
+no branch to it, no ROM absolute-address match, and cannot be fallen into
+because the routine above it ends in `rts`. What makes it interesting is that it
+is the only reader of `$4A` in the side-shot object, and
+`Projectile_ViblackSideShotSequenceSpawnState` still copies its own `$4A` into
+every child it spawns and then replaces it with the new child, building a chain
+of four shots each holding the one before it. Live code maintains that chain and
+nothing reads it. `Projectile_ViblackSideShotNoOp` is a bare return that nothing
+references either, and the routine above it ends in a tail jump.
+
+The fly phase tables are read one entry past their end. `$48` steps 0, 2, 4, 6
+and the state only checks for 8 after the three loads, so on the fourth visit
+each three-word table is indexed at offset 6. Forward, that takes `$100` from
+the first word of the target-angle table, `$10` from the first word of the speed
+table, and `$FFFE` from the first word of the reverse step table. Reverse, the
+last table in the group overruns into the two bytes that follow it, which are
+the `$4E75` return opcode of `Enemy_Stage9FlyNoOpState`. All six values are
+stored into `$4A`, `$4E` and `$50` on the same frame that moves the fly to its
+no-op state, so nothing ever uses them. It is worth recording because the tables
+look like clean three-entry arrays and are not indexed as such.
+
+Two smaller corrections. `Stage9_FlyFormationAllocateSlotsState` reserves eight
+slots, not the four its comment claimed: the counter runs 0 to `$10` in steps of
+two and the slots are stored from `$4C` upward. And unlike the Stage 12 tables
+audited in the previous package, every slot of the fly state table is reachable
+— the orbit state advances into the no-op slot once its phase counter reaches 8,
+so a finished fly sits there inert while the controller keeps animating it.
+
+The hide flag found in Stage 12 turns up again here, unchanged: the formation
+controller, the sequence spawner and an expired side shot all set bit 4 of the
+sprite flag byte rather than freeing their slots.
+
+Fifty-two exact-address records raise the registry from 14,903 to 14,955. The
+pending queue falls from 1,439 to 1,387 and its actionable upper bound from 926
+to 874; provenance, the 513 classified binary-backed end aliases, and the
+379-module layout remain unchanged.
+`enemies/stage_9_flies_and_viblack_shots.s` now has zero pending current names,
+leaving 14 modules in the queue.

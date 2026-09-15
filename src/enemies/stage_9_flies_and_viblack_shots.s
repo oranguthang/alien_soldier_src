@@ -141,7 +141,7 @@ Projectile_ViblackSideShotInitState_SetPositiveTurn:    ; CODE XREF: Projectile_
                 move.w  #8,$4E(a5)
                 rts
 ; End of function Projectile_ViblackSideShotInitState
-; Waits until the side shot has descended below Viblack's stored Y position
+; Waits until the side shot sits at least $20 below the player centre
 Projectile_ViblackSideShotApproachState:                ; DATA XREF: ROM:0002D7C0   o  ; was: sub_2D802
                 move.w  $14(a5),d0
                 sub.w   (PlayerCenterY).w,d0
@@ -153,8 +153,8 @@ Projectile_ViblackSideShotApproachState:                ; DATA XREF: ROM:0002D7C
                 addq.w  #2,4(a5)
                 rts
 ; End of function Projectile_ViblackSideShotApproachState
-; Waits for linked object (at $4A) to have state=0 and vertical velocity=0 before advancing
-Projectile_ViblackSideShotWaitForLinkedObject:
+; Unreachable: would wait for the linked shot in $4A to settle before advancing
+Orphaned_ViblackSideShotWaitForLinkedObject:
                 movea.w $4A(a5),a1                      ; was: sub_2D81E
                 tst.w   4(a1)
                 beq.s   Projectile_ViblackSideShotState_Return
@@ -164,7 +164,7 @@ Projectile_ViblackSideShotWaitForLinkedObject:
 Projectile_ViblackSideShotState_Return:                 ; CODE XREF: Projectile_ViblackSideShotApproachState+A   j  ; was: locret_2D832
                                         ; Projectile_ViblackSideShotApproachState+10   j
                 rts
-; End of function Projectile_ViblackSideShotWaitForLinkedObject
+; End of function Orphaned_ViblackSideShotWaitForLinkedObject
 ; Stops the entry motion and starts the turn timer
 Projectile_ViblackSideShotBeginTurnState:               ; DATA XREF: ROM:0002D7C2   o  ; was: sub_2D834
                 clr.w   $1C(a5)
@@ -189,38 +189,38 @@ Projectile_ViblackSideShotTurnAndLaunchState_Return:    ; CODE XREF: Projectile_
                                         ; Projectile_ViblackSideShotTurnAndLaunchState+28   j
                 rts
 ; End of function Projectile_ViblackSideShotTurnAndLaunchState
-; Tracks Viblack's stored altitude until the shot lifetime expires
+; Tracks the player altitude until the shot lifetime expires, then hides the shot
 Projectile_ViblackSideShotTrackAltitudeState:           ; DATA XREF: ROM:0002D7C6   o  ; was: sub_2D874
-                bsr.w   Projectile_ViblackSideShotSteerTowardBossAltitude
+                bsr.w   Projectile_ViblackSideShotSteerTowardPlayer
                 subq.w  #1,$48(a5)
                 bne.s   Projectile_ViblackSideShotTrackAltitudeState_Return
                 bset    #4,2(a5)
 Projectile_ViblackSideShotTrackAltitudeState_Return:    ; CODE XREF: Projectile_ViblackSideShotTrackAltitudeState+8   j  ; was: locret_2D884
                 rts
 ; End of function Projectile_ViblackSideShotTrackAltitudeState
-; Accelerates vertically toward Viblack's stored altitude
-Projectile_ViblackSideShotSteerTowardBossAltitude:      ; CODE XREF: Projectile_ViblackSideShotTrackAltitudeState   p  ; was: sub_2D886
+; Accelerates vertically toward the player centre, capped at two pixels a frame
+Projectile_ViblackSideShotSteerTowardPlayer:            ; CODE XREF: Projectile_ViblackSideShotTrackAltitudeState   p  ; was: sub_2D886
                 move.w  (PlayerCenterY).w,d0
                 sub.w   $14(a5),d0
-                beq.s   Projectile_ViblackSideShotSteerTowardBossAltitude_Return
+                beq.s   Projectile_ViblackSideShotSteerTowardPlayer_Return
                 tst.w   d0
-                bpl.s   Projectile_ViblackSideShotSteerTowardBossAltitude_AccelerateDown
+                bpl.s   Projectile_ViblackSideShotSteerTowardPlayer_AccelerateDown
                 subi.l  #$2000,$1C(a5)
                 cmpi.l  #$FFFE0000,$1C(a5)
-                bgt.s   Projectile_ViblackSideShotSteerTowardBossAltitude_Return
+                bgt.s   Projectile_ViblackSideShotSteerTowardPlayer_Return
                 move.l  #$FFFE0000,$1C(a5)
                 rts
 ; ---------------------------------------------------------------------------
 ; Accelerates downward, capped at the positive vertical speed limit
-Projectile_ViblackSideShotSteerTowardBossAltitude_AccelerateDown:  ; CODE XREF: Projectile_ViblackSideShotSteerTowardBossAltitude+C   j  ; was: loc_2D8B0
+Projectile_ViblackSideShotSteerTowardPlayer_AccelerateDown:  ; CODE XREF: Projectile_ViblackSideShotSteerTowardPlayer+C   j  ; was: loc_2D8B0
                 addi.l  #$2000,$1C(a5)
                 cmpi.l  #$20000,$1C(a5)
-                blt.s   Projectile_ViblackSideShotSteerTowardBossAltitude_Return
+                blt.s   Projectile_ViblackSideShotSteerTowardPlayer_Return
                 move.l  #$20000,$1C(a5)
-Projectile_ViblackSideShotSteerTowardBossAltitude_Return:  ; CODE XREF: Projectile_ViblackSideShotSteerTowardBossAltitude+8   j  ; was: locret_2D8CA
-                                        ; Projectile_ViblackSideShotSteerTowardBossAltitude+1E   j
+Projectile_ViblackSideShotSteerTowardPlayer_Return:     ; CODE XREF: Projectile_ViblackSideShotSteerTowardPlayer+8   j  ; was: locret_2D8CA
+                                        ; Projectile_ViblackSideShotSteerTowardPlayer+1E   j
                 rts
-; End of function Projectile_ViblackSideShotSteerTowardBossAltitude
+; End of function Projectile_ViblackSideShotSteerTowardPlayer
 ; Clears the side shot's combat state and replaces it with the base projectile burst
 Projectile_ViblackSideShotBeginBurst:                   ; CODE XREF: Projectile_ViblackSideShotController+A   j  ; was: sub_2D8CC
                                         ; Projectile_ViblackSideShotController+14   j
@@ -231,9 +231,10 @@ Projectile_ViblackSideShotBeginBurst:                   ; CODE XREF: Projectile_
                 clr.l   $1C(a5)
                 jmp     Enemy_SpawnQuadProjectiles
 ; End of function Projectile_ViblackSideShotBeginBurst
-Projectile_ViblackSideShotNoOp:                         ; was: nullsub_65
+; Unreachable: a bare return with no reference of any kind
+Orphaned_ViblackSideShotNoOp:                           ; was: nullsub_65
                 rts
-; End of function Projectile_ViblackSideShotNoOp
+; End of function Orphaned_ViblackSideShotNoOp
 
 ; Controls allocation and activation of the two Stage 9 fly waves
 Stage9_FlyFormationController:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2D8E8
@@ -266,7 +267,7 @@ Stage9_FlyFormationDelayState:                          ; DATA XREF: ROM:0002D8F
 Stage9_FlyFormationDelayState_Return:                   ; CODE XREF: Stage9_FlyFormationDelayState+4   j  ; was: locret_2D928
                 rts
 ; End of function Stage9_FlyFormationDelayState
-; Allocates four dormant object slots for the next fly wave
+; Allocates eight dormant object slots for the next fly wave
 Stage9_FlyFormationAllocateSlotsState:                  ; DATA XREF: ROM:0002D8F8   o  ; was: sub_2D92A
                 jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Stage9_FlyFormationAllocateSlotsState_Return
