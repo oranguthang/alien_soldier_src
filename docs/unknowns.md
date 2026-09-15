@@ -8514,3 +8514,46 @@ pending queue falls from 2,604 to 2,587 and its actionable upper bound from
 2,091 to 2,074; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `bosses/victor_parts_and_projectiles.s`
 now has zero pending current names, leaving 50 modules in the queue.
+
+The 18 pending entries in `bosses/xi_tiger_core.s` are read against
+`Boss_XiTigerStateOffsets`, whose 21 words are offsets measured from
+`Boss_XiTigerInit` rather than absolute addresses. That table is the only way
+into a Xi-Tiger state, so membership in it, not an address search, decides
+whether a routine is live.
+
+Two routines fail that test. Neither `sub_3DAA8` nor `sub_3DAE2` is named by
+any of the 21 offsets, and neither absolute address occurs anywhere in the
+ROM, so both take the `Orphaned_` prefix with their internal labels. The first
+pins the boss to X `$120` and Y `$148` while running the landing-recovery pose.
+The second subtracts two from the state word while bit 6 of
+`ControllerPressedState` is held, stepping the boss backwards through its own
+states; no other block in this module reads the controller at all. Their two
+pose-command tables stay under the `Boss_` prefix because live states share
+them.
+
+A third routine is referenced but never entered. `Boss_XiTigerFallingLanding`
+occupies table index 4, yet `Boss_XiTigerSetup` advances the state word by four
+from state 2 straight to state 6, and no code in the project writes 4 into this
+boss's state word. It keeps its name and its `Boss_` prefix, because the
+dispatch table does reference it; the registry records that the released game
+does not reach it.
+
+Three live names asserted behavior the code does not perform.
+`Boss_XiTigerBattleActive` runs no combat decision: it holds the idle pose
+until counter `$17E` reaches `$FFFC` and then calls `BossMessage_Start`, so it
+is now `Boss_XiTigerStartBossMessage`. `Boss_XiTigerJumpPeak` covers the
+descent and the landing impact rather than the apex, which the preceding state
+already ends at, so it is now `Boss_XiTigerJumpDescendAndLand`.
+`Boss_XiTigerUpdateBody` touches no metasprite part; it writes
+`SecondaryCameraXPos` and `SecondaryCameraYPos` and tail-calls
+`Boss_ClampSharedScreenPosition`, the publish-and-clamp pair already named by
+`Boss_ShellshogunPublishScreenPosition`, so it becomes
+`Boss_XiTigerPublishScreenPosition`. `Boss_XiTigerCloseRangeAI` is renamed to
+`Boss_XiTigerCloseRangeAttackState` because the former name identified no
+mechanism.
+
+Eighteen exact-address records raise the registry from 13,755 to 13,773. The
+pending queue falls from 2,587 to 2,569 and its actionable upper bound from
+2,074 to 2,056; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `bosses/xi_tiger_core.s` now has zero
+pending current names, leaving 49 modules in the queue.
