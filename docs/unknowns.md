@@ -10085,3 +10085,55 @@ pending queue falls from 1,165 to 1,106 and its actionable upper bound from 652
 to 593; provenance, the 513 classified binary-backed end aliases, and the
 379-module layout remain unchanged. `gameplay/main_loop.s` now has zero pending
 current names, leaving 9 modules in the queue.
+
+`gameplay/object_data.s` holds the two loader dispatch tables, and auditing them
+showed that two handler names in the first table were the wrong way round.
+
+The module has two parallel eight-entry tables. `LoadObjDataHandlers` is the
+synchronous one, indexed by the `field_0` word of every asset load list in the
+game; `Sys_DataLoaderHandlers` is the asynchronous one, indexed the same way by
+`DataLoaderControl`. Slot for slot the type meanings match: RAM code copy, VRAM
+write, tiles decoded to RAM, tiles decoded to VRAM, the same pair again in slots
+4 and 5, then LZSS to RAM and LZSS to VRAM.
+
+Three independent lines of evidence agree on what slots 6 and 7 are. First the
+code: slot 6 reads its destination word after `moveq #$FFFFFFFF`, so it is
+sign-extended into `$FFFFxxxx` and the decoder writes to RAM, while slot 7 seeds
+with `moveq #0` and turns the word into a VDP write command. Second the data:
+across the whole source, 153 of the 157 slot-6 records carry a mapping payload
+and 169 of the 193 slot-7 records carry tile art. Third the parallel table,
+whose names for the same two slots — `Data_DecompressLZSSDirect` and
+`Gfx_DecompressLZSSToVRAMBatched` — already say destination rather than payload.
+So `LoadCompressedTiles` is the one that loads mappings, to RAM, and
+`LoadCompressedMappings` is the one that loads tile art, to VRAM. They become
+`LoadCompressedToRAM` and `LoadCompressedToVRAM`, with their four sub-labels
+following.
+
+Those two are the first names this audit has corrected that had no
+address-derived legacy: they were imported already named, so they carried no
+provenance marker and had no registry record at all. They are handled the way
+`LoadPalette` and `CheckFlagsLoadObjData` were handled before — added to the
+`legacy_name_pattern` whitelist in `config/source_policy.json` so that the old
+name can be recorded as the legacy in both the source marker and the registry.
+The provenance count rises by two as a result, from 16,051 to 16,053.
+
+Two details of the LZSS format are worth keeping. The opcode byte selects five
+cases from three bits: bit 7 gives a back reference, and with it clear bits 5
+and 6 give a literal run, a single-byte fill, a two-byte fill and a mixed fill
+that holds one byte constant while taking the other fresh from the stream. And
+the back reference takes its length from bits 2 to 6 plus one, one to thirty-two
+bytes, and its distance from the remaining two bits joined with the next byte,
+masked to `$3FF` and incremented — a 1024-byte window, which is exactly the
+`$400` block size `LZSSDecomp` enforces on every caller.
+
+One asymmetry in that decoder looks like an oversight but is consistent across
+the whole format: all three fill cases mask the count to five bits and then add
+one before the `dbf`, while the literal case masks and does not. For the same
+encoded count a literal run is therefore one byte shorter than a fill.
+
+Sixty-one exact-address records raise the registry from 15,236 to 15,297, two of
+them for labels that had never been recorded before. The pending queue falls
+from 1,106 to 1,047 and its actionable upper bound from 593 to 534; the 513
+classified binary-backed end aliases and the 379-module layout remain unchanged.
+`gameplay/object_data.s` now has zero pending current names, leaving 8 modules
+in the queue.

@@ -17,8 +17,8 @@ LoadObjDataHandlers:    dc.l    LoadFuncToRAM           ; was: off_2650
                 dc.l    Gfx_LoadCompressedGfx
                 dc.l    LoadFuncToRAM
                 dc.l    Gfx_LoadDataToVRAM
-                dc.l    LoadCompressedTiles
-                dc.l    LoadCompressedMappings
+                dc.l    LoadCompressedToRAM
+                dc.l    LoadCompressedToVRAM
 
 LoadFuncToRAM:                                          ; DATA XREF: ROM:LoadObjDataHandlers   o
                                         ; ROM:00002660   o
@@ -113,7 +113,8 @@ Gfx_DecompLoop:                                         ; CODE XREF: Gfx_LoadCom
                 dbf     d1,Gfx_DecompLoop
                 rts
 ; End of function Gfx_LoadCompressedGfx
-LoadCompressedTiles:                                    ; DATA XREF: ROM:00002668   o
+; Decompresses LZSS blocks straight into a RAM destination
+LoadCompressedToRAM:                                    ; DATA XREF: ROM:00002668   o  ; was: LoadCompressedTiles
                 movea.l (a0)+,a1
                 moveq   #0,d0
                 move.w  (a1)+,d0
@@ -123,14 +124,15 @@ LoadCompressedTiles:                                    ; DATA XREF: ROM:0000266
                 move.w  (a0)+,d0
                 movea.l d0,a2
 ; Loop that decompresses multiple LZSS-compressed data blocks sequentially until reaching end address
-Data_LZSSDecompLoop:                                    ; CODE XREF: LoadCompressedTiles+16   j  ; was: loc_273C
+LoadCompressedToRAM_BlockLoop:                          ; CODE XREF: LoadCompressedToRAM+16   j  ; was: loc_273C
                 bsr.w   LZSSDecomp
                 cmpa.l  a4,a1
-                bcs.s   Data_LZSSDecompLoop
+                bcs.s   LoadCompressedToRAM_BlockLoop
                 rts
-; End of function LoadCompressedTiles
+; End of function LoadCompressedToRAM
 
-LoadCompressedMappings:                                 ; DATA XREF: ROM:0000266C   o
+; Decompresses LZSS through the staging buffer and writes $400-byte blocks to VRAM
+LoadCompressedToVRAM:                                   ; DATA XREF: ROM:0000266C   o  ; was: LoadCompressedMappings
                 movea.l (a0)+,a1
                 moveq   #0,d0
                 move.w  (a1)+,d0
@@ -139,11 +141,11 @@ LoadCompressedMappings:                                 ; DATA XREF: ROM:0000266
                 moveq   #0,d0
                 move.w  (a0)+,d0
                 movea.l d0,a3
-LoadCompressedMappings_BlockLoop:                       ; CODE XREF: LoadCompressedMappings+56   j  ; was: loc_2756
+LoadCompressedToVRAM_BlockLoop:                         ; CODE XREF: LoadCompressedToVRAM+56   j  ; was: loc_2756
                 lea     (GraphicsStagingBuffer).w,a2
                 bsr.w   LZSSDecomp
                 cmpa.l  a4,a1
-                bcc.w   LoadCompressedMappings_FinalBlock
+                bcc.w   LoadCompressedToVRAM_FinalBlock
                 move.w  #$FF,d1
                 lea     (GraphicsStagingBuffer).w,a2
                 lea     (VDP_CTRL).l,a5
@@ -157,14 +159,14 @@ LoadCompressedMappings_BlockLoop:                       ; CODE XREF: LoadCompres
                 swap    d2
                 move.l  d2,(a5)
                 lea     (VDP_DATA).l,a5
-LoadCompressedMappings_WriteFullBlock:                  ; CODE XREF: LoadCompressedMappings+4C   j  ; was: loc_2790
+LoadCompressedToVRAM_WriteFullBlock:                    ; CODE XREF: LoadCompressedToVRAM+4C   j  ; was: loc_2790
                 move.l  (a2)+,(a5)
-                dbf     d1,LoadCompressedMappings_WriteFullBlock
+                dbf     d1,LoadCompressedToVRAM_WriteFullBlock
                 move    (sp)+,sr
                 lea     $400(a3),a3
-                bra.s   LoadCompressedMappings_BlockLoop
+                bra.s   LoadCompressedToVRAM_BlockLoop
 ; ---------------------------------------------------------------------------
-LoadCompressedMappings_FinalBlock:                      ; CODE XREF: LoadCompressedMappings+1A   j  ; was: loc_279E
+LoadCompressedToVRAM_FinalBlock:                        ; CODE XREF: LoadCompressedToVRAM+1A   j  ; was: loc_279E
                 move.w  a2,d1
                 subi.w  #$B400,d1
                 lsr.w   #1,d1
@@ -180,12 +182,12 @@ LoadCompressedMappings_FinalBlock:                      ; CODE XREF: LoadCompres
                 swap    d2
                 move.l  d2,(a5)
                 lea     (VDP_DATA).l,a5
-LoadCompressedMappings_WriteFinalBlock:                 ; CODE XREF: LoadCompressedMappings+8A   j  ; was: loc_27CE
+LoadCompressedToVRAM_WriteFinalBlock:                   ; CODE XREF: LoadCompressedToVRAM+8A   j  ; was: loc_27CE
                 move.w  (a2)+,(a5)
-                dbf     d1,LoadCompressedMappings_WriteFinalBlock
+                dbf     d1,LoadCompressedToVRAM_WriteFinalBlock
                 move    (sp)+,sr
                 rts
-; End of function LoadCompressedMappings
+; End of function LoadCompressedToVRAM
 
 ; Processes data pointers with state bits
 Data_ProcessPointer:                                    ; CODE XREF: Sys_DispatchDataLoader+16   p  ; was: sub_27D8
@@ -394,8 +396,8 @@ Gfx_DecompressLZSSToVRAMBatched_WaitFinal:              ; CODE XREF: Gfx_Decompr
                 bne.s   Gfx_DecompressLZSSToVRAMBatched_WaitFinal
                 rts
 ; End of function Gfx_DecompressLZSSToVRAMBatched
-LZSSDecomp:                                             ; CODE XREF: LoadCompressedTiles:loc_273C   p
-                                        ; LoadCompressedMappings+14   p
+LZSSDecomp:                                             ; CODE XREF: LoadCompressedToRAM:loc_273C   p
+                                        ; LoadCompressedToVRAM+14   p
                 movem.l d4-d7/a5,-(sp)
                 move.w  a2,d4
                 addi.w  #$400,d4
