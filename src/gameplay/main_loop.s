@@ -122,12 +122,12 @@ Sys_GameplayMainLoop_UpdateFrameTiming:                 ; CODE XREF: Sys_Gamepla
                 bmi.s   Sys_GameplayMainLoop_FinishFrame
                 addq.w  #1,(FrameCounter).w
                 subq.w  #1,(FrameFreezeTimer).w
-                bpl.s   Sys_GameplayMainLoop_SetActiveFrame
+                bpl.s   Sys_GameplayMainLoop_SetFrozenFrame
                 move.w  #$FFFF,(FrameFreezeTimer).w
                 move.b  #0,d0
                 bra.s   Sys_GameplayMainLoop_StoreFrameFlag
 ; ---------------------------------------------------------------------------
-Sys_GameplayMainLoop_SetActiveFrame:                    ; CODE XREF: Sys_GameplayMainLoop+212   j  ; was: loc_1C87C
+Sys_GameplayMainLoop_SetFrozenFrame:                    ; CODE XREF: Sys_GameplayMainLoop+212   j  ; was: loc_1C87C
                 move.b  #$80,d0
 Sys_GameplayMainLoop_StoreFrameFlag:                    ; CODE XREF: Sys_GameplayMainLoop+21E   j  ; was: loc_1C880
                 move.b  d0,(FrameControlFlags).w
@@ -272,15 +272,15 @@ Object_ApplyCameraMotion_VisibleLoop:                   ; CODE XREF: Object_Appl
                 move.b  2(a5),d2
                 beq.s   Object_ApplyCameraMotion_NextVisible
                 btst    d5,d2
-                beq.s   Object_ApplyCameraMotion_ApplyHorizontalVelocity
+                beq.s   Object_ApplyCameraMotion_ProcessVerticalVelocity
                 move.l  $18(a5),d3
                 add.l   d3,$10(a5)
-Object_ApplyCameraMotion_ApplyHorizontalVelocity:       ; CODE XREF: Object_ApplyCameraMotion+98   j  ; was: loc_1CA1C
+Object_ApplyCameraMotion_ProcessVerticalVelocity:       ; CODE XREF: Object_ApplyCameraMotion+98   j  ; was: loc_1CA1C
                 btst    d6,d2
-                beq.s   Object_ApplyCameraMotion_ApplyVerticalVelocity
+                beq.s   Object_ApplyCameraMotion_ProcessCameraDelta
                 move.l  $1C(a5),d3
                 add.l   d3,$14(a5)
-Object_ApplyCameraMotion_ApplyVerticalVelocity:         ; CODE XREF: Object_ApplyCameraMotion+A4   j  ; was: loc_1CA28
+Object_ApplyCameraMotion_ProcessCameraDelta:            ; CODE XREF: Object_ApplyCameraMotion+A4   j  ; was: loc_1CA28
                 btst    d7,d2
                 beq.s   Object_ApplyCameraMotion_NextVisible
                 sub.w   d0,$10(a5)
@@ -309,10 +309,10 @@ Object_ApplyCameraMotion_StationaryLoop:                ; CODE XREF: Object_Appl
                 move.b  2(a5),d2
                 beq.s   Object_ApplyCameraMotion_NextStationary
                 btst    d5,d2
-                beq.s   Object_ApplyCameraMotion_ApplyStationaryHorizontalVelocity
+                beq.s   Object_ApplyCameraMotion_ProcessStationaryVertical
                 move.l  $18(a5),d3
                 add.l   d3,$10(a5)
-Object_ApplyCameraMotion_ApplyStationaryHorizontalVelocity:  ; CODE XREF: Object_ApplyCameraMotion+F0   j  ; was: loc_1CA74
+Object_ApplyCameraMotion_ProcessStationaryVertical:     ; CODE XREF: Object_ApplyCameraMotion+F0   j  ; was: loc_1CA74
                 btst    d6,d2
                 beq.s   Object_ApplyCameraMotion_NextStationary
                 move.l  $1C(a5),d3
@@ -375,7 +375,7 @@ Physics_ApplyVelocityWithBounds_ApplyVertical:          ; CODE XREF: Physics_App
 Physics_ApplyVelocityWithBounds_Return:                 ; CODE XREF: Physics_ApplyVelocityWithBounds+36   j  ; was: locret_1CAE2
                 rts
 ; End of function Physics_ApplyVelocityWithBounds
-; Applies position offset based on direction flags
+; Applies the camera delta to an object whose flag bit 0 makes it follow the camera
 Physics_ApplyPositionOffset:                            ; CODE XREF: Object_ApplyCameraMotion+7A   p  ; was: sub_1CAE4
                 btst    d7,d2
                 beq.s   Physics_ApplyPositionOffset_Return

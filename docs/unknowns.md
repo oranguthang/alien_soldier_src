@@ -10034,3 +10034,54 @@ pending queue falls from 1,222 to 1,165 and its actionable upper bound from 709
 to 652; provenance, the 513 classified binary-backed end aliases, and the
 379-module layout remain unchanged. `weapons/firing.s` now has zero pending
 current names, leaving 10 modules in the queue.
+
+`gameplay/main_loop.s` explains its own shape once one detail is noticed: the
+fifteen phase labels of `Sys_GameplayMainLoop` exist because each is the target
+of a `FrameTimingDebugFlag` test that writes `$C0420000` to the VDP control port
+and then a colour to the data port. That is a CRAM write to entry `$21`, so with
+the flag set the backdrop changes colour at every phase boundary and the border
+becomes a raster profile of the frame. The labels are not arbitrary subdivisions
+but the measurement points of a built-in profiler.
+
+One name was inverted. `Sys_GameplayMainLoop_SetActiveFrame` is the branch taken
+while `FrameFreezeTimer` is still counting, and the `$80` it writes sets bit 7
+of `FrameControlFlags` — the bit that makes `Collision_UpdateSystem` return
+immediately and `Player_Update` render without updating. It marks the frame
+*frozen*, and the running case is the other branch, which writes zero. The timer
+it spends is the four-frame hit-stop that
+`Collision_CheckPlayerAgainstHostiles_StoreDamageFeedback` arms. It becomes
+`Sys_GameplayMainLoop_SetFrozenFrame`.
+
+Three labels in `Object_ApplyCameraMotion` were one position out. The object
+loop has three steps — horizontal velocity, vertical velocity, camera delta —
+and each step ends with a label that is the branch target for skipping it. The
+labels were named for the step above them rather than the step they perform, so
+`ApplyHorizontalVelocity` in fact applies the vertical velocity and
+`ApplyVerticalVelocity` applies the camera delta. The same module settles which
+convention is right: `Physics_ApplyVelocityWithBounds_ProcessVertical`, three
+routines later, is the identical construct named for the step it performs. The
+three become `ProcessVerticalVelocity`, `ProcessCameraDelta` and
+`ProcessStationaryVertical`.
+
+That routine also pins three more bits of the object flag byte at `2(a5)`. It
+loads d5, d6 and d7 with 3, 2 and 0 and then uses them as register bit indices
+throughout, so bit 3 is "apply horizontal velocity", bit 2 "apply vertical
+velocity" and bit 0 "follow the camera". With bits 7 and 4 already identified as
+visible and hidden in earlier packages, five of the eight are now accounted for.
+
+`Physics_ApplyPositionOffset` applies the camera delta specifically, not an
+arbitrary offset — it is the third step of the loop factored out for the player,
+guarded by the same bit 0 — and its comment is corrected to say so.
+
+Two smaller notes. `nullsub_2` is live, not orphaned: `Sys_GameplayMainLoop`
+calls it as its very first instruction, so it is an emptied hook rather than a
+cut routine. And `Sys_GameplayMainLoop_RequestExit` writes `$41` into
+`GameplayControlFlags`, which is bits 6 and 0 and pointedly not bit 7, so unlike
+the `$80` that boss and stage code writes it does not stop the frame counter.
+The record states what it writes rather than asserting more than the code shows.
+
+Fifty-nine exact-address records raise the registry from 15,177 to 15,236. The
+pending queue falls from 1,165 to 1,106 and its actionable upper bound from 652
+to 593; provenance, the 513 classified binary-backed end aliases, and the
+379-module layout remain unchanged. `gameplay/main_loop.s` now has zero pending
+current names, leaving 9 modules in the queue.
