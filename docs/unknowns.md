@@ -9328,3 +9328,36 @@ pending queue falls from 1,885 to 1,844 and its actionable upper bound from
 1,372 to 1,331; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `collision/terrain_and_combat.s` now has
 zero pending current names, leaving 24 modules in the queue.
+
+The 41 pending entries in `gameplay/sprite_initialization.s` are dominated by
+twenty-one object-descriptor tables whose names each claim a boss owner. Every
+claim was checked against the table's callers rather than accepted, and twenty
+of the twenty-one hold: each is referenced by exactly the boss module its name
+names, and by nothing else.
+
+The exception is `Boss_ValkirieObjectInitTable`, whose only consumer is
+`debug/valkirie_composite_viewer.s`, a handler that `Entity_UpdateHandlerTable`
+installs. The Valkirie battle itself uses the two separate intro and effect
+tables that follow it, and a third Valkirie module uses the alternate table, so
+the boss attribution was wrong; the table becomes
+`Debug_ValkirieViewerObjectInitTable`.
+
+The interpreter that reads all of them is worth recording. `Object_InitGroupFromTable`
+walks a stream terminated by `$FFFE` in which every record names its own
+destination object by address, which is why a single table can initialize an
+arbitrary set of records rather than a contiguous run. Bit 0 of the second byte
+is consumed as a flag that presets field `$23`, and a later byte in the same
+record overwrites it, so the flag only matters for records that end without one.
+
+Two comments claimed behaviour the code does not have.
+`Sprite_FindFreeEnemySlot` performs a plain linear scan of sixteen records with
+no wraparound, and `Sprite_FindFreeEffectSlot` is the same shape over four
+records with nothing tying it to explosions. `Sprite_ClearObjectFlags`, which
+sixteen boss defeat paths call, clears the collision byte only of objects whose
+flags overlap the `$92` mask rather than of every record.
+
+Forty-one exact-address records raise the registry from 14,498 to 14,539. The
+pending queue falls from 1,844 to 1,803 and its actionable upper bound from
+1,331 to 1,290; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `gameplay/sprite_initialization.s` now
+has zero pending current names, leaving 23 modules in the queue.

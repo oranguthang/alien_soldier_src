@@ -72,7 +72,7 @@ Debug_ValkirieViewerInitialize:                         ; DATA XREF: ROM:Debug_V
                 move.w  d1,$9CE(a5)
                 move.b  #$18,$9E0(a5)
                 move.l  #Debug_ValkirieViewerExtendedGunMapping,$9C8(a5)
-                movea.l #Boss_ValkirieObjectInitTable,a1
+                movea.l #Debug_ValkirieViewerObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l
                 bsr.w   Debug_ValkirieViewerLoadLeftTiles
                 bra.w   *+4

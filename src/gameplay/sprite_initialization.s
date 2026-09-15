@@ -186,7 +186,7 @@ Boss_WolfGaropaObjectInitTable: dc.w    $C620, $5004, $E004, $E040, $E0F8, $E030
                 dc.w    $CF80, 8, $F010, $FF24, $F010, $FC04, $2A04
                 dc.w    $CFE0, $1038, $FC2C, $F010, 0, 0, $84
                 dc.w    $FFFE
-Boss_ValkirieObjectInitTable:   dc.w    $C620, $501C, $D010, $F010, $D808, $F808, $6909  ; was: word_1BE6C
+Debug_ValkirieViewerObjectInitTable:    dc.w    $C620, $501C, $D010, $F010, $D808, $F808, $6909  ; was: word_1BE6C
                                         ; DATA XREF: Debug_ValkirieViewerInitialize+F6   o
                 dc.w    $CB60, $5004, $F010, $F010, $FC04, $FC04, $7D09
                 dc.w    $CCE0, $5004, $F010, $F010, $FC04, $FC04, $7D09
@@ -237,7 +237,7 @@ Boss_SylpheedObjectInitTable:   dc.w    $C620, $5040, $EC14, $EC14, $EC14, $EC14
                 dc.w    $CFE0, $5000, $E41C, $E41C, $FC04, $FC04, $3710
                 dc.w    $FFFE
 
-; Finds free enemy object slot with wraparound search
+; Scans sixteen contiguous enemy records for the first free one
 Sprite_FindFreeEnemySlot:                               ; CODE XREF: TerrainTileAnimation_WaitForActivation+14   p  ; was: sub_1C014
                 movea.w #(SecondaryEntityType-M68K_RAM),a0
                 moveq   #$F,d7
@@ -249,7 +249,7 @@ Sprite_FindFreeEnemySlot_Loop:                          ; CODE XREF: Sprite_Find
 Sprite_FindFreeEnemySlot_Return:                        ; CODE XREF: Sprite_FindFreeEnemySlot+8   j  ; was: locret_1C026
                 rts
 ; End of function Sprite_FindFreeEnemySlot
-; Searches for free sprite slot in effect pool for explosions
+; Scans four contiguous records from the shared entity slot for the first free one
 Sprite_FindFreeEffectSlot:                              ; CODE XREF: Hazard_UpdateTopFallingSpawnerType104+2E   p  ; was: sub_1C028
                 movea.w #(Entity57Type-M68K_RAM),a0
                 moveq   #3,d7
