@@ -8832,3 +8832,34 @@ pending queue falls from 2,404 to 2,381 and its actionable upper bound from
 1,891 to 1,868; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `stages/stage_12_yacht.s` now has zero
 pending current names, leaving 40 modules in the queue.
+
+The 24 pending entries in `player/cutscene_and_damage_states.s` needed a
+reachability test of their own, because the player state table stores word
+offsets from `Player_HandleDeathSequence` rather than absolute addresses. An
+absolute-address scan of the ROM therefore finds nothing even for states that
+are plainly live, and indeed it fails on the control pair
+`Player_KnockbackState` and `Player_SpecialMoveRecoveryState`. Resolving the 47
+table words against that base finds both controls and none of the four
+candidates, which have no symbolic reference either.
+
+Two of the four are dead only at their entry instruction, which is why the
+prefix is applied carefully. `Player_InitAirRecovery` is one `move.l` that sets
+the slower `$FFFD8000` rise; the tail immediately below it is live, because the
+fast-velocity path branches straight there, so the entry becomes
+`Orphaned_PlayerSetAirRecoveryRiseVelocity` while the tail is renamed
+`Player_EnterAirRecoveryFall` rather than kept as that entry's `_Finish`. The
+same split applies to `Player_NoOp`: the single `nop` is unreachable, but the
+return instruction after it is the knockback state's no-contact exit, so it
+becomes `Player_KnockbackStateReturn`.
+
+The other two are dead outright. `Player_SetHorizontalKnockback` begins with a
+conditional branch and so depends on condition codes a caller would set, but no
+caller exists; the live facing-based variant `Player_SetKnockbackVelocity` sits
+directly below it. `Player_UnusedStateReturn` is a bare return whose former name
+already guessed its status, which the prefix now records as a checked fact.
+
+Twenty-four exact-address records raise the registry from 13,961 to 13,985. The
+pending queue falls from 2,381 to 2,357 and its actionable upper bound from
+1,868 to 1,844; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `player/cutscene_and_damage_states.s`
+now has zero pending current names, leaving 39 modules in the queue.

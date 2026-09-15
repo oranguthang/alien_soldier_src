@@ -25,15 +25,15 @@ Player_SpecialMoveRecoveryState:                        ; CODE XREF: Player_Hand
                 bne.w   Player_InitiateDashAttack_UseGroundState
 Player_SpecialMoveRecoveryState_SetFastVerticalVelocity:  ; CODE XREF: Player_SpecialMoveRecoveryState+54   j  ; was: loc_160FA
                 move.l  #$FFF80000,$1C(a5)
-                bra.s   Player_InitAirRecovery_Finish
+                bra.s   Player_EnterAirRecoveryFall
 ; End of function Player_SpecialMoveRecoveryState
-; Sets upward velocity for air recovery
-Player_InitAirRecovery:
+; Unreachable entry that only sets the slower air-recovery rise velocity
+Orphaned_PlayerSetAirRecoveryRiseVelocity:
                 move.l  #$FFFD8000,$1C(a5)              ; was: sub_16104
-Player_InitAirRecovery_Finish:                          ; CODE XREF: Player_SpecialMoveRecoveryState+68   j  ; was: loc_1610C
+Player_EnterAirRecoveryFall:                            ; CODE XREF: Player_SpecialMoveRecoveryState+68   j  ; was: loc_1610C
                 move.w  #$FFE0,$52(a5)
                 bra.w   Player_InitFallState_Finish
-; End of function Player_InitAirRecovery
+; End of function Orphaned_PlayerSetAirRecoveryRiseVelocity
 ; Renders the recovery pose with or without the weapon overlay
 Player_RenderSpecialMoveRecovery:                       ; CODE XREF: Player_SpecialMoveRecoveryState+4E   j  ; was: sub_16116
                 movea.l #Player_SpecialAttackSecondarySpriteMappingA,a2
@@ -209,16 +209,16 @@ Player_InitKnockbackState_SetAlternateVerticalVelocity:  ; CODE XREF: Player_Ini
                 bne.w   Player_InitKnockbackState_UseStoredHorizontalVelocity
                 bra.s   Player_SetKnockbackVelocity
 ; End of function Player_InitKnockbackState
-; Sets horizontal knockback velocity
-Player_SetHorizontalKnockback:
-                bmi.s   Player_SetHorizontalKnockback_Negative  ; was: sub_1632E
+; Unreachable: picks a signed knockback velocity from the caller's condition codes
+Orphaned_PlayerSetHorizontalKnockbackFromFlags:
+                bmi.s   Orphaned_PlayerSetHorizontalKnockbackNegative  ; was: sub_1632E
                 move.l  #$38000,$18(a5)
                 rts
 ; ---------------------------------------------------------------------------
-Player_SetHorizontalKnockback_Negative:                 ; CODE XREF: Player_SetHorizontalKnockback   j  ; was: loc_1633A
+Orphaned_PlayerSetHorizontalKnockbackNegative:          ; CODE XREF: Orphaned_PlayerSetHorizontalKnockbackFromFlags   j  ; was: loc_1633A
                 move.l  #$FFFC8000,$18(a5)
                 rts
-; End of function Player_SetHorizontalKnockback
+; End of function Orphaned_PlayerSetHorizontalKnockbackFromFlags
 ; Sets player horizontal knockback velocity based on facing direction
 Player_SetKnockbackVelocity:                            ; CODE XREF: Player_InitKnockbackState+84   j  ; was: sub_16344
                 move.l  #$FFFC8000,$18(a5)
@@ -250,7 +250,7 @@ Player_KnockbackState_ApplyPhysics:                     ; CODE XREF: Player_Knoc
                 bmi.s   Player_KnockbackState_CheckUpperTerrain
                 bsr.w   Physics_DescendingTerrainCheckWrapper
                 btst    #0,6(a5)
-                beq.s   Player_StateNoOp_Return
+                beq.s   Player_KnockbackStateReturn
                 bsr.w   Player_ClearKnockbackState
                 bra.w   Player_InitLandingState
 ; ---------------------------------------------------------------------------
@@ -258,12 +258,12 @@ Player_KnockbackState_CheckUpperTerrain:                ; CODE XREF: Player_Knoc
                 clr.b   6(a5)
                 jmp     Physics_RisingTerrainCheckWrapper(pc)  ; (pc)
 ; End of function Player_KnockbackState
-; Empty function that returns
-Player_NoOp:
+; Unreachable single nop ahead of the live shared knockback return
+Orphaned_PlayerNoOpEntry:
                 nop                                     ; was: sub_163BA
-Player_StateNoOp_Return:                                ; CODE XREF: Player_KnockbackState+4E   j  ; was: locret_163BC
+Player_KnockbackStateReturn:                            ; CODE XREF: Player_KnockbackState+4E   j  ; was: locret_163BC
                 rts
-; End of function Player_NoOp
+; End of function Orphaned_PlayerNoOpEntry
 ; Clears player knockback flag and resets sprite state after hit
 Player_ClearKnockbackState:                             ; CODE XREF: Player_KnockbackState+1A   p  ; was: sub_163BE
                                         ; Player_KnockbackState+50   p
@@ -272,9 +272,9 @@ Player_ClearKnockbackState:                             ; CODE XREF: Player_Knoc
                 move.b  #$81,$21(a5)
                 rts
 ; End of function Player_ClearKnockbackState
-Player_UnusedStateReturn:                               ; was: nullsub_41
+Orphaned_PlayerUnusedStateReturn:                       ; was: nullsub_41
                 rts
-; End of function Player_UnusedStateReturn
+; End of function Orphaned_PlayerUnusedStateReturn
 
 ; Initializes the idle state used while attached to upper terrain
 Player_InitCeilingIdleState:                            ; CODE XREF: Player_CeilingCounterForceState+1A   j  ; was: sub_163D2

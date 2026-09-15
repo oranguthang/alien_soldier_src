@@ -1087,6 +1087,9 @@
         "It performs player terrain, input, damage, velocity, and rendering decisions and never iterates or updates particle objects."
       ]
     },
+    { "address": "0x0160FA", "previous_name": "loc_160FA", "current_name": "Player_SpecialMoveRecoveryState_SetFastVerticalVelocity", "legacy_name": "loc_160FA", "evidence": "static", "basis": ["Both the already-used air dash and the downward-held case converge here to take the faster $FFF80000 rise instead of the slower value the unreachable entry above would set."] },
+    { "address": "0x016104", "previous_name": "Player_InitAirRecovery", "current_name": "Orphaned_PlayerSetAirRecoveryRiseVelocity", "legacy_name": "sub_16104", "evidence": "static", "basis": ["The player state table holds word offsets from Player_HandleDeathSequence, and no entry resolves to this address; nothing branches to it either, while the control states Player_KnockbackState and Player_SpecialMoveRecoveryState are both found in that table. The single instruction sets the slower $FFFD8000 rise velocity before the live tail below."] },
+    { "address": "0x01610C", "previous_name": "Player_InitAirRecovery_Finish", "current_name": "Player_EnterAirRecoveryFall", "legacy_name": "loc_1610C", "evidence": "static", "basis": ["This tail is live: the fast-velocity path branches straight to it. It stores the $FFE0 recovery marker in $52 and enters the shared fall state, so it no longer carries the unreachable entry's name."] },
     {
       "address": "0x016116",
       "previous_name": "Player_CheckSpecialAttack",
@@ -1098,8 +1101,20 @@
         "No availability, resource, or attack-state condition is checked."
       ]
     },
+    { "address": "0x01612A", "previous_name": "loc_1612A", "current_name": "Player_RenderSpecialMoveRecovery_SelectVariant", "legacy_name": "loc_1612A", "evidence": "static", "basis": ["Both frame-counter halves converge here with a secondary mapping chosen, and the held bit 4 then decides between the plain pose and the weapon overlay."] },
+    { "address": "0x016146", "previous_name": "loc_16146", "current_name": "Player_RenderSpecialMoveRecovery_WithWeapon", "legacy_name": "loc_16146", "evidence": "static", "basis": ["The weapon path supplies the alternate muzzle offsets and layout table to the shared table-driven renderer instead of building the plain pose."] },
+    { "address": "0x01615A", "previous_name": "nullsub_40", "current_name": "Player_SpecialMoveRecoveryState_Return", "legacy_name": "nullsub_40", "evidence": "static", "basis": ["A bare return taken when the recovery weapon-select helper reports that it consumed the input."] },
     {"address":"0x01615C","previous_name":"Player_CheckAlternateSpecialActivation","current_name":"Player_CheckRecoveryWeaponSelectInput","legacy_name":"sub_1615C","evidence":"static","basis":["Pressed input bit six (button A) saves WeaponSlotOffset, sets WeaponStateIndex to $12, and enters a terrain-specific holding state until WeaponSelect_Update closes the selector.","The official Sega Alien Soldier manual assigns button A to weapon selection; no Counter Force or other special attack is created by this path."]},
     {"address":"0x0161A6","previous_name":"Player_AlternateSpecialState","current_name":"Player_RecoveryWeaponSelectState","legacy_name":"sub_161A6","evidence":"static","basis":["Pressed input bit six (button A) saves WeaponSlotOffset, sets WeaponStateIndex to $12, and enters a terrain-specific holding state until WeaponSelect_Update closes the selector.","The official Sega Alien Soldier manual assigns button A to weapon selection; no Counter Force or other special attack is created by this path."]},
+    { "address": "0x0162E6", "previous_name": "loc_162E6", "current_name": "Player_InitKnockbackState_SetDefaultVelocity", "legacy_name": "loc_162E6", "evidence": "static", "basis": ["The invulnerable path reaches here every frame but plays SFX $19 only on every eighth, then installs the $FFFEA000 rise and prefers a stored horizontal knockback when one exists."] },
+    { "address": "0x0162F4", "previous_name": "loc_162F4", "current_name": "Player_InitKnockbackState_UseStoredHorizontalVelocity", "legacy_name": "loc_162F4", "evidence": "static", "basis": ["Both vertical variants share this path, which copies PlayerKnockbackXVel straight into the horizontal velocity."] },
+    { "address": "0x0162FC", "previous_name": "loc_162FC", "current_name": "Player_InitKnockbackState_SetFacingVelocity", "legacy_name": "loc_162FC", "evidence": "static", "basis": ["With no stored knockback the default path installs $FFFF7000 and negates it unless the facing bit $800 is set, so the player is always pushed backwards."] },
+    { "address": "0x016310", "previous_name": "locret_16310", "current_name": "Player_InitKnockbackState_Return", "legacy_name": "locret_16310", "evidence": "static", "basis": ["The facing branch returns here once the sign is chosen."] },
+    { "address": "0x016312", "previous_name": "loc_16312", "current_name": "Player_InitKnockbackState_SetAlternateVerticalVelocity", "legacy_name": "loc_16312", "evidence": "static", "basis": ["The non-invulnerable path always plays SFX $19 and uses the stronger $FFFE8000 rise; it also tests only the low word of PlayerKnockbackXVel before falling through to the facing helper."] },
+    { "address": "0x01632E", "previous_name": "Player_SetHorizontalKnockback", "current_name": "Orphaned_PlayerSetHorizontalKnockbackFromFlags", "legacy_name": "sub_1632E", "evidence": "static", "basis": ["Unreferenced and absent from the player state table. The routine begins with a conditional branch, so it depends on condition codes the caller would have set, and selects $38000 or $FFFC8000 accordingly."] },
+    { "address": "0x01633A", "previous_name": "Player_SetHorizontalKnockback_Negative", "current_name": "Orphaned_PlayerSetHorizontalKnockbackNegative", "legacy_name": "loc_1633A", "evidence": "static", "basis": ["The negative half of that unreferenced pair."] },
+    { "address": "0x016344", "previous_name": "sub_16344", "current_name": "Player_SetKnockbackVelocity", "legacy_name": "sub_16344", "evidence": "static", "basis": ["The live facing-based variant, reached from the alternate vertical path: it installs $FFFC8000 and negates it unless the facing bit is set."] },
+    { "address": "0x016358", "previous_name": "locret_16358", "current_name": "Player_SetKnockbackVelocity_Return", "legacy_name": "locret_16358", "evidence": "static", "basis": ["The sign-selection return of that live helper."] },
     {
       "address": "0x01635A",
       "previous_name": "Player_DefeatState",
@@ -1111,6 +1126,12 @@
         "It applies knockback gravity and terrain collision before restoring normal player state; no death transition is performed."
       ]
     },
+    { "address": "0x01638C", "previous_name": "loc_1638C", "current_name": "Player_KnockbackState_ApplyPhysics", "legacy_name": "loc_1638C", "evidence": "static", "basis": ["While the knockback timer runs the state adds $6000 of gravity, checks walls, and only tests the lower terrain once the vertical velocity has turned positive."] },
+    { "address": "0x0163B2", "previous_name": "loc_163B2", "current_name": "Player_KnockbackState_CheckUpperTerrain", "legacy_name": "loc_163B2", "evidence": "static", "basis": ["While still rising the state tail-calls the rising-terrain wrapper instead, so ceilings are tested on the way up and floors on the way down."] },
+    { "address": "0x0163BA", "previous_name": "Player_NoOp", "current_name": "Orphaned_PlayerNoOpEntry", "legacy_name": "sub_163BA", "evidence": "static", "basis": ["A single nop with no reference anywhere and no entry in the player state table. Only the return instruction after it is live."] },
+    { "address": "0x0163BC", "previous_name": "Player_StateNoOp_Return", "current_name": "Player_KnockbackStateReturn", "legacy_name": "locret_163BC", "evidence": "static", "basis": ["The knockback state branches here when the descending terrain check reports no contact, so this return is live even though the nop above it is not; the name now says which state uses it."] },
+    { "address": "0x0163BE", "previous_name": "sub_163BE", "current_name": "Player_ClearKnockbackState", "legacy_name": "sub_163BE", "evidence": "static", "basis": ["Both knockback exits call this helper, which clears PlayerDefeatPhase and restores the object flags and collision byte the hit had changed."] },
+    { "address": "0x0163D0", "previous_name": "Player_UnusedStateReturn", "current_name": "Orphaned_PlayerUnusedStateReturn", "legacy_name": "nullsub_41", "evidence": "static", "basis": ["A bare return with no reference and no player state table entry; the prefix now records that directly rather than only in the name."] },
     {
       "address": "0x0163D2",
       "previous_name": "Player_InitGroundedState",
@@ -1122,6 +1143,7 @@
         "The state is therefore the upper-terrain idle path, not a lower-terrain grounded state."
       ]
     },
+    { "address": "0x016400", "previous_name": "nullsub_42", "current_name": "Player_CeilingIdleState_Return", "legacy_name": "nullsub_42", "evidence": "static", "basis": ["This bare return is live: the ceiling idle state branches to it from two separate input tests."] },
     {
       "address": "0x016402",
       "previous_name": "Player_HandleDashState",
@@ -1133,6 +1155,8 @@
         "It is entered by Player_InitCeilingIdleState and is not itself the dash-state initializer."
       ]
     },
+    { "address": "0x016440", "previous_name": "loc_16440", "current_name": "Player_CeilingIdleState_CheckDashInput", "legacy_name": "loc_16440", "evidence": "static", "basis": ["The ceiling idle state reaches this block once the earlier input tests fall through, and it decides whether the dash state is entered."] },
+    { "address": "0x01645E", "previous_name": "loc_1645E", "current_name": "Player_CeilingIdleState_Render", "legacy_name": "loc_1645E", "evidence": "static", "basis": ["The state converges here to build its sprite pieces when no input changed the state."] },
     {"address":"0x0164B0","previous_name":"Player_CeilingDamageState","current_name":"Player_CeilingCounterForceState","legacy_name":"sub_164B0","evidence":"static","basis":["The normal and Seven Forces state paths enter this family only after CounterForceTriggerFlag is raised by the second B-button press; no health-loss or damage event publishes that trigger.","The family creates one fixed-slot effect, applies terrain-specific recoil, and renders the same four-frame Counter Force pose documented by the official Sega manual."]},
     {
       "address": "0x01652C",
