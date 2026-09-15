@@ -9220,3 +9220,39 @@ pending queue falls from 1,999 to 1,962 and its actionable upper bound from
 1,486 to 1,449; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `player/air_and_ground_states.s` now has
 zero pending current names, leaving 27 modules in the queue.
+
+The 37 pending entries in `player/terrain_wrappers.s` all hold, and the module
+is recorded because it settles two things earlier audits had to work around.
+
+The six terrain wrappers share a single gate: bit 5 of `PlayerRestrictionFlags`
+suppresses terrain collision for all of them, which is the one place the feature
+is switched off. They split cleanly: the two wall wrappers do nothing else,
+while the four vertical wrappers run `Collision_CheckPlayerPlatforms` first so a
+moving platform is resolved before the terrain probe.
+`Physics_FacingExtendedWallCheckWrapper` picks its vertical probe offset from
+bit 4 of the byte at `$E`, the vertical flip, supplying `$FFE8` the usual way up
+and `$18` when inverted.
+
+The aim system decodes exactly. `Input_ProcessDirectionInput` clears whichever
+horizontal bit lost a simultaneous press, so the remaining nibble is
+unambiguous, and `Input_DirectionIndexTable` maps it to an eight-way index
+running clockwise from right: 0 right, 1 down-right, 2 down, 3 down-left, 4
+left, 5 up-left, 6 up, 7 up-right. `Player_AutoFlipDirection` then reads that
+index and flips the facing, so the aim drives the facing rather than the
+reverse; its two branches are exactly the halves of that ring, a contiguous 3 to
+5 span for a right-facing player and the wrapped ends for a left-facing one.
+That agreement between the table and the two comparison ranges is what confirms
+the ordering.
+
+One asymmetry is worth recording. All three acceleration routines share the
+`$A800` step, but their limits differ: the by-facing pair used by ordinary
+ground and ceiling movement tops out at plus or minus `$42000`, while the armed
+pair used by the weapon and air-control states tops out at plus or minus
+`$2A000`. Holding a weapon therefore caps the player's speed at about
+two-thirds.
+
+Thirty-seven exact-address records raise the registry from 14,380 to 14,417. The
+pending queue falls from 1,962 to 1,925 and its actionable upper bound from
+1,449 to 1,412; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `player/terrain_wrappers.s` now has zero
+pending current names, leaving 26 modules in the queue.

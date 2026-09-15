@@ -910,6 +910,27 @@
         "Four generic terrain response entries call it; no battle state or boss data is accessed."
       ]
     },
+    { "address": "0x016CC8", "previous_name": "sub_16CC8", "current_name": "Physics_WallCheckWrapper", "legacy_name": "sub_16CC8", "evidence": "static", "basis": ["All six wrappers in this group share one gate: bit 5 of PlayerRestrictionFlags suppresses terrain collision entirely. This one adds nothing else and tail-calls the plain wall check."] },
+    { "address": "0x016CD8", "previous_name": "sub_16CD8", "current_name": "Physics_ExtendedWallCheckWrapper", "legacy_name": "sub_16CD8", "evidence": "static", "basis": ["The same gate in front of the extended wall check; like the plain one it does not consult moving platforms."] },
+    { "address": "0x016CE8", "previous_name": "sub_16CE8", "current_name": "Physics_LowerTerrainCheckWrapper", "legacy_name": "sub_16CE8", "evidence": "static", "basis": ["The four vertical wrappers differ from the two wall wrappers by running Collision_CheckPlayerPlatforms first, so a moving platform is resolved before the terrain probe."] },
+    { "address": "0x016CFE", "previous_name": "sub_16CFE", "current_name": "Physics_DescendingTerrainCheckWrapper", "legacy_name": "sub_16CFE", "evidence": "static", "basis": ["The descending variant selects the probe that only resolves contact while the player is moving downward."] },
+    { "address": "0x016D14", "previous_name": "sub_16D14", "current_name": "Physics_UpperTerrainCheckWrapper", "legacy_name": "sub_16D14", "evidence": "static", "basis": ["The ceiling counterpart of the lower wrapper, used by every state in the ceiling block."] },
+    { "address": "0x016D2A", "previous_name": "sub_16D2A", "current_name": "Physics_RisingTerrainCheckWrapper", "legacy_name": "sub_16D2A", "evidence": "static", "basis": ["The rising variant resolves ceiling contact only while the player is moving upward."] },
+    { "address": "0x016D60", "previous_name": "sub_16D60", "current_name": "Physics_FacingExtendedWallCheckWrapper", "legacy_name": "sub_16D60", "evidence": "static", "basis": ["The wrapper chooses the vertical probe offset from bit 4 of the byte at $E, the vertical flip, supplying $FFE8 when the player hangs the usual way up and $18 when he is inverted, then enters the extended wall check past its own offset setup."] },
+    { "address": "0x016D7E", "previous_name": "locret_16D7E", "current_name": "Physics_TerrainCheckWrappers_Return", "legacy_name": "locret_16D7E", "evidence": "static", "basis": ["All six wrappers return here when the restriction bit is set, which is the single point where terrain collision is disabled."] },
+    { "address": "0x016D80", "previous_name": "sub_16D80", "current_name": "Input_ProcessDirectionInput", "legacy_name": "sub_16D80", "evidence": "static", "basis": ["The routine converts the D-pad into an eight-way aim index in field $9E. It is inert while a script drives the player, and ShootingMode decides whether the fire button must be held or newly pressed for the aim to update."] },
+    { "address": "0x016D9C", "previous_name": "loc_16D9C", "current_name": "Input_ProcessDirectionInput_CheckAlternateGate", "legacy_name": "loc_16D9C", "evidence": "static", "basis": ["In the other shooting mode the gate is the pressed byte rather than the held byte, so the aim latches on the press instead of tracking."] },
+    { "address": "0x016DA6", "previous_name": "loc_16DA6", "current_name": "Input_ProcessDirectionInput_ApplyHorizontalInput", "legacy_name": "loc_16DA6", "evidence": "static", "basis": ["A left or right press sets the facing bit and clears the opposite direction bit, so the remaining nibble can never hold both horizontals at once."] },
+    { "address": "0x016DB8", "previous_name": "loc_16DB8", "current_name": "Input_ProcessDirectionInput_CheckRightInput", "legacy_name": "loc_16DB8", "evidence": "static", "basis": ["The right test runs only when left was not pressed, so left wins a simultaneous press."] },
+    { "address": "0x016DC8", "previous_name": "loc_16DC8", "current_name": "Input_ProcessDirectionInput_DecodeDirection", "legacy_name": "loc_16DC8", "evidence": "static", "basis": ["With no direction held the index comes from the facing alone, 0 for right and 4 for left, which are the same two values the table produces for those directions."] },
+    { "address": "0x016DDC", "previous_name": "loc_16DDC", "current_name": "Input_ProcessDirectionInput_LookupDirection", "legacy_name": "loc_16DDC", "evidence": "static", "basis": ["Any held direction is decoded through the sixteen-entry table indexed by the cleaned nibble."] },
+    { "address": "0x016DE0", "previous_name": "loc_16DE0", "current_name": "Input_StoreDirectionByte", "legacy_name": "loc_16DE0", "evidence": "static", "basis": ["Both paths converge to store the index in field $9E, which is the only consumer-visible output of the routine."] },
+    { "address": "0x016DE4", "previous_name": "locret_16DE4", "current_name": "Input_ProcessDirectionInput_Return", "legacy_name": "locret_16DE4", "evidence": "static", "basis": ["The scripted-player path returns here without touching the aim."] },
+    { "address": "0x016DE6", "previous_name": "byte_16DE6", "current_name": "Input_DirectionIndexTable", "legacy_name": "byte_16DE6", "evidence": "static", "basis": ["Sixteen bytes mapping the D-pad nibble to an eight-way index that runs clockwise from right: 0 right, 1 down-right, 2 down, 3 down-left, 4 left, 5 up-left, 6 up, 7 up-right. Entries for impossible combinations are zero."] },
+    { "address": "0x016DF6", "previous_name": "sub_16DF6", "current_name": "Player_AutoFlipDirection", "legacy_name": "sub_16DF6", "evidence": "static", "basis": ["The aim index drives the facing rather than the reverse. While the fire button is held in moving-shooting mode, a right-facing player flips once the index reaches the down-left to up-left range 3 to 5, and a left-facing player flips for right, down-right or up-right."] },
+    { "address": "0x016E1E", "previous_name": "loc_16E1E", "current_name": "Player_AutoFlipDirection_CheckLeftFacing", "legacy_name": "loc_16E1E", "evidence": "static", "basis": ["The left-facing half tests the two ends of the index range rather than a contiguous span, because right sits at index 0."] },
+    { "address": "0x016E2C", "previous_name": "loc_16E2C", "current_name": "Player_AutoFlipDirection_Flip", "legacy_name": "loc_16E2C", "evidence": "static", "basis": ["Both facings converge on a single toggle of the $800 horizontal-flip bit."] },
+    { "address": "0x016E32", "previous_name": "locret_16E32", "current_name": "Player_AutoFlipDirection_Return", "legacy_name": "locret_16E32", "evidence": "static", "basis": ["Fixed-shooting mode and a released fire button both leave the facing alone."] },
     {
       "address": "0x016E34",
       "previous_name": "Physics_ApplyVerticalDecel",
@@ -921,6 +942,10 @@
         "Facing bit 3 selects addition or subtraction of 0xA800 toward symmetric horizontal limits."
       ]
     },
+    { "address": "0x016E4A", "previous_name": "loc_16E4A", "current_name": "Physics_AccelerateHorizontalByFacing_AccelerateNegative", "legacy_name": "loc_16E4A", "evidence": "static", "basis": ["The leftward branch applies the shared $A800 step, and its limit is reached only when the velocity is already past $FFFBE000."] },
+    { "address": "0x016E56", "previous_name": "loc_16E56", "current_name": "Physics_AccelerateHorizontalByFacing_AcceleratePositive", "legacy_name": "loc_16E56", "evidence": "static", "basis": ["The rightward branch mirrors it against $42000, so this variant is symmetric at plus or minus $42000."] },
+    { "address": "0x016E64", "previous_name": "loc_16E64", "current_name": "Physics_AccelerateHorizontalByFacing_AddStep", "legacy_name": "loc_16E64", "evidence": "static", "basis": ["A velocity of the opposite sign always accelerates, so reversing direction is not limit-checked."] },
+    { "address": "0x016E6A", "previous_name": "loc_16E6A", "current_name": "Physics_AccelerateHorizontalByFacing_Store", "legacy_name": "loc_16E6A", "evidence": "static", "basis": ["Both the accelerated and the clamped cases converge on one store."] },
     {
       "address": "0x016E70",
       "previous_name": "Physics_ApplyDownwardGravity",
@@ -932,6 +957,8 @@
         "It does not access the vertical velocity at offset 0x1C, so neither downward motion nor gravity is implemented."
       ]
     },
+    { "address": "0x016E7E", "previous_name": "loc_16E7E", "current_name": "Physics_AccelerateHorizontalNegative_SubtractStep", "legacy_name": "loc_16E7E", "evidence": "static", "basis": ["The armed leftward variant uses the same $A800 step but a lower limit of $FFFD6000."] },
+    { "address": "0x016E84", "previous_name": "loc_16E84", "current_name": "Physics_AccelerateHorizontalNegative_Store", "legacy_name": "loc_16E84", "evidence": "static", "basis": ["The clamped and accelerated cases share this store."] },
     {
       "address": "0x016E8A",
       "previous_name": "Physics_ApplyUpwardGravity",
@@ -1023,6 +1050,16 @@
         "It does not call the sound driver or inspect any boss damage state."
       ]
     },
+    { "address": "0x016E98", "previous_name": "loc_16E98", "current_name": "Physics_AccelerateHorizontalPositive_AddStep", "legacy_name": "loc_16E98", "evidence": "static", "basis": ["The armed rightward variant mirrors it against $2A000, so the armed pair tops out at plus or minus $2A000, well below the by-facing pair."] },
+    { "address": "0x016E9E", "previous_name": "loc_16E9E", "current_name": "Physics_AccelerateHorizontalPositive_Store", "legacy_name": "loc_16E9E", "evidence": "static", "basis": ["The clamped and accelerated cases share this store."] },
+    { "address": "0x016EA4", "previous_name": "sub_16EA4", "current_name": "Player_DecelerateHorizontalVelocityFast", "legacy_name": "sub_16EA4", "evidence": "static", "basis": ["A one-instruction entry that presets the $C000 deceleration step and falls into the general routine, which callers can also enter directly with their own step in d1."] },
+    { "address": "0x016EAA", "previous_name": "sub_16EAA", "current_name": "Player_DecelerateHorizontalVelocity", "legacy_name": "sub_16EAA", "evidence": "static", "basis": ["The routine moves the velocity toward zero by the caller's step and snaps to exactly zero whenever the step would cross it, so it never oscillates around the origin."] },
+    { "address": "0x016EBC", "previous_name": "loc_16EBC", "current_name": "Player_DecelerateHorizontalVelocity_IncreaseNegative", "legacy_name": "loc_16EBC", "evidence": "static", "basis": ["The negative half adds the step instead of subtracting it and applies the same crossing test."] },
+    { "address": "0x016EC2", "previous_name": "loc_16EC2", "current_name": "Physics_StoreHorizontalVelocity", "legacy_name": "loc_16EC2", "evidence": "static", "basis": ["Both signs converge on one store; the two snap-to-zero paths store separately because they clear d0 first."] },
+    { "address": "0x016EEA", "previous_name": "byte_16EEA", "current_name": "Player_IdleFrameOffsets", "legacy_name": "byte_16EEA", "evidence": "static", "basis": ["Four signed byte pairs cycled on bits 2 and 3 of the frame counter, which is what gives the idle pose its slow breathing motion."] },
+    { "address": "0x016EF8", "previous_name": "loc_16EF8", "current_name": "Player_RenderAirborneFrame_UseAnimatedOffsets", "legacy_name": "loc_16EF8", "evidence": "static", "basis": ["A negative animation counter selects the cycling offsets; the jump apex state enters here directly to force them."] },
+    { "address": "0x016F1A", "previous_name": "loc_16F1A", "current_name": "Player_RenderAirborneFrame_UseStaticOffsets", "legacy_name": "loc_16F1A", "evidence": "static", "basis": ["A non-negative counter uses a fixed offset pair and the common movement mapping instead."] },
+    { "address": "0x016F2E", "previous_name": "byte_16F2E", "current_name": "Player_AirborneFrameOffsets", "legacy_name": "byte_16F2E", "evidence": "static", "basis": ["The airborne counterpart of the idle table, cycled the same way but with much larger vertical offsets."] },
     {
       "address": "0x016F36",
       "previous_name": "Boss_AnimateDeathSequence",
