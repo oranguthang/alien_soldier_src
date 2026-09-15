@@ -42,7 +42,7 @@ Stage11_FishWaveSpawnState_Finish:                      ; CODE XREF: Stage11_Fis
 ; End of function Stage11_FishWaveSpawnState
 ; Initializes a Stage 11 fish in a newly allocated object slot
 Stage11_SpawnFish:                                      ; CODE XREF: Stage11_FishWaveSpawnState+1C   p  ; was: sub_2EA58
-                                        ; Stage11_FishWaveReplaceDefeatedState+20   p
+                                        ; Stage11_FishWaveMaintainPopulationState+20   p
                 bsr.w   Enemy_InitStage11Fish
                 move.w  a5,$4E(a0)
                 move.w  $4A(a5),d0
@@ -440,7 +440,7 @@ Enemy_Stage11FishWaitForOuterEdgeState_Return:          ; CODE XREF: Enemy_Stage
                                         ; Enemy_Stage11FishWaitForOuterEdgeState+20   j
                 rts
 ; End of function Enemy_Stage11FishWaitForOuterEdgeState
-; Marks the fish invisible before accelerating it upward
+; Sets bit 9 of the sprite word before the fish accelerates off the top
 Enemy_Stage11FishBeginExitState:                        ; DATA XREF: ROM:0002EB90   o  ; was: sub_2EEC0
                 ori.w   #$200,2(a5)
                 addq.w  #2,4(a5)

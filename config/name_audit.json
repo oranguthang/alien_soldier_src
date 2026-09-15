@@ -3170,6 +3170,7 @@
         "Its three-state table initializes a pointer list and creates or replaces type-0x44C fish objects, proving that it is the wave controller rather than an individual flyer's main loop."
       ]
     },
+    { "address": "0x02EA08", "previous_name": "off_2EA08", "current_name": "Stage11_FishWaveStateOffsets", "legacy_name": "off_2EA08", "evidence": "static", "basis": ["Three self-relative words measured from the table itself: init, spawn, and the population top-up that runs for the rest of the stage."] },
     {
       "address": "0x02EA0E",
       "previous_name": "Enemy_FlyerDispatcher",
@@ -3181,6 +3182,10 @@
         "It clears the child-pointer list, writes its sentinel, initializes a 64-frame timer and advances the controller state."
       ]
     },
+    { "address": "0x02EA28", "previous_name": "sub_2EA28", "current_name": "Stage11_FishWaveSpawnState", "legacy_name": "sub_2EA28", "evidence": "static", "basis": ["It spawns one fish every $40 frames and stops when the slot cursor reaches the $FFFF terminator the init state wrote, so the wave is exactly two fish."] },
+    { "address": "0x02EA46", "previous_name": "loc_2EA46", "current_name": "Stage11_FishWaveSpawnState_ResetDelay", "legacy_name": "loc_2EA46", "evidence": "static", "basis": ["The delay is re-armed and the slot cursor stepped whether or not a slot was found, so a full object pool costs one spawn rather than retrying."] },
+    { "address": "0x02EA50", "previous_name": "locret_2EA50", "current_name": "Stage11_FishWaveSpawnState_Return", "legacy_name": "locret_2EA50", "evidence": "static", "basis": ["The counting frames return here."] },
+    { "address": "0x02EA52", "previous_name": "loc_2EA52", "current_name": "Stage11_FishWaveSpawnState_Finish", "legacy_name": "loc_2EA52", "evidence": "static", "basis": ["Reaching the terminator advances to the top-up state, which never returns to spawning."] },
     {
       "address": "0x02EA58",
       "previous_name": "Enemy_FlyerMovement1",
@@ -3192,6 +3197,12 @@
         "It selects an alternating spawn X coordinate and a fixed Y coordinate; it does not update the caller's movement."
       ]
     },
+    { "address": "0x02EA88", "previous_name": "locret_2EA88", "current_name": "Stage11_SpawnFish_Return", "legacy_name": "locret_2EA88", "evidence": "static", "basis": ["A fish spawned at or beyond X $120 gets bit 3 of $E set, so the facing is derived from the spawn side rather than stored separately."] },
+    { "address": "0x02EA8A", "previous_name": "word_2EA8A", "current_name": "Stage11_FishSpawnXPositions", "legacy_name": "word_2EA8A", "evidence": "static", "basis": ["Eight words alternating $1A0 and $A0. The cursor in $4A steps by two and is masked with 7, so it takes only the values 0, 2, 4 and 6 and the last four entries are never read; the four that are read repeat the same two positions."] },
+    { "address": "0x02EA9A", "previous_name": "sub_2EA9A", "current_name": "Stage11_FishWaveMaintainPopulationState", "legacy_name": "sub_2EA9A", "evidence": "static", "basis": ["It walks the slot list looking for the first entry whose object is no longer type $44C, which is how a defeated fish is noticed without a callback."] },
+    { "address": "0x02EA9E", "previous_name": "loc_2EA9E", "current_name": "Stage11_FishWaveMaintainPopulationState_NextSlot", "legacy_name": "loc_2EA9E", "evidence": "static", "basis": ["The scan ends at the same $FFFF terminator the spawn state uses."] },
+    { "address": "0x02EAAE", "previous_name": "locret_2EAAE", "current_name": "Stage11_FishWaveMaintainPopulationState_Return", "legacy_name": "locret_2EAAE", "evidence": "static", "basis": ["Both a full list and a full object pool return here, so a failed top-up is simply retried next frame."] },
+    { "address": "0x02EAB0", "previous_name": "loc_2EAB0", "current_name": "Stage11_FishWaveMaintainPopulationState_Spawn", "legacy_name": "loc_2EAB0", "evidence": "static", "basis": ["The replacement reuses Stage11_SpawnFish, so a replaced fish enters from the same two X positions as the original."] },
     {
       "address": "0x02EABE",
       "previous_name": "Enemy_FlyerMovement2",
@@ -3214,6 +3225,10 @@
         "Only one later state fires projectiles, so classifying the complete lifecycle controller as an attack routine was too narrow."
       ]
     },
+    { "address": "0x02EB2E", "previous_name": "loc_2EB2E", "current_name": "Enemy_Stage11FishController_PositionEmitter", "legacy_name": "loc_2EB2E", "evidence": "static", "basis": ["The emitter is placed every frame at the fish position plus $14 vertically and plus or minus $14 horizontally by the facing bit, with its own $48 offset added, which is what the volley animation modulates."] },
+    { "address": "0x02EB62", "previous_name": "loc_2EB62", "current_name": "Enemy_Stage11FishController_PositionEmitterLeft", "legacy_name": "loc_2EB62", "evidence": "static", "basis": ["The left-facing placement, mirroring the horizontal offset only."] },
+    { "address": "0x02EB68", "previous_name": "loc_2EB68", "current_name": "Enemy_Stage11FishController_DispatchState", "legacy_name": "loc_2EB68", "evidence": "static", "basis": ["Reached both from state zero, before an emitter exists, and from the placement above."] },
+    { "address": "0x02EB74", "previous_name": "off_2EB74", "current_name": "Enemy_Stage11FishStateOffsets", "legacy_name": "off_2EB74", "evidence": "static", "basis": ["Fifteen self-relative words. States 8 to $16 form the pass cycle and the controller forces the state to $1C, the exit, when the parent object is no longer type $454."] },
     {
       "address": "0x02EB94",
       "previous_name": "Enemy_FlyerSpawnProjectile",
@@ -3225,6 +3240,11 @@
         "The fish controller repositions this child every frame and later uses it only as the origin passed to Enemy_InitHomingProjectile; it is an attached emitter sprite, not the fired projectile."
       ]
     },
+    { "address": "0x02EBD0", "previous_name": "locret_2EBD0", "current_name": "Enemy_Stage11FishInitEmitterState_Return", "legacy_name": "locret_2EBD0", "evidence": "static", "basis": ["A full object pool leaves the fish in state zero, so the emitter allocation is retried every frame until it succeeds."] },
+    { "address": "0x02EBD2", "previous_name": "sub_2EBD2", "current_name": "Enemy_Stage11FishRiseToEntryHeightState", "legacy_name": "sub_2EBD2", "evidence": "static", "basis": ["The fish rises from its spawn Y of $180 until it is above $160, which is the first point at which it is on screen."] },
+    { "address": "0x02EBDE", "previous_name": "locret_2EBDE", "current_name": "Enemy_Stage11FishRiseToEntryHeightState_Return", "legacy_name": "locret_2EBDE", "evidence": "static", "basis": ["The frames below the entry height return here."] },
+    { "address": "0x02EBE0", "previous_name": "sub_2EBE0", "current_name": "Enemy_Stage11FishRiseTowardPlayerState", "legacy_name": "sub_2EBE0", "evidence": "static", "basis": ["The second rise ends $40 below the player centre, so the fish stops under the player rather than level with them."] },
+    { "address": "0x02EBF2", "previous_name": "locret_2EBF2", "current_name": "Enemy_Stage11FishRiseTowardPlayerState_Return", "legacy_name": "locret_2EBF2", "evidence": "static", "basis": ["The frames below the band return here."] },
     {
       "address": "0x02EBF4",
       "previous_name": "Enemy_FlyerAccelerate",
@@ -3236,6 +3256,38 @@
         "It then explicitly clears vertical velocity, advances state and starts a timer, so its net action is braking to rest."
       ]
     },
+    { "address": "0x02EC12", "previous_name": "locret_2EC12", "current_name": "Enemy_Stage11FishBrakeVerticalMotionState_Return", "legacy_name": "locret_2EC12", "evidence": "static", "basis": ["The brake adds $4000 a frame and tests bit 7 of the top byte of the velocity long, so it stops on the exact frame the sign turns, then zeroes the velocity outright."] },
+    { "address": "0x02EC14", "previous_name": "sub_2EC14", "current_name": "Enemy_Stage11FishTrackPlayerHeightState", "legacy_name": "sub_2EC14", "evidence": "static", "basis": ["It tracks the live player height for $40 frames and then snapshots it into $4C, which every later state uses as its target instead of the live value."] },
+    { "address": "0x02EC32", "previous_name": "locret_2EC32", "current_name": "Enemy_Stage11FishTrackPlayerHeightState_Return", "legacy_name": "locret_2EC32", "evidence": "static", "basis": ["The tracking frames return here."] },
+    { "address": "0x02EC34", "previous_name": "sub_2EC34", "current_name": "Enemy_Stage11FishChoosePassState", "legacy_name": "sub_2EC34", "evidence": "static", "basis": ["The choice is two independent bit tests on the same random byte, bits 0 and 1, and either one set selects the volley, so a direct pass happens on one draw in four."] },
+    { "address": "0x02EC74", "previous_name": "loc_2EC74", "current_name": "Enemy_Stage11FishChoosePassState_SetNegativeSpeed", "legacy_name": "loc_2EC74", "evidence": "static", "basis": ["The pass speed is 4 in the high word, which is four pixels a frame, signed by the facing bit."] },
+    { "address": "0x02EC7C", "previous_name": "loc_2EC7C", "current_name": "Enemy_Stage11FishChoosePassState_PrepareVolley", "legacy_name": "loc_2EC7C", "evidence": "static", "basis": ["Both volley draws converge here and write state $C."] },
+    { "address": "0x02EC82", "previous_name": "locret_2EC82", "current_name": "Enemy_Stage11FishChoosePassState_Return", "legacy_name": "locret_2EC82", "evidence": "static", "basis": ["The frames before the $10-frame timer expires return here."] },
+    { "address": "0x02EC84", "previous_name": "sub_2EC84", "current_name": "Enemy_Stage11FishPrepareVolleyState", "legacy_name": "sub_2EC84", "evidence": "static", "basis": ["The volley is sixteen shots eight frames apart, so it lasts $80 frames."] },
+    { "address": "0x02EC9E", "previous_name": "sub_2EC9E", "current_name": "Enemy_Stage11FishFireVolleyState", "legacy_name": "sub_2EC9E", "evidence": "static", "basis": ["It swaps a5 to the emitter object across the spawn call, so the projectile is created at the emitter position rather than the fish position."] },
+    { "address": "0x02ECDA", "previous_name": "loc_2ECDA", "current_name": "Enemy_Stage11FishFireVolleyState_UseUnflippedOrigin", "legacy_name": "loc_2ECDA", "evidence": "static", "basis": ["The unflipped origin uses a $18 muzzle offset and angle zero against $FFE8 and $100 for the flipped one."] },
+    { "address": "0x02ECE0", "previous_name": "loc_2ECE0", "current_name": "Enemy_Stage11FishFireVolleyState_SpawnShot", "legacy_name": "loc_2ECE0", "evidence": "static", "basis": ["The shot is created through Projectile_InitializeDifficultyScaledTwoSpeedShot with a $8004 parameter, so its speed is difficulty-scaled."] },
+    { "address": "0x02ED00", "previous_name": "loc_2ED00", "current_name": "Enemy_Stage11FishFireVolleyState_SetPositiveShotSpeed", "legacy_name": "loc_2ED00", "evidence": "static", "basis": ["The shot drift in $50 is 6 or $FFFA by the facing, which is what makes the volley fan outward."] },
+    { "address": "0x02ED06", "previous_name": "loc_2ED06", "current_name": "Enemy_Stage11FishFireVolleyState_AdvanceBurst", "legacy_name": "loc_2ED06", "evidence": "static", "basis": ["The burst counter is separate from the eight-frame interval counter, so a full object pool costs a shot but not the interval."] },
+    { "address": "0x02ED14", "previous_name": "loc_2ED14", "current_name": "Enemy_Stage11FishFireVolleyState_Finish", "legacy_name": "loc_2ED14", "evidence": "static", "basis": ["Both the exhausted burst and a full pool end the volley with a $40-frame pause and state 8."] },
+    { "address": "0x02ED20", "previous_name": "locret_2ED20", "current_name": "Enemy_Stage11FishFireVolleyState_Return", "legacy_name": "locret_2ED20", "evidence": "static", "basis": ["The frames between shots return here."] },
+    { "address": "0x02ED22", "previous_name": "sub_2ED22", "current_name": "Enemy_SetStage11FishEmitterXOffset", "legacy_name": "sub_2ED22", "evidence": "static", "basis": ["It is called every frame of the volley with the interval counter as its index, so the emitter visibly recoils between shots."] },
+    { "address": "0x02ED32", "previous_name": "loc_2ED32", "current_name": "Enemy_SetStage11FishEmitterXOffset_UseNegativeOffsets", "legacy_name": "loc_2ED32", "evidence": "static", "basis": ["The facing bit selects between the two tables below."] },
+    { "address": "0x02ED38", "previous_name": "loc_2ED38", "current_name": "Enemy_SetStage11FishEmitterXOffset_Store", "legacy_name": "loc_2ED38", "evidence": "static", "basis": ["The index is doubled because the tables are words, so the eight-frame interval maps onto eight entries exactly."] },
+    { "address": "0x02ED42", "previous_name": "word_2ED42", "current_name": "Enemy_Stage11FishNegativeEmitterOffsets", "legacy_name": "word_2ED42", "evidence": "static", "basis": ["Eight words running 0, -1, -2, -3, -4, -3, -2, -1, a triangle that returns to zero, so the emitter ends each interval where it started."] },
+    { "address": "0x02ED52", "previous_name": "word_2ED52", "current_name": "Enemy_Stage11FishPositiveEmitterOffsets", "legacy_name": "word_2ED52", "evidence": "static", "basis": ["The mirrored table for the other facing, with the same triangle positive."] },
+    { "address": "0x02ED62", "previous_name": "sub_2ED62", "current_name": "Enemy_Stage11FishBrakeOutwardMotionState", "legacy_name": "sub_2ED62", "evidence": "static", "basis": ["The brake requires the velocity to reach exactly zero, which it does because the pass speed $40000 and the brake step $4000 divide evenly in sixteen frames."] },
+    { "address": "0x02ED7C", "previous_name": "loc_2ED7C", "current_name": "Enemy_Stage11FishBrakeOutwardMotionState_AddPositive", "legacy_name": "loc_2ED7C", "evidence": "static", "basis": ["The positive half of the same brake."] },
+    { "address": "0x02ED84", "previous_name": "loc_2ED84", "current_name": "Enemy_Stage11FishBrakeOutwardMotionState_CheckStopped", "legacy_name": "loc_2ED84", "evidence": "static", "basis": ["The sprite mapping changes only once the velocity is exactly zero, so the turn animation is tied to the stop rather than to a timer."] },
+    { "address": "0x02ED9A", "previous_name": "locret_2ED9A", "current_name": "Enemy_Stage11FishBrakeOutwardMotionState_Return", "legacy_name": "locret_2ED9A", "evidence": "static", "basis": ["The braking frames return here."] },
+    { "address": "0x02ED9C", "previous_name": "sub_2ED9C", "current_name": "Enemy_Stage11FishAccelerateInwardState", "legacy_name": "sub_2ED9C", "evidence": "static", "basis": ["The inward acceleration is capped at $60000, half again the pass speed."] },
+    { "address": "0x02EDC0", "previous_name": "loc_2EDC0", "current_name": "Enemy_Stage11FishAccelerateInwardState_AddPositive", "legacy_name": "loc_2EDC0", "evidence": "static", "basis": ["The positive half of the same acceleration."] },
+    { "address": "0x02EDD2", "previous_name": "loc_2EDD2", "current_name": "Enemy_Stage11FishAccelerateInwardState_Finish", "legacy_name": "loc_2EDD2", "evidence": "static", "basis": ["Both halves converge on the advance once the cap is reached."] },
+    { "address": "0x02EDD6", "previous_name": "locret_2EDD6", "current_name": "Enemy_Stage11FishAccelerateInwardState_Return", "legacy_name": "locret_2EDD6", "evidence": "static", "basis": ["The accelerating frames return here."] },
+    { "address": "0x02EDD8", "previous_name": "sub_2EDD8", "current_name": "Enemy_Stage11FishWaitForInnerEdgeState", "legacy_name": "sub_2EDD8", "evidence": "static", "basis": ["The inner edges are $E0 and $160, a band $80 wide centred on the screen."] },
+    { "address": "0x02EDF2", "previous_name": "loc_2EDF2", "current_name": "Enemy_Stage11FishWaitForInnerEdgeState_CheckRightEdge", "legacy_name": "loc_2EDF2", "evidence": "static", "basis": ["The right-hand half of the same test."] },
+    { "address": "0x02EDFA", "previous_name": "loc_2EDFA", "current_name": "Enemy_Stage11FishWaitForInnerEdgeState_Finish", "legacy_name": "loc_2EDFA", "evidence": "static", "basis": ["Crossing the inner edge restores the first sprite mapping."] },
+    { "address": "0x02EE0A", "previous_name": "locret_2EE0A", "current_name": "Enemy_Stage11FishWaitForInnerEdgeState_Return", "legacy_name": "locret_2EE0A", "evidence": "static", "basis": ["The frames before the edge return here."] },
     {
       "address": "0x02EE0C",
       "previous_name": "Projectile_FlyerBullet1",
@@ -3247,6 +3299,9 @@
         "It changes the fish sprite mapping and advances the fish state when horizontal speed reaches zero; no projectile object is initialized."
       ]
     },
+    { "address": "0x02EE28", "previous_name": "loc_2EE28", "current_name": "Enemy_Stage11FishBrakeInwardMotionState_AddNegative", "legacy_name": "loc_2EE28", "evidence": "static", "basis": ["This brake tests the result of the add directly rather than with a separate tst, but requires the same exact zero."] },
+    { "address": "0x02EE32", "previous_name": "loc_2EE32", "current_name": "Enemy_Stage11FishBrakeInwardMotionState_Finish", "legacy_name": "loc_2EE32", "evidence": "static", "basis": ["The second mapping change of the cycle, matching the first brake."] },
+    { "address": "0x02EE42", "previous_name": "locret_2EE42", "current_name": "Enemy_Stage11FishBrakeInwardMotionState_Return", "legacy_name": "locret_2EE42", "evidence": "static", "basis": ["The braking frames return here."] },
     {
       "address": "0x02EE44",
       "previous_name": "Projectile_FlyerBullet2",
@@ -3258,6 +3313,9 @@
         "The routine creates no child and initializes no projectile fields, contradicting the generated bullet classification."
       ]
     },
+    { "address": "0x02EE68", "previous_name": "loc_2EE68", "current_name": "Enemy_Stage11FishAccelerateOutwardState_AddNegative", "legacy_name": "loc_2EE68", "evidence": "static", "basis": ["The outward acceleration mirrors the inward one with the same $60000 cap."] },
+    { "address": "0x02EE7A", "previous_name": "loc_2EE7A", "current_name": "Enemy_Stage11FishAccelerateOutwardState_Finish", "legacy_name": "loc_2EE7A", "evidence": "static", "basis": ["Both halves converge on the advance."] },
+    { "address": "0x02EE7E", "previous_name": "locret_2EE7E", "current_name": "Enemy_Stage11FishAccelerateOutwardState_Return", "legacy_name": "locret_2EE7E", "evidence": "static", "basis": ["The accelerating frames return here."] },
     {
       "address": "0x02EE80",
       "previous_name": "Projectile_FlyerBullet3",
@@ -3269,6 +3327,9 @@
         "It neither represents nor updates a bullet; the actual homing shots use entity type 0x148."
       ]
     },
+    { "address": "0x02EE9A", "previous_name": "loc_2EE9A", "current_name": "Enemy_Stage11FishWaitForOuterEdgeState_CheckLeftEdge", "legacy_name": "loc_2EE9A", "evidence": "static", "basis": ["The outer edges are $A0 and $1A0, which are exactly the two spawn positions."] },
+    { "address": "0x02EEA2", "previous_name": "loc_2EEA2", "current_name": "Enemy_Stage11FishWaitForOuterEdgeState_Finish", "legacy_name": "loc_2EEA2", "evidence": "static", "basis": ["Reaching the outer edge clears the velocity, restores the first mapping and returns the fish to state 8, closing the pass cycle."] },
+    { "address": "0x02EEBE", "previous_name": "locret_2EEBE", "current_name": "Enemy_Stage11FishWaitForOuterEdgeState_Return", "legacy_name": "locret_2EEBE", "evidence": "static", "basis": ["The frames before the edge return here."] },
     {
       "address": "0x02EEC0",
       "previous_name": "Enemy_FlyerDestroy",
@@ -3291,6 +3352,10 @@
         "Negative vertical velocity is upward in the engine's downward-positive screen-coordinate convention, so this continuously accelerates upward rather than decelerating."
       ]
     },
+    { "address": "0x02EED6", "previous_name": "sub_2EED6", "current_name": "Enemy_AdjustStage11FishVerticalVelocity", "legacy_name": "sub_2EED6", "evidence": "static", "basis": ["The step is $1000 a frame, a quarter of the horizontal one, capped at $20000 either way, and an exact match between the fish and the target height leaves the velocity untouched."] },
+    { "address": "0x02EEFE", "previous_name": "loc_2EEFE", "current_name": "Enemy_AdjustStage11FishVerticalVelocity_AccelerateDownward", "legacy_name": "loc_2EEFE", "evidence": "static", "basis": ["The downward half of the same clamp."] },
+    { "address": "0x02EF18", "previous_name": "locret_2EF18", "current_name": "Enemy_AdjustStage11FishVerticalVelocity_Return", "legacy_name": "locret_2EF18", "evidence": "static", "basis": ["An exact match and both clamped cases share this return."] },
+    { "address": "0x02EF1A", "previous_name": "sub_2EF1A", "current_name": "Enemy_DestroyStage11FishAndEmitter", "legacy_name": "sub_2EF1A", "evidence": "static", "basis": ["It writes $1000 into the sprite word of both the fish and its emitter, which is the same hide flag the Stage 12 turret uses, so neither object is freed."] },
     {
       "address": "0x02EF32",
       "previous_name": "Entity_TrainEndDispatcher",

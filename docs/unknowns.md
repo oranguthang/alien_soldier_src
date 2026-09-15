@@ -10343,3 +10343,61 @@ pending queue falls from 863 to 800 and its actionable upper bound from 350 to
 287; provenance, the 513 classified binary-backed end aliases, and the
 379-module layout remain unchanged. `effects/wave_transition.s` now has zero
 pending current names, leaving 4 modules in the queue.
+
+`enemies/stage_11_fish.s` is the first module in this audit where every pending
+name survived verification and the corrections were all in the comments. What it
+produced instead is a set of exact constants for a two-object enemy that keeps
+its state in an unusual place.
+
+The wave is exactly two fish. `Stage11_FishWaveInitState` clears two words of
+`SharedPatternRow0Long0` and writes `$FFFF` into the word after them, and both
+the spawn state and the top-up state walk that list until they hit the
+terminator. The spawn state runs once every `$40` frames and then hands over to
+a top-up state that never returns to spawning: it scans for the first slot whose
+object is no longer type `$44C` and refills it, which is how a defeated fish is
+noticed without any callback.
+
+`Stage11_FishSpawnXPositions` looks like an eight-position rotation and is not.
+The cursor in `$4A` steps by two and is masked with 7, so it takes only the
+values 0, 2, 4 and 6; the last four entries are never read, and the four that
+are read alternate between the same two positions, `$1A0` and `$A0`. Those two
+values are also the outer edges the pass cycle tests against, so a fish always
+turns around exactly where it entered.
+
+The fish itself is two objects. State zero allocates a second, inert type-`$10`
+object as a projectile emitter and stores it in `$5C`, and the controller
+repositions it every frame at the fish position plus `$14` vertically and plus
+or minus `$14` horizontally by the facing bit. During a volley
+`Enemy_SetStage11FishEmitterXOffset` adds a further offset from an eight-entry
+triangle, 0 to 4 and back, indexed by the shot interval counter, so the emitter
+visibly recoils and returns to rest between shots. When the fish dies, both
+objects get `$1000` written into their sprite word — the same hide flag the
+Stage 12 turret uses — rather than being freed.
+
+Two behavioural constants are worth recording because they are not obvious from
+the names. The pass-or-volley choice is two independent bit tests on the same
+random byte, bits 0 and 1, and *either* one set selects the volley, so a direct
+pass happens on one draw in four. And the target height the whole pass cycle
+steers toward is not the live player position: the tracking state follows the
+player for `$40` frames and then snapshots the height into `$4C`, which every
+later state uses.
+
+Both brake states require the horizontal velocity to reach *exactly* zero, and
+that works only because the pass speed `$40000` and the brake step `$4000`
+divide evenly in sixteen frames. One of the two tests the result of its `addi`
+directly and the other uses a separate `tst.l`, but the requirement is the same.
+
+Two comments were wrong and are corrected. One cross-reference still named
+`Stage11_FishWaveReplaceDefeatedState`, a symbol that no longer exists anywhere
+in the source — the first stale *semantic* cross-reference this audit has found,
+as against the stale address-derived ones already on the backlog. And
+`Enemy_Stage11FishBeginExitState` was described as marking the fish invisible;
+it sets bit 9 of the sprite word, which is neither the bit 7 visibility flag nor
+the bit 4 hide flag this audit has pinned, so the comment now states the fact
+rather than an interpretation.
+
+Sixty-five exact-address records raise the registry from 15,544 to 15,609, with
+no renames. The pending queue falls from 800 to 735 and its actionable upper
+bound from 287 to 222; provenance, the 513 classified binary-backed end aliases,
+and the 379-module layout remain unchanged. `enemies/stage_11_fish.s` now has
+zero pending current names, leaving 3 modules in the queue.
