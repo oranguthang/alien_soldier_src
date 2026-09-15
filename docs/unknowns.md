@@ -8623,3 +8623,35 @@ pending queue falls from 2,550 to 2,531 and its actionable upper bound from
 2,037 to 2,018; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `demo/playback.s` now has zero pending
 current names, leaving 47 modules in the queue.
+
+The 20 pending entries in `debug/sprite_editor.s` cover two handlers that
+`Entity_UpdateHandlerTable` installs at indices 16 and 90. That table is
+indexed by object type divided by four, which `Boss_XiTigerMain` confirms:
+it sits at index 69 and `Boss_XiTigerInit` writes type `$114`. The two debug
+handlers therefore answer to types `$40` and `$168`, and no source code writes
+either value. Object types can also arrive from stage layout data, so the
+registry records the absent code reference without claiming the handlers are
+unreachable.
+
+Three control labels named the wrong field. `Sprite_RenderSingleObjectEntry`
+reads field `$A` as a signed byte added to the object's X coordinate and field
+`$B` as a signed byte added to its Y coordinate, so the word at `$A` holds two
+display offsets rather than a size. The control that the former
+`UI_DebugSpriteEditor_ApplyWidth` guards increments the high byte of that word,
+making it an X offset, and the former `UI_DebugSpriteEditor_CheckHeight`
+increments the low byte, making it a Y offset; the packed sprite-size nibble
+lives separately in the `$F00` field of `8(a5)`. They become
+`UI_DebugSpriteEditor_ApplySizeAndCheckOffsetX` and
+`UI_DebugSpriteEditor_CheckOffsetY`.
+
+`UI_DebugSpriteEditor_CheckPriorityToggle` toggles bit `$800` of attribute word
+`$E`, which is the horizontal-flip bit. The priority bit is `$8000` and is
+merged in from `GlobalSpritePriorityBit` by the preceding block, so the label is
+renamed `UI_DebugSpriteEditor_CheckHorizontalFlipToggle`. The neighbouring
+`$1000` toggle, which the palette block owns, is the vertical flip.
+
+Twenty exact-address records raise the registry from 13,811 to 13,831. The
+pending queue falls from 2,531 to 2,511 and its actionable upper bound from
+2,018 to 1,998; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `debug/sprite_editor.s` now has zero
+pending current names, leaving 46 modules in the queue.

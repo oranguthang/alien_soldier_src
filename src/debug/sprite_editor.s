@@ -53,9 +53,9 @@ UI_DebugSpriteEditor_ApplyPaletteLine:                  ; CODE XREF: UI_DebugSpr
                 move.w  (GlobalSpritePriorityBit).w,d0
                 or.w    d0,$E(a5)
                 btst    #1,(ControllerPressedState).w
-                beq.w   UI_DebugSpriteEditor_CheckPriorityToggle
+                beq.w   UI_DebugSpriteEditor_CheckHorizontalFlipToggle
                 eori.w  #$1000,$E(a5)
-UI_DebugSpriteEditor_CheckPriorityToggle:               ; CODE XREF: UI_DebugSpriteEditor+C6   j  ; was: loc_2AAD8
+UI_DebugSpriteEditor_CheckHorizontalFlipToggle:         ; CODE XREF: UI_DebugSpriteEditor+C6   j  ; was: loc_2AAD8
                 btst    #3,(ControllerPressedState).w
                 beq.w   UI_DebugSpriteEditor_CheckSizeControls
                 eori.w  #$800,$E(a5)
@@ -64,18 +64,18 @@ UI_DebugSpriteEditor_CheckSizeControls:                 ; CODE XREF: UI_DebugSpr
                 btst    #5,(ControllerHeldState).w
                 beq.w   UI_DebugSpriteEditor_Return
                 btst    #0,(ControllerPressedState).w
-                beq.w   UI_DebugSpriteEditor_ApplyWidth
+                beq.w   UI_DebugSpriteEditor_ApplySizeAndCheckOffsetX
                 addi.w  #$100,8(a5)
-UI_DebugSpriteEditor_ApplyWidth:                        ; CODE XREF: UI_DebugSpriteEditor+F0   j  ; was: loc_2AB02
+UI_DebugSpriteEditor_ApplySizeAndCheckOffsetX:          ; CODE XREF: UI_DebugSpriteEditor+F0   j  ; was: loc_2AB02
                 andi.w  #$F00,8(a5)
                 btst    #1,(ControllerPressedState).w
-                beq.w   UI_DebugSpriteEditor_CheckHeight
+                beq.w   UI_DebugSpriteEditor_CheckOffsetY
                 move.w  $A(a5),d0
                 andi.w  #$FF,$A(a5)
                 addi.w  #$100,d0
                 andi.w  #$FF00,d0
                 or.w    d0,$A(a5)
-UI_DebugSpriteEditor_CheckHeight:                       ; CODE XREF: UI_DebugSpriteEditor+106   j  ; was: loc_2AB28
+UI_DebugSpriteEditor_CheckOffsetY:                      ; CODE XREF: UI_DebugSpriteEditor+106   j  ; was: loc_2AB28
                 btst    #3,(ControllerPressedState).w
                 beq.w   UI_DebugSpriteEditor_Return
                 move.w  $A(a5),d0
@@ -87,7 +87,7 @@ UI_DebugSpriteEditor_Return:                            ; CODE XREF: UI_DebugSpr
                                         ; UI_DebugSpriteEditor+126   j
                 rts
 ; End of function UI_DebugSpriteEditor
-; Debug sprite position editor for moving sprites with collision detection
+; Debug object that walks itself two pixels per frame against terrain collision
 UI_DebugSpritePositionEditor:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2AB4A
                 tst.w   4(a5)
                 bne.w   UI_DebugSpritePositionEditor_Update
