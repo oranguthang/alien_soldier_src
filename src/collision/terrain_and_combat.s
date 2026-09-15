@@ -332,7 +332,7 @@ Collision_CheckTerrainTile:                             ; CODE XREF: Collision_G
                 rts
 ; End of function Collision_CheckTerrainTile
 ; Aligns entity Y position to terrain surface clearing velocity
-Physics_AlignToTerrain:                                 ; CODE XREF: Player_InitHardLanding   p  ; was: sub_14534
+Physics_AlignToTerrain:                                 ; CODE XREF: Player_InitUpwardTerrainLaunch   p  ; was: sub_14534
                                         ; Enemy_PhasePatternAirborneState+52   p
                 move.w  d1,d4
                 sub.w   (PrimaryCameraYPosition).w,d4

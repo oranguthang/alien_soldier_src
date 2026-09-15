@@ -1,16 +1,16 @@
-; Ends the dash state and applies its exit vertical velocity
-Player_EndDashWithVerticalVelocity:                     ; CODE XREF: Player_CheckDashInput+12   j  ; was: sub_15C66
-                bsr.s   Player_EndDashState
+; Drops the player off the ceiling with a downward push
+Player_DropFromCeiling:                                 ; CODE XREF: Player_CheckDashInput+12   j  ; was: sub_15C66
+                bsr.s   Player_InitCeilingDetachFall
                 move.l  #$20000,$1C(a5)
                 rts
-; End of function Player_EndDashWithVerticalVelocity
-; Ends dash attack and transitions to air state
-Player_EndDashState:                                    ; CODE XREF: Player_EndDashWithVerticalVelocity   p  ; was: sub_15C72
+; End of function Player_DropFromCeiling
+; Detaches from the ceiling and resets the animation counter before falling
+Player_InitCeilingDetachFall:                           ; CODE XREF: Player_DropFromCeiling   p  ; was: sub_15C72
                                         ; Player_CeilingIdleState+12   j
                 clr.w   (PlayerAirMoveUsedFlags).w
                 clr.w   $52(a5)
-; Initializes end of air dash with gravity and velocity setup
-Player_InitAirDashEnd:                                  ; CODE XREF: Player_DashAttackState+62   j  ; was: loc_15C7A
+; Enters fall state $28, the ceiling-detach twin of Player_InitFallState_Finish
+Player_InitCeilingDetachFall_Finish:                    ; CODE XREF: Player_DashAttackState+62   j  ; was: loc_15C7A
                 bclr    #0,(CounterForceTriggerFlag).w
                 move.w  #$28,4(a5)                      ; '('
                 bclr    #4,$E(a5)
@@ -20,7 +20,7 @@ Player_InitAirDashEnd:                                  ; CODE XREF: Player_Dash
                 clr.w   $4A(a5)
                 move.b  #$7F,(PlayerInputMask).w
                 rts
-; End of function Player_EndDashState
+; End of function Player_InitCeilingDetachFall
 ; Initializes a timed transition into the common falling state
 Player_InitFallingTransition:                           ; CODE XREF: Player_CheckSpecialMoveActivation+32   p  ; was: sub_15CAC
                 bclr    #0,(CounterForceTriggerFlag).w
@@ -34,14 +34,14 @@ Player_InitFallingTransition:                           ; CODE XREF: Player_Chec
                 move.b  #$7F,(PlayerInputMask).w
                 rts
 ; End of function Player_InitFallingTransition
-; Handles player falling state with gravity
+; The shared falling state, reached from state slots $06, $08, $14 and $28
 Player_HandleFallingState:                              ; CODE XREF: Player_KnockbackState+2E   j  ; was: sub_15CE4
                                         ; DATA XREF: ROM:00015068   o
                 bset    #0,(PlayerActionStateFlags).w
                 btst    #5,$69(a5)
-                bne.s   Player_HandleFallingState_UpdateTimer
+                bne.s   Player_HandleFallingState_UpdateJumpHold
                 move.w  #$FFFF,$48(a5)
-Player_HandleFallingState_UpdateTimer:                  ; CODE XREF: Player_HandleFallingState+C   j  ; was: loc_15CF8
+Player_HandleFallingState_UpdateJumpHold:               ; CODE XREF: Player_HandleFallingState+C   j  ; was: loc_15CF8
                 tst.w   $48(a5)
                 bmi.s   Player_HandleFallingState_ApplyGravity
                 subq.w  #1,$48(a5)
@@ -78,7 +78,7 @@ Player_HandleFallingState_CheckUpperTerrain:            ; CODE XREF: Player_Hand
                 btst    #2,6(a5)
                 beq.s   Player_HandleFallingState_ProcessInput
                 btst    #0,$69(a5)
-                bne.w   Player_InitHardLanding
+                bne.w   Player_InitUpwardTerrainLaunch
 Player_HandleFallingState_ProcessInput:                 ; CODE XREF: Player_HandleFallingState+44   j  ; was: loc_15D60
                                         ; Player_HandleFallingState+54   j
                 btst    #0,(CounterForceTriggerFlag).w
@@ -101,7 +101,7 @@ Player_HandleFallingState_SelectControl:                ; CODE XREF: Player_Hand
                 tst.w   $52(a5)
                 bne.s   Player_HandleFallingState_ApplyAirControl
                 btst    #4,$69(a5)
-                bne.w   Player_HandleFallingState_ApplyManualControl
+                bne.w   Player_HandleFallingState_ApplyLockedFacingControl
 Player_HandleFallingState_ApplyAirControl:              ; CODE XREF: Player_HandleFallingState+AE   j  ; was: loc_15D9E
                 bsr.w   Player_ApplyAirControl
                 move.w  #2,d1
@@ -113,7 +113,7 @@ Player_HandleFallingState_ApplyAirControl:              ; CODE XREF: Player_Hand
                 moveq   #0,d6
                 bra.w   Player_BuildSpritePieces
 ; ---------------------------------------------------------------------------
-Player_HandleFallingState_ApplyManualControl:           ; CODE XREF: Player_HandleFallingState+B6   j  ; was: loc_15DBE
+Player_HandleFallingState_ApplyLockedFacingControl:     ; CODE XREF: Player_HandleFallingState+B6   j  ; was: loc_15DBE
                 btst    #2,$69(a5)
                 beq.s   Player_HandleFallingState_CheckRightInput
 Player_HandleFallingState_AccelerateLeft:               ; CODE XREF: Player_HandleFallingState+144   j  ; was: loc_15DC6
@@ -136,7 +136,7 @@ Player_HandleFallingState_StepLeftVelocity:             ; CODE XREF: Player_Hand
 ; ---------------------------------------------------------------------------
 Player_HandleFallingState_CheckRightInput:              ; CODE XREF: Player_HandleFallingState+E0   j  ; was: loc_15DF0
                 btst    #3,$69(a5)
-                beq.s   Player_HandleFallingState_CheckNeutralVelocity
+                beq.s   Player_HandleFallingState_HandleNeutralInput
 Player_HandleFallingState_AccelerateRight:              ; CODE XREF: Player_HandleFallingState+142   j  ; was: loc_15DF8
                 move.l  #$38000,d1
                 btst    #3,$E(a5)
@@ -155,7 +155,7 @@ Player_HandleFallingState_StepRightVelocity:            ; CODE XREF: Player_Hand
                 addi.l  #$7777,d0
                 bra.s   Player_HandleFallingState_StoreVelocityAndRender
 ; ---------------------------------------------------------------------------
-Player_HandleFallingState_CheckNeutralVelocity:         ; CODE XREF: Player_HandleFallingState+112   j  ; was: loc_15E22
+Player_HandleFallingState_HandleNeutralInput:           ; CODE XREF: Player_HandleFallingState+112   j  ; was: loc_15E22
                 move.l  $18(a5),d0
                 bmi.s   Player_HandleFallingState_AccelerateRight
                 bne.s   Player_HandleFallingState_AccelerateLeft
@@ -182,7 +182,7 @@ Player_SelectFallPrimaryFrame_UseDefault:               ; CODE XREF: Player_Sele
                 movea.l #Player_FallPrimarySpriteMapping,a1
                 rts
 ; End of function Player_SelectFallPrimaryFrame
-; Selects animation based on falling velocity
+; Selects the secondary mapping from the vertical speed band
 Player_SelectFallAnimation:                             ; CODE XREF: Player_HandleFallingState+CE   p  ; was: sub_15E5E
                                         ; Player_HandleFallingState+14A   p
                 move.w  $1C(a5),d0
@@ -190,25 +190,25 @@ Player_SelectFallAnimation:                             ; CODE XREF: Player_Hand
                 neg.w   d0
 Player_SelectFallAnimation_UseAbsoluteSpeed:            ; CODE XREF: Player_SelectFallAnimation+4   j  ; was: loc_15E66
                 cmpi.w  #7,d0
-                bpl.s   Player_SelectFallAnimation_UseFastFrame
+                bpl.s   Player_SelectFallAnimation_UseDefaultFrame
                 cmpi.w  #2,d0
-                bmi.s   Player_SelectFallAnimation_UseFastFrame
+                bmi.s   Player_SelectFallAnimation_UseDefaultFrame
                 tst.w   $1C(a5)
                 bmi.s   Player_SelectFallAnimation_UseRisingFrame
                 movea.l #Player_FallingSecondarySpriteMapping,a2
                 rts
 ; ---------------------------------------------------------------------------
-Player_SelectFallAnimation_UseFastFrame:                ; CODE XREF: Player_SelectFallAnimation+C   j  ; was: loc_15E80
+Player_SelectFallAnimation_UseDefaultFrame:             ; CODE XREF: Player_SelectFallAnimation+C   j  ; was: loc_15E80
                                         ; Player_SelectFallAnimation+12   j
-                movea.l #Player_FastVerticalSecondarySpriteMapping,a2
+                movea.l #Player_DefaultVerticalSecondarySpriteMapping,a2
                 rts
 ; ---------------------------------------------------------------------------
 Player_SelectFallAnimation_UseRisingFrame:              ; CODE XREF: Player_SelectFallAnimation+18   j  ; was: loc_15E88
                 movea.l #Player_RisingSecondarySpriteMapping,a2
                 rts
 ; End of function Player_SelectFallAnimation
-; Initializes hard landing state with terrain alignment and downward velocity
-Player_InitHardLanding:                                 ; CODE XREF: Player_HandleFallingState+78   j  ; was: sub_15E90
+; Snaps to the upper tile boundary and launches the player further upward
+Player_InitUpwardTerrainLaunch:                         ; CODE XREF: Player_HandleFallingState+78   j  ; was: sub_15E90
                 jsr     (Physics_AlignToTerrain).l
                 move.w  #$12,4(a5)
                 move.l  #$FFF86000,$1C(a5)
@@ -216,33 +216,33 @@ Player_InitHardLanding:                                 ; CODE XREF: Player_Hand
                 move.w  #6,$52(a5)
                 move.b  #$7F,(PlayerInputMask).w
                 rts
-; End of function Player_InitHardLanding
-; Handles bounce state with gravity and terrain collision checks
-Player_HandleBounceState:                               ; DATA XREF: ROM:00015074   o  ; was: sub_15EB6
+; End of function Player_InitUpwardTerrainLaunch
+; Carries the upward launch for 25 frames, ending in a landing, a ceiling attach or a fall
+Player_UpwardTerrainLaunchState:                        ; DATA XREF: ROM:00015074   o  ; was: sub_15EB6
                 bset    #0,(PlayerActionStateFlags).w
                 addi.l  #$8800,$1C(a5)
                 jsr     Physics_ExtendedWallCheckWrapper(pc)  ; (pc)
                 nop
                 tst.w   $1C(a5)
-                bmi.s   Player_HandleBounceState_CheckUpperTerrain
+                bmi.s   Player_UpwardTerrainLaunchState_CheckUpperTerrain
                 bsr.w   Physics_DescendingTerrainCheckWrapper
                 btst    #0,6(a5)
                 bne.w   Player_InitLandingState
-                bra.s   Player_HandleBounceState_AdvanceAnimation
+                bra.s   Player_UpwardTerrainLaunchState_AdvanceAnimation
 ; ---------------------------------------------------------------------------
-Player_HandleBounceState_CheckUpperTerrain:             ; CODE XREF: Player_HandleBounceState+18   j  ; was: loc_15EE0
+Player_UpwardTerrainLaunchState_CheckUpperTerrain:      ; CODE XREF: Player_UpwardTerrainLaunchState+18   j  ; was: loc_15EE0
                 clr.b   6(a5)
                 jsr     Physics_RisingTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
                 bne.w   Player_InitCeilingLandingState
-Player_HandleBounceState_AdvanceAnimation:              ; CODE XREF: Player_HandleBounceState+28   j  ; was: loc_15EF4
+Player_UpwardTerrainLaunchState_AdvanceAnimation:       ; CODE XREF: Player_UpwardTerrainLaunchState+28   j  ; was: loc_15EF4
                 cmpi.w  #$38,$52(a5)                    ; '8'
                 bpl.w   Player_InitFallState
                 moveq   #2,d1
                 bra.w   Player_AdvanceAnimationFrame
-; End of function Player_HandleBounceState
-; Applies horizontal air control input
+; End of function Player_UpwardTerrainLaunchState
+; Applies horizontal air control and turns the player to face the input
 Player_ApplyAirControl:                                 ; CODE XREF: Player_HandleFallingState:Player_HandleFallingState_ApplyAirControl   p  ; was: sub_15F04
                 btst    #2,$69(a5)
                 beq.s   Player_ApplyAirControl_CheckRight

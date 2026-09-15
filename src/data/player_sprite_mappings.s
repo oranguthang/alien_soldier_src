@@ -541,7 +541,7 @@ Player_CounterForcePrimarySpriteMapping03:  dc.w    $800  ; DATA XREF: ROM:00017
                 dc.w    $8806
                 dc.l    Player_CounterForcePrimarySpriteArt03Piece03+$F000000
                 dc.w    $DAEF
-Player_FastVerticalSecondarySpriteMapping:  dc.w    $800  ; DATA XREF: Player_SelectFallAnimation:Player_SelectFallAnimation_UseFastFrame   o  ; was: word_E8C2A
+Player_DefaultVerticalSecondarySpriteMapping:   dc.w    $800  ; DATA XREF: Player_SelectFallAnimation:Player_SelectFallAnimation_UseDefaultFrame   o  ; was: word_E8C2A
                 dc.l    Player_FastVerticalSecondarySpriteArtPiece00
                 dc.w    $20F6
                 dc.w    $801

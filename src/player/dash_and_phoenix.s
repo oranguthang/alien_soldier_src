@@ -276,7 +276,7 @@ Player_DashAttackState_CheckTerrainContact:             ; CODE XREF: Player_Dash
 Player_DashAttackState_ExitToFall:                      ; CODE XREF: Player_DashAttackState+4C   j  ; was: loc_15A38
                 btst    #4,$E(a5)
                 beq.w   Player_InitFallState_Finish
-                bra.w   Player_InitAirDashEnd
+                bra.w   Player_InitCeilingDetachFall_Finish
 ; ---------------------------------------------------------------------------
 Player_DashAttackState_HandleTerrainContact:            ; CODE XREF: Player_DashAttackState+3A   j  ; was: loc_15A46
                 clr.w   (PlayerAirMoveUsedFlags).w
@@ -454,7 +454,7 @@ Player_CheckDashInput:                                  ; CODE XREF: Player_Ceil
                 beq.s   Player_CheckSpecialMoveActivation_Return
                 btst    #0,$69(a5)
                 bne.w   Player_InitiateDashAttack
-                bra.s   Player_EndDashWithVerticalVelocity
+                bra.s   Player_DropFromCeiling
 ; End of function Player_CheckDashInput
 ; Initializes player falling state with parameters
 Player_InitFallState:                                   ; CODE XREF: Player_GroundIdleState+10   j  ; was: sub_15C34

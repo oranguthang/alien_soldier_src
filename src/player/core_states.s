@@ -117,7 +117,7 @@ Player_StateHandlerOffsets: dc.w    Player_GroundIdleState-Player_HandleDeathSeq
                 dc.w    Player_GroundWeaponSelectState-Player_HandleDeathSequence
                 dc.w    Player_GroundCrouchState-Player_HandleDeathSequence
                 dc.w    Player_DashAttackState-Player_HandleDeathSequence
-                dc.w    Player_HandleBounceState-Player_HandleDeathSequence
+                dc.w    Player_UpwardTerrainLaunchState-Player_HandleDeathSequence
                 dc.w    Player_HandleFallingState-Player_HandleDeathSequence
                 dc.w    Player_HandleLandingState-Player_HandleDeathSequence
                 dc.w    Player_CeilingIdleState-Player_HandleDeathSequence

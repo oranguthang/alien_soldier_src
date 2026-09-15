@@ -9528,3 +9528,68 @@ pending queue falls from 1,677 to 1,633 and its actionable upper bound from
 1,164 to 1,120; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `credits/main.s` now has zero pending
 current names, leaving 19 modules in the queue.
+
+`player/fall_and_special_attack.s` was audited next, and its two worst names
+were a landing and a bounce that are neither.
+
+`Player_InitHardLanding` is reached from exactly one place: the falling state,
+while the player is *rising*, when the upper terrain probe reports bit 2 of
+`6(a5)`. That bit is not the ceiling. `Physics_HandleUpperCenterTerrain` splits
+the upper surfaces on the tile angle: an angle of `$80` or more sets bit 1, the
+attachable ceiling that leads to `Player_InitCeilingLandingState`, and anything
+shallower falls through to `Physics_SetSolidTerrainFlag`, which sets bit 2. So
+bit 2 is upper terrain the player cannot attach to. With up held, the response
+is `Physics_AlignToTerrain`, which snaps the player up to the tile boundary,
+followed by `$FFF86000` into `$1C` — eight pixels per frame *upward*. The
+routine's own comment claimed a downward velocity. It is renamed
+`Player_InitUpwardTerrainLaunch`.
+
+It is also the only writer of player state `$12`, whose handler was
+`Player_HandleBounceState`. That handler carries the upward velocity against the
+ordinary `$8800` of gravity while running both vertical probes, so it can end in
+a floor landing, in a ceiling attach, or, once the animation accumulator `$52`
+passes `$38`, in an ordinary fall. `Player_AdvanceAnimationFrame` adds 2 to `$52`
+each frame and the entry seeds it at 6, which puts the give-up point 25 frames
+out. Nothing in the state bounces; it becomes
+`Player_UpwardTerrainLaunchState`.
+
+The dash names at the head of the module were wrong in the other direction.
+`Player_EndDashState` is called by `Player_CeilingIdleState` the moment the
+attach bit is lost, with no dash involved, and it falls into a routine that is
+the field-for-field twin of `Player_InitFallState_Finish`: the same
+`CounterForceTriggerFlag` clear, the same `bclr #4,$E`, the same `$C` animation
+request, the same `$48` and `$4A` seeds, the same `$7F` input mask. The two
+differ only in the state written, `$28` against `$06`, and in a downward
+`$12000` push. `Player_DashAttackState_ExitToFall` chooses between them on
+exactly bit 4 of `$E`, the ceiling-attachment flag, which identifies `$28` as
+the ceiling-detach fall. The pair becomes
+`Player_InitCeilingDetachFall` and `Player_InitCeilingDetachFall_Finish`, and
+the routine above them, which supplies a downward `$20000` when C is pressed
+without up from either ceiling state, becomes `Player_DropFromCeiling` — a
+correction to a name confirmed earlier in the audit.
+
+Two fields of the falling state are now pinned. `$48` is the jump hold: while it
+is non-negative both branches of `Player_HandleFallingState_UpdateJumpHold` skip
+the gravity add, and releasing C writes `-1` into it, which is the variable jump
+height. `$4A` is a countdown during which the lower probe is skipped, so the
+player cannot land.
+
+The falling state has two separate horizontal controls, which the old names hid.
+`Player_ApplyAirControl` rewrites bit 3 of `$E` from the held direction and uses
+one symmetric `$38000` cap. The branch taken while the shot button is held never
+touches that bit, so the player keeps its facing, and its cap depends on the
+facing: `$38000` forward and only `$2C000` backward, mirrored exactly on both
+sides. It becomes `Player_HandleFallingState_ApplyLockedFacingControl`.
+
+Finally, `Player_SelectFallAnimation_UseFastFrame` is reached from both outer
+speed bands, at 7 or more and below 2, so only the middle band 2 to 6 gets the
+falling and rising poses. The label and the mapping it loads are renamed
+`Player_SelectFallAnimation_UseDefaultFrame` and
+`Player_DefaultVerticalSecondarySpriteMapping`.
+
+Forty-six exact-address records raise the registry from 14,709 to 14,755, and
+two existing records are corrected in place. The pending queue falls from 1,633
+to 1,587 and its actionable upper bound from 1,120 to 1,074; provenance, the 513
+classified binary-backed end aliases, and the 379-module layout remain
+unchanged. `player/fall_and_special_attack.s` now has zero pending current
+names, leaving 18 modules in the queue.

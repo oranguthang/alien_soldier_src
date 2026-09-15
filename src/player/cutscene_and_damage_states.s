@@ -301,7 +301,7 @@ Player_CeilingIdleState:                                ; DATA XREF: ROM:0001507
                 jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
-                beq.w   Player_EndDashState
+                beq.w   Player_InitCeilingDetachFall
                 bsr.w   Effect_SpawnParticle
                 bsr.w   Player_CheckCeilingWeaponSelectInput
                 bne.s   Player_CeilingIdleState_Return

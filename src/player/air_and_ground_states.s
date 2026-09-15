@@ -38,13 +38,13 @@ Player_CeilingDashState:                                ; DATA XREF: ROM:0001508
                 jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
-                beq.w   Player_EndDashState
+                beq.w   Player_InitCeilingDetachFall
                 bsr.w   Player_CheckCeilingWeaponSelectInput
                 bne.s   Player_CeilingDashState_Return
                 btst    #5,$6A(a5)
                 beq.s   Player_CeilingDashState_UpdateMovement
                 btst    #0,$69(a5)
-                beq.w   Player_EndDashState
+                beq.w   Player_InitCeilingDetachFall
                 bra.w   Player_InitiateDashAttack
 ; ---------------------------------------------------------------------------
 Player_CeilingDashState_UpdateMovement:                 ; CODE XREF: Player_CeilingDashState+28   j  ; was: loc_16564
@@ -85,7 +85,7 @@ Player_CeilingDecelerateState:                          ; DATA XREF: ROM:0001508
                 jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
-                beq.w   Player_EndDashState
+                beq.w   Player_InitCeilingDetachFall
                 bsr.w   Player_CheckCeilingWeaponSelectInput
                 bne.s   Player_CeilingState_Return
                 bsr.w   Player_CheckDashInput
@@ -119,7 +119,7 @@ Player_CeilingState_Return:                             ; CODE XREF: Player_Ceil
 ; End of function Player_CeilingDecelerateState
 ; Initializes the landing state for contact with upper terrain
 Player_InitCeilingLandingState:                         ; CODE XREF: Player_HandleFallingState+66   j  ; was: sub_1663A
-                                        ; Player_HandleBounceState+3A   j
+                                        ; Player_UpwardTerrainLaunchState+3A   j
                 move.b  #$7F,(PlayerInputMask).w
                 clr.w   (PlayerAirMoveUsedFlags).w
                 move.w  #$26,4(a5)                      ; '&'
@@ -138,7 +138,7 @@ Player_CeilingLandingState:                             ; DATA XREF: ROM:0001508
                 jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
-                beq.w   Player_EndDashState
+                beq.w   Player_InitCeilingDetachFall
                 bsr.w   Player_CheckCeilingWeaponSelectInput
                 bne.s   Player_CeilingState_Return
                 bsr.w   Player_CheckDashInput
@@ -208,7 +208,7 @@ Player_CeilingWeaponSelectState:                        ; DATA XREF: ROM:0001508
                 jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
-                beq.w   Player_EndDashState
+                beq.w   Player_InitCeilingDetachFall
                 bra.w   Player_RenderIdleFrame
 ; End of function Player_CeilingWeaponSelectState
 ; Toggles moving/fixed shooting mode and plays its sound
@@ -268,7 +268,7 @@ Player_CeilingMovementState:                            ; DATA XREF: ROM:0001507
                 jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
-                beq.w   Player_EndDashState
+                beq.w   Player_InitCeilingDetachFall
                 bsr.w   Player_CheckCeilingWeaponSelectInput
                 bne.s   Player_CeilingMovementState_Return
                 bsr.w   Player_CheckDashInput
@@ -318,7 +318,7 @@ Player_CeilingAirControlState:                          ; DATA XREF: ROM:0001507
                 jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
-                beq.w   Player_EndDashState
+                beq.w   Player_InitCeilingDetachFall
                 bsr.w   Player_CheckCeilingWeaponSelectInput
                 bne.s   Player_CeilingAirControlState_Return
                 bsr.w   Player_CheckDashInput
