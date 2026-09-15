@@ -36,6 +36,48 @@
         "UI_InitializeSEGAScreen copies all 32 bytes into palette RAM immediately before loading sega_tiles."
       ]
     },
+    { "address": "0x0220D0", "previous_name": "sub_220D0", "current_name": "Boss_ZLeoMainController", "legacy_name": "sub_220D0", "evidence": "static", "basis": ["Called once a frame from ZLeoEnding_UpdateScene. State zero skips both the scroll integration and the player placement, so the first frame runs the intro before anything moves."] },
+    { "address": "0x0220E0", "previous_name": "loc_220E0", "current_name": "Boss_ZLeoMainController_DispatchState", "legacy_name": "loc_220E0", "evidence": "static", "basis": ["The state index is SharedPatternRow0Long0 at $FF9400, not an object field, so this whole sequence keeps its state machine in the shared pattern scratch area: the index at +0, its timer at +2, the camera scroll rate at Long2+2, and the particle parameters across Long4 to Long7."] },
+    { "address": "0x0220EC", "previous_name": "off_220EC", "current_name": "Boss_ZLeoStateHandlers", "legacy_name": "off_220EC", "evidence": "static", "basis": ["Nineteen self-relative words. Every state advances by two and never branches back, so the sequence is strictly linear and ends parked on the idle entry."] },
+    { "address": "0x022112", "previous_name": "sub_22112", "current_name": "Boss_ZLeoIntroSequence", "legacy_name": "sub_22112", "evidence": "static", "basis": ["It builds a type-$10 object at the head of Entity_ObjectPool, which is the object the PrimaryEntity RAM names address. Type $10 is index 4 of Entity_UpdateHandlerTable, Entity_NullUpdateHandler4, so the object never updates itself and serves only as a moving marker."] },
+    { "address": "0x022166", "previous_name": "loc_22166", "current_name": "Boss_ZLeoIntroSequence_ParticleWait", "legacy_name": "loc_22166", "evidence": "static", "basis": ["The routine spawns particles and counts down a $40-frame timer. It touches no palette at all, which is what the former PaletteWait name claimed."] },
+    { "address": "0x02217E", "previous_name": "locret_2217E", "current_name": "Boss_ZLeoIntroSequence_Return", "legacy_name": "locret_2217E", "evidence": "static", "basis": ["The counting frames return here; the last one starts the marker moving at four pixels a frame and spawns the impact object."] },
+    { "address": "0x022180", "previous_name": "sub_22180", "current_name": "Boss_ZLeoWaitMarkerPosition", "legacy_name": "sub_22180", "evidence": "static", "basis": ["The test is cmpi.w against PrimaryEntityXPos, the marker X, not a camera Y as the comment claimed. It waits for the marker to reach $1E0, then stops it and arms the next $40-frame timer."] },
+    { "address": "0x02219A", "previous_name": "locret_2219A", "current_name": "Boss_ZLeoWaitMarkerPosition_Return", "legacy_name": "locret_2219A", "evidence": "static", "basis": ["The frames before the marker arrives return here."] },
+    { "address": "0x02219C", "previous_name": "sub_2219C", "current_name": "Boss_ZLeoWaitTimer", "legacy_name": "sub_2219C", "evidence": "static", "basis": ["A bare countdown that keeps spawning particles, the shape most states in this sequence share."] },
+    { "address": "0x0221AA", "previous_name": "locret_221AA", "current_name": "Boss_ZLeoWaitTimer_Return", "legacy_name": "locret_221AA", "evidence": "static", "basis": ["The counting frames return here."] },
+    { "address": "0x0221AC", "previous_name": "sub_221AC", "current_name": "Boss_ZLeoCameraScroll", "legacy_name": "sub_221AC", "evidence": "static", "basis": ["This one really is the camera: Boss_ZLeoUpdateScroll adds SharedPatternRow0Long2+2 to PrimaryCameraXPosition every frame, and this state is what accelerates that rate. It also subtracts the same rate from the particle emitter origin, so the emitter stays fixed in world space while the camera moves."] },
+    { "address": "0x0221C2", "previous_name": "loc_221C2", "current_name": "Boss_ZLeoCameraScroll_ConfigureParticles", "legacy_name": "loc_221C2", "evidence": "static", "basis": ["Once the emitter origin has scrolled below $60 it is re-seeded at $160 with a wider spread, so the effect restarts at the other side rather than running off screen."] },
+    { "address": "0x0221EA", "previous_name": "loc_221EA", "current_name": "Boss_ZLeoCameraScroll_Accelerate", "legacy_name": "loc_221EA", "evidence": "static", "basis": ["The rate rises by $800 a frame and the state ends on the exact frame it equals $80000, a compare for equality rather than a threshold, so the acceleration must divide evenly into the target."] },
+    { "address": "0x022214", "previous_name": "locret_22214", "current_name": "Boss_ZLeoCameraScroll_Return", "legacy_name": "locret_22214", "evidence": "static", "basis": ["Every frame short of the exact rate returns here."] },
+    { "address": "0x022216", "previous_name": "sub_22216", "current_name": "Boss_ZLeoWaitForScrollThreshold", "legacy_name": "sub_22216", "evidence": "static", "basis": ["It waits for the marker to fall back to X $120 or below, then copies the camera scroll rate into the marker velocity so the two move together."] },
+    { "address": "0x02222C", "previous_name": "locret_2222C", "current_name": "Boss_ZLeoWaitForScrollThreshold_Return", "legacy_name": "locret_2222C", "evidence": "static", "basis": ["The frames above the threshold return here."] },
+    { "address": "0x02222E", "previous_name": "sub_2222E", "current_name": "Boss_ZLeoConfigureParticleBurst", "legacy_name": "sub_2222E", "evidence": "static", "basis": ["It raises the per-frame particle count from one to two and re-seeds the emitter, then arms an $80-frame window."] },
+    { "address": "0x022262", "previous_name": "sub_22262", "current_name": "Boss_ZLeoWaitParticleBurst", "legacy_name": "sub_22262", "evidence": "static", "basis": ["The burst runs for its whole window and re-arms the same $80 for the next state rather than clearing it."] },
+    { "address": "0x022276", "previous_name": "locret_22276", "current_name": "Boss_ZLeoWaitParticleBurst_Return", "legacy_name": "locret_22276", "evidence": "static", "basis": ["The counting frames return here."] },
+    { "address": "0x022278", "previous_name": "sub_22278", "current_name": "Boss_ZLeoStartReverseScroll", "legacy_name": "sub_22278", "evidence": "static", "basis": ["It clears bit 0 of the marker flags and installs a leftward $20000, which is what sends the marker back the way it came."] },
+    { "address": "0x022294", "previous_name": "locret_22294", "current_name": "Boss_ZLeoStartReverseScroll_Return", "legacy_name": "locret_22294", "evidence": "static", "basis": ["The frames before the reversal return here."] },
+    { "address": "0x022296", "previous_name": "sub_22296", "current_name": "Boss_ZLeoWaitForScrollSignChange", "legacy_name": "sub_22296", "evidence": "static", "basis": ["The bit-7 test is a byte operation on the top byte of the marker velocity long, so it is a sign test: $1000 is added each frame until the velocity turns positive, and the turn is marked with SFX $D5."] },
+    { "address": "0x0222B8", "previous_name": "locret_222B8", "current_name": "Boss_ZLeoWaitForScrollSignChange_Return", "legacy_name": "locret_222B8", "evidence": "static", "basis": ["The still-negative frames return here."] },
+    { "address": "0x0222BA", "previous_name": "sub_222BA", "current_name": "Boss_ZLeoWaitForMarkerEnd", "legacy_name": "sub_222BA", "evidence": "static", "basis": ["It keeps accelerating the marker and waits for it to reach X $1E0 again, the same value the early wait used, then steps the particle count up by one."] },
+    { "address": "0x0222DC", "previous_name": "locret_222DC", "current_name": "Boss_ZLeoWaitForMarkerEnd_Return", "legacy_name": "locret_222DC", "evidence": "static", "basis": ["The frames before the marker arrives return here."] },
+    { "address": "0x0222DE", "previous_name": "sub_222DE", "current_name": "Boss_ZLeoSetParticleMode4", "legacy_name": "sub_222DE", "evidence": "static", "basis": ["After its own $80-frame delay it sets the per-frame particle count to four outright rather than stepping it."] },
+    { "address": "0x0222F8", "previous_name": "locret_222F8", "current_name": "Boss_ZLeoSetParticleMode4_Return", "legacy_name": "locret_222F8", "evidence": "static", "basis": ["The counting frames return here."] },
+    { "address": "0x0222FA", "previous_name": "sub_222FA", "current_name": "Boss_ZLeoWaitParticleMode4", "legacy_name": "sub_222FA", "evidence": "static", "basis": ["A bare countdown at four particles a frame, the densest point of the effect."] },
+    { "address": "0x022308", "previous_name": "locret_22308", "current_name": "Boss_ZLeoWaitParticleMode4_Return", "legacy_name": "locret_22308", "evidence": "static", "basis": ["The counting frames return here."] },
+    { "address": "0x02230A", "previous_name": "sub_2230A", "current_name": "Boss_ZLeoStartFinalDelay", "legacy_name": "sub_2230A", "evidence": "static", "basis": ["It arms $40 frames and advances in the same frame, so it is a one-frame setup state rather than a wait."] },
+    { "address": "0x02231A", "previous_name": "sub_2231A", "current_name": "Boss_ZLeoWaitFinalDelay", "legacy_name": "sub_2231A", "evidence": "static", "basis": ["It clears the timer on the last frame, which is what lets the fade state reuse the same word as a fade index starting from zero."] },
+    { "address": "0x02232C", "previous_name": "locret_2232C", "current_name": "Boss_ZLeoWaitFinalDelay_Return", "legacy_name": "locret_2232C", "evidence": "static", "basis": ["The counting frames return here."] },
+    { "address": "0x02232E", "previous_name": "sub_2232E", "current_name": "Boss_ZLeoFadeToEnding", "legacy_name": "sub_2232E", "evidence": "static", "basis": ["The fade index advances only on frames where bits 0 and 1 of the VBlank counter are both clear, so it steps once every four frames, and every other frame spawns particles instead."] },
+    { "address": "0x022360", "previous_name": "loc_22360", "current_name": "Boss_ZLeoFadeToEnding_ClearPaletteBufferLoop", "legacy_name": "loc_22360", "evidence": "static", "basis": ["It clears $20 long words of PaletteShadowBuffer, the whole shadow palette, once the fade index passes $E."] },
+    { "address": "0x022376", "previous_name": "locret_22376", "current_name": "Boss_ZLeoFadeToEnding_Return", "legacy_name": "locret_22376", "evidence": "static", "basis": ["The frames still fading return here."] },
+    { "address": "0x022378", "previous_name": "loc_22378", "current_name": "Boss_ZLeoFadeToEnding_UpdateParticles", "legacy_name": "loc_22378", "evidence": "static", "basis": ["The three frames in four that do not step the fade still emit particles, so the effect does not stall during the fade."] },
+    { "address": "0x02237E", "previous_name": "sub_2237E", "current_name": "Boss_ZLeoPrepareEndingExit", "legacy_name": "sub_2237E", "evidence": "static", "basis": ["It holds the fade at its final index $E for $80 frames, then stops the camera scroll and the particle emitter together."] },
+    { "address": "0x02239E", "previous_name": "locret_2239E", "current_name": "Boss_ZLeoPrepareEndingExit_Return", "legacy_name": "locret_2239E", "evidence": "static", "basis": ["The holding frames return here."] },
+    { "address": "0x0223A0", "previous_name": "sub_223A0", "current_name": "Boss_ZLeoWaitEndingExit", "legacy_name": "sub_223A0", "evidence": "static", "basis": ["The fade index now counts down on the same one-in-four cadence, and reaching negative sets GameModeIndex to $8C, which is what leaves the sequence."] },
+    { "address": "0x0223C8", "previous_name": "locret_223C8", "current_name": "Boss_ZLeoWaitEndingExit_Return", "legacy_name": "locret_223C8", "evidence": "static", "basis": ["Both skipped frames and counting frames return here."] },
+    { "address": "0x0223CA", "previous_name": "nullsub_56", "current_name": "Boss_ZLeoSequenceIdle", "legacy_name": "nullsub_56", "evidence": "static", "basis": ["The nineteenth and last state, and genuinely entered: the exit state advances into it after setting the game mode, so the controller parks here until the mode change takes effect. Its address comes from build/main.lst, because nullsub names carry a counter rather than an address."] },
+    { "address": "0x0223CC", "previous_name": "sub_223CC", "current_name": "Credits_ApplyFadeStep", "legacy_name": "sub_223CC", "evidence": "static", "basis": ["It masks the index to $E, so the caller can pass any value and only the even steps 0 to $E reach Gfx_ApplyPaletteFade. Both callers are in this module."] },
     {
       "address": "0x0223E2",
       "previous_name": "Boss_ZLeoPaletteUpdate",
@@ -47,29 +89,28 @@
         "It neither reads nor writes palette memory."
       ]
     },
+    { "address": "0x0223EC", "previous_name": "sub_223EC", "current_name": "Orphaned_ZLeoMovePlayerByInput", "legacy_name": "sub_223EC", "evidence": "static", "basis": ["Zero references of any kind: the only mentions of the entry label are its own definition and the cross-reference comments its four sub-labels carry, there is no ROM absolute-address match, and the routine above it ends in rts so it cannot be fallen into. It moves PlayerXPosition and PlayerYPosition by four a frame from the held D-pad, which is the player object and not a camera as the former Debug name claimed."] },
+    { "address": "0x0223F8", "previous_name": "loc_223F8", "current_name": "Orphaned_ZLeoMovePlayerByInput_CheckRight", "legacy_name": "loc_223F8", "evidence": "static", "basis": ["Left is tested first, so holding both directions would move the player left."] },
+    { "address": "0x022404", "previous_name": "loc_22404", "current_name": "Orphaned_ZLeoMovePlayerByInput_CheckUp", "legacy_name": "loc_22404", "evidence": "static", "basis": ["The bit order is the standard pad layout: 0 up, 1 down, 2 left, 3 right."] },
+    { "address": "0x022410", "previous_name": "loc_22410", "current_name": "Orphaned_ZLeoMovePlayerByInput_CheckDown", "legacy_name": "loc_22410", "evidence": "static", "basis": ["The vertical pair mirrors the horizontal one exactly."] },
+    { "address": "0x02241C", "previous_name": "locret_2241C", "current_name": "Orphaned_ZLeoMovePlayerByInput_Return", "legacy_name": "locret_2241C", "evidence": "static", "basis": ["All four directions converge on this return."] },
     {
       "address": "0x02241E",
-      "previous_name": "Stage_UpdateCameraFromTable",
-      "current_name": "Boss_ZLeoUpdateCameraOrbit",
+      "previous_name": "Boss_ZLeoUpdateCameraOrbit",
+      "current_name": "Orphaned_ZLeoOrbitPlayerPosition",
       "legacy_name": "sub_2241E",
       "evidence": "static",
-      "basis": [
-        "Both outputs are derived from phase indices and the shared sine table.",
-        "The resulting fixed-point coordinates are written to the same camera target fields used by the Z-Leo ending sequence."
-      ]
+      "basis": ["Zero references of any kind, no ROM absolute-address match, and the routine above it ends in rts so it cannot be fallen into. Like its live sibling it would write PlayerXPosition and PlayerYPosition, here from two sine phases advancing at four and two units a frame scaled by $40 and $20 around a fixed centre, so it is an orbit of the player object rather than of a camera. This record supersedes the earlier confirmation."]
     },
     {
       "address": "0x022466",
-      "previous_name": "Boss_ZLeoPaletteEffect1",
-      "current_name": "Boss_ZLeoUpdateCameraBounds",
+      "previous_name": "Boss_ZLeoUpdateCameraBounds",
+      "current_name": "Boss_ZLeoPlacePlayerAtMarker",
       "legacy_name": "sub_22466",
       "evidence": "static",
-      "basis": [
-        "The routine checks the camera Y coordinate against 0x80 and 0x1C0.",
-        "Inside that range it copies camera coordinates to the target fields; outside it resets the target and a control flag.",
-        "It does not access palette memory."
-      ]
+      "basis": ["It writes PlayerXPosition and PlayerYPosition from the marker object position and sets bit 7 of the player flag word while the marker X stays between $80 and $1C0. It touches no camera field at all: the camera in this sequence is moved by Boss_ZLeoUpdateScroll, which adds the scroll rate straight into PrimaryCameraXPosition. This record supersedes the earlier confirmation, which was made before the marker object and the camera scroll were told apart."]
     },
+    { "address": "0x02248A", "previous_name": "loc_2248A", "current_name": "Boss_ZLeoPlacePlayerAtMarker_HideAndPark", "legacy_name": "loc_2248A", "evidence": "static", "basis": ["Outside the bounds it parks the player at X $60 and clears bit 7 of the player flag word. Bit 7 of that high byte is the visibility bit: every visible sprite word in this codebase has it set and the hidden $1000 value has it clear, so the player is hidden while the marker is off the active span."] },
     {
       "address": "0x02249A",
       "previous_name": "Boss_ZLeoPaletteEffect2",
@@ -82,6 +123,13 @@
         "It does not access palette memory."
       ]
     },
+    { "address": "0x0224A4", "previous_name": "loc_224A4", "current_name": "Boss_ZLeoSpawnParticles_Loop", "legacy_name": "loc_224A4", "evidence": "static", "basis": ["Each particle takes its spread from a mask in SharedPatternRow0Long5+2 and Long6, centred by halving the mask plus one, then adds one of four fixed offsets chosen by two random bits. Its horizontal velocity is the camera scroll rate halved, so the particles drift with the camera at half speed."] },
+    { "address": "0x022540", "previous_name": "loc_22540", "current_name": "Boss_ZLeoSpawnParticles_SelectFinalSfx", "legacy_name": "loc_22540", "evidence": "static", "basis": ["From state $18 onward the periodic sound changes from $30 to $2F, so the last two states of the sequence sound different."] },
+    { "address": "0x022544", "previous_name": "loc_22544", "current_name": "Boss_ZLeoSpawnParticles_PlaySfx", "legacy_name": "loc_22544", "evidence": "static", "basis": ["The sound is gated by a random value masked with SharedPatternRow0Long7, so it fires on roughly one frame in eight rather than on a timer."] },
+    { "address": "0x02254A", "previous_name": "locret_2254A", "current_name": "Boss_ZLeoSpawnParticles_Return", "legacy_name": "locret_2254A", "evidence": "static", "basis": ["A zero particle count, a full object pool and the off-sound frames all share this return."] },
+    { "address": "0x02254C", "previous_name": "word_2254C", "current_name": "Boss_ZLeoParticleXOffsets", "legacy_name": "word_2254C", "evidence": "static", "basis": ["Four words, $20, 0, $FFE0, 0, indexed by two random bits doubled, so the horizontal jitter is plus or minus $20 on half the particles."] },
+    { "address": "0x022554", "previous_name": "word_22554", "current_name": "Boss_ZLeoParticleYOffsets", "legacy_name": "word_22554", "evidence": "static", "basis": ["The companion four words, 0, $A, $FFF0, 0, indexed by the same random pair, so the two offsets are always taken together and the four combinations form a small diamond."] },
+    { "address": "0x02255C", "previous_name": "off_2255C", "current_name": "Boss_ZLeoParticleSpritePointers", "legacy_name": "off_2255C", "evidence": "static", "basis": ["Eight long pointers over six distinct animations: SharedCombatSpriteAnimation03 appears twice and 00 and 02 appear twice each, so the random draw is not uniform across the six."] },
     {
       "address": "0x02257C",
       "previous_name": "Credits_UpdateTilemap",
@@ -16333,6 +16381,7 @@
     {"address":"0x0220A6","previous_name":"Effect_WaitAndSetFallGravity","current_name":"CreditsGlyph_WaitAndStartFall","legacy_name":"sub_220A6","evidence":"static","basis":["State eight counts down the record-derived hold, then enables motion flags and sets positive fixed-point Y velocity $1.0000."]},
     {"address":"0x0220C4","previous_name":"Effect_WaitAndSetFallGravity_Return","current_name":"CreditsGlyph_WaitAndStartFallReturn","legacy_name":"locret_220C4","evidence":"static","basis":["Continuing and completed hold paths return here."]},
     {"address":"0x0220C6","previous_name":"Effect_DecelerateFloatingIconFall","current_name":"CreditsGlyph_ApplyUpwardAcceleration","legacy_name":"sub_220C6","evidence":"static","basis":["The final glyph state subtracts fixed-point $0.0800 from vertical velocity on every update."]},
+    { "address": "0x0225CC", "previous_name": "unused_5", "current_name": "Credits_UnidentifiedTrailingData", "legacy_name": "unused_5", "evidence": "static", "basis": ["A binclude payload with no reference of any kind and no ROM absolute-address match. It sits between the Z-Leo impact spawner and the demo playback module, and nothing in the build reads it, so the honest name records that it is trailing data of unidentified purpose rather than guessing one. Its address comes from build/main.lst."] },
     {"address":"0xFF00EC","previous_name":"word_FF00EC","current_name":"SharedSequenceState","legacy_name":"word_FF00EC","evidence":"static","basis":["Frontend pattern dispatchers and the credits-glyph sequence use this even word as a state-table offset, clearing it before each owner's sequence."]},
     {"address":"0xFF00F8","previous_name":"dword_FF00F8","current_name":"SharedSequenceCursor","legacy_name":"dword_FF00F8","evidence":"static","basis":["Story text advances this longword through fixed-size row records; credits independently advances it through variable-size two-row glyph records."]},
     {"address":"0xFF00FC","previous_name":"word_FF00FC","current_name":"SharedSequenceTimer","legacy_name":"word_FF00FC","evidence":"static","basis":["Story text uses this word as row cadence, while credits stores and counts down glyph-record delays in the same scratch location."]},

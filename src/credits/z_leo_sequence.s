@@ -2,7 +2,7 @@ Boss_ZLeoMainController:                                ; CODE XREF: ZLeoEnding_
                 tst.w   (SharedPatternRow0Long0).w
                 beq.w   Boss_ZLeoMainController_DispatchState
                 bsr.w   Boss_ZLeoUpdateScroll
-                bsr.w   Boss_ZLeoUpdateCameraBounds
+                bsr.w   Boss_ZLeoPlacePlayerAtMarker
 Boss_ZLeoMainController_DispatchState:                  ; CODE XREF: Boss_ZLeoMainController+4   j  ; was: loc_220E0
                 move.w  (SharedPatternRow0Long0).w,d0
                 lea     Boss_ZLeoStateHandlers(pc,d0.w),a0
@@ -11,8 +11,8 @@ Boss_ZLeoMainController_DispatchState:                  ; CODE XREF: Boss_ZLeoMa
 ; End of function Boss_ZLeoMainController
 ; ---------------------------------------------------------------------------
 Boss_ZLeoStateHandlers: dc.w    Boss_ZLeoIntroSequence-*  ; DATA XREF: Boss_ZLeoMainController+14   o  ; was: off_220EC
-                dc.w    Boss_ZLeoIntroSequence_PaletteWait-*
-                dc.w    Boss_ZLeoWaitCameraPosition-*
+                dc.w    Boss_ZLeoIntroSequence_ParticleWait-*
+                dc.w    Boss_ZLeoWaitMarkerPosition-*
                 dc.w    Boss_ZLeoWaitTimer-*
                 dc.w    Boss_ZLeoCameraScroll-*
                 dc.w    Boss_ZLeoWaitForScrollThreshold-*
@@ -20,7 +20,7 @@ Boss_ZLeoStateHandlers: dc.w    Boss_ZLeoIntroSequence-*  ; DATA XREF: Boss_ZLeo
                 dc.w    Boss_ZLeoWaitParticleBurst-*
                 dc.w    Boss_ZLeoStartReverseScroll-*
                 dc.w    Boss_ZLeoWaitForScrollSignChange-*
-                dc.w    Boss_ZLeoWaitForCameraEnd-*
+                dc.w    Boss_ZLeoWaitForMarkerEnd-*
                 dc.w    Boss_ZLeoSetParticleMode4-*
                 dc.w    Boss_ZLeoWaitParticleMode4-*
                 dc.w    Boss_ZLeoStartFinalDelay-*
@@ -48,8 +48,8 @@ Boss_ZLeoIntroSequence:                                 ; DATA XREF: ROM:Boss_ZL
                 move.w  #7,(SharedPatternRow0Long7).w
                 bsr.w   Boss_ZLeoSpawnParticles
                 move.w  #$40,(SharedPatternRow0Long0+2).w  ; '@'
-; Emits particles while the Z-Leo intro countdown runs
-Boss_ZLeoIntroSequence_PaletteWait:                     ; DATA XREF: ROM:000220EE   o  ; was: loc_22166
+; Emits particles while the intro countdown runs; it touches no palette
+Boss_ZLeoIntroSequence_ParticleWait:                    ; DATA XREF: ROM:000220EE   o  ; was: loc_22166
                 bsr.w   Boss_ZLeoSpawnParticles
                 subq.w  #1,(SharedPatternRow0Long0+2).w
                 bne.s   Boss_ZLeoIntroSequence_Return
@@ -59,17 +59,17 @@ Boss_ZLeoIntroSequence_PaletteWait:                     ; DATA XREF: ROM:000220E
 Boss_ZLeoIntroSequence_Return:                          ; CODE XREF: Boss_ZLeoIntroSequence+5C   j  ; was: locret_2217E
                 rts
 ; End of function Boss_ZLeoIntroSequence
-; Waits for camera Y position to reach 0x1E0 before advancing state
-Boss_ZLeoWaitCameraPosition:                            ; DATA XREF: ROM:000220F0   o  ; was: sub_22180
+; Waits for the marker object X to reach $1E0 before advancing state
+Boss_ZLeoWaitMarkerPosition:                            ; DATA XREF: ROM:000220F0   o  ; was: sub_22180
                 bsr.w   Boss_ZLeoSpawnParticles
                 cmpi.w  #$1E0,(PrimaryEntityXPos).w
-                bcs.s   Boss_ZLeoWaitCameraPosition_Return
+                bcs.s   Boss_ZLeoWaitMarkerPosition_Return
                 clr.w   (PrimaryEntityXVelocity).w
                 move.w  #$40,(SharedPatternRow0Long0+2).w  ; '@'
                 addq.w  #2,(SharedPatternRow0Long0).w
-Boss_ZLeoWaitCameraPosition_Return:                     ; CODE XREF: Boss_ZLeoWaitCameraPosition+A   j  ; was: locret_2219A
+Boss_ZLeoWaitMarkerPosition_Return:                     ; CODE XREF: Boss_ZLeoWaitMarkerPosition+A   j  ; was: locret_2219A
                 rts
-; End of function Boss_ZLeoWaitCameraPosition
+; End of function Boss_ZLeoWaitMarkerPosition
 ; Emits particles while waiting for the state timer
 Boss_ZLeoWaitTimer:                                     ; DATA XREF: ROM:000220F2   o  ; was: sub_2219C
                 bsr.w   Boss_ZLeoSpawnParticles
@@ -163,18 +163,18 @@ Boss_ZLeoWaitForScrollSignChange:                       ; DATA XREF: ROM:000220F
 Boss_ZLeoWaitForScrollSignChange_Return:                ; CODE XREF: Boss_ZLeoWaitForScrollSignChange+12   j  ; was: locret_222B8
                 rts
 ; End of function Boss_ZLeoWaitForScrollSignChange
-; Waits for the camera to reach the ending position
-Boss_ZLeoWaitForCameraEnd:                              ; DATA XREF: ROM:00022100   o  ; was: sub_222BA
+; Waits for the marker object to return to X $1E0
+Boss_ZLeoWaitForMarkerEnd:                              ; DATA XREF: ROM:00022100   o  ; was: sub_222BA
                 bsr.w   Boss_ZLeoSpawnParticles
                 addi.l  #$1000,(PrimaryEntityXVelocity).w
                 cmpi.w  #$1E0,(PrimaryEntityXPos).w
-                blt.s   Boss_ZLeoWaitForCameraEnd_Return
+                blt.s   Boss_ZLeoWaitForMarkerEnd_Return
                 addq.w  #1,(SharedPatternRow0Long4).w
                 addq.w  #2,(SharedPatternRow0Long0).w
                 move.w  #$80,(SharedPatternRow0Long0+2).w
-Boss_ZLeoWaitForCameraEnd_Return:                       ; CODE XREF: Boss_ZLeoWaitForCameraEnd+12   j  ; was: locret_222DC
+Boss_ZLeoWaitForMarkerEnd_Return:                       ; CODE XREF: Boss_ZLeoWaitForMarkerEnd+12   j  ; was: locret_222DC
                 rts
-; End of function Boss_ZLeoWaitForCameraEnd
+; End of function Boss_ZLeoWaitForMarkerEnd
 ; Selects four particles per update after a delay
 Boss_ZLeoSetParticleMode4:                              ; DATA XREF: ROM:00022102   o  ; was: sub_222DE
                 bsr.w   Boss_ZLeoSpawnParticles
@@ -289,28 +289,28 @@ Boss_ZLeoUpdateScroll:                                  ; CODE XREF: Boss_ZLeoMa
                 add.l   d0,(PrimaryCameraXPosition).w
                 rts
 ; End of function Boss_ZLeoUpdateScroll
-; Debug function for manual camera control using directional inputs
-Debug_CameraManualControl:
+; Unreachable: would nudge the player four pixels per frame from the D-pad
+Orphaned_ZLeoMovePlayerByInput:
                 btst    #2,(ControllerHeldState).w      ; was: sub_223EC
-                beq.s   Debug_CameraManualControl_CheckRight
+                beq.s   Orphaned_ZLeoMovePlayerByInput_CheckRight
                 subq.w  #4,(PlayerXPosition).w
-Debug_CameraManualControl_CheckRight:                   ; CODE XREF: Debug_CameraManualControl+6   j  ; was: loc_223F8
+Orphaned_ZLeoMovePlayerByInput_CheckRight:              ; CODE XREF: Orphaned_ZLeoMovePlayerByInput+6   j  ; was: loc_223F8
                 btst    #3,(ControllerHeldState).w
-                beq.s   Debug_CameraManualControl_CheckUp
+                beq.s   Orphaned_ZLeoMovePlayerByInput_CheckUp
                 addq.w  #4,(PlayerXPosition).w
-Debug_CameraManualControl_CheckUp:                      ; CODE XREF: Debug_CameraManualControl+12   j  ; was: loc_22404
+Orphaned_ZLeoMovePlayerByInput_CheckUp:                 ; CODE XREF: Orphaned_ZLeoMovePlayerByInput+12   j  ; was: loc_22404
                 btst    #0,(ControllerHeldState).w
-                beq.s   Debug_CameraManualControl_CheckDown
+                beq.s   Orphaned_ZLeoMovePlayerByInput_CheckDown
                 subq.w  #4,(PlayerYPosition).w
-Debug_CameraManualControl_CheckDown:                    ; CODE XREF: Debug_CameraManualControl+1E   j  ; was: loc_22410
+Orphaned_ZLeoMovePlayerByInput_CheckDown:               ; CODE XREF: Orphaned_ZLeoMovePlayerByInput+1E   j  ; was: loc_22410
                 btst    #1,(ControllerHeldState).w
-                beq.s   Debug_CameraManualControl_Return
+                beq.s   Orphaned_ZLeoMovePlayerByInput_Return
                 addq.w  #4,(PlayerYPosition).w
-Debug_CameraManualControl_Return:                       ; CODE XREF: Debug_CameraManualControl+2A   j  ; was: locret_2241C
+Orphaned_ZLeoMovePlayerByInput_Return:                  ; CODE XREF: Orphaned_ZLeoMovePlayerByInput+2A   j  ; was: locret_2241C
                 rts
-; End of function Debug_CameraManualControl
-; Updates the camera orbit from the shared sine table
-Boss_ZLeoUpdateCameraOrbit:
+; End of function Orphaned_ZLeoMovePlayerByInput
+; Unreachable: would drive the player position around a sine orbit
+Orphaned_ZLeoOrbitPlayerPosition:
                 lea     (Math_SineTable).l,a4           ; was: sub_2241E
                 addi.w  #4,(SharedPatternRow0Long1).w
                 addi.w  #2,(SharedPatternRow0Long1+2).w
@@ -327,24 +327,24 @@ Boss_ZLeoUpdateCameraOrbit:
                 addi.l  #$F00000,d0
                 move.l  d0,(PlayerYPosition).w
                 rts
-; End of function Boss_ZLeoUpdateCameraOrbit
-; Uses the Z-Leo camera position while it remains inside the active bounds
-Boss_ZLeoUpdateCameraBounds:                            ; CODE XREF: Boss_ZLeoMainController+C   p  ; was: sub_22466
+; End of function Orphaned_ZLeoOrbitPlayerPosition
+; Shows the player at the marker while the marker stays between X $80 and $1C0
+Boss_ZLeoPlacePlayerAtMarker:                           ; CODE XREF: Boss_ZLeoMainController+C   p  ; was: sub_22466
                 cmpi.w  #$80,(PrimaryEntityXPos).w
-                blt.s   Boss_ZLeoUpdateCameraBounds_Reset
+                blt.s   Boss_ZLeoPlacePlayerAtMarker_HideAndPark
                 cmpi.w  #$1C0,(PrimaryEntityXPos).w
-                bgt.s   Boss_ZLeoUpdateCameraBounds_Reset
+                bgt.s   Boss_ZLeoPlacePlayerAtMarker_HideAndPark
                 bset    #7,(PlayerObjectFlags).w
                 move.l  (PrimaryEntityXPos).w,(PlayerXPosition).w
                 move.l  (PrimaryEntityYPos).w,(PlayerYPosition).w
                 rts
 ; ---------------------------------------------------------------------------
-Boss_ZLeoUpdateCameraBounds_Reset:                      ; CODE XREF: Boss_ZLeoUpdateCameraBounds+6   j  ; was: loc_2248A
-                                        ; Boss_ZLeoUpdateCameraBounds+E   j
+Boss_ZLeoPlacePlayerAtMarker_HideAndPark:               ; CODE XREF: Boss_ZLeoPlacePlayerAtMarker+6   j  ; was: loc_2248A
+                                        ; Boss_ZLeoPlacePlayerAtMarker+E   j
                 move.l  #$60,(PlayerXPosition).w        ; '`'
                 bclr    #7,(PlayerObjectFlags).w
                 rts
-; End of function Boss_ZLeoUpdateCameraBounds
+; End of function Boss_ZLeoPlacePlayerAtMarker
 ; Spawns randomized Z-Leo ending particles and their periodic sound
 Boss_ZLeoSpawnParticles:                                ; CODE XREF: Boss_ZLeoIntroSequence+4A   p  ; was: sub_2249A
                                         ; sub_22112:loc_22166   p

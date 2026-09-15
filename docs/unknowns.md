@@ -9873,3 +9873,59 @@ fifteen thousand. The pending queue falls from 1,387 to 1,334 and its actionable
 upper bound from 874 to 821; provenance, the 513 classified binary-backed end
 aliases, and the 379-module layout remain unchanged. `collision/detection.s` now
 has zero pending current names, leaving 13 modules in the queue.
+
+`credits/z_leo_sequence.s` had one confusion running through it: the word
+"camera" was attached to three different things, only one of which is the
+camera.
+
+There are two moving objects in this sequence and they are not the same. The
+camera is moved by `Boss_ZLeoUpdateScroll`, which adds the rate at
+`SharedPatternRow0Long2+2` straight into `PrimaryCameraXPosition`. Separately,
+the intro builds a type-`$10` object at the head of `Entity_ObjectPool` — index
+4 of `Entity_UpdateHandlerTable`, so `Entity_NullUpdateHandler4`, an object that
+never updates itself — and the `PrimaryEntity` RAM names address its fields.
+That object is a marker the states steer by. And thirdly,
+`Boss_ZLeoUpdateCameraBounds` writes neither: it copies the marker position into
+`PlayerXPosition` and `PlayerYPosition` and sets bit 7 of the player flag word
+while the marker X stays between `$80` and `$1C0`, parking the player at `$60`
+and clearing that bit otherwise. Bit 7 of that byte is the visibility bit —
+every visible sprite word in this codebase has it set, and the hidden `$1000`
+value the Stage 12 turret writes has it clear — so the routine shows the player
+at the marker and hides it outside the span. It becomes
+`Boss_ZLeoPlacePlayerAtMarker`, and the two states that test the marker X become
+`Boss_ZLeoWaitMarkerPosition` and `Boss_ZLeoWaitForMarkerEnd`.
+`Boss_ZLeoCameraScroll` keeps its name, because that one really does drive the
+camera rate.
+
+Two routines are orphans. `Boss_ZLeoUpdateCameraOrbit` would drive the player
+position around a sine orbit, two phases advancing at four and two units a frame
+scaled by `$40` and `$20`; nothing references it. `Debug_CameraManualControl`
+would nudge `PlayerXPosition` and `PlayerYPosition` by four a frame from the
+held D-pad; nothing references that either, and the only mentions of its entry
+label are its own definition and the cross-reference comments its four
+sub-labels carry. Neither can be fallen into, since the routine above each ends
+in `rts`. They become `Orphaned_ZLeoOrbitPlayerPosition` and
+`Orphaned_ZLeoMovePlayerByInput`. Both were named for a camera and both move the
+player.
+
+`Boss_ZLeoIntroSequence_PaletteWait` touches no palette. It spawns particles and
+counts down a `$40`-frame timer, so it becomes
+`Boss_ZLeoIntroSequence_ParticleWait`.
+
+Worth recording for its own sake: this whole sequence keeps its state machine in
+the shared pattern scratch area at `$FF9400` rather than in an object. The state
+index is `SharedPatternRow0Long0`, its timer the word after it, the camera
+scroll rate `Long2+2`, and the particle parameters — count, origin, two spread
+masks and a sound mask — run across `Long4` to `Long7`. Nineteen states advance
+by two and never branch back, so the sequence is strictly linear.
+
+One quirk in the middle of it: `Boss_ZLeoCameraScroll_Accelerate` ends on a
+compare for equality against `$80000` rather than a threshold, so the `$800`
+step has to divide evenly into the target or the state would never end.
+
+Fifty-six exact-address records raise the registry from 15,008 to 15,064, and
+two existing records are corrected in place. The pending queue falls from 1,334
+to 1,278 and its actionable upper bound from 821 to 765; provenance, the 513
+classified binary-backed end aliases, and the 379-module layout remain
+unchanged. `credits/z_leo_sequence.s` now has zero pending current names,
+leaving 12 modules in the queue.
