@@ -20,17 +20,17 @@ Math_CalculateAngleBetween:                             ; CODE XREF: Projectile_
                 movea.w a4,a5
                 rts
 ; End of function Math_CalculateAngleBetween
-; Wrapper for Math_Arctan2Lookup that preserves d0-d1/a0 registers
-Math_Arctan2WithPreserve:
+; Unreachable wrapper that would preserve d0, d1 and a0 across the arctan lookup
+Orphaned_MathArctan2WithPreserve:
                 movem.l d0-d1/a0,-(sp)                  ; was: sub_3570
                 jsr     Math_Arctan2Lookup(pc)          ; (pc)
                 nop
                 movem.l (sp)+,d0-d1/a0
                 rts
-; End of function Math_Arctan2WithPreserve
+; End of function Orphaned_MathArctan2WithPreserve
 ; Arctangent2 function using lookup table
 Math_Arctan2Lookup:                                     ; CODE XREF: Math_CalculateAngleToPlayer:Math_CalculateDirectionIndex   p  ; was: sub_3580
-                                        ; Math_Arctan2WithPreserve+4   p
+                                        ; Orphaned_MathArctan2WithPreserve+4   p
                 lea     Math_ArctangentTable(pc),a0
                 nop
                 tst.w   d0
@@ -176,32 +176,32 @@ Math_Arctan2Lookup_Quadrant3HighSlope:                  ; CODE XREF: Math_Arctan
 Math_ArctangentTable:   binclude "data/other/word_36A4.bin"  ; was: word_36A4
 Math_ArctangentTable_End:                               ; was: word_36A4_End
 
-; Calculates the integer square root of d0 with a restoring bit-pair algorithm
-Math_SquareRoot:
+; Unreachable: integer square root of d0 by a restoring bit-pair algorithm
+Orphaned_MathSquareRoot:
                 tst.l   d0                              ; was: sub_38A4
-                beq.s   Math_SquareRoot_Return
+                beq.s   Orphaned_MathSquareRootReturn
                 cmpi.l  #$10000,d0
-                bcc.s   Math_SquareRoot_ComputeWordResult
+                bcc.s   Orphaned_MathSquareRootComputeWordResult
                 cmpi.w  #$271,d0
-                bhi.s   Math_SquareRoot_ComputeByteResult
+                bhi.s   Orphaned_MathSquareRootComputeByteResult
                 move.w  d1,-(sp)
                 move.w  #$FFFF,d1
-Math_SquareRoot_SmallValueLoop:                         ; CODE XREF: Math_SquareRoot+1C   j  ; was: loc_38BC
+Orphaned_MathSquareRootSmallValueLoop:                  ; CODE XREF: Orphaned_MathSquareRoot+1C   j  ; was: loc_38BC
                 addq.w  #2,d1
                 sub.w   d1,d0
-                bpl.s   Math_SquareRoot_SmallValueLoop
+                bpl.s   Orphaned_MathSquareRootSmallValueLoop
                 asr.w   #1,d1
                 move.w  d1,d0
                 move.w  (sp)+,d1
-Math_SquareRoot_Return:                                 ; CODE XREF: Math_SquareRoot+2   j  ; was: locret_38C8
+Orphaned_MathSquareRootReturn:                          ; CODE XREF: Orphaned_MathSquareRoot+2   j  ; was: locret_38C8
                 rts
 ; ---------------------------------------------------------------------------
-Math_SquareRoot_ComputeByteResult:                      ; CODE XREF: Math_SquareRoot+10   j  ; was: loc_38CA
+Orphaned_MathSquareRootComputeByteResult:               ; CODE XREF: Orphaned_MathSquareRoot+10   j  ; was: loc_38CA
                 movem.w d1-d4,-(sp)
                 move.w  #7,d4
                 clr.w   d1
                 clr.w   d2
-Math_SquareRoot_ByteResultLoop:                         ; CODE XREF: Math_SquareRoot:Math_SquareRoot_ByteResultNextBit   j  ; was: loc_38D6
+Orphaned_MathSquareRootByteResultLoop:                  ; CODE XREF: Orphaned_MathSquareRoot:Orphaned_MathSquareRootByteResultNextBit   j  ; was: loc_38D6
                 add.w   d0,d0
                 addx.w  d1,d1
                 add.w   d0,d0
@@ -210,22 +210,22 @@ Math_SquareRoot_ByteResultLoop:                         ; CODE XREF: Math_Square
                 move.w  d2,d3
                 add.w   d3,d3
                 cmp.w   d3,d1
-                bls.s   Math_SquareRoot_ByteResultNextBit
+                bls.s   Orphaned_MathSquareRootByteResultNextBit
                 addq.w  #1,d2
                 addq.w  #1,d3
                 sub.w   d3,d1
-Math_SquareRoot_ByteResultNextBit:                      ; CODE XREF: Math_SquareRoot+42   j  ; was: loc_38EE
-                dbf     d4,Math_SquareRoot_ByteResultLoop
+Orphaned_MathSquareRootByteResultNextBit:               ; CODE XREF: Orphaned_MathSquareRoot+42   j  ; was: loc_38EE
+                dbf     d4,Orphaned_MathSquareRootByteResultLoop
                 move.w  d2,d0
                 movem.w (sp)+,d1-d4
                 rts
 ; ---------------------------------------------------------------------------
-Math_SquareRoot_ComputeWordResult:                      ; CODE XREF: Math_SquareRoot+A   j  ; was: loc_38FA
+Orphaned_MathSquareRootComputeWordResult:               ; CODE XREF: Orphaned_MathSquareRoot+A   j  ; was: loc_38FA
                 movem.l d1-d4,-(sp)
                 moveq   #$D,d4
                 moveq   #0,d1
                 moveq   #0,d2
-Math_SquareRoot_WordResultLoop:                         ; CODE XREF: Math_SquareRoot:Math_SquareRoot_WordResultBit15   j  ; was: loc_3904
+Orphaned_MathSquareRootWordResultLoop:                  ; CODE XREF: Orphaned_MathSquareRoot:Orphaned_MathSquareRootWordResultBit15   j  ; was: loc_3904
                 add.l   d0,d0
                 addx.w  d1,d1
                 add.l   d0,d0
@@ -234,12 +234,12 @@ Math_SquareRoot_WordResultLoop:                         ; CODE XREF: Math_Square
                 move.w  d2,d3
                 add.w   d3,d3
                 cmp.w   d3,d1
-                bls.s   Math_SquareRoot_WordResultBit15
+                bls.s   Orphaned_MathSquareRootWordResultBit15
                 addq.w  #1,d2
                 addq.w  #1,d3
                 sub.w   d3,d1
-Math_SquareRoot_WordResultBit15:                        ; CODE XREF: Math_SquareRoot+70   j  ; was: loc_391C
-                dbf     d4,Math_SquareRoot_WordResultLoop
+Orphaned_MathSquareRootWordResultBit15:                 ; CODE XREF: Orphaned_MathSquareRoot+70   j  ; was: loc_391C
+                dbf     d4,Orphaned_MathSquareRootWordResultLoop
                 add.l   d0,d0
                 addx.w  d1,d1
                 add.l   d0,d0
@@ -248,11 +248,11 @@ Math_SquareRoot_WordResultBit15:                        ; CODE XREF: Math_Square
                 move.l  d2,d3
                 add.w   d3,d3
                 cmp.l   d3,d1
-                bls.s   Math_SquareRoot_WordResultBit16
+                bls.s   Orphaned_MathSquareRootWordResultBit16
                 addq.w  #1,d2
                 addq.w  #1,d3
                 sub.l   d3,d1
-Math_SquareRoot_WordResultBit16:                        ; CODE XREF: Math_SquareRoot+8C   j  ; was: loc_3938
+Orphaned_MathSquareRootWordResultBit16:                 ; CODE XREF: Orphaned_MathSquareRoot+8C   j  ; was: loc_3938
                 add.l   d0,d0
                 addx.l  d1,d1
                 add.l   d0,d0
@@ -261,11 +261,11 @@ Math_SquareRoot_WordResultBit16:                        ; CODE XREF: Math_Square
                 move.l  d2,d3
                 add.l   d3,d3
                 cmp.l   d3,d1
-                bls.s   Math_SquareRoot_FinishWordResult
+                bls.s   Orphaned_MathSquareRootFinishWordResult
                 addq.w  #1,d2
-Math_SquareRoot_FinishWordResult:                       ; CODE XREF: Math_SquareRoot+A4   j  ; was: loc_394C
+Orphaned_MathSquareRootFinishWordResult:                ; CODE XREF: Orphaned_MathSquareRoot+A4   j  ; was: loc_394C
                 move.w  d2,d0
                 movem.l (sp)+,d1-d4
                 rts
-; End of function Math_SquareRoot
+; End of function Orphaned_MathSquareRoot
 ; Adds BCD value to score with overflow check and clamping

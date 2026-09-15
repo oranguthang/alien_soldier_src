@@ -9012,3 +9012,32 @@ pending queue falls from 2,245 to 2,212 and its actionable upper bound from
 1,732 to 1,699; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `enemies/circling_enemies.s` now has
 zero pending current names, leaving 34 modules in the queue.
+
+The 33 pending entries in `math/angles.s` split into a heavily used arctangent
+family and two routines nothing calls.
+
+The arctangent is worth recording because its eight quadrant labels describe one
+symmetry rather than eight separate cases. The routine answers the four axis
+cases and the four exact diagonals directly, and otherwise always divides the
+smaller component by the larger so the quotient stays inside one word; the
+high-slope half of each quadrant then subtracts the table value from the next
+quadrant boundary instead of adding it to the current one. All eight paths index
+the same eighth-turn table, which is why one preserved table covers the whole
+circle. The `$1FE` angles the rest of the project uses come from
+`Math_CalculateDirectionIndex`, which shifts the 16-bit result right by seven
+and masks it.
+
+`Math_SquareRoot` and `Math_Arctan2WithPreserve` have no caller and no absolute
+address anywhere in the ROM, while `Math_Arctan2Lookup` is found at six sites and
+`Math_CalculateAngleToPlayer` at nineteen by the same scan, so the method
+separates them cleanly. Both take the `Orphaned_` prefix along with the ten
+internal labels of the square-root routine, whose three magnitude paths are
+recorded as they stand: odd-number subtraction up to `$271`, an eight-iteration
+restoring loop below `$10000`, and fourteen iterations plus two unrolled bits
+above it.
+
+Thirty-three exact-address records raise the registry from 14,130 to 14,163. The
+pending queue falls from 2,212 to 2,179 and its actionable upper bound from
+1,699 to 1,666; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `math/angles.s` now has zero pending
+current names, leaving 33 modules in the queue.
