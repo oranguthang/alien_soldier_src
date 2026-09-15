@@ -2368,6 +2368,8 @@
     { "address": "0x02E282", "previous_name": "sub_2E282", "current_name": "Enemy_UpdateStage10WaspDefeatDebris", "legacy_name": "sub_2E282", "evidence": "static", "basis": ["Entity_UpdateHandlerTable installs the debris handler, which falls for $10 frames and then raises an explosion, plays SFX $BC and drops a random pickup."] },
     { "address": "0x02E2A8", "previous_name": "loc_2E2A8", "current_name": "Enemy_UpdateStage10WaspDefeatDebris_Blink", "legacy_name": "loc_2E2A8", "evidence": "static", "basis": ["The blink is driven from bit 0 of the timer's low byte, the same pattern the beetle and the shared defeat projectile use."] },
     { "address": "0x02E2BC", "previous_name": "locret_2E2BC", "current_name": "Enemy_UpdateStage10WaspDefeatDebris_Return", "legacy_name": "locret_2E2BC", "evidence": "static", "basis": ["The visible half of the blink returns here."] },
+    { "address": "0x02E2BE", "previous_name": "sub_2E2BE", "current_name": "Enemy_InitStage12FloatingSprite", "legacy_name": "sub_2E2BE", "evidence": "static", "basis": ["Shared by the floater and the launcher init states, which call it with d0 set to 0 and 4 respectively, the two record offsets of the parameter table below."] },
+    { "address": "0x02E304", "previous_name": "word_2E304", "current_name": "Enemy_Stage12FloatingSpriteParameters", "legacy_name": "word_2E304", "evidence": "static", "basis": ["Two four-byte records read as three separate bytes: $18 into $27, then $04 or $02 into $25, then $11 shifted left four into $5A. Only the middle byte differs between the floater and the launcher, so the two enemies share every parameter except that one."] },
     {
       "address": "0x02E30C",
       "previous_name": "Enemy_Stage12FloaterMain",
@@ -2379,6 +2381,12 @@
         "It only maps the animation selector at offset 0x5C to one of two sprite mappings and clears the frame counter; it performs no main-state dispatch."
       ]
     },
+    { "address": "0x02E31E", "previous_name": "locret_2E31E", "current_name": "Enemy_UpdateStage12FloatingAnimation_Return", "legacy_name": "locret_2E31E", "evidence": "static", "basis": ["A zero animation request leaves the current mapping in place, which is why both controllers can clear $5C every frame and only the states that want a change write it."] },
+    { "address": "0x02E320", "previous_name": "off_2E320", "current_name": "Enemy_Stage12FloatingAnimationMappings", "legacy_name": "off_2E320", "evidence": "static", "basis": ["Two long pointers indexed by the animation request less four, so the only legal requests are 4 and 8, which are exactly the values the floater and launcher states write."] },
+    { "address": "0x02E328", "previous_name": "sub_2E328", "current_name": "Enemy_Stage12FloaterController", "legacy_name": "sub_2E328", "evidence": "static", "basis": ["Named by Entity_UpdateHandlerTable. State zero skips the defeat checks entirely, so a freshly spawned floater cannot be converted before it has initialised."] },
+    { "address": "0x02E352", "previous_name": "loc_2E352", "current_name": "Enemy_Stage12FloaterController_UpdateState", "legacy_name": "loc_2E352", "evidence": "static", "basis": ["The state runs first and the shared animation update second, the same shape the launcher controller uses."] },
+    { "address": "0x02E358", "previous_name": "sub_2E358", "current_name": "Enemy_DispatchStage12FloaterState", "legacy_name": "sub_2E358", "evidence": "static", "basis": ["Seven self-relative words measured from the table itself rather than from a base routine."] },
+    { "address": "0x02E368", "previous_name": "off_2E368", "current_name": "Enemy_Stage12FloaterStateOffsets", "legacy_name": "off_2E368", "evidence": "static", "basis": ["Seven entries, states $00 to $0C. The floater only ever advances by two from zero and stops at $08, the falling object, which converts itself to a type-$88 effect, so slots $0A and $0C are referenced by the table but never entered."] },
     {
       "address": "0x02E376",
       "previous_name": "Enemy_Stage12FloaterAttack",
@@ -2390,6 +2398,17 @@
         "It creates no projectile and immediately falls through to the player-distance wait state, so it is initialization rather than an attack."
       ]
     },
+    { "address": "0x02E386", "previous_name": "loc_2E386", "current_name": "Enemy_Stage12FloaterWaitForPlayerState", "legacy_name": "loc_2E386", "evidence": "static", "basis": ["The threshold is a horizontal distance under $60, and the response is an upward $20000, so the floater only starts rising once the player is close."] },
+    { "address": "0x02E3A0", "previous_name": "locret_2E3A0", "current_name": "Enemy_Stage12FloaterWaitForPlayerState_Return", "legacy_name": "locret_2E3A0", "evidence": "static", "basis": ["The far-away frames return here without touching the velocity."] },
+    { "address": "0x02E3A2", "previous_name": "sub_2E3A2", "current_name": "Enemy_Stage12FloaterRiseState", "legacy_name": "sub_2E3A2", "evidence": "static", "basis": ["A bare height test: the state advances once Y has risen above $150, with no movement of its own, because the velocity the wait state installed is still in force."] },
+    { "address": "0x02E3AE", "previous_name": "locret_2E3AE", "current_name": "Enemy_Stage12FloaterRiseState_Return", "legacy_name": "locret_2E3AE", "evidence": "static", "basis": ["The frames below the threshold return here."] },
+    { "address": "0x02E3B0", "previous_name": "sub_2E3B0", "current_name": "Enemy_Stage12FloaterReleaseState", "legacy_name": "sub_2E3B0", "evidence": "static", "basis": ["The release waits on a terrain probe returning zero, then installs a $C0 collision byte, an upward $48000, animation 8, and a horizontal velocity taken from the sine table at a random angle and shifted left three, so the scatter direction is random but the speed is not."] },
+    { "address": "0x02E3F2", "previous_name": "locret_2E3F2", "current_name": "Enemy_Stage12FloaterReleaseState_Return", "legacy_name": "locret_2E3F2", "evidence": "static", "basis": ["Frames blocked by terrain return here and retry on the next one."] },
+    { "address": "0x02E3F4", "previous_name": "sub_2E3F4", "current_name": "Enemy_UpdateStage12FallingObject", "legacy_name": "sub_2E3F4", "evidence": "static", "basis": ["Shared by the floater and the launcher tables, at states $08 and $06. The bit-7 test is a byte operation on the top byte of the $1C velocity, so it is a sign test: the object only becomes solid and only checks the lower bound once it is descending."] },
+    { "address": "0x02E414", "previous_name": "locret_2E414", "current_name": "Enemy_UpdateStage12FallingObject_Return", "legacy_name": "locret_2E414", "evidence": "static", "basis": ["Both the still-rising frames and the above-the-bound frames return here."] },
+    { "address": "0x02E416", "previous_name": "loc_2E416", "current_name": "Enemy_ConvertStage12FallingObjectToEffect", "legacy_name": "loc_2E416", "evidence": "static", "basis": ["Also entered directly from Projectile_FallingShotInit, so the conversion is shared with a projectile path outside this module."] },
+    { "address": "0x02E436", "previous_name": "nullsub_67", "current_name": "Enemy_Stage12SharedNoOpState", "legacy_name": "nullsub_67", "evidence": "static", "basis": ["Named by two tables at once, slot $0A of the floater and slot $08 of the launcher, which is what makes it shared. Neither owner can reach its slot: both enemies advance only by two and stop one slot earlier, at the shared falling object. Its address comes from build/main.lst, because nullsub names carry a counter rather than an address."] },
+    { "address": "0x02E438", "previous_name": "nullsub_68", "current_name": "Enemy_Stage12FloaterNoOpState", "legacy_name": "nullsub_68", "evidence": "static", "basis": ["Slot $0C of the floater table, two bytes after the shared one, and likewise never entered: no code in this module writes $0C into the state field. It is not orphaned, because the table reference is real. Its address also comes from build/main.lst."] },
     {
       "address": "0x02E43A",
       "previous_name": "Enemy_Stage12LauncherMain",
@@ -2401,6 +2420,7 @@
         "The active conversion clears combat fields, installs entity type 0x2D0 and upward falling velocity; it is a shared defeat conversion, not the launcher's main handler."
       ]
     },
+    { "address": "0x02E46C", "previous_name": "loc_2E46C", "current_name": "Enemy_ConvertStage12ObjectToDefeatDebris_Activate", "legacy_name": "loc_2E46C", "evidence": "static", "basis": ["The active path retypes the object to $2D0, which is index $B4 of Entity_UpdateHandlerTable and therefore Enemy_UpdateStage12DefeatDebris, arms a $10-frame fuse and clears the collision bytes."] },
     {
       "address": "0x02E490",
       "previous_name": "Enemy_Stage12LauncherExplode",
@@ -2412,6 +2432,17 @@
         "It applies gravity and blinking before the final explosion and pickup, so ownership is shared and the routine is the debris update rather than a launcher-only explosion entry."
       ]
     },
+    { "address": "0x02E4BE", "previous_name": "loc_2E4BE", "current_name": "Enemy_UpdateStage12DefeatDebris_HideInsteadOfPickup", "legacy_name": "loc_2E4BE", "evidence": "static", "basis": ["The test is whether the object in the Entity57 slot is type $1B8, which is index $6E and so Stage12_YachtControllerMain. While the yacht is present the debris sets bit 4 of its sprite flag byte and drops nothing. That bit is the hide flag: Enemy_Stage12TurretHide writes $10 into the same byte, whose only set bit is bit 4, and every other value this module writes there has it clear."] },
+    { "address": "0x02E4C6", "previous_name": "loc_2E4C6", "current_name": "Enemy_UpdateStage12DefeatDebris_Blink", "legacy_name": "loc_2E4C6", "evidence": "static", "basis": ["Bit 7 is set and then cleared again on every frame whose fuse low bit is clear, so the debris flashes at half the frame rate for its $10 frames."] },
+    { "address": "0x02E4DA", "previous_name": "locret_2E4DA", "current_name": "Enemy_UpdateStage12DefeatDebris_Return", "legacy_name": "locret_2E4DA", "evidence": "static", "basis": ["The visible half of the blink returns here."] },
+    { "address": "0x02E4DC", "previous_name": "sub_2E4DC", "current_name": "Enemy_Stage12TurretController", "legacy_name": "sub_2E4DC", "evidence": "static", "basis": ["It copies the Entity57 position into its own every frame, so the turret rides the yacht rather than the camera, and from state 4 onward it tail-calls the periodic bird spawner."] },
+    { "address": "0x02E4FE", "previous_name": "sub_2E4FE", "current_name": "Enemy_DispatchStage12TurretState", "legacy_name": "sub_2E4FE", "evidence": "static", "basis": ["Seven self-relative words, and unlike the floater dispatcher it does not clear the animation request first, because the turret has no animation."] },
+    { "address": "0x02E50A", "previous_name": "off_2E50A", "current_name": "Enemy_Stage12TurretStateOffsets", "legacy_name": "off_2E50A", "evidence": "static", "basis": ["Seven entries. The reset state writes 6 rather than advancing, so states $06 to $0C form a loop and the turret produces one launcher after another."] },
+    { "address": "0x02E518", "previous_name": "sub_2E518", "current_name": "Enemy_Stage12TurretInit", "legacy_name": "sub_2E518", "evidence": "static", "basis": ["The only work is the sprite flag word $0D00 and the advance, so the turret has no position of its own until the controller copies the position of the yacht."] },
+    { "address": "0x02E524", "previous_name": "sub_2E524", "current_name": "Enemy_Stage12TurretIdle", "legacy_name": "sub_2E524", "evidence": "static", "basis": ["It waits on two conditions: that the Entity57 slot really holds type $1B8, and that the state of that object has reached 6. Only then does it arm the $100-frame delay."] },
+    { "address": "0x02E53E", "previous_name": "locret_2E53E", "current_name": "Enemy_Stage12TurretIdle_Return", "legacy_name": "locret_2E53E", "evidence": "static", "basis": ["Both failed conditions share this return."] },
+    { "address": "0x02E540", "previous_name": "sub_2E540", "current_name": "Enemy_Stage12TurretDelayState", "legacy_name": "sub_2E540", "evidence": "static", "basis": ["A bare countdown on $48."] },
+    { "address": "0x02E54A", "previous_name": "locret_2E54A", "current_name": "Enemy_Stage12TurretDelayState_Return", "legacy_name": "locret_2E54A", "evidence": "static", "basis": ["The counting frames return here."] },
     {
       "address": "0x02E54C",
       "previous_name": "Enemy_Stage12TurretReload",
@@ -2423,6 +2454,7 @@
         "It sets no reload timer or weapon ammunition; the next state later activates that reserved slot as the Stage 12 launcher."
       ]
     },
+    { "address": "0x02E560", "previous_name": "locret_2E560", "current_name": "Enemy_Stage12TurretAllocateLauncherState_Return", "legacy_name": "locret_2E560", "evidence": "static", "basis": ["A full object pool leaves the state unchanged, so the allocation is retried every frame until it succeeds."] },
     {
       "address": "0x02E562",
       "previous_name": "Enemy_Stage12TurretCheckPlayer",
@@ -2434,6 +2466,25 @@
         "Once the threshold is reached, the state converts the reserved slot at offset 0x4A to entity type 0x2E4 and initializes its launch delay fields."
       ]
     },
+    { "address": "0x02E58C", "previous_name": "locret_2E58C", "current_name": "Enemy_Stage12TurretActivateLauncherState_Return", "legacy_name": "locret_2E58C", "evidence": "static", "basis": ["The frames before the turret has descended to Y $140 return here, holding the reserved slot dormant at type $10."] },
+    { "address": "0x02E58E", "previous_name": "sub_2E58E", "current_name": "Enemy_Stage12TurretBeginResetState", "legacy_name": "sub_2E58E", "evidence": "static", "basis": ["Arms a $40-frame gap between launchers."] },
+    { "address": "0x02E59A", "previous_name": "sub_2E59A", "current_name": "Enemy_Stage12TurretResetDelayState", "legacy_name": "sub_2E59A", "evidence": "static", "basis": ["It writes 6 rather than advancing, which is what closes the launcher production loop."] },
+    { "address": "0x02E5A6", "previous_name": "locret_2E5A6", "current_name": "Enemy_Stage12TurretResetDelayState_Return", "legacy_name": "locret_2E5A6", "evidence": "static", "basis": ["The counting frames return here."] },
+    { "address": "0x02E5A8", "previous_name": "sub_2E5A8", "current_name": "Enemy_Stage12TurretSpawnPeriodicBird", "legacy_name": "sub_2E5A8", "evidence": "static", "basis": ["The spawned type is $90, which is index $24 of Entity_UpdateHandlerTable and therefore Enemy_BirdController, not a shot as the former name claimed. The turret is the bird source of the stage."] },
+    { "address": "0x02E5BE", "previous_name": "loc_2E5BE", "current_name": "Enemy_Stage12TurretSpawnPeriodicBird_CheckSlowInterval", "legacy_name": "loc_2E5BE", "evidence": "static", "basis": ["A one in four draw on the random state picks the $FF frame mask; the other three quarters of the time the $1FF mask halves the rate."] },
+    { "address": "0x02E5C8", "previous_name": "loc_2E5C8", "current_name": "Enemy_Stage12TurretSpawnPeriodicBird_Spawn", "legacy_name": "loc_2E5C8", "evidence": "static", "basis": ["The bird is placed at Y $B0 with $5E set to 1 and no X of its own, so the slot keeps whatever X it had."] },
+    { "address": "0x02E5E0", "previous_name": "locret_2E5E0", "current_name": "Enemy_Stage12TurretSpawnPeriodicBird_Return", "legacy_name": "locret_2E5E0", "evidence": "static", "basis": ["Both the off-interval frames and a full object pool return here."] },
+    { "address": "0x02E5E2", "previous_name": "sub_2E5E2", "current_name": "Enemy_Stage12TurretHide", "legacy_name": "sub_2E5E2", "evidence": "static", "basis": ["It writes $1000 into the sprite word, whose high byte has only bit 4 set, and that is the same bit the defeat debris sets to suppress its pickup."] },
+    { "address": "0x02E5EA", "previous_name": "sub_2E5EA", "current_name": "Enemy_Stage12LauncherController", "legacy_name": "sub_2E5EA", "evidence": "static", "basis": ["Instruction for instruction the floater controller with a different dispatcher, including the same state-zero exemption from the defeat checks."] },
+    { "address": "0x02E614", "previous_name": "loc_2E614", "current_name": "Enemy_Stage12LauncherController_UpdateState", "legacy_name": "loc_2E614", "evidence": "static", "basis": ["It shares Enemy_UpdateStage12FloatingAnimation with the floater, which is why both enemies draw from the same two mappings."] },
+    { "address": "0x02E61A", "previous_name": "sub_2E61A", "current_name": "Enemy_DispatchStage12LauncherState", "legacy_name": "sub_2E61A", "evidence": "static", "basis": ["Five self-relative words, otherwise identical to the floater dispatcher."] },
+    { "address": "0x02E62A", "previous_name": "off_2E62A", "current_name": "Enemy_Stage12LauncherStateOffsets", "legacy_name": "off_2E62A", "evidence": "static", "basis": ["Five entries. The launcher advances by two and stops at $06, the shared falling object, so slot $08 is referenced but never entered, the same situation as the last two slots of the floater table."] },
+    { "address": "0x02E634", "previous_name": "sub_2E634", "current_name": "Enemy_Stage12LauncherInitState", "legacy_name": "sub_2E634", "evidence": "static", "basis": ["It calls the shared sprite init with d0 set to 4, the second parameter record, then overrides the collision bytes and the sprite word with $ED00 and falls straight into the rise state, so the launcher spends no frame in state zero."] },
+    { "address": "0x02E65C", "previous_name": "loc_2E65C", "current_name": "Enemy_Stage12LauncherRiseToYachtState", "legacy_name": "loc_2E65C", "evidence": "static", "basis": ["The $4E field is both the countdown and the Y offset that Enemy_Stage12LauncherUpdatePosition adds to the yacht position, so decrementing it once a frame walks the launcher from $38 pixels below the yacht up to it, and the state ends exactly when the gap closes. The former wait name described only half of that."] },
+    { "address": "0x02E670", "previous_name": "locret_2E670", "current_name": "Enemy_Stage12LauncherRiseToYachtState_Return", "legacy_name": "locret_2E670", "evidence": "static", "basis": ["The frames still closing the gap return here."] },
+    { "address": "0x02E672", "previous_name": "sub_2E672", "current_name": "Enemy_Stage12LauncherUpdatePosition", "legacy_name": "sub_2E672", "evidence": "static", "basis": ["It reads Entity57, the yacht, not the camera. $4C is the fixed horizontal offset the turret randomised between $50 and $CF, and $4E is the shrinking vertical one."] },
+    { "address": "0x02E690", "previous_name": "sub_2E690", "current_name": "Enemy_Stage12LauncherLaunchState", "legacy_name": "sub_2E690", "evidence": "static", "basis": ["It keeps following the yacht for another $40 frames, then sets the $40 collision bit, switches the sprite word to $EF00, and leaves with an upward $48000 and a leftward $20000."] },
+    { "address": "0x02E6C0", "previous_name": "locret_2E6C0", "current_name": "Enemy_Stage12LauncherLaunchState_Return", "legacy_name": "locret_2E6C0", "evidence": "static", "basis": ["The frames before the launch return here, still attached."] },
     {
       "address": "0x02E6C2",
       "previous_name": "Enemy_Stage10BomberMain",

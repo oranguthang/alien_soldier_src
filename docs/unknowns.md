@@ -9697,3 +9697,63 @@ pending queue falls from 1,539 to 1,490 and its actionable upper bound from
 379-module layout remain unchanged. `credits/palette_data.s` now has zero
 pending current names, leaving 16 modules in the queue, and the actionable
 backlog is under a thousand names for the first time.
+
+`enemies/stage_12_enemies.s` turned out to be one machine with four object types
+in it, and resolving the type constants through `Entity_UpdateHandlerTable`
+corrected three names and four comments.
+
+Every constant this module writes into a type field resolves cleanly at index
+type divided by four. `$2D0` is index `$B4`, `Enemy_UpdateStage12DefeatDebris`,
+which is what the defeat conversion retypes to. `$2E4` is index `$B9`,
+`Enemy_Stage12LauncherController`, which is what the turret activates. `$10` is
+index 4, `Entity_NullUpdateHandler4`, which is what the turret reserves a slot
+with, so a reserved launcher is genuinely dormant rather than merely idle. And
+`$1B8` is index `$6E`, `Stage12_YachtControllerMain`.
+
+That last one rewrites the module. Both the turret and the launcher copy
+`Entity57` into their own position every frame, and `Entity57` is the yacht, not
+the camera, so three comments that spoke of a camera-attached turret and a
+camera-relative anchor were wrong. The turret idle state is waiting for the
+yacht to exist and to reach its own state 6, and the defeat debris tests the
+same slot: while the yacht is present it hides itself instead of dropping a
+pickup. That branch was called `RemoveForSpecialStage`, which named neither the
+condition nor the effect, and becomes
+`Enemy_UpdateStage12DefeatDebris_HideInsteadOfPickup`. The hide is bit 4 of the
+sprite flag byte, which is confirmed by `Enemy_Stage12TurretHide` writing `$10`
+into that byte — a value whose only set bit is bit 4 — while every other value
+the module writes there, `$EF`, `$ED` and `$0D`, has it clear.
+
+The turret also spawns type `$90`, which is index `$24` and therefore
+`Enemy_BirdController`. It is not a shot. `Enemy_Stage12TurretSpawnPeriodicShot`
+and its three labels become `...SpawnPeriodicBird`, and the turret is the bird
+source of the stage: from state 4 onward the controller tail-calls it every
+frame, and a one in four draw on the random state picks a `$FF` frame mask
+against the usual `$1FF`.
+
+The launcher hides a small trick. `Enemy_Stage12LauncherAttachedWaitState`
+decrements `$4E` once a frame until it hits zero, and `$4E` is also the vertical
+offset that `Enemy_Stage12LauncherUpdatePosition` adds to the yacht position.
+The turret seeds it at `$38`. So the countdown and the approach are the same
+number: the launcher walks up from 56 pixels below the yacht at a pixel a frame
+and the state ends exactly when the gap closes. It becomes
+`Enemy_Stage12LauncherRiseToYachtState`.
+
+Three table slots are referenced but never entered, which is the second dead-code
+category rather than the orphaned one. Both enemies advance their state only by
+two and stop at the shared falling object, which retypes itself rather than
+advancing, so the floater never reaches slots `$0A` or `$0C` and the launcher
+never reaches slot `$08`. The two no-op routines that fill those slots keep
+their names and carry the finding in their records.
+
+One process note. `nullsub_67` and `nullsub_68` carry a counter rather than an
+address, so unlike every other legacy name they cannot be read as one. A record
+was first written for the second of them at a guessed address that turned out to
+be inside a different routine; the queue count catching the shortfall exposed it,
+and both addresses were then taken from `build/main.lst`, `$2E436` and `$2E438`.
+The bad record was removed before the package was committed.
+
+Fifty-two exact-address records raise the registry from 14,852 to 14,903. The
+pending queue falls from 1,490 to 1,439 and its actionable upper bound from 977
+to 926; provenance, the 513 classified binary-backed end aliases, and the
+379-module layout remain unchanged. `enemies/stage_12_enemies.s` now has zero
+pending current names, leaving 15 modules in the queue.

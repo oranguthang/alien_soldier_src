@@ -174,7 +174,7 @@ Enemy_ConvertStage12ObjectToDefeatDebris_Activate:      ; CODE XREF: Enemy_Conve
                 move.l  #$FFFB8000,$1C(a5)
                 rts
 ; End of function Enemy_ConvertStage12ObjectToDefeatDebris
-; Updates shared Stage 12 defeat debris, then creates an explosion and pickup
+; Updates shared Stage 12 defeat debris, then explodes and drops a pickup unless the yacht is active
 Enemy_UpdateStage12DefeatDebris:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2E490
                 addi.l  #$5C00,$1C(a5)
                 subq.w  #1,$48(a5)
@@ -183,11 +183,11 @@ Enemy_UpdateStage12DefeatDebris:                        ; DATA XREF: ROM:Entity_
                 move.b  #$BC,d0
                 jsr     (Sound_QueueSFXRequest).l
                 cmpi.w  #$1B8,(Entity57Type).w
-                beq.s   Enemy_UpdateStage12DefeatDebris_RemoveForSpecialStage
+                beq.s   Enemy_UpdateStage12DefeatDebris_HideInsteadOfPickup
                 moveq   #$F,d0
                 jmp     Pickup_SpawnRandomFromCurrentObject
 ; ---------------------------------------------------------------------------
-Enemy_UpdateStage12DefeatDebris_RemoveForSpecialStage:  ; CODE XREF: Enemy_UpdateStage12DefeatDebris+24   j  ; was: loc_2E4BE
+Enemy_UpdateStage12DefeatDebris_HideInsteadOfPickup:    ; CODE XREF: Enemy_UpdateStage12DefeatDebris+24   j  ; was: loc_2E4BE
                 bset    #4,2(a5)
                 rts
 ; ---------------------------------------------------------------------------
@@ -199,7 +199,7 @@ Enemy_UpdateStage12DefeatDebris_Blink:                  ; CODE XREF: Enemy_Updat
 Enemy_UpdateStage12DefeatDebris_Return:                 ; CODE XREF: Enemy_UpdateStage12DefeatDebris+42   j  ; was: locret_2E4DA
                 rts
 ; End of function Enemy_UpdateStage12DefeatDebris
-; Updates the camera-attached Stage 12 turret and its periodic shot
+; Updates the yacht-attached Stage 12 turret and its periodic bird spawn
 Enemy_Stage12TurretController:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2E4DC
                 tst.w   (StageSpawnCountdown).w
                 bpl.w   Enemy_Stage12TurretHide
@@ -207,7 +207,7 @@ Enemy_Stage12TurretController:                          ; DATA XREF: ROM:Entity_
                 move.l  (Entity57XPos).w,$10(a5)
                 move.l  (Entity57YPos).w,$14(a5)
                 cmpi.w  #4,4(a5)
-                bcc.w   Enemy_Stage12TurretSpawnPeriodicShot
+                bcc.w   Enemy_Stage12TurretSpawnPeriodicBird
                 rts
 ; End of function Enemy_Stage12TurretController
 ; Dispatches the Stage 12 turret's current state
@@ -291,31 +291,31 @@ Enemy_Stage12TurretResetDelayState:                     ; DATA XREF: ROM:0002E51
 Enemy_Stage12TurretResetDelayState_Return:              ; CODE XREF: Enemy_Stage12TurretResetDelayState+4   j  ; was: locret_2E5A6
                 rts
 ; End of function Enemy_Stage12TurretResetDelayState
-; Periodically spawns the turret's type-$90 shot
-Enemy_Stage12TurretSpawnPeriodicShot:                   ; CODE XREF: Enemy_Stage12TurretController+1C   j  ; was: sub_2E5A8
+; Periodically spawns a bird enemy at the top of the screen
+Enemy_Stage12TurretSpawnPeriodicBird:                   ; CODE XREF: Enemy_Stage12TurretController+1C   j  ; was: sub_2E5A8
                 move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
-                bne.s   Enemy_Stage12TurretSpawnPeriodicShot_CheckSlowInterval
+                bne.s   Enemy_Stage12TurretSpawnPeriodicBird_CheckSlowInterval
                 move.w  (FrameCounter).w,d7
                 andi.w  #$FF,d7
-                bne.s   Enemy_Stage12TurretSpawnPeriodicShot_Return
-                bra.s   Enemy_Stage12TurretSpawnPeriodicShot_Spawn
+                bne.s   Enemy_Stage12TurretSpawnPeriodicBird_Return
+                bra.s   Enemy_Stage12TurretSpawnPeriodicBird_Spawn
 ; ---------------------------------------------------------------------------
-Enemy_Stage12TurretSpawnPeriodicShot_CheckSlowInterval:  ; CODE XREF: Enemy_Stage12TurretSpawnPeriodicShot+8   j  ; was: loc_2E5BE
+Enemy_Stage12TurretSpawnPeriodicBird_CheckSlowInterval:  ; CODE XREF: Enemy_Stage12TurretSpawnPeriodicBird+8   j  ; was: loc_2E5BE
                 move.w  (FrameCounter).w,d7
                 andi.w  #$1FF,d7
-                bne.s   Enemy_Stage12TurretSpawnPeriodicShot_Return
-Enemy_Stage12TurretSpawnPeriodicShot_Spawn:             ; CODE XREF: Enemy_Stage12TurretSpawnPeriodicShot+14   j  ; was: loc_2E5C8
+                bne.s   Enemy_Stage12TurretSpawnPeriodicBird_Return
+Enemy_Stage12TurretSpawnPeriodicBird_Spawn:             ; CODE XREF: Enemy_Stage12TurretSpawnPeriodicBird+14   j  ; was: loc_2E5C8
                 jsr     (Projectile_FindFreeSlotForward).l
-                bne.s   Enemy_Stage12TurretSpawnPeriodicShot_Return
+                bne.s   Enemy_Stage12TurretSpawnPeriodicBird_Return
                 move.w  #$90,(a0)
                 move.w  #1,$5E(a0)
                 move.w  #$B0,$14(a0)
-Enemy_Stage12TurretSpawnPeriodicShot_Return:            ; CODE XREF: Enemy_Stage12TurretSpawnPeriodicShot+12   j  ; was: locret_2E5E0
-                                        ; Enemy_Stage12TurretSpawnPeriodicShot+1E   j
+Enemy_Stage12TurretSpawnPeriodicBird_Return:            ; CODE XREF: Enemy_Stage12TurretSpawnPeriodicBird+12   j  ; was: locret_2E5E0
+                                        ; Enemy_Stage12TurretSpawnPeriodicBird+1E   j
                 rts
-; End of function Enemy_Stage12TurretSpawnPeriodicShot
-; Hides turret enemy
+; End of function Enemy_Stage12TurretSpawnPeriodicBird
+; Hides the turret by writing the bit-4 flag byte to its sprite word
 Enemy_Stage12TurretHide:                                ; CODE XREF: Enemy_Stage12TurretController+4   j  ; was: sub_2E5E2
                 move.w  #$1000,2(a5)
                 rts
@@ -346,12 +346,12 @@ Enemy_DispatchStage12LauncherState:                     ; CODE XREF: Enemy_Stage
 ; End of function Enemy_DispatchStage12LauncherState
 ; ---------------------------------------------------------------------------
 Enemy_Stage12LauncherStateOffsets:  dc.w    Enemy_Stage12LauncherInitState-*  ; DATA XREF: Enemy_DispatchStage12LauncherState+8   o  ; was: off_2E62A
-                dc.w    Enemy_Stage12LauncherAttachedWaitState-*
+                dc.w    Enemy_Stage12LauncherRiseToYachtState-*
                 dc.w    Enemy_Stage12LauncherLaunchState-*
                 dc.w    Enemy_UpdateStage12FallingObject-*
                 dc.w    Enemy_Stage12SharedNoOpState-*
 
-; Initializes the launcher and attaches it to the camera-relative anchor
+; Initializes the launcher and attaches it to the yacht
 Enemy_Stage12LauncherInitState:                         ; DATA XREF: ROM:Enemy_Stage12LauncherStateOffsets   o  ; was: sub_2E634
                 moveq   #4,d0
                 bsr.w   Enemy_InitStage12FloatingSprite
@@ -361,18 +361,18 @@ Enemy_Stage12LauncherInitState:                         ; DATA XREF: ROM:Enemy_S
                 move.w  #$ED00,2(a5)
                 move.w  #4,$5C(a5)
                 addq.w  #2,4(a5)
-; Follows the anchor until the launch delay expires
-Enemy_Stage12LauncherAttachedWaitState:                 ; DATA XREF: ROM:0002E62C   o  ; was: loc_2E65C
+; Rises to the yacht a pixel a frame: $4E is both the delay and the Y offset
+Enemy_Stage12LauncherRiseToYachtState:                  ; DATA XREF: ROM:0002E62C   o  ; was: loc_2E65C
                 bsr.w   Enemy_Stage12LauncherUpdatePosition
                 subq.w  #1,$4E(a5)
-                bne.s   Enemy_Stage12LauncherAttachedWaitState_Return
+                bne.s   Enemy_Stage12LauncherRiseToYachtState_Return
                 move.w  #$40,$48(a5)                    ; '@'
                 addq.w  #2,4(a5)
-Enemy_Stage12LauncherAttachedWaitState_Return:          ; CODE XREF: Enemy_Stage12LauncherInitState+30   j  ; was: locret_2E670
+Enemy_Stage12LauncherRiseToYachtState_Return:           ; CODE XREF: Enemy_Stage12LauncherInitState+30   j  ; was: locret_2E670
                 rts
 ; End of function Enemy_Stage12LauncherInitState
-; Updates launcher position relative to ship
-Enemy_Stage12LauncherUpdatePosition:                    ; CODE XREF: Enemy_Stage12LauncherInitState:Enemy_Stage12LauncherAttachedWaitState   p  ; was: sub_2E672
+; Places the launcher at the yacht position plus its $4C and $4E offsets
+Enemy_Stage12LauncherUpdatePosition:                    ; CODE XREF: Enemy_Stage12LauncherInitState:Enemy_Stage12LauncherRiseToYachtState   p  ; was: sub_2E672
                                         ; sub_2E690   p
                 move.l  (Entity57XPos).w,$10(a5)
                 move.l  (Entity57YPos).w,$14(a5)
