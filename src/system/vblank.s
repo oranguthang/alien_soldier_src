@@ -15,8 +15,8 @@ Int_VBlank_WaitForBlanking:                             ; CODE XREF: VBLANK+2E  
                 btst    #6,(ConsoleVersionFlags).w
                 beq.w   Int_VBlank_RunEffects
                 move.w  #$300,d0
-Int_VBlank_DebugDelayLoop:                              ; CODE XREF: VBLANK:Int_VBlank_DebugDelayLoop   j  ; was: loc_AB8
-                dbf     d0,Int_VBlank_DebugDelayLoop
+Int_VBlank_PalDelayLoop:                                ; CODE XREF: VBLANK:Int_VBlank_PalDelayLoop   j  ; was: loc_AB8
+                dbf     d0,Int_VBlank_PalDelayLoop
 Int_VBlank_RunEffects:                                  ; CODE XREF: VBLANK+36   j  ; was: loc_ABC
                 jsr     (VBlank_DispatchRasterEffect).l
                 bsr.w   Gfx_ApplyHInterruptState
@@ -73,44 +73,44 @@ Sys_VBlankHandler_ReleaseZ80BusForExit:                 ; CODE XREF: Sys_VBlankH
                 beq.s   Sys_VBlankHandler_ReleaseZ80BusForExit
                 move    #$2300,sr
                 bsr.w   Sys_VBlankEventHandler
-                bsr.w   Input_HandleControllerState
+                bsr.w   Input_UpdatePauseFromStartButton
                 jsr     (RandomNumber).l
                 bsr.w   Sys_UpdateTimers
                 move.b  #1,(VBlankUpdateReady).w
                 movem.l (sp)+,d0-d7/a0-a5
                 rte
 ; End of function Sys_VBlankHandler
-; Handles controller port state changes and button press detection
-Input_HandleControllerState:                            ; CODE XREF: Sys_VBlankHandler+4E   p  ; was: sub_B82
+; Toggles the pause flag and sound pause when Start is pressed on an enabled port
+Input_UpdatePauseFromStartButton:                       ; CODE XREF: Sys_VBlankHandler+4E   p  ; was: sub_B82
                 move.b  (GameplayControlFlags).w,d0
                 btst    #6,d0
-                beq.w   Input_HandleControllerState_Return
+                beq.w   Input_UpdatePauseFromStartButton_Return
                 clr.b   d1
                 btst    #0,d0
-                beq.w   Input_HandleControllerState_CheckPort2
+                beq.w   Input_UpdatePauseFromStartButton_CheckPort2
                 or.b    (ControllerPressedState).w,d1
-Input_HandleControllerState_CheckPort2:                 ; CODE XREF: Input_HandleControllerState+12   j  ; was: loc_B9C
+Input_UpdatePauseFromStartButton_CheckPort2:            ; CODE XREF: Input_UpdatePauseFromStartButton+12   j  ; was: loc_B9C
                 btst    #1,d0
-                beq.w   Input_HandleControllerState_CheckTransition
+                beq.w   Input_UpdatePauseFromStartButton_CheckStartPressed
                 or.b    (ControllerPressedState+1).w,d1
-Input_HandleControllerState_CheckTransition:            ; CODE XREF: Input_HandleControllerState+1E   j  ; was: loc_BA8
+Input_UpdatePauseFromStartButton_CheckStartPressed:     ; CODE XREF: Input_UpdatePauseFromStartButton+1E   j  ; was: loc_BA8
                 tst.b   d1
-                bpl.w   Input_HandleControllerState_Return
+                bpl.w   Input_UpdatePauseFromStartButton_Return
                 tst.b   d0
-                bmi.w   Input_HandleControllerState_ClearActiveFlag
+                bmi.w   Input_UpdatePauseFromStartButton_Unpause
                 bset    #7,d0
                 move.b  d0,(GameplayControlFlags).w
                 move.b  #1,(SoundPauseState).w
                 rts
 ; ---------------------------------------------------------------------------
-Input_HandleControllerState_ClearActiveFlag:            ; CODE XREF: Input_HandleControllerState+2E   j  ; was: loc_BC4
+Input_UpdatePauseFromStartButton_Unpause:               ; CODE XREF: Input_UpdatePauseFromStartButton+2E   j  ; was: loc_BC4
                 bclr    #7,d0
                 move.b  d0,(GameplayControlFlags).w
                 move.b  #$80,(SoundPauseState).w
-Input_HandleControllerState_Return:                     ; CODE XREF: Input_HandleControllerState+8   j  ; was: locret_BD2
-                                        ; Input_HandleControllerState+28   j
+Input_UpdatePauseFromStartButton_Return:                ; CODE XREF: Input_UpdatePauseFromStartButton+8   j  ; was: locret_BD2
+                                        ; Input_UpdatePauseFromStartButton+28   j
                 rts
-; End of function Input_HandleControllerState
+; End of function Input_UpdatePauseFromStartButton
 ; Handles timed events and callbacks during VBlank
 Sys_VBlankEventHandler:                                 ; CODE XREF: VBLANK+96   p  ; was: sub_BD4
                                         ; Sys_VBlankHandler+4A   p

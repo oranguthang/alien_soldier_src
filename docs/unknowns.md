@@ -8889,3 +8889,33 @@ pending queue falls from 2,357 to 2,331 and its actionable upper bound from
 1,844 to 1,818; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `bosses/jetsripper_core.s` now has zero
 pending current names, leaving 38 modules in the queue.
+
+The 27 pending entries in `system/vblank.s` produced two corrections, both
+settled by cross-checking a bit against an independent use of the same register.
+
+`Int_VBlank_DebugDelayLoop` runs only when bit 6 of `ConsoleVersionFlags` is
+set. `Sys_CheckRegionLock` tests bit 6 of the same hardware version register to
+decide whether overseas hardware is PAL, so the `$300`-iteration delay is PAL
+timing compensation rather than a debug hook, and it becomes
+`Int_VBlank_PalDelayLoop`. The neighbouring `Int_VBlank_WaitForBlanking` was
+checked the same way and is correct: it tests bit 3 of the VDP status register,
+the vertical blanking flag, unlike the similarly shaped reset-path loop that was
+renamed `Reset_WaitForDmaIdle` earlier in this pass.
+
+`Input_HandleControllerState` handles no general controller state. It is gated
+on bit 6 of `GameplayControlFlags`, ORs the pressed bytes of whichever ports
+bits 0 and 1 enable, and acts only on bit 7 of the result, which is Start; it
+then toggles bit 7 of the control flags and writes 1 or `$80` to
+`SoundPauseState`. It and its four internal labels are renamed around
+`Input_UpdatePauseFromStartButton`, with the vague `_CheckTransition` and
+`_ClearActiveFlag` becoming `_CheckStartPressed` and `_Unpause`.
+
+The soft reset is recorded rather than renamed: while paused,
+`Sys_DispatchGameState` clears the VDP display bit, the loader control and both
+game-mode words once all three of the `$70` button bits are held.
+
+Twenty-seven exact-address records raise the registry from 14,011 to 14,038. The
+pending queue falls from 2,331 to 2,304 and its actionable upper bound from
+1,818 to 1,791; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `system/vblank.s` now has zero pending
+current names, leaving 37 modules in the queue.
