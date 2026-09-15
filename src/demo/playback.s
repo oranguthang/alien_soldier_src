@@ -36,10 +36,10 @@ Demo_PlaybackSystem_Return:                             ; CODE XREF: Demo_Playba
 ; ---------------------------------------------------------------------------
 Demo_PlaybackSystem_Update:                             ; CODE XREF: Demo_PlaybackSystem+12   j  ; was: loc_23D48
                 tst.w   (DataLoaderControl).w
-                bmi.w   Demo_PlaybackSystem_UpdateTimer
+                bmi.w   Demo_PlaybackSystem_CheckFramesRemaining
                 btst    #7,(ControllerPressedState).w
                 bne.w   Demo_PlaybackSystem_Exit
-Demo_PlaybackSystem_UpdateTimer:                        ; CODE XREF: Demo_PlaybackSystem+92   j  ; was: loc_23D5A
+Demo_PlaybackSystem_CheckFramesRemaining:               ; CODE XREF: Demo_PlaybackSystem+92   j  ; was: loc_23D5A
                 tst.w   (DemoFramesRemaining).w
                 beq.w   Demo_PlaybackSystem_Exit
                 cmpi.w  #$80,(DemoFramesRemaining).w
@@ -72,9 +72,9 @@ Demo_PlaybackSystem_Exit:                               ; CODE XREF: Demo_Playba
                 lea     (PaletteActiveBuffer).w,a0
                 moveq   #0,d0
                 move.w  #$3F,d1                         ; '?'
-Demo_PlaybackSystem_ClearBufferLoop:                    ; CODE XREF: Demo_PlaybackSystem+11A   j  ; was: loc_23DD2
+Demo_PlaybackSystem_ClearPaletteBufferLoop:             ; CODE XREF: Demo_PlaybackSystem+11A   j  ; was: loc_23DD2
                 move.l  d0,(a0)+
-                dbf     d1,Demo_PlaybackSystem_ClearBufferLoop
+                dbf     d1,Demo_PlaybackSystem_ClearPaletteBufferLoop
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
                 move.w  (VDPReg1Shadow).w,(VDP_CTRL).l

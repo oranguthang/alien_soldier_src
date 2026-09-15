@@ -8588,3 +8588,38 @@ pending queue falls from 2,569 to 2,550 and its actionable upper bound from
 2,056 to 2,037; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `data/shared_effect_sprite_frames.s`
 now has zero pending current names, leaving 48 modules in the queue.
+
+The 19 pending entries in `demo/playback.s` describe one coherent subsystem and
+all of them survive, but the module turns out to contain a dead facility worth
+recording. `DemoRecordingMode` at `$FFFFFF56` is written exactly once in the
+whole source, with zero, at the top of `Demo_PlaybackSystem`, and it is read
+four times. Nothing anywhere sets it, so every branch guarded by it is
+unreachable in the released ROM: `Demo_HandlePlaybackInput_Record`,
+`Demo_HandlePlaybackInput_AppendRecord`,
+`Demo_GetInputPointer_UseRecordingBuffer`, and the two counter resets at the end
+of the setup path. These keep their `Demo_` names because live conditional
+branches do reference them; the registry records that the condition is
+constant.
+
+Two labels named the wrong operation. The block at `loc_23D5A` only reads the
+frame budget, exiting the demo when it is exhausted and arming the sound fade at
+exactly `$80` remaining frames; the decrement happens further down at
+`Demo_PlaybackSystem_DecrementTimer`. It becomes
+`Demo_PlaybackSystem_CheckFramesRemaining`. The clearing loop at `loc_23DD2`
+clears `PaletteActiveBuffer` specifically, so it becomes
+`Demo_PlaybackSystem_ClearPaletteBufferLoop`.
+
+The remaining names are confirmed with their mechanics measured. Playback seeds
+`RandomNumberState` with `$8522BD7A`, saves and restores the difficulty, sound
+and control-layout settings around the demo, and selects one of four stages,
+`2`, `$E`, `$12` and `$1E`, through `Demo_StageIndexTable`; the same rotation
+index doubled selects the matching stream in `Demo_InputStreamPointers`. The
+four streams are run-length coded input-word and frame-count pairs, and the
+demo drives ordinary player code by writing them into `ControllerHeldState` and
+`ControllerPressedState`.
+
+Nineteen exact-address records raise the registry from 13,792 to 13,811. The
+pending queue falls from 2,550 to 2,531 and its actionable upper bound from
+2,037 to 2,018; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `demo/playback.s` now has zero pending
+current names, leaving 47 modules in the queue.
