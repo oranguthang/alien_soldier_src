@@ -124,7 +124,7 @@ Player_UpdateDashSprite_UseDefaultVariant:              ; CODE XREF: Player_Upda
                 bra.w   Player_PrepareSpriteRendering
 ; End of function Player_UpdateDashSprite
 ; Renders player special weapon sprite with conditional positioning
-Player_RenderSpecialWeapon:                             ; CODE XREF: Player_HandleJump+64   j  ; was: sub_17086
+Player_RenderSpecialWeapon:                             ; CODE XREF: Player_GroundIdleState+64   j  ; was: sub_17086
                 tst.w   (ShootingMode).w
                 beq.s   Player_RenderSpecialWeapon_UseDefaultVariant
                 lea     (Player_AlternateLayoutMuzzleOffsets0).l,a4
@@ -154,7 +154,7 @@ Player_RenderWithWeapon:                                ; CODE XREF: Player_Ceil
                 moveq   #$11,d6
                 lea     Player_AlternateAnimationLayoutTable(pc),a0
                 nop
-                movea.l #Player_AirborneWeaponSecondarySpriteMapping,a2
+                movea.l #Player_MotionPoseSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering_WithTables
 ; ---------------------------------------------------------------------------
 Player_RenderWithWeapon_UseDefaultVariant:              ; CODE XREF: Player_RenderWithWeapon+C   j  ; was: loc_170E2
@@ -164,7 +164,7 @@ Player_RenderWithWeapon_UseDefaultVariant:              ; CODE XREF: Player_Rend
                 movea.l #Player_WeaponSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering
 ; ---------------------------------------------------------------------------
-Player_RenderAirborneWithWeapon:                        ; CODE XREF: Player_HandleAirState+62   j  ; was: loc_170F6
+Player_RenderAirborneWithWeapon:                        ; CODE XREF: Player_GroundCrouchState+62   j  ; was: loc_170F6
                                         ; Player_HandleLandingState+7A   j
                 tst.w   $48(a5)
                 bpl.w   Player_RenderFallingSprite
@@ -175,7 +175,7 @@ Player_RenderAirborneWithWeapon:                        ; CODE XREF: Player_Hand
                 moveq   #$11,d6
                 lea     Player_AlternateAnimationLayoutTable(pc),a0
                 nop
-                movea.l #Player_AirborneWeaponSecondarySpriteMapping,a2
+                movea.l #Player_MotionPoseSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering_WithTables
 ; ---------------------------------------------------------------------------
 Player_RenderAirborneWithWeapon_UseDefaultVariant:      ; CODE XREF: Player_RenderWithWeapon+48   j  ; was: loc_1711E
@@ -194,7 +194,7 @@ Player_RenderGroundedFrame:                             ; CODE XREF: Player_Ceil
                 bra.w   Player_PrepareSpriteRendering
 ; End of function Player_RenderWithWeapon
 ; Prepares player falling/airborne sprite for rendering
-Player_RenderFallingSprite:                             ; CODE XREF: Player_HandleAirMovement+5C   j  ; was: sub_17146
+Player_RenderFallingSprite:                             ; CODE XREF: Player_GroundDecelerateState+5C   j  ; was: sub_17146
                                         ; Player_RenderWithWeapon+40   j
                 movea.l #Player_CommonMovementSecondarySpriteMapping,a2
                 moveq   #0,d5

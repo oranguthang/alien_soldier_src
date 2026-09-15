@@ -6,7 +6,7 @@ Sys_ClearObjectBlocks17:                                ; CODE XREF: Player_Hand
                 bra.s   Sys_ClearObjectBlocks96
 ; End of function Sys_ClearObjectBlocks17
 ; Clears 16 consecutive 96-byte object blocks from the shared effect pool
-Sys_ClearObjectBlocks16:                                ; CODE XREF: Player_HandleJump+72   p  ; was: sub_1924C
+Sys_ClearObjectBlocks16:                                ; CODE XREF: Player_GroundIdleState+72   p  ; was: sub_1924C
                                         ; Player_StartAirCounterForce+A   p
                 movea.w #(SharedEffectObjectPool-M68K_RAM),a0
                 moveq   #$F,d7

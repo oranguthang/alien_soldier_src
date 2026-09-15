@@ -107,15 +107,15 @@ Player_UpdateState:                                     ; CODE XREF: Player_Upda
                 jmp     (a0)
 ; End of function Player_UpdateState
 ; ---------------------------------------------------------------------------
-Player_StateHandlerOffsets: dc.w    Player_HandleJump-Player_HandleDeathSequence  ; was: off_15062
+Player_StateHandlerOffsets: dc.w    Player_GroundIdleState-Player_HandleDeathSequence  ; was: off_15062
                                         ; DATA XREF: Player_UpdateState+4   r
                 dc.w    Player_GroundedMovementState-Player_HandleDeathSequence
                 dc.w    Player_GroundWeaponState-Player_HandleDeathSequence
                 dc.w    Player_HandleFallingState-Player_HandleDeathSequence
                 dc.w    Player_HandleFallingState-Player_HandleDeathSequence
-                dc.w    Player_HandleAirMovement-Player_HandleDeathSequence
+                dc.w    Player_GroundDecelerateState-Player_HandleDeathSequence
                 dc.w    Player_GroundWeaponSelectState-Player_HandleDeathSequence
-                dc.w    Player_HandleAirState-Player_HandleDeathSequence
+                dc.w    Player_GroundCrouchState-Player_HandleDeathSequence
                 dc.w    Player_DashAttackState-Player_HandleDeathSequence
                 dc.w    Player_HandleBounceState-Player_HandleDeathSequence
                 dc.w    Player_HandleFallingState-Player_HandleDeathSequence
@@ -230,8 +230,8 @@ Player_HandleRespawnGravity:                            ; DATA XREF: ROM:0001509
                 clr.b   (PlayerAirShotUsedFlag).w
                 bra.w   Player_HandleFallingState_UpdateTerrain
 ; End of function Player_HandleDeathSequence
-; Initializes player air movement state
-Player_InitAirState:                                    ; CODE XREF: Player_GroundCounterForceState+18   j  ; was: sub_151EE
+; Enters state $00, the grounded standing state
+Player_InitGroundIdleState:                             ; CODE XREF: Player_GroundCounterForceState+18   j  ; was: sub_151EE
                                         ; Player_UnusedCounterForceTerrainState+10   j
                 move.b  #$7F,(PlayerInputMask).w
                 bclr    #0,(CounterForceTriggerFlag).w
@@ -242,14 +242,14 @@ Player_InitAirState:                                    ; CODE XREF: Player_Grou
                 move.w  #$FFFF,$C(a5)
                 move.w  #4,$5C(a5)
                 bra.w   Player_AutoFlipDirection
-; End of function Player_InitAirState
-Player_HandleJump_Return:                               ; CODE XREF: Player_HandleJump+1C   j  ; was: nullsub_36
-                                        ; Player_HandleJump+22   j
+; End of function Player_InitGroundIdleState
+Player_GroundIdleState_Return:                          ; CODE XREF: Player_GroundIdleState+1C   j  ; was: nullsub_36
+                                        ; Player_GroundIdleState+22   j
                 rts
-; End of function Player_HandleJump_Return
+; End of function Player_GroundIdleState_Return
 
-; Handles player jump mechanics
-Player_HandleJump:                                      ; DATA XREF: ROM:Player_StateHandlerOffsets   o  ; was: sub_1521E
+; State $00: standing on the ground, falling out the moment contact is lost
+Player_GroundIdleState:                                 ; DATA XREF: ROM:Player_StateHandlerOffsets   o  ; was: sub_1521E
                 jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
                 bsr.w   Physics_LowerTerrainCheckWrapper
@@ -257,30 +257,30 @@ Player_HandleJump:                                      ; DATA XREF: ROM:Player_
                 beq.w   Player_InitFallState
                 bsr.w   Effect_SpawnParticle
                 bsr.w   Player_CheckWeaponSelectInput
-                bne.s   Player_HandleJump_Return
+                bne.s   Player_GroundIdleState_Return
                 bsr.w   Player_CheckSpecialMoveActivation
-                bne.s   Player_HandleJump_Return
+                bne.s   Player_GroundIdleState_Return
                 btst    #0,(CounterForceTriggerFlag).w
                 bne.w   Player_StartGroundCounterForce
                 btst    #4,$69(a5)
-                beq.s   Player_HandleJump_CheckMovementInput
+                beq.s   Player_GroundIdleState_CheckMovementInput
                 tst.w   (ShootingMode).w
-                bne.s   Player_HandleJump_Render
-Player_HandleJump_CheckMovementInput:                   ; CODE XREF: Player_HandleJump+34   j  ; was: loc_1525A
+                bne.s   Player_GroundIdleState_Render
+Player_GroundIdleState_CheckMovementInput:              ; CODE XREF: Player_GroundIdleState+34   j  ; was: loc_1525A
                 btst    #1,$69(a5)
-                bne.w   Player_InitJumpCancelState
+                bne.w   Player_InitGroundCrouchState
                 btst    #2,$69(a5)
-                bne.w   Player_CheckWallCollisionJump
+                bne.w   Player_SelectGroundDirectionState
                 btst    #3,$69(a5)
-                bne.w   Player_CheckWallCollisionJump
-Player_HandleJump_Render:                               ; CODE XREF: Player_HandleJump+3A   j  ; was: loc_15278
+                bne.w   Player_SelectGroundDirectionState
+Player_GroundIdleState_Render:                          ; CODE XREF: Player_GroundIdleState+3A   j  ; was: loc_15278
                 btst    #4,$69(a5)
                 beq.w   Player_RenderIdleFrame
                 bra.w   Player_RenderSpecialWeapon
 ; ---------------------------------------------------------------------------
 ; Starts grounded Counter Force recoil, effect, and animation timing
-Player_StartGroundCounterForce:                         ; CODE XREF: Player_HandleJump+2A   j  ; was: loc_15286
-                                        ; Player_HandleAirState+2C   j
+Player_StartGroundCounterForce:                         ; CODE XREF: Player_GroundIdleState+2A   j  ; was: loc_15286
+                                        ; Player_GroundCrouchState+2C   j
                 bsr.w   Player_SpawnCounterForceEffect
                 move.b  #$7F,(PlayerInputMask).w
                 jsr     (Sys_ClearObjectBlocks16).l
@@ -293,9 +293,9 @@ Player_StartGroundCounterForce:                         ; CODE XREF: Player_Hand
                 btst    #3,$E(a5)
                 bne.s   Player_StartGroundCounterForce_Return
                 neg.l   $18(a5)
-Player_StartGroundCounterForce_Return:                  ; CODE XREF: Player_HandleJump+A4   j  ; was: locret_152C8
+Player_StartGroundCounterForce_Return:                  ; CODE XREF: Player_GroundIdleState+A4   j  ; was: locret_152C8
                 rts
-; End of function Player_HandleJump
+; End of function Player_GroundIdleState
 ; Updates the grounded Counter Force recoil and animation
 Player_GroundCounterForceState:                         ; DATA XREF: ROM:0001509C   o  ; was: sub_152CA
                 jsr     Physics_WallCheckWrapper(pc)    ; (pc)
@@ -304,7 +304,7 @@ Player_GroundCounterForceState:                         ; DATA XREF: ROM:0001509
                 btst    #0,6(a5)
                 beq.w   Player_SetAirCounterForceState
                 subq.w  #1,$4A(a5)
-                bmi.w   Player_InitAirState
+                bmi.w   Player_InitGroundIdleState
                 bsr.w   Player_CheckCounterForceDashInput
                 bne.w   Player_InitiateDashAttack_UseGroundState
                 move.l  #$2000,d1
@@ -355,7 +355,7 @@ Player_UnusedCounterForceTerrainState:                  ; was: sub_15372
                 nop
                 bsr.w   Physics_LowerTerrainCheckWrapper
                 btst    #0,6(a5)
-                bne.w   Player_InitAirState
+                bne.w   Player_InitGroundIdleState
 Player_UpdateCounterForceStateTimer:                    ; CODE XREF: Player_AirCounterForceState+22   j  ; was: loc_15386
                                         ; Player_AirCounterForceState+2E   j
                 subq.w  #1,$4A(a5)
@@ -379,7 +379,7 @@ Player_CheckCounterForceDashInput_Return:               ; CODE XREF: Player_Chec
                 rts
 ; End of function Player_CheckCounterForceDashInput
 ; Supplies facing-dependent position and velocity for the Counter Force effect
-Player_SpawnCounterForceEffect:                         ; CODE XREF: Player_HandleJump:loc_15286   p  ; was: sub_153BC
+Player_SpawnCounterForceEffect:                         ; CODE XREF: Player_GroundIdleState:loc_15286   p  ; was: sub_153BC
                                         ; sub_152FC   p
                 moveq   #$FFFFFFFC,d0
                 move.l  #$FFFC0000,d2
@@ -390,12 +390,12 @@ Player_SpawnCounterForceEffect:                         ; CODE XREF: Player_Hand
 Player_SpawnCounterForceEffect_Create:                  ; CODE XREF: Player_SpawnCounterForceEffect+10   j  ; was: loc_153D0
                 bra.w   Player_CreateCounterForceEffect
 ; End of function Player_SpawnCounterForceEffect
-; Initializes jump cancel state clearing flags and timers
-Player_InitJumpCancelState:                             ; CODE XREF: Player_HandleJump+42   j  ; was: sub_153D4
-                                        ; Player_HandleAirMovement+30   j
+; Enters state $0E, the grounded crouch
+Player_InitGroundCrouchState:                           ; CODE XREF: Player_GroundIdleState+42   j  ; was: sub_153D4
+                                        ; Player_GroundDecelerateState+30   j
                 move.w  #2,$48(a5)
-; Initializes jump cancel state clearing flags and setting timers
-Player_InitJumpCancelCleanup:                           ; CODE XREF: Player_DashAttackState+84   j  ; was: loc_153DA
+; Shared tail that installs the crouch state, timers and animation
+Player_InitGroundCrouchStateCleanup:                    ; CODE XREF: Player_DashAttackState+84   j  ; was: loc_153DA
                                         ; Player_HandleSlideState+34   j
                 bclr    #0,(CounterForceTriggerFlag).w
                 clr.w   (PlayerAirMoveUsedFlags).w
@@ -405,14 +405,14 @@ Player_InitJumpCancelCleanup:                           ; CODE XREF: Player_Dash
                 move.w  #8,$5C(a5)
                 move.b  #$7F,(PlayerInputMask).w
                 bra.w   Player_AutoFlipDirection
-; End of function Player_InitJumpCancelState
-Player_HandleAirState_Return:                           ; CODE XREF: Player_HandleAirState+1E   j  ; was: nullsub_37
-                                        ; Player_HandleAirState+24   j
+; End of function Player_InitGroundCrouchState
+Player_GroundCrouchState_Return:                        ; CODE XREF: Player_GroundCrouchState+1E   j  ; was: nullsub_37
+                                        ; Player_GroundCrouchState+24   j
                 rts
-; End of function Player_HandleAirState_Return
+; End of function Player_GroundCrouchState_Return
 
-; Handles player airborne state logic
-Player_HandleAirState:                                  ; DATA XREF: ROM:00015070   o  ; was: sub_15408
+; State $0E: crouched on the ground, returning to standing when down is released
+Player_GroundCrouchState:                               ; DATA XREF: ROM:00015070   o  ; was: sub_15408
                 bset    #1,(PlayerActionStateFlags).w
                 jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
@@ -420,65 +420,65 @@ Player_HandleAirState:                                  ; DATA XREF: ROM:0001507
                 btst    #0,6(a5)
                 beq.w   Player_InitFallState
                 bsr.w   Player_CheckWeaponSelectInput
-                bne.s   Player_HandleAirState_Return
+                bne.s   Player_GroundCrouchState_Return
                 bsr.w   Player_CheckSpecialMoveActivation
-                bne.s   Player_HandleAirState_Return
+                bne.s   Player_GroundCrouchState_Return
                 btst    #0,(CounterForceTriggerFlag).w
                 bne.w   Player_StartGroundCounterForce
                 bsr.w   Player_DecelerateHorizontalVelocityFast
                 subq.w  #1,$48(a5)
-                bpl.s   Player_CheckAirStateTransition
+                bpl.s   Player_GroundCrouchState_Render
                 move.w  #$FFFF,$48(a5)
                 btst    #4,$69(a5)
-                beq.s   Player_HandleAirState_CheckJumpInput
+                beq.s   Player_GroundCrouchState_CheckReleaseInput
                 tst.w   (ShootingMode).w
-                bne.s   Player_CheckAirStateTransition
-Player_HandleAirState_CheckJumpInput:                   ; CODE XREF: Player_HandleAirState+46   j  ; was: loc_15456
+                bne.s   Player_GroundCrouchState_Render
+Player_GroundCrouchState_CheckReleaseInput:             ; CODE XREF: Player_GroundCrouchState+46   j  ; was: loc_15456
                 btst    #1,$69(a5)
-                beq.w   Player_InitAirState
-; Checks conditions for transitioning between air states
-Player_CheckAirStateTransition:                         ; CODE XREF: Player_HandleAirState+38   j  ; was: loc_15460
-                                        ; Player_HandleAirState+4C   j
+                beq.w   Player_InitGroundIdleState
+; Selects the armed or unarmed crouch rendering path
+Player_GroundCrouchState_Render:                        ; CODE XREF: Player_GroundCrouchState+38   j  ; was: loc_15460
+                                        ; Player_GroundCrouchState+4C   j
                 btst    #4,$69(a5)
-                beq.w   Player_RenderAirborneFrame
+                beq.w   Player_RenderMotionPose
                 bra.w   Player_RenderAirborneWithWeapon
-; End of function Player_HandleAirState
-; Initializes player air state with parameters
-Player_InitAirJumpState:                                ; CODE XREF: Player_HandleLandingState+6C   j  ; was: sub_1546E
-                                        ; Player_CheckWallCollisionJump+3A   j
+; End of function Player_GroundCrouchState
+; Enters state $0A, the grounded deceleration
+Player_InitGroundDecelerateState:                       ; CODE XREF: Player_HandleLandingState+6C   j  ; was: sub_1546E
+                                        ; Player_SelectGroundDirectionState+3A   j
                 move.b  #$7F,(PlayerInputMask).w
                 clr.w   (PlayerAirMoveUsedFlags).w
                 move.w  #$A,4(a5)
                 clr.w   $48(a5)
                 move.w  #4,$5C(a5)
                 bra.w   Player_AutoFlipDirection
-; End of function Player_InitAirJumpState
-; Handles player movement while airborne
-Player_HandleAirMovement:                               ; DATA XREF: ROM:0001506C   o  ; was: sub_1548C
+; End of function Player_InitGroundDecelerateState
+; State $0A: decelerating on the ground after a landing or a released direction
+Player_GroundDecelerateState:                           ; DATA XREF: ROM:0001506C   o  ; was: sub_1548C
                 jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
                 bsr.w   Physics_LowerTerrainCheckWrapper
                 btst    #0,6(a5)
                 beq.w   Player_InitFallState
                 bsr.w   Player_CheckWeaponSelectInput
-                bne.s   Player_AirMovement_Return
+                bne.s   Player_GroundDecelerateState_Return
                 bsr.w   Player_CheckSpecialMoveActivation
-                bne.s   Player_AirMovement_Return
+                bne.s   Player_GroundDecelerateState_Return
                 btst    #0,(CounterForceTriggerFlag).w
                 bne.w   Player_StartGroundCounterForce
                 btst    #1,$69(a5)
-                bne.w   Player_InitJumpCancelState
+                bne.w   Player_InitGroundCrouchState
                 bsr.w   Player_DecelerateHorizontalVelocityFast
                 move.l  $18(a5),d0
-                bne.s   Player_RenderAirMovementFrame
+                bne.s   Player_GroundDecelerateState_Render
                 btst    #2,$69(a5)
-                bne.w   Player_CheckWallCollisionFromMovement
+                bne.w   Player_SelectGroundDirectionFromDeceleration
                 btst    #3,$69(a5)
-                bne.w   Player_CheckWallCollisionFromMovement
-                bra.w   Player_InitAirState
+                bne.w   Player_SelectGroundDirectionFromDeceleration
+                bra.w   Player_InitGroundIdleState
 ; ---------------------------------------------------------------------------
-; Selects the unarmed air-movement rendering path
-Player_RenderAirMovementFrame:                          ; CODE XREF: Player_HandleAirMovement+3C   j  ; was: loc_154E2
+; Renders the grounded deceleration while the player is still sliding
+Player_GroundDecelerateState_Render:                    ; CODE XREF: Player_GroundDecelerateState+3C   j  ; was: loc_154E2
                 btst    #4,$69(a5)
                 bne.w   Player_RenderFallingSprite
                 movea.l #Player_CommonPrimarySpriteMapping,a1
@@ -487,10 +487,10 @@ Player_RenderAirMovementFrame:                          ; CODE XREF: Player_Hand
                 moveq   #6,d6
                 bra.w   Player_BuildSpritePieces
 ; ---------------------------------------------------------------------------
-Player_AirMovement_Return:                              ; CODE XREF: Player_HandleAirMovement+18   j  ; was: locret_15500
-                                        ; Player_HandleAirMovement+1E   j
+Player_GroundDecelerateState_Return:                    ; CODE XREF: Player_GroundDecelerateState+18   j  ; was: locret_15500
+                                        ; Player_GroundDecelerateState+1E   j
                 rts
-; End of function Player_HandleAirMovement
+; End of function Player_GroundDecelerateState
 ; Initializes player landing state
 Player_InitLandingState:                                ; CODE XREF: Player_AirCounterForceState+1E   j  ; was: sub_15502
                                         ; Player_HandleFallingState+50   j
@@ -513,9 +513,9 @@ Player_HandleLandingState:                              ; DATA XREF: ROM:0001507
                 btst    #0,6(a5)
                 beq.w   Player_InitFallState
                 bsr.w   Player_CheckWeaponSelectInput
-                bne.s   Player_AirMovement_Return
+                bne.s   Player_GroundDecelerateState_Return
                 bsr.w   Player_CheckSpecialMoveActivation
-                bne.s   Player_AirMovement_Return
+                bne.s   Player_GroundDecelerateState_Return
                 btst    #0,(CounterForceTriggerFlag).w
                 bne.w   Player_StartGroundCounterForce
                 move.l  #$4000,d1
@@ -525,26 +525,26 @@ Player_HandleLandingState:                              ; DATA XREF: ROM:0001507
                 bpl.s   Player_HandleLandingState_Render
                 btst    #1,$69(a5)
                 beq.s   Player_HandleLandingState_CheckMovementInput
-                bsr.w   Player_InitJumpCancelState
+                bsr.w   Player_InitGroundCrouchState
                 move.w  #$FFFF,$48(a5)
                 bra.s   Player_HandleLandingState_Render
 ; ---------------------------------------------------------------------------
 Player_HandleLandingState_CheckMovementInput:           ; CODE XREF: Player_HandleLandingState+4A   j  ; was: loc_1558A
                 btst    #2,$69(a5)
-                bne.w   Player_CheckWallCollisionFromMovement
+                bne.w   Player_SelectGroundDirectionFromDeceleration
                 btst    #3,$69(a5)
-                bne.w   Player_CheckWallCollisionFromMovement
-                bra.w   Player_InitAirJumpState
+                bne.w   Player_SelectGroundDirectionFromDeceleration
+                bra.w   Player_InitGroundDecelerateState
 ; ---------------------------------------------------------------------------
 Player_HandleLandingState_Render:                       ; CODE XREF: Player_HandleLandingState+42   j  ; was: loc_155A2
                                         ; Player_HandleLandingState+56   j
                 btst    #4,$69(a5)
-                beq.w   Player_RenderAirborneFrame
+                beq.w   Player_RenderMotionPose
                 bra.w   Player_RenderAirborneWithWeapon
 ; End of function Player_HandleLandingState
 ; Opens weapon selection with A, or toggles shooting mode with down+A
-Player_CheckWeaponSelectInput:                          ; CODE XREF: Player_HandleJump+18   p  ; was: sub_155B0
-                                        ; Player_HandleAirState+1A   p
+Player_CheckWeaponSelectInput:                          ; CODE XREF: Player_GroundIdleState+18   p  ; was: sub_155B0
+                                        ; Player_GroundCrouchState+1A   p
                 btst    #6,$6A(a5)
                 beq.s   Player_CheckWeaponSelectInput_NotActivated
                 btst    #1,$69(a5)
@@ -581,7 +581,7 @@ Player_GroundWeaponSelectState:                         ; DATA XREF: ROM:0001506
                 btst    #0,6(a5)
                 beq.w   Player_InitFallState
                 cmpi.w  #$12,(WeaponStateIndex).w
-                bmi.w   Player_InitAirState
+                bmi.w   Player_InitGroundIdleState
                 bra.w   Player_RenderIdleFrame
 ; End of function Player_GroundWeaponSelectState
 ; Masks input, toggles moving/fixed shooting mode, and plays its sound
@@ -594,43 +594,43 @@ Player_ToggleShootingModeWithInputMask:                 ; CODE XREF: Player_Chec
                 moveq   #0,d0
                 rts
 ; End of function Player_ToggleShootingModeWithInputMask
-; Checks wall collision during jump and initiates wall states
-Player_CheckWallCollisionJump:                          ; CODE XREF: Player_HandleJump+4C   j  ; was: sub_1564C
-                                        ; Player_HandleJump+56   j
+; Routes a held direction to the armed ground move or to a turn
+Player_SelectGroundDirectionState:                      ; CODE XREF: Player_GroundIdleState+4C   j  ; was: sub_1564C
+                                        ; Player_GroundIdleState+56   j
                 btst    #4,$69(a5)
-                beq.s   Player_InitWallBounceState
+                beq.s   Player_InitGroundedMovementState
                 tst.w   (ShootingMode).w
-                beq.s   Player_CheckWallCollisionJump_CheckFacing
+                beq.s   Player_SelectGroundDirectionCheckFacing
                 rts
 ; ---------------------------------------------------------------------------
-Player_CheckWallCollisionFromMovement:                  ; CODE XREF: Player_HandleAirMovement+44   j  ; was: loc_1565C
-                                        ; Player_HandleAirMovement+4E   j
+Player_SelectGroundDirectionFromDeceleration:           ; CODE XREF: Player_GroundDecelerateState+44   j  ; was: loc_1565C
+                                        ; Player_GroundDecelerateState+4E   j
                 btst    #4,$69(a5)
-                beq.s   Player_InitWallBounceState
+                beq.s   Player_InitGroundedMovementState
                 tst.w   (ShootingMode).w
-                bne.w   Player_InitAirState
-Player_CheckWallCollisionJump_CheckFacing:              ; CODE XREF: Player_CheckWallCollisionJump+C   j  ; was: loc_1566C
+                bne.w   Player_InitGroundIdleState
+Player_SelectGroundDirectionCheckFacing:                ; CODE XREF: Player_SelectGroundDirectionState+C   j  ; was: loc_1566C
                 btst    #3,$69(a5)
-                beq.s   Player_CheckWallCollisionJump_CheckLeft
+                beq.s   Player_SelectGroundDirectionCheckLeft
                 btst    #3,$E(a5)
                 bne.w   Player_InitGroundWeaponState
-                bra.s   Player_InitWallBounceState
+                bra.s   Player_InitGroundedMovementState
 ; ---------------------------------------------------------------------------
-Player_CheckWallCollisionJump_CheckLeft:                ; CODE XREF: Player_CheckWallCollisionJump+26   j  ; was: loc_15680
+Player_SelectGroundDirectionCheckLeft:                  ; CODE XREF: Player_SelectGroundDirectionState+26   j  ; was: loc_15680
                 btst    #2,$69(a5)
-                beq.w   Player_InitAirJumpState
+                beq.w   Player_InitGroundDecelerateState
                 btst    #3,$E(a5)
                 beq.w   Player_InitGroundWeaponState
-; Initializes wall bounce state with velocity and direction flip
-Player_InitWallBounceState:                             ; CODE XREF: Player_CheckWallCollisionJump+6   j  ; was: loc_15694
-                                        ; Player_CheckWallCollisionJump+16   j
+; Enters state $02, grounded movement, turning the player to face the input
+Player_InitGroundedMovementState:                       ; CODE XREF: Player_SelectGroundDirectionState+6   j  ; was: loc_15694
+                                        ; Player_SelectGroundDirectionState+16   j
                 move.b  #$7F,(PlayerInputMask).w
                 move.w  #2,4(a5)
                 move.w  #4,$48(a5)
                 move.w  #$FFFF,$C(a5)
                 move.w  #4,$5C(a5)
                 bra.w   Player_AutoFlipDirection
-; End of function Player_CheckWallCollisionJump
+; End of function Player_SelectGroundDirectionState
 Player_GroundedMovementState_Return:                    ; CODE XREF: Player_GroundedMovementState+18   j  ; was: nullsub_38
                                         ; Player_GroundedMovementState+1E   j
                 rts

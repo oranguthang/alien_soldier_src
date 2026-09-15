@@ -9361,3 +9361,65 @@ pending queue falls from 1,844 to 1,803 and its actionable upper bound from
 1,331 to 1,290; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `gameplay/sprite_initialization.s` now
 has zero pending current names, leaving 23 modules in the queue.
+
+The 42 pending entries in `player/core_states.s` produced the largest correction
+of this pass. An entire family of grounded states carried airborne names.
+
+The evidence is uniform. Each of the four states calls
+`Physics_LowerTerrainCheckWrapper` and diverts to `Player_InitFallState` on the
+very next instruction when ground contact is absent, and `Player_InitFallState`
+writes state 6, which `Player_StateHandlerOffsets` resolves to
+`Player_HandleFallingState`, the routine that actually applies gravity without
+requiring contact. A state that cannot survive the loss of ground contact is a
+grounded state.
+
+On that basis state `$00`, formerly `Player_HandleJump`, is where the player
+stands: it spawns the idle particle and routes a held down button to the crouch
+and a held direction to the ground direction selector. State `$0E`, formerly
+`Player_HandleAirState`, is that crouch, and it returns to standing when down is
+released. State `$0A`, formerly `Player_HandleAirMovement`, brakes the player to
+a stop and then either resumes movement or returns to standing, which is the
+exact shape of the ceiling deceleration state renamed earlier in this pass. The
+three initializers and the two selector entries followed the same mistake:
+`Player_InitWallBounceState` performs no bounce, it writes state `$02`,
+`Player_GroundedMovementState`, and `Player_CheckWallCollisionJump` tests no wall
+at all. It compares the held direction against the facing bit and enters the
+armed ground-weapon state when they agree or turns the player when they do not.
+
+Twenty symbols are renamed around `Player_GroundIdleState`,
+`Player_GroundCrouchState`, `Player_GroundDecelerateState`,
+`Player_InitGroundedMovementState` and `Player_SelectGroundDirectionState`. With
+the ceiling block corrected earlier, the state table now reads as three coherent
+groups: grounded states `$00` to `$16`, the genuinely airborne and knockback
+states, and the ceiling block `$18` to `$26`.
+
+Two smaller facts are recorded. The death countdown can be cut short three
+times, because each press of any of the three `$70` buttons plays SFX `$BD` and
+spends one of three retries. And `Player_Update_Return` is not only the
+frozen-frame return: the state table names it for three separate slots, so it is
+also the idle state handler.
+
+Forty-two exact-address records raise the registry from 14,539 to 14,580. The
+pending queue falls from 1,803 to 1,762 and its actionable upper bound from
+1,290 to 1,249; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `player/core_states.s` now has zero
+pending current names, leaving 22 modules in the queue.
+
+Correcting the grounded state family exposed a name this pass had already
+confirmed on a false premise. `Player_RenderAirborneFrame` was accepted while
+auditing `player/terrain_wrappers.s`, at a point when its callers were still
+believed to be airborne. They are not. Six call sites reach it and only one, the
+jump apex, is airborne; the other five are the ceiling dash, the ceiling
+landing, the grounded crouch, the grounded landing and the slide, every one of
+which requires ceiling or ground contact.
+
+It is the shared pose for states in motion, as opposed to
+`Player_RenderIdleFrame`, so the routine, its two offset-selection labels, its
+offset table and the secondary mapping it loads are renamed around
+`Player_RenderMotionPose`. The five registry records are updated in place rather
+than added, and each now records that it supersedes the earlier confirmation.
+
+This is the second methodological correction of the pass, after the
+absolute-address false positive, and it points the same way: a name is only as
+good as the premise used to confirm it, so a confirmation made before a
+neighbouring family was understood has to be revisited once that family changes.

@@ -65,7 +65,7 @@ Player_CeilingDashState_CheckDashInput:                 ; CODE XREF: Player_Ceil
 Player_CeilingDashState_Render:                         ; CODE XREF: Player_CeilingDashState+4A   j  ; was: loc_16596
                                         ; Player_CeilingDashState+5E   j
                 btst    #4,$69(a5)
-                beq.w   Player_RenderAirborneFrame
+                beq.w   Player_RenderMotionPose
                 bra.w   Player_RenderWithWeapon
 ; End of function Player_CeilingDashState
 ; Enters state $1E, which brakes the player to a stop while held to the ceiling
@@ -166,7 +166,7 @@ Player_CeilingLandingState_CheckMovementInput:          ; CODE XREF: Player_Ceil
 Player_CeilingLandingState_Render:                      ; CODE XREF: Player_CeilingLandingState+3E   j  ; was: loc_166DC
                                         ; Player_CeilingLandingState+52   j
                 btst    #4,$69(a5)
-                beq.w   Player_RenderAirborneFrame
+                beq.w   Player_RenderMotionPose
                 bra.w   Player_RenderWithWeapon
 ; End of function Player_CeilingLandingState
 ; Opens ceiling weapon selection with A, or toggles shooting mode with up+A
@@ -368,7 +368,7 @@ Player_JumpApexState:                                   ; DATA XREF: ROM:000150A
                 addi.l  #$8800,$1C(a5)
                 bpl.w   Player_InitFallState
                 bclr    #4,$E(a5)
-                bra.w   Player_RenderAirborneFrame_UseAnimatedOffsets
+                bra.w   Player_RenderMotionPose_UseAnimatedOffsets
 ; End of function Player_JumpApexState
 ; Player dash effect during teleport
 Player_TeleportDash:                                    ; DATA XREF: ROM:000150B2   o  ; was: sub_16942

@@ -275,7 +275,7 @@ Player_IdleSecondarySpriteMapping:  dc.w    $800        ; DATA XREF: Player_Rend
                 dc.w    $880C
                 dc.l    Player_IdleSecondarySpriteArtPiece05+$E000000
                 dc.w    $F8F0
-Player_CommonPrimarySpriteMapping:  dc.w    $800        ; DATA XREF: Player_HandleAirMovement+60   o  ; was: word_E8972
+Player_CommonPrimarySpriteMapping:  dc.w    $800        ; DATA XREF: Player_GroundDecelerateState+60   o  ; was: word_E8972
                                         ; Player_HandleSpecialAttack+B4   o
                 dc.l    Player_CommonPrimarySpriteArtPiece00+$F000000
                 dc.w    $DAEC
@@ -307,7 +307,7 @@ Player_DashSecondarySpriteMapping:  dc.w    $800        ; DATA XREF: ROM:0001704
                 dc.w    $880D
                 dc.l    Player_DashSecondarySpriteArtPiece05+$E000000
                 dc.w    $F8EF
-Player_CommonMovementSecondarySpriteMapping:    dc.w    $800  ; DATA XREF: Player_HandleAirMovement+66   o  ; was: word_E89C2
+Player_CommonMovementSecondarySpriteMapping:    dc.w    $800  ; DATA XREF: Player_GroundDecelerateState+66   o  ; was: word_E89C2
                                         ; Player_KnockbackState+6   o
                 dc.l    Player_CommonMovementSecondarySpriteArtPiece00
                 dc.w    $18DF
@@ -819,7 +819,7 @@ Player_TeleportDashTrailSpriteMapping:  dc.w    0       ; DATA XREF: Player_Init
                 dc.w    $803A
                 dc.l    Player_TeleportDashTrailSpriteArtPiece09+$6000000
                 dc.w    $F4D0
-Player_AirborneWeaponSecondarySpriteMapping:    dc.w    $800  ; DATA XREF: Player_RenderAirborneFrame+1E   o  ; was: word_E8F0A
+Player_MotionPoseSecondarySpriteMapping:    dc.w    $800  ; DATA XREF: Player_RenderMotionPose+1E   o  ; was: word_E8F0A
                                         ; Player_RenderWithWeapon+1E   o
                 dc.l    Player_AirborneWeaponSecondarySpriteArtPiece00
                 dc.w    3

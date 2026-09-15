@@ -12,16 +12,16 @@ Player_GroundedMovementState:                           ; DATA XREF: ROM:0001506
                 btst    #0,(CounterForceTriggerFlag).w
                 bne.w   Player_StartGroundCounterForce
                 btst    #1,$69(a5)
-                bne.w   Player_InitJumpCancelState
+                bne.w   Player_InitGroundCrouchState
                 btst    #4,$69(a5)
                 beq.s   Player_GroundedMovementState_CheckHorizontalInput
                 tst.w   (ShootingMode).w
-                bne.w   Player_InitAirJumpState
+                bne.w   Player_InitGroundDecelerateState
 Player_GroundedMovementState_CheckHorizontalInput:      ; CODE XREF: Player_GroundedMovementState+3A   j  ; was: loc_156FC
                 btst    #2,$69(a5)
                 bne.s   Player_GroundedMovementState_Accelerate
                 btst    #3,$69(a5)
-                beq.w   Player_InitAirJumpState
+                beq.w   Player_InitGroundDecelerateState
 Player_GroundedMovementState_Accelerate:                ; CODE XREF: Player_GroundedMovementState+4A   j  ; was: loc_1570E
                 bsr.w   Physics_AccelerateHorizontalByFacing
                 btst    #4,$69(a5)
@@ -38,8 +38,8 @@ Player_GroundedMovementState_CheckRightFacing:          ; CODE XREF: Player_Grou
                 bra.w   Player_RenderDashEffect
 ; ---------------------------------------------------------------------------
 ; Initializes state 0x04 for weapon movement on lower terrain
-Player_InitGroundWeaponState:                           ; CODE XREF: Player_CheckWallCollisionJump+2E   j  ; was: loc_15740
-                                        ; Player_CheckWallCollisionJump+44   j
+Player_InitGroundWeaponState:                           ; CODE XREF: Player_SelectGroundDirectionState+2E   j  ; was: loc_15740
+                                        ; Player_SelectGroundDirectionState+44   j
                 move.w  #4,4(a5)
                 clr.w   $48(a5)
                 move.w  #$FFFF,$C(a5)
@@ -60,21 +60,21 @@ Player_GroundWeaponState:                               ; DATA XREF: ROM:0001506
                 bsr.w   Player_CheckSpecialMoveActivation
                 bne.s   Player_GroundWeaponState_Return
                 btst    #1,$69(a5)
-                bne.w   Player_InitJumpCancelState
+                bne.w   Player_InitGroundCrouchState
                 btst    #4,$69(a5)
-                beq.w   Player_InitWallBounceState
+                beq.w   Player_InitGroundedMovementState
                 bsr.w   Player_PrepareWeaponSprite
                 btst    #2,$69(a5)
                 beq.s   Player_GroundWeaponState_CheckRightFacing
                 btst    #3,$E(a5)
-                beq.w   Player_InitWallBounceState
+                beq.w   Player_InitGroundedMovementState
                 bra.w   Physics_AccelerateHorizontalNegative
 ; ---------------------------------------------------------------------------
 Player_GroundWeaponState_CheckRightFacing:              ; CODE XREF: Player_GroundWeaponState+3E   j  ; was: loc_157A6
                 btst    #3,$69(a5)
-                beq.w   Player_InitAirJumpState
+                beq.w   Player_InitGroundDecelerateState
                 btst    #3,$E(a5)
-                bne.w   Player_InitWallBounceState
+                bne.w   Player_InitGroundedMovementState
                 bra.w   Physics_AccelerateHorizontalPositive
 ; End of function Player_GroundWeaponState
 ; Initializes Phoenix weapon attack
@@ -288,7 +288,7 @@ Player_DashAttackState_HandleTerrainContact:            ; CODE XREF: Player_Dash
 ; ---------------------------------------------------------------------------
 Player_DashAttackState_ResumeAttachedState:             ; CODE XREF: Player_DashAttackState+6E   j  ; was: loc_15A5E
                 btst    #4,$E(a5)
-                beq.w   Player_InitJumpCancelCleanup
+                beq.w   Player_InitGroundCrouchStateCleanup
                 bra.w   Player_InitDashAnimation
 ; ---------------------------------------------------------------------------
 Player_DashAttackState_CleanupAfterMovement:            ; CODE XREF: Player_DashAttackState+A4   j  ; was: loc_15A6C
@@ -376,12 +376,12 @@ Player_HandleSlideState_CheckTerrainContact:            ; CODE XREF: Player_Hand
                 tst.l   $18(a5)
                 bne.s   Player_HandleSlideState_UpdateAnimation
                 btst    #4,$E(a5)
-                beq.w   Player_InitJumpCancelCleanup
+                beq.w   Player_InitGroundCrouchStateCleanup
                 bra.w   Player_InitDashAnimation
 ; ---------------------------------------------------------------------------
 Player_HandleSlideState_UpdateAnimation:                ; CODE XREF: Player_HandleSlideState+2C   j  ; was: loc_15B5C
                 subq.w  #1,$48(a5)
-                bra.w   Player_RenderAirborneFrame
+                bra.w   Player_RenderMotionPose
 ; End of function Player_HandleSlideState
 Player_UnusedDashStateReturn:                           ; was: nullsub_39
                 rts
@@ -417,8 +417,8 @@ Player_DashKickState_Return:                            ; CODE XREF: Player_Dash
                 rts
 ; End of function Player_DashKickState
 ; Checks and activates special move from state flags
-Player_CheckSpecialMoveActivation:                      ; CODE XREF: Player_HandleJump+1E   p  ; was: sub_15BB8
-                                        ; Player_HandleAirState+20   p
+Player_CheckSpecialMoveActivation:                      ; CODE XREF: Player_GroundIdleState+1E   p  ; was: sub_15BB8
+                                        ; Player_GroundCrouchState+20   p
                 btst    #5,$6A(a5)
                 beq.s   Player_CheckSpecialMoveActivation_Return
                 btst    #1,$69(a5)
@@ -457,8 +457,8 @@ Player_CheckDashInput:                                  ; CODE XREF: Player_Ceil
                 bra.s   Player_EndDashWithVerticalVelocity
 ; End of function Player_CheckDashInput
 ; Initializes player falling state with parameters
-Player_InitFallState:                                   ; CODE XREF: Player_HandleJump+10   j  ; was: sub_15C34
-                                        ; Player_HandleAirState+16   j
+Player_InitFallState:                                   ; CODE XREF: Player_GroundIdleState+10   j  ; was: sub_15C34
+                                        ; Player_GroundCrouchState+16   j
                 clr.w   (PlayerAirMoveUsedFlags).w
                 clr.w   $52(a5)
 Player_InitFallState_Finish:                            ; CODE XREF: Player_UnusedCounterForceTerrainState+18   j  ; was: loc_15C3C

@@ -1,5 +1,5 @@
 ; Runs the simple wall check unless terrain collisions are disabled
-Physics_WallCheckWrapper:                               ; CODE XREF: Player_HandleJump   p  ; was: sub_16CC8
+Physics_WallCheckWrapper:                               ; CODE XREF: Player_GroundIdleState   p  ; was: sub_16CC8
                                         ; sub_152CA   p
                 btst    #5,(PlayerRestrictionFlags).w
                 bne.w   Physics_TerrainCheckWrappers_Return
@@ -13,7 +13,7 @@ Physics_ExtendedWallCheckWrapper:                       ; CODE XREF: Player_AirC
                 jmp     Physics_EntityExtendedWallCheck
 ; End of function Physics_ExtendedWallCheckWrapper
 ; Checks moving platforms, then probes the entity's lower terrain boundary
-Physics_LowerTerrainCheckWrapper:                       ; CODE XREF: Player_HandleJump+6   p  ; was: sub_16CE8
+Physics_LowerTerrainCheckWrapper:                       ; CODE XREF: Player_GroundIdleState+6   p  ; was: sub_16CE8
                                         ; Player_GroundCounterForceState+6   p
                 btst    #5,(PlayerRestrictionFlags).w
                 bne.w   Physics_TerrainCheckWrappers_Return
@@ -123,8 +123,8 @@ Input_DirectionIndexTable:  dc.b    0, 6, 2, 0, 4, 5, 3, 0, 0, 7, 1, 0, 0, 0, 0,
                                         ; DATA XREF: Input_ProcessDirectionInput:Input_ProcessDirectionInput_LookupDirection   r
 
 ; Auto-flips player direction based on weapon aim angle constraints
-Player_AutoFlipDirection:                               ; CODE XREF: Player_InitAirState+2A   j  ; was: sub_16DF6
-                                        ; Player_InitJumpCancelState+2E   j
+Player_AutoFlipDirection:                               ; CODE XREF: Player_InitGroundIdleState+2A   j  ; was: sub_16DF6
+                                        ; Player_InitGroundCrouchState+2E   j
                 tst.w   (ShootingMode).w
                 bne.s   Player_AutoFlipDirection_Return
                 btst    #4,$69(a5)
@@ -205,8 +205,8 @@ Physics_AccelerateHorizontalPositive_Store:             ; CODE XREF: Physics_Acc
                 rts
 ; End of function Physics_AccelerateHorizontalPositive
 ; Selects the faster horizontal deceleration step
-Player_DecelerateHorizontalVelocityFast:                ; CODE XREF: Player_HandleAirState+30   p  ; was: sub_16EA4
-                                        ; Player_HandleAirMovement+34   p
+Player_DecelerateHorizontalVelocityFast:                ; CODE XREF: Player_GroundCrouchState+30   p  ; was: sub_16EA4
+                                        ; Player_GroundDecelerateState+34   p
                 move.l  #$C000,d1
 ; End of function Player_DecelerateHorizontalVelocityFast
 ; Decelerates horizontal velocity towards zero
@@ -231,7 +231,7 @@ Physics_StoreHorizontalVelocity:                        ; CODE XREF: Player_Dece
                 rts
 ; End of function Player_DecelerateHorizontalVelocity
 ; Renders the player's unarmed idle frame with cycling offsets
-Player_RenderIdleFrame:                                 ; CODE XREF: Player_HandleJump+60   j  ; was: sub_16EC8
+Player_RenderIdleFrame:                                 ; CODE XREF: Player_GroundIdleState+60   j  ; was: sub_16EC8
                                         ; Player_GroundWeaponSelectState+1E   j
                 move.w  (FrameCounter).w,d0
                 asr.w   #2,d0
@@ -247,30 +247,30 @@ Player_IdleFrameOffsets:    dc.b    1, $FE, 0, $FF, 0, 0, 0, $FF  ; was: byte_16
                                         ; DATA XREF: Player_RenderIdleFrame+A   r
                                         ; Player_RenderIdleFrame+E   r
 
-; Renders an airborne frame using animated or fixed offsets
-Player_RenderAirborneFrame:                             ; CODE XREF: Player_HandleAirState+5E   j  ; was: sub_16EF2
+; Renders the shared motion pose, cycling its offsets while the counter is negative
+Player_RenderMotionPose:                                ; CODE XREF: Player_GroundCrouchState+5E   j  ; was: sub_16EF2
                                         ; Player_HandleLandingState+76   j
                 tst.w   $48(a5)
-                bpl.s   Player_RenderAirborneFrame_UseStaticOffsets
-Player_RenderAirborneFrame_UseAnimatedOffsets:          ; CODE XREF: Player_JumpApexState+12   j  ; was: loc_16EF8
+                bpl.s   Player_RenderMotionPose_UseStaticOffsets
+Player_RenderMotionPose_UseAnimatedOffsets:             ; CODE XREF: Player_JumpApexState+12   j  ; was: loc_16EF8
                 move.w  (FrameCounter).w,d0
                 asr.w   #2,d0
                 andi.w  #6,d0
-                move.b  Player_AirborneFrameOffsets(pc,d0.w),d5
-                move.b  Player_AirborneFrameOffsets+1(pc,d0.w),d6
+                move.b  Player_MotionPoseFrameOffsets(pc,d0.w),d5
+                move.b  Player_MotionPoseFrameOffsets+1(pc,d0.w),d6
                 movea.l #Player_CommonPrimarySpriteMapping,a1
-                movea.l #Player_AirborneWeaponSecondarySpriteMapping,a2
+                movea.l #Player_MotionPoseSecondarySpriteMapping,a2
                 bra.w   Player_BuildSpritePieces
 ; ---------------------------------------------------------------------------
-; Uses fixed offsets for the nonnegative animation state
-Player_RenderAirborneFrame_UseStaticOffsets:            ; CODE XREF: Player_RenderAirborneFrame+4   j  ; was: loc_16F1A
+; Uses one fixed offset pair once the animation counter is non-negative
+Player_RenderMotionPose_UseStaticOffsets:               ; CODE XREF: Player_RenderMotionPose+4   j  ; was: loc_16F1A
                 moveq   #0,d5
                 moveq   #8,d6
                 movea.l #Player_CommonPrimarySpriteMapping,a1
                 movea.l #Player_CommonMovementSecondarySpriteMapping,a2
                 bra.w   Player_BuildSpritePieces
-; End of function Player_RenderAirborneFrame
+; End of function Player_RenderMotionPose
 ; ---------------------------------------------------------------------------
-Player_AirborneFrameOffsets:    dc.b    1, $F, 0, $10, 0, $11, 0, $10  ; was: byte_16F2E
-                                        ; DATA XREF: Player_RenderAirborneFrame+10   r
-                                        ; Player_RenderAirborneFrame+14   r
+Player_MotionPoseFrameOffsets:  dc.b    1, $F, 0, $10, 0, $11, 0, $10  ; was: byte_16F2E
+                                        ; DATA XREF: Player_RenderMotionPose+10   r
+                                        ; Player_RenderMotionPose+14   r

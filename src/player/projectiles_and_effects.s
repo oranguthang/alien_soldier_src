@@ -44,7 +44,7 @@ Orphaned_PlayerGetWeaponTableOffsetSelectFrame:         ; CODE XREF: Orphaned_Pl
                 rts
 ; End of function Orphaned_PlayerGetWeaponTableOffset
 ; Expands two frame streams into the player's composite sprite-piece buffer
-Player_BuildSpritePieces:                               ; CODE XREF: Player_HandleAirMovement+70   j  ; was: sub_174A8
+Player_BuildSpritePieces:                               ; CODE XREF: Player_GroundDecelerateState+70   j  ; was: sub_174A8
                                         ; Player_HandleFallingState+D6   j
                 movea.w #(PlayerSpritePieceBuffer-M68K_RAM),a3
                 move.l  a3,8(a5)
@@ -99,7 +99,7 @@ Player_BuildSpritePieces_CopySecondaryStream:           ; CODE XREF: Player_Buil
                 rts
 ; End of function Player_BuildSpritePieces
 ; Spawns particle effect with random velocity
-Effect_SpawnParticle:                                   ; CODE XREF: Player_HandleJump+14   p  ; was: sub_17514
+Effect_SpawnParticle:                                   ; CODE XREF: Player_GroundIdleState+14   p  ; was: sub_17514
                                         ; Player_CeilingIdleState+16   p
                 btst    #4,$69(a5)
                 bne.w   Effect_SpawnParticle_Return
