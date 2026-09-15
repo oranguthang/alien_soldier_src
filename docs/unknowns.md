@@ -9256,3 +9256,39 @@ pending queue falls from 1,962 to 1,925 and its actionable upper bound from
 1,449 to 1,412; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `player/terrain_wrappers.s` now has zero
 pending current names, leaving 26 modules in the queue.
+
+The 40 pending entries in `weapons/special_firing_and_feedback.s` needed the
+weapon table's own addressing to resolve. `Weapon_FireHandlerOffsets` holds word
+offsets from `Weapon_DirectionIndexTable` at `$17F3A`, so an absolute-address
+scan finds neither of the module's two live handlers; resolving against that
+base finds both, and finds none of the three candidates. They therefore take the
+`Orphaned_` prefix: two unreferenced bare returns whose former names claimed a
+companion-handler role nothing supports, and `Weapon_CalculateOffsetPosition`.
+
+The module also exposes a defect in the shared ammo-cost pattern, which is
+recorded because it changes what the surviving names mean. Six sites across this
+module and `weapons/firing.s` load a higher cost, execute `tst.b
+(DifficultyMode).w`, branch on non-zero, and otherwise load a lower cost.
+`DifficultyMode` is a word at `$FFFFFF0E` that is only ever written with
+`move.w` and values up to two, so the byte read is its always-zero high half and
+the branch is never taken. Every one of those six weapons therefore always
+charges the lower cost: 1 instead of 2 for the plain shot, `$12` instead of
+`$14` for the four-shot spread, 3 instead of 4 for the bullet handler, 1 instead
+of 2 for the beam, and 2 instead of 3 for the homing shot. The circle attack is
+the exception only because both of its arms load the same `$8C`. Genuine word
+tests on the same variable appear a few instructions later in the same routines
+and do work, which is what makes the byte form identifiable as a defect rather
+than a convention.
+
+Two slot conventions are worth stating because they are opposites. The circle
+attack aborts on the first occupied slot, so it needs all eight shared effect
+slots free at once, while the homing shot stops at the first free one. Both then
+clamp the ammo subtraction at zero rather than wrapping, so firing with
+insufficient ammo is allowed and simply empties the gauge.
+
+Forty exact-address records raise the registry from 14,417 to 14,457. The
+pending queue falls from 1,925 to 1,885 and its actionable upper bound from
+1,412 to 1,372; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged.
+`weapons/special_firing_and_feedback.s` now has zero pending current names,
+leaving 25 modules in the queue.

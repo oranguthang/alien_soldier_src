@@ -109,9 +109,9 @@ Weapon_CircleAttackSpriteData:  dc.w    $65A0, $75A0, $75A0, $7DA0, $6DA0, $6DA0
                 dc.w    $C00, $500, $300, $500, $C00, $500, $300, $500
                 dc.w    $F0FC, $F8F8, $FCF0, $F8F8, $F0FC, $F8F8, $FCF0, $F8F8
 
-Weapon_EmptyCircleCompanionHandler:                     ; was: nullsub_49
+Orphaned_WeaponReturnAfterCircleAttack:                 ; was: nullsub_49
                 rts
-; End of function Weapon_EmptyCircleCompanionHandler
+; End of function Orphaned_WeaponReturnAfterCircleAttack
 
 ; Fires homing projectile that tracks player position
 Weapon_FireHomingShot:                                  ; DATA XREF: ROM:00017F2E   o  ; was: sub_186E2
@@ -198,26 +198,26 @@ Weapon_HomingShotSpriteData:    dc.w    $65A3, $75A6, $75A0, $7DA6, $6DA3, $6DA6
                 dc.w    $800, $A00, $200, $A00, $800, $A00, $200, $A00
                 dc.w    $F4FC, $F4F4, $FCF4, $F4F4, $F4FC, $F4F4, $FCF4, $F4F4
 
-Weapon_EmptyHomingCompanionHandler:                     ; was: nullsub_50
+Orphaned_WeaponReturnAfterHomingShot:                   ; was: nullsub_50
                 rts
-; End of function Weapon_EmptyHomingCompanionHandler
+; End of function Orphaned_WeaponReturnAfterHomingShot
 
-; Calculates projectile spawn position
-Weapon_CalculateOffsetPosition:
+; Unreachable: would place a projectile from a facing-mirrored table offset
+Orphaned_WeaponCalculateOffsetPosition:
                 move.b  (a4,d6.w),d0                    ; was: sub_1881E
                 move.b  8(a4,d6.w),d1
                 ext.w   d0
                 ext.w   d1
                 btst    #3,$E(a5)
-                beq.s   Weapon_CalculateOffsetPosition_ApplyFacing
+                beq.s   Orphaned_WeaponCalculateOffsetPositionApplyFacing
                 neg.w   d0
-Weapon_CalculateOffsetPosition_ApplyFacing:             ; CODE XREF: Weapon_CalculateOffsetPosition+12   j  ; was: loc_18834
+Orphaned_WeaponCalculateOffsetPositionApplyFacing:      ; CODE XREF: Orphaned_WeaponCalculateOffsetPosition+12   j  ; was: loc_18834
                 add.w   $10(a5),d0
                 add.w   $14(a5),d1
                 move.w  d0,$10(a0)
                 move.w  d1,$14(a0)
                 rts
-; End of function Weapon_CalculateOffsetPosition
+; End of function Orphaned_WeaponCalculateOffsetPosition
 ; Spawns random debris particle with velocity
 Effect_SpawnRandomDebris:                               ; CODE XREF: Weapon_FireProjectile+4   j  ; was: sub_18846
                                         ; Weapon_FireMultipleShots+4   j
