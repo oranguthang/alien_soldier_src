@@ -9980,3 +9980,57 @@ pending queue falls from 1,278 to 1,222 and its actionable upper bound from 765
 to 709; provenance, the 513 classified binary-backed end aliases, and the
 379-module layout remain unchanged. `player/dash_and_phoenix.s` now has zero
 pending current names, leaving 11 modules in the queue.
+
+`weapons/firing.s` sharpens the difficulty-mode finding from an earlier package
+into an exact rule, and turns up five orphans.
+
+There are eight `DifficultyMode` tests in this module and they split perfectly
+by what they control. Every one of the four **ammo cost** tests is `tst.b`, a
+byte read of the always-zero high half of a word variable, so none of those
+branches is ever taken: the plain projectile always costs 1 and never 2, the
+four-shot spread always `$12` and never `$14`, the bullet always 3 and never 4,
+the beam always 1 and never 2. Every one of the four **damage** tests, on the
+same variable, is `tst.w` and works: 4 against 3 for the projectile, 2 against 1
+for the spread shot, 4 against 3 for the bullet, 2 against 1 for the beam. Two
+of those pairs sit inside a single routine a dozen instructions apart, so the
+difference is the operand size and nothing else. Difficulty scales what the
+weapons do and not what they cost.
+
+Five routines have zero references of any kind.
+`Weapon_ConsumeAmmoForSpread` is the interesting one: it would charge a flat
+`$12` with no difficulty test and then fall into the live spread initialiser,
+which is a second, simpler ammo path for the same weapon. Its only two source
+mentions are its own definition and the outgoing cross-reference comment on the
+routine it falls into, and the routine above it ends in `rts`. The reachability
+scan did report one ROM address match, at `$43A20` inside `Boss_ViblackInit`,
+and it is a false positive of exactly the kind the method was refined to catch:
+those four bytes are the `$0001` immediate and the `$8218` short address of
+`move.w #1,(PaletteEffectControl).w`, not a pointer.
+
+The other four are `Weapon_CloneBeamProjectile`, which would build a type-`$A0`
+companion at a fixed `$300` bytes above the beam object, and the three empty
+companion handlers `nullsub_46`, `nullsub_47` and `nullsub_48`. Each of the
+three sits immediately after the routine it would have accompanied, each is a
+bare return, and none has a ROM absolute-address match — which matters here
+beyond the usual, because this module installs function pointers by writing
+32-bit immediates into `$48` and `$54` of the projectile object. Such an
+immediate would appear in ROM, so its absence rules out that route too. All five
+take the `Orphaned_` prefix.
+
+Two structural notes. The handler table is eleven self-relative words measured
+from `Weapon_DirectionIndexTable` rather than from itself, which is why an
+absolute-address scan finds no weapon handler; six distinct handlers fill eleven
+slots because five of them share `Weapon_FireNoOp`. And `Weapon_FireMultipleShots`
+counts every free slot before firing and then requires at least four, so a pool
+with three free slots produces nothing at all rather than a smaller spread.
+
+One detail worth keeping for its oddity: the beam firing sound is gated on bit 5
+of the object slot address, so only half the pool positions make a noise, and
+the skip path branches to `Weapon_FireNoOp` to use the shared no-op as its
+return.
+
+Fifty-seven exact-address records raise the registry from 15,120 to 15,177. The
+pending queue falls from 1,222 to 1,165 and its actionable upper bound from 709
+to 652; provenance, the 513 classified binary-backed end aliases, and the
+379-module layout remain unchanged. `weapons/firing.s` now has zero pending
+current names, leaving 10 modules in the queue.

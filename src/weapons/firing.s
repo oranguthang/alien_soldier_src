@@ -254,8 +254,8 @@ Weapon_FireMultipleShots_NextSlot:                      ; CODE XREF: Weapon_Fire
                 bpl.w   Weapon_FireFourShotSpread
                 rts
 ; End of function Weapon_FireMultipleShots
-; Consumes ammo for spread shot
-Weapon_ConsumeAmmoForSpread:
+; Unreachable: would charge a flat $12 of ammo before the shared spread initialiser
+Orphaned_WeaponConsumeAmmoForSpread:
                 move.w  #$80,(PaletteRGBAdjustLevel).w  ; was: sub_18218
                 move.b  #$E0,(PaletteRGBChannelMask).w
                 move.b  #4,(PaletteRGBAdjustStep).w
@@ -263,9 +263,9 @@ Weapon_ConsumeAmmoForSpread:
                 subi.w  #$12,$10(a4)
                 bpl.s   Weapon_InitSpreadShot
                 clr.w   $10(a4)
-; End of function Weapon_ConsumeAmmoForSpread
+; End of function Orphaned_WeaponConsumeAmmoForSpread
 ; Initializes single shot in spread fire pattern with velocity
-Weapon_InitSpreadShot:                                  ; CODE XREF: Weapon_ConsumeAmmoForSpread+1E   j  ; was: sub_1823C
+Weapon_InitSpreadShot:                                  ; CODE XREF: Orphaned_WeaponConsumeAmmoForSpread+1E   j  ; was: sub_1823C
                                         ; Weapon_FireFourShotSpread+48   p
                 movea.w (a3)+,a0
                 move.w  d1,$10(a0)
@@ -340,9 +340,10 @@ Weapon_InitSpreadProjectileState:                       ; DATA XREF: Weapon_Init
                 move.b  #1,$23(a5)
                 rts
 ; End of function Weapon_InitSpreadProjectileState
-Weapon_EmptySpreadProjectileHandler:                    ; was: nullsub_46
+; Unreachable: a bare return with no reference of any kind
+Orphaned_WeaponEmptySpreadProjectileHandler:            ; was: nullsub_46
                 rts
-; End of function Weapon_EmptySpreadProjectileHandler
+; End of function Orphaned_WeaponEmptySpreadProjectileHandler
 
 ; Handles player bullet firing with ammo check
 Weapon_FireBulletHandler:                               ; DATA XREF: ROM:00017F2A   o  ; was: sub_18328
@@ -408,9 +409,10 @@ Weapon_FireBulletHandler_SetDamage:                     ; CODE XREF: Weapon_Fire
 Weapon_FireBulletHandler_Return:                        ; CODE XREF: Weapon_FireBulletHandler+C6   j  ; was: locret_183FA
                 rts
 ; End of function Weapon_FireBulletHandler
-Weapon_EmptyBulletCompanionHandler:                     ; was: nullsub_47
+; Unreachable: a bare return with no reference of any kind
+Orphaned_WeaponEmptyBulletCompanionHandler:             ; was: nullsub_47
                 rts
-; End of function Weapon_EmptyBulletCompanionHandler
+; End of function Orphaned_WeaponEmptyBulletCompanionHandler
 
 ; Fires beam weapon with continuous fire and ammo consumption
 Weapon_FireBeamWeapon:                                  ; DATA XREF: ROM:00017F2C   o  ; was: sub_183FE
@@ -489,8 +491,8 @@ Weapon_DirectionTableOffsets:   dc.b    0, $10, $20, $30, $40, $50, $60, $70  ; 
 Weapon_BeamJitterOffsets:   dc.b    $FC, $F8, $FC, 0, 0, 4, 8, 4  ; was: byte_184E0
                                         ; DATA XREF: Weapon_FireBeamWeapon+BA   r
 
-; Duplicates beam projectile
-Weapon_CloneBeamProjectile:
+; Unreachable: would build a companion object $300 bytes above the beam projectile
+Orphaned_WeaponCloneBeamProjectile:
                 movea.w a0,a1                           ; was: sub_184E8
                 adda.w  #$300,a1
                 move.w  #$A0,(a1)
@@ -506,7 +508,8 @@ Weapon_CloneBeamProjectile:
                 andi.w  #$20,d0                         ; ' '
                 move.w  d0,$4C(a1)
                 rts
-; End of function Weapon_CloneBeamProjectile
-Weapon_EmptyBeamCompanionHandler:                       ; was: nullsub_48
+; End of function Orphaned_WeaponCloneBeamProjectile
+; Unreachable: a bare return with no reference of any kind
+Orphaned_WeaponEmptyBeamCompanionHandler:               ; was: nullsub_48
                 rts
-; End of function Weapon_EmptyBeamCompanionHandler
+; End of function Orphaned_WeaponEmptyBeamCompanionHandler
