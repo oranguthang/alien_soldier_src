@@ -9491,3 +9491,40 @@ pending queue falls from 1,720 to 1,677 and its actionable upper bound from
 1,207 to 1,164; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `enemies/projectile_attack_states.s` now
 has zero pending current names, leaving 20 modules in the queue.
+
+The 44 pending entries in `credits/main.s` include a pair of routines whose
+names describe an operation they never perform. `Gfx_FadeInPaletteEntry` and
+`Gfx_FadeAllPaletteEntries` touch no palette at all: both operate on
+`HScrollBuffer`, subtracting `$7FFF8` from a long word, which moves the plane A
+half of that row eight pixels one way and the plane B half eight pixels the
+other.
+
+The two work together as a progressive reveal, and the arithmetic proves it.
+`Credits_InitializeSceneSequence` primes all `$F0` long words with `$7F008000`.
+The all-rows routine skips any long whose `$00FF00FF` bits are zero, and
+`$7F008000` masked that way is exactly zero, while a row that has been stepped
+once gives `$00F80008`. So untouched rows stay still, and only rows that the
+single-entry routine has already started keep moving. That routine walks a table
+of `HScrollBuffer` byte offsets, one new row per frame for `$1E0` entries, which
+is the order in which the scene is uncovered.
+
+All five names are corrected around `Credits_StartNextScrollRowReveal`,
+`Credits_AdvanceRevealedScrollRows` and `Credits_ScrollRowRevealOrder`, and the
+`Gfx_` prefix is dropped because neither routine is used outside the credits.
+The fill loop that primes the buffer was likewise named for a palette buffer and
+becomes `Credits_InitializeSceneSequence_FillScrollBufferLoop`.
+
+Two further comments claimed unsupported behaviour: the scroll table update was
+described as a 3D rotation, when it is four passes driven by one accumulating
+phase halved and quartered, and the scene-activation wait was described as an
+input check when it waits on `DataLoaderControl`.
+
+The nested scene table is worth recording: thirteen entries resolve to nine
+distinct handlers, because the prepare, wait and fade-in trio is reused for both
+the treasure and the SEGA scene.
+
+Forty-four exact-address records raise the registry from 14,665 to 14,709. The
+pending queue falls from 1,677 to 1,633 and its actionable upper bound from
+1,164 to 1,120; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `credits/main.s` now has zero pending
+current names, leaving 19 modules in the queue.

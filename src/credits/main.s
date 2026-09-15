@@ -222,7 +222,7 @@ Credits_CyclePaletteColors:                             ; CODE XREF: Credits_Scr
                 eori.w  #$226,(PaletteActiveColor22).w
                 rts
 ; End of function Credits_CyclePaletteColors
-; Updates horizontal scroll tables with 3D rotation effect
+; Drives the two plane halves in opposite directions from one accumulating phase
 Credits_UpdateScrollTables:                             ; CODE XREF: Credits_FadeInState   p  ; was: sub_20CCA
                                         ; Credits_ScrollWithColorCycle+A   p
                 move.l  (EndingScrollRate).l,d0
@@ -416,7 +416,7 @@ Credits_SceneStateHandlers: dc.w    Credits_InitializeSceneSequence-*  ; DATA XR
                 dc.w    Credits_FadeInSpecialScene-*
                 dc.w    Credits_SceneStateIdle-*
 
-; Initialize credits screen with sprite objects and palette data
+; Builds the two Xi-Tiger sprites and primes the scroll buffer for the reveal
 Credits_InitializeSceneSequence:                        ; DATA XREF: ROM:Credits_SceneStateHandlers   o  ; was: sub_20F28
                 clr.w   (CreditsClearedSceneWord).l
                 lea     Credits_InitialAssetLoadList(pc),a0
@@ -453,9 +453,9 @@ Credits_InitializeSceneSequence:                        ; DATA XREF: ROM:Credits
                 lea     (HScrollBuffer).w,a0
                 move.l  #$7F008000,d1
                 move.w  #$EF,d0
-Credits_InitializeSceneSequence_FillPaletteBufferLoop:  ; CODE XREF: Credits_InitializeSceneSequence+B2   j  ; was: loc_20FD8
+Credits_InitializeSceneSequence_FillScrollBufferLoop:   ; CODE XREF: Credits_InitializeSceneSequence+B2   j  ; was: loc_20FD8
                 move.l  d1,(a0)+
-                dbf     d0,Credits_InitializeSceneSequence_FillPaletteBufferLoop
+                dbf     d0,Credits_InitializeSceneSequence_FillScrollBufferLoop
                 move.w  #$AA,(CreditsSceneTimer).l
                 move.l  #Credits_SceneDataPointers,(CreditsSceneDataCursor).l
                 move.l  #$FFFFE320,(CreditsPaletteTarget).l
@@ -476,7 +476,7 @@ Credits_LoadNextScene:                                  ; DATA XREF: ROM:00020F1
                 addq.w  #2,(CreditsSceneState).l
                 rts
 ; End of function Credits_LoadNextScene
-; Wait for timer and check player input to advance
+; Waits for the asset loader rather than for input
 Credits_WaitForSceneActivation:                         ; DATA XREF: ROM:00020F12   o  ; was: sub_21036
                 subq.w  #1,(CreditsSceneTimer).l
                 tst.w   (DataLoaderControl).w
@@ -487,8 +487,8 @@ Credits_WaitForSceneActivation:                         ; DATA XREF: ROM:00020F1
 ; End of function Credits_WaitForSceneActivation
 ; Main credits update loop with data cycling
 Credits_UpdateScene:                                    ; DATA XREF: ROM:00020F14   o  ; was: sub_21052
-                bsr.w   Gfx_FadeInPaletteEntry
-                bsr.w   Gfx_FadeAllPaletteEntries
+                bsr.w   Credits_StartNextScrollRowReveal
+                bsr.w   Credits_AdvanceRevealedScrollRows
                 subq.w  #1,(CreditsSceneTimer).l
                 bne.w   Credits_StateReturn
                 move.w  #$AA,(CreditsSceneTimer).l
@@ -502,40 +502,40 @@ Credits_UpdateScene:                                    ; DATA XREF: ROM:00020F1
                 move.w  #8,(CreditsSceneState).l
                 rts
 ; End of function Credits_UpdateScene
-; Fade in single palette entry by modifying color value
-Gfx_FadeInPaletteEntry:                                 ; CODE XREF: Credits_UpdateScene   p  ; was: sub_210A2
+; Starts one more scroll row moving, in the order the reveal table gives
+Credits_StartNextScrollRowReveal:                       ; CODE XREF: Credits_UpdateScene   p  ; was: sub_210A2
                 move.w  (CreditsPaletteFadeIndex).l,d0
                 cmpi.w  #$1E0,d0
                 bcc.w   Credits_StateReturn
                 addq.w  #2,(CreditsPaletteFadeIndex).l
-                move.w  Credits_PaletteFadeOrder(pc,d0.w),d1
+                move.w  Credits_ScrollRowRevealOrder(pc,d0.w),d1
                 lea     (HScrollBuffer).w,a0
                 move.l  (a0,d1.w),d2
                 subi.l  #$7FFF8,d2
                 move.l  d2,(a0,d1.w)
                 rts
-; End of function Gfx_FadeInPaletteEntry
+; End of function Credits_StartNextScrollRowReveal
 ; ---------------------------------------------------------------------------
-Credits_PaletteFadeOrder:   binclude "data/other/word_210CE.bin"  ; was: word_210CE
-Credits_PaletteFadeOrder_End:                           ; was: word_210CE_End
+Credits_ScrollRowRevealOrder:   binclude "data/other/word_210CE.bin"  ; was: word_210CE
+Credits_ScrollRowRevealOrder_End:                       ; was: word_210CE_End
 
-; Fade all palette entries in buffer
-Gfx_FadeAllPaletteEntries:                              ; CODE XREF: Credits_UpdateScene+4   p  ; was: sub_212AE
+; Advances every scroll row that has already started, leaving untouched rows alone
+Credits_AdvanceRevealedScrollRows:                      ; CODE XREF: Credits_UpdateScene+4   p  ; was: sub_212AE
                 lea     (HScrollBuffer).w,a0
                 move.l  #$7FFF8,d1
                 move.w  #$EF,d0
-Credits_FadeAllPaletteEntries_Loop:                     ; CODE XREF: Gfx_FadeAllPaletteEntries+20   j  ; was: loc_212BC
+Credits_AdvanceRevealedScrollRows_Loop:                 ; CODE XREF: Credits_AdvanceRevealedScrollRows+20   j  ; was: loc_212BC
                 move.l  (a0),d2
                 andi.l  #$FF00FF,d2
-                beq.s   Credits_FadeAllPaletteEntries_Next
+                beq.s   Credits_AdvanceRevealedScrollRows_Next
                 move.l  (a0),d2
                 sub.l   d1,d2
                 move.l  d2,(a0)
-Credits_FadeAllPaletteEntries_Next:                     ; CODE XREF: Gfx_FadeAllPaletteEntries+16   j  ; was: loc_212CC
+Credits_AdvanceRevealedScrollRows_Next:                 ; CODE XREF: Credits_AdvanceRevealedScrollRows+16   j  ; was: loc_212CC
                 addq.l  #4,a0
-                dbf     d0,Credits_FadeAllPaletteEntries_Loop
+                dbf     d0,Credits_AdvanceRevealedScrollRows_Loop
                 rts
-; End of function Gfx_FadeAllPaletteEntries
+; End of function Credits_AdvanceRevealedScrollRows
 ; Copies the staged palette before loading a special credits scene
 Credits_PrepareSpecialScenePalette:                     ; DATA XREF: ROM:00020F16   o  ; was: sub_212D4
                                         ; ROM:00020F1E   o
