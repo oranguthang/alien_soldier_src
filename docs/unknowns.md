@@ -9813,3 +9813,63 @@ to 874; provenance, the 513 classified binary-backed end aliases, and the
 379-module layout remain unchanged.
 `enemies/stage_9_flies_and_viblack_shots.s` now has zero pending current names,
 leaving 14 modules in the queue.
+
+`collision/detection.s` is the whole hit-detection pass in one file, and
+auditing it settled the meaning of the object flag byte `$21` and of the word
+"flagged" that seven labels were carrying.
+
+`Collision_BuildEntityLists` reads `$21` once per object and builds every list
+from it, so the bit assignment falls out of a single routine: bits 1 and 6 are
+the primary-collider mask, bits 4 and 7 the target mask, bit 4 on its own also
+the lock-on list, bit 5 the moving platform, bit 0 the player weapon. Two
+separate boxes are cached per object: the primary box at `$3C`, `$3E`, `$38`,
+`$3A` from the `$2E` to `$2D` offsets, and the target box at `$34`, `$36`,
+`$30`, `$32` from the `$2A` to `$29` offsets, so an object can present a
+different shape to weapons than it does to the player.
+
+That bit 4 is what both damage routines test, and what they do with it decides
+the naming. Everything below the test reads and writes `BossHealth`,
+`BossColorEffectFlags`, `BossMaxHealth` and the two boss combat counters. So the
+seven `Flagged` labels are the boss-health path and are renamed to match:
+`ResolveBossTarget`, `ApplyBossDamage`, `MarkBossHit`, `SubtractBossHealth` in
+the weapon routine and the first two in the special-attack routine. The two
+paths differ in more than the target: the boss path multiplies the weapon `$26`
+by the target `$24` and then spends the shot by setting `$26` to `$FFFF`, while
+the ordinary path subtracts `$26` straight from `$24` and refunds the overkill
+back into `$26`. Scores differ too, `$11` against `$21` packed BCD.
+
+`Collision_CheckPlayerAgainstHostiles_SubtractResource` named the field by its
+category rather than by its name, and the field is `PlayerHealth`. Renaming it
+exposed the mechanic above it: damage taken at exactly one point of health
+kills, and damage that would take the player below zero from any higher value
+leaves them on one. No single hit can kill outright unless the player is already
+at one point.
+
+The difficulty read here works, unlike the six in the weapon code. This site is
+`tst.w (DifficultyMode).w`, a word read, so the stun window really is
+difficulty-scaled: `$20` to `$78` at difficulty 0 and `$10` to `$3C` otherwise,
+with the stun length in `$5E` being the damage clamped into that window. It
+joins `Enemy_HomingAttackInitialDelays` as a confirmed counter-example to the
+byte-test pattern.
+
+Two structural details are worth keeping. The primary list is the only one the
+builder halves: an object qualifies on a frame whose low bit matches the low bit
+of its own slot index, so the player is tested against half the colliders each
+frame. And the two effect-pool bases are one object apart —
+`EffectCollisionOddStart` is `SharedEffectObjectPool` plus `$60` — while every
+loop that uses them steps by `$C0`, so the same alternation splits an eight-slot
+pool into its even and odd halves. The RAM name is about odd slots, not odd
+frames, and is correct as it stands.
+
+Two smaller notes. `Collision_CheckTerrainTiles` probes one point per slot, the
+object centre, so its "multi-point" comment was wrong and is corrected; a hit
+clears bit 6 of `$21` and sets bit 6 of `$23`, which is what stops each effect
+object exactly once. And `Collision_CheckSpecialAttackTargets_TargetLoop` ends
+in `bne` followed by `beq` on the same flags, an unconditional two-way branch,
+so nothing ever falls through to the loop tail from there.
+
+Fifty-three exact-address records raise the registry from 14,955 to 15,008, past
+fifteen thousand. The pending queue falls from 1,387 to 1,334 and its actionable
+upper bound from 874 to 821; provenance, the 513 classified binary-backed end
+aliases, and the 379-module layout remain unchanged. `collision/detection.s` now
+has zero pending current names, leaving 13 modules in the queue.

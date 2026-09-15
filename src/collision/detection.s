@@ -130,7 +130,7 @@ Collision_BuildEntityLists_NextEntity:                  ; CODE XREF: Collision_B
                 dbf     d7,Collision_BuildEntityLists_ScanLoop
                 rts
 ; End of function Collision_BuildEntityLists
-; Multi-point terrain tile collision check for multiple entities
+; Disables an effect slot once its own centre enters a solid terrain tile
 Collision_CheckTerrainTiles:                            ; CODE XREF: Collision_UpdateSystem+1E   p  ; was: sub_13C50
                 movea.l #$FFFF0000,a0
                 movea.l #$FFFF7800,a1
@@ -207,7 +207,7 @@ Collision_CheckWeaponProjectilesAgainstEnemies_TargetLoop:  ; CODE XREF: Collisi
                 cmp.w   $30(a2),d3
                 bmi.s   Collision_CheckWeaponProjectilesAgainstEnemies_NextTarget
                 btst    d5,$21(a2)
-                bne.s   Collision_CheckWeaponProjectilesAgainstEnemies_ResolveFlaggedTarget
+                bne.s   Collision_CheckWeaponProjectilesAgainstEnemies_ResolveBossTarget
                 bra.w   Collision_CheckWeaponProjectilesAgainstEnemies_ResolveStandardTarget
 ; ---------------------------------------------------------------------------
 Collision_CheckWeaponProjectilesAgainstEnemies_NextTarget:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+40   j  ; was: loc_13D28
@@ -219,17 +219,17 @@ Collision_CheckWeaponProjectilesAgainstEnemies_NextWeaponSlot:  ; CODE XREF: Col
                 dbf     d6,Collision_CheckWeaponProjectilesAgainstEnemies_WeaponSlotLoop
                 rts
 ; ---------------------------------------------------------------------------
-Collision_CheckWeaponProjectilesAgainstEnemies_ResolveFlaggedTarget:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+58   j  ; was: loc_13D36
+Collision_CheckWeaponProjectilesAgainstEnemies_ResolveBossTarget:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+58   j  ; was: loc_13D36
                 btst    #2,(BossColorEffectFlags).w
                 bne.s   Collision_CheckWeaponProjectilesAgainstEnemies_CheckLinkedTarget
                 tst.w   (BossHealth).w
                 beq.s   Collision_CheckWeaponProjectilesAgainstEnemies_NextTarget
 Collision_CheckWeaponProjectilesAgainstEnemies_CheckLinkedTarget:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+72   j  ; was: loc_13D44
                 btst    #1,$23(a3)
-                beq.s   Collision_CheckWeaponProjectilesAgainstEnemies_ApplyFlaggedDamage
+                beq.s   Collision_CheckWeaponProjectilesAgainstEnemies_ApplyBossDamage
                 cmpa.w  (WeaponTargetOrFrame).w,a2
                 bne.s   Collision_CheckWeaponProjectilesAgainstEnemies_NextTarget
-Collision_CheckWeaponProjectilesAgainstEnemies_ApplyFlaggedDamage:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+80   j  ; was: loc_13D52
+Collision_CheckWeaponProjectilesAgainstEnemies_ApplyBossDamage:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+80   j  ; was: loc_13D52
                 btst    #1,(BossColorEffectFlags).w
                 bne.w   Collision_CheckWeaponProjectilesAgainstEnemies_ResolveBlockedHit
                 btst    #4,$23(a2)
@@ -240,19 +240,19 @@ Collision_CheckWeaponProjectilesAgainstEnemies_ApplyFlaggedDamage:  ; CODE XREF:
                 and.b   d4,d0
                 bne.w   Collision_CheckWeaponProjectilesAgainstEnemies_ResolveBlockedHit
                 btst    #7,$23(a2)
-                beq.s   Collision_CheckWeaponProjectilesAgainstEnemies_MarkFlaggedHit
+                beq.s   Collision_CheckWeaponProjectilesAgainstEnemies_MarkBossHit
                 move.b  #$AE,d0
                 jsr     (Sound_QueueSFXRequest).l
                 bset    #3,(BossColorEffectFlags).w
-Collision_CheckWeaponProjectilesAgainstEnemies_MarkFlaggedHit:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+B4   j  ; was: loc_13D90
+Collision_CheckWeaponProjectilesAgainstEnemies_MarkBossHit:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+B4   j  ; was: loc_13D90
                 bset    #0,(BossColorEffectFlags).w
                 bset    #7,$22(a3)
                 bset    #6,$22(a2)
                 btst    #7,$23(a3)
-                bne.s   Collision_CheckWeaponProjectilesAgainstEnemies_SubtractFlaggedHealth
+                bne.s   Collision_CheckWeaponProjectilesAgainstEnemies_SubtractBossHealth
                 moveq   #$11,d0
                 jsr     (Score_AddPackedBCD).l
-Collision_CheckWeaponProjectilesAgainstEnemies_SubtractFlaggedHealth:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+DE   j  ; was: loc_13DB2
+Collision_CheckWeaponProjectilesAgainstEnemies_SubtractBossHealth:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+DE   j  ; was: loc_13DB2
                 move.w  $26(a3),d4
                 move.w  #$FFFF,$26(a3)
                 move.w  $24(a2),(CombatPercentIndex).w
@@ -371,11 +371,11 @@ Collision_CheckPlayerAgainstHostiles_ResolveHit:        ; CODE XREF: Collision_C
                 or.b    d0,$22(a0)
                 move.w  $26(a2),d4
                 cmpi.w  #1,(PlayerHealth).w
-                bne.s   Collision_CheckPlayerAgainstHostiles_SubtractResource
+                bne.s   Collision_CheckPlayerAgainstHostiles_SubtractHealth
                 clr.w   (PlayerHealth).w
                 bra.s   Collision_CheckPlayerAgainstHostiles_ApplyDamage
 ; ---------------------------------------------------------------------------
-Collision_CheckPlayerAgainstHostiles_SubtractResource:  ; CODE XREF: Collision_CheckPlayerAgainstHostiles+BA   j  ; was: loc_13F5C
+Collision_CheckPlayerAgainstHostiles_SubtractHealth:    ; CODE XREF: Collision_CheckPlayerAgainstHostiles+BA   j  ; was: loc_13F5C
                 sub.w   d4,(PlayerHealth).w
                 bpl.s   Collision_CheckPlayerAgainstHostiles_ApplyDamage
                 move.w  #1,(PlayerHealth).w
@@ -492,7 +492,7 @@ Collision_CheckSpecialAttackTargets_TargetLoop:         ; CODE XREF: Collision_C
                 cmp.w   $30(a2),d3
                 bmi.s   Collision_CheckSpecialAttackTargets_NextTarget
                 btst    d5,$21(a2)
-                bne.s   Collision_CheckSpecialAttackTargets_ResolveFlaggedTarget
+                bne.s   Collision_CheckSpecialAttackTargets_ResolveBossTarget
                 beq.w   Collision_CheckSpecialAttackTargets_ApplyStandardDamage
 Collision_CheckSpecialAttackTargets_NextTarget:         ; CODE XREF: Collision_CheckSpecialAttackTargets+72   j  ; was: loc_1409C
                                         ; Collision_CheckSpecialAttackTargets+78   j
@@ -501,12 +501,12 @@ Collision_CheckSpecialAttackTargets_Return:             ; CODE XREF: Collision_C
                                         ; Collision_CheckSpecialAttackTargets+E   j
                 rts
 ; ---------------------------------------------------------------------------
-Collision_CheckSpecialAttackTargets_ResolveFlaggedTarget:  ; CODE XREF: Collision_CheckSpecialAttackTargets+8A   j  ; was: loc_140A2
+Collision_CheckSpecialAttackTargets_ResolveBossTarget:  ; CODE XREF: Collision_CheckSpecialAttackTargets+8A   j  ; was: loc_140A2
                 btst    #2,(BossColorEffectFlags).w
-                bne.s   Collision_CheckSpecialAttackTargets_ApplyFlaggedDamage
+                bne.s   Collision_CheckSpecialAttackTargets_ApplyBossDamage
                 tst.w   (BossHealth).w
                 beq.s   Collision_CheckSpecialAttackTargets_NextTarget
-Collision_CheckSpecialAttackTargets_ApplyFlaggedDamage:  ; CODE XREF: Collision_CheckSpecialAttackTargets+9C   j  ; was: loc_140B0
+Collision_CheckSpecialAttackTargets_ApplyBossDamage:    ; CODE XREF: Collision_CheckSpecialAttackTargets+9C   j  ; was: loc_140B0
                 bset    #7,$22(a3)
                 btst    #1,(BossColorEffectFlags).w
                 bne.s   Collision_CheckSpecialAttackTargets_NextTarget
