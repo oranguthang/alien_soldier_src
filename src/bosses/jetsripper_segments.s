@@ -1,70 +1,70 @@
 ; Updates an oscillating angle in eight-unit steps
-Boss_UpdateOscillatingAngle:
+Orphaned_UpdateBoundedAngle:
                 move.w  $56(a5),d0                      ; was: sub_35E1E
                 tst.w   $4C(a5)
-                beq.s   Boss_UpdateOscillatingAngleIncrease
+                beq.s   Orphaned_UpdateBoundedAngleIncrease
                 subq.w  #8,d0
                 andi.w  #$1F8,d0
                 cmpi.w  #$1A8,d0
-                bne.s   Boss_UpdateOscillatingAngleStore
+                bne.s   Orphaned_UpdateBoundedAngleStore
                 move.w  #$1B0,d0
                 cmpi.w  #$128,$14(a5)
-                bmi.s   Boss_UpdateOscillatingAngleStore
+                bmi.s   Orphaned_UpdateBoundedAngleStore
                 clr.w   $4C(a5)
-                bra.s   Boss_UpdateOscillatingAngleStore
+                bra.s   Orphaned_UpdateBoundedAngleStore
 ; ---------------------------------------------------------------------------
-Boss_UpdateOscillatingAngleIncrease:                    ; CODE XREF: Boss_UpdateOscillatingAngle+8   j  ; was: loc_35E46
+Orphaned_UpdateBoundedAngleIncrease:                    ; CODE XREF: Orphaned_UpdateBoundedAngle+8   j  ; was: loc_35E46
                 addq.w  #8,d0
                 andi.w  #$1F8,d0
                 cmpi.w  #$58,d0                         ; 'X'
-                bne.s   Boss_UpdateOscillatingAngleStore
+                bne.s   Orphaned_UpdateBoundedAngleStore
                 addq.w  #1,$4C(a5)
-Boss_UpdateOscillatingAngleStore:                       ; CODE XREF: Boss_UpdateOscillatingAngle+14   j  ; was: loc_35E56
-                                        ; Boss_UpdateOscillatingAngle+20   j
+Orphaned_UpdateBoundedAngleStore:                       ; CODE XREF: Orphaned_UpdateBoundedAngle+14   j  ; was: loc_35E56
+                                        ; Orphaned_UpdateBoundedAngle+20   j
                 move.w  d0,$56(a5)
                 rts
-; End of function Boss_UpdateOscillatingAngle
+; End of function Orphaned_UpdateBoundedAngle
 ; Finds sprite segment with lowest Y position in chain
-Boss_FindLowestSegment:
+Orphaned_JetsripperSelectLowestChainSegment:
                 movea.w #(SecondaryEntityType-M68K_RAM),a0  ; was: sub_35E5C
                 movea.w a5,a1
                 move.l  $44(a5),d1
                 moveq   #$10,d7
-Boss_FindLowestSegmentNextCandidate:                    ; CODE XREF: Boss_FindLowestSegment+1C   j  ; was: loc_35E68
+Orphaned_JetsripperSelectLowestChainSegmentNextCandidate:  ; CODE XREF: Orphaned_JetsripperSelectLowestChainSegment+1C   j  ; was: loc_35E68
                 cmp.l   $44(a0),d1
-                bpl.s   Boss_FindLowestSegmentAdvance
+                bpl.s   Orphaned_JetsripperSelectLowestChainSegmentAdvance
                 move.l  $44(a0),d1
                 movea.w a0,a1
-Boss_FindLowestSegmentAdvance:                          ; CODE XREF: Boss_FindLowestSegment+10   j  ; was: loc_35E74
+Orphaned_JetsripperSelectLowestChainSegmentAdvance:     ; CODE XREF: Orphaned_JetsripperSelectLowestChainSegment+10   j  ; was: loc_35E74
                 lea     $60(a0),a0
-                dbf     d7,Boss_FindLowestSegmentNextCandidate
+                dbf     d7,Orphaned_JetsripperSelectLowestChainSegmentNextCandidate
                 move.w  a1,$48(a5)
                 move.w  a1,$4A(a5)
                 move.w  #$144,$14(a1)
                 rts
-; End of function Boss_FindLowestSegment
+; End of function Orphaned_JetsripperSelectLowestChainSegment
 ; Selects the visually lowest segment (largest Y coordinate) for targeting
-Boss_JetsripperFindLowestSegment:                       ; CODE XREF: Boss_JetsripperRotateState+34   p  ; was: sub_35E8C
+Boss_JetsripperSelectLowestMiddleSegment:               ; CODE XREF: Boss_JetsripperRotateState+34   p  ; was: sub_35E8C
                                         ; Boss_JetsripperUpdateMovement+92   p
                 movea.w #(NinthEntityType-M68K_RAM),a0
                 movea.w #(EighthEntityType-M68K_RAM),a1
                 move.l  $44(a1),d1
                 moveq   #3,d7
-Boss_JetsripperFindLowestSegmentNextCandidate:          ; CODE XREF: Boss_JetsripperFindLowestSegment+1E   j  ; was: loc_35E9A
+Boss_JetsripperSelectLowestMiddleSegmentNextCandidate:  ; CODE XREF: Boss_JetsripperSelectLowestMiddleSegment+1E   j  ; was: loc_35E9A
                 cmp.l   $44(a0),d1
-                bpl.s   Boss_JetsripperFindLowestSegmentAdvance
+                bpl.s   Boss_JetsripperSelectLowestMiddleSegmentAdvance
                 move.l  $44(a0),d1
                 movea.w a0,a1
-Boss_JetsripperFindLowestSegmentAdvance:                ; CODE XREF: Boss_JetsripperFindLowestSegment+12   j  ; was: loc_35EA6
+Boss_JetsripperSelectLowestMiddleSegmentAdvance:        ; CODE XREF: Boss_JetsripperSelectLowestMiddleSegment+12   j  ; was: loc_35EA6
                 lea     $60(a0),a0
-                dbf     d7,Boss_JetsripperFindLowestSegmentNextCandidate
+                dbf     d7,Boss_JetsripperSelectLowestMiddleSegmentNextCandidate
                 move.w  a1,$48(a5)
                 move.w  a1,$4A(a5)
                 move.w  #$144,$14(a1)
                 rts
-; End of function Boss_JetsripperFindLowestSegment
+; End of function Boss_JetsripperSelectLowestMiddleSegment
 ; Updates sprites for all body segments
-Boss_JetsripperUpdateAllSprites:                        ; CODE XREF: Boss_JetsripperRotateState+48   p  ; was: sub_35EBE
+Boss_JetsripperUpdateAllSegmentSprites:                 ; CODE XREF: Boss_JetsripperRotateState+48   p  ; was: sub_35EBE
                                         ; Boss_JetsripperUpdateMovement+A6   p
                 movea.w a5,a0
                 movea.l #Boss_JetsripperHeadFrames,a1
@@ -72,12 +72,12 @@ Boss_JetsripperUpdateAllSprites:                        ; CODE XREF: Boss_Jetsri
                 bsr.s   Boss_JetsripperUpdateEndSprite
                 movea.l #Boss_JetsripperBodyDirectionFrames,a1
                 moveq   #$F,d7
-                bsr.s   Boss_JetsripperUpdateBodySprite
+                bsr.s   Boss_JetsripperUpdateBodySegmentSprites
                 movea.l #Boss_JetsripperTailFrames,a1
                 moveq   #0,d7
-; End of function Boss_JetsripperUpdateAllSprites
+; End of function Boss_JetsripperUpdateAllSegmentSprites
 ; Updates a head or tail sprite with four-direction facing
-Boss_JetsripperUpdateEndSprite:                         ; CODE XREF: Boss_JetsripperUpdateAllSprites+A   p  ; was: sub_35EDC
+Boss_JetsripperUpdateEndSprite:                         ; CODE XREF: Boss_JetsripperUpdateAllSegmentSprites+A   p  ; was: sub_35EDC
                                         ; Boss_JetsripperUpdateEndSprite+4A   j
                 move.w  $56(a0),d0
                 add.w   $5A(a5),d0
@@ -104,36 +104,36 @@ Boss_JetsripperUpdateEndSpriteSelectFrame:              ; CODE XREF: Boss_Jetsri
                 rts
 ; End of function Boss_JetsripperUpdateEndSprite
 ; Updates body segment sprites with 16-direction facing
-Boss_JetsripperUpdateBodySprite:                        ; CODE XREF: Boss_JetsripperUpdateAllSprites+14   p  ; was: sub_35F2C
-                                        ; Boss_JetsripperUpdateBodySprite+38   j
+Boss_JetsripperUpdateBodySegmentSprites:                ; CODE XREF: Boss_JetsripperUpdateAllSegmentSprites+14   p  ; was: sub_35F2C
+                                        ; Boss_JetsripperUpdateBodySegmentSprites+38   j
                 move.w  $56(a0),d0
                 add.w   $5A(a5),d0
                 andi.w  #$1FE,d0
                 bset    #3,$E(a0)
                 cmpi.w  #$180,d0
-                bpl.s   Boss_JetsripperUpdateBodyFrame
+                bpl.s   Boss_JetsripperUpdateBodySegmentFrame
                 cmpi.w  #$80,d0
-                bmi.s   Boss_JetsripperUpdateBodyFrame
+                bmi.s   Boss_JetsripperUpdateBodySegmentFrame
                 bclr    #3,$E(a0)
 ; Updates body sprite frame based on calculated angle
-Boss_JetsripperUpdateBodyFrame:                         ; CODE XREF: Boss_JetsripperUpdateBodySprite+16   j  ; was: loc_35F50
-                                        ; Boss_JetsripperUpdateBodySprite+1C   j
+Boss_JetsripperUpdateBodySegmentFrame:                  ; CODE XREF: Boss_JetsripperUpdateBodySegmentSprites+16   j  ; was: loc_35F50
+                                        ; Boss_JetsripperUpdateBodySegmentSprites+1C   j
                 addi.w  #$10,d0
                 andi.w  #$1E0,d0
                 asr.w   #3,d0
                 move.l  (a1,d0.w),8(a0)
                 lea     $60(a0),a0
-                dbf     d7,Boss_JetsripperUpdateBodySprite
+                dbf     d7,Boss_JetsripperUpdateBodySegmentSprites
                 rts
-; End of function Boss_JetsripperUpdateBodySprite
+; End of function Boss_JetsripperUpdateBodySegmentSprites
 ; ---------------------------------------------------------------------------
 Boss_JetsripperHeadFrames:  dc.l    Boss_JetsripperSpriteMapping00  ; DATA XREF: Boss_JetsripperDeathInit+3E   o  ; was: off_35F6A
-                                        ; Boss_JetsripperUpdateAllSprites+2   o
+                                        ; Boss_JetsripperUpdateAllSegmentSprites+2   o
                 dc.l    Boss_JetsripperSpriteMapping01
                 dc.l    Boss_JetsripperSpriteMapping02
                 dc.l    Boss_JetsripperSpriteMapping01
 Boss_JetsripperBodyDirectionFrames: dc.l    Boss_JetsripperSpriteMapping03  ; DATA XREF: Boss_JetsripperDeathInit+66   o  ; was: off_35F7A
-                                        ; Boss_JetsripperUpdateAllSprites+C   o
+                                        ; Boss_JetsripperUpdateAllSegmentSprites+C   o
                 dc.l    Boss_JetsripperSpriteMapping12
                 dc.l    Boss_JetsripperSpriteMapping13
                 dc.l    Boss_JetsripperSpriteMapping14
@@ -150,35 +150,35 @@ Boss_JetsripperBodyDirectionFrames: dc.l    Boss_JetsripperSpriteMapping03  ; DA
                 dc.l    Boss_JetsripperSpriteMapping04
                 dc.l    Boss_JetsripperSpriteMapping10
 Boss_JetsripperTailFrames:  dc.l    Boss_JetsripperSpriteMapping07  ; DATA XREF: Boss_JetsripperDeathInit+7E   o  ; was: off_35FBA
-                                        ; Boss_JetsripperUpdateAllSprites+16   o
+                                        ; Boss_JetsripperUpdateAllSegmentSprites+16   o
                 dc.l    Boss_JetsripperSpriteMapping08
                 dc.l    Boss_JetsripperSpriteMapping09
                 dc.l    Boss_JetsripperSpriteMapping08
 
 ; Fills angle buffer with constant value for segments
-Boss_JetsripperFillAngleBuffer:                         ; CODE XREF: Boss_JetsripperInitBody+B6   j  ; was: sub_35FCA
+Boss_JetsripperFillAngleHistory:                        ; CODE XREF: Boss_JetsripperInitBody+B6   j  ; was: sub_35FCA
                                         ; Boss_JetsripperDiveExecute+76   p
                 movea.w #(JetsripperAngleHistory-M68K_RAM),a0
                 move.w  #$47,d7                         ; 'G'
-Boss_JetsripperFillAngleBufferNextWord:                 ; CODE XREF: Boss_JetsripperFillAngleBuffer+A   j  ; was: loc_35FD2
+Boss_JetsripperFillAngleHistoryNextWord:                ; CODE XREF: Boss_JetsripperFillAngleHistory+A   j  ; was: loc_35FD2
                 move.w  d0,(a0)+
-                dbf     d7,Boss_JetsripperFillAngleBufferNextWord
+                dbf     d7,Boss_JetsripperFillAngleHistoryNextWord
                 rts
-; End of function Boss_JetsripperFillAngleBuffer
+; End of function Boss_JetsripperFillAngleHistory
 ; Fills angle buffer with gradient values for wave motion
-Boss_JetsripperFillAngleGradient:                       ; CODE XREF: Boss_JetsripperSwingAttack+B2   p  ; was: sub_35FDA
+Boss_JetsripperFillAngleHistoryGradient:                ; CODE XREF: Boss_JetsripperSwingAttack+B2   p  ; was: sub_35FDA
                                         ; Boss_JetsripperSwingAttack+C6   p
                 movea.w #(JetsripperAngleHistory-M68K_RAM),a0
                 move.w  $56(a5),d0
                 move.w  #$1FE,d2
                 move.w  #$47,d7                         ; 'G'
-Boss_JetsripperFillAngleGradientNextWord:               ; CODE XREF: Boss_JetsripperFillAngleGradient+16   j  ; was: loc_35FEA
+Boss_JetsripperFillAngleHistoryGradientNextWord:        ; CODE XREF: Boss_JetsripperFillAngleHistoryGradient+16   j  ; was: loc_35FEA
                 move.w  d0,(a0)+
                 add.w   d1,d0
                 and.w   d2,d0
-                dbf     d7,Boss_JetsripperFillAngleGradientNextWord
+                dbf     d7,Boss_JetsripperFillAngleHistoryGradientNextWord
                 rts
-; End of function Boss_JetsripperFillAngleGradient
+; End of function Boss_JetsripperFillAngleHistoryGradient
 ; Converts the current chain radius into per-segment radial distances
 Boss_JetsripperAssignSegmentRadii:                      ; CODE XREF: Boss_JetsripperRotateState:Boss_JetsripperUpdateSegmentDisplay   p  ; was: sub_35FF6
                                         ; Boss_JetsripperMovementUpdateSegmentDisplay   p
@@ -207,7 +207,7 @@ Boss_JetsripperAssignSegmentRadiiReduceLeadingSegment:  ; CODE XREF: Boss_Jetsri
                 rts
 ; End of function Boss_JetsripperAssignSegmentRadii
 ; Sets the current object's horizontal velocity from its angle
-Boss_SetHorizontalVelocityFromAngle:
+Orphaned_SetHorizontalVelocityFromAngle:
                 move.w  #3,d3                           ; was: sub_36034
                 movea.l #Math_SineTable,a0
                 move.w  $56(a5),d0
@@ -218,7 +218,7 @@ Boss_SetHorizontalVelocityFromAngle:
                 asl.l   #2,d2
                 move.l  d2,$18(a5)
                 rts
-; End of function Boss_SetHorizontalVelocityFromAngle
+; End of function Orphaned_SetHorizontalVelocityFromAngle
 ; Returns Jetsripper's scaled sine velocity in d2
 Boss_JetsripperCalculateAngleVelocity:                  ; CODE XREF: Boss_JetsripperOscillate+3C   p  ; was: sub_36058
                                         ; Boss_JetsripperDivePrep+C   p
@@ -232,7 +232,7 @@ Boss_JetsripperCalculateAngleVelocity:                  ; CODE XREF: Boss_Jetsri
                 rts
 ; End of function Boss_JetsripperCalculateAngleVelocity
 ; Updates positions of sprite segment chain based on velocity deltas
-Boss_UpdateSegmentChainPositions:
+Orphaned_JetsripperUpdateChainFromAngleDeltas:
                 movea.w #(TenthEntityType-M68K_RAM),a0  ; was: sub_36074
                 movea.w a0,a1
                 lea     -$60(a0),a0
@@ -247,14 +247,14 @@ Boss_UpdateSegmentChainPositions:
                 moveq   #0,d2
                 moveq   #0,d3
                 moveq   #8,d7
-Boss_UpdateSegmentChainPositionsNextAnglePair:          ; CODE XREF: Boss_UpdateSegmentChainPositions+38   j  ; was: loc_36098
+Orphaned_JetsripperUpdateChainFromAngleDeltasNextPair:  ; CODE XREF: Orphaned_JetsripperUpdateChainFromAngleDeltas+38   j  ; was: loc_36098
                 add.l   d0,d2
                 add.l   d1,d3
                 add.l   d2,$56(a0)
                 add.l   d3,$56(a1)
                 lea     -$60(a0),a0
                 lea     $60(a1),a1
-                dbf     d7,Boss_UpdateSegmentChainPositionsNextAnglePair
+                dbf     d7,Orphaned_JetsripperUpdateChainFromAngleDeltasNextPair
                 movea.w a5,a0
                 bclr    #0,2(a5)
                 movea.w #(SecondaryEntityType-M68K_RAM),a1
@@ -262,7 +262,7 @@ Boss_UpdateSegmentChainPositionsNextAnglePair:          ; CODE XREF: Boss_Update
                 move.w  $5A(a5),d1
                 move.w  #$1FE,d2
                 moveq   #$10,d7
-Boss_UpdateSegmentChainPositionsNextSegment:            ; CODE XREF: Boss_UpdateSegmentChainPositions+94   j  ; was: loc_360CC
+Orphaned_JetsripperUpdateChainFromAngleDeltasNextSegment:  ; CODE XREF: Orphaned_JetsripperUpdateChainFromAngleDeltas+94   j  ; was: loc_360CC
                 move.w  $56(a1),d3
                 and.w   d2,d3
                 move.w  -$80(a2,d3.w),d4
@@ -281,20 +281,20 @@ Boss_UpdateSegmentChainPositionsNextSegment:            ; CODE XREF: Boss_Update
                 bclr    #0,2(a1)
                 lea     $60(a0),a0
                 lea     $60(a1),a1
-                dbf     d7,Boss_UpdateSegmentChainPositionsNextSegment
+                dbf     d7,Orphaned_JetsripperUpdateChainFromAngleDeltasNextSegment
                 rts
-; End of function Boss_UpdateSegmentChainPositions
+; End of function Orphaned_JetsripperUpdateChainFromAngleDeltas
 ; Updates all segment positions with wave motion
-Boss_JetsripperUpdateSegments:                          ; CODE XREF: Boss_JetsripperRotateState+30   p  ; was: sub_3610E
+Boss_JetsripperUpdateSegmentsFromAngleHistory:          ; CODE XREF: Boss_JetsripperRotateState+30   p  ; was: sub_3610E
                                         ; Boss_JetsripperUpdateMovement+8E   p
                 movea.w #(JetsripperAngleHistory-M68K_RAM),a0
                 move.w  $56(a5),d0
                 move.w  #$47,d7                         ; 'G'
-Boss_JetsripperShiftAngleBufferNextWord:                ; CODE XREF: Boss_JetsripperUpdateSegments+12   j  ; was: loc_3611A
+Boss_JetsripperShiftAngleHistoryNextWord:               ; CODE XREF: Boss_JetsripperUpdateSegmentsFromAngleHistory+12   j  ; was: loc_3611A
                 move.w  (a0),d1
                 move.w  d0,(a0)+
                 move.w  d1,d0
-                dbf     d7,Boss_JetsripperShiftAngleBufferNextWord
+                dbf     d7,Boss_JetsripperShiftAngleHistoryNextWord
                 movea.w a5,a0
                 bclr    #0,2(a0)
                 clr.w   $58(a0)
@@ -305,7 +305,7 @@ Boss_JetsripperShiftAngleBufferNextWord:                ; CODE XREF: Boss_Jetsri
                 move.w  #$1FE,d2
                 moveq   #0,d6
                 moveq   #$10,d7
-Boss_JetsripperUpdateSegmentsNextSegment:               ; CODE XREF: Boss_JetsripperUpdateSegments+88   j  ; was: loc_3614A
+Boss_JetsripperUpdateSegmentsFromAngleHistoryNextSegment:  ; CODE XREF: Boss_JetsripperUpdateSegmentsFromAngleHistory+88   j  ; was: loc_3614A
                 move.w  (a2),d3
                 add.w   d6,d3
                 and.w   d2,d3
@@ -329,9 +329,9 @@ Boss_JetsripperUpdateSegmentsNextSegment:               ; CODE XREF: Boss_Jetsri
                 lea     $60(a1),a1
                 lea     8(a2),a2
                 add.w   $BE(a5),d6
-                dbf     d7,Boss_JetsripperUpdateSegmentsNextSegment
+                dbf     d7,Boss_JetsripperUpdateSegmentsFromAngleHistoryNextSegment
                 rts
-; End of function Boss_JetsripperUpdateSegments
+; End of function Boss_JetsripperUpdateSegmentsFromAngleHistory
 ; Updates palette colors for glow effect
 Boss_JetsripperUpdatePalette:                           ; CODE XREF: Boss_JetsripperUpdateState:Boss_JetsripperUpdateActiveState   p  ; was: sub_3619C
                 movea.w #(PaletteActiveColor61-M68K_RAM),a0
@@ -365,9 +365,9 @@ Boss_JetsripperClampYReturn:                            ; CODE XREF: Boss_Jetsri
                 rts
 ; End of function Boss_JetsripperClampY
 ; Updates body segment with gravity physics
-Boss_JetsripperSegmentPhysics:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_361EE
+Boss_JetsripperUpdateFallingSegment:                    ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_361EE
                 tst.w   4(a5)
-                beq.w   Boss_JetsripperSegmentPhysicsBeginFall
+                beq.w   Boss_JetsripperFallingSegmentBeginFall
                 addi.l  #$4000,$1C(a5)
                 movea.l $4C(a5),a1
                 move.w  $56(a5),d0
@@ -375,47 +375,47 @@ Boss_JetsripperSegmentPhysics:                          ; DATA XREF: ROM:Entity_
                 andi.w  #$1E0,d0
                 move.w  d0,$56(a5)
                 cmpi.l  #Boss_JetsripperBodyDirectionFrames,$4C(a5)
-                beq.s   Boss_JetsripperSegmentPhysicsOrientBodyFrame
+                beq.s   Boss_JetsripperFallingSegmentOrientBodyFrame
                 bset    #3,$E(a5)
                 cmpi.w  #$180,d0
-                bpl.s   Boss_JetsripperSegmentPhysicsOrientEndFrame
+                bpl.s   Boss_JetsripperFallingSegmentOrientEndFrame
                 cmpi.w  #$80,d0
-                bmi.s   Boss_JetsripperSegmentPhysicsOrientEndFrame
+                bmi.s   Boss_JetsripperFallingSegmentOrientEndFrame
                 bclr    #3,$E(a5)
-Boss_JetsripperSegmentPhysicsOrientEndFrame:            ; CODE XREF: Boss_JetsripperSegmentPhysics+38   j  ; was: loc_36234
-                                        ; Boss_JetsripperSegmentPhysics+3E   j
+Boss_JetsripperFallingSegmentOrientEndFrame:            ; CODE XREF: Boss_JetsripperUpdateFallingSegment+38   j  ; was: loc_36234
+                                        ; Boss_JetsripperUpdateFallingSegment+3E   j
                 bset    #4,$E(a5)
                 cmpi.w  #$100,d0
-                bmi.s   Boss_JetsripperSegmentPhysicsSelectEndFrame
+                bmi.s   Boss_JetsripperFallingSegmentSelectEndFrame
                 bclr    #4,$E(a5)
-Boss_JetsripperSegmentPhysicsSelectEndFrame:            ; CODE XREF: Boss_JetsripperSegmentPhysics+50   j  ; was: loc_36246
+Boss_JetsripperFallingSegmentSelectEndFrame:            ; CODE XREF: Boss_JetsripperUpdateFallingSegment+50   j  ; was: loc_36246
                 asr.w   #4,d0
                 andi.w  #$C,d0
                 move.l  (a1,d0.w),8(a5)
                 rts
 ; ---------------------------------------------------------------------------
-Boss_JetsripperSegmentPhysicsOrientBodyFrame:           ; CODE XREF: Boss_JetsripperSegmentPhysics+2C   j  ; was: loc_36254
+Boss_JetsripperFallingSegmentOrientBodyFrame:           ; CODE XREF: Boss_JetsripperUpdateFallingSegment+2C   j  ; was: loc_36254
                 bset    #3,$E(a5)
                 cmpi.w  #$180,d0
-                bpl.s   Boss_JetsripperSegmentPhysicsSelectBodyFrame
+                bpl.s   Boss_JetsripperFallingSegmentSelectBodyFrame
                 cmpi.w  #$80,d0
-                bmi.s   Boss_JetsripperSegmentPhysicsSelectBodyFrame
+                bmi.s   Boss_JetsripperFallingSegmentSelectBodyFrame
                 bclr    #3,$E(a5)
-Boss_JetsripperSegmentPhysicsSelectBodyFrame:           ; CODE XREF: Boss_JetsripperSegmentPhysics+70   j  ; was: loc_3626C
-                                        ; Boss_JetsripperSegmentPhysics+76   j
+Boss_JetsripperFallingSegmentSelectBodyFrame:           ; CODE XREF: Boss_JetsripperUpdateFallingSegment+70   j  ; was: loc_3626C
+                                        ; Boss_JetsripperUpdateFallingSegment+76   j
                 asr.w   #3,d0
                 move.l  (a1,d0.w),8(a5)
                 rts
 ; ---------------------------------------------------------------------------
-Boss_JetsripperSegmentPhysicsBeginFall:                 ; CODE XREF: Boss_JetsripperSegmentPhysics+4   j  ; was: loc_36276
+Boss_JetsripperFallingSegmentBeginFall:                 ; CODE XREF: Boss_JetsripperUpdateFallingSegment+4   j  ; was: loc_36276
                 subq.w  #1,$48(a5)
-                bpl.s   Boss_JetsripperSegmentPhysicsReturn
+                bpl.s   Boss_JetsripperFallingSegmentReturn
                 addq.w  #1,4(a5)
                 move.w  #$CF00,2(a5)
                 move.w  #4,(PlaneAShakeLevel).w
                 move.l  #$FFFC0000,$1C(a5)
                 jsr     (Projectile_FindFreeSlotForward).l
-                bne.s   Boss_JetsripperSegmentPhysicsReturn
+                bne.s   Boss_JetsripperFallingSegmentReturn
                 move.l  #SharedCombatSpriteAnimation01,8(a0)
                 jsr     (Projectile_InitType88).l
                 clr.b   $20(a0)
@@ -425,7 +425,7 @@ Boss_JetsripperSegmentPhysicsBeginFall:                 ; CODE XREF: Boss_Jetsri
                 move.b  #$C1,d0
                 jmp     (Sound_QueueSFXRequest).l
 ; ---------------------------------------------------------------------------
-Boss_JetsripperSegmentPhysicsReturn:                    ; CODE XREF: Boss_JetsripperSegmentPhysics+8C   j  ; was: locret_362CC
-                                        ; Boss_JetsripperSegmentPhysics+AC   j
+Boss_JetsripperFallingSegmentReturn:                    ; CODE XREF: Boss_JetsripperUpdateFallingSegment+8C   j  ; was: locret_362CC
+                                        ; Boss_JetsripperUpdateFallingSegment+AC   j
                 rts
-; End of function Boss_JetsripperSegmentPhysics
+; End of function Boss_JetsripperUpdateFallingSegment

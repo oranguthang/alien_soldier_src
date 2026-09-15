@@ -147,7 +147,7 @@ Boss_JetsripperInitBodyParts:                           ; CODE XREF: Boss_Jetsri
                 clr.w   $5A(a5)
                 clr.w   $BE(a5)
                 move.w  #0,d0
-                bra.w   Boss_JetsripperFillAngleBuffer
+                bra.w   Boss_JetsripperFillAngleHistory
 ; End of function Boss_JetsripperInitBody
 ; Handles boss entering screen until position threshold
 Boss_JetsripperEnterScreen:                             ; DATA XREF: ROM:000356E8   o  ; was: sub_357C8
@@ -206,13 +206,13 @@ Boss_JetsripperRotateStateStoreAngle:                   ; CODE XREF: Boss_Jetsri
 Boss_JetsripperUpdateSegmentDisplay:                    ; CODE XREF: Boss_JetsripperEnterScreen+A   j  ; was: loc_35868
                                         ; Boss_JetsripperEnterScreen+1C   j
                 bsr.w   Boss_JetsripperAssignSegmentRadii
-                bsr.w   Boss_JetsripperUpdateSegments
-                bsr.w   Boss_JetsripperFindLowestSegment
+                bsr.w   Boss_JetsripperUpdateSegmentsFromAngleHistory
+                bsr.w   Boss_JetsripperSelectLowestMiddleSegment
                 move.w  #$C740,$48(a5)
                 movea.w a5,a3
                 moveq   #$11,d7
                 jsr     (Sprite_ApplyAnchorOffsetToLinkedParts).l
-                bsr.w   Boss_JetsripperUpdateAllSprites
+                bsr.w   Boss_JetsripperUpdateAllSegmentSprites
                 cmpi.w  #$144,$14(a5)
                 bmi.s   Boss_JetsripperSegmentDisplayReturn
                 move.w  #$144,$14(a5)
@@ -417,13 +417,13 @@ Boss_JetsripperMovementSelectAlignState:                ; CODE XREF: Boss_Jetsri
 Boss_JetsripperMovementUpdateSegmentDisplay:            ; CODE XREF: Boss_JetsripperAlignToCenter+48   j  ; was: loc_35AD8
                                         ; Boss_JetsripperUpdateMovement+5A   j
                 bsr.w   Boss_JetsripperAssignSegmentRadii
-                bsr.w   Boss_JetsripperUpdateSegments
-                bsr.w   Boss_JetsripperFindLowestSegment
+                bsr.w   Boss_JetsripperUpdateSegmentsFromAngleHistory
+                bsr.w   Boss_JetsripperSelectLowestMiddleSegment
                 move.w  #$C980,$48(a5)
                 movea.w a5,a3
                 moveq   #$11,d7
                 jsr     (Sprite_ApplyAnchorOffsetToLinkedParts).l
-                bsr.w   Boss_JetsripperUpdateAllSprites
+                bsr.w   Boss_JetsripperUpdateAllSegmentSprites
                 cmpi.w  #$144,$14(a5)
                 bmi.s   Boss_JetsripperSelectSprite
                 move.w  #$144,$14(a5)
@@ -508,7 +508,7 @@ Boss_JetsripperDiveStoreAngles:                         ; CODE XREF: Boss_Jetsri
                 move.w  #$1A0,$54(a5)
                 move.w  #$80,d0
                 move.w  d0,$56(a5)
-                bsr.w   Boss_JetsripperFillAngleBuffer
+                bsr.w   Boss_JetsripperFillAngleHistory
                 clr.w   $BE(a5)
                 clr.w   $5A(a5)
                 bsr.w   Boss_JetsripperProcessSegmentChain
@@ -524,13 +524,13 @@ Boss_JetsripperDiveLaunchReturn:                        ; CODE XREF: Boss_Jetsri
 ; ---------------------------------------------------------------------------
 Boss_JetsripperDiveUpdateWindupSegments:                ; CODE XREF: Boss_JetsripperDiveExecute+52   j  ; was: loc_35C38
                 bsr.w   Boss_JetsripperAssignSegmentRadii
-                bsr.w   Boss_JetsripperUpdateSegments
+                bsr.w   Boss_JetsripperUpdateSegmentsFromAngleHistory
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
                 movea.w a5,a3
                 moveq   #$11,d7
                 jsr     (Sprite_ApplyAnchorOffsetToLinkedParts).l
-                bsr.w   Boss_JetsripperUpdateAllSprites
+                bsr.w   Boss_JetsripperUpdateAllSegmentSprites
                 move.l  #Boss_JetsripperSpriteMapping06,8(a5)
                 move.w  $E(a5),d0
                 andi.w  #$E7FF,d0
@@ -566,7 +566,7 @@ Boss_JetsripperSwingApplyAngles:                        ; CODE XREF: Boss_Jetsri
                 move.w  d2,$BE(a5)
                 andi.w  #$1FE,d1
                 move.w  d1,$5A(a5)
-                bsr.w   Boss_JetsripperFillAngleBuffer
+                bsr.w   Boss_JetsripperFillAngleHistory
                 subq.w  #8,$54(a5)
                 cmpi.w  #$120,$54(a5)
                 bpl.s   Boss_JetsripperSwingUpdateVerticalMotion
@@ -590,26 +590,26 @@ Boss_JetsripperSwingUpdateVerticalMotion:               ; CODE XREF: Boss_Jetsri
                 move.w  #8,4(a5)
                 clr.w   $4C(a5)
                 moveq   #$A,d1
-                bsr.w   Boss_JetsripperFillAngleGradient
+                bsr.w   Boss_JetsripperFillAngleHistoryGradient
                 bra.s   Boss_JetsripperProcessSegmentChain
 ; ---------------------------------------------------------------------------
 Boss_JetsripperSwingSelectAlignState:                   ; CODE XREF: Boss_JetsripperSwingAttack+A4   j  ; was: loc_35D24
                 move.w  #$C,4(a5)
                 move.w  #1,$4C(a5)
                 moveq   #$FFFFFFF6,d1
-                bsr.w   Boss_JetsripperFillAngleGradient
+                bsr.w   Boss_JetsripperFillAngleHistoryGradient
 ; End of function Boss_JetsripperSwingAttack
 ; Updates all body segments and linked sprite positions
 Boss_JetsripperProcessSegmentChain:                     ; CODE XREF: Boss_JetsripperDiveExecute+82   p  ; was: sub_35D36
                                         ; Boss_JetsripperSwingAttack+6A   j
                 bsr.w   Boss_JetsripperAssignSegmentRadii
-                bsr.w   Boss_JetsripperUpdateSegments
+                bsr.w   Boss_JetsripperUpdateSegmentsFromAngleHistory
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
                 movea.w a5,a3
                 moveq   #$11,d7
                 jsr     (Sprite_ApplyAnchorOffsetToLinkedParts).l
-                bra.w   Boss_JetsripperUpdateAllSprites
+                bra.w   Boss_JetsripperUpdateAllSegmentSprites
 ; End of function Boss_JetsripperProcessSegmentChain
 ; Initializes Jetsripper death sequence with particles
 Boss_JetsripperDeathInit:                               ; DATA XREF: ROM:000356F6   o  ; was: sub_35D54

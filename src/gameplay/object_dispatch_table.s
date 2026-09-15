@@ -58,7 +58,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Proj
                 dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    Boss_JetsripperMainHandler
                 dc.l    Boss_JetsripperClampY
-                dc.l    Boss_JetsripperSegmentPhysics
+                dc.l    Boss_JetsripperUpdateFallingSegment
                 dc.l    Boss_ShiperMainHandler
                 dc.l    Boss_ShellshogunMainHandler
                 dc.l    FrontendCursor_NoOpUpdate

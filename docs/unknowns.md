@@ -8437,3 +8437,40 @@ pending queue falls from 2,635 to 2,618 and its actionable upper bound from
 2,122 to 2,105; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `bosses/shiper_core.s` now has zero
 pending current names.
+
+The 14 pending entries in `bosses/jetsripper_segments.s` are audited together
+with 19 already registered internal names that inherited the same imprecise
+wording. Four routines in the module are unreachable: `sub_35E1E`,
+`sub_35E5C`, `sub_36034`, and `sub_36074` have no static caller, and their
+absolute addresses do not occur anywhere in the canonical ROM. The live
+handlers `sub_361DE` and `sub_361EE` were checked the same way and are found
+in `Entity_UpdateHandlerTable`, so the scan distinguishes reachable from
+orphaned code rather than merely failing to find references. The four
+unreachable routines therefore take the honest `Orphaned_` prefix.
+
+Two of the orphans pair with live counterparts that differ only in coverage,
+which is what the old shared names obscured. The orphaned chain scan covers
+the current object plus seventeen contiguous segment records, while the live
+`Boss_JetsripperSelectLowestMiddleSegment` considers only the five middle
+segments from the eighth through the twelfth entity record; both publish the
+visually lowest object in `$48` and `$4A` and clamp it to the `$144` floor.
+`Orphaned_JetsripperUpdateChainFromAngleDeltas` rebuilds seventeen segment
+positions from accumulated `$4C`/`$4E` deltas, whereas the
+live `Boss_JetsripperUpdateSegmentsFromAngleHistory` drives the same seventeen
+segments from the shared angle history.
+
+The remaining live names are narrowed to their measured extents rather than
+generic roles. `Boss_JetsripperUpdateAllSegmentSprites` covers one head sprite,
+sixteen body sprites, and a tail sprite reached by falling through the
+end-sprite routine a second time. Both history writers span the full
+seventy-two words of `JetsripperAngleHistory`: one flattens the chain to a
+single angle, the other seeds a gradient so a curved pose is assumed in one
+frame. `Boss_JetsripperSegmentPhysics` is renamed to
+`Boss_JetsripperUpdateFallingSegment` because it is the detached-segment
+handler, not a shared physics helper.
+
+Fourteen exact-address records raise the registry from 13,724 to 13,738. The
+pending queue falls from 2,618 to 2,604 and its actionable upper bound from
+2,105 to 2,091; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `bosses/jetsripper_segments.s` now has
+zero pending current names.
