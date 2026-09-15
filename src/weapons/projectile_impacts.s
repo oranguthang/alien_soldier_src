@@ -47,10 +47,10 @@ Weapon_HandleProjectileHit_InitBurst:                   ; CODE XREF: Weapon_Hand
                 bra.w   Effect_InitSharedImpactMotion
 ; End of function Weapon_HandleProjectileHit
 ; Attributes: thunk
-; Thunk to Sprite_InitTypeA4FromCurrentTable
-Effect_InitImpactObjectFromCurrent:
+; Unreachable: a thunk to Sprite_InitTypeA4FromCurrentTable with no reference of any kind
+Orphaned_EffectInitImpactObjectFromCurrent:
                 jmp     Sprite_InitTypeA4FromCurrentTable  ; was: sub_18B1A
-; End of function Effect_InitImpactObjectFromCurrent
+; End of function Orphaned_EffectInitImpactObjectFromCurrent
 ; Decrements projectile lifetime
 Weapon_TickLifetimeTimer:                               ; CODE XREF: Weapon_HandleProjectileHit+E   j  ; was: sub_18B20
                 subq.w  #1,$48(a5)
@@ -104,10 +104,10 @@ Weapon_HandleExplosiveImpact_InitBurst:                 ; CODE XREF: Weapon_Hand
                 bra.w   Effect_InitSharedImpactMotion
 ; End of function Weapon_HandleExplosiveImpact
 ; Attributes: thunk
-; Thunk to Sprite_InitTypeA4FromCurrentTable
-Effect_InitExplosiveImpactFromCurrent:
+; Unreachable: a second thunk to the same routine, likewise unreferenced
+Orphaned_EffectInitExplosiveImpactFromCurrent:
                 jmp     Sprite_InitTypeA4FromCurrentTable  ; was: sub_18BCC
-; End of function Effect_InitExplosiveImpactFromCurrent
+; End of function Orphaned_EffectInitExplosiveImpactFromCurrent
 ; Animates explosion sprite fading sequence
 Weapon_AnimateExplosionFade:                            ; CODE XREF: Weapon_HandleExplosiveImpact+E   j  ; was: sub_18BD2
                 subq.w  #2,$5E(a5)
@@ -326,7 +326,7 @@ Weapon_UpdateSeekingMissile_SelectFrame:                ; CODE XREF: Weapon_Upda
                 move.w  #$F4F4,$A(a5)
                 rts
 ; ---------------------------------------------------------------------------
-; Sets seeking missile sprite size based on distance from player
+; Sets the smaller missile sprite for the first two frame indices
 Weapon_SetMissileSize:                                  ; CODE XREF: Weapon_UpdateSeekingMissile+106   j  ; was: loc_18E74
                 move.w  #$500,8(a5)
                 move.w  #$F8F8,$A(a5)

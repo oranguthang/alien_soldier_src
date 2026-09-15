@@ -10453,3 +10453,59 @@ pending queue falls from 735 to 668 and its actionable upper bound from 222 to
 155; provenance, the 513 classified binary-backed end aliases, and the
 379-module layout remain unchanged. `player/terrain_responses.s` now has zero
 pending current names, leaving 2 modules in the queue.
+
+`weapons/projectile_impacts.s` is eleven handler-table entries in one file, and
+auditing it turned up a third and fourth use of an idiom this audit has now seen
+across three modules.
+
+Bit 5 of the object slot address is used as a cheap way to halve work over the
+pool. `weapons/firing.s` uses it to make only half the beam slots play their
+firing sound. Here `Effect_UpdateImpactParticleSpawner` uses it so only half the
+slots spawn a child particle and the rest deactivate at once, and
+`Weapon_UpdateSeekingMissile` combines it with the frame-counter parity so each
+missile runs its arctangent on alternate frames. That last one is the clearest
+case: the expensive part of the homing is spread over two frames without any
+per-object timer.
+
+Two orphans, and both are the same shape as the one found in `bird_enemy.s`.
+`Effect_InitImpactObjectFromCurrent` and `Effect_InitExplosiveImpactFromCurrent`
+are one-instruction thunks to `Sprite_InitTypeA4FromCurrentTable` with no
+reference of any kind and no ROM absolute-address match, and each sits
+immediately after a routine that performs that very `jmp` inline. Helpers that
+were inlined and left behind.
+
+The `$300` companion stride is now pinned from both ends.
+`Weapon_InitProjectileCompanion` and the bomb both write to the slot `$300`
+bytes above their own, and `Effect_UpdateCompanionFromParent` finds its parent by
+subtracting `$300` — or `$360` on alternate frames, one object further back. The
+companion also renders where its parent was on the *previous* frame, because the
+position it copies is the parent position minus the parent velocity.
+
+`Effect_SpawnExplosion` and `Effect_CreateExplosionDebris` are the same routine
+instruction for instruction, differing only in two shift seeds that are lower by
+one each, so the debris flies at a quarter of the explosion speed. Both take
+their velocity as a sine and a cosine read `$80` bytes apart in the same table,
+each shifted by a random amount, so direction and magnitude are both randomised.
+
+`Weapon_UpdateBombProjectile` is the only projectile here that positions itself
+relative to the player rather than in world coordinates: its X is
+`PlayerXPosition` plus a fixed offset in `$58` plus an accumulator in `$50`, and
+the same vertically. It drifts in the player frame of reference.
+
+One comment was wrong. `Weapon_SetMissileSize` was described as choosing the
+sprite size by distance from the player; the selection is by frame index, and
+the smaller sprite is used for the first two indices only.
+
+Two smaller confirmations. The difficulty test in
+`Weapon_HandleExplosiveImpact` is `tst.w` and works — 6 points of damage at
+difficulty 0 against 5 otherwise — which holds the rule established in
+`weapons/firing.s` that every damage test is a word read and every ammo test is
+a byte read. And `Effect_ApplySparkDeceleration` decays a spark along its own
+launch axis rather than toward zero, because the spawn stores the unscaled sine
+and cosine into `$4E` and `$50` and the update subtracts exactly those.
+
+Seventy-six exact-address records raise the registry from 15,676 to 15,752. The
+pending queue falls from 668 to 592 and its actionable upper bound from 155 to
+79; provenance, the 513 classified binary-backed end aliases, and the 379-module
+layout remain unchanged. `weapons/projectile_impacts.s` now has zero pending
+current names, leaving one module in the queue.
