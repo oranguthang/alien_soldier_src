@@ -19,7 +19,7 @@ Player_UpdateSevenForcesBattleClampFallVelocity:        ; CODE XREF: Player_Upda
                 clr.l   $1C(a5)
 Player_UpdateSevenForcesBattleFinalizeFrame:            ; CODE XREF: Player_UpdateSevenForcesBattle+28   j  ; was: loc_19DE4
                                         ; Player_UpdateSevenForcesBattle+30   j
-                jsr     (Player_UpdateDirectionBit).l
+                jsr     (Player_UpdateSpritePriorityBit).l
                 move.b  $69(a5),$6B(a5)
                 jsr     (Player_UpdateInvulnerabilityTimer).l
                 jsr     (Player_SetHitbox).l

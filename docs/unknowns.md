@@ -8722,3 +8722,31 @@ pending queue falls from 2,491 to 2,470 and its actionable upper bound from
 1,978 to 1,957; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `system/boot.s` now has zero pending
 current names, leaving 44 modules in the queue.
+
+The 21 pending entries in `player/input_and_status.s` hold except for one name
+that contradicted its neighbour. `Player_UpdateDirectionBit` clears bit 7 of the
+byte at `$E`, which is bit 15 of the sprite attribute word and therefore the
+priority bit, and then merges `GlobalSpritePriorityBit` back in. It sets no
+direction at all; the horizontal facing bit is `$800` and the routine three
+entries below, `Player_UpdateHorizontalFacing`, is the one that drives it from
+the cached input. The misnamed routine becomes
+`Player_UpdateSpritePriorityBit`.
+
+The same bit numbering settles the hitbox mirror. `Player_SetHitbox` mirrors
+only when bit 4 of the byte at `$E` is set, which is the vertical flip, and it
+swaps and negates the first two bound bytes, which `Player_CalculateCenterPosition`
+confirms are the vertical pair. The former comment called this direction
+mirroring without saying which axis.
+
+The three palette variants keep the honest treatment they already had. Their
+selecting conditions are recorded exactly: variant C needs `PhoenixAttackStatus`
+zero and two separate frame-counter tests, which makes it a brief periodic
+flash, variant B needs `ShootingMode` nonzero, and variant A is the default.
+What the colours mean in play is still unknown, and the module comment continues
+to say so.
+
+Twenty-one exact-address records raise the registry from 13,872 to 13,893. The
+pending queue falls from 2,470 to 2,449 and its actionable upper bound from
+1,957 to 1,936; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `player/input_and_status.s` now has zero
+pending current names, leaving 43 modules in the queue.

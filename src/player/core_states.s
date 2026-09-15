@@ -92,7 +92,7 @@ Player_Update_RunState:                                 ; CODE XREF: Player_Upda
 ; Updates core player attributes including direction invulnerability hitbox and center position
 Player_UpdateCoreAttributes:                            ; CODE XREF: Player_Update+68   j  ; was: loc_15038
                                         ; Player_Update+76   j
-                bsr.w   Player_UpdateDirectionBit
+                bsr.w   Player_UpdateSpritePriorityBit
                 move.b  $69(a5),$6B(a5)
                 bsr.w   Player_UpdateInvulnerabilityTimer
                 bsr.w   Player_SetHitbox

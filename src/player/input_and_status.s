@@ -31,18 +31,18 @@ Player_UpdateCounterForceInput_StoreHealthDelta:        ; CODE XREF: Player_Upda
                 move.w  d0,(PhoenixAttackStatus).w
                 rts
 ; End of function Player_UpdateCounterForceInput
-; Updates player direction bit from controller state
-Player_UpdateDirectionBit:                              ; CODE XREF: Player_Update:loc_15038   p  ; was: sub_16B5C
+; Refreshes the player sprite priority bit from the global priority setting
+Player_UpdateSpritePriorityBit:                         ; CODE XREF: Player_Update:loc_15038   p  ; was: sub_16B5C
                                         ; sub_19DAE:Player_UpdateSevenForcesBattleFinalizeFrame   p
                 btst    #5,(PlayerActionStateFlags).w
-                bne.s   Player_UpdateDirectionBit_Return
+                bne.s   Player_UpdateSpritePriorityBit_Return
                 bclr    #7,$E(a5)
                 move.w  (GlobalSpritePriorityBit).w,d0
                 or.w    d0,$E(a5)
-Player_UpdateDirectionBit_Return:                       ; CODE XREF: Player_UpdateDirectionBit+6   j  ; was: locret_16B72
+Player_UpdateSpritePriorityBit_Return:                  ; CODE XREF: Player_UpdateSpritePriorityBit+6   j  ; was: locret_16B72
                 rts
-; End of function Player_UpdateDirectionBit
-; Sets player hit box collision boundaries with direction mirroring
+; End of function Player_UpdateSpritePriorityBit
+; Selects hitbox bounds and mirrors the vertical pair when the sprite is flipped
 Player_SetHitbox:                                       ; CODE XREF: Player_Update+AE   p  ; was: sub_16B74
                                         ; Player_UpdateSevenForcesBattle+48   p
                 move.w  $5C(a5),d0
