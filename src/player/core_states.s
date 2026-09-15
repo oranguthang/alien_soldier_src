@@ -258,7 +258,7 @@ Player_GroundIdleState:                                 ; DATA XREF: ROM:Player_
                 bsr.w   Effect_SpawnParticle
                 bsr.w   Player_CheckWeaponSelectInput
                 bne.s   Player_GroundIdleState_Return
-                bsr.w   Player_CheckSpecialMoveActivation
+                bsr.w   Player_CheckJumpOrDashInput
                 bne.s   Player_GroundIdleState_Return
                 btst    #0,(CounterForceTriggerFlag).w
                 bne.w   Player_StartGroundCounterForce
@@ -421,7 +421,7 @@ Player_GroundCrouchState:                               ; DATA XREF: ROM:0001507
                 beq.w   Player_InitFallState
                 bsr.w   Player_CheckWeaponSelectInput
                 bne.s   Player_GroundCrouchState_Return
-                bsr.w   Player_CheckSpecialMoveActivation
+                bsr.w   Player_CheckJumpOrDashInput
                 bne.s   Player_GroundCrouchState_Return
                 btst    #0,(CounterForceTriggerFlag).w
                 bne.w   Player_StartGroundCounterForce
@@ -462,7 +462,7 @@ Player_GroundDecelerateState:                           ; DATA XREF: ROM:0001506
                 beq.w   Player_InitFallState
                 bsr.w   Player_CheckWeaponSelectInput
                 bne.s   Player_GroundDecelerateState_Return
-                bsr.w   Player_CheckSpecialMoveActivation
+                bsr.w   Player_CheckJumpOrDashInput
                 bne.s   Player_GroundDecelerateState_Return
                 btst    #0,(CounterForceTriggerFlag).w
                 bne.w   Player_StartGroundCounterForce
@@ -514,7 +514,7 @@ Player_HandleLandingState:                              ; DATA XREF: ROM:0001507
                 beq.w   Player_InitFallState
                 bsr.w   Player_CheckWeaponSelectInput
                 bne.s   Player_GroundDecelerateState_Return
-                bsr.w   Player_CheckSpecialMoveActivation
+                bsr.w   Player_CheckJumpOrDashInput
                 bne.s   Player_GroundDecelerateState_Return
                 btst    #0,(CounterForceTriggerFlag).w
                 bne.w   Player_StartGroundCounterForce

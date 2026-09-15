@@ -7,7 +7,7 @@ Player_GroundedMovementState:                           ; DATA XREF: ROM:0001506
                 beq.w   Player_InitFallState
                 bsr.w   Player_CheckWeaponSelectInput
                 bne.s   Player_GroundedMovementState_Return
-                bsr.w   Player_CheckSpecialMoveActivation
+                bsr.w   Player_CheckJumpOrDashInput
                 bne.s   Player_GroundedMovementState_Return
                 btst    #0,(CounterForceTriggerFlag).w
                 bne.w   Player_StartGroundCounterForce
@@ -57,7 +57,7 @@ Player_GroundWeaponState:                               ; DATA XREF: ROM:0001506
                 beq.w   Player_InitFallState
                 bsr.w   Player_CheckWeaponSelectInput
                 bne.s   Player_GroundWeaponState_Return
-                bsr.w   Player_CheckSpecialMoveActivation
+                bsr.w   Player_CheckJumpOrDashInput
                 bne.s   Player_GroundWeaponState_Return
                 btst    #1,$69(a5)
                 bne.w   Player_InitGroundCrouchState
@@ -194,7 +194,7 @@ Player_InitiateDashAttack:                              ; CODE XREF: Player_Chec
                 bra.s   Player_InitiateDashAttack_Initialize
 ; ---------------------------------------------------------------------------
 Player_InitiateDashAttack_UseGroundState:               ; CODE XREF: Player_GroundCounterForceState+20   j  ; was: loc_15936
-                                        ; Player_CheckSpecialMoveActivation+1A   j
+                                        ; Player_CheckJumpOrDashInput+1A   j
                 move.w  #$10,4(a5)
 Player_InitiateDashAttack_Initialize:                   ; CODE XREF: Player_InitiateDashAttack+6   j  ; was: loc_1593C
                 move.b  #$73,(PlayerInputMask).w        ; 's'
@@ -223,17 +223,17 @@ Player_InitiateDashAttack_FaceRight:                    ; CODE XREF: Player_Init
                 bset    #3,$E(a5)
 Player_InitiateDashAttack_TryProjectile:                ; CODE XREF: Player_InitiateDashAttack+62   j  ; was: loc_159A0
                 tst.w   (PhoenixAttackStatus).w
-                bne.s   Player_PlayDashAttackSound
+                bne.s   Player_InitiateDashAttack_PlayBlockedSound
                 btst    #7,(PlayerRestrictionFlags).w
-                bne.s   Player_PlayDashAttackSound
+                bne.s   Player_InitiateDashAttack_PlayBlockedSound
                 bsr.w   Player_SpawnProjectile
                 move.l  #Player_PhoenixAndTeleportDashSpriteMapping,8(a5)
                 move.w  #$78,(PhoenixAttackStatus).w    ; 'x'
                 moveq   #1,d0
                 rts
 ; ---------------------------------------------------------------------------
-; Plays dash attack sound effect and sets animation pointer
-Player_PlayDashAttackSound:                             ; CODE XREF: Player_InitiateDashAttack+76   j  ; was: loc_159C4
+; The blocked branch: no projectile, SFX $A6 and the plain dash mapping
+Player_InitiateDashAttack_PlayBlockedSound:             ; CODE XREF: Player_InitiateDashAttack+76   j  ; was: loc_159C4
                                         ; Player_InitiateDashAttack+7E   j
                 move.b  #$A6,d0
                 jsr     (Sound_QueueSFXRequest).l
@@ -383,9 +383,10 @@ Player_HandleSlideState_UpdateAnimation:                ; CODE XREF: Player_Hand
                 subq.w  #1,$48(a5)
                 bra.w   Player_RenderMotionPose
 ; End of function Player_HandleSlideState
-Player_UnusedDashStateReturn:                           ; was: nullsub_39
+; Unreachable: a bare return with no reference of any kind
+Orphaned_PlayerDashStateReturn:                         ; was: nullsub_39
                 rts
-; End of function Player_UnusedDashStateReturn
+; End of function Orphaned_PlayerDashStateReturn
 
 ; Initializes dash kick with velocity
 Player_InitDashKick:
@@ -416,13 +417,13 @@ Player_DashKickState:                                   ; DATA XREF: ROM:000150A
 Player_DashKickState_Return:                            ; CODE XREF: Player_DashKickState+18   j  ; was: locret_15BB6
                 rts
 ; End of function Player_DashKickState
-; Checks and activates special move from state flags
-Player_CheckSpecialMoveActivation:                      ; CODE XREF: Player_GroundIdleState+1E   p  ; was: sub_15BB8
+; Handles the C button from a grounded state: jump, dash attack or drop-through
+Player_CheckJumpOrDashInput:                            ; CODE XREF: Player_GroundIdleState+1E   p  ; was: sub_15BB8
                                         ; Player_GroundCrouchState+20   p
                 btst    #5,$6A(a5)
-                beq.s   Player_CheckSpecialMoveActivation_Return
+                beq.s   Player_CheckJumpOrDashInput_Return
                 btst    #1,$69(a5)
-                beq.w   Player_CheckSpecialMoveActivation_InitAirState
+                beq.w   Player_CheckJumpOrDashInput_InitJump
                 move.b  $69(a5),d0
                 andi.b  #$C,d0
                 bne.w   Player_InitiateDashAttack_UseGroundState
@@ -434,7 +435,7 @@ Player_CheckSpecialMoveActivation:                      ; CODE XREF: Player_Grou
                 moveq   #1,d0
                 rts
 ; ---------------------------------------------------------------------------
-Player_CheckSpecialMoveActivation_InitAirState:         ; CODE XREF: Player_CheckSpecialMoveActivation+E   j  ; was: loc_15BF2
+Player_CheckJumpOrDashInput_InitJump:                   ; CODE XREF: Player_CheckJumpOrDashInput+E   j  ; was: loc_15BF2
                 move.w  #8,4(a5)
                 move.l  #$FFFA8000,$1C(a5)
                 move.w  #$C,$5C(a5)
@@ -443,15 +444,15 @@ Player_CheckSpecialMoveActivation_InitAirState:         ; CODE XREF: Player_Chec
                 clr.w   (PlayerAirMoveUsedFlags).w
                 clr.w   $52(a5)
                 move.b  #$7F,(PlayerInputMask).w
-Player_CheckSpecialMoveActivation_Return:               ; CODE XREF: Player_CheckSpecialMoveActivation+6   j  ; was: locret_15C1E
+Player_CheckJumpOrDashInput_Return:                     ; CODE XREF: Player_CheckJumpOrDashInput+6   j  ; was: locret_15C1E
                                         ; Player_CheckDashInput+6   j
                 rts
-; End of function Player_CheckSpecialMoveActivation
+; End of function Player_CheckJumpOrDashInput
 ; Checks controller input for dash attack activation
 Player_CheckDashInput:                                  ; CODE XREF: Player_CeilingIdleState+20   p  ; was: sub_15C20
                                         ; Player_CeilingDecelerateState+1C   p
                 btst    #5,$6A(a5)
-                beq.s   Player_CheckSpecialMoveActivation_Return
+                beq.s   Player_CheckJumpOrDashInput_Return
                 btst    #0,$69(a5)
                 bne.w   Player_InitiateDashAttack
                 bra.s   Player_DropFromCeiling

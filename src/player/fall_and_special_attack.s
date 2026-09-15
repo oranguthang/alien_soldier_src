@@ -22,7 +22,7 @@ Player_InitCeilingDetachFall_Finish:                    ; CODE XREF: Player_Dash
                 rts
 ; End of function Player_InitCeilingDetachFall
 ; Initializes a timed transition into the common falling state
-Player_InitFallingTransition:                           ; CODE XREF: Player_CheckSpecialMoveActivation+32   p  ; was: sub_15CAC
+Player_InitFallingTransition:                           ; CODE XREF: Player_CheckJumpOrDashInput+32   p  ; was: sub_15CAC
                 bclr    #0,(CounterForceTriggerFlag).w
                 move.w  #$FFE0,$52(a5)
                 move.w  #$14,4(a5)

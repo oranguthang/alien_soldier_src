@@ -9929,3 +9929,54 @@ to 1,278 and its actionable upper bound from 821 to 765; provenance, the 513
 classified binary-backed end aliases, and the 379-module layout remain
 unchanged. `credits/z_leo_sequence.s` now has zero pending current names,
 leaving 12 modules in the queue.
+
+`player/dash_and_phoenix.s` held the jump, and nothing in the source said so.
+
+`Player_CheckSpecialMoveActivation` is the C-button handler for the two grounded
+states that call it, the standing state and the crouch. Without down held it
+falls through to a branch that writes fall state `$08`, an upward `$58000`, and
+5 into `$48` — the field the previous package identified as the jump-hold
+window, during which `Player_HandleFallingState_UpdateJumpHold` suppresses
+gravity entirely. That is the jump, and no other routine starts one from the
+ground. With down held the same handler produces a dash attack, or, when no
+direction is held and the solid-terrain bit is set and bit 6 of
+`PlayerRestrictionFlags` is clear, a drop through the floor via
+`Player_InitFallingTransition`. Three outcomes, none of them named: the routine
+becomes `Player_CheckJumpOrDashInput` and the branch becomes
+`Player_CheckJumpOrDashInput_InitJump`. Its ceiling counterpart,
+`Player_CheckDashInput`, has no jump branch at all, because the ceiling states
+reach the air by detaching.
+
+`Player_PlayDashAttackSound` named an exception as though it were the rule. It
+is the branch taken when `PhoenixAttackStatus` is still counting down or bit 7
+of `PlayerRestrictionFlags` blocks the shot: no projectile, SFX `$A6`, and the
+plain dash mapping instead of the Phoenix one. The identical branch in the
+Phoenix update is already called `PlayBlockedSound`, so this one becomes
+`Player_InitiateDashAttack_PlayBlockedSound`.
+
+One branch in the module does nothing at all.
+`Player_DashAttackState_HandleTerrainContact` tests bit 4 of `$E`, the ceiling
+attachment, and both the `beq` and the `bra` target `Player_InitSlideState`. A
+dash that lands slides the same way on the ground and on the ceiling. The same
+test two instructions later, in `ResumeAttachedState`, is live and does separate
+the two cases, which is what makes the inert one worth recording rather than
+assuming a typo in the disassembly.
+
+`nullsub_39` has zero references of any kind, no ROM absolute-address match, and
+cannot be fallen into because the routine above it ends in a branch. It becomes
+`Orphaned_PlayerDashStateReturn`; its address, `$15B64`, comes from
+`build/main.lst` because nullsub names carry a counter rather than an address.
+
+Two smaller findings. `Player_SpawnPhoenixTrails` builds exactly two trails with
+no loop: it calls the initialiser, steps the pool pointer by one object and the
+table index by two, then falls straight through into it a second time. And
+`Player_ApplyHorizontalMovement` reports a collision only from the wall bits in
+`7(a5)`; both of its screen clamps at `$90` and `$1AF` return zero, so a dash
+stopped by the screen edge keeps running rather than ending. The dash calls that
+helper three times per frame and stops at the first wall.
+
+Fifty-six exact-address records raise the registry from 15,064 to 15,120. The
+pending queue falls from 1,278 to 1,222 and its actionable upper bound from 765
+to 709; provenance, the 513 classified binary-backed end aliases, and the
+379-module layout remain unchanged. `player/dash_and_phoenix.s` now has zero
+pending current names, leaving 11 modules in the queue.
