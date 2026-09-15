@@ -13,7 +13,7 @@ Boss_ZLeoSpawnOrb:                                      ; CODE XREF: Boss_ZLeoWa
                 move.w  #$8000,$59E(a5)
 Boss_ZLeoFinishOrbVelocitySelection:                    ; CODE XREF: Boss_ZLeoSpawnOrb+2E   j  ; was: loc_52F68
                 move.w  #3,$59C(a5)
-                movea.l #Weapon_SpreadShotInitialSpriteFrame,a1
+                movea.l #Weapon_SharedShotInitialSpriteFrame,a1
                 jsr     (Sprite_InitFromTable).l
                 move.b  #4,$20(a0)
                 move.w  #$8040,2(a0)

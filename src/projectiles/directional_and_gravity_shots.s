@@ -501,7 +501,7 @@ Projectile_SpawnDelayedCollisionShotImpact:             ; CODE XREF: Projectile_
 Projectile_InitializeTerobusterGravityShot:             ; CODE XREF: Boss_TerobusterSpawnMultiDirectional+52   p  ; was: sub_2B60C
                 move.w  #$54,(a0)                       ; 'T'
                 move.w  #$8D40,2(a0)
-                move.l  #Enemy_AnimatedProjectileSpriteFrames,$48(a0)
+                move.l  #Projectile_TerobusterGravityShotSpriteFrames,$48(a0)
                 move.w  #1,$4C(a0)
                 moveq   #0,d0
                 move.w  (RandomNumberState).w,d0

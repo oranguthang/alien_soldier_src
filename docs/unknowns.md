@@ -8557,3 +8557,34 @@ pending queue falls from 2,587 to 2,569 and its actionable upper bound from
 2,074 to 2,056; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `bosses/xi_tiger_core.s` now has zero
 pending current names, leaving 49 modules in the queue.
+
+The 19 pending entries in `data/shared_effect_sprite_frames.s` are frame lists
+whose names assert an owner, so each one is checked against its actual callers
+rather than against its contents. Sixteen hold: the dash-trail pair, the two
+impact-particle lists, and the knockback, star, bomb-and-radial, and
+homing-and-rock lists all match the call sites that load them, and the two
+generically named lists are genuinely shared, `Projectile_SpawnSpriteFrames`
+across twelve references in ten modules and `Effect_StarParticleSpriteFrames`
+across six references in four.
+
+Three names claimed more or less than the reference graph supports.
+`Enemy_AnimatedProjectileSpriteFrames` has exactly one caller,
+`Projectile_InitializeTerobusterGravityShot`, which stores it in field `$48` of
+a type-`$54` shot; the list also ends in a loop-back record instead of the usual
+`$FFFF` terminator, matching that shot's continuous animation. It becomes
+`Projectile_TerobusterGravityShotSpriteFrames`.
+`Boss_SharedCollisionProjectileSpriteFrames` is loaded by
+`Boss_ViblackInitializeStandardRadialShot` and `Boss_WolfGaropaSpawnOrbitSpark`,
+neither of which performs a collision test at the load, so it is renamed for its
+two owners.
+
+`Weapon_SpreadShotInitialSpriteFrame` is one unterminated eight-byte frame with
+four callers. Two are type-`$268` spread projectiles, but the Wolf Garopa orb
+pair and the Z-Leo orb are not spread shots, so the name covered only half its
+users and becomes `Weapon_SharedShotInitialSpriteFrame`.
+
+Nineteen exact-address records raise the registry from 13,773 to 13,792. The
+pending queue falls from 2,569 to 2,550 and its actionable upper bound from
+2,056 to 2,037; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `data/shared_effect_sprite_frames.s`
+now has zero pending current names, leaving 48 modules in the queue.

@@ -45,7 +45,7 @@ Boss_WolfGaropaSpawnOrbitSpark:                         ; CODE XREF: Boss_WolfGa
                 bne.w   Boss_WolfGaropaOrbitSparkReturn
                 jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Boss_WolfGaropaOrbitSparkReturn
-                lea     (Boss_SharedCollisionProjectileSpriteFrames).l,a1
+                lea     (Boss_ViblackAndWolfGaropaShotSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 move.b  #4,$20(a0)
                 move.w  #$8C00,2(a0)

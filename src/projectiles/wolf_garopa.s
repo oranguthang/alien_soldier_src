@@ -585,7 +585,7 @@ Boss_WolfGaropaSpawnOrbProjectilePair:                  ; CODE XREF: Boss_WolfGa
                 move.w  #1,(PlaneBShakeLevel).w
                 jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Boss_WolfGaropaOrbProjectilePairReturn
-                movea.l #Weapon_SpreadShotInitialSpriteFrame,a1
+                movea.l #Weapon_SharedShotInitialSpriteFrame,a1
                 jsr     (Sprite_InitFromTable).l
                 move.b  #4,$20(a0)
                 move.w  #$8040,2(a0)

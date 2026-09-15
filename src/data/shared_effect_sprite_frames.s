@@ -31,7 +31,7 @@ Weapon_ImpactSpriteFrames:  dc.l    $244AC, $500F8F8    ; DATA XREF: Weapon_Hand
                 dc.l    $244B8, $500F8F8
                 dc.l    $144E8, $500F8F8
                 dc.w    $FFFF
-Enemy_AnimatedProjectileSpriteFrames:   dc.l    $244F6, $FCFC  ; DATA XREF: Projectile_InitializeTerobusterGravityShot+A   o  ; was: dword_2ACD0
+Projectile_TerobusterGravityShotSpriteFrames:   dc.l    $244F6, $FCFC  ; DATA XREF: Projectile_InitializeTerobusterGravityShot+A   o  ; was: dword_2ACD0
                 dc.l    $244F7, $FCFC
                 dc.l    $244F8, $FCFC
                 dc.l    $24CF7, $FCFC
@@ -51,7 +51,7 @@ Boss_TerobusterProjectileSpriteFrames:  dc.l    $364CC, $500F8F8  ; DATA XREF: B
                 dc.l    $264D4, $FCFC
                 dc.l    $264D5, $FCFC
                 dc.w    $FFFF
-Boss_SharedCollisionProjectileSpriteFrames: dc.l    $344CC, $500F8F8  ; DATA XREF: Boss_ViblackRadialShotAttackState:Boss_ViblackInitializeStandardRadialShot   o  ; was: dword_2AD4A
+Boss_ViblackAndWolfGaropaShotSpriteFrames:  dc.l    $344CC, $500F8F8  ; DATA XREF: Boss_ViblackRadialShotAttackState:Boss_ViblackInitializeStandardRadialShot   o  ; was: dword_2AD4A
                                         ; Boss_WolfGaropaSpawnOrbitSpark+20   o
                 dc.l    $244D0, $500F8F8
                 dc.l    $244D4, $FCFC
@@ -71,7 +71,7 @@ Projectile_HomingAndRockSpriteFrames:   dc.l    $24480, $A00F4F4  ; DATA XREF: P
                 dc.l    $144FC, $FCFC
                 dc.l    $144FD, $FCFC
                 dc.w    $FFFF
-Weapon_SpreadShotInitialSpriteFrame:    dc.l    $24480, $A00F4F4  ; DATA XREF: Weapon_InitSpreadShot+16   o  ; was: dword_2ADC8
+Weapon_SharedShotInitialSpriteFrame:    dc.l    $24480, $A00F4F4  ; DATA XREF: Weapon_InitSpreadShot+16   o  ; was: dword_2ADC8
                                         ; Projectile_InitializeEpsilon1SpreadSlot+16   o
 Weapon_ProjectileSpriteFrames:  dc.l    $244D6, $A00F4F4  ; DATA XREF: Weapon_FireProjectile+70   o  ; was: dword_2ADD0
                 dc.l    $244DF, $A00F4F4

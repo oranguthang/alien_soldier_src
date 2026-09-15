@@ -272,7 +272,7 @@ Weapon_InitSpreadShot:                                  ; CODE XREF: Weapon_Cons
                 move.w  d2,$14(a0)
                 move.w  #$268,(a0)
                 move.l  #Weapon_InitSpreadProjectileState,$48(a0)
-                move.l  #Weapon_SpreadShotInitialSpriteFrame,$54(a0)
+                move.l  #Weapon_SharedShotInitialSpriteFrame,$54(a0)
                 move.w  #$8C80,2(a0)
                 clr.b   $21(a0)
                 move.w  #1,$26(a0)

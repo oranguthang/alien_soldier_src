@@ -280,7 +280,7 @@ Boss_ViblackSpawnShotPairLoop:                          ; CODE XREF: Boss_Viblac
                 bra.s   Boss_ViblackPositionRadialShot
 ; ---------------------------------------------------------------------------
 Boss_ViblackInitializeStandardRadialShot:               ; CODE XREF: Boss_ViblackRadialShotAttackState+48   j  ; was: loc_43CCE
-                lea     (Boss_SharedCollisionProjectileSpriteFrames).l,a1
+                lea     (Boss_ViblackAndWolfGaropaShotSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 lea     (Math_SineTable).l,a1
                 move.w  Math_QuarterSineTable-Math_SineTable(a1,d6.w),d0
