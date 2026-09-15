@@ -86,7 +86,7 @@ Boss_JetsripperStates:  dc.w    Boss_JetsripperInitState-Boss_JetsripperInitStat
                 dc.w    Boss_JetsripperAlignState-Boss_JetsripperInitState
                 dc.w    Boss_JetsripperPatrolState-Boss_JetsripperInitState
                 dc.w    Boss_JetsripperEnterScreen-Boss_JetsripperInitState
-                dc.w    Boss_JetsripperStateThunk-Boss_JetsripperInitState
+                dc.w    Boss_JetsripperAlignToCenterThunk-Boss_JetsripperInitState
                 dc.w    Boss_JetsripperAttackTimer-Boss_JetsripperInitState
                 dc.w    Boss_JetsripperEndAttack-Boss_JetsripperInitState
                 dc.w    Boss_JetsripperDivePrep-Boss_JetsripperInitState
@@ -160,10 +160,10 @@ Boss_JetsripperEnterScreen:                             ; DATA XREF: ROM:000356E
                 bra.w   Boss_JetsripperUpdateSegmentDisplay
 ; End of function Boss_JetsripperEnterScreen
 ; Attributes: thunk
-; Thunk routine jumping to alignment state handler
-Boss_JetsripperStateThunk:                              ; DATA XREF: ROM:000356EA   o  ; was: sub_357E8
+; State entry $12 that only re-enters the centre-alignment state
+Boss_JetsripperAlignToCenterThunk:                      ; DATA XREF: ROM:000356EA   o  ; was: sub_357E8
                 bra.w   Boss_JetsripperAlignToCenter
-; End of function Boss_JetsripperStateThunk
+; End of function Boss_JetsripperAlignToCenterThunk
 ; Handles attack timer countdown and sound trigger
 Boss_JetsripperAttackTimer:                             ; DATA XREF: ROM:000356EC   o  ; was: sub_357EC
                 subq.w  #1,$5C(a5)
@@ -338,7 +338,7 @@ Boss_JetsripperUpdateAngle:                             ; CODE XREF: Boss_Jetsri
                 rts
 ; End of function Boss_JetsripperOscillate
 ; Moves boss toward center alignment position
-Boss_JetsripperAlignToCenter:                           ; CODE XREF: Boss_JetsripperStateThunk   j  ; was: sub_35A02
+Boss_JetsripperAlignToCenter:                           ; CODE XREF: Boss_JetsripperAlignToCenterThunk   j  ; was: sub_35A02
                                         ; DATA XREF: ROM:000356DC   o
                 move.w  #2,$52(a5)
                 bsr.w   Boss_JetsripperAdjustRadius

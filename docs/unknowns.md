@@ -8863,3 +8863,29 @@ pending queue falls from 2,381 to 2,357 and its actionable upper bound from
 1,868 to 1,844; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `player/cutscene_and_damage_states.s`
 now has zero pending current names, leaving 39 modules in the queue.
+
+The 26 pending entries in `bosses/jetsripper_core.s` complete the Jetsripper
+subsystem, whose two other modules were audited earlier in this pass. All the
+state names hold; the seventeen entries of `Boss_JetsripperStates` are word
+offsets from `Boss_JetsripperInitState`, and every pending name resolves to one
+of them or to a helper those states call.
+
+One structural fact is worth recording. The main handler clears the shake
+request in `$52` before running the state machine and only afterwards copies the
+requested value into `PlaneAShakeLevel`, halving it for plane B. Individual
+states therefore request a shake intensity rather than writing the hardware
+level: the oscillator asks for 1, the centre alignment for 2, and the attack
+timer for 8.
+
+The idle and patrol states are mirror images that the names already reflect,
+differing only in angle direction, in the `$710` against `$870` position
+threshold, and in whether the rotate or the align state follows. The one vague
+name was `Boss_JetsripperStateThunk`, state entry `$12`, which is a single
+branch into the centre-alignment state that entry 4 also names directly; it
+becomes `Boss_JetsripperAlignToCenterThunk`.
+
+Twenty-six exact-address records raise the registry from 13,985 to 14,011. The
+pending queue falls from 2,357 to 2,331 and its actionable upper bound from
+1,844 to 1,818; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `bosses/jetsripper_core.s` now has zero
+pending current names, leaving 38 modules in the queue.
