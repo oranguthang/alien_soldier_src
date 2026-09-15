@@ -8950,3 +8950,33 @@ pending queue falls from 2,304 to 2,275 and its actionable upper bound from
 1,791 to 1,762; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `enemies/phase_and_debris_states.s` now
 has zero pending current names, leaving 36 modules in the queue.
+
+The 30 pending entries in `gameplay/object_spawner.s` all hold, and the module
+is worth recording because it fixes the meaning of several fields that other
+audits in this pass had to guess at. A spawn record is twelve bytes: X at 0, Y
+at 2, the type word with two difficulty bits at 4, an extra word at 6 that
+becomes field `$5E`, and the slot range at 8 and `$A`. The walker consumes the
+list strictly forwards, spawning every record within `$140` pixels ahead of the
+camera and writing the first record beyond that window back as the cursor.
+
+The two difficulty bits are removed from the word before it becomes the object
+type, so bit 0 suppresses the object on one difficulty and bit 1 on the other.
+The off-screen cull is equally concrete: an object outside X `$60` to `$1E0` or
+Y `$40` to `$170` is cleared rather than queued, and bit 1 of the flags decides
+whether it is culled by position at all.
+
+The two slot searches use opposite flag conventions, which is worth stating
+because both return through a bare `rts`. `Sys_FindSlotInRange` clears the zero
+flag explicitly when its range is exhausted, while `Sys_FindReusableSlotInRange`
+sets it deliberately in the same situation; the caller relies on each.
+
+The five named spawn lists were checked against `configuration_records.s` rather
+than trusted: each is referenced by exactly the stage configuration record whose
+number it carries, and the nine remaining stages share the single `$7FFF`
+terminator of `Stage_EmptyObjectSpawnList`.
+
+Thirty exact-address records raise the registry from 14,067 to 14,097. The
+pending queue falls from 2,275 to 2,245 and its actionable upper bound from
+1,762 to 1,732; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `gameplay/object_spawner.s` now has zero
+pending current names, leaving 35 modules in the queue.
