@@ -8980,3 +8980,35 @@ pending queue falls from 2,275 to 2,245 and its actionable upper bound from
 1,762 to 1,732; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `gameplay/object_spawner.s` now has zero
 pending current names, leaving 35 modules in the queue.
+
+The 33 pending entries in `enemies/circling_enemies.s` hold, and two mechanisms
+in the module are recorded because the names alone do not convey them.
+
+The rotation sprite is drawn from only five distinct mappings. The sixteen-entry
+pointer table repeats them mirrored about both half-turns, and a parallel
+sixteen-word attribute table supplies the flip bits that complete the mirroring,
+which is why the same helper halves its index between the two lookups. The
+firing helper is likewise staggered rather than synchronous: it adds the
+object's own record address to the frame counter before the 128-frame test, so a
+group of these enemies fires at spread-out times rather than together.
+
+The orbit is adaptive in a specific way. Three of every four step-timer
+expiries take a randomized new duration and reverse the rotation direction to
+whichever side turns the enemy toward the player, while the fourth restores the
+default `$10` step. The exit state then drives the angle at a fixed rate and
+tests for exactly `$1C0`, which is why the preceding state rounds the angle down
+to a `$10` boundary before handing over.
+
+One entry is unreachable. `Enemy_DifficultyProjectileNoOp` is a bare return with
+no caller and no absolute address in the ROM, while the two handlers above it
+are both found in `Entity_UpdateHandlerTable` by the same scan; it becomes
+`Orphaned_EnemyDifficultyProjectileNoOp`. The neighbouring
+`Enemy_CirclingNoOpState` was checked the same way and is live: the fifth state
+table entry names it, so the object keeps its last velocity and drifts off
+screen until the visible-object cull clears it.
+
+Thirty-three exact-address records raise the registry from 14,097 to 14,130. The
+pending queue falls from 2,245 to 2,212 and its actionable upper bound from
+1,732 to 1,699; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `enemies/circling_enemies.s` now has
+zero pending current names, leaving 34 modules in the queue.

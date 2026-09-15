@@ -283,7 +283,7 @@ Enemy_CirclingOrbitState_BeginExit:                     ; CODE XREF: Enemy_Circl
                 addq.w  #2,4(a5)
                 rts
 ; End of function Enemy_CirclingOrbitState
-; Descending attack state with rotation sprite update
+; Drives the orbit angle to $1C0 at a fixed rate, then hands over to the no-op state
 Enemy_CirclingExitOrbitState:                           ; DATA XREF: ROM:0002D42E   o  ; was: sub_2D5F0
                 addi.w  #$10,$4C(a5)
                 andi.w  #$1FF,$4C(a5)
@@ -301,7 +301,7 @@ Enemy_CirclingNoOpState:                                ; DATA XREF: ROM:0002D43
                 rts
 ; End of function Enemy_CirclingNoOpState
 
-; Resets enemy to idle state clearing velocities
+; Recycles the record as type $2A4 with its state, health and velocities cleared
 Enemy_ResetCirclingState:                               ; CODE XREF: Enemy_CirclingController+A   j  ; was: sub_2D61C
                                         ; Enemy_CirclingController+14   j
                 clr.w   4(a5)
@@ -329,6 +329,6 @@ Enemy_SpawnDifficultyProjectilePattern_Base:            ; CODE XREF: Enemy_Spawn
                                         ; Enemy_SpawnDifficultyProjectilePattern+C   j
                 jmp     Enemy_SpawnQuadProjectiles
 ; End of function Enemy_SpawnDifficultyProjectilePattern
-Enemy_DifficultyProjectileNoOp:                         ; was: nullsub_63
+Orphaned_EnemyDifficultyProjectileNoOp:                 ; was: nullsub_63
                 rts
-; End of function Enemy_DifficultyProjectileNoOp
+; End of function Orphaned_EnemyDifficultyProjectileNoOp
