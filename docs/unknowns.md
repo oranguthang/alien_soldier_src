@@ -8474,3 +8474,43 @@ pending queue falls from 2,618 to 2,604 and its actionable upper bound from
 2,105 to 2,091; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `bosses/jetsripper_segments.s` now has
 zero pending current names.
+
+The 17 pending entries in `bosses/victor_parts_and_projectiles.s` resolve
+against two field facts established from the shared helper
+`Entity_UpdatePolarPositionFromParent`, which every Victor part handler ends
+in. That helper feeds field `$40` to
+`Math_LookupSineCosinePairDuplicate` and multiplies the resulting sine and
+cosine pair by field `$42`, taking the parent object from `$44`. Field `$40` is
+therefore the orbit angle and `$42` the radius, and no Victor part state is
+free to reinterpret them.
+
+That settles the detached-part family, whose three state names claimed angular
+motion the code does not perform. The first state adds per-part step `$4C` to
+`$42`, so it grows the radius and is renamed
+`Boss_VictorDetachedPartExtendRadius`; the second is renamed
+`Boss_VictorDetachedPartContractRadius` to say which quantity contracts; the
+third subtracts the same step before the removal timer and is renamed
+`Boss_VictorDetachedPartRetractAndExpire`. The already registered
+`Boss_VictorDetachedPartStates` keeps its name, but its basis no longer
+describes the first entry as an orbit state.
+
+`Boss_VictorBeginDefeatDelay` keeps its name and loses a false claim. It clears
+byte `$21`, which `Collision_CheckPlayerAgainstHostiles` tests before it will
+consider an object at all, and it touches no sprite or priority field. The
+state disables contact, it does not hide Victor.
+
+The remaining thirteen names are confirmed rather than changed, with their
+extents measured. The split-shot wave fires only when the low seven bits of
+countdown `$4A` are zero and selects a table half by bit `$80`, so each wave is
+exactly three shots every 128 ticks. Both post-attack waits write state 6,
+which `Boss_VictorStates` resolves to `Boss_VictorChooseAttack`. The orbit
+radius states retract to `$80`, expand to `$A8`, and clamp at `$A8` without a
+state change. `Entity_RemoveWithExplosionWhenEnabled` is gated on a shared
+word, and marks its caller for removal on both the successful and the failed
+explosion-allocation path.
+
+Seventeen exact-address records raise the registry from 13,738 to 13,755. The
+pending queue falls from 2,604 to 2,587 and its actionable upper bound from
+2,091 to 2,074; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `bosses/victor_parts_and_projectiles.s`
+now has zero pending current names, leaving 50 modules in the queue.

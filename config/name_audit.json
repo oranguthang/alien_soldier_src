@@ -4457,10 +4457,13 @@
       "address": "0x032AC4", "previous_name": "loc_32AC4", "current_name": "Boss_VictorOffsetLaunchedPartUp", "legacy_name": "loc_32AC4", "evidence": "static",
       "basis": ["This launch branch subtracts $28 from the spawned part's screen Y coordinate."]
     },
+    { "address": "0x032ACC", "previous_name": "sub_32ACC", "current_name": "Boss_VictorSetLaunchedPartDirection", "legacy_name": "sub_32ACC", "evidence": "static", "basis": ["Boss_VictorLaunchOrbitingPart calls this helper to give the freshly launched part an X velocity of +3 or -3 depending on whether Victor's own X coordinate $10 lies left or right of the arena midpoint $120."] },
     {
       "address": "0x032ADE", "previous_name": "loc_32ADE", "current_name": "Boss_VictorLaunchPartRight", "legacy_name": "loc_32ADE", "evidence": "static",
       "basis": ["A Victor origin left of X=$120 selects positive horizontal velocity for the launched part."]
     },
+    { "address": "0x032AE6", "previous_name": "sub_32AE6", "current_name": "Boss_VictorWaitAfterPartLaunch", "legacy_name": "sub_32AE6", "evidence": "static", "basis": ["Entry $16 of Boss_VictorStates keeps the viewport offset and animation running while delay $4A counts down, then writes state 6, which Boss_VictorStates resolves to Boss_VictorChooseAttack."] },
+    { "address": "0x032B32", "previous_name": "sub_32B32", "current_name": "Boss_VictorSpawnSplitShotWave", "legacy_name": "sub_32B32", "evidence": "static", "basis": ["The routine fires only when the low seven bits of countdown $4A are zero, so one wave leaves every 128 ticks; bit $80 of the same countdown then selects the upper table half at d6 0, 2, 4 or the lower half at d6 4, 6, 8, making each wave exactly three shots."] },
     {
       "address": "0x032B56", "previous_name": "loc_32B56", "current_name": "Boss_VictorSpawnUpperSplitShots", "legacy_name": "loc_32B56", "evidence": "static",
       "basis": ["The first timed wave iterates offset indices 0, 2, and 4 to create three Victor split shots."]
@@ -4473,6 +4476,7 @@
       "address": "0x032B76", "previous_name": "loc_32B76", "current_name": "Boss_VictorSpawnLowerSplitShots", "legacy_name": "loc_32B76", "evidence": "static",
       "basis": ["The second timed wave iterates offset indices 4, 6, and 8 to create three Victor split shots."]
     },
+    { "address": "0x032B92", "previous_name": "sub_32B92", "current_name": "Projectile_VictorInitSplitShot", "legacy_name": "sub_32B92", "evidence": "static", "basis": ["Each allocated slot is stamped as type $3B8 and positioned from the paired X and Y offset tables indexed by d6; the X offset is subtracted and the velocity set to -2 when Victor stands right of the midpoint $120, and added with velocity +2 otherwise."] },
     {
       "address": "0x032BBE", "previous_name": "loc_32BBE", "current_name": "Projectile_VictorPlaceRightwardSplitShot", "legacy_name": "loc_32BBE", "evidence": "static",
       "basis": ["Shots emitted while Victor is left of X=$120 add their X offset and receive positive velocity."]
@@ -4485,6 +4489,8 @@
       "address": "0x032BD8", "previous_name": "word_32BD8", "current_name": "Projectile_VictorSplitShotYOffsetTable", "legacy_name": "word_32BD8", "evidence": "static",
       "basis": ["Projectile_VictorInitSplitShot uses these five values as vertical spawn offsets."]
     },
+    { "address": "0x032BE2", "previous_name": "sub_32BE2", "current_name": "Boss_VictorWaitAfterSplitShots", "legacy_name": "sub_32BE2", "evidence": "static", "basis": ["Entry $1C of Boss_VictorStates mirrors the launched-part wait: it runs the viewport and animation updates until delay $4A expires, then returns to state 6, Boss_VictorChooseAttack."] },
+    { "address": "0x032BFA", "previous_name": "sub_32BFA", "current_name": "Boss_VictorBeginDefeatDelay", "legacy_name": "sub_32BFA", "evidence": "static", "basis": ["The state clears collision byte $21, which Collision_CheckPlayerAgainstHostiles tests before considering an object at all, then arms a $100-tick delay and advances to Boss_VictorUpdateDefeatExplosion. It changes no sprite or priority field, so it disables contact rather than hiding Victor."] },
     {
       "address": "0x032C2E", "previous_name": "loc_32C2E", "current_name": "Boss_VictorWaitForDefeatExplosion", "legacy_name": "loc_32C2E", "evidence": "static",
       "basis": ["The defeat loop converges here to count down before loading blank graphics and removing Victor."]
@@ -4493,18 +4499,28 @@
       "address": "0x032C5C", "previous_name": "word_32C5C", "current_name": "Boss_VictorDefeatGraphicsLoadDescriptor", "legacy_name": "word_32C5C", "evidence": "static",
       "basis": ["Victor's final defeat state passes this descriptor directly to the compressed-tile loader."]
     },
+    { "address": "0x032C98", "previous_name": "sub_32C98", "current_name": "Boss_VictorTurnPartTowardPlayer", "legacy_name": "sub_32C98", "evidence": "static", "basis": ["The helper takes the angle to the player through Math_CalculateAngleToPlayer, ignores differences inside a symmetric eight-unit deadzone, and otherwise turns orbit angle $40 by exactly two units toward the shorter side."] },
     {
       "address": "0x032CCC", "previous_name": "loc_32CCC", "current_name": "Boss_VictorTurnPartCounterclockwise", "legacy_name": "loc_32CCC", "evidence": "static",
       "basis": ["When the wrapped target delta is at least $100, this branch subtracts two from the part angle."]
     },
+    { "address": "0x032CD2", "previous_name": "sub_32CD2", "current_name": "Boss_VictorOrbitingPartRadialMain", "legacy_name": "sub_32CD2", "evidence": "static", "basis": ["Handler entry ROM:000323F4 applies the shared removal gate, runs the part's radius state, normalizes orbit angle $40 to the $1FE range, and ends in Entity_UpdatePolarPositionFromParent."] },
+    { "address": "0x032CE4", "previous_name": "sub_32CE4", "current_name": "Boss_VictorDispatchOrbitRadiusState", "legacy_name": "sub_32CE4", "evidence": "static", "basis": ["The dispatcher reads state word 4, indexes the three self-relative entries of Boss_VictorOrbitRadiusStates, and jumps; it holds no behavior of its own."] },
     {
       "address": "0x032CF0", "previous_name": "off_32CF0", "current_name": "Boss_VictorOrbitRadiusStates", "legacy_name": "off_32CF0", "evidence": "static",
       "basis": ["The orbiting-part radial handler indexes these retract, expand, and clamped-expand states."]
     },
+    { "address": "0x032CF6", "previous_name": "sub_32CF6", "current_name": "Boss_VictorRetractOrbitRadius", "legacy_name": "sub_32CF6", "evidence": "static", "basis": ["The state adds the shared formation step to orbit angle $40 and decrements radius $42 by one per frame until the radius reaches $80, then advances the part's own state word by two."] },
+    { "address": "0x032D12", "previous_name": "sub_32D12", "current_name": "Boss_VictorExpandOrbitRadius", "legacy_name": "sub_32D12", "evidence": "static", "basis": ["The state adds the shared formation step to orbit angle $40 and increments radius $42 by one per frame until the radius reaches $A8, then steps the part's state word back by two, producing the paired retract/expand cycle."] },
+    { "address": "0x032D2E", "previous_name": "sub_32D2E", "current_name": "Boss_VictorExpandOrbitRadiusClamped", "legacy_name": "sub_32D2E", "evidence": "static", "basis": ["This third state also advances orbit angle $40 every frame, but it stops growing radius $42 once it equals $A8 instead of changing state, so the part keeps rotating at the outer radius."] },
+    { "address": "0x032D46", "previous_name": "sub_32D46", "current_name": "Boss_VictorDetachedPartMain", "legacy_name": "sub_32D46", "evidence": "static", "basis": ["Handler entry ROM:000323F6 applies the shared removal gate and dispatches through the three self-relative entries of Boss_VictorDetachedPartStates."] },
     {
       "address": "0x032D56", "previous_name": "off_32D56", "current_name": "Boss_VictorDetachedPartStates", "legacy_name": "off_32D56", "evidence": "static",
-      "basis": ["The detached-part handler indexes these orbit, contract, and timed-expiration states."]
+      "basis": ["The detached-part handler indexes these radius-extend, radius-contract, and timed-expiration states."]
     },
+    { "address": "0x032D5C", "previous_name": "Boss_VictorDetachedPartOrbit", "current_name": "Boss_VictorDetachedPartExtendRadius", "legacy_name": "sub_32D5C", "evidence": "static", "basis": ["The state adds per-part step $4C to field $42, and Entity_UpdatePolarPositionFromParent multiplies field $42 by the sine/cosine pair while taking the angle from field $40. Field $42 is therefore the radius, so this state moves the part outward and does not advance an orbit angle as its former name claimed."] },
+    { "address": "0x032D68", "previous_name": "Boss_VictorDetachedPartContract", "current_name": "Boss_VictorDetachedPartContractRadius", "legacy_name": "sub_32D68", "evidence": "static", "basis": ["The state returns untouched when a5 is the thirty-second entity slot $FFFFD1C0; otherwise it normalizes angle $40 and decrements radius $42 by one per frame. The name now states which quantity contracts."] },
+    { "address": "0x032D80", "previous_name": "Boss_VictorDetachedPartExpire", "current_name": "Boss_VictorDetachedPartRetractAndExpire", "legacy_name": "sub_32D80", "evidence": "static", "basis": ["The final state subtracts per-part step $4C from radius $42, reversing the outward motion of the first state, and removes the part by writing $1000 to field 2 once timer $4A expires."] },
     {
       "address": "0x032DAE", "previous_name": "loc_32DAE", "current_name": "Boss_VictorPartCheckHorizontalBounds", "legacy_name": "loc_32DAE", "evidence": "static",
       "basis": ["Non-collision and non-reactive-hit paths converge here before checking the part's X coordinate against arena bounds."]
@@ -4513,6 +4529,7 @@
       "address": "0x032DC4", "previous_name": "loc_32DC4", "current_name": "Boss_VictorRemovePartOutsideArena", "legacy_name": "loc_32DC4", "evidence": "static",
       "basis": ["Both failed horizontal arena checks converge here to set the part's removal flag."]
     },
+    { "address": "0x032DCC", "previous_name": "sub_32DCC", "current_name": "Entity_RemoveWithExplosionWhenEnabled", "legacy_name": "sub_32DCC", "evidence": "static", "basis": ["The helper returns immediately while the shared gate word is zero. Once the gate is set it attempts one reverse-scan projectile slot, initializes a type-$160 explosion at the caller's position when the allocation succeeds, and marks the caller for removal on both the successful and the failed path. Projectile_HitReactiveShotMain and every Victor part handler share it."] },
     {
       "address": "0x032DF6", "previous_name": "loc_32DF6", "current_name": "Entity_RemoveAfterExplosionAttempt", "legacy_name": "loc_32DF6", "evidence": "static",
       "basis": ["Both allocation failure and successful type-$160 explosion initialization converge here to remove the source entity."]

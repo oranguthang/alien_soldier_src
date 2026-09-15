@@ -195,7 +195,7 @@ Boss_VictorWaitAfterSplitShots:                         ; DATA XREF: ROM:0003244
                 move.w  #6,4(a5)
                 rts
 ; End of function Boss_VictorWaitAfterSplitShots
-; Hides Victor and begins the final explosion delay
+; Disables Victor's collision byte and begins the final explosion delay
 Boss_VictorBeginDefeatDelay:                            ; DATA XREF: ROM:0003244A   o  ; was: sub_32BFA
                 clr.b   $21(a5)
                 move.w  #$100,$4A(a5)
@@ -322,26 +322,26 @@ Boss_VictorDetachedPartMain:                            ; DATA XREF: ROM:000323F
                 jmp     (a0)
 ; End of function Boss_VictorDetachedPartMain
 ; ---------------------------------------------------------------------------
-Boss_VictorDetachedPartStates:  dc.w    Boss_VictorDetachedPartOrbit-*  ; DATA XREF: Boss_VictorDetachedPartMain+8   o  ; was: off_32D56
-                dc.w    Boss_VictorDetachedPartContract-*
-                dc.w    Boss_VictorDetachedPartExpire-*
+Boss_VictorDetachedPartStates:  dc.w    Boss_VictorDetachedPartExtendRadius-*  ; DATA XREF: Boss_VictorDetachedPartMain+8   o  ; was: off_32D56
+                dc.w    Boss_VictorDetachedPartContractRadius-*
+                dc.w    Boss_VictorDetachedPartRetractAndExpire-*
 
-; Advances a detached part's orbit angle
-Boss_VictorDetachedPartOrbit:                           ; DATA XREF: ROM:Boss_VictorDetachedPartStates   o  ; was: sub_32D5C
+; Grows a detached part's parent-relative radius by its per-part step
+Boss_VictorDetachedPartExtendRadius:                    ; DATA XREF: ROM:Boss_VictorDetachedPartStates   o  ; was: sub_32D5C
                 move.w  $4C(a5),d0
                 add.w   d0,$42(a5)
                 bra.w   Entity_UpdatePolarPositionFromParent
-; End of function Boss_VictorDetachedPartOrbit
-; Contracts a detached part unless it occupies the reserved slot
-Boss_VictorDetachedPartContract:                        ; DATA XREF: ROM:00032D58   o  ; was: sub_32D68
+; End of function Boss_VictorDetachedPartExtendRadius
+; Shrinks a detached part's radius unless it is the thirty-second entity slot
+Boss_VictorDetachedPartContractRadius:                  ; DATA XREF: ROM:00032D58   o  ; was: sub_32D68
                 cmpa.l  #$FFFFD1C0,a5
                 beq.w   Entity_UpdateReturn
                 andi.w  #$1FE,$40(a5)
                 subq.w  #1,$42(a5)
                 bra.w   Entity_UpdatePolarPositionFromParent
-; End of function Boss_VictorDetachedPartContract
-; Reverses a detached part's orbit and removes it when its timer expires
-Boss_VictorDetachedPartExpire:                          ; DATA XREF: ROM:00032D5A   o  ; was: sub_32D80
+; End of function Boss_VictorDetachedPartContractRadius
+; Reverses the radial step and removes a detached part when its timer expires
+Boss_VictorDetachedPartRetractAndExpire:                ; DATA XREF: ROM:00032D5A   o  ; was: sub_32D80
                 move.w  $4C(a5),d0
                 sub.w   d0,$42(a5)
                 bsr.w   Entity_UpdatePolarPositionFromParent
@@ -349,7 +349,7 @@ Boss_VictorDetachedPartExpire:                          ; DATA XREF: ROM:00032D5
                 bne.w   Entity_UpdateReturn
                 move.w  #$1000,2(a5)
                 rts
-; End of function Boss_VictorDetachedPartExpire
+; End of function Boss_VictorDetachedPartRetractAndExpire
 ; Handles part collision effects and horizontal arena removal
 Boss_VictorOrbitingPartCollisionMain:                   ; DATA XREF: ROM:000323F8   o  ; was: sub_32D9C
                 bclr    #7,$22(a5)
