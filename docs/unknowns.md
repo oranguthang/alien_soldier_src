@@ -9041,3 +9041,31 @@ pending queue falls from 2,212 to 2,179 and its actionable upper bound from
 1,699 to 1,666; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `math/angles.s` now has zero pending
 current names, leaving 33 modules in the queue.
+
+The 34 pending entries in `effects/explosion_patterns.s` all hold, and the
+module's ring vocabulary turns out to be exact rather than decorative.
+`Effect_SpawnRadialParticlePattern` treats its first argument as a power of two:
+it spawns `2^d0` particles and divides the full `$200` angle range by the same
+power, so the spacing is always even. The three variant B patterns then name
+their own counts correctly, at two, four and eight particles per ring, and the
+shared random start angle is stored once in `$58` so every ring of one burst
+lines up. The two-ring pattern additionally rotates its second ring by `$40`, a
+half-spacing at four particles, so the two rings interleave.
+
+Two details are recorded because the names cannot carry them. The four variant A
+motion handlers occupy four table slots but only three distinct routines:
+variants 2 and 3 share the spiral dispatcher and differ only in whether the
+spiral reseeds a fresh random angle or keeps turning. And the two particle-loop
+counters are tested differently, variant A with a zero test and variant B with a
+signed one, so variant B emits one particle more than its counter value
+suggests.
+
+`Effect_SpawnEightWayExplosionParticles` sets only the count and the mapping
+before falling into the shared spawner, so its caller still supplies the speed
+shift and the start angle; that is why the entry is two instructions long.
+
+Thirty-four exact-address records raise the registry from 14,163 to 14,197. The
+pending queue falls from 2,179 to 2,145 and its actionable upper bound from
+1,666 to 1,632; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `effects/explosion_patterns.s` now has
+zero pending current names, leaving 32 modules in the queue.

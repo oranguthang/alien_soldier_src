@@ -1401,6 +1401,13 @@
         "On collection the handler plays the pickup sound, adds 500 BCD score, increases PlayerHealth up to PlayerMaxHealth, and starts the transient value display."
       ]
     },
+    { "address": "0x02BE56", "previous_name": "sub_2BE56", "current_name": "Effect_SpawnEightWayExplosionParticles", "legacy_name": "sub_2BE56", "evidence": "static", "basis": ["The entry sets only the count exponent 3 and the mapping pointer before falling into the shared pattern routine, so the caller still supplies the speed shift in d1 and the start angle in d2."] },
+    { "address": "0x02BE60", "previous_name": "sub_2BE60", "current_name": "Effect_SpawnRadialParticlePattern", "legacy_name": "sub_2BE60", "evidence": "static", "basis": ["The routine treats d0 as a power of two: it spawns exactly 2^d0 particles and divides the full $200 angle range by the same power, so the particles are always evenly spaced. The speed shift in d1 scales the sine and cosine pair."] },
+    { "address": "0x02BE72", "previous_name": "loc_2BE72", "current_name": "Effect_SpawnRadialParticlePattern_Loop", "legacy_name": "loc_2BE72", "evidence": "static", "basis": ["Each iteration takes one free projectile slot, reads a sine and cosine pair at the running angle, and places the particle at the parent position."] },
+    { "address": "0x02BEB6", "previous_name": "loc_2BEB6", "current_name": "Effect_SpawnRadialParticlePattern_Next", "legacy_name": "loc_2BEB6", "evidence": "static", "basis": ["A failed allocation skips the angle advance, so a short slot supply thins the ring rather than shifting it."] },
+    { "address": "0x02BEBC", "previous_name": "sub_2BEBC", "current_name": "Effect_SpawnExplosionA", "legacy_name": "sub_2BEBC", "evidence": "static", "basis": ["The variant A constructor allocates a type-$1A0 controller with six particle repetitions, picks one of four motion variants from two random bits, plays SFX $BB and shares the common initializer."] },
+    { "address": "0x02BEF0", "previous_name": "sub_2BEF0", "current_name": "Effect_SpawnExplosionB", "legacy_name": "sub_2BEF0", "evidence": "static", "basis": ["The variant B constructor is the same shape with type $1A4, eight repetitions and SFX $BC, and falls straight through into the common initializer."] },
+    { "address": "0x02BF22", "previous_name": "loc_2BF22", "current_name": "Effect_InitializeExplosion", "legacy_name": "loc_2BF22", "evidence": "static", "basis": ["Both constructors converge here to copy the parent position, install the flags and attribute word with the global priority bit, disable collision, and request shake level 2 on both planes."] },
     {
       "address": "0x02BF58",
       "previous_name": "Enemy_UpdatePhasePattern",
@@ -1412,6 +1419,25 @@
         "The handler bounds-checks the effect, manages its particle lifetime, and selects one of four random motion variants; it reads no enemy phase state."
       ]
     },
+    { "address": "0x02BF9E", "previous_name": "off_2BF9E", "current_name": "Effect_ExplosionAVariantHandlers", "legacy_name": "off_2BF9E", "evidence": "static", "basis": ["Four self-relative words, but only three distinct handlers: variants 2 and 3 share the spiral dispatcher and differ only in whether the spiral restarts."] },
+    { "address": "0x02BFA6", "previous_name": "sub_2BFA6", "current_name": "Effect_ExplosionA_UpdateVerticalMotion", "legacy_name": "sub_2BFA6", "evidence": "static", "basis": ["Variant 0 installs a fixed upward velocity on its first frame and then accelerates upward every frame after."] },
+    { "address": "0x02BFB6", "previous_name": "loc_2BFB6", "current_name": "Effect_ExplosionA_ApplyUpwardAcceleration", "legacy_name": "loc_2BFB6", "evidence": "static", "basis": ["The repeat path subtracts a further $4000 from the vertical velocity each frame."] },
+    { "address": "0x02BFC0", "previous_name": "sub_2BFC0", "current_name": "Effect_ExplosionA_ArcDispatcher", "legacy_name": "sub_2BFC0", "evidence": "static", "basis": ["Variant 1 uses field $4E as a two-entry state index for its arc."] },
+    { "address": "0x02BFCC", "previous_name": "off_2BFCC", "current_name": "Effect_ExplosionAArcHandlers", "legacy_name": "off_2BFCC", "evidence": "static", "basis": ["Two self-relative words: the launch away from the player and the gravity that follows it."] },
+    { "address": "0x02BFD0", "previous_name": "sub_2BFD0", "current_name": "Effect_ExplosionA_InitAwayFromPlayer", "legacy_name": "sub_2BFD0", "evidence": "static", "basis": ["The launch takes the angle to the player, adds half a turn so the motion is away from the player, and converts that direction into the initial velocity."] },
+    { "address": "0x02BFFE", "previous_name": "sub_2BFFE", "current_name": "Effect_ExplosionA_ApplyGravity", "legacy_name": "sub_2BFFE", "evidence": "static", "basis": ["Every later frame of the arc adds $4000 to the vertical velocity."] },
+    { "address": "0x02C008", "previous_name": "sub_2C008", "current_name": "Effect_ExplosionA_SpiralDispatcher", "legacy_name": "sub_2C008", "evidence": "static", "basis": ["Variants 2 and 3 both enter here and use field $4E as a three-entry state index."] },
+    { "address": "0x02C014", "previous_name": "off_2C014", "current_name": "Effect_ExplosionASpiralHandlers", "legacy_name": "off_2C014", "evidence": "static", "basis": ["Three self-relative words: seed the angle, convert it to velocity, and advance the spiral."] },
+    { "address": "0x02C01A", "previous_name": "sub_2C01A", "current_name": "Effect_ExplosionA_InitRandomSpiral", "legacy_name": "sub_2C01A", "evidence": "static", "basis": ["The first spiral state seeds the angle from the random state and falls through into the conversion, so both state advances happen on the same frame."] },
+    { "address": "0x02C024", "previous_name": "loc_2C024", "current_name": "Effect_ExplosionA_SetSpiralVelocity", "legacy_name": "loc_2C024", "evidence": "static", "basis": ["The conversion scales the sine and cosine pair by sixteen into both velocity fields and arms a four-frame step timer."] },
+    { "address": "0x02C058", "previous_name": "sub_2C058", "current_name": "Effect_ExplosionA_UpdateSpiral", "legacy_name": "sub_2C058", "evidence": "static", "basis": ["Each time the step timer expires the angle is turned back by $40 and the state returns to the conversion, which is what makes the path spiral rather than travel straight."] },
+    { "address": "0x02C074", "previous_name": "loc_2C074", "current_name": "Effect_ExplosionA_RestartSpiral", "legacy_name": "loc_2C074", "evidence": "static", "basis": ["Variant 3 alone clears the spiral state entirely, so it reseeds a fresh random angle instead of continuing the turn."] },
+    { "address": "0x02C07A", "previous_name": "sub_2C07A", "current_name": "Effect_ExplosionA_LifetimeDispatcher", "legacy_name": "sub_2C07A", "evidence": "static", "basis": ["Independently of the motion variant, the controller runs a three-state particle loop keyed on field 4."] },
+    { "address": "0x02C086", "previous_name": "off_2C086", "current_name": "Effect_ExplosionALifetimeHandlers", "legacy_name": "off_2C086", "evidence": "static", "basis": ["Three self-relative words: spawn one particle, wait, and finally remove the controller."] },
+    { "address": "0x02C08C", "previous_name": "sub_2C08C", "current_name": "Effect_ExplosionA_SpawnParticle", "legacy_name": "sub_2C08C", "evidence": "static", "basis": ["One particle is placed at the controller's position and a four-frame gap is armed."] },
+    { "address": "0x02C0BC", "previous_name": "sub_2C0BC", "current_name": "Effect_ExplosionA_UpdateParticleTimer", "legacy_name": "sub_2C0BC", "evidence": "static", "basis": ["When the gap expires the repetition counter in $4A is spent and the state steps back to the spawner, so the controller emits its six particles four frames apart."] },
+    { "address": "0x02C0D0", "previous_name": "loc_2C0D0", "current_name": "Effect_ExplosionA_FinishParticleLoop", "legacy_name": "loc_2C0D0", "evidence": "static", "basis": ["The exhausted counter advances instead to the removal state."] },
+    { "address": "0x02C0D6", "previous_name": "sub_2C0D6", "current_name": "Effect_RemoveExplosionObject", "legacy_name": "sub_2C0D6", "evidence": "static", "basis": ["Both variants share this single instruction, which sets the removal bit that the visible-object pass acts on."] },
     {
       "address": "0x02C0DE",
       "previous_name": "Enemy_BossPartDispatcher",
@@ -1423,6 +1449,7 @@
         "Its random selector dispatches only particle-loop and radial-ring explosion patterns, not boss-part states."
       ]
     },
+    { "address": "0x02C0F8", "previous_name": "off_2C0F8", "current_name": "Effect_ExplosionBVariantHandlers", "legacy_name": "off_2C0F8", "evidence": "static", "basis": ["Four self-relative words: the repeating particle loop and the three ring patterns."] },
     {
       "address": "0x02C100",
       "previous_name": "Projectile_SnakeDispatcher",
@@ -1434,6 +1461,13 @@
         "No Snake boss state, Snake-specific mapping, or projectile attack parameters are referenced."
       ]
     },
+    { "address": "0x02C10C", "previous_name": "off_2C10C", "current_name": "Effect_ExplosionBParticleLoopHandlers", "legacy_name": "off_2C10C", "evidence": "static", "basis": ["Three self-relative words mirroring variant A's lifetime states."] },
+    { "address": "0x02C112", "previous_name": "sub_2C112", "current_name": "Effect_ExplosionB_SpawnRandomParticle", "legacy_name": "sub_2C112", "evidence": "static", "basis": ["Variant B's loop scatters each particle inside a 64-pixel box centred on the controller and arms a two-frame gap, half of variant A's."] },
+    { "address": "0x02C15E", "previous_name": "sub_2C15E", "current_name": "Effect_ExplosionB_UpdateParticleTimer", "legacy_name": "sub_2C15E", "evidence": "static", "basis": ["The counter is tested with a signed branch rather than a zero test, so variant B emits one more particle than its counter value suggests."] },
+    { "address": "0x02C174", "previous_name": "loc_2C174", "current_name": "Effect_ExplosionB_FinishParticleLoop", "legacy_name": "loc_2C174", "evidence": "static", "basis": ["The exhausted counter advances to the removal state."] },
+    { "address": "0x02C17A", "previous_name": "sub_2C17A", "current_name": "Effect_ExplosionB_SpawnThreeRings", "legacy_name": "sub_2C17A", "evidence": "static", "basis": ["The pattern fires once on the controller's first frame and calls the radial spawner three times with exponent 1, so each ring is two particles, at speed shifts 1, 3 and 5 from one shared random start angle."] },
+    { "address": "0x02C1D6", "previous_name": "sub_2C1D6", "current_name": "Effect_ExplosionB_SpawnTwoRings", "legacy_name": "sub_2C1D6", "evidence": "static", "basis": ["Two calls with exponent 2 give four particles each at speed shifts 3 and 5, and the second ring is rotated by $40 so the two do not overlap."] },
+    { "address": "0x02C224", "previous_name": "sub_2C224", "current_name": "Effect_ExplosionB_SpawnSingleRing", "legacy_name": "sub_2C224", "evidence": "static", "basis": ["One call with exponent 3 gives a single eight-particle ring at speed shift 4."] },
     {
       "address": "0x02C280",
       "previous_name": "Projectile_BugmaxMain",
