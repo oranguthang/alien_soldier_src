@@ -2601,6 +2601,25 @@
         "It tail-calls Projectile_InitViblackSideShot, whose type-0x2F4 state machine contains no walker behavior."
       ]
     },
+    { "address": "0x02DA3A", "previous_name": "sub_2DA3A", "current_name": "Enemy_InitBirdSprite", "legacy_name": "sub_2DA3A", "evidence": "static", "basis": ["Its one caller passes d0 as zero, so only the first parameter record is ever read. The sprite attribute word comes from BirdEnemyTileAttr, a stage variable, which is how the same enemy takes different art in different stages."] },
+    { "address": "0x02DA88", "previous_name": "word_2DA88", "current_name": "Enemy_BirdSpriteParameters", "legacy_name": "word_2DA88", "evidence": "static", "basis": ["One four-byte record read as three bytes: $18 into $27, 6 into $25, and $11 shifted left four into $5A. The 6 is the health, and Enemy_BirdInit overwrites it with 2 when the yacht is present."] },
+    { "address": "0x02DA8C", "previous_name": "sub_2DA8C", "current_name": "Enemy_UpdateBirdAnimation", "legacy_name": "sub_2DA8C", "evidence": "static", "basis": ["The request in $5C is indexed less four, so the four legal requests are 4, 8, $C and $10, which are exactly the values the bird states write."] },
+    { "address": "0x02DA9E", "previous_name": "locret_2DA9E", "current_name": "Enemy_UpdateBirdAnimation_Return", "legacy_name": "locret_2DA9E", "evidence": "static", "basis": ["A zero request leaves the current mapping alone, which is why the dispatcher can clear $5C every frame."] },
+    { "address": "0x02DAA0", "previous_name": "off_2DAA0", "current_name": "Enemy_BirdAnimationMappings", "legacy_name": "off_2DAA0", "evidence": "static", "basis": ["Four long pointers covering the four requests."] },
+    { "address": "0x02DAB0", "previous_name": "sub_2DAB0", "current_name": "Enemy_UpdateHorizontalFlipFromVelocity", "legacy_name": "sub_2DAB0", "evidence": "static", "basis": ["Shared with Enemy_Stage10WaspController. The bit-7 test is a byte operation on the top byte of the $18 velocity long, so it is a sign test, and a zero velocity leaves the flip bit untouched rather than resetting it."] },
+    { "address": "0x02DAC6", "previous_name": "loc_2DAC6", "current_name": "Enemy_SetHorizontalFlip", "legacy_name": "loc_2DAC6", "evidence": "static", "basis": ["Bit 11 of the sprite attribute word is the horizontal flip, set for leftward motion and cleared for rightward."] },
+    { "address": "0x02DACC", "previous_name": "locret_2DACC", "current_name": "Enemy_UpdateHorizontalFlipFromVelocity_Return", "legacy_name": "locret_2DACC", "evidence": "static", "basis": ["Both the zero-velocity case and the flip-setting case return here."] },
+    { "address": "0x02DACE", "previous_name": "sub_2DACE", "current_name": "Enemy_BirdController", "legacy_name": "sub_2DACE", "evidence": "static", "basis": ["Index $24 of Entity_UpdateHandlerTable, which is type $90, the value the Stage 12 turret writes when it spawns a bird. State zero is exempt from the defeat checks, and unlike the Stage 12 controllers this one has a fourth exit: with bit 7 of $22 set and bit 4 clear it plays SFX $BC and retypes itself to a type-$88 effect on the spot."] },
+    { "address": "0x02DB1A", "previous_name": "loc_2DB1A", "current_name": "Enemy_BirdController_UpdateState", "legacy_name": "loc_2DB1A", "evidence": "static", "basis": ["The random state is advanced once per frame per bird, which is what feeds the tracking jitter below."] },
+    { "address": "0x02DB24", "previous_name": "loc_2DB24", "current_name": "Enemy_BirdController_DispatchAndRender", "legacy_name": "loc_2DB24", "evidence": "static", "basis": ["Three steps rather than the two the Stage 12 controllers use: state, animation, then the shared velocity-driven flip."] },
+    { "address": "0x02DB2E", "previous_name": "sub_2DB2E", "current_name": "Enemy_DispatchBirdState", "legacy_name": "sub_2DB2E", "evidence": "static", "basis": ["Fourteen self-relative words measured from the table itself."] },
+    { "address": "0x02DB3E", "previous_name": "off_2DB3E", "current_name": "Enemy_BirdStateOffsets", "legacy_name": "off_2DB3E", "evidence": "static", "basis": ["Fourteen entries, states $00 to $1A, and every one is a distinct handler. The bird advances by 2, by 4, by 6 and by 8 at different points and also steps backwards by 2 and by 4, so unlike the Stage 12 enemies its state graph is not a straight line."] },
+    { "address": "0x02DB5A", "previous_name": "nullsub_66", "current_name": "Orphaned_BirdNoOpState", "legacy_name": "nullsub_66", "evidence": "static", "basis": ["A bare return with zero references of any kind and no ROM absolute-address match. It sits immediately after the state table, which is data, so nothing can fall into it either, and the fourteen table slots all name other handlers. Its address comes from build/main.lst."] },
+    { "address": "0x02DB5C", "previous_name": "sub_2DB5C", "current_name": "Enemy_BirdInit", "legacy_name": "sub_2DB5C", "evidence": "static", "basis": ["Bit 0 of $5F selects the spawn edge, X $1E0 on the right with the flip bit set or X $70 on the left with it clear, so the spawner picks the side by setting one bit."] },
+    { "address": "0x02DB7C", "previous_name": "loc_2DB7C", "current_name": "Enemy_BirdInit_PlaceAtLeftEdge", "legacy_name": "loc_2DB7C", "evidence": "static", "basis": ["The left edge is $70 against the right edge $1E0, and the flip bit is cleared to match."] },
+    { "address": "0x02DB88", "previous_name": "loc_2DB88", "current_name": "Enemy_BirdInit_SelectInitialState", "legacy_name": "loc_2DB88", "evidence": "static", "basis": ["Bit 1 of $5F sends the bird straight to the wait state instead of the entry state. On the entry path it then tests whether the object in the Entity57 slot is type $1B8, Stage12_YachtControllerMain, and if so lowers the health from the table value 6 to 2. Birds in the yacht stage take a third of the damage to kill."] },
+    { "address": "0x02DBA6", "previous_name": "loc_2DBA6", "current_name": "Enemy_BirdSetWaitState", "legacy_name": "loc_2DBA6", "evidence": "static", "basis": ["State 6 is the wait, reached directly from the init when bit 1 of $5F is set."] },
+    { "address": "0x02DBAC", "previous_name": "locret_2DBAC", "current_name": "Enemy_BirdInit_Return", "legacy_name": "locret_2DBAC", "evidence": "static", "basis": ["The non-yacht entry path returns here without touching the health."] },
     {
       "address": "0x02DBAE",
       "previous_name": "Enemy_BirdStartDive",
@@ -2612,17 +2631,32 @@
         "It does not change vertical velocity or perform terrain checks; the later Enemy_BirdDiveAttack state owns that behavior."
       ]
     },
+    { "address": "0x02DBD0", "previous_name": "loc_2DBD0", "current_name": "Enemy_BirdBeginHorizontalEntryState_MoveRight", "legacy_name": "loc_2DBD0", "evidence": "static", "basis": ["The entry velocity is $20000 rightward or $20000 leftward, selected by the same bit 0 of $5F that chose the spawn edge, so a bird always flies away from the edge it entered on."] },
+    { "address": "0x02DBDA", "previous_name": "sub_2DBDA", "current_name": "Enemy_BirdFireState", "legacy_name": "sub_2DBDA", "evidence": "static", "basis": ["A bsr followed by rts where a bra would do, so the state is a pure wrapper around the shot spawner and never advances the state itself."] },
+    { "address": "0x02DBE0", "previous_name": "sub_2DBE0", "current_name": "Enemy_BirdPrepareDiveState", "legacy_name": "sub_2DBE0", "evidence": "static", "basis": ["It arms $4A with 4, which is the number of wait-and-chase cycles the bird will run before the chase state gives up and starts the long attack."] },
     {
       "address": "0x02DBF8",
-      "previous_name": "Player_WallCheckAndDispatch",
-      "current_name": "Enemy_UpdateWallAndLowerTerrainCollision",
+      "previous_name": "Enemy_UpdateWallAndLowerTerrainCollision",
+      "current_name": "Orphaned_EnemyWallAndLowerTerrainCollision",
       "legacy_name": "sub_2DBF8",
       "evidence": "static",
-      "basis": [
-        "The routine calls the generic entity wall check and tail-jumps to the lower-terrain check using the current a5 object.",
-        "It neither selects a player object nor dispatches a player state."
-      ]
+      "basis": ["Zero references of any kind and no ROM absolute-address match, and the routine above it ends in rts so it cannot be fallen into. Its two instructions are the wall check and the lower terrain probe that Enemy_BirdDiveAttack performs inline with other work between them, so it reads as a helper that was inlined and left behind."]
     },
+    { "address": "0x02DC04", "previous_name": "sub_2DC04", "current_name": "Enemy_BirdDiveAttack", "legacy_name": "sub_2DC04", "evidence": "static", "basis": ["It caches the wall-contact byte 7(a5) into $58 every frame, and the chase state later reads that cached byte to decide how steeply to climb."] },
+    { "address": "0x02DC26", "previous_name": "loc_2DC26", "current_name": "Enemy_BirdDiveAttack_ApplyGravity", "legacy_name": "loc_2DC26", "evidence": "static", "basis": ["The floor probe runs only while descending, but the ceiling probe runs on every frame, so a rising bird is stopped by a ceiling and an ascending one ignores the floor."] },
+    { "address": "0x02DC40", "previous_name": "loc_2DC40", "current_name": "Enemy_BirdDiveAttack_BeginRecovery", "legacy_name": "loc_2DC40", "evidence": "static", "basis": ["Reaching terminal velocity $58000 without touching ground skips four states forward, straight to the upward acceleration."] },
+    { "address": "0x02DC4C", "previous_name": "loc_2DC4C", "current_name": "Enemy_BirdTransitionToWait", "legacy_name": "loc_2DC4C", "evidence": "static", "basis": ["A floor contact clears the horizontal velocity and arms a four-frame wait, so a landed bird pauses before its next move."] },
+    { "address": "0x02DC62", "previous_name": "sub_2DC62", "current_name": "Enemy_BirdWaitState", "legacy_name": "sub_2DC62", "evidence": "static", "basis": ["Two nested counters: $48 counts frames and $4A counts how many wait-and-chase cycles remain out of the 4 the dive setup armed."] },
+    { "address": "0x02DC78", "previous_name": "locret_2DC78", "current_name": "Enemy_BirdWaitState_Return", "legacy_name": "locret_2DC78", "evidence": "static", "basis": ["The frames inside one wait return here."] },
+    { "address": "0x02DC7A", "previous_name": "loc_2DC7A", "current_name": "Enemy_BirdWaitState_BeginChase", "legacy_name": "loc_2DC7A", "evidence": "static", "basis": ["When the cycle counter runs out the bird skips forward by 4 with a $40-frame timer rather than by the usual 2."] },
+    { "address": "0x02DC8C", "previous_name": "sub_2DC8C", "current_name": "Enemy_BirdChasePlayer", "legacy_name": "sub_2DC8C", "evidence": "static", "basis": ["A horizontal distance under $80 sends the bird up at $58000 and forward six states; further away it steps back four states and climbs more gently."] },
+    { "address": "0x02DCA0", "previous_name": "loc_2DCA0", "current_name": "Enemy_BirdChasePlayer_MoveRight", "legacy_name": "loc_2DCA0", "evidence": "static", "basis": ["The chase speed is the same $20000 the entry uses, only the sign differs."] },
+    { "address": "0x02DCA8", "previous_name": "loc_2DCA8", "current_name": "Enemy_BirdChasePlayer_SelectVerticalMotion", "legacy_name": "loc_2DCA8", "evidence": "static", "basis": ["The $80 threshold is the only distance test in the whole bird state machine."] },
+    { "address": "0x02DCC2", "previous_name": "loc_2DCC2", "current_name": "Enemy_BirdChasePlayer_ResetApproach", "legacy_name": "loc_2DCC2", "evidence": "static", "basis": ["The cached wall byte from the dive decides between two climb rates, so a bird that hit a wall on its dive climbs at $50000 and one that did not at $28000."] },
+    { "address": "0x02DCDC", "previous_name": "loc_2DCDC", "current_name": "Enemy_BirdChasePlayer_UseShallowAscent", "legacy_name": "loc_2DCDC", "evidence": "static", "basis": ["The shallow climb also requests animation $10, the only state that uses the fourth mapping."] },
+    { "address": "0x02DCEA", "previous_name": "locret_2DCEA", "current_name": "Enemy_BirdChasePlayer_Return", "legacy_name": "locret_2DCEA", "evidence": "static", "basis": ["Both climb rates return here."] },
+    { "address": "0x02DCEC", "previous_name": "sub_2DCEC", "current_name": "Enemy_BirdWaitTimer", "legacy_name": "sub_2DCEC", "evidence": "static", "basis": ["It re-arms the cycle counter to 4 and steps back two states, which is what makes the wait-and-chase pair a loop."] },
+    { "address": "0x02DCFC", "previous_name": "locret_2DCFC", "current_name": "Enemy_BirdWaitTimer_Return", "legacy_name": "locret_2DCFC", "evidence": "static", "basis": ["The counting frames return here."] },
     {
       "address": "0x02DCFE",
       "previous_name": "Enemy_BirdDescendToThreshold",
@@ -2634,6 +2668,9 @@
         "Negative vertical velocity moves upward in the engine's downward-positive screen-coordinate convention, so the old descend claim was reversed."
       ]
     },
+    { "address": "0x02DD14", "previous_name": "locret_2DD14", "current_name": "Enemy_BirdAccelerateUpwardState_Return", "legacy_name": "locret_2DD14", "evidence": "static", "basis": ["The state accelerates by $4000 a frame until the velocity passes $58000 upward, the same magnitude the dive uses downward."] },
+    { "address": "0x02DD16", "previous_name": "sub_2DD16", "current_name": "Enemy_BirdAccelerateDownwardState", "legacy_name": "sub_2DD16", "evidence": "static", "basis": ["Its threshold is $28000, under half the upward one, so the bird falls back more slowly than it climbs."] },
+    { "address": "0x02DD2C", "previous_name": "locret_2DD2C", "current_name": "Enemy_BirdAccelerateDownwardState_Return", "legacy_name": "locret_2DD2C", "evidence": "static", "basis": ["The accelerating frames return here."] },
     {
       "address": "0x02DD2E",
       "previous_name": "Enemy_BirdDecelerate",
@@ -2645,6 +2682,9 @@
         "It therefore continues through zero into upward motion before starting the attack timer, rather than merely decelerating downward."
       ]
     },
+    { "address": "0x02DD50", "previous_name": "locret_2DD50", "current_name": "Enemy_BirdReverseToUpwardState_Return", "legacy_name": "locret_2DD50", "evidence": "static", "basis": ["The reversal ends at only $20000 upward and then arms the $100-frame attack window."] },
+    { "address": "0x02DD52", "previous_name": "sub_2DD52", "current_name": "Enemy_BirdAttackState", "legacy_name": "sub_2DD52", "evidence": "static", "basis": ["The longest state at $100 frames, and the only one that runs both the tracking helper and the shot spawner every frame."] },
+    { "address": "0x02DD6A", "previous_name": "locret_2DD6A", "current_name": "Enemy_BirdAttackState_Return", "legacy_name": "locret_2DD6A", "evidence": "static", "basis": ["The frames inside the attack window return here."] },
     {
       "address": "0x02DD6C",
       "previous_name": "Enemy_BirdAscendToThreshold",
@@ -2656,6 +2696,20 @@
         "Positive vertical velocity is downward in screen coordinates, contradicting the generated ascend description."
       ]
     },
+    { "address": "0x02DD82", "previous_name": "locret_2DD82", "current_name": "Enemy_BirdAccelerateDownwardExitState_Return", "legacy_name": "locret_2DD82", "evidence": "static", "basis": ["The exit threshold is $20000, the gentlest of the three acceleration states."] },
+    { "address": "0x02DD84", "previous_name": "sub_2DD84", "current_name": "Enemy_BirdOscillateMovement", "legacy_name": "sub_2DD84", "evidence": "static", "basis": ["The last state and the only one with no exit: it pushes the vertical velocity upward while it is positive and the horizontal one away from zero, so a bird that reaches it drifts off screen and is collected by the spawn countdown."] },
+    { "address": "0x02DD94", "previous_name": "loc_2DD94", "current_name": "Enemy_BirdOscillateMovement_UpdateHorizontal", "legacy_name": "loc_2DD94", "evidence": "static", "basis": ["Both halves test bit 7 of the top byte of a velocity long, the same sign test the flip helper uses."] },
+    { "address": "0x02DDA6", "previous_name": "loc_2DDA6", "current_name": "Enemy_BirdOscillateMovement_AccelerateLeft", "legacy_name": "loc_2DDA6", "evidence": "static", "basis": ["The horizontal step is $800 against the vertical $2000, so the drift is mostly upward."] },
+    { "address": "0x02DDB0", "previous_name": "sub_2DDB0", "current_name": "Enemy_BirdAITracking", "legacy_name": "sub_2DDB0", "evidence": "static", "basis": ["The aim point is re-randomised only on frames where the low five bits of the frame counter are zero, so the offsets in $4C and $4E hold for $20 frames at a time and the bird weaves rather than homing."] },
+    { "address": "0x02DDDA", "previous_name": "loc_2DDDA", "current_name": "Enemy_BirdAITracking_UpdateTarget", "legacy_name": "loc_2DDDA", "evidence": "static", "basis": ["The target is the player centre plus the jitter, with a fixed $60 subtracted from the vertical, so the bird aims above the player rather than at it."] },
+    { "address": "0x02DE14", "previous_name": "loc_2DE14", "current_name": "Enemy_BirdAITracking_AccelerateRight", "legacy_name": "loc_2DE14", "evidence": "static", "basis": ["The horizontal acceleration is $2000 a frame, clamped at $20000."] },
+    { "address": "0x02DE2E", "previous_name": "loc_2DE2E", "current_name": "Enemy_BirdAITracking_UpdateVertical", "legacy_name": "loc_2DE2E", "evidence": "static", "basis": ["Reached from four places, including the exact-alignment cases of the horizontal half."] },
+    { "address": "0x02DE54", "previous_name": "loc_2DE54", "current_name": "Enemy_BirdAITracking_AccelerateDown", "legacy_name": "loc_2DE54", "evidence": "static", "basis": ["The vertical acceleration is $4000 a frame, twice the horizontal, with the same $20000 clamp."] },
+    { "address": "0x02DE6E", "previous_name": "locret_2DE6E", "current_name": "Enemy_BirdAITracking_Return", "legacy_name": "locret_2DE6E", "evidence": "static", "basis": ["Exact vertical alignment and both clamped cases share this return."] },
+    { "address": "0x02DE70", "previous_name": "sub_2DE70", "current_name": "Enemy_BirdSpawnShot", "legacy_name": "sub_2DE70", "evidence": "static", "basis": ["It fires on one frame in $20 and, unlike every other spawner in this module, does not test the result of Projectile_FindFreeSlotForward before writing, so a full pool is overwritten rather than skipped."] },
+    { "address": "0x02DEB8", "previous_name": "loc_2DEB8", "current_name": "Enemy_BirdSpawnShot_MoveLeft", "legacy_name": "loc_2DEB8", "evidence": "static", "basis": ["The shot leaves $10 pixels to the side the bird is facing, with the muzzle offset and the velocity sign taken from the same bit."] },
+    { "address": "0x02DEC6", "previous_name": "locret_2DEC6", "current_name": "Enemy_BirdSpawnShot_Return", "legacy_name": "locret_2DEC6", "evidence": "static", "basis": ["The off-interval frames return here."] },
+    { "address": "0x02DEC8", "previous_name": "sub_2DEC8", "current_name": "Enemy_ConvertBirdToDefeatDebris", "legacy_name": "sub_2DEC8", "evidence": "static", "basis": ["It retypes to $1DC, index $77 of Entity_UpdateHandlerTable, and negates the horizontal velocity so the debris is thrown back the way the bird came."] },
     {
       "address": "0x02DEFE",
       "previous_name": "Enemy_BirdProjectileSpawn",
@@ -2667,6 +2721,9 @@
         "The handler applies gravity, emits visual particles, creates a radial destruction effect and either spawns a pickup or removes the debris; it does not create the bird's attack projectile."
       ]
     },
+    { "address": "0x02DF1A", "previous_name": "loc_2DF1A", "current_name": "Enemy_UpdateBirdDefeatDebris_EmitParticles", "legacy_name": "loc_2DF1A", "evidence": "static", "basis": ["A particle is spawned on one frame in eight, and $4A counts those particles down from 4, so the debris lasts $20 frames before it bursts."] },
+    { "address": "0x02DF76", "previous_name": "loc_2DF76", "current_name": "Enemy_UpdateBirdDefeatDebris_HideInsteadOfPickup", "legacy_name": "loc_2DF76", "evidence": "static", "basis": ["The same test and the same response as Enemy_UpdateStage12DefeatDebris_HideInsteadOfPickup: while the object in the Entity57 slot is type $1B8, the yacht, the debris sets bit 4 of its sprite flag byte and drops nothing. The former name spoke of a special stage without naming the condition or the effect."] },
+    { "address": "0x02DF7C", "previous_name": "locret_2DF7C", "current_name": "Enemy_UpdateBirdDefeatDebris_Return", "legacy_name": "locret_2DF7C", "evidence": "static", "basis": ["The off-interval frames, a full object pool and the counting frames all share this return."] },
     {
       "address": "0x02DF7E",
       "previous_name": "Enemy_Stage10FlyMain",

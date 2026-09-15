@@ -10137,3 +10137,50 @@ from 1,106 to 1,047 and its actionable upper bound from 593 to 534; the 513
 classified binary-backed end aliases and the 379-module layout remain unchanged.
 `gameplay/object_data.s` now has zero pending current names, leaving 8 modules
 in the queue.
+
+`enemies/bird_enemy.s` is the enemy the Stage 12 turret spawns — index `$24` of
+`Entity_UpdateHandlerTable` is type `$90`, the value that turret writes — and
+auditing it turned up the yacht test twice more.
+
+`Enemy_BirdInit_SelectInitialState` reads the same `Entity57Type` slot the
+Stage 12 code reads and compares it against `$1B8`,
+`Stage12_YachtControllerMain`. When the yacht is present it overwrites the
+health byte the parameter table supplied, 6, with 2. Birds in the yacht stage
+take a third of the damage to kill, and nothing in the source said so.
+
+The second occurrence is a name this audit has already corrected once.
+`Enemy_UpdateBirdDefeatDebris_RemoveForSpecialStage` is the identical
+construct to `Enemy_UpdateStage12DefeatDebris_RemoveForSpecialStage`, corrected
+two packages ago: the same test on the same slot, and the same response of
+setting bit 4 of the sprite flag byte instead of dropping a pickup. It becomes
+`Enemy_UpdateBirdDefeatDebris_HideInsteadOfPickup`, so the two now read alike.
+
+Two orphans. `nullsub_66` sits immediately after the fourteen-entry state table,
+whose slots all name other handlers; it has no reference of any kind, no ROM
+address match, and the data above it means nothing can fall into it.
+`Enemy_UpdateWallAndLowerTerrainCollision` is more interesting: its two
+instructions are exactly the wall check and the lower terrain probe that
+`Enemy_BirdDiveAttack` performs inline, with other work between them, so it
+reads as a helper that was inlined and left behind. Both take the `Orphaned_`
+prefix.
+
+The bird is also the first enemy in this audit whose state graph is not a
+straight line. Fourteen states, all distinct handlers, and the machine advances
+by 2, 4, 6 and 8 at different points and steps backwards by 2 and by 4 as well:
+the wait and the chase form a loop counted down by `$4A`, which the dive setup
+arms at 4, and the chase state exits that loop either forward six states when
+the player is within `$80` or backward four when not.
+
+Two details worth keeping. `Enemy_BirdDiveAttack` caches the wall-contact byte
+`7(a5)` into `$58` on every frame, and the chase state reads that cached byte
+much later to pick between a `$50000` climb and a `$28000` one — a value carried
+across three state transitions. And `Enemy_BirdSpawnShot` is the only spawner in
+the module that does not test the result of `Projectile_FindFreeSlotForward`
+before writing, so a full object pool is overwritten rather than skipped; the
+debris particle spawner twenty lines later does test it.
+
+Sixty-one records, sixty new and one corrected in place, raise the registry from
+15,297 to 15,357. The pending queue falls from 1,047 to 987 and its actionable
+upper bound from 534 to 474; provenance, the 513 classified binary-backed end
+aliases, and the 379-module layout remain unchanged. `enemies/bird_enemy.s` now
+has zero pending current names, leaving 7 modules in the queue.

@@ -106,9 +106,10 @@ Enemy_BirdStateOffsets: dc.w    Enemy_BirdInit-*        ; DATA XREF: Enemy_Dispa
                 dc.w    Enemy_BirdAccelerateDownwardExitState-*
                 dc.w    Enemy_BirdOscillateMovement-*
 
-Enemy_BirdNoOpState:                                    ; was: nullsub_66
+; Unreachable: a bare return with no reference of any kind
+Orphaned_BirdNoOpState:                                 ; was: nullsub_66
                 rts
-; End of function Enemy_BirdNoOpState
+; End of function Orphaned_BirdNoOpState
 
 ; Initializes bird enemy position direction and movement state
 Enemy_BirdInit:                                         ; DATA XREF: ROM:Enemy_BirdStateOffsets   o  ; was: sub_2DB5C
@@ -167,11 +168,11 @@ Enemy_BirdPrepareDiveState:                             ; DATA XREF: ROM:0002DB4
                 addq.w  #2,4(a5)
                 rts
 ; End of function Enemy_BirdPrepareDiveState
-; Updates wall and lower-terrain collision for the current enemy
-Enemy_UpdateWallAndLowerTerrainCollision:
+; Unreachable: would run the wall check and the lower terrain probe back to back
+Orphaned_EnemyWallAndLowerTerrainCollision:
                 jsr     (Physics_EntityWallCheck).l     ; was: sub_2DBF8
                 jmp     Physics_CheckLowerTerrain
-; End of function Enemy_UpdateWallAndLowerTerrainCollision
+; End of function Orphaned_EnemyWallAndLowerTerrainCollision
 ; Bird dive attack with gravity and ground collision detection
 Enemy_BirdDiveAttack:                                   ; DATA XREF: ROM:0002DB46   o  ; was: sub_2DC04
                 jsr     (Physics_EntityWallCheck).l
@@ -419,7 +420,7 @@ Enemy_ConvertBirdToDefeatDebris:                        ; CODE XREF: Enemy_BirdC
                 move.w  #8,$5C(a5)
                 bra.w   Enemy_UpdateBirdAnimation
 ; End of function Enemy_ConvertBirdToDefeatDebris
-; Updates falling bird defeat debris, emits particles, then creates a pickup
+; Updates falling bird debris, emits particles, then drops a pickup unless the yacht is active
 Enemy_UpdateBirdDefeatDebris:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2DEFE
                 bsr.w   Enemy_UpdateBlinkVisibility
                 addi.l  #$2000,$1C(a5)
@@ -448,11 +449,11 @@ Enemy_UpdateBirdDefeatDebris_EmitParticles:             ; CODE XREF: Enemy_Updat
                 move.b  #$BC,d0
                 jsr     (Sound_QueueSFXRequest).l
                 cmpi.w  #$1B8,(Entity57Type).w
-                beq.s   Enemy_UpdateBirdDefeatDebris_RemoveForSpecialStage
+                beq.s   Enemy_UpdateBirdDefeatDebris_HideInsteadOfPickup
                 moveq   #7,d0
                 jmp     Pickup_SpawnRandomFromCurrentObject
 ; ---------------------------------------------------------------------------
-Enemy_UpdateBirdDefeatDebris_RemoveForSpecialStage:     ; CODE XREF: Enemy_UpdateBirdDefeatDebris+6E   j  ; was: loc_2DF76
+Enemy_UpdateBirdDefeatDebris_HideInsteadOfPickup:       ; CODE XREF: Enemy_UpdateBirdDefeatDebris+6E   j  ; was: loc_2DF76
                 bset    #4,2(a5)
 Enemy_UpdateBirdDefeatDebris_Return:                    ; CODE XREF: Enemy_UpdateBirdDefeatDebris+24   j  ; was: locret_2DF7C
                                         ; Enemy_UpdateBirdDefeatDebris+2C   j
