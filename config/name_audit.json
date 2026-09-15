@@ -2503,6 +2503,8 @@
         "Its states drive yacht motion, scrolling-plane offsets, steering, destruction palette cycling and debris; no enemy-cannon object is initialized here."
       ]
     },
+    { "address": "0x02F5E8", "previous_name": "sub_2F5E8", "current_name": "Stage12_YachtControllerInit", "legacy_name": "sub_2F5E8", "evidence": "static", "basis": ["State 0 sets the controller's flags and hitbox, clears its motion accumulators, and caches the spawn position in $4C and $4E before falling straight into the idle state."] },
+    { "address": "0x02F62C", "previous_name": "locret_2F62C", "current_name": "Stage12_YachtControllerIdle", "legacy_name": "locret_2F62C", "evidence": "static", "basis": ["State 2 is a bare return; the controller waits here until the stage script writes a later state index."] },
     {
       "address": "0x02F62E",
       "previous_name": "Enemy_ShipUpdatePosition",
@@ -2536,6 +2538,8 @@
         "It allocates no cannons and transitions to the destruction state when the controller health field becomes negative."
       ]
     },
+    { "address": "0x02F6CA", "previous_name": "loc_2F6CA", "current_name": "Stage12_YachtRecoveryState", "legacy_name": "loc_2F6CA", "evidence": "static", "basis": ["State $A adds $210 to the vertical velocity each frame and rejoins the bobbing state once the velocity turns positive and the yacht has sunk past Y $12C."] },
+    { "address": "0x02F6EC", "previous_name": "loc_2F6EC", "current_name": "Stage12_YachtPostSignalState", "legacy_name": "loc_2F6EC", "evidence": "static", "basis": ["State $C keeps the scroll acceleration, preset alternation and plane-offset projection running but no longer applies the vertical bob or the player steering; only the recovery signal still diverts it."] },
     {
       "address": "0x02F706",
       "previous_name": "Enemy_ShipSpawnCannons_MainLoop",
@@ -2569,6 +2573,7 @@
         "It performs no health, destruction or remaining-object check."
       ]
     },
+    { "address": "0x02F7D6", "previous_name": "sub_2F7D6", "current_name": "Stage12_YachtApplySteering", "legacy_name": "sub_2F7D6", "evidence": "static", "basis": ["Steering is disabled while the player is defeated or bit 0 of PlayerActionStateFlags is set. Otherwise the held left and right bits push the horizontal velocity toward $FFFD0000 or $30000 in $2000 steps, and the screen limits $70 and $100 divert to the easing helper instead."] },
     {
       "address": "0x02F82E",
       "previous_name": "Enemy_ShipCannonFirePattern",
@@ -2580,6 +2585,7 @@
         "It neither creates a projectile nor selects a firing pattern."
       ]
     },
+    { "address": "0x02F868", "previous_name": "sub_2F868", "current_name": "Stage12_YachtUpdateScrollPreset", "legacy_name": "sub_2F868", "evidence": "static", "basis": ["The routine acts only on odd frames and then alternates between two packed four-row scroll commands, $4C705B01 and $4C705CA1, on the next counter bit."] },
     {
       "address": "0x02F894",
       "previous_name": "Enemy_ShipCannonSpawn",
@@ -2591,6 +2597,7 @@
         "It calls no allocator and writes no entity type, so the claimed cannon spawn is contradicted."
       ]
     },
+    { "address": "0x02F8B8", "previous_name": "sub_2F8B8", "current_name": "Stage12_YachtSpawnDestructionDebris", "legacy_name": "sub_2F8B8", "evidence": "static", "basis": ["Subject to the shared global spawn delay, the routine places one debris object within a 64-pixel random box biased $10 left and $18 above the yacht, and gives it a randomized horizontal velocity."] },
     {
       "address": "0x02F90E",
       "previous_name": "Enemy_ShipCannon1Main",
@@ -2613,6 +2620,15 @@
         "The same state machine later anchors that actor to the yacht; it is not one of several ship cannons."
       ]
     },
+    { "address": "0x02F97A", "previous_name": "loc_2F97A", "current_name": "Stage12_TeddyBearWaitForRescue", "legacy_name": "loc_2F97A", "evidence": "static", "basis": ["The rescue begins only once the camera passes X $17A0 and a scan of the entity pool finds no remaining type-$36C object, so the bear stays captive while any of those are alive."] },
+    { "address": "0x02F9E0", "previous_name": "nullsub_71", "current_name": "Stage12_TeddyBearReturn", "legacy_name": "nullsub_71", "evidence": "static", "basis": ["The teddy-bear state table names this bare return as a real state, and the timing states also branch to it on every frame their counters are still running, so it serves as both an idle state and the shared early exit."] },
+    { "address": "0x02F9E2", "previous_name": "sub_2F9E2", "current_name": "Stage12_TeddyBearBeginDrop", "legacy_name": "sub_2F9E2", "evidence": "static", "basis": ["After the $40-tick rescue pose the state installs the drop animation and an upward kick of $FFFD8000 before the landing state takes over."] },
+    { "address": "0x02FA00", "previous_name": "loc_2FA00", "current_name": "Stage12_TeddyBearLand", "legacy_name": "loc_2FA00", "evidence": "static", "basis": ["Gravity of $3800 per frame runs until the bear passes Y $120, where the state pins the coordinate, clears the velocity, and either waits or jumps straight to the boarding jump when bit 0 of StageRouteFlags is set."] },
+    { "address": "0x02FA3E", "previous_name": "sub_2FA3E", "current_name": "Stage12_TeddyBearFacePlayerDelay", "legacy_name": "sub_2FA3E", "evidence": "static", "basis": ["For $20 ticks the bear keeps turning toward the player, then switches to the pre-boarding animation and a longer $A0-tick wait."] },
+    { "address": "0x02FA5E", "previous_name": "loc_2FA5E", "current_name": "Stage12_TeddyBearWaitBeforeBoarding", "legacy_name": "loc_2FA5E", "evidence": "static", "basis": ["The longer wait keeps facing the player and ends by clearing the flip bit and selecting the boarding-delay animation."] },
+    { "address": "0x02FA86", "previous_name": "loc_2FA86", "current_name": "Stage12_TeddyBearBoardingDelay", "legacy_name": "loc_2FA86", "evidence": "static", "basis": ["A final $40-tick pause before the boarding jump; the early route from the landing state enters just past it."] },
+    { "address": "0x02FAB6", "previous_name": "loc_2FAB6", "current_name": "Stage12_TeddyBearBoardingJump", "legacy_name": "loc_2FAB6", "evidence": "static", "basis": ["The jump arc adds $4000 per frame and completes only once the vertical velocity has passed $54000, so the state spans both the rise and most of the fall."] },
+    { "address": "0x02FAE4", "previous_name": "loc_2FAE4", "current_name": "Stage12_TeddyBearPilotAttachDelay", "legacy_name": "loc_2FAE4", "evidence": "static", "basis": ["For $20 ticks the bear is anchored to the yacht each frame before the piloting loop animation and SFX $18 start."] },
     {
       "address": "0x02FB10",
       "previous_name": "Enemy_ShipCannon2Main",
@@ -2624,6 +2640,12 @@
         "The apparent numbered cannon states are successive states of the same entity dispatch table, not separate cannon handlers."
       ]
     },
+    { "address": "0x02FB4A", "previous_name": "Stage12_TeddyBearPilotUpdatePalette", "current_name": "Stage12_TeddyBearPilotTrackOamBucket", "legacy_name": "sub_2FB4A", "evidence": "static", "basis": ["The state copies PlayerOAMBucketOffset into field $20. Sprite_RenderSingleObjectEntry masks that field with $FC and uses it to select which OAM list head the object is appended to, so it is the draw-order bucket, not a palette selector."] },
+    { "address": "0x02FB54", "previous_name": "sub_2FB54", "current_name": "Stage12_TeddyBearPilotPrepareShot", "legacy_name": "sub_2FB54", "evidence": "static", "basis": ["A one-frame state that selects the piloting loop animation and falls through into the firing state."] },
+    { "address": "0x02FB64", "previous_name": "loc_2FB64", "current_name": "Stage12_TeddyBearPilotFire", "legacy_name": "loc_2FB64", "evidence": "static", "basis": ["The firing state is a single branch into the shared periodic downward-shot helper."] },
+    { "address": "0x02FB68", "previous_name": "sub_2FB68", "current_name": "Stage12_TeddyBearPilotRelease", "legacy_name": "sub_2FB68", "evidence": "static", "basis": ["The release state selects the release pose, rewrites the object flags, and falls through into the fall state."] },
+    { "address": "0x02FB7E", "previous_name": "loc_2FB7E", "current_name": "Stage12_TeddyBearPilotFall", "legacy_name": "loc_2FB7E", "evidence": "static", "basis": ["The terminal state only adds $2000 of downward acceleration each frame."] },
+    { "address": "0x02FB88", "previous_name": "sub_2FB88", "current_name": "Stage12_TeddyBearFireDownwardShot", "legacy_name": "sub_2FB88", "evidence": "static", "basis": ["The helper fires once every 64 frames, plays SFX $2C, and gives the type-$188 shot the bear's own draw bucket minus four so it renders in front, starting $10 pixels above him."] },
     {
       "address": "0x02FBEA",
       "previous_name": "Enemy_ShipCannon3Main",
@@ -2635,6 +2657,7 @@
         "It creates and updates no third cannon."
       ]
     },
+    { "address": "0x02FC0E", "previous_name": "sub_2FC0E", "current_name": "Stage12_TeddyBearFacePlayer", "legacy_name": "sub_2FC0E", "evidence": "static", "basis": ["The helper sets the horizontal flip bit only when the player is to the left, comparing PlayerXPosition against the bear's own X."] },
     {
       "address": "0x02FC26",
       "previous_name": "Enemy_ProjectileMainDispatch",

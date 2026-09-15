@@ -8805,3 +8805,30 @@ pending queue falls from 2,427 to 2,404 and its actionable upper bound from
 1,914 to 1,891; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `cutscenes/xi_tiger_entrance_sequences.s`
 now has zero pending current names, leaving 41 modules in the queue.
+
+The 23 pending entries in `stages/stage_12_yacht.s` hold except for one field
+attribution. `Stage12_TeddyBearPilotUpdatePalette` copies `PlayerOAMBucketOffset`
+into field `$20`, and `Sprite_RenderSingleObjectEntry` masks that field with
+`$FC` and uses the result to select which OAM list head the object is appended
+to. It is the sprite draw-order bucket, not a palette selector, so the state
+becomes `Stage12_TeddyBearPilotTrackOamBucket`. The same field explains the
+bear's downward shot, which copies his bucket and subtracts four so the
+projectile renders in front of him.
+
+Two gates in the module are worth recording because they are not obvious from
+the names. The rescue does not begin on camera position alone: after the camera
+passes X `$17A0` the state also scans the whole entity pool and stays captive
+while any type-`$36C` object is still alive. The boarding jump can also be
+skipped entirely, because the landing state jumps straight to it when bit 0 of
+`StageRouteFlags` is set, bypassing the two facing delays.
+
+`Stage12_TeddyBearReturn` was resolved against the assembler listing rather than
+inferred: it sits at `0x02F9E0`, and the teddy-bear state table names it as a
+real state. It therefore serves as both an idle state and the shared early exit
+that every timing state branches to.
+
+Twenty-three exact-address records raise the registry from 13,938 to 13,961. The
+pending queue falls from 2,404 to 2,381 and its actionable upper bound from
+1,891 to 1,868; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `stages/stage_12_yacht.s` now has zero
+pending current names, leaving 40 modules in the queue.

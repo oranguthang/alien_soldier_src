@@ -320,7 +320,7 @@ Stage12_TeddyBearStateTable:    dc.w    Stage12_TeddyBearInit-Stage12_TeddyBearI
                 dc.w    Stage12_TeddyBearBoardingJump-Stage12_TeddyBearInit
                 dc.w    Stage12_TeddyBearPilotAttachDelay-Stage12_TeddyBearInit
                 dc.w    Stage12_TeddyBearPilotStart-Stage12_TeddyBearInit
-                dc.w    Stage12_TeddyBearPilotUpdatePalette-Stage12_TeddyBearInit
+                dc.w    Stage12_TeddyBearPilotTrackOamBucket-Stage12_TeddyBearInit
                 dc.w    Stage12_TeddyBearPilotPrepareShot-Stage12_TeddyBearInit
                 dc.w    Stage12_TeddyBearPilotFire-Stage12_TeddyBearInit
                 dc.w    Stage12_TeddyBearPilotRelease-Stage12_TeddyBearInit
@@ -468,11 +468,11 @@ Stage12_TeddyBearPilotStart:                            ; DATA XREF: ROM:0002F93
                 move.l  #Stage12_TeddyBearDropAndPilotAnimation,8(a5)
                 rts
 ; End of function Stage12_TeddyBearPilotStart
-; Copies the current stage palette selector while attached to the yacht
-Stage12_TeddyBearPilotUpdatePalette:                    ; DATA XREF: ROM:0002F934   o  ; was: sub_2FB4A
+; Tracks the player's OAM draw bucket while attached to the yacht
+Stage12_TeddyBearPilotTrackOamBucket:                   ; DATA XREF: ROM:0002F934   o  ; was: sub_2FB4A
                 move.b  (PlayerOAMBucketOffset).w,$20(a5)
                 bra.w   Stage12_TeddyBearAttachToYacht
-; End of function Stage12_TeddyBearPilotUpdatePalette
+; End of function Stage12_TeddyBearPilotTrackOamBucket
 ; Selects the attached firing animation
 Stage12_TeddyBearPilotPrepareShot:                      ; DATA XREF: ROM:0002F936   o  ; was: sub_2FB54
                 addq.w  #2,4(a5)
