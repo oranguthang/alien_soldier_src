@@ -9187,3 +9187,36 @@ pending queue falls from 2,036 to 1,999 and its actionable upper bound from
 the 379-module layout remain unchanged.
 `enemies/stage_10_wasp_and_falling_shot.s` now has zero pending current names,
 leaving 28 modules in the queue.
+
+The 37 pending entries in `player/air_and_ground_states.s` produced the largest
+naming correction of this pass, because two families were named for moves the
+player state table shows they do not perform. That table,
+`Player_StateHandlerOffsets`, holds 48 words measured from
+`Player_HandleDeathSequence`, and states `$18` through `$26` are the ceiling
+block.
+
+`Player_InitWallKickState` performs no wall kick. Every path through it ends at
+an entry that writes state `$1A`, which the table resolves to
+`Player_CeilingMovementState`, so the routine and its four internal labels are
+renamed around `Player_InitCeilingMovementState`. `Player_InitCrouchState` and
+`Player_HandleCrouchState` are likewise not a ground crouch: the initializer
+writes state `$1E`, and that handler tests upper-terrain contact and routes to
+the ceiling idle and ceiling counter-force states. It brakes the horizontal
+velocity while the player hangs from the ceiling, resuming movement if a
+direction is held and going idle otherwise, so the pair becomes
+`Player_InitCeilingDecelerateState` and `Player_CeilingDecelerateState`.
+
+With those two corrected the ceiling block reads as one family: idle at `$18`,
+movement at `$1A`, its armed counterpart at `$1C`, deceleration at `$1E`, weapon
+select at `$20`, dash at `$22` and landing at `$26`.
+
+`Player_UpdateWeaponCharge` is unreachable. It has no caller, no absolute
+address in the ROM, and no offset in the 48-word table, while the live states in
+the same module all resolve there. Its body repeats the health-minus-maximum
+store that `Player_UpdateCounterForceInput` ends with.
+
+Thirty-seven exact-address records raise the registry from 14,343 to 14,380. The
+pending queue falls from 1,999 to 1,962 and its actionable upper bound from
+1,486 to 1,449; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `player/air_and_ground_states.s` now has
+zero pending current names, leaving 27 modules in the queue.

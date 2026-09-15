@@ -317,9 +317,9 @@ Player_CeilingIdleState_CheckDashInput:                 ; CODE XREF: Player_Ceil
                 btst    #0,$69(a5)
                 bne.w   Player_InitDashState
                 btst    #2,$69(a5)
-                bne.w   Player_InitWallKickState
+                bne.w   Player_InitCeilingMovementState
                 btst    #3,$69(a5)
-                bne.w   Player_InitWallKickState
+                bne.w   Player_InitCeilingMovementState
 Player_CeilingIdleState_Render:                         ; CODE XREF: Player_CeilingIdleState+3C   j  ; was: loc_1645E
                 btst    #4,$69(a5)
                 beq.w   Player_RenderIdleFrame

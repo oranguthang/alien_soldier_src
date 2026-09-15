@@ -1,19 +1,19 @@
-Player_UpdateWeaponCharge:
+Orphaned_PlayerUpdateWeaponCharge:
                 btst    #5,$6A(a5)                      ; was: sub_164DC
-                beq.s   Player_UpdateWeaponCharge_Return
+                beq.s   Orphaned_PlayerUpdateWeaponChargeReturn
                 btst    #0,$69(a5)
-                beq.s   Player_UpdateWeaponCharge_Return
+                beq.s   Orphaned_PlayerUpdateWeaponChargeReturn
                 move.w  (PlayerHealth).w,d0
                 sub.w   (PlayerMaxHealth).w,d0
                 move.w  d0,(PhoenixAttackStatus).w
                 moveq   #1,d0
-Player_UpdateWeaponCharge_Return:                       ; CODE XREF: Player_UpdateWeaponCharge+6   j  ; was: locret_164FA
-                                        ; Player_UpdateWeaponCharge+E   j
+Orphaned_PlayerUpdateWeaponChargeReturn:                ; CODE XREF: Orphaned_PlayerUpdateWeaponCharge+6   j  ; was: locret_164FA
+                                        ; Orphaned_PlayerUpdateWeaponCharge+E   j
                 rts
-; End of function Player_UpdateWeaponCharge
+; End of function Orphaned_PlayerUpdateWeaponCharge
 ; Initializes player dash state with animation and counter setup
 Player_InitDashState:                                   ; CODE XREF: Player_CeilingIdleState+44   j  ; was: sub_164FC
-                                        ; Player_HandleCrouchState+32   j
+                                        ; Player_CeilingDecelerateState+32   j
                 move.w  #2,$48(a5)
 ; Initializes dash animation with timer and direction flip
 Player_InitDashAnimation:                               ; CODE XREF: Player_DashAttackState+88   j  ; was: loc_16502
@@ -68,18 +68,18 @@ Player_CeilingDashState_Render:                         ; CODE XREF: Player_Ceil
                 beq.w   Player_RenderAirborneFrame
                 bra.w   Player_RenderWithWeapon
 ; End of function Player_CeilingDashState
-; Initializes player crouch state
-Player_InitCrouchState:                                 ; CODE XREF: Player_CeilingLandingState+68   j  ; was: sub_165A4
-                                        ; Player_InitWallKickState+3A   j
+; Enters state $1E, which brakes the player to a stop while held to the ceiling
+Player_InitCeilingDecelerateState:                      ; CODE XREF: Player_CeilingLandingState+68   j  ; was: sub_165A4
+                                        ; Player_InitCeilingMovementState+3A   j
                 move.b  #$7F,(PlayerInputMask).w
                 clr.w   (PlayerAirMoveUsedFlags).w
                 move.w  #$1E,4(a5)
                 clr.w   $48(a5)
                 move.w  #$10,$5C(a5)
                 bra.w   Player_AutoFlipDirection
-; End of function Player_InitCrouchState
-; Main crouch state handler with input checks
-Player_HandleCrouchState:                               ; DATA XREF: ROM:00015080   o  ; was: sub_165C2
+; End of function Player_InitCeilingDecelerateState
+; Brakes to a stop on the ceiling, then resumes movement or goes idle
+Player_CeilingDecelerateState:                          ; DATA XREF: ROM:00015080   o  ; was: sub_165C2
                 jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
                 jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
@@ -96,15 +96,15 @@ Player_HandleCrouchState:                               ; DATA XREF: ROM:0001508
                 bne.w   Player_InitDashState
                 bsr.w   Player_DecelerateHorizontalVelocityFast
                 move.l  $18(a5),d0
-                bne.s   Player_RenderCrouchMovement
+                bne.s   Player_CeilingDecelerateState_Render
                 btst    #2,$69(a5)
-                bne.w   Player_InitWallKickFromMovement
+                bne.w   Player_InitCeilingMovementFromDirection
                 btst    #3,$69(a5)
-                bne.w   Player_InitWallKickFromMovement
+                bne.w   Player_InitCeilingMovementFromDirection
                 bra.w   Player_InitCeilingIdleState
 ; ---------------------------------------------------------------------------
-; Selects the crouch-movement rendering path
-Player_RenderCrouchMovement:                            ; CODE XREF: Player_HandleCrouchState+3E   j  ; was: loc_1661A
+; Selects the rendering path while still sliding along the ceiling
+Player_CeilingDecelerateState_Render:                   ; CODE XREF: Player_CeilingDecelerateState+3E   j  ; was: loc_1661A
                 btst    #4,$69(a5)
                 bne.w   Player_RenderGroundedFrame
                 movea.l #Player_CommonPrimarySpriteMapping,a1
@@ -113,10 +113,10 @@ Player_RenderCrouchMovement:                            ; CODE XREF: Player_Hand
                 moveq   #6,d6
                 bra.w   Player_BuildSpritePieces
 ; ---------------------------------------------------------------------------
-Player_CeilingState_Return:                             ; CODE XREF: Player_HandleCrouchState+1A   j  ; was: locret_16638
-                                        ; Player_HandleCrouchState+20   j
+Player_CeilingState_Return:                             ; CODE XREF: Player_CeilingDecelerateState+1A   j  ; was: locret_16638
+                                        ; Player_CeilingDecelerateState+20   j
                 rts
-; End of function Player_HandleCrouchState
+; End of function Player_CeilingDecelerateState
 ; Initializes the landing state for contact with upper terrain
 Player_InitCeilingLandingState:                         ; CODE XREF: Player_HandleFallingState+66   j  ; was: sub_1663A
                                         ; Player_HandleBounceState+3A   j
@@ -158,10 +158,10 @@ Player_CeilingLandingState:                             ; DATA XREF: ROM:0001508
 ; ---------------------------------------------------------------------------
 Player_CeilingLandingState_CheckMovementInput:          ; CODE XREF: Player_CeilingLandingState+46   j  ; was: loc_166C4
                 btst    #2,$69(a5)
-                bne.w   Player_InitWallKickFromMovement
+                bne.w   Player_InitCeilingMovementFromDirection
                 btst    #3,$69(a5)
-                bne.w   Player_InitWallKickFromMovement
-                bra.w   Player_InitCrouchState
+                bne.w   Player_InitCeilingMovementFromDirection
+                bra.w   Player_InitCeilingDecelerateState
 ; ---------------------------------------------------------------------------
 Player_CeilingLandingState_Render:                      ; CODE XREF: Player_CeilingLandingState+3E   j  ; was: loc_166DC
                                         ; Player_CeilingLandingState+52   j
@@ -219,43 +219,43 @@ Player_ToggleShootingMode:                              ; CODE XREF: Player_Chec
                 moveq   #0,d0
                 rts
 ; End of function Player_ToggleShootingMode
-; Initializes wall kick state from button input
-Player_InitWallKickState:                               ; CODE XREF: Player_CeilingIdleState+4E   j  ; was: sub_16782
+; Enters state $1A, ceiling movement, from a held direction
+Player_InitCeilingMovementState:                        ; CODE XREF: Player_CeilingIdleState+4E   j  ; was: sub_16782
                                         ; Player_CeilingIdleState+58   j
                 btst    #4,$69(a5)
-                beq.s   Player_InitWallKickAnimation
+                beq.s   Player_InitCeilingMovementAnimation
                 tst.w   (ShootingMode).w
-                beq.s   Player_InitWallKickState_CheckFacing
+                beq.s   Player_InitCeilingMovementCheckFacing
                 rts
 ; ---------------------------------------------------------------------------
-Player_InitWallKickFromMovement:                        ; CODE XREF: Player_HandleCrouchState+46   j  ; was: loc_16792
-                                        ; Player_HandleCrouchState+50   j
+Player_InitCeilingMovementFromDirection:                ; CODE XREF: Player_CeilingDecelerateState+46   j  ; was: loc_16792
+                                        ; Player_CeilingDecelerateState+50   j
                 btst    #4,$69(a5)
-                beq.s   Player_InitWallKickAnimation
+                beq.s   Player_InitCeilingMovementAnimation
                 tst.w   (ShootingMode).w
                 bne.w   Player_InitCeilingIdleState
-Player_InitWallKickState_CheckFacing:                   ; CODE XREF: Player_InitWallKickState+C   j  ; was: loc_167A2
+Player_InitCeilingMovementCheckFacing:                  ; CODE XREF: Player_InitCeilingMovementState+C   j  ; was: loc_167A2
                 btst    #3,$69(a5)
-                beq.s   Player_InitWallKickState_CheckLeft
+                beq.s   Player_InitCeilingMovementCheckLeft
                 btst    #3,$E(a5)
                 bne.w   Player_InitCeilingAirControlState
-                bra.s   Player_InitWallKickAnimation
+                bra.s   Player_InitCeilingMovementAnimation
 ; ---------------------------------------------------------------------------
-Player_InitWallKickState_CheckLeft:                     ; CODE XREF: Player_InitWallKickState+26   j  ; was: loc_167B6
+Player_InitCeilingMovementCheckLeft:                    ; CODE XREF: Player_InitCeilingMovementState+26   j  ; was: loc_167B6
                 btst    #2,$69(a5)
-                beq.w   Player_InitCrouchState
+                beq.w   Player_InitCeilingDecelerateState
                 btst    #3,$E(a5)
                 beq.w   Player_InitCeilingAirControlState
-; Initializes wall kick animation with timer and direction flip
-Player_InitWallKickAnimation:                           ; CODE XREF: Player_InitWallKickState+6   j  ; was: loc_167CA
-                                        ; Player_InitWallKickState+16   j
+; Installs the ceiling-movement animation and enters state $1A
+Player_InitCeilingMovementAnimation:                    ; CODE XREF: Player_InitCeilingMovementState+6   j  ; was: loc_167CA
+                                        ; Player_InitCeilingMovementState+16   j
                 move.b  #$7F,(PlayerInputMask).w
                 move.w  #$1A,4(a5)
                 move.w  #4,$48(a5)
                 move.w  #$FFFF,$C(a5)
                 move.w  #$10,$5C(a5)
                 bra.w   Player_AutoFlipDirection
-; End of function Player_InitWallKickState
+; End of function Player_InitCeilingMovementState
 Player_CeilingMovementState_Return:                     ; CODE XREF: Player_CeilingMovementState+1A   j  ; was: nullsub_44
                                         ; Player_CeilingMovementState+20   j
                 rts
@@ -280,12 +280,12 @@ Player_CeilingMovementState:                            ; DATA XREF: ROM:0001507
                 btst    #4,$69(a5)
                 beq.s   Player_CeilingMovementState_CheckHorizontalInput
                 tst.w   (ShootingMode).w
-                bne.w   Player_InitCrouchState
+                bne.w   Player_InitCeilingDecelerateState
 Player_CeilingMovementState_CheckHorizontalInput:       ; CODE XREF: Player_CeilingMovementState+3C   j  ; was: loc_16834
                 btst    #2,$69(a5)
                 bne.s   Player_CeilingMovementState_Accelerate
                 btst    #3,$69(a5)
-                beq.w   Player_InitCrouchState
+                beq.w   Player_InitCeilingDecelerateState
 Player_CeilingMovementState_Accelerate:                 ; CODE XREF: Player_CeilingMovementState+4C   j  ; was: loc_16846
                 bsr.w   Physics_AccelerateHorizontalByFacing
                 btst    #4,$69(a5)
@@ -301,8 +301,8 @@ Player_CeilingMovementState_CheckRightFacing:           ; CODE XREF: Player_Ceil
                 bne.w   Player_InitCeilingAirControlState
                 bra.w   Player_RenderDashSprite
 ; ---------------------------------------------------------------------------
-Player_InitCeilingAirControlState:                      ; CODE XREF: Player_InitWallKickState+2E   j  ; was: loc_16878
-                                        ; Player_InitWallKickState+44   j
+Player_InitCeilingAirControlState:                      ; CODE XREF: Player_InitCeilingMovementState+2E   j  ; was: loc_16878
+                                        ; Player_InitCeilingMovementState+44   j
                 move.w  #$1C,4(a5)
                 clr.w   $48(a5)
                 move.w  #$FFFF,$C(a5)
@@ -328,19 +328,19 @@ Player_CeilingAirControlState:                          ; DATA XREF: ROM:0001507
                 btst    #0,$69(a5)
                 bne.w   Player_InitDashState
                 btst    #4,$69(a5)
-                beq.w   Player_InitWallKickAnimation
+                beq.w   Player_InitCeilingMovementAnimation
                 bsr.w   Player_RenderWeaponSprite
                 btst    #2,$69(a5)
                 beq.s   Player_CeilingAirControlState_CheckRightFacing
                 btst    #3,$E(a5)
-                beq.w   Player_InitWallKickAnimation
+                beq.w   Player_InitCeilingMovementAnimation
                 bra.w   Physics_AccelerateHorizontalNegative
 ; ---------------------------------------------------------------------------
 Player_CeilingAirControlState_CheckRightFacing:         ; CODE XREF: Player_CeilingAirControlState+4A   j  ; was: loc_168EA
                 btst    #3,$69(a5)
-                beq.w   Player_InitCrouchState
+                beq.w   Player_InitCeilingDecelerateState
                 btst    #3,$E(a5)
-                bne.w   Player_InitWallKickAnimation
+                bne.w   Player_InitCeilingMovementAnimation
                 bra.w   Physics_AccelerateHorizontalPositive
 ; End of function Player_CeilingAirControlState
 ; Updates aim direction from D-pad

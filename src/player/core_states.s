@@ -123,7 +123,7 @@ Player_StateHandlerOffsets: dc.w    Player_HandleJump-Player_HandleDeathSequence
                 dc.w    Player_CeilingIdleState-Player_HandleDeathSequence
                 dc.w    Player_CeilingMovementState-Player_HandleDeathSequence
                 dc.w    Player_CeilingAirControlState-Player_HandleDeathSequence
-                dc.w    Player_HandleCrouchState-Player_HandleDeathSequence
+                dc.w    Player_CeilingDecelerateState-Player_HandleDeathSequence
                 dc.w    Player_CeilingWeaponSelectState-Player_HandleDeathSequence
                 dc.w    Player_CeilingDashState-Player_HandleDeathSequence
                 dc.w    Player_DashAttackState-Player_HandleDeathSequence

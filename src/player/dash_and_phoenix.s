@@ -449,7 +449,7 @@ Player_CheckSpecialMoveActivation_Return:               ; CODE XREF: Player_Chec
 ; End of function Player_CheckSpecialMoveActivation
 ; Checks controller input for dash attack activation
 Player_CheckDashInput:                                  ; CODE XREF: Player_CeilingIdleState+20   p  ; was: sub_15C20
-                                        ; Player_HandleCrouchState+1C   p
+                                        ; Player_CeilingDecelerateState+1C   p
                 btst    #5,$6A(a5)
                 beq.s   Player_CheckSpecialMoveActivation_Return
                 btst    #0,$69(a5)

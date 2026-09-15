@@ -185,7 +185,7 @@ Player_RenderAirborneWithWeapon_UseDefaultVariant:      ; CODE XREF: Player_Rend
                 movea.l #Player_WeaponSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering
 ; ---------------------------------------------------------------------------
-Player_RenderGroundedFrame:                             ; CODE XREF: Player_HandleCrouchState+5E   j  ; was: loc_17132
+Player_RenderGroundedFrame:                             ; CODE XREF: Player_CeilingDecelerateState+5E   j  ; was: loc_17132
                                         ; Player_RenderWithWeapon+4   j
                 movea.l #Player_CommonMovementSecondarySpriteMapping,a2
                 moveq   #0,d5
