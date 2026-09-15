@@ -9097,3 +9097,35 @@ pending queue falls from 2,145 to 2,109 and its actionable upper bound from
 1,632 to 1,596; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `enemies/stage_10_beetles.s` now has
 zero pending current names, leaving 31 modules in the queue.
+
+The 36 pending entries in `player/projectiles_and_effects.s` include three
+unreachable routines, one of which matters beyond its own name.
+
+`Orphaned_UIRenderTransientValue` has no caller and no absolute address in the
+ROM, while `Effect_SpawnParticle` in the same module is found by that scan. It
+is also the only reader of `HealthDeltaDisplayValue` and
+`HealthDeltaDisplayTimer`, and three live sites still write both: the health
+pickup, the contact-damage path in collision detection, and the teleport-dash
+health cost in this module. The registry records that asymmetry rather than
+drawing a conclusion about why it exists; what is checked is that the value is
+produced and never consumed.
+
+The other two are ordinary. `Player_GetWeaponTableOffset` begins with a
+conditional branch, so it would also depend on condition codes a caller had set,
+and `Player_SpawnRadialShot` never loads `a0` with the effect pool, unlike the
+triple shot immediately above it that does. Both are unreferenced and absent
+from the ROM as absolute addresses.
+
+Two live mechanisms are recorded because the names cannot carry them.
+`Player_BuildSpritePieces` decodes the packed size byte of the terminating
+primary piece into a tile count and shifts every tile index of the secondary
+stream by it, which is how two independent mappings share one tile allocation.
+And `Player_SpawnPhoenixParticles` places each particle eight times further
+along its own velocity vector than the velocity itself, so the effect trails
+behind the player instead of starting at him.
+
+Thirty-six exact-address records raise the registry from 14,233 to 14,269. The
+pending queue falls from 2,109 to 2,073 and its actionable upper bound from
+1,596 to 1,560; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `player/projectiles_and_effects.s` now
+has zero pending current names, leaving 30 modules in the queue.

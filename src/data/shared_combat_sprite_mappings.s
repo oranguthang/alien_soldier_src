@@ -285,7 +285,7 @@ SharedCombatSpriteAnimation00:  dc.w    SharedCombatSpriteFrame06-*  ; DATA XREF
                 dc.w    SharedCombatSpriteFrame05-*
                 dc.w    $FF
 SharedCombatSpriteAnimation01:  dc.w    SharedCombatSpriteFrame06-*  ; DATA XREF: Player_SpawnTripleShot:Player_SpawnTripleShot_Loop   o  ; was: off_E9560
-                                        ; sub_17678:Player_SpawnRadialShot_Loop   o
+                                        ; sub_17678:Orphaned_PlayerSpawnRadialShotLoop   o
                 dc.w    1
                 dc.w    SharedCombatSpriteFrame07-*
                 dc.w    1

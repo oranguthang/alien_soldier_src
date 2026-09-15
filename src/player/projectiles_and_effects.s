@@ -32,17 +32,17 @@ Player_SpawnProjectile_UseAlternateParameters:          ; CODE XREF: Player_Spaw
                 move.w  #$30,(HealthDeltaDisplayTimer).w  ; '0'
                 rts
 ; End of function Player_SpawnProjectile
-; Calculates weapon data table offset
-Player_GetWeaponTableOffset:
-                bne.s   Player_GetWeaponTableOffset_SelectFrame  ; was: sub_17490
+; Unreachable: picks a frame offset from the frame counter for the caller's table
+Orphaned_PlayerGetWeaponTableOffset:
+                bne.s   Orphaned_PlayerGetWeaponTableOffsetSelectFrame  ; was: sub_17490
                 bset    #1,(PlayerActionStateFlags).w
-Player_GetWeaponTableOffset_SelectFrame:                ; CODE XREF: Player_GetWeaponTableOffset   j  ; was: loc_17498
+Orphaned_PlayerGetWeaponTableOffsetSelectFrame:         ; CODE XREF: Orphaned_PlayerGetWeaponTableOffset   j  ; was: loc_17498
                 movea.l $48(a5),a0
                 move.w  (FrameCounter).w,d0
                 asr.w   #1,d0
                 andi.w  #$C,d0
                 rts
-; End of function Player_GetWeaponTableOffset
+; End of function Orphaned_PlayerGetWeaponTableOffset
 ; Expands two frame streams into the player's composite sprite-piece buffer
 Player_BuildSpritePieces:                               ; CODE XREF: Player_HandleAirMovement+70   j  ; was: sub_174A8
                                         ; Player_HandleFallingState+D6   j
@@ -213,25 +213,25 @@ Player_SpawnTripleShot_Loop:                            ; CODE XREF: Player_Spaw
                 dbf     d7,Player_SpawnTripleShot_Loop
                 rts
 ; End of function Player_SpawnTripleShot
-; Spawns 5 projectiles in radial spread
-Player_SpawnRadialShot:
+; Unreachable: five-shot radial spread; unlike the triple shot it never sets a0
+Orphaned_PlayerSpawnRadialShot:
                 moveq   #4,d5                           ; was: sub_17678
                 move.w  #$FFC0,d6
                 moveq   #4,d7
                 btst    #3,$E(a5)
-                beq.s   Player_SpawnRadialShot_Loop
+                beq.s   Orphaned_PlayerSpawnRadialShotLoop
                 addi.w  #$80,d6
-Player_SpawnRadialShot_Loop:                            ; CODE XREF: Player_SpawnRadialShot+E   j  ; was: loc_1768C
-                                        ; Player_SpawnRadialShot+22   j
+Orphaned_PlayerSpawnRadialShotLoop:                     ; CODE XREF: Orphaned_PlayerSpawnRadialShot+E   j  ; was: loc_1768C
+                                        ; Orphaned_PlayerSpawnRadialShot+22   j
                 move.l  #SharedCombatSpriteAnimation01,8(a0)
                 bsr.s   Player_InitShotProjectile
                 addi.w  #$40,d6                         ; '@'
-                dbf     d7,Player_SpawnRadialShot_Loop
+                dbf     d7,Orphaned_PlayerSpawnRadialShotLoop
                 rts
-; End of function Player_SpawnRadialShot
+; End of function Orphaned_PlayerSpawnRadialShot
 ; Initializes shot projectile with angle and velocity
 Player_InitShotProjectile:                              ; CODE XREF: Player_SpawnTripleShot+2A   p  ; was: sub_176A0
-                                        ; Player_SpawnRadialShot+1C   p
+                                        ; Orphaned_PlayerSpawnRadialShot+1C   p
                 jsr     (Projectile_InitType88).l
                 move.b  $20(a5),$20(a0)
                 lea     (Math_SineTable).l,a1
@@ -256,24 +256,24 @@ Player_LowerTerrainAnimationIndices:    dc.w    0, 8, 4, 8, 0, $C, $10, $C  ; wa
 Player_UpperTerrainAnimationIndices:    dc.w    0, $C, $10, $C, 0, 8, 4, 8  ; was: word_176F2
                                         ; DATA XREF: Player_PrepareSpriteRendering+14   o
 
-; Renders a transient signed three-digit value as four OAM sprites
-UI_RenderTransientValue:
+; Unreachable: would draw the signed health-delta value three writers still set
+Orphaned_UIRenderTransientValue:
                 tst.w   (HealthDeltaDisplayValue).w     ; was: sub_17702
-                beq.w   UI_RenderTransientValue_Return
+                beq.w   Orphaned_UIRenderTransientValueReturn
                 tst.b   (FrameControlFlags).w
-                bmi.s   UI_RenderTransientValue_BuildSprites
+                bmi.s   Orphaned_UIRenderTransientValueBuildSprites
                 subq.w  #1,(HealthDeltaDisplayTimer).w
-                bpl.s   UI_RenderTransientValue_UpdatePosition
+                bpl.s   Orphaned_UIRenderTransientValueUpdatePosition
                 clr.w   (HealthDeltaDisplayValue).w
-UI_RenderTransientValue_Return:                         ; CODE XREF: UI_RenderTransientValue+4   j  ; was: locret_1771A
+Orphaned_UIRenderTransientValueReturn:                  ; CODE XREF: Orphaned_UIRenderTransientValue+4   j  ; was: locret_1771A
                 rts
 ; ---------------------------------------------------------------------------
-UI_RenderTransientValue_UpdatePosition:                 ; CODE XREF: UI_RenderTransientValue+12   j  ; was: loc_1771C
+Orphaned_UIRenderTransientValueUpdatePosition:          ; CODE XREF: Orphaned_UIRenderTransientValue+12   j  ; was: loc_1771C
                 btst    #0,(FrameCounter+1).w
-                bne.s   UI_RenderTransientValue_BuildSprites
+                bne.s   Orphaned_UIRenderTransientValueBuildSprites
                 subq.w  #1,(TransientValueScreenY).w
-UI_RenderTransientValue_BuildSprites:                   ; CODE XREF: UI_RenderTransientValue+C   j  ; was: loc_17728
-                                        ; UI_RenderTransientValue+20   j
+Orphaned_UIRenderTransientValueBuildSprites:            ; CODE XREF: Orphaned_UIRenderTransientValue+C   j  ; was: loc_17728
+                                        ; Orphaned_UIRenderTransientValue+20   j
                 move.b  (HealthDeltaDisplayValue).w,d0
                 andi.w  #$10,d0
                 addi.w  #-$3841,d0
@@ -295,9 +295,9 @@ UI_RenderTransientValue_BuildSprites:                   ; CODE XREF: UI_RenderTr
                 move.w  (TransientValueScreenX).w,d5
                 move.w  (TransientValueScreenY).w,d6
                 cmpi.w  #$A0,d6
-                bpl.s   UI_RenderTransientValue_UseClampedY
+                bpl.s   Orphaned_UIRenderTransientValueUseClampedY
                 move.w  #$A0,d6
-UI_RenderTransientValue_UseClampedY:                    ; CODE XREF: UI_RenderTransientValue+76   j  ; was: loc_1777E
+Orphaned_UIRenderTransientValueUseClampedY:             ; CODE XREF: Orphaned_UIRenderTransientValue+76   j  ; was: loc_1777E
                 movea.w #(SharedSpriteScratch-M68K_RAM),a0
                 move.w  d6,(a0)+
                 move.w  d4,(a0)+
@@ -321,7 +321,7 @@ UI_RenderTransientValue_UseClampedY:                    ; CODE XREF: UI_RenderTr
                 move.w  #$FFFF,(a0)
                 movea.w #(SharedSpriteScratch-M68K_RAM),a0
                 jmp     (Sprite_AppendOAMEntries).l
-; End of function UI_RenderTransientValue
+; End of function Orphaned_UIRenderTransientValue
 ; Creates visual dash trail effect behind player
 Effect_CreateDashTrail:                                 ; CODE XREF: Player_DashAttackState+B8   j  ; was: sub_177B6
                                         ; Player_TeleportDash+C8   j
