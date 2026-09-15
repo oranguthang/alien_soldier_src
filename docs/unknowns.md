@@ -8688,3 +8688,37 @@ pending queue falls from 2,511 to 2,491 and its actionable upper bound from
 1,998 to 1,978; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `gameplay/math_and_buffer_helpers.s` now
 has zero pending current names, leaving 45 modules in the queue.
+
+The 21 pending entries in `system/boot.s` are the standard Mega Drive reset
+path, and the three bootstrap clearing loops turn out to be labelled one
+position out of step. Each loop is preceded by the VDP control long that selects
+its target. The first is preceded by `$C0000000`, the CRAM write address, and
+writes 32 long words, exactly the 128 bytes of colour RAM. The second is
+preceded by `$40000010`, the VSRAM write address, and writes 20 long words,
+exactly the 80 bytes of vertical scroll RAM. The third writes no video memory at
+all: it sends four bytes to `$11(a3)`, the PSG port at `$C00011`, and the
+bootstrap block supplies `$9F`, `$BF`, `$DF` and `$FF`, the maximum-attenuation
+command for each PSG channel. The three become
+`Reset_ClearCRAMBootstrapLoop`, `Reset_ClearVSRAMBootstrapLoop` and
+`Reset_MutePSGChannelsLoop`.
+
+Two more names named the wrong thing. `Reset_WaitForBlanking` tests bit 1 of the
+VDP status register, which reports DMA busy rather than either blanking
+interval, so it becomes `Reset_WaitForDmaIdle`. `Sys_InitBootstrap` starts no
+bootstrap: it is the single jump where the warm-boot branch and the completed
+cold-boot path converge before the runtime initialization, so it becomes
+`Reset_EnterRuntime`.
+
+The remaining names hold, with their extents measured against the hardware: the
+bootstrap RAM clear covers `$4000` long words with `a6` wrapping from zero, the
+runtime clear covers `$3FC0`, the Z80 RAM clear covers exactly 8 KB, and the
+checksum loop sums every word from `Reset` to `$60000`. The endless main loop
+calls only `Sys_DispatchDataLoader`; every other subsystem runs from the
+interrupt handlers, so the former comment claiming a sound update here was
+removed.
+
+Twenty-one exact-address records raise the registry from 13,851 to 13,872. The
+pending queue falls from 2,491 to 2,470 and its actionable upper bound from
+1,978 to 1,957; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `system/boot.s` now has zero pending
+current names, leaving 44 modules in the queue.

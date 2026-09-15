@@ -4,7 +4,7 @@ Reset:                                                  ; DATA XREF: ROM:0000000
                 bne.s   Reset_CheckColdBoot
                 tst.w   (IO_EXT_CTRL).l
 Reset_CheckColdBoot:                                    ; CODE XREF: Reset+6   j  ; was: loc_20E
-                bne.s   Sys_InitBootstrap
+                bne.s   Reset_EnterRuntime
                 lea     Reset_BootstrapData(pc),a5
                 movem.w (a5)+,d5-d7
                 movem.l (a5)+,a0-a4
@@ -43,23 +43,23 @@ Reset_ClearMainRAMBootstrapLoop:                        ; CODE XREF: Reset+5E   
                 move.l  (a5)+,(a4)
                 move.l  (a5)+,(a4)
                 moveq   #$1F,d3
-Reset_ClearVRAMBootstrapLoop:                           ; CODE XREF: Reset+6A   j  ; was: loc_268
+Reset_ClearCRAMBootstrapLoop:                           ; CODE XREF: Reset+6A   j  ; was: loc_268
                 move.l  d0,(a3)
-                dbf     d3,Reset_ClearVRAMBootstrapLoop
+                dbf     d3,Reset_ClearCRAMBootstrapLoop
                 move.l  (a5)+,(a4)
                 moveq   #$13,d4
-Reset_ClearCRAMBootstrapLoop:                           ; CODE XREF: Reset+74   j  ; was: loc_272
+Reset_ClearVSRAMBootstrapLoop:                          ; CODE XREF: Reset+74   j  ; was: loc_272
                 move.l  d0,(a3)
-                dbf     d4,Reset_ClearCRAMBootstrapLoop
+                dbf     d4,Reset_ClearVSRAMBootstrapLoop
                 moveq   #3,d5
-Reset_ClearVSRAMBootstrapLoop:                          ; CODE XREF: Reset+7E   j  ; was: loc_27A
+Reset_MutePSGChannelsLoop:                              ; CODE XREF: Reset+7E   j  ; was: loc_27A
                 move.b  (a5)+,$11(a3)
-                dbf     d5,Reset_ClearVSRAMBootstrapLoop
+                dbf     d5,Reset_MutePSGChannelsLoop
                 move.w  d0,(a2)
                 movem.l (a6),d0-d7/a0-a6
                 move    #$2700,sr
-; Jump target that branches to initialization code after register restoration during boot sequence
-Sys_InitBootstrap:                                      ; CODE XREF: Reset:Reset_CheckColdBoot   j  ; was: loc_28C
+; Cold and warm boot converge here before the runtime initialization
+Reset_EnterRuntime:                                     ; CODE XREF: Reset:Reset_CheckColdBoot   j  ; was: loc_28C
                 bra.s   Reset_InitRuntime
 ; ---------------------------------------------------------------------------
 Reset_BootstrapData:    dc.w    $8000                   ; DATA XREF: Reset+10   o  ; was: word_28E
@@ -132,10 +132,10 @@ Reset_InitDefaults:                                     ; CODE XREF: Reset+14C  
                 move.b  #5,(P2ButtonCSourceBit).w
                 clr.w   (DemoPlaybackActive).w
                 clr.w   (DemoRotationIndex).w
-Reset_WaitForBlanking:                                  ; CODE XREF: Reset+204   j  ; was: loc_3FA
+Reset_WaitForDmaIdle:                                   ; CODE XREF: Reset+204   j  ; was: loc_3FA
                 move.w  (VDP_CTRL).l,d0
                 btst    #1,d0
-                bne.s   Reset_WaitForBlanking
+                bne.s   Reset_WaitForDmaIdle
                 lea     (M68K_RAM).l,a0
                 moveq   #0,d0
                 move.w  #$3FBF,d1
@@ -159,7 +159,7 @@ Reset_ClearZ80RAMLoop:                                  ; CODE XREF: Reset+242  
                 jsr     (Sound_UpdateThunk).l
                 move.b  #1,(VBlankUpdateReady).w
                 move    #$2300,sr
-; Infinite loop that calls sound update and main game routine at the core of the game execution
+; Endless loop that re-enables interrupts and runs the data loader dispatcher
 Sys_MainGameLoop:                                       ; CODE XREF: Reset+26C   j  ; was: loc_462
                 move    #$2300,sr
                 jsr     (Sys_DispatchDataLoader).l
