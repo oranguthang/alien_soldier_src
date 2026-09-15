@@ -9129,3 +9129,29 @@ pending queue falls from 2,109 to 2,073 and its actionable upper bound from
 1,596 to 1,560; provenance, the 513 classified binary-backed end aliases, and
 the 379-module layout remain unchanged. `player/projectiles_and_effects.s` now
 has zero pending current names, leaving 30 modules in the queue.
+
+The 37 pending entries in `enemies/spawn_and_movement.s` hold, with one
+unreachable routine separated. `EnemySpawn_ClearDirectorData` has no caller and
+no absolute address in the ROM, while both of the module's entry points are
+found by that scan, so it becomes `Orphaned_EnemySpawnClearDirectorData`.
+
+The spawn director's terrain search is the part worth recording, because the
+names describe its steps but not its shape. It probes twenty-four layout rows
+upward from a chosen origin, needs seven consecutive clear rows to accept a
+position, and then consults a random one-bit pass that decides whether the first
+qualifying run is taken or skipped in favour of the next. The origin itself is
+normally Y `$1D0`, but above the default difficulty, with the camera nearly
+still and the player past X `$C0`, one draw in four starts the search at `$70`
+instead, which is what lets enemies arrive from above. Only four records are
+available to the director, so a crowded screen simply produces no spawn.
+
+Two smaller facts are recorded for the same reason. The first delay after the
+director starts is a fixed `$A0` frames while every later one is a random `$20`
+to `$9F`, and the difficulty changes the tracked projectile's speed, derived as
+`DifficultyMode` halved plus nine, rather than the rate at which it is fired.
+
+Thirty-seven exact-address records raise the registry from 14,269 to 14,306. The
+pending queue falls from 2,073 to 2,036 and its actionable upper bound from
+1,560 to 1,523; provenance, the 513 classified binary-backed end aliases, and
+the 379-module layout remain unchanged. `enemies/spawn_and_movement.s` now has
+zero pending current names, leaving 29 modules in the queue.

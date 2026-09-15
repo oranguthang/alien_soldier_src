@@ -1509,6 +1509,15 @@
         "Its active path allocates an enemy object, searches terrain near the player, and installs entity type 0x1C; it neither identifies Jetsripper nor moves an existing boss."
       ]
     },
+    { "address": "0x02C354", "previous_name": "off_2C354", "current_name": "EnemySpawn_DirectorHandlers", "legacy_name": "off_2C354", "evidence": "static", "basis": ["Three words measured from EnemySpawn_ResetDirectorState rather than absolute addresses; state 0 is a bare return, so the director is idle until something sets its state word."] },
+    { "address": "0x02C35A", "previous_name": "sub_2C35A", "current_name": "EnemySpawn_ResetDirectorState", "legacy_name": "sub_2C35A", "evidence": "static", "basis": ["The reset clears the director state and falls straight into the shared return."] },
+    { "address": "0x02C35E", "previous_name": "locret_2C35E", "current_name": "EnemySpawn_DirectorReturn", "legacy_name": "locret_2C35E", "evidence": "static", "basis": ["The paused-game path, the idle state, the running timer and every failed allocation share this single return."] },
+    { "address": "0x02C360", "previous_name": "sub_2C360", "current_name": "EnemySpawn_StartDirectorTimer", "legacy_name": "sub_2C360", "evidence": "static", "basis": ["State 2 advances to the running state and arms a fixed $A0-frame first delay, after which every later delay is randomized."] },
+    { "address": "0x02C36A", "previous_name": "loc_2C36A", "current_name": "EnemySpawn_UpdateDirectorTimer", "legacy_name": "loc_2C36A", "evidence": "static", "basis": ["On expiry the director picks a new delay, allocates a slot, chooses a search origin, sets a random one-bit search pass, and on success stamps the new record as type $1C."] },
+    { "address": "0x02C3A8", "previous_name": "EnemySpawn_ClearDirectorData", "current_name": "Orphaned_EnemySpawnClearDirectorData", "legacy_name": "sub_2C3A8", "evidence": "static", "basis": ["The routine has no caller and its absolute address does not occur in the ROM, while EnemySpawn_UpdateDirector and Enemy_UpdateDefeatProjectile in the same module are both found by that scan. It would clear the delay timer and three further longs of director state."] },
+    { "address": "0x02C3BC", "previous_name": "sub_2C3BC", "current_name": "EnemySpawn_ResetDelay", "legacy_name": "sub_2C3BC", "evidence": "static", "basis": ["Each later delay is a random value between $20 and $9F frames."] },
+    { "address": "0x02C3CE", "previous_name": "sub_2C3CE", "current_name": "EnemySpawn_SelectSearchOriginY", "legacy_name": "sub_2C3CE", "evidence": "static", "basis": ["The search normally starts at Y $1D0, but above the default difficulty, with the camera nearly still and the player past X $C0, one draw in four starts at $70 instead, which is what lets enemies appear from above."] },
+    { "address": "0x02C3F6", "previous_name": "locret_2C3F6", "current_name": "EnemySpawn_SelectSearchOriginY_Return", "legacy_name": "locret_2C3F6", "evidence": "static", "basis": ["All four rejection tests converge on the default origin and return here."] },
     {
       "address": "0x02C3F8",
       "previous_name": "Boss_SetAnimationFrame",
@@ -1520,6 +1529,8 @@
         "It returns failure when every slot is occupied and does not read or write animation-frame data."
       ]
     },
+    { "address": "0x02C3FE", "previous_name": "loc_2C3FE", "current_name": "EnemySpawn_AllocateObjectSlot_Loop", "legacy_name": "loc_2C3FE", "evidence": "static", "basis": ["Only four records are available to this director, scanned from the twenty-second entity slot."] },
+    { "address": "0x02C40E", "previous_name": "loc_2C40E", "current_name": "EnemySpawn_AllocateObjectSlot_Initialize", "legacy_name": "loc_2C40E", "evidence": "static", "basis": ["The chosen record is cleared through the shared block clear, which advances the pointer, so the routine steps it back by one record before returning."] },
     {
       "address": "0x02C41C",
       "previous_name": "Boss_UpdateAttackTimer",
@@ -1531,6 +1542,13 @@
         "Its success result supplies the position written into a newly allocated enemy object; no attack timer is updated."
       ]
     },
+    { "address": "0x02C446", "previous_name": "loc_2C446", "current_name": "EnemySpawn_FindTerrainPosition_Loop", "legacy_name": "loc_2C446", "evidence": "static", "basis": ["Each of the twenty-four rows tests two horizontal probes against the terrain collision buffer and treats a row as clear only when either probe reports empty."] },
+    { "address": "0x02C470", "previous_name": "loc_2C470", "current_name": "EnemySpawn_FindTerrainPosition_CheckRun", "legacy_name": "loc_2C470", "evidence": "static", "basis": ["A candidate needs seven consecutive clear rows, and the random search pass then decides whether the first such run is taken or skipped in favour of the next."] },
+    { "address": "0x02C484", "previous_name": "loc_2C484", "current_name": "EnemySpawn_FindTerrainPosition_NextRow", "legacy_name": "loc_2C484", "evidence": "static", "basis": ["Each step moves eight pixels up and one layout row back, with both offsets masked to the layout's wrap."] },
+    { "address": "0x02C49E", "previous_name": "loc_2C49E", "current_name": "EnemySpawn_FindTerrainPosition_Found", "legacy_name": "loc_2C49E", "evidence": "static", "basis": ["Success returns zero in d7 while an exhausted search returns one, which is the convention the caller tests."] },
+    { "address": "0x02C4A2", "previous_name": "sub_2C4A2", "current_name": "EnemySpawn_CalculateLayoutOffset", "legacy_name": "sub_2C4A2", "evidence": "static", "basis": ["The helper converts a camera-relative coordinate pair into a byte offset into the terrain layout, masking the horizontal part to $7E and the vertical part to $1F80."] },
+    { "address": "0x02C4C0", "previous_name": "sub_2C4C0", "current_name": "EnemySpawn_InitializeObjectPosition", "legacy_name": "sub_2C4C0", "evidence": "static", "basis": ["The chosen position is stored $20 pixels above the found row, and a spawn left of the midpoint additionally sets bit 7 of field $5F."] },
+    { "address": "0x02C4DA", "previous_name": "locret_2C4DA", "current_name": "EnemySpawn_InitializeObjectPosition_Return", "legacy_name": "locret_2C4DA", "evidence": "static", "basis": ["Right-side spawns return here without setting that flag."] },
     {
       "address": "0x02C4DC",
       "previous_name": "Sprite_SetupBossSprite",
@@ -1542,6 +1560,21 @@
         "It applies variant parameters from a local four-byte table and contains no boss-specific state or mapping."
       ]
     },
+    { "address": "0x02C4FC", "previous_name": "loc_2C4FC", "current_name": "Enemy_SetupBehaviorSprite_ApplyAttributes", "legacy_name": "loc_2C4FC", "evidence": "static", "basis": ["Both facings converge here; the flag set at spawn time is what clears the horizontal flip bit for left-side enemies before this point."] },
+    { "address": "0x02C538", "previous_name": "byte_2C538", "current_name": "Enemy_BehaviorSpriteParameters", "legacy_name": "byte_2C538", "evidence": "static", "basis": ["One three-byte record; only index zero is ever passed, and the third byte is scaled by sixteen into field $5A."] },
+    { "address": "0x02C53C", "previous_name": "sub_2C53C", "current_name": "Enemy_UpdateBehaviorAnimation", "legacy_name": "sub_2C53C", "evidence": "static", "basis": ["The animation request in $5C is biased by four before indexing, so a request of zero means no change."] },
+    { "address": "0x02C54E", "previous_name": "locret_2C54E", "current_name": "Enemy_UpdateBehaviorAnimation_Return", "legacy_name": "locret_2C54E", "evidence": "static", "basis": ["States that requested no animation return here."] },
+    { "address": "0x02C564", "previous_name": "sub_2C564", "current_name": "Enemy_AccelerateHorizontal", "legacy_name": "sub_2C564", "evidence": "static", "basis": ["Acceleration is applied in the facing direction and clamped at $20000 in either sign."] },
+    { "address": "0x02C584", "previous_name": "loc_2C584", "current_name": "Enemy_AccelerateHorizontal_Right", "legacy_name": "loc_2C584", "evidence": "static", "basis": ["The rightward branch below the limit adds the acceleration step."] },
+    { "address": "0x02C590", "previous_name": "loc_2C590", "current_name": "Enemy_AccelerateHorizontal_LeftFacing", "legacy_name": "loc_2C590", "evidence": "static", "basis": ["The left-facing entry repeats the same clamp against the negative limit."] },
+    { "address": "0x02C5A8", "previous_name": "loc_2C5A8", "current_name": "Enemy_AccelerateHorizontal_Left", "legacy_name": "loc_2C5A8", "evidence": "static", "basis": ["The leftward branch below the limit subtracts the acceleration step."] },
+    { "address": "0x02C5B4", "previous_name": "sub_2C5B4", "current_name": "Enemy_DecelerateHorizontal", "legacy_name": "sub_2C5B4", "evidence": "static", "basis": ["Deceleration uses asymmetric steps: $3800 toward zero from the positive side and a $FFFFC800 threshold on the negative side."] },
+    { "address": "0x02C5CE", "previous_name": "locret_2C5CE", "current_name": "Enemy_DecelerateHorizontal_Return", "legacy_name": "locret_2C5CE", "evidence": "static", "basis": ["An already stationary enemy and the completed positive step share this return."] },
+    { "address": "0x02C5D0", "previous_name": "loc_2C5D0", "current_name": "Enemy_DecelerateHorizontal_Negative", "legacy_name": "loc_2C5D0", "evidence": "static", "basis": ["The negative branch adds the same step back toward zero."] },
+    { "address": "0x02C5E4", "previous_name": "loc_2C5E4", "current_name": "Enemy_DecelerateHorizontal_Stop", "legacy_name": "loc_2C5E4", "evidence": "static", "basis": ["Both signs snap to exactly zero once the remaining speed is inside one step."] },
+    { "address": "0x02C5EA", "previous_name": "sub_2C5EA", "current_name": "Enemy_SpawnTrackedProjectile", "legacy_name": "sub_2C5EA", "evidence": "static", "basis": ["The spawner returns without firing when no projectile slot is free."] },
+    { "address": "0x02C5F4", "previous_name": "loc_2C5F4", "current_name": "Enemy_SpawnTrackedProjectile_Initialize", "legacy_name": "loc_2C5F4", "evidence": "static", "basis": ["The muzzle offset and the launch angle are both mirrored by the facing bit, and the shot takes the enemy's draw bucket minus four so it renders in front."] },
+    { "address": "0x02C612", "previous_name": "loc_2C612", "current_name": "Enemy_SpawnTrackedProjectile_SetParameters", "legacy_name": "loc_2C612", "evidence": "static", "basis": ["The shot speed is derived from DifficultyMode halved plus nine, so the difficulty changes the projectile speed rather than the firing rate."] },
     {
       "address": "0x02C622",
       "previous_name": "Boss_FireProjectilePattern",
@@ -1553,6 +1586,7 @@
         "The routine converts the current object to entity type 0x1D4, assigns falling velocity and defeat animation data, and spawns no projectile pattern."
       ]
     },
+    { "address": "0x02C664", "previous_name": "locret_2C664", "current_name": "Enemy_ConvertToDefeatProjectile_Return", "legacy_name": "locret_2C664", "evidence": "static", "basis": ["The right-facing case keeps the default negative horizontal velocity and returns here."] },
     {
       "address": "0x02C666",
       "previous_name": "Boss_SpawnMultipleShots",
@@ -18385,6 +18419,9 @@
     {"address":"0x02C32C","previous_name":"Projectile_BugmaxDebrisSpawner_WaitBetweenParticles","current_name":"Projectile_BugmaxDebrisSpawner_WaitSpawnInterval","legacy_name":"sub_2C32C","evidence":"static","basis":["State four decrements the interval field at $50 and subtracts two from the state only when the counter reaches zero, returning to the spawn-attempt state."]},
     {"address":"0x02C336","previous_name":"Projectile_BugmaxDebrisSpawner_WaitBetweenParticles_Return","current_name":"Projectile_BugmaxDebrisSpawner_WaitSpawnInterval_Return","legacy_name":"locret_2C336","evidence":"static","basis":["Continuing and completed inter-spawn interval paths return through this RTS."]},
     {"address":"0x02C338","previous_name":"Object_UpdateNoOpReturn","current_name":"Effect_ExplosionUpdateReturn","legacy_name":"nullsub_61","evidence":"static","basis":["Ten branches from the two explosion-pattern state machines share this single RTS for allocation failures, active timers, and already-initialized ring states.","It is not registered as an object update handler and performs no independent no-op dispatch role."]},
+    { "address": "0x02C68A", "previous_name": "loc_2C68A", "current_name": "Enemy_UpdateDefeatProjectile_DropPickup", "legacy_name": "loc_2C68A", "evidence": "static", "basis": ["Only a defeat object whose $4A field is zero drops a pickup; the other case simply removes itself."] },
+    { "address": "0x02C692", "previous_name": "loc_2C692", "current_name": "Enemy_UpdateDefeatProjectile_ApplyBlink", "legacy_name": "loc_2C692", "evidence": "static", "basis": ["The visibility bit is toggled from bit 0 of the timer's low byte, the same blink the Stage 10 beetle debris uses."] },
+    { "address": "0x02C6A6", "previous_name": "locret_2C6A6", "current_name": "Enemy_UpdateDefeatProjectile_Return", "legacy_name": "locret_2C6A6", "evidence": "static", "basis": ["The visible half of the blink returns here."] },
     { "address": "0x023CBA", "previous_name": "sub_23CBA", "current_name": "Demo_PlaybackSystem", "legacy_name": "sub_23CBA", "evidence": "static", "basis": ["Sys_DispatchGameState calls this every frame. On the first pass it seeds RandomNumberState with $8522BD7A, saves the difficulty, sound and control-layout settings, forces difficulty 2 with sound enabled, selects one of four stages from Demo_StageIndexTable by DemoRotationIndex, reads the stream's first run-length header, and arms a $1000-frame budget."] },
     { "address": "0x023D46", "previous_name": "locret_23D46", "current_name": "Demo_PlaybackSystem_Return", "legacy_name": "locret_23D46", "evidence": "static", "basis": ["The inactive-demo path, the never-taken recording path, and the mid-run playback path in Demo_HandlePlaybackInput all converge on this return."] },
     { "address": "0x023D48", "previous_name": "loc_23D48", "current_name": "Demo_PlaybackSystem_Update", "legacy_name": "loc_23D48", "evidence": "static", "basis": ["Once the playback state is nonzero this path skips the abort test while DataLoaderControl is busy, and otherwise ends the demo when bit 7 of ControllerPressedState is pressed."] },

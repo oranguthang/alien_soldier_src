@@ -42,15 +42,15 @@ EnemySpawn_UpdateDirectorTimer:                         ; DATA XREF: ROM:0002C35
                 move.b  #$B,$5F(a0)
                 bra.w   EnemySpawn_InitializeObjectPosition
 ; End of function EnemySpawn_StartDirectorTimer
-; Clears the enemy-spawn director's timer and search state
-EnemySpawn_ClearDirectorData:
+; Unreachable: would clear the director's timer and three search longs
+Orphaned_EnemySpawnClearDirectorData:
                 moveq   #0,d0                           ; was: sub_2C3A8
                 move.l  d0,(EnemySpawnDelayTimer).w
                 move.l  d0,(EnemySpawnClearedLongA).w
                 move.l  d0,(EnemySpawnClearedLongB).w
                 move.l  d0,(EnemySpawnClearedLongC).w
                 rts
-; End of function EnemySpawn_ClearDirectorData
+; End of function Orphaned_EnemySpawnClearDirectorData
 ; Chooses the next randomized spawn delay
 EnemySpawn_ResetDelay:                                  ; CODE XREF: EnemySpawn_StartDirectorTimer+12   p  ; was: sub_2C3BC
                 move.w  (RandomNumberState).w,d0
