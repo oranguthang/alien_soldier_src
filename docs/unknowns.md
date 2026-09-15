@@ -10290,3 +10290,56 @@ pending queue falls from 925 to 863 and its actionable upper bound from 412 to
 350; provenance, the 513 classified binary-backed end aliases, and the
 379-module layout remain unchanged. `enemies/jetsripper_stage_actors.s` now has
 zero pending current names, leaving 5 modules in the queue.
+
+`effects/wave_transition.s` is two halves that share a file and nothing else,
+and only one of them runs.
+
+`Effect_WaveController` has no caller anywhere in the source, no ROM
+absolute-address match, and `Stage_StopScrollEffect` above it ends in `rts`, so
+it cannot be fallen into. Everything the wave machine consists of — the
+six-entry handler table, the six states, the deformation generator, the output
+buffer clear, and the two fifteen-word parameter tables — is reachable only
+through it. The three RAM words it drives, `WaveStateOffset`,
+`WaveControlWord` and `WaveParameterIndex`, are read and written nowhere else in
+the source either.
+
+The second dead region is one level further out. `Gfx_CalculateTileCoordinates`,
+`Math_WaveToTileIndex`, `Gfx_PrepareTilePointers`, `Gfx_PixelBlendDispatcher`
+and the four pixel blend routines behind it have exactly one caller between
+them: `UnreferencedWave_RenderTilemapToVRAM`, whose own name already records
+that nothing reaches it. These are second-order dead code, and by the rule this
+audit follows they do **not** take the `Orphaned_` prefix, because they are
+genuinely referenced — the reference simply comes from a routine that is not.
+Their records say so instead.
+
+Only two symbols here qualify as orphans on the zero-reference rule: the
+controller itself and `nullsub_59`, a second bare return two bytes after the
+bare return that state 5 of the table uses. The one the table names stays as it
+is.
+
+One name was wrong in the usual way.
+`Camera_UpdateAndRenderStageTilemapEffect` is state 4 of the wave table, it
+touches no camera field, and it renders nothing: it runs the wave parameter
+index from `$1C` down to zero and advances into the empty state. It becomes
+`Effect_WaveWindDown`, which also completes the picture of the machine — states
+2 and 3 form a repeating body that runs the index down to 6 and back up to
+`$1C`, counted by a separate timer, and state 4 is the single wind-down that
+ends it.
+
+The half that does run is the tile loader at the end of the file, and the
+reachability scan separates it cleanly: `Gfx_LoadTilesLoop` has two ROM
+absolute-address matches, inside `EndingSequence_Initialize` and
+`Stage_LoadTeleportAssets`, and those are genuine call sites. That half
+interpolates between two compressed source tiles as it decompresses, saving and
+restoring the codec state around each pair, which is what makes the ending
+transition a morph rather than a cut.
+
+One detail worth keeping from the dead half: `Gfx_PrepareTilePointers` builds
+both of its tile pointers into `sega_tiles`, so whatever the wave deformation
+was for, it was to be applied to the SEGA logo.
+
+Sixty-three exact-address records raise the registry from 15,481 to 15,544. The
+pending queue falls from 863 to 800 and its actionable upper bound from 350 to
+287; provenance, the 513 classified binary-backed end aliases, and the
+379-module layout remain unchanged. `effects/wave_transition.s` now has zero
+pending current names, leaving 4 modules in the queue.

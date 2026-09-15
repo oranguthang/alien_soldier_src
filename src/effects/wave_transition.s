@@ -60,19 +60,19 @@ Stage_StopScrollEffect:                                 ; was: sub_26286
                 move.w  #0,(VScrollPlaneBColumn0).w
                 rts
 ; End of function Stage_StopScrollEffect
-; Main controller for wave/distortion effect, dispatches to state handlers
-Effect_WaveController:
+; Unreachable: would clear the output buffer and dispatch the six wave states
+Orphaned_WaveController:
                 bsr.w   Effect_ClearWaveOutputBuffer    ; was: sub_262A0
                 movea.w (WaveStateOffset).w,a0
                 movea.l Effect_WaveStateHandlers(pc,a0.w),a0
                 jmp     (a0)
-; End of function Effect_WaveController
+; End of function Orphaned_WaveController
 ; ---------------------------------------------------------------------------
-Effect_WaveStateHandlers:   dc.l    Effect_WaveInitialize  ; DATA XREF: Effect_WaveController+8   r  ; was: off_262AE
+Effect_WaveStateHandlers:   dc.l    Effect_WaveInitialize  ; DATA XREF: Orphaned_WaveController+8   r  ; was: off_262AE
                 dc.l    Effect_WaveHoldState
                 dc.l    Effect_WaveFadeOut
                 dc.l    Effect_WaveLoopOrEnd
-                dc.l    Camera_UpdateAndRenderStageTilemapEffect
+                dc.l    Effect_WaveWindDown
                 dc.l    Gfx_ScrollEffectEmptyState
 
 ; Initializes wave effect by setting up buffer and incrementing counter
@@ -127,27 +127,28 @@ Effect_WaveLoopOrEnd_Repeat:                            ; CODE XREF: Effect_Wave
 Effect_WaveLoopOrEnd_Return:                            ; CODE XREF: Effect_WaveLoopOrEnd+14   j  ; was: locret_26354
                 rts
 ; End of function Effect_WaveLoopOrEnd
-; Updates scroll effect with timing control and state increments
-Camera_UpdateAndRenderStageTilemapEffect:               ; DATA XREF: ROM:000262BE   o  ; was: sub_26356
+; Winds the wave parameter index down to zero and ends the effect
+Effect_WaveWindDown:                                    ; DATA XREF: ROM:000262BE   o  ; was: sub_26356
                 movea.l #$FFFF9E00,a6
                 bsr.w   Gfx_GenerateWaveDeformation
                 bsr.w   Effect_WavePostUpdateNoOp
                 subq.w  #2,(WaveParameterIndex).w
-                bne.w   Camera_UpdateAndRenderStageTilemapEffect_Return
+                bne.w   Effect_WaveWindDown_Return
                 addq.w  #4,(WaveStateOffset).w
-Camera_UpdateAndRenderStageTilemapEffect_Return:        ; CODE XREF: Camera_UpdateAndRenderStageTilemapEffect+12   j  ; was: locret_26370
+Effect_WaveWindDown_Return:                             ; CODE XREF: Effect_WaveWindDown+12   j  ; was: locret_26370
                 rts
-; End of function Camera_UpdateAndRenderStageTilemapEffect
+; End of function Effect_WaveWindDown
 ; Empty scroll effect graphics state
 Gfx_ScrollEffectEmptyState:                             ; DATA XREF: ROM:000262C2   o  ; was: nullsub_58
                 rts
 ; End of function Gfx_ScrollEffectEmptyState
-Effect_WaveUnusedNoOp:                                  ; was: nullsub_59
+; Unreachable: a bare return with no reference of any kind
+Orphaned_WaveNoOp:                                      ; was: nullsub_59
                 rts
-; End of function Effect_WaveUnusedNoOp
+; End of function Orphaned_WaveNoOp
 
 ; Clears 81 longwords in the wave output buffer at $FFFF9800
-Effect_ClearWaveOutputBuffer:                           ; CODE XREF: Effect_WaveController   p  ; was: sub_26376
+Effect_ClearWaveOutputBuffer:                           ; CODE XREF: Orphaned_WaveController   p  ; was: sub_26376
                 movea.l #WaveOutputBuffer,a0
                 moveq   #0,d0
                 move.w  #$50,d7                         ; 'P'
@@ -385,7 +386,7 @@ Gfx_WaveParameterTableD:    dc.w    $E00, $1500, $1D00, $2600, $3000, $3B00, $47
                                         ; DATA XREF: UnreferencedWave_RenderTilemapToVRAM+3E   o
 
 Effect_WavePostUpdateNoOp:                              ; CODE XREF: Effect_WaveInitialize+A   p  ; was: nullsub_57
-                                        ; Camera_UpdateAndRenderStageTilemapEffect+A   p
+                                        ; Effect_WaveWindDown+A   p
                 rts
 ; End of function Effect_WavePostUpdateNoOp
 ; ---------------------------------------------------------------------------
