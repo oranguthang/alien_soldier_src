@@ -553,7 +553,7 @@ StageTransition_UpdateWolfGaropaBackdropCoordinates:    ; CODE XREF: StageTransi
 ; Adjusts tile indices in the stage-transition rows
 Gfx_AdjustTransitionTileIndexRows:                      ; CODE XREF: StageTransition_CompleteShieldViperFade+3E   j  ; was: sub_F7AC
                                         ; StageTransition_UpdateWolfGaropaBackdropApproach+5C   j
-                movea.l #$FFFF4300,a0
+                movea.l #(LargeTilemapBuffer+$300),a0
                 moveq   #$30,d7                         ; '0'
                 jmp     Gfx_AdjustTileIndexRows
 ; End of function Gfx_AdjustTransitionTileIndexRows

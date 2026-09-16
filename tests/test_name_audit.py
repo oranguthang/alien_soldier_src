@@ -33,7 +33,11 @@ class NameAuditTests(unittest.TestCase):
             self.assertRegex(
                 record["address"], r"^0x(?:[0-9A-F]{6}|FFFF[0-9A-F]{4})$"
             )
-            self.assertRegex(record["legacy_name"], legacy_name_pattern)
+            # A null legacy name means the import carried no symbol at all for
+            # that address, which is different from carrying a generated one.
+            if record["legacy_name"] is not None:
+                self.assertRegex(record["legacy_name"], legacy_name_pattern)
+                self.assertIsNotNone(record["previous_name"])
             self.assertIn(record["evidence"], EVIDENCE_LEVELS)
             self.assertGreater(len(record["basis"]), 0)
 

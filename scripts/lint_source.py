@@ -28,6 +28,13 @@ CALL_TARGET = re.compile(
     r"\s*(?:\(pc[^)]*\))?\s*(?:;.*)?$",
     re.IGNORECASE,
 )
+# A work RAM address formed from a raw literal rather than from a name. Only
+# address-forming instructions are covered: the same bit pattern in moveq or
+# move.l is almost always a negative constant, not an address.
+RAW_RAM_ADDRESS = re.compile(
+    r"^\s+(?:movea\.[wl]|cmpa\.[wl]|lea|pea|suba\.l|adda\.l)\s+[^;]*\$FFFF[0-9A-Fa-f]{4}",
+    re.IGNORECASE,
+)
 REGISTER = re.compile(r"^(?:[da][0-7]|sp|pc|sr|ccr|usp)$", re.IGNORECASE)
 INCLUDE = re.compile(r'^\s*include\s+"([^"]+)"', re.IGNORECASE)
 WAS = re.compile(r";\s*was:\s*([A-Za-z_][A-Za-z0-9_]*)\s*$")
@@ -107,6 +114,12 @@ def scan(policy: dict, project_root: Path) -> Inventory:
                     definitions[name] = where
                 if address_name.fullmatch(name):
                     address_derived[name] = where
+
+            if RAW_RAM_ADDRESS.match(line.split(";")[0]):
+                errors.append(
+                    f"{where}: work RAM address written as a raw literal; "
+                    "use the name from src/ram_addrs.inc"
+                )
 
             call = CALL_TARGET.match(line)
             if call and not REGISTER.match(call.group(1)):

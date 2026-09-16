@@ -376,7 +376,7 @@ StoryTitle_CharacterLeftRepeatPixel:                    ; was: loc_4D9A
                 andi.w  #3,d7
                 bne.s   StoryTitle_CharacterLeftAdvanceDestination
                 suba.l  #$3C,a1                         ; '<'
-                cmpa.l  #$FFFF1000,a1
+                cmpa.l  #CutsceneWorkBuffer,a1
                 bcs.s   StoryTitle_CharacterLeftAdvanceRow
 StoryTitle_CharacterLeftAdvanceDestination:             ; was: loc_4DB2
                 subq.l  #1,a1
@@ -407,7 +407,7 @@ StoryTitle_CharacterRightRepeatPixel:                   ; was: loc_4DF6
                 andi.w  #3,d7
                 bne.s   StoryTitle_CharacterRightContinuePixel
                 adda.l  #$3C,a1                         ; '<'
-                cmpa.l  #$FFFF1A00,a1
+                cmpa.l  #(CutsceneWorkBuffer+$A00),a1
                 bcc.s   StoryTitle_CharacterRightAdvanceRow
 StoryTitle_CharacterRightContinuePixel:                 ; was: loc_4E0E
                 dbf     d3,StoryTitle_CharacterRightRepeatPixel
@@ -591,7 +591,7 @@ StoryTitle_CompletedLogoLeftRepeatPixel:                ; was: loc_502C
                 andi.w  #3,d7
                 bne.s   StoryTitle_CompletedLogoLeftAdvanceDestination
                 suba.l  #$3C,a1                         ; '<'
-                cmpa.l  #$FFFF1000,a1
+                cmpa.l  #CutsceneWorkBuffer,a1
                 bcs.s   StoryTitle_CompletedLogoLeftAdvanceRow
 StoryTitle_CompletedLogoLeftAdvanceDestination:         ; was: loc_5044
                 subq.l  #1,a1
@@ -600,7 +600,7 @@ StoryTitle_CompletedLogoLeftAdvanceDestination:         ; was: loc_5044
                 andi.w  #7,d7
                 bne.s   StoryTitle_CompletedLogoLeftContinueSource
                 suba.l  #$78,a0                         ; 'x'
-                cmpa.l  #$FFFF1A00,a0
+                cmpa.l  #(CutsceneWorkBuffer+$A00),a0
                 bcs.s   StoryTitle_CompletedLogoLeftAdvanceRow
 StoryTitle_CompletedLogoLeftContinueSource:             ; was: loc_5060
                 dbf     d5,StoryTitle_CompletedLogoLeftNextSourceByte
@@ -631,7 +631,7 @@ StoryTitle_CompletedLogoRightRepeatPixel:               ; was: loc_509A
                 andi.w  #3,d7
                 bne.s   StoryTitle_CompletedLogoRightContinuePixel
                 adda.l  #$3C,a1                         ; '<'
-                cmpa.l  #$FFFF1A00,a1
+                cmpa.l  #(CutsceneWorkBuffer+$A00),a1
                 bcc.s   StoryTitle_CompletedLogoRightAdvanceRow
 StoryTitle_CompletedLogoRightContinuePixel:             ; was: loc_50B2
                 dbf     d3,StoryTitle_CompletedLogoRightRepeatPixel
@@ -639,7 +639,7 @@ StoryTitle_CompletedLogoRightContinuePixel:             ; was: loc_50B2
                 andi.w  #7,d7
                 bne.s   StoryTitle_CompletedLogoRightContinueSource
                 adda.l  #$78,a0                         ; 'x'
-                cmpa.l  #$FFFF2E00,a0
+                cmpa.l  #(CutsceneWorkBuffer+$1E00),a0
                 bcc.s   StoryTitle_CompletedLogoRightAdvanceRow
 StoryTitle_CompletedLogoRightContinueSource:            ; was: loc_50CC
                 dbf     d5,StoryTitle_CompletedLogoRightNextSourceByte

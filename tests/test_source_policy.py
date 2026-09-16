@@ -110,6 +110,18 @@ class SourcePolicyTests(unittest.TestCase):
         errors = self._scan_module("Sys_Boot:\n                jmp     (a0)\n")
         self.assertEqual([], [e for e in errors if "branch target" in e])
 
+    def test_a_raw_work_ram_address_is_rejected(self) -> None:
+        raw = self._scan_module("Sys_Boot:\n                movea.l #$FFFF8000,a0\n")
+        self.assertTrue(any("raw literal" in error for error in raw), raw)
+
+        named = self._scan_module("Sys_Boot:\n                movea.l #Sys_Workspace,a0\n")
+        self.assertEqual([], [e for e in named if "raw literal" in e])
+
+    def test_a_negative_constant_is_not_a_raw_address(self) -> None:
+        for instruction in ("moveq   #$FFFFFFF8,d0", "move.l  #$FFFF0000,$1C(a5)"):
+            errors = self._scan_module("Sys_Boot:\n                %s\n" % instruction)
+            self.assertEqual([], [e for e in errors if "raw literal" in e], instruction)
+
     def _scan_one_definition(self, name: str) -> list[str]:
         body = "" if name == "Sys_Boot" else "Sys_Boot:\n"
         return self._scan_module(body + name + ":\n")

@@ -393,12 +393,12 @@ Gfx_ArtemisInitialAssetTransfers:   dc.w    7           ; field_0 ; was: stru_EE
 Gfx_ArtemisInitializeTilemap:                           ; CODE XREF: Stage_SevenForcesBeginArtemisTransition   p  ; was: sub_EED8
                 tst.w   (DataLoaderControl).w
                 bmi.s   Gfx_ArtemisTilemapInitReturn
-                movea.l #$FFFF4020,a0
+                movea.l #FlyingNeoTileAttrRangeA,a0
                 move.w  #0,d0
                 move.w  #$F8,d1
                 moveq   #$47,d7                         ; 'G'
                 jsr     (Gfx_UpdateTilemapIndices).l
-                movea.l #$FFFF4920,a0
+                movea.l #(LargeTilemapBuffer+$920),a0
                 move.w  #$A000,d0
                 move.w  #$F8,d1
                 moveq   #1,d7
@@ -466,7 +466,7 @@ Gfx_SevenForcesCutsceneAssetTransfers:  dc.w    7       ; field_0 ; was: stru_EF
 Gfx_InitializeSevenForcesCutsceneTilemap:               ; CODE XREF: Cutscene_SevenForcesVictoryState3+C   p  ; was: sub_EFAC
                 tst.w   (DataLoaderControl).w
                 bmi.s   Gfx_SevenForcesCutsceneTilemapInitReturn
-                movea.l #$FFFF4020,a0
+                movea.l #FlyingNeoTileAttrRangeA,a0
                 move.w  #0,d0
                 move.w  #$F8,d1
                 moveq   #$7E,d7                         ; '~'

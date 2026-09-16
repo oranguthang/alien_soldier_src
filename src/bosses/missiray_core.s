@@ -39,7 +39,7 @@ Boss_MissirayApplySegmentSpacingLoop:                   ; CODE XREF: Boss_Missir
                 lea     $60(a0),a0
                 dbf     d7,Boss_MissirayApplySegmentSpacingLoop
 Boss_MissirayUpdateVScrollBuffer:                       ; CODE XREF: Boss_MissirayMain+28   j  ; was: loc_53826
-                movea.l #$FFFFEC02,a1
+                movea.l #VScrollPlaneBColumn0,a1
                 move.w  $14(a5),d1
                 move.w  #3,d7
                 lea     $60(a5),a0

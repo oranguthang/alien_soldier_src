@@ -193,7 +193,7 @@ Tilemap_WriteDirectTransferRowSegment:                  ; CODE XREF: Tilemap_Tra
                 move.w  6(a1,d3.w),(a2)+
                 tst.w   (a0)+
                 beq.w   Tilemap_AdvanceDirectTransferRowSegment
-                movea.l #$FFFF0000,a2
+                movea.l #M68K_RAM,a2
                 move.w  d1,d4
                 lsl.w   #4,d4
                 andi.w  #$1F80,d4
@@ -284,7 +284,7 @@ Tilemap_WriteScrollingRowSegment:                       ; CODE XREF: Tilemap_Que
                 move.w  6(a1,d3.w),(a2)+
                 tst.w   (a0)+
                 beq.w   Tilemap_AdvanceScrollingRowSegment
-                movea.l #$FFFF0000,a2
+                movea.l #M68K_RAM,a2
                 move.w  d1,d4
                 lsl.w   #4,d4
                 andi.w  #$1F80,d4

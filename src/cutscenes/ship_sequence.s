@@ -649,7 +649,7 @@ ShipSequence_SpawnScheduledPiece:                       ; CODE XREF: ShipSequenc
                 move.w  (ShipSequenceFrame).l,d0
                 cmp.w   (a0)+,d0
                 bne.w   Cutscene_Return
-                movea.l #$FFFFC620,a4
+                movea.l #Entity_ObjectPool,a4
                 adda.w  (a0)+,a4
                 move.w  #$CC00,2(a4)
                 move.w  #$30C,(a4)
@@ -692,7 +692,7 @@ ShipSequence_SpawnScheduledDebris:                      ; CODE XREF: ShipSequenc
                 move.w  (ShipSequenceFrame).l,d0
                 cmp.w   (a0)+,d0
                 bne.w   Cutscene_Return
-                movea.l #$FFFFC620,a4
+                movea.l #Entity_ObjectPool,a4
                 adda.w  (a0)+,a4
                 move.w  #$CC00,2(a4)
                 clr.w   4(a4)

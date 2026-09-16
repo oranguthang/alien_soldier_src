@@ -122,7 +122,7 @@ Boss_ZLeoInit:                                          ; DATA XREF: ROM:Boss_ZL
                 move.w  #$18,(RasterLayoutOffset).w
                 bset    #7,(CameraMotionLockFlags).w
                 bset    #6,(CameraMotionLockFlags).w
-                movea.l #$FFFF4520,a0
+                movea.l #(LargeTilemapBuffer+$520),a0
                 move.w  #$A000,d0
                 moveq   #5,d7
                 jsr     (Gfx_AdjustTileIndexRows).l

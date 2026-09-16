@@ -129,13 +129,13 @@ Boss_SunsetStingWriteWaveInterpolationLoop:             ; CODE XREF: Boss_Sunset
                 add.l   d1,d0
                 swap    d0
                 move.w  d0,-(a0)
-                cmpa.l  #$FFFF9C00,a0
+                cmpa.l  #RasterStagingBuffer,a0
                 ble.s   Boss_SunsetStingUpdateWaveScreenReturn
                 dbf     d7,Boss_SunsetStingWriteWaveInterpolationLoop
 Boss_SunsetStingFillRemainingWaveRowsLoop:              ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+EE   j  ; was: loc_42A04
                                         ; Boss_SunsetStingUpdateWaveScreen+12C   j
                 move.w  d0,-(a0)
-                cmpa.l  #$FFFF9C00,a0
+                cmpa.l  #RasterStagingBuffer,a0
                 bne.s   Boss_SunsetStingFillRemainingWaveRowsLoop
 Boss_SunsetStingUpdateWaveScreenReturn:                 ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+11E   j  ; was: locret_42A0E
                 rts

@@ -242,7 +242,7 @@ Hazard_UpdateTopFallingSpawnerType104_Tick:             ; CODE XREF: Hazard_Upda
                 move.b  #$40,$21(a0)                    ; '@'
                 move.l  #$FC04FC04,$28(a0)
                 move.w  #$64,$26(a0)                    ; 'd'
-                move.l  #$FFFF6000,$18(a0)
+                move.l  #Stage3ResampleBuffer,$18(a0)
                 move.w  #3,$1C(a0)
                 move.w  #$A0,$14(a0)
                 move.b  (RandomNumberState).w,d0

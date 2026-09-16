@@ -30,7 +30,7 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
   expectations, covering boot, the title screen, the options screen, the story
   screen, weapon setup, gameplay, a boss transition, a stage change, an
   inter-stage transition, attract-mode demo playback, and the credits.
-- The listing exports 16,065 canonical ROM/RAM/hardware addresses; layout
+- The listing exports 16,067 canonical ROM/RAM/hardware addresses; layout
   landmarks and runtime symbols are checked by `make verify-symbols`.
 - `make clean` is restricted to reproducible build/runtime outputs and Python
   caches; extracted assets, traces, workflow files, and source backups survive.
@@ -46,7 +46,7 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
 
 The contract does not require invented semantics. No live address-derived
 definitions remain in executable, preserved-ROM, or RAM source. The exact-
-address audit registry contains 15,831 records. A further 513 provenance-mapped
+address audit registry contains 15,833 records. A further 513 provenance-mapped
 current names do not yet appear as current-name or alias records; this is an
 upper-bound semantic review queue because aliases that share an address must
 be folded into one record. `make semantic-audit` identifies 513 binary-backed

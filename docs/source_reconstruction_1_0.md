@@ -29,12 +29,16 @@ byte.
   one of 192 declared subsystems, derives from a symbol that exists, or is a
   declared hardware exception. The vocabulary is a closed list in
   `config/source_policy.json`; a new owner token fails lint.
-- **Evidence behind every name.** `config/name_audit.json` holds 15,831
+- **Evidence behind every name.** `config/name_audit.json` holds 15,833
   exact-address records. Each carries the address, the imported name, the name
   it replaced and the static evidence for the name it has now.
 - **Provenance is retained.** 16,053 `; was:` markers map current definitions to
   the imported labels they replaced.
-- **A memory map.** 1,291 work RAM fields, the hardware ports and the shared
+- **No address is formed from a literal.** No work RAM address is reached
+  through a raw `$FFFFxxxx` immediate. `make lint` rejects one in any
+  address-forming instruction with a ceiling of zero, so `movea.l`, `cmpa.l`,
+  `lea`, `pea`, `adda.l` and `suba.l` must name what they point at.
+- **A memory map.** 1,293 work RAM fields, the hardware ports and the shared
   equates are named in include files and documented in `docs/ram_map.md`.
 - **Behaviour observed, not assumed.** Twelve scenarios replay three pinned
   movies under the pinned emulator and check 78 named work RAM expectations,
@@ -56,7 +60,6 @@ that limits it. They are stated here rather than left implicit.
 | `NAME-001` | 513 `_End` aliases that follow their own `binclude` payload hold no separate record. | partial |
 | `LAYOUT-001` | Module sizes: 204 of 379 modules sit inside the preferred 200–700 line band, 145 are shorter and 30 are longer. | partial |
 | `DOC-001` | 207 imported cross-reference comments still quote address-derived names that no longer define anything. | partial |
-| `SRC-001` | 264 instructions still address work RAM by a raw `$FFFFxxxx` literal rather than by name. | partial |
 | `TOOL-001` | Five older analysis commands that mutate a single translation unit and are outside the release interface. | unsupported |
 | `commit_body_convention` | Commits made before this manifest carry a title and attribution without a body. | partial |
 | `frame_image_comparison` | Pixel comparison. The runtime layer checks state, not frames. | planned |
@@ -74,9 +77,9 @@ is preserved by include order, so a subsystem that is contiguous in ROM stays in
 one module even when that module is short or long. The 1000-line ceiling is the
 hard limit and no module reaches it.
 
-`DOC-001` and `SRC-001` are text and literals, not identifiers. Neither can be
-mistaken for a symbol that resolves, because the address-derived ceiling is zero
-and every RAM field has a name.
+`DOC-001` is text, not identifiers. A stale name in a comment cannot be mistaken
+for a symbol that resolves, because the address-derived ceiling is zero and every
+RAM field has a name.
 
 ## Naming is not grandfathered
 

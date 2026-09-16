@@ -311,8 +311,8 @@ Physics_AddEntityOffset:                                ; CODE XREF: UI_DebugSpr
 ; Checks collision with terrain by reading tilemap and height data
 Collision_CheckTerrainTile:                             ; CODE XREF: Collision_GetEntityPosition+8   j  ; was: sub_144F2
                                         ; Orphaned_CollisionCheckScreenBounds+C   j
-                movea.l #$FFFF0000,a0
-                movea.l #$FFFF7800,a1
+                movea.l #M68K_RAM,a0
+                movea.l #TerrainCollisionBuffer,a1
                 move.w  d0,d2
                 subi.w  #$80,d2
                 add.w   (PrimaryCameraXPosition).w,d2

@@ -260,7 +260,7 @@ Projectile_MadamBarbarDropHandleFinalTerrainContact:    ; CODE XREF: Projectile_
                 bset    #2,2(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-                move.l  #$FFFF6000,$1C(a0)
+                move.l  #Stage3ResampleBuffer,$1C(a0)
 Projectile_MadamBarbarDropConvertToExplosion:           ; CODE XREF: Projectile_MadamBarbarDropUpdate+7E   j  ; was: loc_3B168
                                         ; Projectile_MadamBarbarDropUpdate+86   j
                 clr.l   $18(a5)

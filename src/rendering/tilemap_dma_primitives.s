@@ -43,7 +43,7 @@ Tilemap_BuildOffsetMirrorRowLoop:                       ; CODE XREF: Tilemap_Mir
                 moveq   #0,d3
 Tilemap_WriteOffsetMirrorRowSegment:                    ; CODE XREF: Tilemap_MirrorOffsetRowAndQueueScrollingRow+62   j  ; was: loc_10D7C
                 tst.w   (a0)+
-                movea.l #$FFFF0000,a2
+                movea.l #M68K_RAM,a2
                 move.w  d1,d4
                 lsl.w   #4,d4
                 andi.w  #$1F80,d4
@@ -104,7 +104,7 @@ Tilemap_WaitForPlaneFillZ80BusRequest:                  ; CODE XREF: Tilemap_Fil
                 move.w  (VDPReg1Shadow).w,d2
                 bset    #4,d2
                 move.w  d2,(a4)
-                movea.l #$FFFF2000,a0
+                movea.l #EndingStarYVelocities,a0
                 move.w  (TilemapRowXOrFillWord).w,d0
                 move.w  #$7FF,d7
 Tilemap_FillPlaneStagingLoop:                           ; CODE XREF: Tilemap_FillPlaneDirectToVRAM+30   j  ; was: loc_10E42

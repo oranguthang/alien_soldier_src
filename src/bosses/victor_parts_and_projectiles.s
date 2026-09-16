@@ -334,7 +334,7 @@ Boss_VictorDetachedPartExtendRadius:                    ; DATA XREF: ROM:Boss_Vi
 ; End of function Boss_VictorDetachedPartExtendRadius
 ; Shrinks a detached part's radius unless it is the thirty-second entity slot
 Boss_VictorDetachedPartContractRadius:                  ; DATA XREF: ROM:00032D58   o  ; was: sub_32D68
-                cmpa.l  #$FFFFD1C0,a5
+                cmpa.l  #ThirtySecondEntityType,a5
                 beq.w   Entity_UpdateReturn
                 andi.w  #$1FE,$40(a5)
                 subq.w  #1,$42(a5)

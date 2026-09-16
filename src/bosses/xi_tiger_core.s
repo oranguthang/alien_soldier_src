@@ -99,7 +99,7 @@ Boss_XiTigerSetup:                                      ; DATA XREF: ROM:0003D88
                 move.l  #Boss_XiTigerClawMappingA,$428(a5)
                 move.w  #$2C,$266(a5)                   ; ','
                 bclr    #7,$48E(a5)
-                movea.l #$FFFF22C0,a0
+                movea.l #(SharedGraphicsOverlay+$240),a0
                 move.w  #$80,d0
                 moveq   #9,d7
 Boss_XiTigerAdjustNextPaletteBlock:                     ; CODE XREF: Boss_XiTigerSetup+AC   j  ; was: loc_3D96A

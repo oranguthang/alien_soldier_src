@@ -125,7 +125,7 @@ Boss_ViblackIntroSetup:                                 ; DATA XREF: ROM:000439D
                 nop
                 move.w  #$8000,d0
                 jsr     (Gfx_AdjustSelectedTileBlocks).l
-                movea.l #$FFFF5520,a0
+                movea.l #(LargeTilemapPage2+$520),a0
                 move.w  #$2000,d0
                 moveq   #$49,d7                         ; 'I'
                 jsr     (Gfx_AdjustTileIndexRows).l

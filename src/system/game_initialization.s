@@ -63,8 +63,8 @@ Sys_ResetTransferAndInputState:                         ; CODE XREF: Reset+224  
                 bsr.w   Input_InitializeControllerState
                 move.w  #$F400,(VDPCommandQueueHead).w
                 move.w  #$F400,(VDPStagingDataCursor).w
-                move.l  #$FFFFE400,(HScrollDMASource).w
-                move.l  #$FFFFEC00,(VScrollDMASource).w
+                move.l  #HScrollBuffer,(HScrollDMASource).w
+                move.l  #VScrollBuffer,(VScrollDMASource).w
                 rts
 ; End of function Sys_ResetTransferAndInputState
 ; Clears the 1 KiB graphics staging buffer and the first 48 KiB of VRAM

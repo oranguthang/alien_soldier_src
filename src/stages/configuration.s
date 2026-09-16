@@ -272,7 +272,7 @@ Stage_InitializeStage18:                                ; DATA XREF: ROM:0001228
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord
 Stage18And19_InitializeTilemapIndices:                  ; CODE XREF: Stage_InitializeStage19+10   j  ; was: loc_124B4
-                movea.l #$FFFF2000,a0
+                movea.l #EndingStarYVelocities,a0
                 move.w  #0,d0
                 move.w  #$150,d1
                 move.w  #$7F,d7
@@ -417,7 +417,7 @@ Gfx_BuildStage3Phase2ScaleStepTable:                    ; CODE XREF: Gfx_Prepare
                 move.w  #$5F,(Stage3ResampleGroupsM1).w  ; '_'
                 move.w  #3,(Stage3ResamplePassesM1).w
                 bsr.w   Gfx_ResampleStage3Phase2Tiles
-                movea.l #$FFFF0000,a0
+                movea.l #M68K_RAM,a0
                 move.w  #$3C00,d5
                 move.l  #$93009412,d4
                 jmp     Gfx_DmaTransferWithZ80Halt

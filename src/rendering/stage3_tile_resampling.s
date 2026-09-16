@@ -2,7 +2,7 @@
 Gfx_ResampleStage3Phase2Tiles:                          ; CODE XREF: Gfx_PrepareStage3Phase2ResampledTiles+40   p  ; was: sub_12648
                 movea.l (Stage3ScaleTablePtr).w,a4
                 movea.l (Stage3PackedTilePtr).w,a0
-                movea.l #$FFFF6000,a2
+                movea.l #Stage3ResampleBuffer,a2
                 moveq   #0,d6
                 move.w  (Stage3ResampleGroupsM1).w,d7
 Gfx_Stage3ResampleNextSourceGroup:                      ; CODE XREF: Gfx_ResampleStage3Phase2Tiles+5E   j  ; was: loc_1265C
@@ -38,8 +38,8 @@ Gfx_Stage3ReversePackedNibbles:                         ; CODE XREF: Gfx_Resampl
 Gfx_Stage3AdvanceSourceGroup:                           ; CODE XREF: Gfx_ResampleStage3Phase2Tiles+52   j  ; was: loc_126A2
                 move.w  (Stage3ResamplePassesM1).w,d5
                 dbf     d7,Gfx_Stage3ResampleNextSourceGroup
-                movea.l #$FFFF6000,a2
-                movea.l #$FFFF0000,a0
+                movea.l #Stage3ResampleBuffer,a2
+                movea.l #M68K_RAM,a0
                 move.w  (Stage3ResampleGroupsM1).w,d7
                 asr.w   #3,d7
                 moveq   #0,d5

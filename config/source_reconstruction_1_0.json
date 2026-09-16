@@ -83,7 +83,7 @@
     {
       "id": "memory_map",
       "kind": "source",
-      "summary": "1,291 work RAM fields, the hardware ports and the shared equates were named in include files and documented, and the symbol export checks them against the build.",
+      "summary": "1,293 work RAM fields, the hardware ports and the shared equates were named in include files and documented, the symbol export checks them against the build, and no work RAM address is reached through a raw literal.",
       "evidence": [
         "memory_map",
         "files:src/ram_addrs.inc"
@@ -212,7 +212,7 @@
     },
     "memory_map": {
       "status": "satisfied",
-      "statement": "Work RAM, hardware ports and shared equates are named in include files and documented field by field.",
+      "statement": "Work RAM, hardware ports and shared equates are named in include files and documented field by field. No work RAM address is formed from a raw $FFFFxxxx literal: make lint rejects one in any address-forming instruction, with a ceiling of zero.",
       "evidence": {
         "targets": [
           "verify-symbols"
@@ -226,9 +226,7 @@
         "scenarios": [],
         "artifacts": []
       },
-      "excluded": [
-        "SRC-001"
-      ]
+      "excluded": []
     },
     "baseline_documentation": {
       "status": "satisfied",
@@ -464,13 +462,6 @@
       "control": "No live definition is address-derived, which make lint enforces with a ceiling of zero, so the stale text cannot be mistaken for a symbol that resolves."
     },
     {
-      "id": "raw_work_ram_literals",
-      "status": "partial",
-      "reason": "Two hundred and sixty-four instructions across 94 modules still address work RAM by a raw $FFFFxxxx literal rather than through the name in src/ram_addrs.inc.",
-      "registry": "SRC-001",
-      "control": "docs/ram_map.md and src/ram_addrs.inc name 1,291 fields, and make verify-symbols checks the exported RAM symbols against the build."
-    },
-    {
       "id": "legacy_analysis_commands",
       "status": "unsupported",
       "reason": "analyze, debug-pointers, find-unanalyzed, prepare-batch and rename predate the split into address-ordered modules and mutate a single translation unit.",
@@ -700,11 +691,11 @@
   "counters": {
     "assets": 579,
     "declared_subsystems": 192,
-    "definitions": 16926,
+    "definitions": 16928,
     "modules": 379,
-    "name_audit_records": 15831,
+    "name_audit_records": 15833,
     "provenance_mappings": 16053,
-    "ram_fields": 1291,
+    "ram_fields": 1293,
     "resolved_branch_targets": 16102,
     "runtime_expectations": 78,
     "runtime_scenarios": 12,

@@ -12,7 +12,7 @@ CutsceneProjection_Initialize:                          ; CODE XREF: Cutscene_In
 ; Resamples a cutscene frame, queues its row transfers, and builds the line-offset table
 CutsceneProjection_BuildFrame:                          ; CODE XREF: Cutscene_UpdateFrameSelectionFromInput+4E   j  ; was: sub_260CE
                                         ; XiTigerCutscene_WaitBeforeReveal+44   j
-                movea.l #$FFFF0400,a0
+                movea.l #CutsceneFrameSourceBuffer,a0
                 move.w  #$9400,(CutsceneRowSource).w
                 move.w  #$C400,(CutsceneRowVRAM).w
                 move.l  (CutsceneScaleStep).w,d0

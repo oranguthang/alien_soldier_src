@@ -10660,3 +10660,62 @@ addresses. The descriptive comment above the definition, which claimed the
 routine updated a scroll position, is rewritten to state what it writes. The
 built image is unchanged and `make verify` reproduces the cartridge byte for
 byte.
+
+`SRC-001` is retired, and the finding that retired it is that the exclusion was
+wrong about its own subject. The manifest claimed 264 instructions still
+addressed work RAM by a raw `$FFFFxxxx` literal. Only 46 of them were addresses
+at all. The rest are negative constants that happen to share the shape of a work
+RAM address, because sign-extended negative longs and the RAM window both begin
+`$FFFF`.
+
+The instruction encoding settles most of it without any analysis. 119 of the 264
+are `moveq`, whose immediate is eight signed bits sign-extended to thirty-two, so
+`moveq #$FFFFFFF8,d0` can only ever be −8 and can never be an address. Two more
+are `ori.l #$FFFF0000` and one is `andi.l #$FFFF0000`, which set and keep a high
+word. The remaining `move.l` and `cmpi.l` sites were settled by their
+destinations: `Epsilon1VerticalAccel`, `SecondaryEntityYVel`, `Entity57YVel`,
+`ShipVerticalVelocity`, `BackdropVelocityA` and `BackdropVelocityB` are velocity
+and acceleration fields, and offsets `$18` and `$1C` of an entity record are the
+signed 16.16 velocities the RAM map already documents, so `$FFFF0000` there is
+−1.0 and `$FFFFC000` is −0.25. The coincidence that `$FFFF0000` is also the value
+of `M68K_RAM` is exactly the trap: a mechanical conversion keyed on the value
+would have rewritten forty-four velocity constants as the RAM base.
+
+What was genuinely an address is decided by context, not by value. The 41
+`movea.l` and `cmpa.l` sites load or compare an address register, and five
+`move.l` sites store into a field the RAM map documents as a pointer:
+`CreditsPaletteTarget` takes `PaletteActiveColor16`, `HScrollDMASource` takes
+`HScrollBuffer`, `VScrollDMASource` takes `VScrollBuffer`, and the Destroyer
+Prototype stores `EighthEntityType` and `TwentyFourthEntityType`, whose values
+land exactly on the eighth and twenty-fourth 96-byte entity records.
+
+Twenty-eight of the 46 resolved to an existing name outright. Eight became
+offsets from the workspace that owns them, and the anchor mattered more than the
+arithmetic: `$FFFF4520` sits inside `FlyingNeoTileAttrRangeD` by address, but the
+site is Z-Leo setup code, so it is written `#(LargeTilemapBuffer+$520)` against
+the neutral page rather than against a boss alias that happens to overlap. The
+same reasoning moved the story-title glyph bounds onto `CutsceneWorkBuffer`,
+which the matching lower bound in the same loops already used.
+
+Two addresses had no imported symbol of any kind and had to be named from
+behaviour. `CutsceneFrameSourceBuffer` at `$FFFF0400` is read by
+`CutsceneProjection_BuildFrame` at `$26(a0,d1.w)` and `$28(a0,d2.w)` while the
+resampled rows go elsewhere, so it is the projection's pixel source.
+`Stage3ResampleBuffer` at `$FFFF6000` is filled by
+`Gfx_ResampleStage3Phase2Tiles` through `(a2)+` and then reloaded and read back
+through `(a2,d4.w)`, so it is that pass's own output.
+
+With all 46 converted, `make lint` now rejects a `$FFFFxxxx` literal in any
+address-forming instruction — `movea`, `cmpa`, `lea`, `pea`, `adda.l`, `suba.l` —
+with a ceiling of zero. The rule is deliberately narrower than the one the
+reference tree uses, because a blanket ban would fail on 215 negative constants
+that are not addresses and never were. The 215 remain, and the honest statement
+about them is that they are numbers written in hex, not addresses hiding from the
+memory map; whether `moveq #$FFFFFFF8,d0` would read better as `moveq #-8,d0` is
+a legibility question for another pass.
+
+The registry grows by two records to 15,833, both of them for addresses the
+import never labelled. That is a shape the schema had not carried before, so a
+record may now hold a null legacy name, meaning the disassembly had no symbol
+there at all — which is different from it having had a generated one. The built
+image is unchanged and `make verify` reproduces the cartridge byte for byte.

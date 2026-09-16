@@ -33,7 +33,7 @@ UnreferencedWave_RenderTilemapToVRAM_BuildTileLoop:     ; CODE XREF: Unreference
                 lea     (VDP_DATA).l,a1
                 lea     (VDP_CTRL).l,a2
                 move.w  #$8F02,(a2)
-                movea.l #$FFFF0000,a0
+                movea.l #M68K_RAM,a0
                 move.l  d0,(a2)
 UnreferencedWave_RenderTilemapToVRAM_TransferLongwordLoop:  ; CODE XREF: UnreferencedWave_RenderTilemapToVRAM+86   j  ; was: loc_2625C
                 move.l  (a0)+,(a1)
@@ -77,7 +77,7 @@ Effect_WaveStateHandlers:   dc.l    Effect_WaveInitialize  ; DATA XREF: Orphaned
 
 ; Initializes wave effect by setting up buffer and incrementing counter
 Effect_WaveInitialize:                                  ; DATA XREF: ROM:Effect_WaveStateHandlers   o  ; was: sub_262C6
-                movea.l #$FFFF9E40,a6
+                movea.l #RasterSecondaryBuffer,a6
                 bsr.w   Gfx_GenerateWaveDeformation
                 bsr.w   Effect_WavePostUpdateNoOp
                 addq.w  #2,(WaveParameterIndex).w
@@ -90,7 +90,7 @@ Effect_WaveInitialize_Return:                           ; CODE XREF: Effect_Wave
 ; End of function Effect_WaveInitialize
 ; Holds wave effect active state while waiting for timer countdown
 Effect_WaveHoldState:                                   ; DATA XREF: ROM:000262B2   o  ; was: sub_262EE
-                movea.l #$FFFF9E40,a6
+                movea.l #RasterSecondaryBuffer,a6
                 bsr.w   Gfx_GenerateWaveDeformation
                 subq.w  #1,(WaveStateTimer).w
                 bne.w   Effect_WaveHoldState_Return
@@ -101,7 +101,7 @@ Effect_WaveHoldState_Return:                            ; CODE XREF: Effect_Wave
 ; End of function Effect_WaveHoldState
 ; Fades out wave effect by decrementing counter back to minimum value
 Effect_WaveFadeOut:                                     ; DATA XREF: ROM:000262B6   o  ; was: sub_2630C
-                movea.l #$FFFF9E80,a6
+                movea.l #(RasterSecondaryBuffer+$40),a6
                 bsr.w   Gfx_GenerateWaveDeformation
                 subq.w  #2,(WaveParameterIndex).w
                 cmpi.w  #6,(WaveParameterIndex).w
@@ -112,7 +112,7 @@ Effect_WaveFadeOut_Return:                              ; CODE XREF: Effect_Wave
 ; End of function Effect_WaveFadeOut
 ; Loops wave effect or ends it based on remaining iteration counter
 Effect_WaveLoopOrEnd:                                   ; DATA XREF: ROM:000262BA   o  ; was: sub_2632A
-                movea.l #$FFFF9E00,a6
+                movea.l #ActiveRasterBuffer,a6
                 bsr.w   Gfx_GenerateWaveDeformation
                 addq.w  #2,(WaveParameterIndex).w
                 cmpi.w  #$1C,(WaveParameterIndex).w
@@ -129,7 +129,7 @@ Effect_WaveLoopOrEnd_Return:                            ; CODE XREF: Effect_Wave
 ; End of function Effect_WaveLoopOrEnd
 ; Winds the wave parameter index down to zero and ends the effect
 Effect_WaveWindDown:                                    ; DATA XREF: ROM:000262BE   o  ; was: sub_26356
-                movea.l #$FFFF9E00,a6
+                movea.l #ActiveRasterBuffer,a6
                 bsr.w   Gfx_GenerateWaveDeformation
                 bsr.w   Effect_WavePostUpdateNoOp
                 subq.w  #2,(WaveParameterIndex).w
@@ -364,7 +364,7 @@ Gfx_BlendPixelsFullyShifted_Loop:                       ; CODE XREF: Gfx_BlendPi
 Gfx_InitializeWaveParameters:                           ; CODE XREF: UnreferencedWave_RenderTilemapToVRAM+8   p  ; was: sub_265BA
                 move.w  (WaveParameterIndex).w,d0
                 moveq   #0,d5
-                movea.l #$FFFF0000,a2
+                movea.l #M68K_RAM,a2
                 movea.w #0,a4
                 movea.l #Gfx_WaveParameterTableA,a0
                 move.w  (a0,d0.w),d6

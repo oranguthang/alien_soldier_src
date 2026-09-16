@@ -1043,6 +1043,23 @@ at `$FFFFDCA0` currently has no dedicated absolute-field references. The name
 deliberately records object-pool ownership rather than the graphics subsystem
 of its caller.
 
+## Fields named by the raw-literal conversion
+
+Two addresses were reachable only through a raw `$FFFFxxxx` immediate and had no
+imported symbol of any kind, so retiring the last address-forming literals meant
+naming them from what the code does with them.
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `CutsceneFrameSourceBuffer` | `$FFFF0400` | `CutsceneProjection_BuildFrame` loads it into `a0` and reads the frame through it at `$26(a0,d1.w)` and `$28(a0,d2.w)` while writing the resampled rows elsewhere, so it is the projection's pixel source. |
+| `Stage3ResampleBuffer` | `$FFFF6000` | `Gfx_ResampleStage3Phase2Tiles` loads it into `a2`, fills it with `move.l (a0,d6.w),(a2)+` and `move.b d0,(a2)+`, then reloads the same address and reads the result back through `(a2,d4.w)`. |
+
+Four further sites were bounds rather than bases and are written as offsets from
+the workspace they belong to: the story-title glyph walks already used
+`#CutsceneWorkBuffer` as their lower bound, so their upper bounds became
+`#(CutsceneWorkBuffer+$A00)` and `#(CutsceneWorkBuffer+$1E00)` instead of
+anchoring on an ending-sequence alias that merely sits at the same address.
+
 ## Reviewed primary entity record
 
 `Entity_ObjectPool` is the base of 61 consecutive 96-byte records ending at

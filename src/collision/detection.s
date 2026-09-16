@@ -132,8 +132,8 @@ Collision_BuildEntityLists_NextEntity:                  ; CODE XREF: Collision_B
 ; End of function Collision_BuildEntityLists
 ; Disables an effect slot once its own centre enters a solid terrain tile
 Collision_CheckTerrainTiles:                            ; CODE XREF: Collision_UpdateSystem+1E   p  ; was: sub_13C50
-                movea.l #$FFFF0000,a0
-                movea.l #$FFFF7800,a1
+                movea.l #M68K_RAM,a0
+                movea.l #TerrainCollisionBuffer,a1
                 movea.w a5,a2
                 moveq   #3,d6
                 moveq   #4,d1

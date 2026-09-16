@@ -458,7 +458,7 @@ Credits_InitializeSceneSequence_FillScrollBufferLoop:   ; CODE XREF: Credits_Ini
                 dbf     d0,Credits_InitializeSceneSequence_FillScrollBufferLoop
                 move.w  #$AA,(CreditsSceneTimer).l
                 move.l  #Credits_SceneDataPointers,(CreditsSceneDataCursor).l
-                move.l  #$FFFFE320,(CreditsPaletteTarget).l
+                move.l  #PaletteActiveColor16,(CreditsPaletteTarget).l
                 addq.w  #2,(CreditsSceneState).l
                 rts
 ; End of function Credits_InitializeSceneSequence

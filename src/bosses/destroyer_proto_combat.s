@@ -298,8 +298,8 @@ Boss_DestroyerProtoChargeStream:                        ; DATA XREF: ROM:0003153
                 addq.w  #1,$4A(a5)
                 cmpi.w  #$E,$4A(a5)
                 bne.w   Entity_UpdateReturn
-                move.l  #$FFFFC8C0,$58(a5)
-                move.l  #$FFFFCEC0,$5C(a5)
+                move.l  #EighthEntityType,$58(a5)
+                move.l  #TwentyFourthEntityType,$5C(a5)
                 move.w  #$10,$4A(a5)
                 addq.w  #2,4(a5)
                 rts

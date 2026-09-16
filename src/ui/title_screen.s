@@ -20,7 +20,7 @@ TitleScreen_Initialize:                                 ; DATA XREF: Sys_Dispatc
 TitleScreen_FinalizeInitialization:                     ; CODE XREF: TitleScreen_Initialize+4   j  ; was: loc_936C
                 move.w  #$18,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
-                movea.l #$FFFF4020,a0
+                movea.l #FlyingNeoTileAttrRangeA,a0
                 move.w  #$C180,d0
                 moveq   #$26,d7                         ; '&'
                 jsr     (Gfx_AdjustTileIndexRows).l

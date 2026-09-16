@@ -20,7 +20,7 @@ Boss_ShellshogunSpawnFallingDebrisNext:                 ; CODE XREF: Boss_Shells
                 clr.w   $C(a5)
                 move.b  #$80,$21(a0)
                 move.l  #$FE06FE06,$28(a0)
-                move.l  #$FFFF6000,$18(a0)
+                move.l  #Stage3ResampleBuffer,$18(a0)
                 move.w  #2,$1C(a0)
                 move.w  (RandomNumberState).w,$1E(a0)
                 move.w  #$90,$14(a0)
