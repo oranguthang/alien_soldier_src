@@ -10625,3 +10625,38 @@ a single subsystem, so a value read through one of them would not settle which
 tenant wrote it. `StoryTextState` shows why. It reads `$0002` during the story
 screen and `$2000` during Stage 1, because the gameplay subsystem owns those
 bytes for something else entirely while the story screen is not running.
+
+`Effect_UpdateScrollPosition` is corrected, and the correction is worth stating
+because the name survived into a tagged release. The routine writes no scroll
+value. It loads `PaletteActiveColor62` into `a1` and stores one word at `(a1)`
+and again at `$80(a1)`, which `src/ram_addrs.inc` names `PaletteShadowColor62`,
+so it drives palette entry 62 in both the active and the shadow buffer. Every
+value it can store is a CRAM colour word: `$EEE`, `$8CE`, and the sixteen entries
+of the table below it. It becomes `Effect_UpdateTransitionColor62`.
+
+The two halves of the routine are separated by `TransitionProgress`, which the
+defeat transition advances by three per frame up to `$7F`. Below `$40` the colour
+strobes: `$EEE` on odd frames, `$EEE` again when a random bit is set, and `$8CE`
+otherwise, so the entry alternates between white and a pale blue on a schedule
+that is deliberately not periodic. At `$40` and above the progress is halved and
+masked to `$1E`, which walks the sixteen-entry table exactly once across the
+second half. The table runs `$EEE, $CEE, $AEE, ... , 8, 6` — white through blue
+to near black — so it is a colour ramp and not a tile pattern, and it becomes
+`Effect_TransitionColorRamp`. The two branch labels follow: `_StoreInitialPattern`
+stores whichever colour the strobe chose rather than an initial pattern, so it is
+`Effect_UpdateTransitionColor62_Store`, and `_SelectPattern` becomes
+`Effect_UpdateTransitionColor62_SelectRampEntry`.
+
+The word *pattern* was the trap. This module does own genuine pattern data —
+`Effect_ClearScrollBuffer` clears `TransitionPatternBuffer`, and
+`Effect_ApplyTransitionMask` consumes it — and the neighbouring scroll routines
+really do compute scroll values. A single routine in the middle of them was doing
+something else entirely, and the imported name said nothing either way. The
+lesson is the one the register keeps repeating: a name inherited from a
+neighbourhood is not evidence about the routine.
+
+Four records are corrected in place, so the registry stays at 15,831 exact
+addresses. The descriptive comment above the definition, which claimed the
+routine updated a scroll position, is rewritten to state what it writes. The
+built image is unchanged and `make verify` reproduces the cartridge byte for
+byte.

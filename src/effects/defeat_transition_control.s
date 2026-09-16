@@ -77,7 +77,7 @@ AlternateTransition_BuildInitialPattern:                ; DATA XREF: ROM:0002693
 ; End of function AlternateTransition_BuildInitialPattern
 ; Advances the alternate transition until the shared completion threshold
 AlternateTransition_Update:                             ; DATA XREF: ROM:00026940   o  ; was: sub_269C4
-                bsr.w   Effect_UpdateScrollPosition
+                bsr.w   Effect_UpdateTransitionColor62
                 move.w  $10(a5),(TransitionOriginXY).w
                 move.w  $14(a5),(TransitionOriginXY+2).w
                 addq.w  #3,(TransitionProgress).w
@@ -158,7 +158,7 @@ TransitionEffect_BuildInitialPattern:                   ; DATA XREF: ROM:00026A1
 ; End of function TransitionEffect_BuildInitialPattern
 ; Advances the standard transition until the shared completion threshold
 TransitionEffect_Update:                                ; DATA XREF: ROM:00026A18   o  ; was: sub_26A9E
-                bsr.w   Effect_UpdateScrollPosition
+                bsr.w   Effect_UpdateTransitionColor62
                 move.w  $10(a5),(TransitionOriginXY).w
                 move.w  $14(a5),(TransitionOriginXY+2).w
                 subi.l  #$3C0,(TransitionEdgeSpan).w

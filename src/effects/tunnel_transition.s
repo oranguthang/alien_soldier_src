@@ -60,7 +60,7 @@ TunnelTransition_BuildInitialPattern:                   ; DATA XREF: TunnelTrans
 ; End of function TunnelTransition_BuildInitialPattern
 ; Advances the tunnel transition and delays mask growth until progress $4E
 TunnelTransition_Update:                                ; DATA XREF: TunnelTransition_ObjectMain+18   o  ; was: sub_279D2
-                bsr.w   Effect_UpdateScrollPosition
+                bsr.w   Effect_UpdateTransitionColor62
                 move.w  $10(a5),(TransitionOriginXY).w
                 move.w  $14(a5),(TransitionOriginXY+2).w
                 move.w  (FrameCounter).w,d0

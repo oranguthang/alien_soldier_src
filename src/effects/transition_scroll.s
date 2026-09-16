@@ -239,36 +239,37 @@ Orphaned_ApplyLinearScroll_Loop:                        ; CODE XREF: Orphaned_Ap
                 dbf     d7,Orphaned_ApplyLinearScroll_Loop
                 rts
 ; End of function Orphaned_ApplyLinearScroll
-; Updates scroll position for effect
-Effect_UpdateScrollPosition:                            ; CODE XREF: AlternateTransition_Update   p  ; was: sub_26E4C
+; Drives palette entry 62 in both the active and the shadow buffer: a white/blue
+; strobe until TransitionProgress reaches $40, then a walk down the colour ramp
+Effect_UpdateTransitionColor62:                         ; CODE XREF: AlternateTransition_Update   p  ; was: sub_26E4C
                                         ; TransitionEffect_Update   p
                 movea.w #(PaletteActiveColor62-M68K_RAM),a1
                 move.w  (TransitionProgress).w,d0
                 subi.w  #$40,d0                         ; '@'
-                bpl.s   Effect_UpdateScrollPosition_SelectPattern
+                bpl.s   Effect_UpdateTransitionColor62_SelectRampEntry
                 move.w  #$EEE,d0
                 btst    #0,(FrameCounter+1).w
-                bne.s   Effect_UpdateScrollPosition_StoreInitialPattern
+                bne.s   Effect_UpdateTransitionColor62_Store
                 btst    #0,(RandomNumberState).w
-                bne.s   Effect_UpdateScrollPosition_StoreInitialPattern
+                bne.s   Effect_UpdateTransitionColor62_Store
                 move.w  #$8CE,d0
-Effect_UpdateScrollPosition_StoreInitialPattern:        ; CODE XREF: Effect_UpdateScrollPosition+18   j  ; was: loc_26E72
-                                        ; Effect_UpdateScrollPosition+20   j
+Effect_UpdateTransitionColor62_Store:                   ; CODE XREF: Effect_UpdateTransitionColor62+18   j  ; was: loc_26E72
+                                        ; Effect_UpdateTransitionColor62+20   j
                 move.w  d0,$80(a1)
                 move.w  d0,(a1)
                 rts
 ; ---------------------------------------------------------------------------
-Effect_UpdateScrollPosition_SelectPattern:              ; CODE XREF: Effect_UpdateScrollPosition+C   j  ; was: loc_26E7A
+Effect_UpdateTransitionColor62_SelectRampEntry:         ; CODE XREF: Effect_UpdateTransitionColor62+C   j  ; was: loc_26E7A
                 asr.w   #1,d0
                 andi.w  #$1E,d0
-                move.w  Effect_TransitionPatternRamp(pc,d0.w),$80(a1)
-                move.w  Effect_TransitionPatternRamp(pc,d0.w),(a1)
+                move.w  Effect_TransitionColorRamp(pc,d0.w),$80(a1)
+                move.w  Effect_TransitionColorRamp(pc,d0.w),(a1)
                 rts
-; End of function Effect_UpdateScrollPosition
+; End of function Effect_UpdateTransitionColor62
 ; ---------------------------------------------------------------------------
-Effect_TransitionPatternRamp:   dc.w    $EEE, $CEE, $AEE, $8EE, $6EE, $4CE, $2AE, $8E, $6E, $4E, $2E, $E, $C, $A, 8, 6  ; was: word_26E8C
-                                        ; DATA XREF: Effect_UpdateScrollPosition+34   r
-                                        ; Effect_UpdateScrollPosition+3A   r
+Effect_TransitionColorRamp: dc.w    $EEE, $CEE, $AEE, $8EE, $6EE, $4CE, $2AE, $8E, $6E, $4E, $2E, $E, $C, $A, 8, 6  ; was: word_26E8C
+                                        ; DATA XREF: Effect_UpdateTransitionColor62+34   r
+                                        ; Effect_UpdateTransitionColor62+3A   r
 
 ; Clears 64 longwords of the transition pattern buffer
 Effect_ClearScrollBuffer:                               ; CODE XREF: TransitionEffect_UpdateMode3Buffers:TransitionEffect_UpdateMode3Buffers_Prepare   p  ; was: sub_26EAC
