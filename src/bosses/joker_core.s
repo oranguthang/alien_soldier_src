@@ -282,7 +282,7 @@ Boss_JokerCleanupReturn:                                ; CODE XREF: Boss_JokerC
 ; End of function Boss_JokerCleanup
 ; Spawns a randomized debris or type-$160 effect during the defeat fall
 Boss_JokerSpawnDefeatEffect:                            ; CODE XREF: Boss_JokerDefeatFallDelayState:Boss_JokerUpdateDefeatFall   p  ; was: sub_3B602
-                jsr     (Projectile_UpdateWithExplosionSound).l
+                jsr     (Projectile_PrepareImpactSpawnOrPlaySound).l
                 jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Boss_JokerSpawnDefeatEffectReturn
                 move.w  (RandomNumberState).w,d0

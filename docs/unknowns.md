@@ -10509,3 +10509,63 @@ pending queue falls from 668 to 592 and its actionable upper bound from 155 to
 79; provenance, the 513 classified binary-backed end aliases, and the 379-module
 layout remain unchanged. `weapons/projectile_impacts.s` now has zero pending
 current names, leaving one module in the queue.
+
+`actors/shared_object_helpers.s` is the last module of the semantic name audit,
+and it is the one that explains a habit visible all through the codebase: one
+routine written once and entered at several points, with the entry chosen to
+supply a constant.
+
+`Sprite_InitFromTable` reads four words into an object and leaves the rest of
+the table as its animation script pointer. Eight two-instruction wrappers sit
+above it, in pairs: one takes the current object and one takes `a0`, and each
+pair differs only in the type word it writes — `$58`, `$68`, `$94`, `$A4`. The
+same shape appears again for effects, where `Projectile_InitType88`,
+`Effect_SpawnExplosionType188`, `Projectile_InitType1A8`,
+`Effect_SpawnExplosionType1AC` and `Sprite_InitType160` all write one type word
+and fall into a single shared graphics tail. And `Physics_AccelerateUpward`
+carries it to its conclusion: it subtracts `$10000` and falls straight into
+`Physics_AccelerateDownward`, which adds `$8000`, so one pair of instructions is
+both directions and the entry point chooses the sign.
+
+Three names claimed work the routines do not do.
+`Projectile_UpdateWithImpactFrames` updates nothing: it finds a free slot,
+selects one of two impact-frame tables, and clears `d0` so the caller sees `Z`
+set. `Boss_ShiperSpawnDebris` shows the contract exactly — `jsr`, `bne` to skip,
+then `Sprite_InitType58FromTable` with `a0` and `a1` already loaded. It and its
+two siblings become `Projectile_PrepareImpactSpawn`,
+`Projectile_PrepareImpactSpawnAfterDelay` and
+`Projectile_PrepareImpactSpawnOrPlaySound`, and the quad-spawn loop body becomes
+`Enemy_SpawnQuadProjectiles_Loop`.
+
+The slot-address idiom turns up a fourth time, and here it is at its clearest.
+`Projectile_UpdatePriorityBySlot` combines bit 5 of the object slot address with
+bit 0 of the frame counter and sets or clears the sprite priority bit from the
+result, so half the pool renders in front on even frames and the other half on
+odd. The three earlier uses — the beam firing sound in `weapons/firing.s`, the
+particle child spawn and the seeking-missile re-aim in
+`weapons/projectile_impacts.s` — are all the same trick applied to a different
+cost.
+
+Both hide mechanisms this audit has pinned appear in this one file.
+`Anim_HideOnScriptEnd` writes `$1000`, setting bit 4, and
+`Anim_UpdateScriptAndHide_Hide` clears bit 15 with `andi.w #$7FFF` instead. The
+two are used by two variants of the same script walker, which is as close to a
+direct comparison as the source offers.
+
+One control-flow detail is worth keeping. `Anim_RunCallbackScript` treats the
+end marker of its script as a jump: at the marker it loads the pointer in `$48`
+into `a0`, copies `$4C` and `$50` into the velocity fields, and executes `jmp
+(a0)`. So an animation script can hand control to a routine when it finishes,
+which is why some objects have no state machine of their own.
+
+Seventy-nine records, seventy-eight new and one corrected in place, raise the
+registry from 15,752 to 15,831. The pending queue falls from 592 to 513 and its
+actionable upper bound from 79 to **zero**.
+
+That closes the queue. The 513 names still listed as pending are the binary-backed
+`_End` aliases that `make semantic-audit` classifies as following their own
+`binclude` payload; the classifier reports zero other end names and zero modules
+remaining, so every provenance-mapped current name in the source now has an
+exact-address record with static evidence behind it. Provenance stands at 16,053
+mappings over 16,926 definitions, no address-derived definition is live, and the
+379-module layout and the canonical ROM are unchanged.

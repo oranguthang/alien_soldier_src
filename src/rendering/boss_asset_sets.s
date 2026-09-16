@@ -335,7 +335,7 @@ Boss_ZLeoGraphicsLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    Boss_ZLeoTileArt1               ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    ZLeoMappingData2020             ; field_2
+                dc.l    BossZLeoMappingData2020         ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_MissirayAssetSet:  dc.w    $3D0                    ; field_0  ; was: stru_1163C

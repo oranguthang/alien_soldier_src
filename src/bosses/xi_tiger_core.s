@@ -769,7 +769,7 @@ Boss_ApplyDefeatPaletteFade:                            ; CODE XREF: Boss_Shells
 ; Spawns a randomized particle during the scripted defeat sequence
 Boss_XiTigerSpawnDefeatParticle:                        ; CODE XREF: Boss_XiTigerDefeatLeapState+66   j  ; was: sub_3E1C0
                                         ; Boss_XiTigerDefeatLandingDelayState+52   j
-                jsr     (Projectile_UpdateAfterGlobalDelay).l
+                jsr     (Projectile_PrepareImpactSpawnAfterDelay).l
                 bne.s   Boss_XiTigerSpawnDefeatParticleReturn
                 movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 jsr     (Sprite_InitTypeA4FromTable).l

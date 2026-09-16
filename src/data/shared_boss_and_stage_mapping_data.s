@@ -12,5 +12,5 @@ Stage1Phase3MappingData2020:    binclude "data/mappings/byte_140B98.bin"  ; was:
 Stage1Phase3MappingData2020_End:                        ; was: byte_140B98_End
 WolfGaropaMappingData2020:      binclude "data/mappings/byte_140F00.bin"  ; was: byte_140F00
 WolfGaropaMappingData2020_End:                          ; was: byte_140F00_End
-ZLeoMappingData2020:            binclude "data/mappings/byte_141018.bin"  ; was: byte_141018
-ZLeoMappingData2020_End:                                ; was: byte_141018_End
+BossZLeoMappingData2020:        binclude "data/mappings/byte_141018.bin"  ; was: byte_141018
+BossZLeoMappingData2020_End:                            ; was: byte_141018_End

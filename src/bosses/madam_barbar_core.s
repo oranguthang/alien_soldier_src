@@ -594,7 +594,7 @@ Boss_MadamBarbarPublishScreenPosition:                  ; CODE XREF: Boss_MadamB
 Boss_MadamBarbarSpawnBarrageParticle:                   ; CODE XREF: Boss_MadamBarbarBulletBarrageState:Boss_MadamBarbarUpdateBulletBarrage   p  ; was: sub_3AB82
                 move.w  #6,(PlaneAShakeLevel).w
                 move.w  #6,(PlaneBShakeLevel).w
-                jsr     (Projectile_UpdateAfterGlobalDelay).l
+                jsr     (Projectile_PrepareImpactSpawnAfterDelay).l
                 bne.s   Boss_MadamBarbarSpawnBarrageParticleReturn
                 jsr     (Sprite_InitTypeA4FromTable).l
                 move.b  #0,$20(a0)

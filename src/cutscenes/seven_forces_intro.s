@@ -616,7 +616,7 @@ Entity_SevenForcesSpawnRandomExplosion:                 ; CODE XREF: Entity_Seve
                                         ; sub_553CC:Entity_SevenForcesExplosionWaitUpdate   p
                 move.w  #2,(PlaneAShakeLevel).w
                 move.w  #2,(PlaneBShakeLevel).w
-                jsr     (Projectile_UpdateWithExplosionSound).l
+                jsr     (Projectile_PrepareImpactSpawnOrPlaySound).l
                 jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Entity_SevenForcesSpawnRandomExplosionReturn
                 jsr     (Sprite_InitType160).l

@@ -223,7 +223,7 @@ Gfx_QueueHexDigitsDMA_UseRequestedWidth:                ; CODE XREF: Gfx_QueueHe
 ; ---------------------------------------------------------------------------
 Gfx_QueueHexDigitsDMA_WriteLeadingBlankOrDigit:         ; CODE XREF: Gfx_QueueHexDigitsDMA+42   j  ; was: loc_1F1E
                                         ; Gfx_QueueHexDigitsDMA+66   j
-                divu.w  HexDigitDivisors(pc,d2.w),d1
+                divu.w  Gfx_HexDigitDivisors(pc,d2.w),d1
                 bne.w   Gfx_QueueHexDigitsDMA_EmitDigit
                 move.b  #$B4,d0
                 move.w  d0,(a2)+
@@ -234,7 +234,7 @@ Gfx_QueueHexDigitsDMA_WriteLeadingBlankOrDigit:         ; CODE XREF: Gfx_QueueHe
 ; ---------------------------------------------------------------------------
 Gfx_QueueHexDigitsDMA_WriteDigit:                       ; CODE XREF: Gfx_QueueHexDigitsDMA+50   j  ; was: loc_1F36
                                         ; Gfx_QueueHexDigitsDMA+7E   j
-                divu.w  HexDigitDivisors(pc,d2.w),d1
+                divu.w  Gfx_HexDigitDivisors(pc,d2.w),d1
 Gfx_QueueHexDigitsDMA_EmitDigit:                        ; CODE XREF: Gfx_QueueHexDigitsDMA+58   j  ; was: loc_1F3A
                 addi.b  #-$4B,d1
                 move.b  d1,d0
@@ -253,7 +253,7 @@ Gfx_QueueHexDigitsDMA_FinalizeQueue:                    ; CODE XREF: Gfx_QueueHe
                 rts
 ; End of function Gfx_QueueHexDigitsDMA
 ; ---------------------------------------------------------------------------
-HexDigitDivisors:   dc.w    1, $10, $100, $1000         ; was: word_1F62
+Gfx_HexDigitDivisors:   dc.w    1, $10, $100, $1000     ; was: word_1F62
 
 ; Prepends a 16-byte VDP DMA command for the length-prefixed source at a1
 Gfx_PrependDMATransferCommand:                          ; CODE XREF: Sprite_RenderDynamicObject+50   p  ; was: sub_1F6A

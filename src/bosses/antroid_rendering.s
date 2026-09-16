@@ -63,7 +63,7 @@ Boss_AntroidEnterStateBindParts:                        ; CODE XREF: Boss_Antroi
 Boss_AntroidSpawnRamDebris:                             ; CODE XREF: Boss_AntroidUpdateRamAttackPose   p  ; was: sub_37F26
                 btst    #0,(FrameCounter+1).w
                 bne.s   Boss_AntroidSpawnRamDebrisReturn
-                jsr     (Projectile_UpdateWithImpactFrames).l
+                jsr     (Projectile_PrepareImpactSpawn).l
                 bne.s   Boss_AntroidSpawnRamDebrisReturn
                 movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 jsr     (Sprite_InitTypeA4FromTable).l

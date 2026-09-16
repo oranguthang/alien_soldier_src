@@ -3,7 +3,7 @@
 ; Spawns random debris particle sprites during boss destruction
 Boss_ShiperSpawnDebris:                                 ; CODE XREF: Boss_ShiperUpdateDefeatEffectsAndMotion+6   p  ; was: sub_36FEE
                 move.w  #3,(PlaneAShakeLevel).w
-                jsr     (Projectile_UpdateWithImpactFrames).l
+                jsr     (Projectile_PrepareImpactSpawn).l
                 bne.s   Boss_ShiperSpawnDebrisReturn
                 jsr     (Sprite_InitType58FromTable).l
                 clr.b   $20(a0)

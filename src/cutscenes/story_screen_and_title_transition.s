@@ -263,7 +263,7 @@ StoryTitle_ClearPatternWorkspace:                       ; was: loc_4BF2
                 move.b  (a0)+,d0
                 move.l  a0,(StoryTitleGlyphCursor).l
                 lsl.w   #6,d0
-                addi.l  #tiles_font,d0
+                addi.l  #SharedFontTileArt,d0
                 movea.l d0,a0
                 lea     (StoryTitleMirroredGlyph).l,a1
                 move.w  #$3F,d0                         ; '?'
@@ -478,7 +478,7 @@ StoryTitle_ClearNextCharacterWorkspace:                 ; was: loc_4EBA
                 move.b  (a0)+,d0
                 move.l  a0,(StoryTitleGlyphCursor).l
                 lsl.w   #6,d0
-                addi.l  #tiles_font,d0
+                addi.l  #SharedFontTileArt,d0
                 movea.l d0,a0
                 lea     (StoryTitleMirroredGlyph).l,a1
                 move.w  #$3F,d0                         ; '?'
@@ -506,7 +506,7 @@ StoryTitle_CompletedLogoNextCharacter:                  ; was: loc_4F20
                 moveq   #0,d0
                 move.b  (a2)+,d0
                 lsl.w   #6,d0
-                addi.l  #tiles_font,d0
+                addi.l  #SharedFontTileArt,d0
                 movea.l d0,a0
                 move.w  #$3F,d0                         ; '?'
 StoryTitle_MirrorCompletedGlyphNibbles:                 ; was: loc_4F32

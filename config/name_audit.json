@@ -399,17 +399,52 @@
         "Carry saturates the displayed destroyed-enemy count at 9999; no subtraction occurs."
       ]
     },
+    { "address": "0x02A30E", "previous_name": "sub_2A30E", "current_name": "Object_UpdateVisibilityLifetime", "legacy_name": "sub_2A30E", "evidence": "static", "basis": ["Once the animation counter passes $80 the object hides itself with $1000 into the sprite word, the bit-4 hide flag; until then a separate $48 counter only clears the collision byte, so the object outlives its own hitbox."] },
+    { "address": "0x02A31E", "previous_name": "loc_2A31E", "current_name": "Object_UpdateVisibilityLifetime_Countdown", "legacy_name": "loc_2A31E", "evidence": "static", "basis": ["The collision byte is cleared once and the countdown then runs negative harmlessly."] },
+    { "address": "0x02A328", "previous_name": "locret_2A328", "current_name": "Object_UpdateVisibilityLifetime_Return", "legacy_name": "locret_2A328", "evidence": "static", "basis": ["The counting frames return here."] },
+    { "address": "0x02A390", "previous_name": "sub_2A390", "current_name": "Projectile_PrepareImpactSpawnAfterDelay", "legacy_name": "sub_2A390", "evidence": "static", "basis": ["It falls straight through into the slot search when the shared ExplosionSoundDelay is still positive, and re-arms the delay to $FFFF otherwise."] },
     {
       "address": "0x02A39C",
-      "previous_name": "Projectile_InitTypeA4",
-      "current_name": "Projectile_UpdateWithImpactFrames",
+      "previous_name": "Projectile_UpdateWithImpactFrames",
+      "current_name": "Projectile_PrepareImpactSpawn",
       "legacy_name": "sub_2A39C",
       "evidence": "static",
-      "basis": [
-        "The routine updates an existing projectile trajectory and selects between shared impact-frame tables.",
-        "It writes no object type and performs no type-A4 initialization."
-      ]
+      "basis": ["It finds a free slot, selects one of two impact-frame tables and clears d0 so the caller sees Z set; it spawns nothing itself. Boss_ShiperSpawnDebris shows the contract: jsr, bne to skip, then Sprite_InitType58FromTable with a0 and a1 already loaded. The former Update name claimed work it does not do."]
     },
+    { "address": "0x02A3B6", "previous_name": "loc_2A3B6", "current_name": "Projectile_PrepareImpactSpawn_PlaySound", "legacy_name": "loc_2A3B6", "evidence": "static", "basis": ["The sound fires on every $20th frame, and on one frame in eight of the rest when bit 3 of the random state is set, so the explosion crackle is irregular rather than periodic."] },
+    { "address": "0x02A3C0", "previous_name": "loc_2A3C0", "current_name": "Projectile_PrepareImpactSpawn_FindSlot", "legacy_name": "loc_2A3C0", "evidence": "static", "basis": ["The routine ends here: it finds a free slot, picks a frame table and clears d0 so the caller sees Z set. It spawns nothing itself. Boss_ShiperSpawnDebris shows the contract exactly: jsr, bne to skip, then Sprite_InitType58FromTable with a0 and a1 already loaded."] },
+    { "address": "0x02A3E2", "previous_name": "loc_2A3E2", "current_name": "Projectile_PrepareImpactSpawn_UseSelectedFrames", "legacy_name": "loc_2A3E2", "evidence": "static", "basis": ["One draw in four on bits 8 and 9 of the random state takes the weapon impact frames instead of the general spawn frames."] },
+    { "address": "0x02A3E4", "previous_name": "locret_2A3E4", "current_name": "Projectile_PrepareImpactSpawn_Return", "legacy_name": "locret_2A3E4", "evidence": "static", "basis": ["A full object pool returns here with Z clear, which is what the callers test."] },
+    { "address": "0x02A3E6", "previous_name": "sub_2A3E6", "current_name": "Projectile_PrepareImpactSpawnOrPlaySound", "legacy_name": "sub_2A3E6", "evidence": "static", "basis": ["The same delay guard as its neighbour, but on the boundary frame it only plays a sound and returns; only while the delay is still running does it enter the slot search."] },
+    { "address": "0x02A40C", "previous_name": "loc_2A40C", "current_name": "Projectile_PrepareImpactSpawnOrPlaySound_Play", "legacy_name": "loc_2A40C", "evidence": "static", "basis": ["The same irregular sound cadence, here as a tail jump into the sound queue."] },
+    { "address": "0x02A416", "previous_name": "locret_2A416", "current_name": "Projectile_PrepareImpactSpawnOrPlaySound_Return", "legacy_name": "locret_2A416", "evidence": "static", "basis": ["The silent boundary frames return here, and with them the caller sees the flags left by the last test rather than a slot result."] },
+    { "address": "0x02A418", "previous_name": "sub_2A418", "current_name": "Boss_CaterpillarSpawnExplosion", "legacy_name": "sub_2A418", "evidence": "static", "basis": ["It raises both plane shake levels to 4, the highest this module uses, against the 2 the generic shake helper sets."] },
+    { "address": "0x02A44E", "previous_name": "sub_2A44E", "current_name": "Projectile_SpawnFourDirectional", "legacy_name": "sub_2A44E", "evidence": "static", "basis": ["Four projectiles at $20 units of angle apart starting from $150, with the vertical component doubled and the horizontal shifted left five, so the spread is a flattened cross."] },
+    { "address": "0x02A45C", "previous_name": "loc_2A45C", "current_name": "Projectile_SpawnFourDirectional_Loop", "legacy_name": "loc_2A45C", "evidence": "static", "basis": ["The sine and cosine are read $80 bytes apart in the same table, the idiom every spawner in this codebase uses for a direction pair."] },
+    { "address": "0x02A49C", "previous_name": "locret_2A49C", "current_name": "Projectile_SpawnFourDirectional_Return", "legacy_name": "locret_2A49C", "evidence": "static", "basis": ["A full pool ends the loop early, so fewer than four may appear."] },
+    { "address": "0x02A4BE", "previous_name": "sub_2A4BE", "current_name": "Effect_InitSmallExplosion", "legacy_name": "sub_2A4BE", "evidence": "static", "basis": ["Type $A8 with the sprite word cleared outright, which is unusual: every other initialiser here writes a non-zero attribute word."] },
+    { "address": "0x02A4E0", "previous_name": "sub_2A4E0", "current_name": "Effect_SetScreenShake", "legacy_name": "sub_2A4E0", "evidence": "static", "basis": ["Two instructions that set both plane shake levels to 2, the value most callers want."] },
+    { "address": "0x02A4EE", "previous_name": "sub_2A4EE", "current_name": "Effect_SpawnParticleLoop", "legacy_name": "sub_2A4EE", "evidence": "static", "basis": ["Two nested counters: $48 paces the spawns two frames apart and $4A counts how many remain, and the object hides itself when $4A runs out but still spawns on that frame."] },
+    { "address": "0x02A506", "previous_name": "loc_2A506", "current_name": "Effect_SpawnParticleLoop_Spawn", "legacy_name": "loc_2A506", "evidence": "static", "basis": ["The jitter is a random $F on each axis, negated independently by two more random bits, so the particles fill a box rather than a line."] },
+    { "address": "0x02A534", "previous_name": "loc_2A534", "current_name": "Effect_SpawnParticleLoop_CheckYSign", "legacy_name": "loc_2A534", "evidence": "static", "basis": ["The vertical half of the same two-bit sign choice."] },
+    { "address": "0x02A53E", "previous_name": "loc_2A53E", "current_name": "Effect_SpawnParticleLoop_StorePosition", "legacy_name": "loc_2A53E", "evidence": "static", "basis": ["The routine ends by tail-jumping into RandomNumber, so the next spawn uses a fresh state."] },
+    { "address": "0x02A554", "previous_name": "locret_2A554", "current_name": "Effect_SpawnParticleLoop_Return", "legacy_name": "locret_2A554", "evidence": "static", "basis": ["Both the paced frames and a full pool return here."] },
+    { "address": "0x02A556", "previous_name": "sub_2A556", "current_name": "Effect_InitLargeExplosion", "legacy_name": "sub_2A556", "evidence": "static", "basis": ["Type $180. It writes d0 into $48 and then immediately clears $48, so the first store has no effect."] },
+    { "address": "0x02A578", "previous_name": "sub_2A578", "current_name": "Projectile_FallingSpawner", "legacy_name": "sub_2A578", "evidence": "static", "basis": ["Gravity $3000 a frame, and a child spawned every two frames with an upward $11000, so the trail rises against the parent falling."] },
+    { "address": "0x02A5B4", "previous_name": "locret_2A5B4", "current_name": "Projectile_FallingSpawner_Return", "legacy_name": "locret_2A5B4", "evidence": "static", "basis": ["Both the paced frames and a full pool return here."] },
+    { "address": "0x02A5B6", "previous_name": "sub_2A5B6", "current_name": "Enemy_SpawnQuadProjectiles", "legacy_name": "sub_2A5B6", "evidence": "static", "basis": ["It retypes the current object first and then spawns four children, so the caller becomes part of the burst."] },
+    { "address": "0x02A5D6", "previous_name": "loc_2A5D6", "current_name": "Enemy_SpawnQuadProjectiles_Loop", "legacy_name": "loc_2A5D6", "evidence": "static", "basis": ["Each child takes its velocity pair from consecutive words of the table below, so the four fly out along the diagonals."] },
+    { "address": "0x02A602", "previous_name": "locret_2A602", "current_name": "Enemy_SpawnQuadProjectiles_Return", "legacy_name": "locret_2A602", "evidence": "static", "basis": ["A full pool ends the loop early."] },
+    { "address": "0x02A604", "previous_name": "word_2A604", "current_name": "Projectile_QuadVelocityComponents", "legacy_name": "word_2A604", "evidence": "static", "basis": ["Eight words read as four pairs, each component plus or minus one, so the four directions are the corners of a unit square."] },
+    { "address": "0x02A614", "previous_name": "sub_2A614", "current_name": "Sprite_InitCurrentFromTable", "legacy_name": "sub_2A614", "evidence": "static", "basis": ["A one-instruction entry that points a0 at the current object and falls into the general initialiser below."] },
+    { "address": "0x02A616", "previous_name": "sub_2A616", "current_name": "Sprite_InitFromTable", "legacy_name": "sub_2A616", "evidence": "static", "basis": ["The shared table reader: four words into $4C, $E, 8 and $A, then the remaining table address into $48 as the animation script pointer."] },
+    { "address": "0x02A642", "previous_name": "sub_2A642", "current_name": "Sprite_InitType58Default", "legacy_name": "sub_2A642", "evidence": "static", "basis": ["The first of eight thin wrappers that differ only in the type word they write; this half of the family takes the current object."] },
+    { "address": "0x02A64C", "previous_name": "sub_2A64C", "current_name": "Sprite_InitType58FromTable", "legacy_name": "sub_2A64C", "evidence": "static", "basis": ["The a0 half of the same pair, and the one Projectile_PrepareImpactSpawn callers use."] },
+    { "address": "0x02A656", "previous_name": "sub_2A656", "current_name": "Sprite_InitType68Default", "legacy_name": "sub_2A656", "evidence": "static", "basis": ["Type $68 from the current object."] },
+    { "address": "0x02A660", "previous_name": "sub_2A660", "current_name": "Sprite_InitType68FromTable", "legacy_name": "sub_2A660", "evidence": "static", "basis": ["Type $68 from a0."] },
+    { "address": "0x02A66A", "previous_name": "sub_2A66A", "current_name": "Sprite_InitType94Default", "legacy_name": "sub_2A66A", "evidence": "static", "basis": ["Type $94 from the current object."] },
+    { "address": "0x02A674", "previous_name": "sub_2A674", "current_name": "Sprite_InitType94FromTable", "legacy_name": "sub_2A674", "evidence": "static", "basis": ["Type $94 from a0. Its only caller is Orphaned_SpawnType94RandomAngle, so this wrapper is live only through a dead one."] },
+    { "address": "0x02A67E", "previous_name": "sub_2A67E", "current_name": "Sprite_InitTypeA4FromCurrentTable", "legacy_name": "sub_2A67E", "evidence": "static", "basis": ["Type $A4 from the current object, and the target of the two orphaned thunks in weapons/projectile_impacts.s."] },
     {
       "address": "0x02A688",
       "previous_name": "Projectile_FindFreeSlotComplex",
@@ -421,6 +456,8 @@
         "It performs no pool scan or free-slot test."
       ]
     },
+    { "address": "0x02A692", "previous_name": "sub_2A692", "current_name": "Anim_UpdateWithPaletteSwap", "legacy_name": "sub_2A692", "evidence": "static", "basis": ["It masks the palette bits out of the sprite attribute and reinstalls one of two values by bit 1 of the frame counter, so the object alternates palette lines every two frames."] },
+    { "address": "0x02A6AC", "previous_name": "loc_2A6AC", "current_name": "Anim_UpdateWithPaletteSwap_UseAlternatePalette", "legacy_name": "loc_2A6AC", "evidence": "static", "basis": ["The alternate line is $6000 against $4000."] },
     {
       "address": "0x02A6B4",
       "previous_name": "Projectile_InitializeFromTable",
@@ -432,6 +469,7 @@
         "It neither consumes an initialization table nor allocates a projectile."
       ]
     },
+    { "address": "0x02A6C8", "previous_name": "sub_2A6C8", "current_name": "Physics_AccelerateUpward", "legacy_name": "sub_2A6C8", "evidence": "static", "basis": ["It subtracts $10000 and falls straight into the routine that adds $8000, so the net effect of this entry is $8000 upward and the entry below it is $8000 downward. One pair of instructions serves both directions."] },
     {
       "address": "0x02A6D0",
       "previous_name": "Physics_ApplyUpwardVelocity",
@@ -443,6 +481,8 @@
         "The engine's paired entry point subtracts velocity for upward acceleration before falling through here."
       ]
     },
+    { "address": "0x02A6D8", "previous_name": "sub_2A6D8", "current_name": "Anim_UpdateSpriteFrame", "legacy_name": "sub_2A6D8", "evidence": "static", "basis": ["The script format is a word count followed by three attribute words, and a negative count ends it. The pointer lives in $48 and is advanced in place."] },
+    { "address": "0x02A700", "previous_name": "locret_2A700", "current_name": "Anim_UpdateSpriteFrame_Return", "legacy_name": "locret_2A700", "evidence": "static", "basis": ["The frames inside one script step return here."] },
     {
       "address": "0x02A702",
       "previous_name": "Sprite_SetBossInactiveState",
@@ -465,6 +505,14 @@
         "At the end marker it restores velocities and jumps through the callback stored at offset 0x48."
       ]
     },
+    { "address": "0x02A72C", "previous_name": "loc_2A72C", "current_name": "Anim_RunCallbackScript_InvokeCallback", "legacy_name": "loc_2A72C", "evidence": "static", "basis": ["The end marker in this variant is a jump: the script pointer in $48 is treated as code and entered, with $4C and $50 copied into the velocity fields first, so a script can hand control to a routine when it finishes."] },
+    { "address": "0x02A73E", "previous_name": "sub_2A73E", "current_name": "Anim_UpdateScriptAndHide", "legacy_name": "sub_2A73E", "evidence": "static", "basis": ["The same script walker as Anim_UpdateSpriteFrame with a different end action and a different pointer field."] },
+    { "address": "0x02A764", "previous_name": "locret_2A764", "current_name": "Anim_UpdateScriptAndHide_Return", "legacy_name": "locret_2A764", "evidence": "static", "basis": ["The frames inside one step return here."] },
+    { "address": "0x02A766", "previous_name": "loc_2A766", "current_name": "Anim_UpdateScriptAndHide_Hide", "legacy_name": "loc_2A766", "evidence": "static", "basis": ["It hides by clearing bit 15 of the sprite word rather than setting bit 4, so this module contains both of the two hide mechanisms this audit has pinned."] },
+    { "address": "0x02A76E", "previous_name": "sub_2A76E", "current_name": "Anim_UpdateLoopingScript", "legacy_name": "sub_2A76E", "evidence": "static", "basis": ["The looping variant reads a new script pointer out of the stream itself at the end marker, so a script can restart or chain to another."] },
+    { "address": "0x02A774", "previous_name": "loc_2A774", "current_name": "Anim_UpdateLoopingScript_ReadFrame", "legacy_name": "loc_2A774", "evidence": "static", "basis": ["The restart re-enters here rather than at the routine head, which is what skips the counter test on the wrap frame."] },
+    { "address": "0x02A794", "previous_name": "locret_2A794", "current_name": "Anim_UpdateLoopingScript_Return", "legacy_name": "locret_2A794", "evidence": "static", "basis": ["The frames inside one step return here."] },
+    { "address": "0x02A796", "previous_name": "loc_2A796", "current_name": "Anim_UpdateLoopingScript_Restart", "legacy_name": "loc_2A796", "evidence": "static", "basis": ["The long following the end marker is the next script address."] },
     {
       "address": "0x02A79C",
       "previous_name": "Enemy_GetEntityAddress",
@@ -476,6 +524,7 @@
         "Its callers therefore initialize the current object rather than merely retrieving an address."
       ]
     },
+    { "address": "0x02A79E", "previous_name": "sub_2A79E", "current_name": "Projectile_InitType88", "legacy_name": "sub_2A79E", "evidence": "static", "basis": ["Type $88, then the shared effect graphics tail."] },
     {
       "address": "0x02A7A4",
       "previous_name": "Weapon_CopySeekingMissileAddress",
@@ -487,6 +536,7 @@
         "No seeking-missile address is stored or returned separately."
       ]
     },
+    { "address": "0x02A7A6", "previous_name": "sub_2A7A6", "current_name": "Effect_SpawnExplosionType188", "legacy_name": "sub_2A7A6", "evidence": "static", "basis": ["Type $188, the same shape one type apart."] },
     {
       "address": "0x02A7AC",
       "previous_name": "Effect_WrapperA5ToA0",
@@ -509,6 +559,7 @@
         "The value 0x2A does not occur in the routine."
       ]
     },
+    { "address": "0x02A7B4", "previous_name": "sub_2A7B4", "current_name": "Effect_SpawnExplosionType1AC", "legacy_name": "sub_2A7B4", "evidence": "static", "basis": ["Type $1AC, and the only one of the family that points a0 at the current object itself rather than having a separate entry for it."] },
     {
       "address": "0x02A7BC",
       "previous_name": "Sprite_SetObjectPointer",
@@ -520,6 +571,16 @@
         "It initializes the current object rather than storing an object pointer."
       ]
     },
+    { "address": "0x02A7BE", "previous_name": "sub_2A7BE", "current_name": "Sprite_InitType160", "legacy_name": "sub_2A7BE", "evidence": "static", "basis": ["Type $160, and the last of the family to fall into the shared tail."] },
+    { "address": "0x02A7C2", "previous_name": "loc_2A7C2", "current_name": "Sprite_InitializeEffectGraphics", "legacy_name": "loc_2A7C2", "evidence": "static", "basis": ["The shared tail writes sprite word $ED40 and attribute $480 and clears the collision byte, so every effect type in the family starts inert."] },
+    { "address": "0x02A7DE", "previous_name": "sub_2A7DE", "current_name": "Physics_ApplyGravity", "legacy_name": "sub_2A7DE", "evidence": "static", "basis": ["Gravity $2000 a frame and then the height check below, which the handler table also names separately."] },
+    { "address": "0x02A7E6", "previous_name": "loc_2A7E6", "current_name": "Physics_CheckHeightBoundary", "legacy_name": "loc_2A7E6", "evidence": "static", "basis": ["Both this label and the routine above it are named by Entity_UpdateHandlerTable, so an object can take the height check without the gravity."] },
+    { "address": "0x02A7F4", "previous_name": "locret_2A7F4", "current_name": "Physics_ApplyGravity_Return", "legacy_name": "locret_2A7F4", "evidence": "static", "basis": ["The in-bounds frames return here."] },
+    { "address": "0x02A7F6", "previous_name": "sub_2A7F6", "current_name": "Enemy_DelayedHide", "legacy_name": "sub_2A7F6", "evidence": "static", "basis": ["Two instructions and a hide, the simplest handler in the file."] },
+    { "address": "0x02A802", "previous_name": "locret_2A802", "current_name": "Enemy_DelayedHide_Return", "legacy_name": "locret_2A802", "evidence": "static", "basis": ["The counting frames return here."] },
+    { "address": "0x02A804", "previous_name": "sub_2A804", "current_name": "Projectile_FallWithGravity", "legacy_name": "sub_2A804", "evidence": "static", "basis": ["Gravity $3000, and again the label below it is a separate handler-table entry so the motion can be had without the acceleration."] },
+    { "address": "0x02A80C", "previous_name": "loc_2A80C", "current_name": "Projectile_FallWithGravity_Update", "legacy_name": "loc_2A80C", "evidence": "static", "basis": ["It applies the global flip bits and then the slot-based priority alternation before the height check."] },
+    { "address": "0x02A822", "previous_name": "locret_2A822", "current_name": "Projectile_FallWithGravity_Return", "legacy_name": "locret_2A822", "evidence": "static", "basis": ["The in-bounds frames return here."] },
     {
       "address": "0x02A824",
       "previous_name": "Projectile_SetVelocityFromAngle",
@@ -542,6 +603,9 @@
         "It performs no trigonometry and never accesses a velocity field."
       ]
     },
+    { "address": "0x02A844", "previous_name": "loc_2A844", "current_name": "Projectile_UpdatePriorityBySlot_SetPriority", "legacy_name": "loc_2A844", "evidence": "static", "basis": ["Bit 5 of the slot address and bit 0 of the frame counter are combined so that half the pool renders in front on even frames and the other half on odd. It is the fourth use of that address bit this audit has found, after the beam sound, the particle child spawn and the seeking missile re-aim."] },
+    { "address": "0x02A84C", "previous_name": "loc_2A84C", "current_name": "Projectile_UpdatePriorityBySlot_CheckFrameParity", "legacy_name": "loc_2A84C", "evidence": "static", "basis": ["The mirrored half of the same exclusive-or."] },
+    { "address": "0x02A854", "previous_name": "loc_2A854", "current_name": "Projectile_UpdatePriorityBySlot_ClearPriority", "legacy_name": "loc_2A854", "evidence": "static", "basis": ["The clearing half."] },
     {
       "address": "0x02A85C",
       "previous_name": "Sprite_WrapperA5ToA0",
@@ -553,6 +617,13 @@
         "Its effect extends beyond register forwarding."
       ]
     },
+    { "address": "0x02A85E", "previous_name": "sub_2A85E", "current_name": "Effect_InitDebrisSprite", "legacy_name": "sub_2A85E", "evidence": "static", "basis": ["The horizontal velocity is the whole random word sign-extended and shifted left three, so it spans both directions, while the vertical is only a two-bit negative, so debris always drifts upward slightly."] },
+    { "address": "0x02A8A2", "previous_name": "sub_2A8A2", "current_name": "Projectile_FallingDebris", "legacy_name": "sub_2A8A2", "evidence": "static", "basis": ["Gravity $4000, the strongest of the three falling handlers in this file."] },
+    { "address": "0x02A8B8", "previous_name": "locret_2A8B8", "current_name": "Projectile_FallingDebris_Return", "legacy_name": "locret_2A8B8", "evidence": "static", "basis": ["The in-bounds frames return here."] },
+    { "address": "0x02A8BA", "previous_name": "sub_2A8BA", "current_name": "Object_ClearInactiveTypes12CAnd134", "legacy_name": "sub_2A8BA", "evidence": "static", "basis": ["It hides itself first and then sweeps the whole object pool up to $DCA0, clearing every object of type $12C or $134 that does not have bit 1 of its sprite word set."] },
+    { "address": "0x02A8CC", "previous_name": "loc_2A8CC", "current_name": "Object_ClearInactiveTypes12CAnd134_ScanLoop", "legacy_name": "loc_2A8CC", "evidence": "static", "basis": ["Two types are matched against one scan, which is why both are named in the routine."] },
+    { "address": "0x02A8D4", "previous_name": "loc_2A8D4", "current_name": "Object_ClearInactiveTypes12CAnd134_ClearMatch", "legacy_name": "loc_2A8D4", "evidence": "static", "basis": ["Bit 1 of the sprite word exempts an object from the sweep."] },
+    { "address": "0x02A8E2", "previous_name": "loc_2A8E2", "current_name": "Object_ClearInactiveTypes12CAnd134_NextObject", "legacy_name": "loc_2A8E2", "evidence": "static", "basis": ["The stride is $60 and the limit is the absolute address $DCA0 rather than a count."] },
     {
       "address": "0x02A94C",
       "previous_name": "Projectile_DestroyOffscreen",
@@ -12086,6 +12157,11 @@
     {"address":"0x0584CC","previous_name":"loc_584CC","current_name":"Boss_CheckArtemisPosePartFlag3","legacy_name":"loc_584CC","evidence":"static","basis":["After optional active-part two synchronization, this block tests active-part mask bit three and processes its fixed record."]},
     {"address":"0x0584DA","previous_name":"locret_584DA","current_name":"Boss_RenderArtemisPoseReturn","legacy_name":"locret_584DA","evidence":"static","basis":["The path returns when active-part mask bit three is clear; the enabled path tail-calls the same synchronization helper."]},
     {"address":"0x01BF64","previous_name":"Boss_ArtemisProjectileInitTable","current_name":"Boss_ArtemisAttackPartGroupInitTable","legacy_name":"word_1BF64","evidence":"static","basis":["Boss_InitArtemisAttackPartGroup passes this three-record table to the generic object-group initializer; the controller later manipulates the resulting fixed part slots as an active-part group."]},
+    { "address": "0x02A96E", "previous_name": "loc_2A96E", "current_name": "Terrain_StampObjectPattern_Setup", "legacy_name": "loc_2A96E", "evidence": "static", "basis": ["Bit 15 of $5E selects between sprite words $E300 and $E100 before it is used as a table index, the same one-bit packing Object_InitIndexedSpriteGraphics uses two routines earlier."] },
+    { "address": "0x02A99E", "previous_name": "loc_2A99E", "current_name": "Terrain_StampObjectPattern_WriteLoop", "legacy_name": "loc_2A99E", "evidence": "static", "basis": ["It writes tile words straight into the tilemap at M68K_RAM, converting each pattern offset into a map index with the same shift and mask arithmetic the terrain probes use."] },
+    { "address": "0x02A9D6", "previous_name": "locret_2A9D6", "current_name": "Terrain_StampObjectPattern_Return", "legacy_name": "locret_2A9D6", "evidence": "static", "basis": ["A non-zero state returns immediately, so the stamp happens once."] },
+    { "address": "0x02A9D8", "previous_name": "off_2A9D8", "current_name": "Terrain_ObjectStampPattern", "legacy_name": "off_2A9D8", "evidence": "static", "basis": ["A record list of four-byte steps ending when the X offset field reads $8000, which is what the write loop tests."] },
+    { "address": "0x02AA04", "previous_name": "off_2AA04", "current_name": "Terrain_ObjectStampPatternPointers", "legacy_name": "off_2AA04", "evidence": "static", "basis": ["A single pointer, so the indexed selection above currently resolves to one pattern."] },
     { "address": "0x02AA08", "previous_name": "sub_2AA08", "current_name": "UI_DebugSpriteEditor", "legacy_name": "sub_2AA08", "evidence": "static", "basis": ["Entity_UpdateHandlerTable installs this handler at index 16, so its object type is $40; no source code writes that type, although object types can also arrive from stage layout data. Holding bit 7 of ControllerHeldState marks the object for removal, and every other path edits the object's own sprite attribute word $E."] },
     { "address": "0x02AA1A", "previous_name": "loc_2AA1A", "current_name": "UI_DebugSpriteEditor_Setup", "legacy_name": "loc_2AA1A", "evidence": "static", "basis": ["The block re-marks the object active, pins it to X $120 and Y $100 every frame, loads attribute word $E into d0, and splits between the held-repeat and single-press tile controls on bit 6."] },
     { "address": "0x02AA4A", "previous_name": "loc_2AA4A", "current_name": "UI_DebugSpriteEditor_DecrementTileHeld", "legacy_name": "loc_2AA4A", "evidence": "static", "basis": ["With bit 6 held, bit 1 decrements the tile index once per frame; the matching increment on bit 0 sits in the caller."] },
@@ -12239,7 +12315,7 @@
     {"address":"0x01B404","previous_name":"Math_LookupCosineValue","current_name":"Math_LookupPackedBCDWord","legacy_name":"sub_1B404","evidence":"static","basis":["The helper returns a word indexed from Math_PackedBCDLookup; its caller passes an even byte offset and renders the returned packed decimal value, with no angle or trigonometric operation."]},
     {"address":"0x05A43C","previous_name":"Entity_EmptyState3","current_name":"Entity_EmptyState3","legacy_name":"nullsub_3","evidence":"static","basis":["Entity_UpdateHandlerTable points to this standalone RTS for an intentionally empty entity update slot."]},
     {"address":"0x05A43E","previous_name":"word_5A43E","current_name":"Math_PackedBCDLookup","legacy_name":"word_5A43E","evidence":"static","basis":["The first 10,000 bytes are exactly 5,000 big-endian packed-BCD words encoding integers 0000 through 4999; menu, password, HUD, player, results, and conversion code index the table by even offsets."]},
-    {"address":"0x05CB72","previous_name":"word_5A43E_End","current_name":"PreSoundPreservedDataEnd","legacy_name":"word_5A43E_End","evidence":"static","basis":["This zero-size boundary follows the 10,036-byte preservation asset and precedes the org-filled gap to the sound driver; the asset's last 36 bytes remain deliberately opaque."]},
+    {"address":"0x05CB72","previous_name":"PreSoundPreservedDataEnd","current_name":"Math_PackedBCDLookup_End","legacy_name":"word_5A43E_End","evidence":"static","basis": ["It is the end label of the Math_PackedBCDLookup binclude directly above it, as its own legacy name word_5A43E_End records, so naming it after the sound data that follows the padding attributed it to the wrong owner."]},
     {"address":"0x082324","previous_name":"Sound_UpdateThunk","current_name":"Sound_UpdateThunk","legacy_name":"sub_82324","evidence":"static","basis":["Reset and VBlank call this two-byte entry, which immediately jumps to the main 68000 sound-driver update routine."]},
     {"address":"0x082328","previous_name":"Sound_InitDriverThunk","current_name":"Sound_InitDriverThunk","legacy_name":"sub_82328","evidence":"static","basis":["Reset calls this two-byte entry, which immediately jumps to the routine that installs the Z80 DAC driver."]},
     {"address":"0x08232C","previous_name":"Sound_UpdateDriver","current_name":"Sound_UpdateDriver","legacy_name":"sub_8232C","evidence":"static","basis":["The routine performs the per-frame fade, tempo, pending-command, FM, PSG, DAC, and pause processing for every sound channel family."]},
@@ -14606,7 +14682,7 @@
     {"address":"0x001F36","previous_name":"loc_1F36","current_name":"Gfx_QueueHexDigitsDMA_WriteDigit","legacy_name":"loc_1F36","evidence":"static","basis":["This loop divides the remaining value by successive powers of sixteen and emits every requested hexadecimal position."]},
     {"address":"0x001F3A","previous_name":"loc_1F3A","current_name":"Gfx_QueueHexDigitsDMA_EmitDigit","legacy_name":"loc_1F3A","evidence":"static","basis":["The quotient is translated to the contiguous digit-tile range beginning at 0xB5 and appended to the staging buffer."]},
     {"address":"0x001F4A","previous_name":"loc_1F4A","current_name":"Gfx_QueueHexDigitsDMA_FinalizeQueue","legacy_name":"loc_1F4A","evidence":"static","basis":["The tail prepends the VDP auto-increment and DMA-length words, then publishes both updated queue cursors."]},
-    {"address":"0x001F62","previous_name":"word_1F62","current_name":"HexDigitDivisors","legacy_name":"word_1F62","evidence":"static","basis":["The four words are 1, 0x10, 0x100, and 0x1000 and are indexed by Gfx_QueueHexDigitsDMA as powers of sixteen."]},
+    {"address":"0x001F62","previous_name":"HexDigitDivisors","current_name":"Gfx_HexDigitDivisors","legacy_name":"word_1F62","evidence":"static","basis": ["Four words, 1, $10, $100 and $1000, read only by Gfx_QueueHexDigitsDMA through two divu instructions. Renamed to carry the owner its single reader already declares."]},
     {"address":"0x001F6A","previous_name":"Gfx_SetupDMATransfer","current_name":"Gfx_PrependDMATransferCommand","legacy_name":"sub_1F6A","evidence":"static","basis":["Given a destination in d0 and a length-prefixed source at a1, the routine prepends the destination, word length, auto-increment, and source-address register words to the queue at a0."]},
     {"address":"0x001FC8","previous_name":"Gfx_LoadFourPalettes","current_name":"Palette_LoadFourOptionalBlocks","legacy_name":"sub_1FC8","evidence":"static","basis":["The routine initializes the active and shadow palette destinations and invokes Palette_CopyOptionalBlock exactly four times."]},
     {"address":"0x001FE2","previous_name":"Gfx_CopyPaletteBlock","current_name":"Palette_CopyOptionalBlock","legacy_name":"sub_1FE2","evidence":"static","basis":["A nonzero source pointer copies the same 32-byte block into corresponding active and shadow palette slots; a null pointer advances both destinations without overwriting them."]},
@@ -14615,8 +14691,8 @@
     { "address": "0x002998", "previous_name": "loc_2998", "current_name": "Gfx_DecompressLZSSToVRAMBatched_WaitBlock", "legacy_name": "loc_2998", "evidence": "static", "basis": ["Each $400-byte block is drained before the next is decoded, into the same staging buffer."] },
     { "address": "0x0029A0", "previous_name": "loc_29A0", "current_name": "Gfx_DecompressLZSSToVRAMBatched_FinalBlock", "legacy_name": "loc_29A0", "evidence": "static", "basis": ["The tail length is the staging pointer minus $B400 and is passed to DMA as a byte count, where the synchronous twin halves it for a word loop."] },
     { "address": "0x0029AE", "previous_name": "loc_29AE", "current_name": "Gfx_DecompressLZSSToVRAMBatched_WaitFinal", "legacy_name": "loc_29AE", "evidence": "static", "basis": ["The final drain before returning."] },
-    { "address": "0x0029C0", "previous_name": "loc_29C0", "current_name": "LZSSDecomp_BlockLoop", "legacy_name": "loc_29C0", "evidence": "static", "basis": ["It stops either when the source reaches the end pointer or when the destination has advanced $400 bytes from where it started, which is what gives every caller a fixed $400 block."] },
-    { "address": "0x0029CE", "previous_name": "loc_29CE", "current_name": "LZSSDecomp_Return", "legacy_name": "loc_29CE", "evidence": "static", "basis": ["Both stop conditions restore the saved registers here; the routine is the only one in the module that preserves d4 to d7 and a5."] },
+    { "address": "0x0029C0", "previous_name": "LZSSDecomp_BlockLoop", "current_name": "Data_LZSSDecomp_BlockLoop", "legacy_name": "loc_29C0", "evidence": "static", "basis": ["Renamed with its parent, which carries the Data_ owner every other routine in gameplay/object_data.s uses."] },
+    { "address": "0x0029CE", "previous_name": "LZSSDecomp_Return", "current_name": "Data_LZSSDecomp_Return", "legacy_name": "loc_29CE", "evidence": "static", "basis": ["Renamed with its parent."] },
     { "address": "0x0029D4", "previous_name": "sub_29D4", "current_name": "Data_LZSSDecodeBlock", "legacy_name": "sub_29D4", "evidence": "static", "basis": ["The opcode byte selects five cases from three bits: bit 7 is a back reference, and with it clear bits 5 and 6 give a literal run, a single-byte fill, a two-byte fill and a mixed fill."] },
     { "address": "0x0029EE", "previous_name": "loc_29EE", "current_name": "Data_LZSSDecodeBlock_FillByte", "legacy_name": "loc_29EE", "evidence": "static", "basis": ["Reached with bit 5 set, and it re-tests bit 6 to separate the plain fill from the mixed one, so the two share an entry."] },
     { "address": "0x0029FE", "previous_name": "loc_29FE", "current_name": "Data_LZSSDecodeBlock_FillByteLoop", "legacy_name": "loc_29FE", "evidence": "static", "basis": ["The count is the low five bits plus one and then a dbf, so the run is two to thirty-three bytes of the same value."] },
@@ -18260,7 +18336,7 @@
     {"address":"0x140B0C","previous_name":"byte_140B0C","current_name":"Stage1Phase3MappingData6800","legacy_name":"byte_140B0C","evidence":"static","basis":["Stage1Phase3AssetLoadList references this exact compressed mapping-data source in its type-six record at destination $6800."]},
     {"address":"0x140B98","previous_name":"byte_140B98","current_name":"Stage1Phase3MappingData2020","legacy_name":"byte_140B98","evidence":"static","basis":["Stage1Phase3AssetLoadList references this exact compressed mapping-data source in its type-six record at destination $2020."]},
     {"address":"0x140F00","previous_name":"byte_140F00","current_name":"WolfGaropaMappingData2020","legacy_name":"byte_140F00","evidence":"static","basis":["Boss_WolfGaropaGraphicsLoadList references this exact compressed mapping-data source in its type-six record at destination $2020."]},
-    {"address":"0x141018","previous_name":"byte_141018","current_name":"ZLeoMappingData2020","legacy_name":"byte_141018","evidence":"static","basis":["Boss_ZLeoGraphicsLoadList references this exact compressed mapping-data source in its type-six record at destination $2020."]},
+    {"address":"0x141018","previous_name":"ZLeoMappingData2020","current_name":"BossZLeoMappingData2020","legacy_name":"byte_141018","evidence":"static","basis": ["A mapping payload for the Z-Leo boss, sitting among SharedBossMappingData2020 and SharedLateBossMappingData2020 in the same module. Renamed to declare the owner its neighbours already declare."]},
     {"address":"0x0ED4B4","previous_name":"tiles_ED4B4","current_name":"FrontendTitleTransitionTileArtA000","legacy_name":"tiles_ED4B4","evidence":"static","basis":["FrontendTitleTransitionAssetLoadList references this exact compressed tile-art source in its type-seven record at destination $A000."]},
     {"address":"0x0E98B0","previous_name":"word_E98B0","current_name":"FrontendSegaScreenSpriteMapping","legacy_name":"word_E98B0","evidence":"static","basis":["Frontend_InitializeSegaScreen installs this three-piece composite sprite mapping directly in the frontend display object."]},
     {"address":"0x0E98C2","previous_name":"word_E98C2","current_name":"FrontendTitleTransitionSpriteMapping","legacy_name":"word_E98C2","evidence":"static","basis":["Frontend_InitializeTitleTransition installs this composite sprite mapping directly in the title-transition display object."]},
@@ -19535,7 +19611,7 @@
     { "address": "0x00042A", "previous_name": "loc_42A", "current_name": "Reset_AcquireZ80Bus", "legacy_name": "loc_42A", "evidence": "static", "basis": ["The second bus-request spin loop, this time before the Z80 RAM is cleared."] },
     { "address": "0x000440", "previous_name": "loc_440", "current_name": "Reset_ClearZ80RAMLoop", "legacy_name": "loc_440", "evidence": "static", "basis": ["The loop writes $800 long words, exactly the 8 KB of Z80 RAM, before the sound driver is installed."] },
     { "address": "0x000462", "previous_name": "loc_462", "current_name": "Sys_MainGameLoop", "legacy_name": "loc_462", "evidence": "static", "basis": ["The endless loop re-enables interrupts at level 3 and calls Sys_DispatchDataLoader; every other subsystem runs from the interrupt handlers rather than from here."] },
-    { "address": "0x0004B8", "previous_name": "loc_4B8", "current_name": "ShowRedScreen_HaltLoop", "legacy_name": "loc_4B8", "evidence": "static", "basis": ["After the checksum failure fills the palette with red, this branch-to-self halts the machine."] },
+    { "address": "0x0004B8", "previous_name": "ShowRedScreen_HaltLoop", "current_name": "Boot_ShowRedScreen_HaltLoop", "legacy_name": "loc_4B8", "evidence": "static", "basis": ["Renamed with its parent, which is the boot error screen and now carries the Boot_ owner rather than the bare verb Show."] },
     {"address":"0x0004BA","previous_name":"Sys_CheckRegionLock","current_name":"Sys_CheckRegionLock","legacy_name":"sub_4BA","evidence":"static","basis":["The first Sys_GameStateHandlers entry selects this routine during startup.","On substate zero it reads IO_PCBVER byte one, accepts hardware when bit seven is clear or bit six is set, and otherwise enters the persistent RegionRestricted screen; later substates return immediately."]},
     {"address":"0x0004D0","previous_name":"Sys_SetGameModeFlags","current_name":"Sys_EnterInitialGameModeAfterRegionCheck","legacy_name":"loc_4D0","evidence":"static","basis":["Both accepted IO_PCBVER branches converge here after the region test.","The block writes game mode four, clears GameSubstateIndex, and returns; it does not manipulate a flag set."]},
     {"address":"0x000580","previous_name":"RegionCheck_Return","current_name":"Sys_CheckRegionLock_Return","legacy_name":"locret_580","evidence":"static","basis":["A nonzero region-check substate branches directly to this RTS.","The rejected-region initialization also advances GameSubstateIndex and falls through here, keeping the displayed restriction screen active on later updates."]},

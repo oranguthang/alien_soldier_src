@@ -410,7 +410,7 @@ Boss_UpdateDefeatExplosionAndSpawnDebris:               ; CODE XREF: Boss_Victor
                 jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #4,(PlaneBShakeLevel).w
-                jsr     (Projectile_UpdateWithExplosionSound).l
+                jsr     (Projectile_PrepareImpactSpawnOrPlaySound).l
                 jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Boss_UpdateDefeatExplosionAndSpawnDebrisReturn
                 jsr     (Projectile_InitType88).l

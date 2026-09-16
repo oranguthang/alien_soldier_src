@@ -36,64 +36,64 @@ Effect_ConvertCurrentToTypeC4Burst:                     ; CODE XREF: Object_Upda
                 move.b  #$BC,d0
                 jmp     (Sound_QueueSFXRequest).l
 ; End of function Effect_ConvertCurrentToTypeC4Burst
-; Waits on the shared explosion-sound delay, then enters the projectile update
-Projectile_UpdateAfterGlobalDelay:                      ; CODE XREF: Enemy_ShipSpawnDebrisProjectile   p  ; was: sub_2A390
+; Waits on the shared explosion-sound delay, then enters the slot search
+Projectile_PrepareImpactSpawnAfterDelay:                ; CODE XREF: Enemy_ShipSpawnDebrisProjectile   p  ; was: sub_2A390
                                         ; sub_3A122   p
                 subq.w  #1,(ExplosionSoundDelay).w
-                bpl.s   Projectile_UpdateWithImpactFrames_Update
+                bpl.s   Projectile_PrepareImpactSpawn_FindSlot
                 move.w  #$FFFF,(ExplosionSoundDelay).w
-; End of function Projectile_UpdateAfterGlobalDelay
-; Updates a projectile and selects one of two shared impact-frame tables
-Projectile_UpdateWithImpactFrames:                      ; CODE XREF: Boss_ShiperSpawnDebris+6   p  ; was: sub_2A39C
+; End of function Projectile_PrepareImpactSpawnAfterDelay
+; Finds a free slot, selects one of two impact-frame tables, and reports success in Z
+Projectile_PrepareImpactSpawn:                          ; CODE XREF: Boss_ShiperSpawnDebris+6   p  ; was: sub_2A39C
                                         ; Boss_AntroidSpawnRamDebris+8   p
                 move.w  (FrameCounter).w,d0
                 move.w  d0,d1
                 andi.w  #$1F,d1
-                beq.s   Projectile_UpdateWithImpactFrames_PlaySound
+                beq.s   Projectile_PrepareImpactSpawn_PlaySound
                 andi.w  #7,d1
-                bne.s   Projectile_UpdateWithImpactFrames_Update
+                bne.s   Projectile_PrepareImpactSpawn_FindSlot
                 btst    #3,(RandomNumberState).w
-                beq.s   Projectile_UpdateWithImpactFrames_Update
-Projectile_UpdateWithImpactFrames_PlaySound:            ; CODE XREF: Projectile_UpdateWithImpactFrames+A   j  ; was: loc_2A3B6
+                beq.s   Projectile_PrepareImpactSpawn_FindSlot
+Projectile_PrepareImpactSpawn_PlaySound:                ; CODE XREF: Projectile_PrepareImpactSpawn+A   j  ; was: loc_2A3B6
                 move.b  #$BC,d0
                 jsr     (Sound_QueueSFXRequest).l
-Projectile_UpdateWithImpactFrames_Update:               ; CODE XREF: Projectile_UpdateAfterGlobalDelay+4   j  ; was: loc_2A3C0
-                                        ; Projectile_UpdateWithImpactFrames+10   j
+Projectile_PrepareImpactSpawn_FindSlot:                 ; CODE XREF: Projectile_PrepareImpactSpawnAfterDelay+4   j  ; was: loc_2A3C0
+                                        ; Projectile_PrepareImpactSpawn+10   j
                 jsr     (Projectile_FindFreeSlotForward).l
-                bne.w   Projectile_UpdateWithImpactFrames_Return
+                bne.w   Projectile_PrepareImpactSpawn_Return
                 movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 move.w  (RandomNumberState).w,d6
                 move.w  d6,d1
                 andi.w  #$300,d6
-                bne.s   Projectile_UpdateWithImpactFrames_UseSelectedFrames
+                bne.s   Projectile_PrepareImpactSpawn_UseSelectedFrames
                 movea.l #Weapon_ImpactSpriteFrames,a1
-Projectile_UpdateWithImpactFrames_UseSelectedFrames:    ; CODE XREF: Projectile_UpdateWithImpactFrames+3E   j  ; was: loc_2A3E2
+Projectile_PrepareImpactSpawn_UseSelectedFrames:        ; CODE XREF: Projectile_PrepareImpactSpawn+3E   j  ; was: loc_2A3E2
                 moveq   #0,d0
-Projectile_UpdateWithImpactFrames_Return:               ; CODE XREF: Projectile_UpdateWithImpactFrames+2A   j  ; was: locret_2A3E4
+Projectile_PrepareImpactSpawn_Return:                   ; CODE XREF: Projectile_PrepareImpactSpawn+2A   j  ; was: locret_2A3E4
                 rts
-; End of function Projectile_UpdateWithImpactFrames
-; Updates a projectile while emitting randomized explosion sounds
-Projectile_UpdateWithExplosionSound:                    ; CODE XREF: Boss_DestroyerProtoEmitDefeatParticle+12   p  ; was: sub_2A3E6
+; End of function Projectile_PrepareImpactSpawn
+; Finds a free slot while the delay runs, and on the boundary frame only plays a sound
+Projectile_PrepareImpactSpawnOrPlaySound:               ; CODE XREF: Boss_DestroyerProtoEmitDefeatParticle+12   p  ; was: sub_2A3E6
                                         ; Boss_JokerSpawnDefeatEffect   p
                 subq.w  #1,(ExplosionSoundDelay).w
-                bpl.s   Projectile_UpdateWithImpactFrames_Update
+                bpl.s   Projectile_PrepareImpactSpawn_FindSlot
                 move.w  #$FFFF,(ExplosionSoundDelay).w
                 move.w  (FrameCounter).w,d0
                 move.w  d0,d1
                 andi.w  #$1F,d1
-                beq.s   Projectile_UpdateWithExplosionSound_Play
+                beq.s   Projectile_PrepareImpactSpawnOrPlaySound_Play
                 andi.w  #7,d1
-                bne.s   Projectile_UpdateWithExplosionSound_Return
+                bne.s   Projectile_PrepareImpactSpawnOrPlaySound_Return
                 btst    #3,(RandomNumberState).w
-                beq.s   Projectile_UpdateWithExplosionSound_Return
-Projectile_UpdateWithExplosionSound_Play:               ; CODE XREF: Projectile_UpdateWithExplosionSound+16   j  ; was: loc_2A40C
+                beq.s   Projectile_PrepareImpactSpawnOrPlaySound_Return
+Projectile_PrepareImpactSpawnOrPlaySound_Play:          ; CODE XREF: Projectile_PrepareImpactSpawnOrPlaySound+16   j  ; was: loc_2A40C
                 move.b  #$BC,d0
                 jmp     (Sound_QueueSFXRequest).l
 ; ---------------------------------------------------------------------------
-Projectile_UpdateWithExplosionSound_Return:             ; CODE XREF: Projectile_UpdateWithExplosionSound+1C   j  ; was: locret_2A416
-                                        ; Projectile_UpdateWithExplosionSound+24   j
+Projectile_PrepareImpactSpawnOrPlaySound_Return:        ; CODE XREF: Projectile_PrepareImpactSpawnOrPlaySound+1C   j  ; was: locret_2A416
+                                        ; Projectile_PrepareImpactSpawnOrPlaySound+24   j
                 rts
-; End of function Projectile_UpdateWithExplosionSound
+; End of function Projectile_PrepareImpactSpawnOrPlaySound
 ; Spawns explosion projectile with sound
 Boss_CaterpillarSpawnExplosion:                         ; CODE XREF: Boss_CaterpillarHomingProjectileSegment+4C   j  ; was: sub_2A418
                                         ; Boss_CaterpillarFourPhaseSegment+40   j
@@ -135,7 +135,7 @@ Projectile_SpawnFourDirectional_Return:                 ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_SpawnFourDirectional
 ; ---------------------------------------------------------------------------
-unused_7:       binclude "data/other/unused_7.bin"
+Actor_UnidentifiedTrailingData: binclude "data/other/unused_7.bin"
 
 ; Initializes small explosion effect sprite with sound effect $BB
 Effect_InitSmallExplosion:
@@ -229,8 +229,8 @@ Enemy_SpawnQuadProjectiles:                             ; CODE XREF: Enemy_Spawn
                 lea     Projectile_QuadVelocityComponents(pc),a2
                 nop
                 moveq   #3,d7
-; Updates quad projectile spawn with trajectory calculation
-Projectile_UpdateQuadSpawn:                             ; CODE XREF: Enemy_SpawnQuadProjectiles+48   j  ; was: loc_2A5D6
+; Spawns one of the four projectiles and takes its velocity pair from the table
+Enemy_SpawnQuadProjectiles_Loop:                        ; CODE XREF: Enemy_SpawnQuadProjectiles+48   j  ; was: loc_2A5D6
                 jsr     (Projectile_FindFreeSlotForward).l
                 bne.s   Enemy_SpawnQuadProjectiles_Return
                 move.l  #SharedCombatSpriteAnimation03,8(a0)
@@ -239,7 +239,7 @@ Projectile_UpdateQuadSpawn:                             ; CODE XREF: Enemy_Spawn
                 move.w  (a2)+,$18(a0)
                 move.w  (a2)+,$1C(a0)
                 bsr.w   Sprite_InitType160
-                dbf     d7,Projectile_UpdateQuadSpawn
+                dbf     d7,Enemy_SpawnQuadProjectiles_Loop
 Enemy_SpawnQuadProjectiles_Return:                      ; CODE XREF: Enemy_SpawnQuadProjectiles+26   j  ; was: locret_2A602
                 rts
 ; End of function Enemy_SpawnQuadProjectiles

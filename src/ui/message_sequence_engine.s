@@ -325,7 +325,7 @@ MessageScript_RenderGlyph:                              ; DATA XREF: ROM:0000A9A
 ; ---------------------------------------------------------------------------
 MessageScript_DrawGlyph:                                ; CODE XREF: MessageScript_RenderGlyph+C   j  ; was: loc_AC88
                 asl.w   #6,d0
-                addi.l  #tiles_font,d0
+                addi.l  #SharedFontTileArt,d0
                 movea.l d0,a0
                 movea.w #(MessageGlyphTileBuffer-M68K_RAM),a1
                 moveq   #$F,d7

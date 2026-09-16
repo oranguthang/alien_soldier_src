@@ -44,14 +44,14 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
 
 The contract does not require invented semantics. No live address-derived
 definitions remain in executable, preserved-ROM, or RAM source. The exact-
-address audit registry contains 15,752 records. A further 592 provenance-mapped
+address audit registry contains 15,831 records. A further 513 provenance-mapped
 current names do not yet appear as current-name or alias records; this is an
 upper-bound semantic review queue because aliases that share an address must
 be folded into one record. `make semantic-audit` identifies 513 binary-backed
 `_End` aliases that immediately follow their `binclude` payload and therefore
 do not represent separate semantic review work. The resulting actionable
-upper bound is 79 names; no other pending `_End` labels are hidden by that
-classification. Promote or correct names only with recorded static or runtime
+upper bound is 0 names: the queue is closed, and the classifier reports no
+other pending `_End` labels and no modules remaining. Promote or correct names only with recorded static or runtime
 evidence.
 The older source-mutating analysis workflows are also outside the release
 interface until made module-aware; see `docs/tooling_status.md`.

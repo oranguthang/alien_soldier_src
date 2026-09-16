@@ -412,7 +412,7 @@ Boss_ZLeoApplyDefeatPaletteFade:                        ; CODE XREF: Boss_ZLeoUp
 ; Update the defeat explosion and spawn one randomized debris or particle effect
 Boss_ZLeoSpawnDefeatEffect:                             ; CODE XREF: Boss_ZLeoBeginDefeatSequence+68   p  ; was: sub_529CE
                                         ; Boss_ZLeoBeginDefeatSequence+9C   p
-                jsr     (Projectile_UpdateWithExplosionSound).l
+                jsr     (Projectile_PrepareImpactSpawnOrPlaySound).l
                 jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Boss_ZLeoSpawnDefeatEffectReturn
                 move.w  (RandomNumberState).w,d0

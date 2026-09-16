@@ -138,7 +138,7 @@ StoryFont_Initialize:                                   ; DATA XREF: ROM:StoryFo
                 nop
                 jsr     StoryFont_QueueIndexRows(pc)    ; (pc)
                 nop
-                move.l  #font_japanese_mappings,(StoryFontGlyphCursor).l
+                move.l  #JapaneseFontMappingData,(StoryFontGlyphCursor).l
                 move.w  #$7C00,(StoryFontVRAMAddress).l
                 clr.w   (StoryFontScrollY).l
                 clr.w   (StoryFontNextGlyphY).l
@@ -157,7 +157,7 @@ StoryFont_StreamNextGlyph:                              ; DATA XREF: ROM:000074A
                 subi.w  #$20,d0                         ; ' '
                 ext.l   d0
                 lsl.l   #7,d0
-                addi.l  #font_japanese_tiles,d0
+                addi.l  #JapaneseFontTileArt,d0
                 move.w  (StoryFontVRAMAddress).l,d4
                 jsr     StoryFont_QueueGlyphDMA(pc)     ; (pc)
                 nop

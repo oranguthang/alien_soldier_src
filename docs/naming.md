@@ -23,6 +23,31 @@ interpretation pass; those names are hypotheses until reviewed.
 - Rename all references atomically and require `make verify` afterward.
 - Do not infer behavior solely from a caller name that is itself provisional.
 
+## Subsystem vocabulary
+
+Every definition in assembly source must satisfy one of three rules, which
+`make lint` checks:
+
+- the name is owned by a declared subsystem, which is the segment before the
+  first underscore or, for a name without one, its leading capitalised word;
+- the name derives from a symbol that exists, as `Owner_Detail` derives from
+  `Owner` and `Block_End` from `Block`;
+- the name is a declared hardware exception.
+
+The vocabulary is the `naming.subsystem_vocabulary` list in
+`config/source_policy.json`. It is closed: a name owned by a token that is not
+on the list fails lint until the token is added deliberately. The list was
+adopted from the reviewed state of the source at Source Reconstruction 1.0
+rather than designed in advance, so it records which subsystems this program
+actually has.
+
+The hardware exceptions are the definitions in `src/equals.inc`,
+`src/ports.inc` and `src/ram_addrs.inc`, which name the machine rather than the
+program, plus two sets named by their formats: the twelve 68000 exception
+vector targets referenced from `Sys_VectorTable`, which keep the name of the
+vector they serve, and the Mega Drive cartridge header fields, which keep the
+name the header format gives them.
+
 ## Evidence levels
 
 - `unknown`: no supported semantic claim.

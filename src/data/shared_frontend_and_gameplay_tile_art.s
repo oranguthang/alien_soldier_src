@@ -1,7 +1,7 @@
 FrontendTitleTransitionTileArtA000:     binclude "data/artcomp/tiles_0ED4B4.bin"  ; was: tiles_ED4B4
 FrontendTitleTransitionTileArtA000_End:                 ; was: tiles_ED4B4_End
-tiles_font:                             binclude "data/artunc/font.bin"
-tiles_font_End:
+SharedFontTileArt:                      binclude "data/artunc/font.bin"
+SharedFontTileArt_End:
 SharedSceneAndStageTileArt9000:         binclude "data/artcomp/tiles_F10A4.bin"  ; was: tiles_F10A4
 SharedSceneAndStageTileArt9000_End:                     ; was: tiles_F10A4_End
 StageEntryAndWeaponSetupTileArtDE00:    binclude "data/artcomp/tiles_0F276E.bin"  ; was: tiles_F276E

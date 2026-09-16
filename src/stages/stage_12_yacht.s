@@ -277,7 +277,7 @@ Stage12_YachtControllerReturn:                          ; CODE XREF: Stage12_Yac
 ; End of function Stage12_YachtUpdatePlaneOffsets
 ; Spawns debris projectile with random offset
 Stage12_YachtSpawnDestructionDebris:                    ; CODE XREF: Stage12_YachtBeginMotion+A4   p  ; was: sub_2F8B8
-                jsr     (Projectile_UpdateAfterGlobalDelay).l
+                jsr     (Projectile_PrepareImpactSpawnAfterDelay).l
                 bne.s   Stage12_YachtDestructionDebrisReturn
                 jsr     (Sprite_InitFromTable).l
                 move.b  #0,$20(a0)

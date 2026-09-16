@@ -11,8 +11,8 @@ MessageDisplay_FontPatternFillSource:   dc.w    $C7F8, $C7F8, $C7F8, $C7F8, $C7F
 MessageDisplay_FontBasePattern0:    dc.w    $C7CC, $C7CD, $C7CE, $C7CF, $C7D0, $C7BF  ; was: unlabeled_180060
 MessageDisplay_FontBasePattern1:    dc.w    $C7F8, $C7DC, $C7DD, $C7DE, $C7DF, $C7BF  ; was: unlabeled_18006C
 MessageDisplay_FontBasePattern2:    dc.w    $C7F8, $C7EC, $C7ED, $C7EE, $C7EF, $C7BF  ; was: unlabeled_180078
-unused_tile_mappings:               binclude "data/mappings/unused.bin"
-unused_tile_mappings_End:
+FrontendUnreferencedMappingData:    binclude "data/mappings/unused.bin"
+FrontendUnreferencedMappingData_End:
 FrontendUnreferencedTileArt:        binclude "data/artcomp/tiles_180F84.bin"  ; was: tiles_180F84
 FrontendUnreferencedTileArt_End:                        ; was: tiles_180F84_End
 SharedFrontendAndTransitionTileArt: dc.b    0, $C4, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0  ; was: byte_18140E

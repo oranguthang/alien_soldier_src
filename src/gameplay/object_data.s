@@ -125,7 +125,7 @@ LoadCompressedToRAM:                                    ; DATA XREF: ROM:0000266
                 movea.l d0,a2
 ; Loop that decompresses multiple LZSS-compressed data blocks sequentially until reaching end address
 LoadCompressedToRAM_BlockLoop:                          ; CODE XREF: LoadCompressedToRAM+16   j  ; was: loc_273C
-                bsr.w   LZSSDecomp
+                bsr.w   Data_LZSSDecomp
                 cmpa.l  a4,a1
                 bcs.s   LoadCompressedToRAM_BlockLoop
                 rts
@@ -143,7 +143,7 @@ LoadCompressedToVRAM:                                   ; DATA XREF: ROM:0000266
                 movea.l d0,a3
 LoadCompressedToVRAM_BlockLoop:                         ; CODE XREF: LoadCompressedToVRAM+56   j  ; was: loc_2756
                 lea     (GraphicsStagingBuffer).w,a2
-                bsr.w   LZSSDecomp
+                bsr.w   Data_LZSSDecomp
                 cmpa.l  a4,a1
                 bcc.w   LoadCompressedToVRAM_FinalBlock
                 move.w  #$FF,d1
@@ -363,7 +363,7 @@ Data_DecompressLZSSDirect:                              ; DATA XREF: ROM:000028A
                 movea.l (DataLoaderCodecState).w,a4
 ; Repeats direct LZSS decompression until the source end is reached
 Data_DecompressLZSSDirect_BlockLoop:                    ; CODE XREF: Data_DecompressLZSSDirect+12   j  ; was: loc_2968
-                bsr.w   LZSSDecomp
+                bsr.w   Data_LZSSDecomp
                 cmpa.l  a4,a1
                 bcs.s   Data_DecompressLZSSDirect_BlockLoop
                 rts
@@ -375,7 +375,7 @@ Gfx_DecompressLZSSToVRAMBatched:                        ; DATA XREF: ROM:000028A
                 movea.l (DataLoaderCodecState).w,a4
 Gfx_DecompressLZSSToVRAMBatched_BlockLoop:              ; CODE XREF: Gfx_DecompressLZSSToVRAMBatched+2C   j  ; was: loc_297E
                 lea     (GraphicsStagingBuffer).w,a2
-                bsr.w   LZSSDecomp
+                bsr.w   Data_LZSSDecomp
                 cmpa.l  a4,a1
                 bcc.w   Gfx_DecompressLZSSToVRAMBatched_FinalBlock
                 move.w  #$400,d1
@@ -396,24 +396,24 @@ Gfx_DecompressLZSSToVRAMBatched_WaitFinal:              ; CODE XREF: Gfx_Decompr
                 bne.s   Gfx_DecompressLZSSToVRAMBatched_WaitFinal
                 rts
 ; End of function Gfx_DecompressLZSSToVRAMBatched
-LZSSDecomp:                                             ; CODE XREF: LoadCompressedToRAM:loc_273C   p
+Data_LZSSDecomp:                                        ; CODE XREF: LoadCompressedToRAM:loc_273C   p
                                         ; LoadCompressedToVRAM+14   p
                 movem.l d4-d7/a5,-(sp)
                 move.w  a2,d4
                 addi.w  #$400,d4
-LZSSDecomp_BlockLoop:                                   ; CODE XREF: LZSSDecomp+16   j  ; was: loc_29C0
+Data_LZSSDecomp_BlockLoop:                              ; CODE XREF: Data_LZSSDecomp+16   j  ; was: loc_29C0
                 bsr.w   Data_LZSSDecodeBlock
                 cmpa.l  a4,a1
-                bcc.w   LZSSDecomp_Return
+                bcc.w   Data_LZSSDecomp_Return
                 cmp.w   a2,d4
-                bhi.s   LZSSDecomp_BlockLoop
-LZSSDecomp_Return:                                      ; CODE XREF: LZSSDecomp+10   j  ; was: loc_29CE
+                bhi.s   Data_LZSSDecomp_BlockLoop
+Data_LZSSDecomp_Return:                                 ; CODE XREF: Data_LZSSDecomp+10   j  ; was: loc_29CE
                 movem.l (sp)+,d4-d7/a5
                 rts
-; End of function LZSSDecomp
+; End of function Data_LZSSDecomp
 
 ; LZSS decoder that handles various compression block types including literal runs RLE and backreferences
-Data_LZSSDecodeBlock:                                   ; CODE XREF: LZSSDecomp:LZSSDecomp_BlockLoop   p  ; was: sub_29D4
+Data_LZSSDecodeBlock:                                   ; CODE XREF: Data_LZSSDecomp:Data_LZSSDecomp_BlockLoop   p  ; was: sub_29D4
                 move.b  (a1)+,d5
                 bmi.w   Data_LZSSDecodeBlock_CopyBackReference
                 btst    #5,d5

@@ -1,6 +1,6 @@
 ; Spawns a type-A4 debris object around Shellshogun during defeat launch
 Boss_ShellshogunSpawnDefeatDebris:                      ; CODE XREF: Boss_ShellshogunDefeatLaunchState:Boss_ShellshogunRenderDefeatLaunch   p  ; was: sub_3A122
-                jsr     (Projectile_UpdateAfterGlobalDelay).l
+                jsr     (Projectile_PrepareImpactSpawnAfterDelay).l
                 bne.s   Boss_ShellshogunSpawnDefeatDebrisReturn
                 jsr     (Sprite_InitTypeA4FromTable).l
                 clr.b   $20(a0)

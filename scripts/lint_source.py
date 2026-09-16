@@ -18,6 +18,7 @@ INDENTED_DEFINITION = re.compile(
 )
 INCLUDE = re.compile(r'^\s*include\s+"([^"]+)"', re.IGNORECASE)
 WAS = re.compile(r";\s*was:\s*([A-Za-z_][A-Za-z0-9_]*)\s*$")
+OWNER_TOKEN = re.compile(r"^[A-Z][a-z0-9]*")
 EMITTING = re.compile(
     r"^\s*(?:dc\.[bwl]|dcb\.[bwl]|binclude|incbin|org0?|align0?|cnop0?)\b",
     re.IGNORECASE,
@@ -107,6 +108,27 @@ def scan(policy: dict, project_root: Path) -> Inventory:
                     provenance[current_label] = (legacy, where)
                     old_symbols[legacy] = where
 
+    naming = policy["naming"]
+    vocabulary = set(naming["subsystem_vocabulary"])
+    hardware_files = set(naming["hardware_exception_files"])
+    hardware_names = set(naming["hardware_exception_names"])
+    for name, where in definitions.items():
+        if where.rsplit(":", 1)[0] in hardware_files or name in hardware_names:
+            continue
+        if "_" in name:
+            parent = name.rsplit("_", 1)[0]
+            if parent != name and parent in definitions:
+                continue
+            token = name.split("_", 1)[0]
+        else:
+            leading = OWNER_TOKEN.match(name)
+            token = leading.group(0) if leading else name
+        if token not in vocabulary:
+            errors.append(
+                f"{where}: {name} is owned by {token}, which is not a declared subsystem; "
+                "name it after one, derive it from a symbol that exists, or declare it"
+            )
+
     minimum = policy["provenance"]["minimum_unique_mappings"]
     if len(provenance) < minimum:
         errors.append(f"provenance has {len(provenance)} mappings; policy requires at least {minimum}")
@@ -158,7 +180,8 @@ def main() -> int:
     print(
         f"[OK] source policy: {len(inventory.definitions)} definitions, "
         f"{len(inventory.provenance)} provenance mappings, "
-        f"{len(inventory.address_derived)} address-derived unknowns"
+        f"{len(inventory.address_derived)} address-derived unknowns, "
+        f"{len(policy['naming']['subsystem_vocabulary'])} declared subsystems"
     )
     return 0
 

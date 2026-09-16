@@ -651,7 +651,7 @@ Boss_SunsetStingDebrisPartRemove:                       ; CODE XREF: Boss_Sunset
 Boss_SunsetStingSpawnRandomOffsetProjectile:            ; CODE XREF: Boss_SunsetStingRiseAndSpawnProjectilesState+E   p  ; was: sub_41492
                                         ; Boss_SunsetStingDescendAndActivateChainsState+E   p
                 move.l  d1,-(sp)
-                jsr     (Projectile_UpdateWithImpactFrames).l
+                jsr     (Projectile_PrepareImpactSpawn).l
                 bne.s   Boss_SunsetStingSpawnRandomOffsetProjectileReturn
                 jsr     (Sprite_InitFromTable).l
                 clr.b   $20(a0)

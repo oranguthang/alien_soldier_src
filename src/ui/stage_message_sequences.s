@@ -478,7 +478,7 @@ Message_LoadNextGlyphTile:                              ; CODE XREF: BattleBanne
 Message_CopyGlyphTile:                                  ; CODE XREF: Message_LoadNextGlyphTile+C   j  ; was: loc_B3A0
                 move.l  a0,(MessageGlyphSourcePtr).w
                 asl.w   #6,d0
-                addi.l  #tiles_font,d0
+                addi.l  #SharedFontTileArt,d0
                 movea.l d0,a0
                 movea.w #(MessageGlyphTileBuffer-M68K_RAM),a1
                 moveq   #$F,d7

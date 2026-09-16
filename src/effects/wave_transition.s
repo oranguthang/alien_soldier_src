@@ -246,7 +246,7 @@ Gfx_PrepareTilePointers_ComputeFirstPointer:            ; CODE XREF: Gfx_Prepare
                 asl.w   #3,d1
                 andi.w  #$FFE0,d1
                 or.w    d1,d2
-                addi.l  #sega_tiles,d2
+                addi.l  #SegaScreenTileArt,d2
                 movea.l d2,a0
                 asr.w   #1,d3
                 bcs.w   Gfx_PrepareTilePointers_ComputeSecondPointer
@@ -257,7 +257,7 @@ Gfx_PrepareTilePointers_ComputeSecondPointer:           ; CODE XREF: Gfx_Prepare
                 asl.w   #3,d1
                 andi.w  #$FFE0,d1
                 or.w    d1,d3
-                addi.l  #sega_tiles,d3
+                addi.l  #SegaScreenTileArt,d3
                 movea.l d3,a1
                 rts
 ; End of function Gfx_PrepareTilePointers

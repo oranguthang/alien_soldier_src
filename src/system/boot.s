@@ -104,7 +104,7 @@ Reset_ChecksumLoop:                                     ; CODE XREF: Reset+162  
                 bcc.s   Reset_ChecksumLoop
                 movea.l #Checksum,a1
                 cmp.w   (a1),d1
-                bne.w   ShowRedScreen
+                bne.w   Boot_ShowRedScreen
                 lea     (SystemStateBlock).w,a1
                 moveq   #0,d1
                 move.w  #$3F,d0                         ; '?'
@@ -213,13 +213,13 @@ Trace:                                                  ; DATA XREF: ROM:0000002
                 stop    #$2700
 ; End of function Trace
 
-ShowRedScreen:                                          ; CODE XREF: Reset+16C   j
+Boot_ShowRedScreen:                                     ; CODE XREF: Reset+16C   j
                 jsr     (Gfx_InitVDPRegisters).l
                 move.l  #$C0000000,(VDP_CTRL).l
                 moveq   #$3F,d7                         ; '?'
-endless_loop:                                           ; CODE XREF: ShowRedScreen+1A   j
+Boot_ShowRedScreen_FillLoop:                            ; CODE XREF: Boot_ShowRedScreen+1A   j
                 move.w  #$E,(VDP_DATA).l
-                dbf     d7,endless_loop
-ShowRedScreen_HaltLoop:                                 ; CODE XREF: ShowRedScreen:ShowRedScreen_HaltLoop   j  ; was: loc_4B8
-                bra.s   ShowRedScreen_HaltLoop
-; End of function ShowRedScreen
+                dbf     d7,Boot_ShowRedScreen_FillLoop
+Boot_ShowRedScreen_HaltLoop:                            ; CODE XREF: Boot_ShowRedScreen:Boot_ShowRedScreen_HaltLoop   j  ; was: loc_4B8
+                bra.s   Boot_ShowRedScreen_HaltLoop
+; End of function Boot_ShowRedScreen

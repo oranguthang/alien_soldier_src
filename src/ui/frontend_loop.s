@@ -140,7 +140,7 @@ Frontend_InitializeSegaScreen_CopyPalette:              ; was: loc_1D09E
                 movea.w (VDPCommandQueueHead).w,a0
                 move.w  #$82,-(a0)
                 move.w  #$6000,-(a0)
-                move.l  #sega_tiles,d0
+                move.l  #SegaScreenTileArt,d0
                 lsr.l   #1,d0
                 move.l  d0,(DMASourceEncoding).w
                 move.b  (DMASourceEncoding+3).w,-(a0)

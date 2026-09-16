@@ -442,7 +442,7 @@ Boss_SunsetStingConvertBodyPartToExplosion:             ; CODE XREF: Boss_Sunset
 ; Spawns a shared impact sprite at a random offset with mirrored velocity
 Boss_SunsetStingSpawnDefeatImpact:                      ; CODE XREF: Boss_SunsetStingScatterSecondFormBodyPartsState+84   p  ; was: sub_42514
                 move.l  d1,-(sp)
-                jsr     (Projectile_UpdateWithImpactFrames).l
+                jsr     (Projectile_PrepareImpactSpawn).l
                 bne.s   Boss_SunsetStingSpawnDefeatImpactReturn
                 jsr     (Sprite_InitFromTable).l
                 clr.b   $20(a0)

@@ -29,7 +29,7 @@ Boss_DestroyerProtoEmitDefeatParticle:                  ; CODE XREF: Boss_Destro
                 jsr     (Gfx_UpdateRandomizedPaletteRange).l
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #4,(PlaneBShakeLevel).w
-                jsr     (Projectile_UpdateWithExplosionSound).l
+                jsr     (Projectile_PrepareImpactSpawnOrPlaySound).l
                 jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Entity_UpdateReturn
                 jsr     (Projectile_InitType88).l

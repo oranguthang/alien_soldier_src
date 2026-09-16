@@ -76,7 +76,7 @@ Gfx_ClearStagingAndFirst48KiBVRAM:                      ; CODE XREF: Sys_ResetFo
 ; End of function Gfx_ClearStagingAndFirst48KiBVRAM
 ; Initializes all VDP registers by loading values from lookup table and storing them to VDP_CTRL and RAM
 Gfx_InitVDPRegisters:                                   ; CODE XREF: Reset+218   p  ; was: sub_2E08
-                                        ; ShowRedScreen   p
+                                        ; Boot_ShowRedScreen   p
                 lea     Gfx_InitialVDPRegisterValues(pc),a0
                 lea     (VDPReg0Shadow).w,a1
                 move.w  #$8000,d0
