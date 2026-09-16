@@ -31,6 +31,7 @@ def ram_symbols(path: Path) -> dict[str, int]:
 def validate(config: dict, capture_root: Path, symbols: dict[str, int]) -> list[str]:
     errors: list[str] = []
     readers = {"u8": Genstate.m68k_u8, "u16": Genstate.m68k_u16, "u32": Genstate.m68k_u32}
+    minimum = int(config.get("minimum_expectations_per_scenario", 2))
     for scenario in config["scenarios"]:
         frame = int(scenario["frame"])
         path = capture_root / scenario["id"] / f"{frame:06d}.genstate"
@@ -44,8 +45,8 @@ def validate(config: dict, capture_root: Path, symbols: dict[str, int]) -> list[
         if len(state.sections.get(M68K_RAM, b"")) != 65536:
             errors.append(f"{scenario['id']}: M68K RAM section is not 64 KiB")
             continue
-        if len(scenario.get("expectations", [])) < 2:
-            errors.append(f"{scenario['id']}: fewer than two named expectations")
+        if len(scenario.get("expectations", [])) < minimum:
+            errors.append(f"{scenario['id']}: fewer than {minimum} named expectations")
         for expectation in scenario.get("expectations", []):
             symbol = expectation["symbol"]
             if symbol not in symbols:
@@ -84,7 +85,9 @@ def main() -> int:
             print(f"[ERROR] {error}", file=sys.stderr)
         return 1
     expectations = sum(len(item["expectations"]) for item in config["scenarios"])
-    print(f"[OK] runtime: {len(config['scenarios'])} scenarios, {expectations} named RAM assertions")
+    movies = len({item["movie"] for item in config["scenarios"]})
+    print(f"[OK] runtime: {len(config['scenarios'])} scenarios from {movies} movies, "
+          f"{expectations} named RAM assertions")
     return 0
 
 

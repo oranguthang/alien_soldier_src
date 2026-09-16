@@ -22,15 +22,22 @@
     "max_module_lines": 1000,
     "minimum_provenance_mappings": 4822,
     "minimum_addressed_symbols": 15000,
-    "runtime_scenarios": 6,
-    "minimum_expectations_per_scenario": 2
+    "runtime_scenarios": 12,
+    "minimum_expectations_per_scenario": 5,
+    "minimum_runtime_expectations": 60
   },
   "required_runtime_ids": [
     "boot",
     "title",
+    "options_screen",
+    "title_idle",
+    "story_screen",
+    "weapon_select",
     "gameplay_start",
     "boss_transition",
     "stage_change",
+    "stage_transition",
+    "demo_playback",
     "credits"
   ],
   "required_toolchain_components": [
@@ -40,6 +47,7 @@
   ],
   "required_documents": [
     "docs/assembly_style.md",
+    "docs/index.md",
     "docs/naming.md",
     "docs/provenance.md",
     "docs/ram_map.md",
@@ -48,6 +56,7 @@
     "docs/runtime.md",
     "docs/source_layout.md",
     "docs/source_map.md",
+    "docs/source_reconstruction_1_0.md",
     "docs/symbols.md",
     "docs/tooling_status.md",
     "docs/unknowns.md"

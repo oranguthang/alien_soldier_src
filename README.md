@@ -24,7 +24,7 @@ make source-inventory # Measure semantic-module and naming debt
 make format         # Deterministically normalize all assembly source
 make lint           # Check source/provenance and repository policy
 make test           # Run the Python verification tests
-make runtime        # Replay six checkpoints and validate named RAM state
+make runtime        # Replay twelve checkpoints and validate named RAM state
 make release-check  # Run the complete ordered clean-room release gate
 ```
 

@@ -1,0 +1,86 @@
+# Source Reconstruction 1.0
+
+This document states what the 1.0 release claims and what it does not. The
+machine-readable form is `config/source_reconstruction_1_0.json`, and
+`make release-audit` resolves every claim below to a file, a target, a scenario
+or an artifact that exists.
+
+1.0 is a preservation release. It reproduces the original cartridge in a form
+that can be read, navigated and checked. It does not claim to explain every
+byte.
+
+## What the release claims
+
+- **Byte identity.** `make verify` assembles `src/main.s` with the vendored
+  toolchain and compares the result with the user-supplied Japanese cartridge
+  dump byte by byte, not by hash alone, reproducing SHA-1
+  `8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`.
+- **Source, not blobs.** All executable 68000 code is assembly source across 378
+  address-ordered modules indexed by `src/main.s`. Include order is ROM order;
+  there is no linker, so `config/rom_layout.json` owns the memory map, the
+  landmarks, the padding gap and every module range, and `make verify-layout`
+  checks them against the assembler listing and the built image.
+- **No address is an identity.** No live definition is address-derived, which
+  `make lint` enforces with a ceiling of zero.
+- **Names are checkable, not merely documented.** Every definition is owned by
+  one of 192 declared subsystems, derives from a symbol that exists, or is a
+  declared hardware exception. The vocabulary is a closed list in
+  `config/source_policy.json`; a new owner token fails lint.
+- **Evidence behind every name.** `config/name_audit.json` holds 15,831
+  exact-address records. Each carries the address, the imported name, the name
+  it replaced and the static evidence for the name it has now.
+- **Provenance is retained.** 16,053 `; was:` markers map current definitions to
+  the imported labels they replaced.
+- **A memory map.** 1,291 work RAM fields, the hardware ports and the shared
+  equates are named in include files and documented in `docs/ram_map.md`.
+- **Behaviour observed, not assumed.** Twelve scenarios replay three pinned
+  movies under the pinned emulator and check 78 named work RAM expectations,
+  each resolved through `src/ram_addrs.inc`. Every observed mode value names a
+  handler in `Sys_GameStateHandlers`, so a checkpoint states which routine owns
+  the frame rather than merely recording a number.
+- **One gate.** `make release-check` runs the whole thing in a fixed order on a
+  clean tree.
+
+## What the release does not claim
+
+Each entry below is an `excluded_scope` record in the manifest with the control
+that limits it. They are stated here rather than left implicit.
+
+| Registry | What is excluded | Status |
+| --- | --- | --- |
+| `PROFILE-001` | The European ROM. Only the Japanese cartridge is accepted. | unsupported |
+| `SND-001` | The Z80 sound driver program, which stays a verbatim payload and is never disassembled. | unsupported |
+| `NAME-001` | 513 `_End` aliases that follow their own `binclude` payload hold no separate record. | partial |
+| `LAYOUT-001` | Module sizes: 203 of 378 modules sit inside the preferred 200–700 line band, 145 are shorter and 30 are longer. | partial |
+| `DOC-001` | 207 imported cross-reference comments still quote address-derived names that no longer define anything. | partial |
+| `SRC-001` | 264 instructions still address work RAM by a raw `$FFFFxxxx` literal rather than by name. | partial |
+| `TOOL-001` | Five older analysis commands that mutate a single translation unit and are outside the release interface. | unsupported |
+| `annotated_tag` | The tag itself, which is created only after the gate passes on a clean tree. | planned |
+| `commit_body_convention` | Commits made before this manifest carry a title and attribution without a body. | partial |
+| `frame_image_comparison` | Pixel comparison. The runtime layer checks state, not frames. | planned |
+| `linux_aggregate_gate` | A gate run on Linux. The vendored Linux toolchain is present but untested. | partial |
+
+## Why the exclusions are shaped this way
+
+`SND-001` is the one place this repository holds executable code that the source
+boundary rule would otherwise forbid. It is named rather than hidden: the
+payload has an owning module, a declared ROM range and a pinned hash.
+
+`LAYOUT-001` is a consequence of a module rule, not an oversight. A procedure
+and its private tables are not split merely to reach a line count, and ROM order
+is preserved by include order, so a subsystem that is contiguous in ROM stays in
+one module even when that module is short or long. The 1000-line ceiling is the
+hard limit and no module reaches it.
+
+`DOC-001` and `SRC-001` are text and literals, not identifiers. Neither can be
+mistaken for a symbol that resolves, because the address-derived ceiling is zero
+and every RAM field has a name.
+
+## Naming is not grandfathered
+
+Semantic labels from the earlier automated pass are not facts. They were
+reviewed module by module and corrected where the code disagreed; they may be
+corrected again as evidence improves, and the imported label stays reachable
+through the provenance marker either way. An unresolved symbol takes a
+role-neutral name and an entry in `docs/unknowns.md` rather than an invented
+behaviour.

@@ -16,15 +16,19 @@ from validate_runtime_scenarios import number, ram_symbols  # noqa: E402
 
 
 class RuntimeContractTests(unittest.TestCase):
-    def test_six_named_scenarios_resolve_ram_symbols(self) -> None:
+    def test_named_scenarios_resolve_ram_symbols(self) -> None:
         config = json.loads((ROOT / "config/runtime_scenarios.json").read_text(encoding="utf-8"))
+        contract = json.loads((ROOT / "config/release_0_5.json").read_text(encoding="utf-8"))
         symbols = ram_symbols(ROOT / "src/ram_addrs.inc")
         self.assertEqual(
-            ["boot", "title", "gameplay_start", "boss_transition", "stage_change", "credits"],
+            contract["required_runtime_ids"],
             [scenario["id"] for scenario in config["scenarios"]],
         )
         for scenario in config["scenarios"]:
-            self.assertGreaterEqual(len(scenario["expectations"]), 2)
+            self.assertGreaterEqual(
+                len(scenario["expectations"]),
+                contract["thresholds"]["minimum_expectations_per_scenario"],
+            )
             for expectation in scenario["expectations"]:
                 self.assertIn(expectation["symbol"], symbols)
                 self.assertEqual(
@@ -32,6 +36,16 @@ class RuntimeContractTests(unittest.TestCase):
                     (symbols[expectation["symbol"]] + number(expectation.get("offset", 0)))
                     & 0xFFFFFF,
                 )
+
+    def test_every_scenario_names_a_pinned_movie(self) -> None:
+        config = json.loads((ROOT / "config/runtime_scenarios.json").read_text(encoding="utf-8"))
+        for movie_id, movie in config["movies"].items():
+            self.assertTrue((ROOT / movie["path"]).is_file(), movie_id)
+            self.assertRegex(movie["sha256"], r"^[0-9a-f]{64}$")
+        declared = set(config["movies"])
+        used = {scenario["movie"] for scenario in config["scenarios"]}
+        self.assertEqual(set(), used - declared)
+        self.assertEqual(set(), declared - used)
 
     def test_genstate_reader_parses_header_sections_and_word_order(self) -> None:
         ram = bytearray(65536)

@@ -10569,3 +10569,59 @@ remaining, so every provenance-mapped current name in the source now has an
 exact-address record with static evidence behind it. Provenance stands at 16,053
 mappings over 16,926 definitions, no address-derived definition is live, and the
 379-module layout and the canonical ROM are unchanged.
+
+The runtime layer grows from six checkpoints on one movie to twelve across
+three, and from 13 named RAM expectations to 78. The three movies are not
+redundancy. A tool-assisted run never opens the options screen and a menu tour
+never finishes a stage, so the pinned set now names each movie by ID with its own
+SHA-256, and every scenario declares which one it replays. The capture runner
+checks all three hashes before it starts, and sizes each emulator deadline from
+the scenario's frame number instead of applying one fixed timeout — the old
+300-second limit was a little under the 294 seconds the 70000-frame credits
+checkpoint actually needs, which is why that capture was the one that kept going
+missing.
+
+`Sys_DispatchGameState` turns out to be the strongest single piece of runtime
+evidence in the program. It uses `GameModeIndex` unchanged as the byte offset
+into `Sys_GameStateHandlers`, a 37-entry `dc.l` table, so an observed mode value
+names a routine outright. The new checkpoints pin six of those entries that no
+scenario reached before: `TitleScreen_Update` at `$18`, `UI_UpdateOptionsScreen`
+at `$20`, `StoryScreen_MainLoop` at `$28` and `WeaponSetup_UpdateScreen` at `$74`,
+alongside the `$14`, `$10` and `$90` the earlier set already covered. The full
+table is now in `docs/runtime.md`, which makes the remaining uncovered modes —
+the password menu, the retry prompt, the game-over screens and the results flow —
+explicit rather than merely absent.
+
+One candidate checkpoint was dropped for a reason worth recording. The menus
+movie spends thousands of frames in the music, SFX and voice tests, but a capture
+at frame 13000 and another at frame 20000 both read `GameModeIndex` as `$20`.
+The sound tests run under `UI_UpdateOptionsScreen` like the rest of the options
+screen, so a scenario there would have repeated `options_screen` without covering
+new dispatch. The eleventh slot went to the Stage 4 to 5 transition instead,
+which stays in `Sys_GameplayMainLoop` but parks the stage timer:
+`StageTimerPauseFlag` reads 1 there and 0 at the `boss_transition` checkpoint,
+which is what separates an inter-stage transition from a mid-stage one.
+
+Demo playback closes a static finding at runtime. `Demo_PlaybackSystem` saves the
+selected difficulty into `SavedDifficultyMode` and forces `DifficultyMode` to 2
+before seeding `DemoFramesRemaining` with `$1000`; the capture at menus frame
+36000 reads playback active, its state at the single `addq.w #4` the entry path
+performs, recording mode zeroed, difficulty 2, and `$0BC9` frames left — 1079
+frames into the demo. The same capture shows `DemoStageTableIndex` and
+`StageTableIndex` both at 2 with `StageNumberBCD` at 2, which is the demo stage
+selection reaching the ordinary stage machinery.
+
+The difficulty word deserves one more line because the audit had only static
+support for it. Every checkpoint from the title screen onward in the
+tool-assisted run reads `DifficultyMode` as `$0002`, and the odd byte of that
+word — the byte all six `tst.b (DifficultyMode).w` sites read — is zero. The
+runtime evidence now agrees with what the disassembly implied: those six tests
+are always false, and it is the `tst.w` sites that decide anything.
+
+An expectation may only name a RAM symbol that `src/ram_addrs.inc` defines with a
+literal address. The 281 context aliases in that file are deliberately out of
+reach of the validator: they give one shared scratch address a second name inside
+a single subsystem, so a value read through one of them would not settle which
+tenant wrote it. `StoryTextState` shows why. It reads `$0002` during the story
+screen and `$2000` during Stage 1, because the gameplay subsystem owns those
+bytes for something else entirely while the story screen is not running.

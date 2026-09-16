@@ -26,8 +26,10 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
   automatically generated semantic names.
 - Initial source/project lint and unit tests are wired as `make lint` and
   `make test`.
-- Six pinned runtime scenarios check 13 named RAM expectations across boot,
-  title, gameplay, boss entry, stage change, and credits.
+- Twelve pinned runtime scenarios across three movies check 78 named RAM
+  expectations, covering boot, the title screen, the options screen, the story
+  screen, weapon setup, gameplay, a boss transition, a stage change, an
+  inter-stage transition, attract-mode demo playback, and the credits.
 - The listing exports 16,064 canonical ROM/RAM/hardware addresses; layout
   landmarks and runtime symbols are checked by `make verify-symbols`.
 - `make clean` is restricted to reproducible build/runtime outputs and Python

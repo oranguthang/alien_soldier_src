@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Audit the static evidence behind the release 0.5 contract."""
+"""Audit the static evidence behind the release contract and its manifest."""
 
 from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 from pathlib import Path
 import re
 
@@ -14,6 +15,136 @@ HEX_DIGEST = re.compile(r"^[0-9a-f]+$")
 
 def load(root: Path, relative: str) -> dict:
     return json.loads((root / relative).read_text(encoding="utf-8"))
+
+
+STATUSES = {"satisfied", "partial", "planned", "unsupported", "not_applicable"}
+MANIFEST_FIELDS = (
+    "release_line", "release", "release_kind", "tag", "status", "reference",
+    "included_scope", "excluded_scope", "delta", "requirements", "profiles",
+    "runtime_coverage", "toolchain", "artifacts", "aggregate_gates",
+    "layout_deviations", "licensing", "provenance",
+)
+
+
+def tracked_history_paths(root: Path) -> list[str] | None:
+    """Every path ever tracked in the reachable history, or None without git."""
+    try:
+        result = subprocess.run(
+            ["git", "log", "--all", "--pretty=format:", "--name-only"],
+            cwd=root, capture_output=True, text=True, check=True, errors="replace",
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    return sorted({line.strip() for line in result.stdout.splitlines() if line.strip()})
+
+
+def audit_manifest(root: Path, manifest: dict, makefile: str, runtime: dict) -> list[str]:
+    """Resolve every claim the release manifest makes to something that exists."""
+    errors: list[str] = []
+    for field in MANIFEST_FIELDS:
+        if field not in manifest:
+            errors.append(f"release manifest is missing {field}")
+    if manifest.get("release_line") != "1.0":
+        errors.append("release manifest does not declare release line 1.0")
+    if manifest.get("release_kind") != "preservation":
+        errors.append("release manifest does not declare a preservation release")
+    if manifest.get("status") not in {"development", "tag-ready", "tagged"}:
+        errors.append("release manifest has an unknown status")
+
+    excluded_ids = {item["id"] for item in manifest.get("excluded_scope", [])}
+    excluded_ids |= {
+        item["registry"] for item in manifest.get("excluded_scope", []) if "registry" in item
+    }
+    for item in manifest.get("excluded_scope", []):
+        if item.get("status") not in STATUSES:
+            errors.append(f"excluded scope {item.get('id')} has an unknown status")
+        if item.get("status") != "not_applicable" and not item.get("control"):
+            errors.append(f"excluded scope {item.get('id')} declares no control")
+
+    scenario_ids = {item["id"] for item in runtime.get("scenarios", [])}
+    artifact_ids = {item["id"] for item in manifest.get("artifacts", [])}
+    for name, requirement in manifest.get("requirements", {}).items():
+        if requirement.get("status") not in STATUSES:
+            errors.append(f"requirement {name} has an unknown status")
+        if not requirement.get("statement"):
+            errors.append(f"requirement {name} has no statement")
+        evidence = requirement.get("evidence", {})
+        for target in evidence.get("targets", []):
+            if not re.search(rf"^{re.escape(target)}\s*:", makefile, re.MULTILINE):
+                errors.append(f"requirement {name} cites missing target {target}")
+        for relative in evidence.get("files", []):
+            if not (root / relative).exists():
+                errors.append(f"requirement {name} cites missing path {relative}")
+        for scenario in evidence.get("scenarios", []):
+            if scenario not in scenario_ids:
+                errors.append(f"requirement {name} cites unknown scenario {scenario}")
+        for artifact in evidence.get("artifacts", []):
+            if artifact not in artifact_ids:
+                errors.append(f"requirement {name} cites unknown artifact {artifact}")
+        if requirement.get("status") in {"partial", "planned", "unsupported"}:
+            named = set(requirement.get("excluded", []))
+            if not named & excluded_ids:
+                errors.append(
+                    f"requirement {name} is {requirement['status']} without naming an excluded scope"
+                )
+
+    for deviation in manifest.get("layout_deviations", []):
+        for field in ("rule_id", "actual_path", "reason", "equivalent_control"):
+            if not deviation.get(field):
+                errors.append(f"layout deviation {deviation.get('rule_id')} is missing {field}")
+
+    for gate in manifest.get("aggregate_gates", {}).values():
+        for command in gate:
+            target = command.removeprefix("make ")
+            if not re.search(rf"^{re.escape(target)}\s*:", makefile, re.MULTILINE):
+                errors.append(f"aggregate gate cites missing target {command}")
+
+    for artifact in manifest.get("artifacts", []):
+        if artifact.get("tracked"):
+            errors.append(f"artifact {artifact['id']} is declared as tracked")
+        if len(artifact.get("sha1", "")) != 40 or len(artifact.get("sha256", "")) != 64:
+            errors.append(f"artifact {artifact['id']} has an invalid digest")
+
+    history = tracked_history_paths(root)
+    if history is None:
+        errors.append("git history is unavailable, so tracked payloads cannot be audited")
+    else:
+        forbidden = tuple(manifest.get("prohibited_tracked_extensions", []))
+        prefixes = tuple(manifest.get("prohibited_tracked_prefixes", []))
+        offenders = [
+            path for path in history
+            if (forbidden and path.endswith(forbidden)) or (prefixes and path.startswith(prefixes))
+        ]
+        if offenders:
+            errors.append(
+                f"{len(offenders)} ROM-derived path(s) appear in the reachable history: "
+                f"{offenders[:5]}"
+            )
+
+    if manifest.get("status") == "tag-ready":
+        errors.extend(audit_tag_ready(root, manifest))
+    return errors
+
+
+def audit_tag_ready(root: Path, manifest: dict) -> list[str]:
+    """The pre-tag conditions that only apply once the manifest claims readiness."""
+    errors: list[str] = []
+    try:
+        status = subprocess.run(
+            ["git", "status", "--porcelain"],
+            cwd=root, capture_output=True, text=True, check=True, errors="replace",
+        ).stdout.strip()
+        tags = subprocess.run(
+            ["git", "tag", "--list", manifest["tag"]],
+            cwd=root, capture_output=True, text=True, check=True, errors="replace",
+        ).stdout.strip()
+    except (OSError, subprocess.CalledProcessError):
+        return ["tag-ready status claimed but git state cannot be read"]
+    if status:
+        errors.append("tag-ready status claimed with a dirty working tree")
+    if tags:
+        errors.append(f"tag-ready status claimed but {manifest['tag']} already exists")
+    return errors
 
 
 def audit(root: Path, contract: dict) -> tuple[list[str], dict[str, int]]:
@@ -31,7 +162,7 @@ def audit(root: Path, contract: dict) -> tuple[list[str], dict[str, int]]:
         errors.append("0.5 must remain explicitly marked as a development release")
     if contract.get("target_contract") != "Source Reconstruction 1.0":
         errors.append("target contract is not Source Reconstruction 1.0")
-    if source_contract.get("release") != contract.get("target_contract"):
+    if source_contract.get("release", {}).get("name") != contract.get("target_contract"):
         errors.append("release target differs from source reconstruction contract")
     excluded = {item["id"] for item in contract.get("excluded_profiles", [])}
     if "europe" not in excluded:
@@ -97,12 +228,23 @@ def audit(root: Path, contract: dict) -> tuple[list[str], dict[str, int]]:
 
     scenarios = runtime["scenarios"]
     stats["runtime_scenarios"] = len(scenarios)
+    stats["runtime_expectations"] = sum(len(item["expectations"]) for item in scenarios)
     actual_ids = [item["id"] for item in scenarios]
     if actual_ids != contract["required_runtime_ids"]:
         errors.append("runtime scenario IDs/order differ from release contract")
     if len(scenarios) != threshold["runtime_scenarios"]:
         errors.append(f"runtime contract has {len(scenarios)} scenarios")
+    if stats["runtime_expectations"] < threshold["minimum_runtime_expectations"]:
+        errors.append(f"runtime contract has {stats['runtime_expectations']} expectations")
+    movies = runtime["movies"]
+    for movie_id, movie in movies.items():
+        if not (root / movie["path"]).is_file():
+            errors.append(f"runtime movie {movie_id} is missing: {movie['path']}")
+        if not re.fullmatch(r"[0-9a-f]{64}", movie["sha256"]):
+            errors.append(f"runtime movie {movie_id} has no pinned SHA-256")
     for scenario in scenarios:
+        if scenario["movie"] not in movies:
+            errors.append(f"runtime scenario {scenario['id']} names undeclared movie {scenario['movie']}")
         if len(scenario["expectations"]) < threshold["minimum_expectations_per_scenario"]:
             errors.append(f"runtime scenario {scenario['id']} has too few expectations")
         for expectation in scenario["expectations"]:
@@ -143,6 +285,10 @@ def audit(root: Path, contract: dict) -> tuple[list[str], dict[str, int]]:
         target = command.removeprefix("make ")
         if not re.search(rf"^{re.escape(target)}\s*:", makefile, re.MULTILINE):
             errors.append(f"source reconstruction command missing: {command}")
+
+    errors.extend(audit_manifest(root, source_contract, makefile, runtime))
+    stats["requirements"] = len(source_contract.get("requirements", {}))
+    stats["layout_deviations"] = len(source_contract.get("layout_deviations", []))
     return errors, stats
 
 
@@ -161,8 +307,11 @@ def main() -> int:
             print(f"[ERROR] {error}")
         return 1
     print(
-        f"[OK] release 0.5 audit: {stats['assets']} assets, "
-        f"{stats['modules']} modules, {stats['runtime_scenarios']} runtime scenarios"
+        f"[OK] release audit: {stats['assets']} assets, {stats['modules']} modules, "
+        f"{stats['runtime_scenarios']} runtime scenarios with "
+        f"{stats['runtime_expectations']} named RAM expectations, "
+        f"{stats['requirements']} resolved requirements, "
+        f"{stats['layout_deviations']} declared layout deviations"
     )
     return 0
 
