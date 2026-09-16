@@ -18,7 +18,7 @@ class SourceReconstructionContractTests(unittest.TestCase):
         shape = contract["source_shape"]
         preferred = shape["preferred_module_lines"]
 
-        self.assertEqual("development", contract["status"])
+        self.assertIn(contract["status"], {"development", "tag-ready", "tagged"})
         self.assertEqual(200, preferred["minimum"])
         self.assertEqual(700, preferred["maximum"])
         self.assertEqual(1000, shape["default_maximum_module_lines"])

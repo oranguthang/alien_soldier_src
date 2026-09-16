@@ -9,6 +9,8 @@ import subprocess
 from pathlib import Path
 import re
 
+import lint_source
+
 
 HEX_DIGEST = re.compile(r"^[0-9a-f]+$")
 
@@ -144,6 +146,49 @@ def audit_tag_ready(root: Path, manifest: dict) -> list[str]:
         errors.append("tag-ready status claimed with a dirty working tree")
     if tags:
         errors.append(f"tag-ready status claimed but {manifest['tag']} already exists")
+    return errors
+
+
+RAM_EQUATE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*\s+equ\s", re.MULTILINE)
+
+
+def audit_counters(
+    root: Path, manifest: dict, policy: dict, layout: dict, stats: dict[str, int]
+) -> list[str]:
+    """Recount every figure the documentation quotes.
+
+    Prose counters go stale silently: a module split or a rename moves the real
+    number and nothing complains. The manifest declares each one and this
+    recounts it from the artefact that owns it, so a drifted figure fails the
+    release rather than surviving into a tag.
+    """
+    errors: list[str] = []
+    declared = manifest.get("counters")
+    if not declared:
+        return ["the manifest declares no counters to recount"]
+    inventory = lint_source.scan(policy, root)
+    ram_map = (root / "src/ram_addrs.inc").read_text(encoding="utf-8")
+    name_audit = load(root, "config/name_audit.json")
+    actual = {
+        "modules": len(layout["modules"]),
+        "assets": stats.get("assets", -1),
+        "runtime_scenarios": stats.get("runtime_scenarios", -1),
+        "runtime_expectations": stats.get("runtime_expectations", -1),
+        "definitions": len(inventory.definitions),
+        "provenance_mappings": len(inventory.provenance),
+        "name_audit_records": len(name_audit["records"]),
+        "ram_fields": len(RAM_EQUATE.findall(ram_map)),
+        "declared_subsystems": len(policy["naming"]["subsystem_vocabulary"]),
+    }
+    for name, value in sorted(declared.items()):
+        if name not in actual:
+            errors.append(f"counter {name} has no source to recount it from")
+        elif actual[name] != value:
+            errors.append(f"counter {name} says {value} but the source has {actual[name]}")
+    missing = sorted(set(actual) - set(declared))
+    if missing:
+        errors.append(f"the manifest leaves these counters undeclared: {missing}")
+    stats["counters"] = len(declared)
     return errors
 
 
@@ -287,6 +332,7 @@ def audit(root: Path, contract: dict) -> tuple[list[str], dict[str, int]]:
             errors.append(f"source reconstruction command missing: {command}")
 
     errors.extend(audit_manifest(root, source_contract, makefile, runtime))
+    errors.extend(audit_counters(root, source_contract, policy, layout, stats))
     stats["requirements"] = len(source_contract.get("requirements", {}))
     stats["layout_deviations"] = len(source_contract.get("layout_deviations", []))
     return errors, stats
@@ -311,6 +357,7 @@ def main() -> int:
         f"{stats['runtime_scenarios']} runtime scenarios with "
         f"{stats['runtime_expectations']} named RAM expectations, "
         f"{stats['requirements']} resolved requirements, "
+        f"{stats['counters']} recounted figures, "
         f"{stats['layout_deviations']} declared layout deviations"
     )
     return 0

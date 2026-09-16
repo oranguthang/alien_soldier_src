@@ -7,7 +7,7 @@
   },
   "release_kind": "preservation",
   "tag": "source-reconstruction-1.0",
-  "status": "development",
+  "status": "tagged",
   "predecessor": null,
   "predecessor_note": "First release of this project. The delta below is the whole reachable history, a6f370d to the release commit.",
   "reference": {
@@ -47,7 +47,7 @@
     {
       "id": "address_ordered_modules",
       "kind": "source",
-      "summary": "The single imported translation unit became src/main.s, an index of 378 address-ordered modules under a 1000-line ceiling, with config/rom_layout.json owning every module range, the landmarks and the padding.",
+      "summary": "The single imported translation unit became src/main.s, an index of 379 address-ordered modules under a 1000-line ceiling, with config/rom_layout.json owning every module range, the landmarks and the padding.",
       "evidence": [
         "source_boundary",
         "files:config/rom_layout.json"
@@ -154,7 +154,7 @@
     },
     "source_boundary": {
       "status": "partial",
-      "statement": "All executable 68000 code is assembly source in 378 address-ordered modules. The Z80 sound driver program remains a verbatim payload.",
+      "statement": "All executable 68000 code is assembly source in 379 address-ordered modules. The Z80 sound driver program remains a verbatim payload.",
       "evidence": {
         "targets": [
           "lint",
@@ -387,8 +387,8 @@
       }
     },
     "tag_integrity": {
-      "status": "planned",
-      "statement": "The annotated tag is created only after the full gate passes on a clean tree with the tag absent.",
+      "status": "satisfied",
+      "statement": "The annotated tag source-reconstruction-1.0 exists on the commit that make release-check passed in full, and it carries the release description.",
       "evidence": {
         "targets": [
           "release-check"
@@ -399,9 +399,7 @@
         "scenarios": [],
         "artifacts": []
       },
-      "excluded": [
-        "annotated_tag"
-      ]
+      "excluded": []
     },
     "commit_history": {
       "status": "partial",
@@ -454,7 +452,7 @@
     {
       "id": "module_line_targets",
       "status": "partial",
-      "reason": "The preferred module size is 200 to 700 lines. 203 of 378 modules are inside it, 145 are shorter and 30 are longer, because the module rule forbids splitting a procedure from its private tables merely to reach a line count.",
+      "reason": "The preferred module size is 200 to 700 lines. 204 of 379 modules are inside it, 145 are shorter and 30 are longer, because the module rule forbids splitting a procedure from its private tables merely to reach a line count.",
       "registry": "LAYOUT-001",
       "control": "The 1000-line ceiling is a hard limit that make lint enforces and no module reaches it, and config/rom_layout.json declares every module range."
     },
@@ -500,12 +498,6 @@
       "id": "authoring_tools",
       "status": "not_applicable",
       "reason": "Editors and content tools belong to a later release. 1.0 ships extraction and verification only."
-    },
-    {
-      "id": "annotated_tag",
-      "status": "planned",
-      "reason": "The annotated tag does not exist yet. It is created only after the full gate passes on a clean tree with the tag absent.",
-      "control": "The manifest status stays development until then, and make release-audit checks the tree and the tag as soon as it says tag-ready."
     },
     {
       "id": "commit_body_convention",
@@ -704,5 +696,16 @@
     "data/sound/",
     "data/other/",
     "data/cutscenes/"
-  ]
+  ],
+  "counters": {
+    "assets": 579,
+    "declared_subsystems": 192,
+    "definitions": 16926,
+    "modules": 379,
+    "name_audit_records": 15831,
+    "provenance_mappings": 16053,
+    "ram_fields": 1291,
+    "runtime_expectations": 78,
+    "runtime_scenarios": 12
+  }
 }

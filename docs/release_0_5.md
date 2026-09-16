@@ -20,7 +20,7 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
   audit rejects a weaker value or a generic declared module filename.
 - `config/rom_layout.json` is checked against listing addresses, landmarks,
   padding ranges, and the built image.
-- Naming/evidence rules, 16,051 provenance mappings, and a zero-live-
+- Naming/evidence rules, 16,053 provenance mappings, and a zero-live-
   address-derived-definition policy are checked.
 - Source/subsystem and RAM orientation maps exist without overstating the
   automatically generated semantic names.
@@ -30,7 +30,7 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
   expectations, covering boot, the title screen, the options screen, the story
   screen, weapon setup, gameplay, a boss transition, a stage change, an
   inter-stage transition, attract-mode demo playback, and the credits.
-- The listing exports 16,064 canonical ROM/RAM/hardware addresses; layout
+- The listing exports 16,065 canonical ROM/RAM/hardware addresses; layout
   landmarks and runtime symbols are checked by `make verify-symbols`.
 - `make clean` is restricted to reproducible build/runtime outputs and Python
   caches; extracted assets, traces, workflow files, and source backups survive.

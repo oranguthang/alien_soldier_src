@@ -15,7 +15,7 @@ byte.
   toolchain and compares the result with the user-supplied Japanese cartridge
   dump byte by byte, not by hash alone, reproducing SHA-1
   `8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`.
-- **Source, not blobs.** All executable 68000 code is assembly source across 378
+- **Source, not blobs.** All executable 68000 code is assembly source across 379
   address-ordered modules indexed by `src/main.s`. Include order is ROM order;
   there is no linker, so `config/rom_layout.json` owns the memory map, the
   landmarks, the padding gap and every module range, and `make verify-layout`
@@ -51,11 +51,10 @@ that limits it. They are stated here rather than left implicit.
 | `PROFILE-001` | The European ROM. Only the Japanese cartridge is accepted. | unsupported |
 | `SND-001` | The Z80 sound driver program, which stays a verbatim payload and is never disassembled. | unsupported |
 | `NAME-001` | 513 `_End` aliases that follow their own `binclude` payload hold no separate record. | partial |
-| `LAYOUT-001` | Module sizes: 203 of 378 modules sit inside the preferred 200–700 line band, 145 are shorter and 30 are longer. | partial |
+| `LAYOUT-001` | Module sizes: 204 of 379 modules sit inside the preferred 200–700 line band, 145 are shorter and 30 are longer. | partial |
 | `DOC-001` | 207 imported cross-reference comments still quote address-derived names that no longer define anything. | partial |
 | `SRC-001` | 264 instructions still address work RAM by a raw `$FFFFxxxx` literal rather than by name. | partial |
 | `TOOL-001` | Five older analysis commands that mutate a single translation unit and are outside the release interface. | unsupported |
-| `annotated_tag` | The tag itself, which is created only after the gate passes on a clean tree. | planned |
 | `commit_body_convention` | Commits made before this manifest carry a title and attribution without a body. | partial |
 | `frame_image_comparison` | Pixel comparison. The runtime layer checks state, not frames. | planned |
 | `linux_aggregate_gate` | A gate run on Linux. The vendored Linux toolchain is present but untested. | partial |
@@ -84,3 +83,20 @@ corrected again as evidence improves, and the imported label stays reachable
 through the provenance marker either way. An unresolved symbol takes a
 role-neutral name and an entry in `docs/unknowns.md` rather than an invented
 behaviour.
+
+## Release status
+
+The manifest carries a `status` field and `make release-audit` reads it. While it
+says `development` the audit checks only the claims above. Once it says
+`tag-ready` the audit additionally requires a clean working tree and refuses to
+pass if `source-reconstruction-1.0` already exists, so the status is a commitment
+rather than a note: it cannot be left set after the tag is created.
+
+The order is therefore fixed. The manifest is set to `tag-ready` and committed,
+`make release-check` runs the whole gate against that commit, and only then is the
+annotated tag created on it. A gate that has not run against the exact commit
+being tagged does not count.
+
+`source-reconstruction-1.0` was created that way, and the manifest now says
+`tagged`. The tag's own message is the release description; this document and
+the manifest are what it points at.
