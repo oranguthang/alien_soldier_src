@@ -20,7 +20,7 @@ that, the latter across the whole reachable history.
 
 ```bash
 make format   # Normalize assembly style; it must never move a byte
-make lint     # Source policy, naming vocabulary and project policy
+make lint     # Source policy, naming, branch targets and text hygiene
 make test     # The Python tests behind the tooling
 make verify   # Byte identity against the cartridge dump
 ```
@@ -46,6 +46,11 @@ Read [`docs/naming.md`](docs/naming.md) first. In short:
   `make verify` afterwards.
 
 A wrong semantic name is worse than an explicit unknown.
+
+Every `jsr`, `jmp`, `bsr`, `bra`, `dbf` and conditional branch written against a
+symbol must resolve to a definition in the source. `make lint` reports the count
+it resolved and fails on the first one it cannot, so a rename that misses a call
+site is caught before the assembler decides what to do about it.
 
 ## Commit messages
 

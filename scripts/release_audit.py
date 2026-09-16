@@ -9,6 +9,7 @@ import subprocess
 from pathlib import Path
 import re
 
+import lint_project
 import lint_source
 
 
@@ -179,6 +180,8 @@ def audit_counters(
         "name_audit_records": len(name_audit["records"]),
         "ram_fields": len(RAM_EQUATE.findall(ram_map)),
         "declared_subsystems": len(policy["naming"]["subsystem_vocabulary"]),
+        "resolved_branch_targets": inventory.call_targets,
+        "tracked_text_files": len(lint_project.tracked_text_files(root)),
     }
     for name, value in sorted(declared.items()):
         if name not in actual:

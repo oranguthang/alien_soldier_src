@@ -35,6 +35,13 @@ class AssemblyStyleTests(unittest.TestCase):
         self.assertTrue(line.startswith(".diff"))
         self.assertIn(":=", line)
 
+    def test_misindented_whole_line_comment_is_named(self) -> None:
+        issues: list[asm_style.Issue] = []
+        asm_style.check_lines(Path("x.s"), ["   ; off by one", "    ; on the step"], issues)
+        kinds = [(issue.line, issue.code) for issue in issues]
+        self.assertIn((1, "comment-indent"), kinds)
+        self.assertNotIn((2, "comment-indent"), kinds)
+
     def test_normalization_is_idempotent(self) -> None:
         once = asm_style.normalize_file("  move.w  #1,d0\nLabel:  rts\n")
         self.assertEqual(once, asm_style.normalize_file(once))

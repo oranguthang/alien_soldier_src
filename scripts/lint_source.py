@@ -16,6 +16,19 @@ EQUATE = re.compile(r"^([A-Za-z_][A-Za-z0-9_]*)\s+equ\b", re.IGNORECASE)
 INDENTED_DEFINITION = re.compile(
     r"^\s+([A-Za-z_][A-Za-z0-9_]*(?::|\s+equ\b))", re.IGNORECASE
 )
+BRANCH_MNEMONIC = (
+    r"jsr|jmp|bsr|bra|dbf|dbra|dbeq|dbne"
+    r"|b(?:hi|ls|cc|cs|ne|eq|vc|vs|pl|mi|ge|lt|gt|le)"
+)
+# A branch or call whose destination is written as a symbol, in any of the three
+# forms the source uses: bare, parenthesised absolute, or PC-relative.
+CALL_TARGET = re.compile(
+    r"^\s+(?:" + BRANCH_MNEMONIC + r")(?:\.[bwsl])?\s+(?:[^,;]*,)?"
+    r"\s*\(?\s*([A-Za-z_][A-Za-z0-9_]*)\s*\)?(?:\.[wl])?"
+    r"\s*(?:\(pc[^)]*\))?\s*(?:;.*)?$",
+    re.IGNORECASE,
+)
+REGISTER = re.compile(r"^(?:[da][0-7]|sp|pc|sr|ccr|usp)$", re.IGNORECASE)
 INCLUDE = re.compile(r'^\s*include\s+"([^"]+)"', re.IGNORECASE)
 WAS = re.compile(r";\s*was:\s*([A-Za-z_][A-Za-z0-9_]*)\s*$")
 OWNER_TOKEN = re.compile(r"^[A-Z][a-z0-9]*")
@@ -31,6 +44,7 @@ class Inventory:
     provenance: dict[str, tuple[str, str]]
     address_derived: dict[str, str]
     errors: list[str]
+    call_targets: int = 0
 
 
 def source_files(root: Path) -> list[Path]:
@@ -50,6 +64,7 @@ def scan(policy: dict, project_root: Path) -> Inventory:
     provenance: dict[str, tuple[str, str]] = {}
     old_symbols: dict[str, str] = {}
     address_derived: dict[str, str] = {}
+    call_targets: list[tuple[str, str]] = []
     errors: list[str] = []
 
     for path in source_files(source_root):
@@ -93,6 +108,10 @@ def scan(policy: dict, project_root: Path) -> Inventory:
                 if address_name.fullmatch(name):
                     address_derived[name] = where
 
+            call = CALL_TARGET.match(line)
+            if call and not REGISTER.match(call.group(1)):
+                call_targets.append((call.group(1), where))
+
             marker = WAS.search(line)
             if marker:
                 legacy = marker.group(1)
@@ -107,6 +126,13 @@ def scan(policy: dict, project_root: Path) -> Inventory:
                 else:
                     provenance[current_label] = (legacy, where)
                     old_symbols[legacy] = where
+
+    # A branch into a name nothing defines would assemble only by accident, or
+    # not at all. Resolving every one against the definitions this scan already
+    # collected is what keeps the source self-contained.
+    for target, where in call_targets:
+        if target not in definitions:
+            errors.append(f"{where}: branch target {target} is not defined in the source")
 
     naming = policy["naming"]
     vocabulary = set(naming["subsystem_vocabulary"])
@@ -158,7 +184,7 @@ def scan(policy: dict, project_root: Path) -> Inventory:
         if not (project_root / included).is_file():
             errors.append(f"{policy['entrypoint']}: missing include {included}")
 
-    return Inventory(definitions, provenance, address_derived, errors)
+    return Inventory(definitions, provenance, address_derived, errors, len(call_targets))
 
 
 def main() -> int:
@@ -181,7 +207,8 @@ def main() -> int:
         f"[OK] source policy: {len(inventory.definitions)} definitions, "
         f"{len(inventory.provenance)} provenance mappings, "
         f"{len(inventory.address_derived)} address-derived unknowns, "
-        f"{len(policy['naming']['subsystem_vocabulary'])} declared subsystems"
+        f"{len(policy['naming']['subsystem_vocabulary'])} declared subsystems, "
+        f"{inventory.call_targets} resolved branch targets"
     )
     return 0
 

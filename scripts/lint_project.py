@@ -5,15 +5,60 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
 
 MARKDOWN_LINK = re.compile(r"\[[^]]+\]\(([^)]+)\)")
+TEXT_SUFFIXES = {".s", ".inc", ".py", ".md", ".txt", ".json", ".dot"}
+TEXT_FILENAMES = {".gitattributes", ".gitignore", ".editorconfig", "Makefile"}
+
+
+def tracked_text_files(project_root: Path) -> list[Path]:
+    """Every tracked file the repository treats as text.
+
+    Line endings and whitespace are checked against the working tree rather
+    than the index, because that is what an editor, a generator script and the
+    assembler all see. .gitattributes normalizes what git stores; nothing but
+    this check notices when a tool writes CRLF back into the tree.
+    """
+    result = subprocess.run(
+        ["git", "ls-files"], cwd=project_root,
+        capture_output=True, text=True, check=False,
+    )
+    if result.returncode != 0:
+        return []
+    paths = [project_root / line for line in result.stdout.splitlines() if line]
+    return [
+        path for path in paths
+        if path.is_file() and (path.suffix in TEXT_SUFFIXES or path.name in TEXT_FILENAMES)
+    ]
+
+
+def check_text_hygiene(project_root: Path, path: Path, errors: list[str]) -> None:
+    relative = path.relative_to(project_root).as_posix()
+    try:
+        text = path.read_bytes().decode("utf-8")
+    except UnicodeDecodeError:
+        errors.append(f"{relative}: not valid UTF-8")
+        return
+    if "\r" in text:
+        errors.append(f"{relative}: contains CR; text files use LF")
+    if text and not text.endswith("\n"):
+        errors.append(f"{relative}: missing final newline")
+    if text.endswith("\n\n"):
+        errors.append(f"{relative}: more than one final newline")
+    for number, line in enumerate(text.split("\n"), 1):
+        if line != line.rstrip():
+            errors.append(f"{relative}:{number}: trailing whitespace")
 
 
 def check(project_root: Path) -> list[str]:
     errors: list[str] = []
+
+    for path in tracked_text_files(project_root):
+        check_text_hygiene(project_root, path, errors)
 
     for path in sorted((project_root / "docs").glob("*")):
         if path.is_file() and path.name != path.name.lower():
@@ -54,7 +99,11 @@ def main() -> int:
         for error in errors:
             print(f"[ERROR] {error}", file=sys.stderr)
         return 1
-    print("[OK] project policy: JSON, Python, documentation names and links")
+    print(
+        "[OK] project policy: text hygiene across "
+        f"{len(tracked_text_files(Path.cwd()))} tracked text files, "
+        "JSON, Python, documentation names and links"
+    )
     return 0
 
 

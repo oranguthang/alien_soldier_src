@@ -228,7 +228,16 @@ def check_lines(path: Path, lines: list[str], issues: list[Issue]) -> None:
                     issues.append(Issue(path, number, "comment-space", "use exactly one space after ';'"))
                 if body.strip().endswith("."):
                     issues.append(Issue(path, number, "comment-period", "drop final comment period"))
-            if code.strip():
+            if not code.strip():
+                indent = len(code) - len(code.lstrip(" "))
+                if indent % COMMENT_INDENT_STEP:
+                    issues.append(
+                        Issue(
+                            path, number, "comment-indent",
+                            f"indent whole-line comments in multiples of {COMMENT_INDENT_STEP}",
+                        )
+                    )
+            else:
                 inline = INLINE_COMMENT_RE.match(line.rstrip())
                 if inline:
                     actual = len(inline.group(2))

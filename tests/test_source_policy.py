@@ -89,7 +89,32 @@ class SourcePolicyTests(unittest.TestCase):
                 offending = [error for error in errors if "declared subsystem" in error]
                 self.assertEqual(accepted, not offending, offending)
 
+    def test_a_branch_into_an_undefined_name_is_rejected(self) -> None:
+        resolved = self._scan_module(
+            "Sys_Boot:\n"
+            "                bsr.w   Sys_Reset\n"
+            "Sys_Reset:\n"
+            "                rts\n"
+        )
+        self.assertEqual([], [e for e in resolved if "branch target" in e])
+
+        dangling = self._scan_module(
+            "Sys_Boot:\n"
+            "                jsr     (Sys_Missing).l\n"
+        )
+        self.assertTrue(
+            any("branch target Sys_Missing" in error for error in dangling), dangling
+        )
+
+    def test_a_register_indirect_jump_is_not_a_branch_target(self) -> None:
+        errors = self._scan_module("Sys_Boot:\n                jmp     (a0)\n")
+        self.assertEqual([], [e for e in errors if "branch target" in e])
+
     def _scan_one_definition(self, name: str) -> list[str]:
+        body = "" if name == "Sys_Boot" else "Sys_Boot:\n"
+        return self._scan_module(body + name + ":\n")
+
+    def _scan_module(self, module: str) -> list[str]:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "src").mkdir()
@@ -97,10 +122,7 @@ class SourcePolicyTests(unittest.TestCase):
             (root / "src" / "main.s").write_text(
                 '    include "src/module.s"\n', encoding="utf-8"
             )
-            body = "" if name == "Sys_Boot" else "Sys_Boot:\n"
-            (root / "src" / "module.s").write_text(
-                body + name + ":\n", encoding="utf-8"
-            )
+            (root / "src" / "module.s").write_text(module, encoding="utf-8")
             layout = {
                 "target": {"max_module_lines": 100},
                 "modules": [{"file": "src/module.s"}],

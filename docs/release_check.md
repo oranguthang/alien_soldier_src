@@ -3,7 +3,8 @@
 `make release-check` is the single ordered release 0.5 gate. It runs:
 
 1. private asset identity and range policy;
-2. source/project lint;
+2. source and project lint: style, naming vocabulary, provenance, branch-target
+   resolution and text hygiene across every tracked text file;
 3. Python verification tests;
 4. cleanup of reproducible outputs;
 5. a fresh byte-identical Japanese ROM build plus layout verification;
@@ -27,12 +28,13 @@ rename the release or silently add the European ROM profile.
 
 ## Counters are recounted, not trusted
 
-The manifest carries a `counters` block: the module count, the asset count, the
-number of definitions, provenance mappings, exact-address records, work RAM
-fields, declared subsystems, runtime scenarios and runtime expectations. The
-audit recounts each one from the artefact that owns it — the layout, the asset
-manifest, a source scan, the name registry, `src/ram_addrs.inc`, the source
-policy and the scenario config — and fails on any drift.
+The manifest carries a `counters` block of eleven figures: the module count, the
+asset count, the number of definitions, provenance mappings, resolved branch
+targets, exact-address records, work RAM fields, declared subsystems, tracked
+text files, runtime scenarios and runtime expectations. The audit recounts each
+one from the artefact that owns it — the layout, the asset manifest, a source
+scan, the name registry, `src/ram_addrs.inc`, the source policy, the tracked
+file list and the scenario config — and fails on any drift.
 
 Prose counters go stale silently: a module split or a rename moves the real
 number and nothing complains. Four figures quoted in the documentation had

@@ -79,9 +79,12 @@ def main() -> int:
         asset["sha1"] = hashlib.sha1(data).hexdigest()
 
     manifest["assets"] = assets
+    # newline="" keeps LF on Windows, where the default would write CRLF into a
+    # tracked file and fail the repository text-hygiene check.
     manifest_path.write_text(
         json.dumps(manifest, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
+        newline="",
     )
     print(f"[OK] Recorded {len(assets)} canonical asset ranges in {manifest_path}")
     return 0

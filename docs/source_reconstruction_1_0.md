@@ -20,6 +20,9 @@ byte.
   there is no linker, so `config/rom_layout.json` owns the memory map, the
   landmarks, the padding gap and every module range, and `make verify-layout`
   checks them against the assembler listing and the built image.
+- **The source is self-contained.** Every `jsr`, `jmp`, `bsr`, `bra`, `dbf` and
+  conditional branch written against a symbol resolves to a definition in the
+  source; `make lint` resolves 16,102 of them and fails on the first it cannot.
 - **No address is an identity.** No live definition is address-derived, which
   `make lint` enforces with a ceiling of zero.
 - **Names are checkable, not merely documented.** Every definition is owned by
