@@ -93,6 +93,22 @@ accompanies a screenshot, so the zero header is not used as evidence; the
 requested frame is encoded in the capture filename and chosen by the emulator's
 screenshot interval.
 
+## Watching it yourself
+
+`make play MOVIE=tas` opens the emulator and plays a movie at normal speed with
+sound, capturing nothing. `ROM=<image>` points it at any image, which is how a
+relocated or resized build gets looked at:
+
+```bash
+make play MOVIE=tas ROM=alien_soldier_stretched_4mb.bin
+make play MOVIE=longplay TURBO=1 MUTE=1 FRAMES=20000
+```
+
+`MOVIE` is `tas`, `longplay` or `menus`; `ROM` defaults to the built image;
+`TURBO`, `MUTE` and `FRAMES` are off unless set. This is not a gate and proves
+nothing on its own. It is here because the two limits below mean some kinds of
+damage reach a person's eyes and nothing else.
+
 ## What the replay cannot see
 
 Two limits are worth stating, because a green `make runtime` does not cover

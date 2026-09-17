@@ -235,6 +235,44 @@ ANALYSIS_MAX_DIFFS = 10
 ANALYSIS_DIFF_COLOR = pink
 PROCEDURES_FILE = $(WORKFLOW_DIR)/unanalyzed_procedures.txt
 
+# Watch a recorded movie play, on whichever image you name. Nothing is captured
+# and nothing is checked: this is for looking at the game with your own eyes,
+# which is the only way to see the classes of damage the state comparison and the
+# vendored emulator are both blind to.
+#
+# Usage: make play MOVIE=tas|longplay|menus
+#        make play MOVIE=tas ROM=alien_soldier_stretched_4mb.bin
+#        make play MOVIE=longplay TURBO=1 FRAMES=20000 MUTE=1
+#
+# ROM defaults to $(ROM); TURBO, MUTE and FRAMES are off unless set.
+PLAY_MOVIE_FILE = $(MOVIE_FILE_$(MOVIE))
+PLAY_FLAGS = -frameskip 0 $(if $(TURBO),-turbo,) $(if $(MUTE),-nosound,) $(if $(FRAMES),-max-frames $(FRAMES),)
+PLAY_USAGE = make play MOVIE=tas|longplay|menus [ROM=<image>] [TURBO=1] [MUTE=1] [FRAMES=<n>]
+
+# Every failure here is raised with $(error) and the emulator is launched on one
+# line, so the target behaves the same whether make found sh or fell back to
+# cmd.exe. Recipes that use [ -f ] or echo "" do not.
+.PHONY: play
+play:
+ifndef MOVIE
+	$(error MOVIE is required. Usage: $(PLAY_USAGE))
+else
+ifeq ($(PLAY_MOVIE_FILE),)
+	$(error unknown MOVIE "$(MOVIE)" - expected tas, longplay or menus. Usage: $(PLAY_USAGE))
+else
+ifeq ($(wildcard $(ROM)),)
+	$(error ROM not found: $(ROM))
+else
+ifeq ($(wildcard $(PLAY_MOVIE_FILE)),)
+	$(error movie not found: $(PLAY_MOVIE_FILE))
+else
+	@echo Playing $(PLAY_MOVIE_FILE) on $(ROM)
+	"$(GENS_EXE)" -rom "$(ROM)" -play "$(PLAY_MOVIE_FILE)" $(PLAY_FLAGS)
+endif
+endif
+endif
+endif
+
 # Generate reference screenshots + memory dumps
 # Usage: make reference MOVIE=tas|longplay|menus
 .PHONY: reference
@@ -752,6 +790,11 @@ help:
 	@echo "  make verify-toolchain   - Hash-check build tools and pin the emulator"
 	@echo "  make split              - Extract data from original ROM"
 	@echo "  make clean              - Remove build artifacts; preserve extracted data"
+	@echo ""
+	@echo "Watching a movie (requires MOVIE=tas|longplay|menus):"
+	@echo "  make play MOVIE=tas                       - Watch it, on $(ROM)"
+	@echo "  make play MOVIE=tas ROM=<image>           - Watch it on another image"
+	@echo "  make play MOVIE=longplay TURBO=1 MUTE=1   - Faster, silent"
 	@echo ""
 	@echo "Analysis workflow (requires MOVIE=tas|longplay|menus):"
 	@echo "  1. make find-unanalyzed        - Generate list of unanalyzed procedures"
