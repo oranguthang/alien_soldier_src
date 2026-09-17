@@ -9,7 +9,9 @@
 4. cleanup of reproducible outputs;
 5. a fresh byte-identical Japanese ROM build plus layout verification, which
    includes the 128 KiB DMA source boundary the emulator cannot check;
-6. canonical symbol export and contract coverage;
+6. canonical symbol export and contract coverage, and a relocation probe that
+   rebuilds the ROM with its layout perturbed and requires every pointer to
+   follow;
 7. all twelve emulator scenarios and 78 named RAM expectations;
 8. the static release audit, which resolves every requirement in
    `config/source_reconstruction_1_0.json` to a file, target, scenario or

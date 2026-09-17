@@ -28,53 +28,107 @@ Gfx_LoadPaletteFromRelativeOffset:                      ; CODE XREF: Gfx_LoadMul
                 bra.s   Gfx_LoadMultiplePalettes_NextOffset
 ; End of function Gfx_LoadMultiplePalettes
 ; ---------------------------------------------------------------------------
-StoryScreenPaletteOffsetList:               dc.w    $20A, 0  ; DATA XREF: StoryScreen_WaitForScrollAndLoadPalette+36   o  ; was: word_B944
-OptionsScreenPaletteOffsetList:             dc.w    $60, $E2, 0  ; DATA XREF: UI_InitOptionsScreen+72   o  ; was: word_B948
-StageStartPaletteOffsetList:                dc.w    $28A, $2B0, 0  ; DATA XREF: WeaponSetup_InitializeScreen+DC   o  ; was: word_B94E
-WeaponSetupControlTestPaletteOffsetList:    dc.w    $2D0, $2D6, 0  ; DATA XREF: WeaponSetup_LoadControlTestText+32   o  ; was: word_B954
-ContinueScreenPaletteOffsetLists:           dc.w    $EE, $F4, $FA, $100, 0, $EE, $F4, $FA, $100, 0  ; was: word_B95A
+StoryScreenPaletteOffsetList:   dc.w    (CreditsAndEarlyStagePaletteCommandBank+$82)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: StoryScreen_WaitForScrollAndLoadPalette+36   o  ; was: word_B944
+                dc.w    0
+OptionsScreenPaletteOffsetList: dc.w    FrontendFullPaletteCommand-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: UI_InitOptionsScreen+72   o  ; was: word_B948
+                dc.w    (FrontendFullPaletteCommand+$82)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    0
+StageStartPaletteOffsetList:    dc.w    (CreditsAndEarlyStagePaletteCommandBank+$102)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: WeaponSetup_InitializeScreen+DC   o  ; was: word_B94E
+                dc.w    (CreditsAndEarlyStagePaletteCommandBank+$128)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    0
+WeaponSetupControlTestPaletteOffsetList:    dc.w    (CreditsAndEarlyStagePaletteCommandBank+$148)-Gfx_LoadPalettePreservingSharedColor
+                                        ; DATA XREF: WeaponSetup_LoadControlTestText+32   o  ; was: word_B954
+                dc.w    (CreditsAndEarlyStagePaletteCommandBank+$14E)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    0
+ContinueScreenPaletteOffsetLists:   dc.w    (StageReadyPaletteCommand+$6)-Gfx_LoadPalettePreservingSharedColor  ; was: word_B95A
+                dc.w    (StageReadyPaletteCommand+$C)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    (StageReadyPaletteCommand+$12)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    (StageReadyPaletteCommand+$18)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    0
+                dc.w    (StageReadyPaletteCommand+$6)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    (StageReadyPaletteCommand+$C)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    (StageReadyPaletteCommand+$12)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    (StageReadyPaletteCommand+$18)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    0
                                         ; DATA XREF: Continue_InitializeScreen+40   o
-ResultsScreenPaletteOffsetList: dc.w    $EE, $F4, $FA, $100, 0  ; was: word_B96E
+ResultsScreenPaletteOffsetList: dc.w    (StageReadyPaletteCommand+$6)-Gfx_LoadPalettePreservingSharedColor  ; was: word_B96E
+                dc.w    (StageReadyPaletteCommand+$C)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    (StageReadyPaletteCommand+$12)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    (StageReadyPaletteCommand+$18)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    0
                                         ; DATA XREF: Results_InitializeFinalSummary+6C   o
-FrontendTransitionPaletteOffsetLists:   dc.w    $26A, 0, $2F6, $336, 0  ; was: word_B978
+FrontendTransitionPaletteOffsetLists:   dc.w    (CreditsAndEarlyStagePaletteCommandBank+$E2)-Gfx_LoadPalettePreservingSharedColor  ; was: word_B978
+                dc.w    0
+                dc.w    (CreditsAndEarlyStagePaletteCommandBank+$16E)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    (CreditsAndEarlyStagePaletteCommandBank+$1AE)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    0
                                         ; DATA XREF: Frontend_InitializeTransitionScene+16   o
-CreditsAndPlanetPaletteOffsetList:  dc.w    $B14, $B54, 0  ; DATA XREF: EndingSequence_Initialize+5E   o  ; was: word_B982
+CreditsAndPlanetPaletteOffsetList:  dc.w    (Boss_Epsilon1PaletteCommands+$20)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: EndingSequence_Initialize+5E   o  ; was: word_B982
+                dc.w    (Boss_Epsilon1PaletteCommands+$60)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    0
                                         ; EndingPlanet_Initialize+20   o
-EarlyStagePaletteOffsetList:    dc.w    $34C, 0         ; DATA XREF: ROM:Stage1ConfigRecord   o  ; was: word_B988
+EarlyStagePaletteOffsetList:    dc.w    (CreditsAndEarlyStagePaletteCommandBank+$1C4)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: ROM:Stage1ConfigRecord   o  ; was: word_B988
+                dc.w    0
                                         ; ROM:Stage2ConfigRecord   o
-ShellshogunStagePaletteOffsetList:  dc.w    $34C, $38E, 0  ; DATA XREF: Camera_ShellshogunBossInit+38   o  ; was: word_B98C
+ShellshogunStagePaletteOffsetList:  dc.w    (CreditsAndEarlyStagePaletteCommandBank+$1C4)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: Camera_ShellshogunBossInit+38   o  ; was: word_B98C
+                dc.w    (CreditsAndEarlyStagePaletteCommandBank+$206)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    0
                                         ; ROM:Stage4ConfigRecord   o
-Stage5To7PaletteOffsetList: dc.w    $3B0, 0             ; DATA XREF: ROM:Stage5ConfigRecord   o  ; was: word_B992
+Stage5To7PaletteOffsetList: dc.w    (CreditsAndEarlyStagePaletteCommandBank+$228)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: ROM:Stage5ConfigRecord   o  ; was: word_B992
+                dc.w    0
                                         ; ROM:Stage6ConfigRecord   o
                                         ; ROM:Stage7ConfigRecord   o
-Stage8InitialPaletteOffsetList:     dc.w    $3F2, 0     ; DATA XREF: ROM:Stage8ConfigRecord   o  ; was: word_B996
-XiTigerAndStage9PaletteOffsetList:  dc.w    $3F2, $966, 0  ; DATA XREF: ROM:XiTigerStageConfigRecord   o  ; was: word_B99A
+Stage8InitialPaletteOffsetList: dc.w    (CreditsAndEarlyStagePaletteCommandBank+$26A)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: ROM:Stage8ConfigRecord   o  ; was: word_B996
+                dc.w    0
+XiTigerAndStage9PaletteOffsetList:  dc.w    (CreditsAndEarlyStagePaletteCommandBank+$26A)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: ROM:XiTigerStageConfigRecord   o  ; was: word_B99A
+                dc.w    (Boss_FlyingNeoPaletteCommands+$20)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    0
                                         ; ROM:Stage9ConfigRecord   o
-XiTigerCutscenePaletteOffsetList:   dc.w    $442, 0     ; DATA XREF: XiTigerCutscene_LoadAssets+C   o  ; was: word_B9A0
-Stage10To13PaletteOffsetList:       dc.w    $482, 0     ; DATA XREF: ROM:Stage10ConfigRecord   o  ; was: word_B9A4
+XiTigerCutscenePaletteOffsetList:   dc.w    (FlyingNeoAndMidgamePaletteCommandBank+$E)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: XiTigerCutscene_LoadAssets+C   o  ; was: word_B9A0
+                dc.w    0
+Stage10To13PaletteOffsetList:   dc.w    (FlyingNeoAndMidgamePaletteCommandBank+$4E)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: ROM:Stage10ConfigRecord   o  ; was: word_B9A4
+                dc.w    0
                                         ; ROM:Stage11ConfigRecord   o
                                         ; ROM:Stage12ConfigRecord   o
                                         ; ROM:Stage13ConfigRecord   o
-Stage14To16PaletteOffsetList:   dc.w    $4C2, 0         ; DATA XREF: ROM:Stage14ConfigRecord   o  ; was: word_B9A8
+Stage14To16PaletteOffsetList:   dc.w    (FlyingNeoAndMidgamePaletteCommandBank+$8E)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: ROM:Stage14ConfigRecord   o  ; was: word_B9A8
+                dc.w    0
                                         ; ROM:Stage15ConfigRecord   o
                                         ; ROM:Stage16ConfigRecord   o
-Stage17PaletteOffsetList:       dc.w    $502, 0         ; DATA XREF: ROM:Stage17BossConfigRecord   o  ; was: word_B9AC
-Stage18And19PaletteOffsetList:  dc.w    $562, 0         ; DATA XREF: ROM:Stage18ConfigRecord   o  ; was: word_B9B0
+Stage17PaletteOffsetList:   dc.w    (FlyingNeoAndMidgamePaletteCommandBank+$CE)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: ROM:Stage17BossConfigRecord   o  ; was: word_B9AC
+                dc.w    0
+Stage18And19PaletteOffsetList:  dc.w    (Stage17PaletteCommandBank+$20)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: ROM:Stage18ConfigRecord   o  ; was: word_B9B0
+                dc.w    0
                                         ; ROM:Stage19ConfigRecord   o
-UnreferencedStage20VariantPaletteOffsetList:    dc.w    $5A2, 0  ; DATA XREF: ROM:UnreferencedStage20Variant1ConfigRecord   o  ; was: word_B9B4
+UnreferencedStage20VariantPaletteOffsetList:    dc.w    (Stage17PaletteCommandBank+$60)-Gfx_LoadPalettePreservingSharedColor
+                                        ; DATA XREF: ROM:UnreferencedStage20Variant1ConfigRecord   o  ; was: word_B9B4
+                dc.w    0
                                         ; ROM:UnreferencedStage20Variant2ConfigRecord   o
                                         ; ROM:UnreferencedStage20Variant3ConfigRecord   o
                                         ; ROM:UnreferencedStage20Variant4ConfigRecord   o
-Stage20PaletteOffsetLists:              dc.w    $5E2, 0, $632, 0  ; DATA XREF: ROM:Stage20ConfigRecord   o  ; was: word_B9B8
-SevenForcesCutscenePaletteOffsetList:   dc.w    $690, $6B0, 0  ; DATA XREF: Cutscene_SevenForcesLoadGraphics   o  ; was: word_B9C0
-Stage21And23PaletteOffsetList:          dc.w    $6B8, $818, 0  ; DATA XREF: ROM:Stage21ConfigRecord   o  ; was: word_B9C6
+Stage20PaletteOffsetLists:  dc.w    (Stage17PaletteCommandBank+$A0)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: ROM:Stage20ConfigRecord   o  ; was: word_B9B8
+                dc.w    0
+                dc.w    SevenForcesArtemisTransitionPaletteCommands-Gfx_LoadPalettePreservingSharedColor
+                dc.w    0
+SevenForcesCutscenePaletteOffsetList:   dc.w    (SireneAndLateStagePaletteCommandBank+$1E)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: Cutscene_SevenForcesLoadGraphics   o  ; was: word_B9C0
+                dc.w    (SireneAndLateStagePaletteCommandBank+$3E)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    0
+Stage21And23PaletteOffsetList:  dc.w    (SireneAndLateStagePaletteCommandBank+$46)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: ROM:Stage21ConfigRecord   o  ; was: word_B9C6
+                dc.w    (Stage15PaletteCommands+$20)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    0
                                         ; ROM:Stage23ConfigRecord   o
-Stage22PaletteOffsetList:               dc.w    $6B8, $828, 0  ; DATA XREF: ROM:Stage22ConfigRecord   o  ; was: word_B9CC
-Stage24PaletteOffsetList:               dc.w    $6F8, $848, 0  ; DATA XREF: ROM:Stage24ConfigRecord   o  ; was: word_B9D2
+Stage22PaletteOffsetList:   dc.w    (SireneAndLateStagePaletteCommandBank+$46)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: ROM:Stage22ConfigRecord   o  ; was: word_B9CC
+                dc.w    DestroyerProtoIntroPaletteCommands-Gfx_LoadPalettePreservingSharedColor
+                dc.w    0
+Stage24PaletteOffsetList:   dc.w    (SireneAndLateStagePaletteCommandBank+$86)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: ROM:Stage24ConfigRecord   o  ; was: word_B9D2
+                dc.w    (DestroyerProtoIntroPaletteCommands+$20)-Gfx_LoadPalettePreservingSharedColor
+                dc.w    0
 UnreferencedFlaggedPaletteOffsetListA:  dc.w    $718, $E34, 0  ; DATA XREF: ROM:UnreferencedFlaggedConfigRecordA   o  ; was: word_B9D8
 UnreferencedFlaggedPaletteOffsetListB:  dc.w    $738, 0  ; DATA XREF: ROM:UnreferencedFlaggedConfigRecordB   o  ; was: word_B9DE
-Stage25PaletteOffsetList:               dc.w    $758, 0  ; DATA XREF: ROM:Stage25ConfigRecord   o  ; was: word_B9E2
-Stage26PaletteOffsetList:               dc.w    $798, 0  ; DATA XREF: ROM:Stage26ConfigRecord   o  ; was: word_B9E6
+Stage25PaletteOffsetList:               dc.w    (SireneAndLateStagePaletteCommandBank+$E6)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: ROM:Stage25ConfigRecord   o  ; was: word_B9E2
+                dc.w    0
+Stage26PaletteOffsetList:   dc.w    (SireneAndLateStagePaletteCommandBank+$126)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: ROM:Stage26ConfigRecord   o  ; was: word_B9E6
+                dc.w    0
                                         ; ZLeoEnding_InitializeScene+24   o
 
 ; Loads a palette command while preserving the shared color at palette slot $36

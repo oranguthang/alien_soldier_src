@@ -10824,3 +10824,87 @@ through 50,000 frames with video memory byte-identical at every checkpoint. The
 hundred-odd work RAM bytes that still differ are the relocated pointers
 themselves, sitting in DMA descriptors and sprite mapping fields, which is what
 correct relocation looks like.
+
+The relocation probe is the generalisation of what the 4 MB experiment did by
+hand, and it found a second instance of the same defect on its first run.
+`Boss_SunsetStingBodyPartInitTable` opens with `dc.w $E, $BDB0`, which
+`Boss_SunsetStingInitBodyParts` reads as one longword with `move.l (a1)+,d4` and
+stores into offset 8 of the part record — the sprite mapping pointer. The value
+is `Boss_SunsetStingPartAnimationMapping6`, written as two constants. It is now
+a `dc.l`, and the image is unchanged.
+
+Getting the probe to say that took four filtering rules, and each is stated
+rather than tuned, because the raw signal is hopeless: with fifteen thousand
+symbols a four-byte window matches one by accident constantly. A window that
+runs past the statement that emitted it is reading across two statements. A word
+or byte sized instruction cannot carry a 32-bit address, so a match inside one is
+reading across its operands. A site authored as a symbol is relocated by the
+assembler and cannot be stale. Bytes inside a `binclude` payload are opaque, and
+nothing about the source follows from them. Two further restrictions come from
+this ROM rather than from the machine: only symbols in content modules are
+considered, and symbols sitting on a `$8000` boundary are skipped, because those
+are the PCM banks whose addresses are exactly the round numbers used for VDP
+commands and 16.16 constants — and which are referenced as `(symbol >> 8)`, so a
+32-bit scan never sees a real one. What survives is fourteen declared
+coincidences, each with the reason it is a number.
+
+Two limits are worth writing down. The probe cannot see a pointer that carries
+flags in its high bits, because the stored value no longer equals the symbol
+address; the same Sunset Sting table holds several of those, with the top byte as
+flags and the low 24 bits as the address, and they are still literals. And a
+pointer inside an extracted payload is out of reach by construction, since the
+assembler cannot relocate those bytes and the source cannot express them any
+other way.
+
+Two mistakes in building it are worth the same treatment. The listing's
+emitted-byte column is as wide as each statement needs, so reading the source
+text from a fixed offset silently truncated the operands and let the filter pass
+statements it had not actually read. And the label a statement defines is not one
+of its operands: counting it as a symbol reference made the filter drop every
+labelled table, which hid the Stage 8 defect from the very check written to catch
+it. Both were found by running the check against a deliberately reintroduced
+defect and watching it stay green.
+
+Moving the code turned out to need a different tool than moving the data, and
+getting the tool right took three tries, each of which blamed the source for the
+probe's own mistake.
+
+The first version inserted a `nop` after every `; End of function` marker. That
+marker is an artefact of the disassembly and does not mean control stops there:
+in `src/system/input.s` two of them sit in fall-through paths, so the filler
+became executed code. A `nop` costs four cycles, and four cycles inside the
+controller read — where the surrounding `nop` delays implement the pad's TH
+protocol — change what the pad reports. Worse, spent anywhere at all they move
+the frame counter, which desynchronises a recorded movie on a ROM that is
+otherwise perfectly playable. A second `rts` immediately after an existing one is
+the sound filler: unreachable by construction, and free.
+
+The second version inserted after every `rts`, and landed on
+`src/sound/driver_core.s`. `Sound_PanAnimationNoteModeDispatch` is a branch table
+built from two-byte instructions and reached by `jmp Table(pc,d0.w)`; its first
+entry is an `rts`. Duplicating that `rts` adds a slot and shifts every later mode
+by one. Five `rts` in the tree are table entries rather than returns, and they are
+told apart by what follows: a real return is followed by a label, a table slot by
+another instruction.
+
+Between those two, the probe found a real defect. `Gfx_LoadPaletteFromRelativeOffset`
+adds each list entry to `Gfx_LoadPalettePreservingSharedColor`, so the 26 palette
+offset lists hold offsets from a code label — written as literals. Forty-nine of
+them. The base moves with the code and the offsets did not, so any change to the
+distance between that label and the palette command banks sends all of them
+somewhere else. They are now `Target-Base`, with the forty-six that land inside a
+command bank written against the bank that contains them.
+
+With that fixed and the filler placed properly, the two axes run together: an
+image stretched to 4 MB, with every region moved by a different multiple of the
+DMA block, and 3,640 extra returns moving every procedure relative to every
+other. Five modules cannot take the filler at all, because a short branch inside
+them stops reaching across an inserted word. That image replays the recorded run
+in sync through 50,000 frames with video memory byte-identical at every
+checkpoint; the two to four hundred work RAM bytes that differ are the relocated
+pointers themselves.
+
+The lesson worth keeping is about attribution. Three times the probe failed and
+three times the first reading was that the source was broken. Two of those were
+the probe. The way to tell them apart was cheap and should have been the first
+move each time: ask what the inserted bytes actually do at that spot.

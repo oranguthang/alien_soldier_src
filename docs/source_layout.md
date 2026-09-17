@@ -65,6 +65,52 @@ them on the 32 KiB granularity the Z80 bank register selects, and `align0 2`
 keeps word data even. Both survive relocation on their own; the `org` gaps do
 not, because they encode absolute positions.
 
+## Pointers are checked by moving the layout
+
+A reference the assembler owns moves when the layout moves. A value written as a
+literal does not. `make verify-relocation` separates the two by rebuilding the
+ROM twice with the layout perturbed, under `build/relocation/`, and requiring
+every reference to follow. Nothing under `src/` is touched and no emulator is
+involved: the perturbed entrypoint and the files it replaces are generated and
+assembled from the output directory.
+
+Two perturbations are declared in `config/rom_layout.json`:
+
+| Probe | What moves | What it tests |
+|---|---|---|
+| `content` | Every padding gap grows by whole DMA blocks, so all content moves | References to data, with the DMA alignment invariant deliberately held still |
+| `code` | Unreachable `nop`s are inserted inside the code region, so code labels move relative to one another while the `org` directives hold the content | References to code, and the relative offsets between code labels |
+| `returns` | Every safe `rts` is duplicated, so every procedure moves relative to every other one | That the source still assembles with the whole code region rearranged |
+
+The filler for `returns` is a second `rts` rather than a `nop` for a reason
+worth stating. A `nop` costs four cycles, and four cycles anywhere move the frame
+counter, which desynchronises a recorded movie on a ROM that plays perfectly by
+hand — a failure that looks exactly like a broken pointer and is not one. A
+second `rts` after an existing one is unreachable by construction and free. It is
+not inserted after every `rts`: five in the tree are the first entry of a branch
+table of two-byte instructions reached by `jmp Table(pc,d0.w)`, where an extra
+entry shifts every later mode, and those are told apart by what follows them — a
+return is followed by a label, a table slot by another instruction.
+
+A value that equals the address of a symbol which moved, and that did not move
+with it, is reported. Both defects found this way were the same shape: a 32-bit
+address encoded as two `dc.w` constants, in the stage tile asset command lists
+and in `Boss_SunsetStingBodyPartInitTable`.
+
+Precision is the hard part, because with fifteen thousand symbols a four-byte
+window matches one by accident often. Four rules cut that down, each stated
+rather than tuned: a window that runs past the statement that emitted it is
+reading across two statements; a word- or byte-sized instruction cannot carry a
+32-bit address; a site authored as a symbol is relocated by the assembler and
+cannot be stale; and bytes inside a `binclude` payload are opaque, so nothing
+about the source follows from them. What survives is listed in
+`accepted_coincidences` with the reason it is a number rather than an address.
+
+The probe cannot see a pointer that carries flags in its high bits, because the
+stored value no longer equals the symbol address. `Boss_SunsetStingBodyPartInitTable`
+holds several of those, with the top byte as flags and the low 24 bits as the
+address, and they remain written as literals.
+
 ## Editing rules
 
 - Keep module includes in ascending ROM order.

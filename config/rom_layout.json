@@ -134,6 +134,143 @@
     "exclusion_reason": "Compressed art is expanded by the 68000 a byte at a time, not transferred by the VDP, so a block boundary inside it is harmless; three such payloads cross one in the canonical image.",
     "emulator_note": "The vendored Gens increments the ROM DMA source without masking it, so make runtime cannot observe a violation. See docs/runtime.md."
   },
+  "relocation_probe": {
+    "output_dir": "build/relocation",
+    "block_size": "0x20000",
+    "reason": "A reference the assembler owns moves when the layout moves. A value written as a literal does not. Perturbing the layout and requiring every reference to follow is what separates the two, and it needs no emulator.",
+    "probes": [
+      {
+        "id": "content",
+        "why": "Grows every padding gap by whole DMA blocks, so all content moves while the code keeps its shape and the DMA alignment invariant is preserved.",
+        "gap_growth": [
+          {
+            "file": "src/data/pre_sound_padding.s",
+            "org": "0x82324",
+            "blocks": 4
+          },
+          {
+            "file": "src/sound/pcm_samples.s",
+            "org": "0xE8000",
+            "blocks": 8
+          },
+          {
+            "file": "src/data/credits_scene_assets.s",
+            "org": "0x180000",
+            "blocks": 12
+          },
+          {
+            "file": "src/data/rom_final_padding.s",
+            "org": "0x1FFFFF",
+            "blocks": 16
+          }
+        ]
+      },
+      {
+        "id": "code",
+        "why": "Inserts unreachable nops inside the code region, so code labels move relative to one another while the org directives hold the content still.",
+        "code_filler": [
+          {
+            "file": "src/gameplay/main_loop.s",
+            "words": 1024
+          }
+        ]
+      },
+      {
+        "id": "returns",
+        "why": "Duplicates every safe rts, which moves each procedure relative to every other one without costing a cycle. A nop would cost four, and four cycles anywhere move the frame counter, which desynchronises a recorded movie on a ROM that plays perfectly by hand. This probe checks the source still assembles that way; the recorded run on the perturbed image is what confirms the behaviour.",
+        "return_filler": {
+          "maximum_skipped_modules": 5,
+          "skip_reason": "A short branch inside these stops reaching its target across an inserted word. An rts that is the first entry of a jmp Table(pc,d0.w) branch table is skipped automatically: a return is followed by a label, a table slot by another instruction.",
+          "skip_modules": [
+            "src/sound/psg_playback_and_envelopes.s",
+            "src/player/terrain_responses.s",
+            "src/system/game_variables.s",
+            "src/bosses/shellshogun_rendering.s",
+            "src/bosses/missiray_segments.s"
+          ]
+        }
+      }
+    ],
+    "accepted_coincidences": [
+      {
+        "value": "0x0A0000",
+        "directive": "dc.l",
+        "why": "Weapon_DirectionVectorsSpeed10 peaks at 10.0 in 16.16, which is the address Sound_PCMBank2 happens to start at."
+      },
+      {
+        "value": "0x0B0000",
+        "directive": "dc.l",
+        "why": "Weapon_DirectionVectorsSpeed11 peaks at 11.0 in 16.16."
+      },
+      {
+        "value": "0x0C0000",
+        "directive": "dc.l",
+        "why": "Weapon_DirectionVectorsSpeed12 peaks at 12.0 in 16.16."
+      },
+      {
+        "value": "0x0D0000",
+        "directive": "dc.l",
+        "why": "Weapon_DirectionVectorsSpeed13 peaks at 13.0 in 16.16."
+      },
+      {
+        "value": "0x180000",
+        "directive": "dc.l",
+        "why": "A dc.l pair whose halves read as one longword; the bytes are a count and a VDP word, not an address."
+      },
+      {
+        "value": "0x0A0000",
+        "directive": "dc.b",
+        "why": "A nibble-packed data table whose bytes coincide with a PCM bank boundary."
+      },
+      {
+        "value": "0x0A0000",
+        "directive": "move.l",
+        "why": "ContinueCountdownValue is seeded with 10.0 in 16.16."
+      },
+      {
+        "value": "0x0C0000",
+        "directive": "move.l",
+        "why": "A 12.0 scroll velocity in 16.16, written into work RAM."
+      },
+      {
+        "value": "0x180000",
+        "directive": "move.l",
+        "why": "A 24.0 corridor coordinate in 16.16."
+      },
+      {
+        "value": "0x0C0000",
+        "directive": "cmpi.l",
+        "why": "The same 12.0 threshold, compared rather than stored."
+      },
+      {
+        "value": "0x040CEE",
+        "directive": "dc.b",
+        "why": "A byte table whose window coincides with a code label; a pointer is never authored a byte at a time."
+      },
+      {
+        "value": "0x040024",
+        "directive": "dc.b",
+        "why": "A byte table of small offsets whose window coincides with a code label."
+      },
+      {
+        "value": "0x04C680",
+        "directive": "dc.w",
+        "why": "A word table of VDP parameters whose window coincides with a code label."
+      },
+      {
+        "value": "0x050004",
+        "directive": "dc.w",
+        "why": "A descending counter table whose window coincides with a code label."
+      }
+    ],
+    "coincidence_note": "A value that equals a symbol address by accident cannot be told from a pointer by its bytes, so each one is listed with why it is a number. A new entry appearing means look at it first.",
+    "content_modules": [
+      "src/data/",
+      "src/sound/"
+    ],
+    "ignore_symbols_aligned_to": "0x8000",
+    "ignore_alignment_reason": "Symbols on a $8000 boundary are the PCM banks. Their addresses are the same round numbers the ROM uses for VDP commands and 16.16 constants, so a four-byte window matches one by accident constantly, and the banks are referenced as (symbol >> 8), which a 32-bit scan cannot see."
+  },
   "shared_definitions": [
     {
       "file": "src/macros.inc",

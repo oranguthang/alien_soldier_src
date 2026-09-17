@@ -69,6 +69,7 @@
     "clean",
     "verify",
     "verify-symbols",
+    "verify-relocation",
     "runtime",
     "release-audit",
     "release-check"

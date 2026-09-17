@@ -730,7 +730,8 @@ Boss_SunsetStingPartAnimationMappings:
                 dc.l    Boss_SunsetStingPartAnimationMapping6
                 dc.l    Boss_SunsetStingPartAnimationMapping7
 Boss_SunsetStingBodyPartInitTable:
-                dc.w    $E, $BDB0, $80, 0, $8000, 1, $2004, $D2E, $83, $140, $6004, $1548  ; was: word_41568
+                dc.l    Boss_SunsetStingPartAnimationMapping6  ; was: word_41568
+                dc.w    $80, 0, $8000, 1, $2004, $D2E, $83, $140, $6004, $1548
                                         ; DATA XREF: Boss_SunsetStingLoadGraphics+28   o
                                         ; Boss_SunsetStingUpdateGraphics:Boss_SunsetStingUpdateBodyGraphics   o
                 dc.w    $43, $A0, $6004, $1548, $4A, 0, $6004, $1548, $61, $60, $6004, $1548

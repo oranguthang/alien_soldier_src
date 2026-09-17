@@ -53,7 +53,7 @@ BIN_DIR = bin
 DATA_ADDRS = $(DATA_DIR)/data_addrs.txt
 
 # Default target
-.PHONY: all build verify check-assets update-asset-manifest verify-toolchain verify-layout format lint test runtime runtime-capture runtime-validate release-audit release-check source-inventory semantic-audit
+.PHONY: all build verify check-assets update-asset-manifest verify-toolchain verify-layout verify-relocation format lint test runtime runtime-capture runtime-validate release-audit release-check source-inventory semantic-audit
 all: build
 
 # Initialize project from original ROM
@@ -145,6 +145,12 @@ verify-layout: $(LISTING)
 		--listing $(LISTING) \
 		--rom $(ROM)
 
+# Rebuild with the layout perturbed and require every reference to follow it.
+# A reference the assembler owns moves; a value written as a literal does not,
+# and that difference is what this separates. No emulator is involved.
+verify-relocation: $(LISTING)
+	@$(PYTHON) $(SCRIPTS_DIR)/verify_relocation.py 		--layout $(ROM_LAYOUT) 		--listing $(LISTING) 		--rom $(ROM)
+
 lint:
 	@$(PYTHON) $(SCRIPTS_DIR)/asm_style.py src
 	@$(PYTHON) $(SCRIPTS_DIR)/lint_source.py \
@@ -197,6 +203,7 @@ release-check:
 	@$(MAKE) --no-print-directory clean
 	@$(MAKE) --no-print-directory verify
 	@$(MAKE) --no-print-directory verify-symbols
+	@$(MAKE) --no-print-directory verify-relocation
 	@$(MAKE) --no-print-directory runtime-capture
 	@$(MAKE) --no-print-directory release-audit
 
@@ -788,6 +795,7 @@ help:
 	@echo "  make compare            - Compare built ROM with original"
 	@echo "  make check-assets       - Validate all extracted private segments"
 	@echo "  make verify-toolchain   - Hash-check build tools and pin the emulator"
+	@echo "  make verify-relocation  - Perturb the layout; every pointer must follow"
 	@echo "  make split              - Extract data from original ROM"
 	@echo "  make clean              - Remove build artifacts; preserve extracted data"
 	@echo ""
