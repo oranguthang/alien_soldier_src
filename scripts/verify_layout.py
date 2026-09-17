@@ -13,6 +13,7 @@ from pathlib import Path
 INCLUDE_ROW = re.compile(r'^\s*\d+/\s*([0-9A-F]+) :\s+include "([^"]+)"')
 LISTING_ROW = re.compile(r'^\(\d+\)\s+\d+/\s*([0-9A-F]+)\s*:')
 LABEL = re.compile(r'^([A-Za-z_][A-Za-z0-9_]*):')
+BINCLUDE_ROW = re.compile(r'^\(\d+\)\s+\d+/\s*([0-9A-F]+)\s*:.*binclude\s+"([^"]+)"')
 
 
 def number(value: str | int) -> int:
@@ -40,6 +41,66 @@ def listing_symbols(lines: list[str]) -> dict[str, int]:
         if label:
             symbols[label.group(1)] = int(row.group(1), 16)
     return symbols
+
+
+def listing_payloads(lines: list[str]) -> dict[str, int]:
+    """Where each binincluded payload actually landed, by data/ path."""
+    payloads: dict[str, int] = {}
+    for line in lines:
+        match = BINCLUDE_ROW.match(line)
+        if match:
+            payloads[match.group(2).replace("\\", "/")] = int(match.group(1), 16)
+    return payloads
+
+
+def check_dma_alignment(
+    layout: dict, lines: list[str], manifest_path: Path, errors: list[str]
+) -> int:
+    """No payload the VDP transfers may straddle a DMA source block boundary.
+
+    The VDP latches the upper bits of a DMA source address, so a transfer that
+    crosses a block boundary wraps back to the start of that block instead of
+    continuing. The cartridge is laid out so that this never happens, and the
+    $FF gaps between regions are part of how it is avoided: they are alignment,
+    not filler. Nothing in the emulator catches a violation, because the
+    vendored Gens increments the ROM source address without masking it, so this
+    invariant has to be checked against the listing instead.
+    """
+    rules = layout.get("dma_alignment")
+    if not rules:
+        errors.append("ROM layout declares no DMA alignment rule")
+        return 0
+    block = number(rules["block_size"])
+    regions = set(rules["transferred_regions"])
+    ceiling = int(rules["maximum_crossings"])
+
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assets = {("data/" + item["path"]).replace("\\", "/"): item for item in manifest["assets"]}
+    payloads = listing_payloads(lines)
+    if len(payloads) != len(assets):
+        errors.append(
+            f"listing places {len(payloads)} payloads; the asset manifest declares {len(assets)}"
+        )
+
+    checked = 0
+    crossings = []
+    for path, start in sorted(payloads.items()):
+        asset = assets.get(path)
+        if asset is None or asset["region"] not in regions:
+            continue
+        checked += 1
+        end = start + int(asset["size"])
+        if start // block != (end - 1) // block:
+            crossings.append(
+                f"{asset['name']} spans 0x{start:06X}-0x{end:06X}, "
+                f"crossing a 0x{block:X} DMA boundary"
+            )
+    if len(crossings) > ceiling:
+        for crossing in crossings[:10]:
+            errors.append(crossing)
+        if len(crossings) > 10:
+            errors.append(f"... and {len(crossings) - 10} more DMA boundary crossings")
+    return checked
 
 
 def check_modules(layout: dict, lines: list[str], errors: list[str]) -> int:
@@ -128,6 +189,7 @@ def main() -> int:
     parser.add_argument("--layout", default="config/rom_layout.json")
     parser.add_argument("--listing", default="build/main.lst")
     parser.add_argument("--rom", default="asbuilt.bin")
+    parser.add_argument("--manifest", default="assets/manifest.json")
     args = parser.parse_args()
 
     layout_path = Path(args.layout)
@@ -145,13 +207,14 @@ def main() -> int:
     modules = check_modules(layout, lines, errors)
     landmarks = check_landmarks(layout, lines, errors)
     padding = check_image(layout, Path(args.rom), errors)
+    transferred = check_dma_alignment(layout, lines, Path(args.manifest), errors)
     if errors:
         for error in errors:
             print(f"[ERROR] {error}", file=sys.stderr)
         return 1
     print(
         f"[OK] ROM layout: {modules} modules, {landmarks} landmarks, "
-        f"{padding} padding bytes"
+        f"{padding} padding bytes, {transferred} DMA payloads inside their blocks"
     )
     return 0
 

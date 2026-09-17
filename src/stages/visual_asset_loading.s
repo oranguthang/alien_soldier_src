@@ -161,7 +161,9 @@ Stage_LoadStage7VisualAssets:                           ; DATA XREF: ROM:00011DF
                 bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Stage_LoadStage7VisualAssets
 ; ---------------------------------------------------------------------------
-Stage7TileAssetCommands:    dc.w    0, $6000, 4, $7000, 7, $10, $4F32, $8000, $FFFF  ; was: word_11F6C
+Stage7TileAssetCommands:    dc.w    0, $6000, 4, $7000, 7  ; was: word_11F6C
+                dc.l    Stage15TileArt+$410
+                dc.w    $8000, $FFFF
                                         ; DATA XREF: Stage_LoadStage7VisualAssets+C   o
 
 ; Loads the shared palette and compact tile commands for the Stage 8 train
@@ -173,7 +175,9 @@ Stage_LoadStage8TrainVisualAssets:                      ; DATA XREF: ROM:00011DF
                 bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Stage_LoadStage8TrainVisualAssets
 ; ---------------------------------------------------------------------------
-Stage8TrainTileAssetCommands:   dc.w    0, $6000, 7, $11, $63AE, $8000, $FFFF  ; was: word_11F94
+Stage8TrainTileAssetCommands:   dc.w    0, $6000, 7     ; was: word_11F94
+                dc.l    Stage9XiTigerEntranceTileArt
+                dc.w    $8000, $FFFF
                                         ; DATA XREF: Stage_LoadStage8TrainVisualAssets+C   o
 
 ; Loads the shared palette and compact tile commands for the Stage 9 flies
@@ -274,7 +278,9 @@ Stage_LoadStage16VisualAssets:                          ; DATA XREF: ROM:00011E0
                 bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Stage_LoadStage16VisualAssets
 ; ---------------------------------------------------------------------------
-Stage16TileAssetCommands:   dc.w    $C, $6000, 7, $12, $3172, $7000, $FFFF  ; was: word_120A6
+Stage16TileAssetCommands:   dc.w    $C, $6000, 7        ; was: word_120A6
+                dc.l    Boss_VictorTileArt_End+$1840
+                dc.w    $7000, $FFFF
                                         ; DATA XREF: Stage_LoadStage16VisualAssets+C   o
 
 ; Loads palettes for stage 17
@@ -293,7 +299,9 @@ Stage_LoadStage18VisualAssets:                          ; DATA XREF: ROM:00011E0
                 bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Stage_LoadStage18VisualAssets
 ; ---------------------------------------------------------------------------
-Stage18TileAssetCommands:   dc.w    $C, $6000, 7, $10, $5B9E, $7000, $FFFF  ; was: word_120E2
+Stage18TileAssetCommands:   dc.w    $C, $6000, 7        ; was: word_120E2
+                dc.l    Stage22And24TileArt+$A08
+                dc.w    $7000, $FFFF
                                         ; DATA XREF: Stage_LoadStage18VisualAssets+C   o
 
 ; Loads the shared palette and compact tile commands for Stage 19

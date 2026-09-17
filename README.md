@@ -262,47 +262,41 @@ A custom binary tracing system was added to the Gens-automation emulator for deb
 - ~1014 RAM addresses defined in `src/ram_addrs.inc`
 - Includes sprite tables, DMA queues, game state, player data
 
-## Known Issues
+## ROM layout is alignment, not filler
 
-### $E8000-$121932 Graphics Corruption
+### The 128 KiB DMA source boundary
 
-**Problem**: Adding padding after `org $E8000` causes graphics corruption around frame 10500 in TAS playback.
+The VDP latches the upper bits of a DMA source address, so a transfer that
+crosses a 128 KiB (`$20000`) boundary wraps back to the start of that block
+instead of continuing. The cartridge is laid out so that this never happens:
+none of the 289 uncompressed art payloads straddles a boundary. The `$FF` gaps
+between regions, reached by the `org` directives in `src/data/*_padding.s`,
+`src/sound/pcm_samples.s` and `src/data/credits_scene_assets.s`, are part of how
+that is achieved.
 
-**Root Cause Analysis** (via binary tracing):
+Move or shorten one of those gaps and payloads slide across boundaries. Removing
+all of them puts `data/artunc/font.bin` at `$0BF202-$0C2B02`, across `$0C0000`,
+and the shared font is what the frontend draws its text and rules with; the
+weapon setup screen, in-stage sprites and stage backgrounds visibly break.
+`make verify-layout` now rejects any such crossing, with a ceiling of zero,
+against the assembler listing. Compressed art is exempt because the 68000
+expands it a byte at a time rather than the VDP transferring it, which is why
+three `artcomp` payloads cross a boundary in the canonical image without harm.
 
-1. **Pointer Storage in RAM**: The game stores ROM pointers in entity structures at runtime
-   - Example: `dword_FFA408` stores pointer to sprite animation data
-   - Code writes `move.l #word_E86AA,8(a5)` during entity initialization
+### Why the emulator cannot see it
 
-2. **Data Shift Effect**: When padding is added after `org $E8000`:
-   - All labels after the padding shift by the padding size (e.g., 32 bytes)
-   - Assembler correctly updates all code references to use new addresses
-   - **BUT**: Pointers already stored in RAM from earlier frames are now stale
+The vendored Gens masks the ROM DMA source address once before the transfer
+loop and then increments it without masking, so it reads straight across a block
+boundary where hardware would wrap. `make runtime` therefore cannot observe a
+violation of this invariant, and neither can a state comparison: the damage is
+in VRAM, not in work RAM. The check is static for that reason.
 
-3. **Trace Evidence** (frame 10500):
-   ```
-   Broken ROM: $FFA408 = $000E86CA  (shifted address)
-   Working ROM: $FFA408 = $000E86AA  (original address)
-   Difference: 0x20 = 32 bytes (padding size)
-   ```
-
-4. **DMA Transfer Mismatch**:
-   ```
-   Broken:  DMA $0F7EE0 -> VRAM (shifted source)
-   Working: DMA $0F7EC0 -> VRAM (correct source)
-   ```
-
-**Why This Happens**:
-- Entity pointers are written to RAM during level/boss initialization (before frame 10500)
-- The TAS movie was recorded with the original ROM layout
-- When ROM changes, game state diverges, but old pointers remain in RAM
-- Result: DMA reads from wrong ROM addresses → corrupted graphics
-
-**Potential Solutions** (not implemented):
-1. Find all pointer table initializations and verify they use labels (not hardcoded)
-2. Check for any tables in ROM that contain absolute addresses to data after $E8000
-3. Ensure no code caches ROM addresses in RAM across level transitions
-4. The issue may be inherent to how the game's entity system works
+An earlier note in this file attributed the corruption to stale entity pointers
+left in RAM. That explanation does not hold: each run starts from a cold boot
+with cleared RAM, and every pointer is written by relocated code with the
+relocated value. The trace it quoted, `$FFA408` reading `$000E86CA` instead of
+`$000E86AA`, shows the pointer being relocated correctly by exactly the padding
+size.
 
 ## Tile Compression
 

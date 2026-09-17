@@ -7,7 +7,8 @@
    resolution and text hygiene across every tracked text file;
 3. Python verification tests;
 4. cleanup of reproducible outputs;
-5. a fresh byte-identical Japanese ROM build plus layout verification;
+5. a fresh byte-identical Japanese ROM build plus layout verification, which
+   includes the 128 KiB DMA source boundary the emulator cannot check;
 6. canonical symbol export and contract coverage;
 7. all twelve emulator scenarios and 78 named RAM expectations;
 8. the static release audit, which resolves every requirement in

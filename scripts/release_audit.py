@@ -182,6 +182,10 @@ def audit_counters(
         "declared_subsystems": len(policy["naming"]["subsystem_vocabulary"]),
         "resolved_branch_targets": inventory.call_targets,
         "tracked_text_files": len(lint_project.tracked_text_files(root)),
+        "dma_transferred_payloads": sum(
+            1 for item in load(root, "assets/manifest.json")["assets"]
+            if item["region"] in set(layout["dma_alignment"]["transferred_regions"])
+        ),
     }
     for name, value in sorted(declared.items()):
         if name not in actual:

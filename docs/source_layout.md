@@ -45,6 +45,26 @@ name as provenance. A semantic name may be corrected whenever stronger static
 or runtime evidence appears; byte identity, references, documentation, and the
 unknowns register must be updated together.
 
+## Padding is alignment
+
+The `$FF` gaps between regions are not filler. The VDP latches the upper bits of
+a DMA source address, so a transfer crossing a 128 KiB boundary wraps to the
+start of that block instead of continuing, and the cartridge is laid out so that
+no transferred payload straddles one: all 289 uncompressed art payloads sit
+inside a single block. The `org` directives that skip those gaps are what holds
+that arrangement.
+
+`config/rom_layout.json` declares the rule in `dma_alignment` and
+`make verify-layout` enforces it with a ceiling of zero. Compressed art is
+exempt, because the 68000 expands it rather than the VDP transferring it; three
+`artcomp` payloads cross a boundary in the canonical image and always have.
+
+Two directives in the source are alignment for the same kind of reason and must
+not be treated as decoration either: `align $8000` before the PCM banks keeps
+them on the 32 KiB granularity the Z80 bank register selects, and `align0 2`
+keeps word data even. Both survive relocation on their own; the `org` gaps do
+not, because they encode absolute positions.
+
 ## Editing rules
 
 - Keep module includes in ascending ROM order.

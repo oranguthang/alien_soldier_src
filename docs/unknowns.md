@@ -10719,3 +10719,108 @@ import never labelled. That is a shape the schema had not carried before, so a
 record may now hold a null legacy name, meaning the disassembly had no symbol
 there at all — which is different from it having had a generated one. The built
 image is unchanged and `make verify` reproduces the cartridge byte for byte.
+
+The padding is alignment, and finding that out cost a wrong diagnosis first.
+Removing all four `$FF` gaps produces a 1,599,020-byte image that assembles with
+no errors and boots once the hardcoded header checksum is recomputed, and its
+work RAM matches the canonical run bit for bit through frame 6800. On that
+evidence the reconstruction looked position-independent apart from the checksum.
+It is not. Played by hand, the reduced image breaks the weapon setup screen's
+rules and text, the Flying Neo shot sprites, and the Stage 18 backgrounds,
+enemies and pickups.
+
+The mechanism is the VDP's DMA source boundary. The VDP latches the upper bits
+of the source address, so a transfer crossing a 128 KiB block wraps to the start
+of that block instead of continuing. The cartridge is laid out so that this
+never happens: all 289 uncompressed art payloads sit inside a single block, and
+the `org` directives that skip the gaps are what holds that arrangement. Remove
+them and `data/artunc/font.bin` lands at `$0BF202-$0C2B02`, across `$0C0000`.
+The shared font is what the frontend draws its text and rules with, which is the
+first of the three symptoms exactly. Compressed art is unaffected because the
+68000 expands it a byte at a time rather than the VDP transferring it — three
+`artcomp` payloads cross a boundary in the canonical image and always have, which
+is why a naive count of crossings does not separate the harmful case from the
+harmless one.
+
+Two blind spots hid this. The scenarios compare work RAM and not video memory,
+so corrupted tiles register only once they feed back into game state, which in
+the reduced image took until frame 12,900. And the vendored Gens does not model
+the boundary at all: in `vdp_io.asm` the ROM transfer loop masks the source
+address once before the loop and then does a bare `add esi, 2`, reading straight
+across a block. The RAM-source loop masks inside the loop; the ROM one does not.
+So the emulator the whole runtime layer rests on cannot observe a violation of
+this constraint, and no replay, however long, would have caught it.
+
+That is why the new check is static. `config/rom_layout.json` declares the rule
+in `dma_alignment` and `make verify-layout` resolves every binincluded payload
+to the address the listing gave it, with a ceiling of zero crossings among the
+transferred regions. It passes on the canonical layout, rejects the fully
+depadded one by naming the font, and passes on a layout with only the two
+trailing gaps removed — which is the variant that was played and behaves
+correctly. Three independent confirmations, one of them from outside this
+repository.
+
+The earlier note in README.md blamed stale entity pointers left in RAM. That
+cannot be right: every run starts from a cold boot with cleared RAM, and each
+pointer is written by relocated code with the relocated value. Its own trace
+evidence, `$FFA408` holding `$000E86CA` instead of `$000E86AA`, shows a pointer
+relocated correctly by exactly the padding size. The note is replaced.
+
+One more thing follows from this. `align $8000` before the PCM banks and
+`align0 2` are alignment that survives relocation, because they are expressed as
+constraints. The `org` gaps are alignment expressed as absolute positions, which
+is why they do not survive. Rewriting them as constraints rather than addresses
+would make the layout self-maintaining, and is worth considering separately; the
+gap can already be written as `dc.b [$E5A2]$FF` with a byte-identical result.
+
+Stretching the ROM is a sharper test than shrinking it, and it found what
+shrinking had only hinted at. Padding the image out to exactly 4 MB, with each
+region moved by a different multiple of the `$20000` DMA block, forces every
+pointer to be recomputed while leaving the code identical and the DMA alignment
+invariant untouched. Anything that survives is genuinely symbolic; anything that
+breaks was an address written as a constant, or a constant written as an address.
+
+Four entries in the stage visual asset command lists were the former. A command
+list is read by `Stage_ExpandAndSubmitTileAssetCommands`, which for a direct
+command copies a 32-bit source with `move.l (a0)+,(a1)+`. Four lists encoded that
+source as two `dc.w` constants rather than as a reference to the data:
+`Stage8TrainTileAssetCommands` held `$11, $63AE`, and Stage 7, Stage 16 and
+Stage 18 held `$10, $4F32`, `$12, $3172` and `$10, $5B9E`. The assembler cannot
+relocate a constant, so every one of them fetches whatever later occupies the old
+address.
+
+That single defect wore three faces. `$001163AE` is
+`Stage9XiTigerEntranceTileArt`, which is also `Boss_FlyingNeoTileArt_End`, so a
+shifted layout makes the train stage submit the wrong tiles and the Flying Neo
+fight inherits the damaged VRAM — which is where a hand-played reduced image
+broke, and which is also the exact frame, in the Stage 8 train, where a recorded
+run first desynchronised. Stage 18 was the third place it showed. Stage 7 and
+Stage 16 are the same bug in stages nobody had looked at.
+
+The correct idiom was already in the tree three files away:
+`Stage17TileAssetCommands` splits its list into `dc.w`, `dc.l Boss_Epsilon1TileArt`,
+`dc.w`. The four broken lists now do the same, with the two mid-payload sources
+written as `Stage15TileArt+$410` and `Stage22And24TileArt+$A08` against the
+payload that contains them. The bytes are unchanged, so the canonical image is
+untouched.
+
+Finding it took narrowing a whole-image symptom to one line. Shifting each region
+in turn showed the damage lived in `[$E8000,$180000)`; shifting the block one
+module at a time narrowed it to `src/data/gameplay_tile_art.s`; and then, because
+the shift was exactly `$20000`, a stale pointer was distinguishable from a
+relocated one by arithmetic alone. Of the 133 references into the moved region
+from outside it, 132 had moved and one had not. That one was the Stage 8 train.
+
+Two measurement mistakes are worth recording with it. Comparing only 68000 RAM
+missed the corruption entirely, because damaged tiles reach a RAM expectation
+only once they feed back into game state. And a harness that reused a stale
+image from a failed build reported a two-byte shift as a block shift, which made
+an earlier bisection point at the wrong module; AS rejects a single `dc.b` repeat
+of `$20000`, and the build error went unread. A test harness that cannot fail
+loudly is a test harness that lies.
+
+With the four sources symbolic, the 4 MB image replays the recorded run in sync
+through 50,000 frames with video memory byte-identical at every checkpoint. The
+hundred-odd work RAM bytes that still differ are the relocated pointers
+themselves, sitting in DMA descriptors and sprite mapping fields, which is what
+correct relocation looks like.

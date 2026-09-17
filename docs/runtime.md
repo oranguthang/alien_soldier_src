@@ -93,6 +93,24 @@ accompanies a screenshot, so the zero header is not used as evidence; the
 requested frame is encoded in the capture filename and chosen by the emulator's
 screenshot interval.
 
+## What the replay cannot see
+
+Two limits are worth stating, because a green `make runtime` does not cover
+them.
+
+The scenarios compare work RAM, not video memory. Corrupted graphics reach a RAM
+expectation only if they later change the game's own state, and often they never
+do.
+
+More importantly, the vendored Gens does not model the VDP's 128 KiB DMA source
+boundary. Its transfer loop masks the ROM source address once before the loop
+and then increments it unmasked, so a transfer reads straight across a block
+boundary where hardware wraps back to the start of the block. A ROM layout that
+violates that constraint replays perfectly here and breaks on hardware. That is
+why the constraint is checked statically by `make verify-layout` against the
+assembler listing, with a ceiling of zero crossings, rather than being left to
+the replay.
+
 An expectation may only name a RAM symbol that `src/ram_addrs.inc` defines with a
 literal address. The 281 context aliases in that file, which give a shared
 scratch address a second name inside one subsystem, are deliberately out of

@@ -120,14 +120,15 @@
   "requirements": {
     "canonical_identity": {
       "status": "satisfied",
-      "statement": "The build reproduces the Japanese cartridge image byte for byte, compared byte by byte and not by hash alone.",
+      "statement": "The build reproduces the Japanese cartridge image byte for byte, compared byte by byte and not by hash alone. The layout constraints the image depends on are checked rather than assumed: no uncompressed art payload straddles a 128 KiB VDP DMA source boundary, with a ceiling of zero, because the vendored emulator cannot observe a violation.",
       "evidence": {
         "targets": [
           "verify"
         ],
         "files": [
           "config/release_0_5.json",
-          "scripts/compare_roms.py"
+          "scripts/compare_roms.py",
+          "config/rom_layout.json"
         ],
         "scenarios": [],
         "artifacts": [
@@ -692,6 +693,7 @@
     "assets": 579,
     "declared_subsystems": 192,
     "definitions": 16928,
+    "dma_transferred_payloads": 289,
     "modules": 379,
     "name_audit_records": 15833,
     "provenance_mappings": 16053,
