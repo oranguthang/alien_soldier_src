@@ -68,6 +68,7 @@ GENERIC_NAME_BASES = (
     "The initializer and update paths implement a two-phase spawner: timed radial particles followed by directional acceleration and horizontal trail emission.",
     "The pose interpreter reads event commands, loop/end markers, frame delays, and frame-data offsets before updating the 19-angle interpolation buffer.",
     "The routine updates two effect anchors, clamps their coordinates, and writes mirrored distortion-offset fields; it does not allocate a projectile.",
+    "The routines interpret $FFFF/$FFFE pose commands, load frame data, calculate interpolation deltas, and prepare the pose buffer; no projectile slot is allocated.",
 )
 
 

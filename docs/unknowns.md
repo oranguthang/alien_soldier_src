@@ -11490,3 +11490,10 @@ position: it adds angle-derived deltas to `PlayerXPosition` and
 here, and later used as a periodic projectile origin. The code writes mirrored
 H/V-scroll RAM fields afterward; the visual appearance and player-control
 intent have not been confirmed by pinned runtime observation.
+
+Medusa's pose interpreter at `$057044..$0570D8` uses eight channels (`d7=7`)
+and treats `$FFFE` as a stop marker and `$FFFF` as a loop marker. The separate
+RTS at `$05707C` has no symbolic source caller or table reference; this is
+not proof that raw-address or external paths cannot reach it. The nine audit
+records now describe their individual instructions rather than claiming the
+entire interpreter operation at each label.

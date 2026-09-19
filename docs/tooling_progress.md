@@ -684,8 +684,8 @@ those were not 1,212 proven naming errors, since many are uniform ROM-ordered
 sprite or mapping records. All 1,212 uses resolved to a source module. The CLI
 can list the largest groups or every member of a filtered group without a ROM
 build or emulator. The module join now scans all definitions, including names
-without a `; was:` marker; the unit test covers
-both marker-bearing and marker-free names plus repeated text within one record.
+without a `; was:` marker; the unit test covers both marker-bearing and
+marker-free names plus repeated text within one record.
 
 The nine Sirene position/distortion records at `$05783C..$05799A` exposed a
 misleading shared premise: the first position pair is the real
@@ -695,5 +695,14 @@ pair is then advanced and bounded before the routine writes mirrored plane-B
 horizontal and vertical scroll offsets. Branch names now describe the next
 operation at each address rather than a preceding clamp. The old nine-way
 sentence is the 53rd known generic basis and has zero remaining matches.
-The wider duplicate queue now contains 253 groups across 1,203 uses, with
-zero unmapped uses; it is not yet a closed semantic audit.
+After this pass the wider duplicate queue contained 253 groups across 1,203
+uses, with zero unmapped uses; it was not a closed semantic audit.
+
+Nine Medusa pose-script records at `$057044..$0570D8` now cite their own
+event-prefix, `$FFFE` stop, `$FFFF` loop, frame setup, eight-channel
+interpolation, and pose-buffer operations. Four labels were narrowed to the
+specific marker check, loop check, part-traversal preparation, or delta
+calculation they perform. The standalone RTS at `$05707C` remains a no-op
+with no symbolic source caller, not a claim of runtime unreachability. Its
+old nine-way sentence is the 54th rejected generic basis. The wider queue
+is now 252 groups across 1,194 uses, still with zero unmapped uses.

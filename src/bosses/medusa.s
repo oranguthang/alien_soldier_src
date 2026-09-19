@@ -568,68 +568,68 @@ Boss_UpdateMedusaPoseScript:                            ; CODE XREF: Boss_Render
                 tst.w   $C(a5)
                 bpl.s   Boss_AdvanceMedusaPoseInterpolation
 Boss_ReadMedusaPoseScriptCommand:                       ; CODE XREF: Boss_UpdateMedusaPoseScript+24   j  ; was: loc_5704E
-                                        ; Boss_LoadMedusaPoseFrame+E   j
+                                        ; Boss_CheckMedusaPoseLoopMarker+E   j
                 move.w  $58(a5),d0
-                bmi.w   Boss_PrepareMedusaPoseRender
+                bmi.w   Boss_PrepareMedusaPosePartTraversal
                 cmpi.b  #$80,(a1,d0.w)
-                bne.s   Boss_ProcessMedusaPoseScriptEntry
+                bne.s   Boss_CheckMedusaPoseStopMarker
                 move.b  1(a1,d0.w),$23E(a5)
                 addq.w  #2,$58(a5)
                 bra.s   Boss_ReadMedusaPoseScriptCommand
 ; ---------------------------------------------------------------------------
-Boss_ProcessMedusaPoseScriptEntry:                      ; CODE XREF: Boss_UpdateMedusaPoseScript+18   j  ; was: loc_5706A
+Boss_CheckMedusaPoseStopMarker:                         ; CODE XREF: Boss_UpdateMedusaPoseScript+18   j  ; was: loc_5706A
                 move.w  (a1,d0.w),d3
                 cmpi.w  #$FFFE,d3
-                bne.s   Boss_LoadMedusaPoseFrame
+                bne.s   Boss_CheckMedusaPoseLoopMarker
                 move.w  d3,$58(a5)
-                bra.w   Boss_PrepareMedusaPoseRender
+                bra.w   Boss_PrepareMedusaPosePartTraversal
 ; End of function Boss_UpdateMedusaPoseScript
 Boss_MedusaPoseScriptNoOp:                              ; was: nullsub_129
                 rts
 ; End of function Boss_MedusaPoseScriptNoOp
 
-; Load a pose frame and advance its interpolation countdown
-Boss_LoadMedusaPoseFrame:                               ; CODE XREF: Boss_UpdateMedusaPoseScript+2E   j  ; was: sub_5707E
+; Restart at $FFFF or set up the next pose frame and interpolation countdown
+Boss_CheckMedusaPoseLoopMarker:                         ; CODE XREF: Boss_UpdateMedusaPoseScript+2E   j  ; was: sub_5707E
                 cmpi.w  #$FFFF,d3
                 bne.s   Boss_StartMedusaPoseFrame
                 clr.w   $58(a5)
                 clr.w   $29C(a5)
                 bra.s   Boss_ReadMedusaPoseScriptCommand
 ; ---------------------------------------------------------------------------
-Boss_StartMedusaPoseFrame:                              ; CODE XREF: Boss_LoadMedusaPoseFrame+4   j  ; was: loc_5708E
+Boss_StartMedusaPoseFrame:                              ; CODE XREF: Boss_CheckMedusaPoseLoopMarker+4   j  ; was: loc_5708E
                 move.w  d3,(PoseCommandWord).w
                 andi.w  #$FF,d3
                 move.w  2(a1,d0.w),d0
                 ext.l   d0
                 add.l   $35C(a5),d0
                 movea.l d0,a0
-                bsr.w   Boss_CalculateMedusaPoseInterpolation
+                bsr.w   Boss_CalculateMedusaPoseDeltas
                 moveq   #0,d0
                 move.b  (PoseDurationByte).w,d0
                 move.w  d0,$C(a5)
                 addq.w  #4,$58(a5)
                 addq.w  #1,$29C(a5)
                 tst.w   $C(a5)
-                bmi.s   Boss_PrepareMedusaPoseRender
+                bmi.s   Boss_PrepareMedusaPosePartTraversal
 Boss_AdvanceMedusaPoseInterpolation:                    ; CODE XREF: Boss_UpdateMedusaPoseScript+8   j  ; was: loc_570BE
                 subq.w  #1,$C(a5)
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 moveq   #7,d7
                 jsr     (Anim_AdvancePoseChannelInterpolation).l
-Boss_PrepareMedusaPoseRender:                           ; CODE XREF: Boss_UpdateMedusaPoseScript+E   j  ; was: loc_570CE
+Boss_PrepareMedusaPosePartTraversal:                    ; CODE XREF: Boss_UpdateMedusaPoseScript+E   j  ; was: loc_570CE
                                         ; Boss_UpdateMedusaPoseScript+34   j
                 move.w  #$1FE,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a0
                 rts
-; End of function Boss_LoadMedusaPoseFrame
+; End of function Boss_CheckMedusaPoseLoopMarker
 ; Calculate interpolation deltas for the next Medusa pose frame
-Boss_CalculateMedusaPoseInterpolation:                  ; CODE XREF: Boss_LoadMedusaPoseFrame+24   p  ; was: sub_570D8
+Boss_CalculateMedusaPoseDeltas:                         ; CODE XREF: Boss_CheckMedusaPoseLoopMarker+24   p  ; was: sub_570D8
                 movea.l $2FC(a5),a1
                 moveq   #7,d7
                 movea.w #(SharedPatternRow0Long0-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 jmp     Anim_CalculatePoseChannelDeltas
-; End of function Boss_CalculateMedusaPoseInterpolation
+; End of function Boss_CalculateMedusaPoseDeltas
 ; Initialize Medusa's eight fixed-point pose channels from bytes at a0
 Boss_MedusaInitializePoseChannels:                      ; CODE XREF: Boss_EnterMedusaState4+2E   p  ; was: sub_570EC
                 moveq   #7,d7
