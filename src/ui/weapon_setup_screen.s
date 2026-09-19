@@ -5,11 +5,11 @@ WeaponSetup_HandleShootingModeInput:                    ; was: sub_1F1B2
                 bne.w   WeaponSetup_RenderLoadout
                 bsr.w   WeaponSetup_RefillAmmo
                 move.w  (ShootingMode).w,d1
-                beq.s   WeaponSetup_CheckFixedShootingModeInput
+                beq.s   WeaponSetup_CheckMovingModeInput
                 btst    #2,(ControllerPressedState).w
-                beq.s   WeaponSetup_CheckFixedShootingModeInput
+                beq.s   WeaponSetup_CheckMovingModeInput
                 moveq   #0,d1
-WeaponSetup_CheckFixedShootingModeInput:                ; CODE XREF: WeaponSetup_HandleShootingModeInput+14   j  ; was: loc_1F1D2
+WeaponSetup_CheckMovingModeInput:                       ; CODE XREF: WeaponSetup_HandleShootingModeInput+14   j  ; was: loc_1F1D2
                                         ; WeaponSetup_HandleShootingModeInput+1C   j
                 tst.w   d1
                 bne.s   WeaponSetup_CommitShootingModeInput
@@ -414,18 +414,18 @@ WeaponSetup_RenderControlTypePage:                      ; CODE XREF: WeaponSetup
                                         ; WeaponSetup_HandleControlTypeInput+84   j
                 move.w  #$E100,d0
                 cmpi.w  #2,(SetupTransitionIndex).w
-                beq.s   WeaponSetup_RenderStatusWindowLabelWithColor
+                beq.s   WeaponSetup_RenderStatusAndControlTypeWithColor
 ; End of function WeaponSetup_RenderControlTypePage
 ; Renders the STATUS WINDOW label and selected controller type
-WeaponSetup_RenderStatusWindowLabel:                    ; CODE XREF: WeaponSetup_InitializeTextAndTiles+8   p  ; was: sub_1F696
+WeaponSetup_RenderStatusAndControlType:                 ; CODE XREF: WeaponSetup_InitializeTextAndTiles+8   p  ; was: sub_1F696
                 move.w  #$8100,d0
-WeaponSetup_RenderStatusWindowLabelWithColor:           ; CODE XREF: WeaponSetup_RenderControlTypePage+A   j  ; was: loc_1F69A
+WeaponSetup_RenderStatusAndControlTypeWithColor:        ; CODE XREF: WeaponSetup_RenderControlTypePage+A   j  ; was: loc_1F69A
                 lea     WeaponSetup_StatusWindowText(pc),a0
                 nop
                 move.w  #$680E,d4
                 jsr     (Text_QueueDoubleHeightStringWrapped).l
                 bra.s   WeaponSetup_RenderSelectedControlType
-; End of function WeaponSetup_RenderStatusWindowLabel
+; End of function WeaponSetup_RenderStatusAndControlType
 ; Maps stored controller-layout flags to one of the 26 displayed types
 WeaponSetup_FindControlTypeIndex:                       ; CODE XREF: WeaponSetup_InitializeTextAndTiles+4   p  ; was: sub_1F6AC
                 lea     WeaponSetup_ControlTypeValues(pc),a0
@@ -444,7 +444,7 @@ WeaponSetup_StoreControlTypeIndex:                      ; CODE XREF: WeaponSetup
                 rts
 ; End of function WeaponSetup_FindControlTypeIndex
 ; Renders the currently selected TYPE 1--26 controller layout
-WeaponSetup_RenderSelectedControlType:                  ; CODE XREF: WeaponSetup_RenderStatusWindowLabel+14   j  ; was: sub_1F6CE
+WeaponSetup_RenderSelectedControlType:                  ; CODE XREF: WeaponSetup_RenderStatusAndControlType+14   j  ; was: sub_1F6CE
                 move.w  (WeaponSetupControlIndex).w,d1
                 lea     WeaponSetup_ControlTypeValues(pc),a0
                 move.b  (a0,d1.w),(ControlLayoutFlags).w

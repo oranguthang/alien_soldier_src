@@ -65,7 +65,7 @@
     {
       "id": "semantic_naming",
       "kind": "source",
-      "summary": "Every live address-derived identifier was replaced and 15,833 exact-address name records now exist. The curated 43-sentence generic evidence detector has zero matches after the palette-command audit; a wider duplicate-basis review and seven boss-identity visual hypotheses remain open.",
+      "summary": "Every live address-derived identifier was replaced and 15,833 exact-address name records now exist. The curated 48-sentence generic evidence detector has zero matches after message-dispatch and weapon-setup follow-up audits; a wider duplicate-basis review and seven boss-identity visual hypotheses remain open.",
       "evidence": [
         "provenance_and_unknowns",
         "files:config/name_audit.json"
@@ -455,9 +455,9 @@
     {
       "id": "generic_name_evidence_bases",
       "status": "partial",
-      "reason": "The curated 43-sentence detector now has zero matches after reviewing the final 17 standalone and banked palette-command records. This only exhausts known generic sentences: a wider duplicate-basis review is still required before the tag, and zero detector matches do not prove all 15,833 name records semantically correct.",
+      "reason": "The curated 48-sentence detector has zero matches after reviewing palette-command, weapon-setup, and message-dispatch records. This only exhausts known generic sentences: a wider duplicate-basis review is still required before the tag, and zero detector matches do not prove all 15,833 name records semantically correct.",
       "registry": "NAME-002",
-      "control": "make release-audit recounts the curated set of 43 known generic basis sentences and refuses tag-ready status until the count is zero; a wider duplicate-basis review must also precede the final tag."
+      "control": "make release-audit recounts the curated set of 48 known generic basis sentences and refuses tag-ready status until the count is zero; a wider duplicate-basis review must also precede the final tag."
     },
     {
       "id": "provisional_boss_visual_identities",

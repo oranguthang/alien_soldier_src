@@ -369,3 +369,23 @@ listing found two false addresses inherited from numeric `nullsub` IDs:
 visual-asset RTS is `$012110`, not `$01210E`. `make verify-symbols` now checks
 every audit name against the uncollapsed listing, including aliases and
 24-bit-normalized RAM equates, so a wrong address cannot pass the release gate.
+
+A wider duplicate-basis scan found twelve weapon-setup records carrying both
+an inaccurate table summary (it claimed a fade state) and a vacuous local-role
+sentence. The seven actual handlers are loadout, control input, exit input,
+exit tilemap fill, control-test text, confirmation, and idle. All twelve
+records now cite their local dispatch, loop, text destination, or branch
+effect. The status-label entry points were renamed to include the selected
+controller type they also render. Both retired sentences are guarded by the
+release audit, raising the known-template set from 43 to 45 while keeping its
+match count at zero; the remaining duplicate-basis review is still open.
+
+The next duplicate-basis pass checked ten shared message-dispatch records and
+nine shooting-mode input/rendering records against their local code. It
+replaced three more repeated summaries with address-specific conditions,
+state writes, table dimensions, and graphics-finalization effects. The input
+label at `$01F1D2` had its direction reversed: pressed bit three chooses the
+nonzero MOVING mode when D1 is zero, so it is now
+`WeaponSetup_CheckMovingModeInput`. The curated detector grows from 45 to 48
+sentences and still has zero matches. This static review does not establish
+the seven visual boss identities or close the remaining duplicate-basis scan.

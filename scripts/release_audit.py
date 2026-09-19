@@ -58,6 +58,11 @@ GENERIC_NAME_BASES = (
     "The owning asset-set record points here, and Data_ProcessPointer consumes the tagged source/VRAM records through the $FFFF terminator.",
     "The setup state table reaches this path after loadout and controller selection; it renders EXIT, handles confirmation/return input, or advances the closing sprite fade.",
     "The routine compares the live setup-screen X position with its target and changes it by one signed unit until equal.",
+    "WeaponSetup_StateHandlerOffsets dispatches the ROM-ordered loadout, controller-layout, exit, fade, text, confirmation, and idle states.",
+    "The local input, state, text, rendering, or initialization operations establish the narrower role stated by the symbol.",
+    "MessageSequenceState directly indexes the ROM-ordered handler table; this entry dispatches, advances, ends, or finalizes that shared stage/result/boss/cutscene message state machine.",
+    "The local state test, table lookup, state write, or graphics-finalization call establishes the narrower role stated by the symbol name.",
+    "The local path selects, highlights, or navigates the encoded SHOOTING MODE, MOVING, and FIX strings and updates ShootingMode.",
 )
 
 

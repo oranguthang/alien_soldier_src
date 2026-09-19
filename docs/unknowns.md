@@ -11225,3 +11225,20 @@ were corrected from the freshly assembled listing. The symbol gate now checks
 every one of the 15,833 records against its assembled address, not just the
 35 layout/runtime landmarks. This verifies address provenance, not semantic
 identity; the wider duplicate-basis and visual-identity reviews remain open.
+
+Twelve weapon-setup records found by the wider duplicate-basis scan no longer
+rely on a generic local-role sentence or on a table summary that incorrectly
+included a fade state. The exact seven targets and each local operation now
+support the names. Two status-label entry points were also renamed because
+they continue into selected controller-type rendering. `NAME-002` remains
+open for the rest of the duplicate-basis corpus; the curated detector now
+covers 45 sentences with zero matches, and `NAME-003` remains seven visual
+hypotheses.
+
+Ten message-sequence and nine shooting-mode records from the wider repeated-
+basis scan now cite their own flag tests, dispatch offset, state write, text
+queue, or graphics finalization. The former fixed-mode input label at
+`$01F1D2` actually checks the bit-three transition to the nonzero MOVING
+mode and was renamed. `NAME-002` remains open outside the curated 48-template
+set, which currently has zero matches; `NAME-003` still has seven visual
+hypotheses.

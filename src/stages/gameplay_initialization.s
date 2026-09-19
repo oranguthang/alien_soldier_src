@@ -176,7 +176,7 @@ WeaponSetup_InitializeColorTables_Loop:                 ; CODE XREF: WeaponSetup
 WeaponSetup_InitializeTextAndTiles:                     ; CODE XREF: WeaponSetup_InitializeScreen+E8   p  ; was: sub_1F02E
                 bsr.w   WeaponSetup_RenderHeading
                 bsr.w   WeaponSetup_FindControlTypeIndex
-                bsr.w   WeaponSetup_RenderStatusWindowLabel
+                bsr.w   WeaponSetup_RenderStatusAndControlType
                 bsr.w   WeaponSetup_RenderExitText
                 lea     WeaponSetup_ForceTextLayout(pc),a2
                 nop

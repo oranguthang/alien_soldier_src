@@ -190,7 +190,7 @@ WeaponSetup_MovingModeText: dc.b    $17, $19, $20, $13, $18, $11, $FF  ; was: by
                                         ; DATA XREF: WeaponSetup_RenderShootingModeOptions:WeaponSetup_RenderMovingModeOption   o
 WeaponSetup_FixedModeText:      dc.b    $10, $13, $22, $FF  ; DATA XREF: WeaponSetup_RenderShootingModeOptions:WeaponSetup_RenderFixedModeOption   o  ; was: byte_1FA70
 WeaponSetup_StatusWindowText:   dc.b    $1D, $1E, $B, $1E, $1F, $1D, 0, $21, $13, $18, $E, $19, $21, $FF  ; was: byte_1FA74
-                                        ; DATA XREF: WeaponSetup_RenderStatusWindowLabel:WeaponSetup_RenderStatusWindowLabelWithColor   o
+                                        ; DATA XREF: WeaponSetup_RenderStatusAndControlType:WeaponSetup_RenderStatusAndControlTypeWithColor   o
 WeaponSetup_ControlType01Text:  dc.b    $1E, $23, $1A, $F, $2E, 2, 0, $FF  ; was: byte_1FA82
                                         ; DATA XREF: ROM:WeaponSetup_ControlTypeTextPointers   o
 WeaponSetup_ControlType02Text:  dc.b    $1E, $23, $1A, $F, $2E, 3, 0, $FF  ; was: byte_1FA8A
