@@ -10986,3 +10986,21 @@ but the visual identities were inferred from unpinned replay or adjacency.
 Each needs a repeatable capture with the pinned emulator or a neutral,
 behavior-only name before the Source Reconstruction 1.0 tag. The release
 audit recounts this queue and blocks `tag-ready` while it is nonzero.
+
+A broader search found that the preceding `NAME-002` zero only covered one
+specific template sentence. Sixty further Gusthead records repeat four other
+generic sentences for loops, RTS joins, dispatch paths, or tables. The audit
+now counts all five known template sentences; the 60 records are again explicit
+`NAME-002` debt. The earlier instruction-specific Gusthead records and the
+`NAME-003` visual-identity queue are unchanged. No generic sentence is accepted
+as proof just because its record is marked `static`.
+
+All 60 Gusthead loop, return, dispatch, and table bases were then checked
+against their actual branch conditions, fields, and consumers. Two labels
+called `...RotationCountDown` in fact subtract `$2000` from joint rotation
+speed; they now name the speed reduction. The five initial template sentences
+have no remaining matches. A duplicate-basis scan across the whole registry
+exposed 301 additional records matching fifteen other clearly generic
+sentences, including vague state-convergence and control-flow claims in
+Medusa, Sirene, Valkirie, Sharpssteel, and UI code. `NAME-002` now counts these
+301 records; this curated list is not a proof that all other bases are strong.

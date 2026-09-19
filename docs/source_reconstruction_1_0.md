@@ -31,9 +31,10 @@ byte.
   `config/source_policy.json`; a new owner token fails lint.
 - **Name evidence is traceable, with a declared review debt.**
   `config/name_audit.json` holds 15,833 exact-address records with imported
-  and current names. The Gusthead template-basis queue is closed (`NAME-002`);
-  seven boss-identity records remain visual hypotheses (`NAME-003`), not
-  semantically confirmed names.
+  and current names. The 60 Gusthead loop, return, dispatch, and table bases
+  have been reviewed, but 301 other records still match known generic evidence
+  sentences (`NAME-002`). Seven boss-identity records remain visual hypotheses
+  (`NAME-003`); neither pending group is semantically confirmed.
 - **Provenance is retained.** 16,053 `; was:` markers map current definitions to
   the imported labels they replaced.
 - **Cross-reference comments stay navigable.** Imported `CODE XREF`, `DATA XREF`
@@ -63,6 +64,7 @@ that limits it. They are stated here rather than left implicit.
 | `PROFILE-001` | The European ROM. Only the Japanese cartridge is accepted. | unsupported |
 | `SND-001` | The Z80 sound driver program, which stays a verbatim payload and is never disassembled. | unsupported |
 | `NAME-001` | 513 `_End` aliases that follow their own `binclude` payload hold no separate record. | partial |
+| `NAME-002` | 301 records across other subsystems still match known generic evidence sentences; a wider duplicate-basis review is also pending. | partial |
 | `NAME-003` | Seven boss-identity names remain provisional until pinned visual evidence or behavior-only renaming. | partial |
 | `LAYOUT-001` | Module sizes: 211 of 383 modules sit inside the preferred 200–700 line band, 146 are shorter and 26 are longer. | partial |
 | `TOOL-001` | Four exploratory commands remain outside release evidence; their source operations address modules. The obsolete pointer debugger is retired, and `verify-relocation` checks pointers across the current layout. | unsupported |

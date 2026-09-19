@@ -65,7 +65,7 @@
     {
       "id": "semantic_naming",
       "kind": "source",
-      "summary": "Every live address-derived identifier was replaced and 15,833 exact-address name records now exist. Template evidence is exhausted, but seven provisional boss-identity records still require pinned visual confirmation or neutral names.",
+      "summary": "Every live address-derived identifier was replaced and 15,833 exact-address name records now exist. The 60 Gusthead loop, return, and dispatch bases were reviewed, but 301 records elsewhere match known generic evidence sentences; seven boss-identity records remain visual hypotheses.",
       "evidence": [
         "provenance_and_unknowns",
         "files:config/name_audit.json"
@@ -193,7 +193,7 @@
     },
     "provenance_and_unknowns": {
       "status": "partial",
-      "statement": "No live definition is address-derived and every replaced name keeps a traceable marker. Exact-address records cover current names with no template bases; seven boss-identity records remain hypotheses pending pinned visual confirmation or neutral names.",
+      "statement": "No live definition is address-derived and every replaced name keeps a traceable marker. The known generic-basis queue contains 301 non-Gusthead records awaiting instruction-specific review; seven boss-identity records remain hypotheses.",
       "evidence": {
         "targets": [
           "lint",
@@ -209,6 +209,7 @@
       },
       "excluded": [
         "NAME-001",
+        "NAME-002",
         "NAME-003"
       ]
     },
@@ -450,6 +451,13 @@
       "reason": "Five hundred and thirteen _End labels immediately follow their own binclude payload and carry no separate semantic claim, so they hold no exact-address record of their own.",
       "registry": "NAME-001",
       "control": "make semantic-audit classifies them, and reports zero other pending end labels and zero modules remaining, so nothing else hides behind the classification."
+    },
+    {
+      "id": "generic_name_evidence_bases",
+      "status": "partial",
+      "reason": "After reviewing the 60 Gusthead loop, return, dispatch, and table records, a wider registry scan exposed 301 further records with generic evidence sentences across other subsystems. Their bases do not identify the record-specific field, branch, caller, or target.",
+      "registry": "NAME-002",
+      "control": "make release-audit recounts the curated set of 20 known generic basis sentences and refuses tag-ready status until the count is zero; a wider duplicate-basis review must also precede the final tag."
     },
     {
       "id": "provisional_boss_visual_identities",
@@ -711,7 +719,7 @@
     "declared_subsystems": 192,
     "definitions": 16928,
     "dma_transferred_payloads": 289,
-    "generic_evidence_bases": 0,
+    "generic_evidence_bases": 301,
     "hypothesis_name_records": 7,
     "modules": 383,
     "name_audit_records": 15833,

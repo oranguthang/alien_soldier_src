@@ -14,10 +14,39 @@ import lint_source
 
 
 HEX_DIGEST = re.compile(r"^[0-9a-f]+$")
+GENERIC_NAME_BASES = (
+    "The name follows the instruction-level condition or side effect and its in-module callers.",
+    "All named predecessor paths converge at this RTS.",
+    "The enclosing DBF or countdown branch returns to this label.",
+    "An indexed load or relative dispatch reads this table directly.",
+    "The state or subtype becomes a table offset here before an indirect jump.",
+    "State-table membership, explicit writes to controller field 4, and direct branch flow establish this Medusa state-machine control point without assigning an unverified attack name.",
+    "State-table membership, explicit writes to controller field 4, and direct branch flow establish this Sirene state-machine control point without assigning an unverified attack name.",
+    "Direct branches inside the named Valkirie controller state establish this convergence path observable role.",
+    "Incoming control flow and the fields read or written at this address establish the narrowly stated helper role.",
+    "All documented wait, timer, or convergence branches at this state converge on this shared return.",
+    "The label follows the local options-screen control flow and the state field read or written at that branch.",
+    "The adjacent comparison and direct field update establish this narrowly named branch role.",
+    "The documented wait or limit branches converge on this shared return address.",
+    "Branches and loop bounds inside the enclosing palette, tile-index, DMA, or asset-set routine establish the control-flow role stated by this name.",
+    "The enclosing state-machine branches converge at this return; the name is scoped to that owning routine.",
+    "Direct branch conditions and the adjacent controller-field writes establish this narrowly named path.",
+    "Direct branches and field accesses in the auxiliary-group update establish this attached, launch, rotation, timer, or velocity-convergence path.",
+    "Direct control flow enters here while installing the matching even value in controller field 4 and initializing that state fields.",
+    "This state convergence path loads its pose script and branches to the shared Valkirie animation/metasprite renderer.",
+    "The 19-entry controller table selects this path for the matching field-4 state code; the body processes that state animation events and transitions.",
+)
 
 
 def load(root: Path, relative: str) -> dict:
     return json.loads((root / relative).read_text(encoding="utf-8"))
+
+
+def count_generic_name_bases(records: list[dict]) -> int:
+    return sum(
+        any(basis in GENERIC_NAME_BASES for basis in record.get("basis", []))
+        for record in records
+    )
 
 
 STATUSES = {"satisfied", "partial", "planned", "unsupported", "not_applicable"}
@@ -237,10 +266,6 @@ def audit_counters(
     inventory = lint_source.scan(policy, root)
     ram_map = (root / "src/ram_addrs.inc").read_text(encoding="utf-8")
     name_audit = load(root, "config/name_audit.json")
-    generic_basis = (
-        "The name follows the instruction-level condition or side effect "
-        "and its in-module callers."
-    )
     actual = {
         "modules": len(layout["modules"]),
         "assets": stats.get("assets", -1),
@@ -249,10 +274,7 @@ def audit_counters(
         "definitions": len(inventory.definitions),
         "provenance_mappings": len(inventory.provenance),
         "name_audit_records": len(name_audit["records"]),
-        "generic_evidence_bases": sum(
-            generic_basis in record.get("basis", [])
-            for record in name_audit["records"]
-        ),
+        "generic_evidence_bases": count_generic_name_bases(name_audit["records"]),
         "hypothesis_name_records": sum(
             record.get("evidence") == "hypothesis"
             for record in name_audit["records"]

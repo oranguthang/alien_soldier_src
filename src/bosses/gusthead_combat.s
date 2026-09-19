@@ -70,9 +70,9 @@ Boss_GustheadDecelerateFragmentPatternRotationState:    ; DATA XREF: ROM:0003F27
                 bsr.w   Boss_GustheadUpdateVerticalBounce
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
-                bne.s   Boss_GustheadFragmentPatternRotationCountDown
+                bne.s   Boss_GustheadReduceFragmentPatternRotationSpeed
                 eori.w  #$8000,2(a5)
-Boss_GustheadFragmentPatternRotationCountDown:          ; CODE XREF: Boss_GustheadDecelerateFragmentPatternRotationState+1C   j  ; was: loc_3FB52
+Boss_GustheadReduceFragmentPatternRotationSpeed:        ; CODE XREF: Boss_GustheadDecelerateFragmentPatternRotationState+1C   j  ; was: loc_3FB52
                 subi.l  #$2000,(SharedPatternRow0Long3).w
                 cmpi.l  #$80000,(SharedPatternRow0Long3).w
                 bne.s   Boss_GustheadFragmentPatternRotationReturn
@@ -208,9 +208,9 @@ Boss_GustheadDecelerateFinalPhaseRotationState:         ; DATA XREF: ROM:0003F29
                 bsr.w   Boss_GustheadUpdateVerticalBounce
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
-                bne.s   Boss_GustheadFinalPhaseRotationCountDown
+                bne.s   Boss_GustheadReduceFinalPhaseRotationSpeed
                 eori.w  #$8000,2(a5)
-Boss_GustheadFinalPhaseRotationCountDown:               ; CODE XREF: Boss_GustheadDecelerateFinalPhaseRotationState+1C   j  ; was: loc_3FCFA
+Boss_GustheadReduceFinalPhaseRotationSpeed:             ; CODE XREF: Boss_GustheadDecelerateFinalPhaseRotationState+1C   j  ; was: loc_3FCFA
                 subi.l  #$2000,(SharedPatternRow0Long3).w
                 cmpi.l  #$80000,(SharedPatternRow0Long3).w
                 bne.s   Boss_GustheadFinalPhaseRotationReturn

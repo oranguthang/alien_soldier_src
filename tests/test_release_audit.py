@@ -17,6 +17,14 @@ import release_audit  # noqa: E402
 
 
 class ReleaseAuditTests(unittest.TestCase):
+    def test_all_known_template_name_bases_are_counted(self) -> None:
+        for basis in release_audit.GENERIC_NAME_BASES:
+            with self.subTest(basis=basis):
+                self.assertEqual(
+                    1,
+                    release_audit.count_generic_name_bases([{"basis": [basis]}]),
+                )
+
     def test_repository_contract_passes_static_audit(self) -> None:
         contract = json.loads(
             (ROOT / "config/release_0_5.json").read_text(encoding="utf-8")
@@ -57,6 +65,7 @@ class ReleaseAuditTests(unittest.TestCase):
         )
         errors = release_audit.audit_counters(ROOT, manifest, policy, layout, {})
         self.assertTrue(any("provenance exact_address_records" in error for error in errors))
+        self.assertTrue(any("generic name-evidence bases" in error for error in errors))
         self.assertTrue(any("hypothesis-level name records" in error for error in errors))
 
     def test_template_name_evidence_blocks_tag_ready_status(self) -> None:
@@ -82,6 +91,14 @@ class ReleaseAuditTests(unittest.TestCase):
         with mock.patch.object(release_audit, "load", side_effect=load_with_template):
             errors = release_audit.audit_counters(ROOT, manifest, policy, layout, {})
         self.assertTrue(any("generic name-evidence bases" in error for error in errors))
+        self.assertTrue(
+            any(
+                "counter generic_evidence_bases says " in error
+                and f"source has {manifest['counters']['generic_evidence_bases'] + 1}"
+                in error
+                for error in errors
+            )
+        )
 
     def test_weakened_scope_and_threshold_are_rejected(self) -> None:
         contract = json.loads(

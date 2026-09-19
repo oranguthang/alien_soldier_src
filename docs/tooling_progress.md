@@ -133,3 +133,19 @@ angle offset to arena side; it now names the `DifficultyMode` condition.
 `NAME-002` reaches zero. Seven provisional visual boss-identity records are
 tracked separately as `NAME-003`, with a manifest counter and tag-ready gate;
 this pass does not claim runtime confirmation for them.
+
+A follow-up audit found that `NAME-002` had been defined too narrowly: its
+counter matched one retired generic sentence but missed 60 other Gusthead
+records using four repeated loop, RTS, dispatch, or table sentences. The
+release audit now recognizes all five sentences and restores the honest debt
+count to 60. This corrects the preceding zero claim; the 29 records reviewed
+there remain instruction-specific, and the seven visual hypotheses are tracked
+separately.
+
+All 60 Gusthead loop, RTS, dispatch, and table records now cite their actual
+field, branch, or table consumer. Two rotation paths were renamed because they
+decelerate joint speed, not a countdown. A wider duplicate-basis scan then
+found 301 records elsewhere with fifteen more vacuous evidence sentences.
+`NAME-002` now tracks twenty known boilerplate sentences, not just the five
+Gusthead forms; 301 records await review. This is a broader audit boundary,
+not a regression in the Gusthead work.
