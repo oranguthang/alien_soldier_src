@@ -13,8 +13,8 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
 - The ROM and all 579 extracted segments have pinned sizes, ranges, and hashes.
 - Vendored assembler/converter files and the emulator commit are pinned.
 - Ordinary cleanup preserves extracted private assets.
-- `src/main.s` is an address-ordered index over 379 modules with a checked
-  1,000-line ceiling; the current mean is 313.4 lines, the largest module is
+- `src/main.s` is an address-ordered index over 380 modules with a checked
+  1,000-line ceiling; the current mean is 312.9 lines, the largest module is
   986 lines, and no waiver is active.
   Layout, release, and 1.0 contracts share that exact ceiling, and the release
   audit rejects a weaker value or a generic declared module filename.

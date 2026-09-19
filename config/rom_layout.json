@@ -495,9 +495,15 @@
       "end": "0x0095C9"
     },
     {
-      "file": "src/ui/options_screen.s",
+      "file": "src/ui/options_menu_controllers.s",
       "subsystem": "ui",
       "start": "0x0095CA",
+      "end": "0x009F8D"
+    },
+    {
+      "file": "src/ui/options_shared_helpers_and_assets.s",
+      "subsystem": "ui",
+      "start": "0x009F8E",
       "end": "0x00A393"
     },
     {

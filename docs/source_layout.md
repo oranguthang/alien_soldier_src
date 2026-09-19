@@ -11,11 +11,7 @@ ROM. `make verify` runs this check after the byte-identity build.
 
 ## Module size policy
 
-The preservation-stage 0.5 layout still enforces a temporary 6,000-line limit
-for byte-emitting `.s` modules. This only guards the first partition of a
-roughly 120,000-line source; it is not an acceptable 1.0 module policy.
-
-The Source Reconstruction 1.0 destination is normally 200-700 lines per
+The Source Reconstruction 1.0 layout is normally 200-700 lines per
 cohesive module, with a default hard ceiling of 1,000 lines. The sole possible
 exception is one concrete boss whose state machine and private data cannot be
 split without harming readability. Exceptions are reviewed individually and
@@ -27,6 +23,14 @@ development release contract, and the Source Reconstruction 1.0 contract.
 `make lint` checks every declared module against it, while `make release-audit`
 rejects a release threshold that attempts to weaken the destination contract.
 The same audit rejects generic module filenames declared in the ROM layout.
+
+The former 889-line `ui/options_screen.s` had a real ownership boundary at
+ROM `$009F8E`: both options-menu controllers and their selection table end
+before the shared BCD/DMA, cursor, and UI asset helpers begin. The ordered
+`options_menu_controllers.s` and `options_shared_helpers_and_assets.s` modules
+preserve that exact byte sequence at 560 and 329 lines respectively. In
+contrast, the long player sprite-mapping family remains together because a
+line-count-only split would obscure its shared consumer.
 
 Definition-only `.inc` files are outside this limit. They will receive their
 own structure and policy as the RAM and hardware maps mature.
