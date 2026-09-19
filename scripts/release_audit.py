@@ -126,6 +126,8 @@ def audit_manifest(root: Path, manifest: dict, makefile: str, runtime: dict) -> 
 
     if manifest.get("status") == "tag-ready":
         errors.extend(audit_tag_ready(root, manifest))
+    elif manifest.get("status") == "tagged":
+        errors.extend(audit_tagged(root, manifest))
     return errors
 
 
@@ -147,6 +149,71 @@ def audit_tag_ready(root: Path, manifest: dict) -> list[str]:
         errors.append("tag-ready status claimed with a dirty working tree")
     if tags:
         errors.append(f"tag-ready status claimed but {manifest['tag']} already exists")
+    return errors
+
+
+def audit_tagged(root: Path, manifest: dict) -> list[str]:
+    """Require an annotated tag on this release, not merely a tagged claim.
+
+    The one permitted successor to the tagged commit is the metadata commit
+    that records the new status in the manifest and release document. Any
+    later source change needs a new release candidate and gate run.
+    """
+    tag = manifest.get("tag", "")
+    ref = f"refs/tags/{tag}"
+
+    def git(*args: str) -> str:
+        return subprocess.run(
+            ["git", *args], cwd=root, capture_output=True, text=True,
+            check=True, errors="replace",
+        ).stdout.strip()
+
+    try:
+        kind = git("cat-file", "-t", ref)
+        target = git("rev-parse", f"{ref}^{{commit}}")
+        head = git("rev-parse", "HEAD")
+        tag_object = git("cat-file", "-p", ref)
+    except (OSError, subprocess.CalledProcessError):
+        return [f"tagged status claimed but {tag} cannot be resolved"]
+
+    errors: list[str] = []
+    try:
+        if git("status", "--porcelain", "--untracked-files=all"):
+            errors.append("tagged status claimed with a dirty working tree")
+    except (OSError, subprocess.CalledProcessError):
+        errors.append("tagged status claimed but working-tree state cannot be read")
+    if kind != "tag":
+        errors.append(f"tagged status claimed but {tag} is not annotated")
+    if not tag_object.partition("\n\n")[2].strip():
+        errors.append(f"tagged status claimed but {tag} has no release description")
+
+    if target != head:
+        try:
+            parent = git("rev-parse", "HEAD^")
+        except (OSError, subprocess.CalledProcessError):
+            parent = ""
+        if target != parent:
+            errors.append(f"tagged status claimed but {tag} does not identify this release")
+        else:
+            try:
+                changed = set(git("diff", "--name-only", target, head).splitlines())
+            except (OSError, subprocess.CalledProcessError):
+                changed = {"<unreadable>"}
+            metadata = {
+                "config/source_reconstruction_1_0.json",
+                "docs/source_reconstruction_1_0.md",
+            }
+            if not changed or changed - metadata:
+                errors.append("tagged status claimed after non-metadata changes")
+
+    try:
+        at_tag = json.loads(git("show", f"{target}:config/source_reconstruction_1_0.json"))
+    except (OSError, subprocess.CalledProcessError, json.JSONDecodeError):
+        errors.append(f"tagged status claimed but {tag} has no readable release manifest")
+    else:
+        expected = "tagged" if target == head else "tag-ready"
+        if at_tag.get("status") != expected:
+            errors.append(f"tagged status claimed but {tag} targets a {at_tag.get('status')} manifest")
     return errors
 
 

@@ -7,7 +7,7 @@
   },
   "release_kind": "preservation",
   "tag": "source-reconstruction-1.0",
-  "status": "tagged",
+  "status": "development",
   "predecessor": null,
   "predecessor_note": "First release of this project. The delta below is the whole reachable history, a6f370d to the release commit.",
   "reference": {
@@ -386,8 +386,8 @@
       }
     },
     "tag_integrity": {
-      "status": "satisfied",
-      "statement": "The annotated tag source-reconstruction-1.0 exists on the commit that make release-check passed in full, and it carries the release description.",
+      "status": "planned",
+      "statement": "The final source-reconstruction-1.0 tag will be created on the isolated 1.0 commit only after the full release gate passes there.",
       "evidence": {
         "targets": [
           "release-check"
@@ -398,7 +398,9 @@
         "scenarios": [],
         "artifacts": []
       },
-      "excluded": []
+      "excluded": [
+        "RELEASE-001"
+      ]
     },
     "commit_history": {
       "status": "partial",
@@ -497,6 +499,13 @@
       "id": "authoring_tools",
       "status": "not_applicable",
       "reason": "Editors and content tools belong to a later release. 1.0 ships extraction and verification only."
+    },
+    {
+      "id": "final_release_tag",
+      "status": "planned",
+      "reason": "The earlier local tag was removed while separating the preservation branch from later authoring work. The isolated 1.0 branch has not yet passed its final aggregate gate.",
+      "registry": "RELEASE-001",
+      "control": "The manifest remains in development; tag-ready requires a clean tree and an unused tag name before the final release-check and annotated tag."
     },
     {
       "id": "commit_body_convention",

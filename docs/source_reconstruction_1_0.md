@@ -62,6 +62,7 @@ that limits it. They are stated here rather than left implicit.
 | `DOC-001` | 207 imported cross-reference comments still quote address-derived names that no longer define anything. | partial |
 | `TOOL-001` | Four exploratory commands remain outside release evidence; their source operations address modules. The obsolete pointer debugger is retired, and `verify-relocation` checks pointers across the current layout. | unsupported |
 | `TOOL-002` | The monolithic asset splitter is retired; `make split` extracts canonical data under the asset manifest. | unsupported |
+| `RELEASE-001` | The isolated 1.0 branch has not yet passed its final gate or received its final tag. | planned |
 | `commit_body_convention` | Commits made before this manifest carry a title and attribution without a body. | partial |
 | `frame_image_comparison` | Pixel comparison. The runtime layer checks state, not frames. | planned |
 | `linux_aggregate_gate` | A gate run on Linux. The vendored Linux toolchain is present but untested. | partial |
@@ -104,6 +105,12 @@ The order is therefore fixed. The manifest is set to `tag-ready` and committed,
 annotated tag created on it. A gate that has not run against the exact commit
 being tagged does not count.
 
-`source-reconstruction-1.0` was created that way, and the manifest now says
-`tagged`. The tag's own message is the release description; this document and
-the manifest are what it points at.
+After tagging, one metadata-only commit may change the manifest to `tagged`
+and record the tag in this document. The audit then requires an annotated tag
+with a release description, pointing either to the checked commit or to that
+metadata commit's parent. A later source change cannot silently inherit the
+old tag as evidence for a new release.
+
+An earlier local `source-reconstruction-1.0` tag was removed while separating
+the preservation branch from later authoring work. This isolated branch remains
+in `development` until its final gate passes; no 1.0 tag currently exists.

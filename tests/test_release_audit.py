@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import json
 import copy
+import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -67,8 +69,8 @@ class ReleaseAuditTests(unittest.TestCase):
         """The release manifest with its status pinned to development.
 
         Every claim the manifest makes must hold whatever the working tree looks
-        like. Only the tag-ready status adds git-dependent checks, and only
-        test_tag_readiness_is_the_only_git_dependent_check exercises those.
+        like. Tag-ready and tagged status add git-dependent checks, exercised
+        separately below.
         """
         manifest = json.loads(
             (ROOT / "config/source_reconstruction_1_0.json").read_text(encoding="utf-8")
@@ -83,13 +85,11 @@ class ReleaseAuditTests(unittest.TestCase):
         )
         return release_audit.audit_manifest(ROOT, manifest, makefile, runtime)
 
-    def test_tag_readiness_is_the_only_git_dependent_check(self) -> None:
+    def test_tag_readiness_adds_only_git_state_checks(self) -> None:
         """A tag-ready manifest adds git-state errors and nothing else.
 
         The static claims must hold no matter what the working tree looks like,
-        so every test that checks them pins the status to development; this is
-        the one test that exercises the tag-ready path, and it only asserts that
-        the extra errors come from the tag-readiness check.
+        so every test that checks them pins the status to development.
         """
         development = self._manifest()
         tag_ready = copy.deepcopy(development)
@@ -100,6 +100,53 @@ class ReleaseAuditTests(unittest.TestCase):
         ]
         for error in extra:
             self.assertTrue(error.startswith("tag-ready status claimed"), error)
+
+    def test_tagged_release_is_exact_and_annotated(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+
+            def git(*args: str) -> str:
+                return subprocess.run(
+                    ["git", *args], cwd=root, capture_output=True, text=True,
+                    check=True,
+                ).stdout.strip()
+
+            tag = "source-reconstruction-1.0"
+            manifest_path = root / "config/source_reconstruction_1_0.json"
+            manifest_path.parent.mkdir()
+            git("init", "-q")
+            git("config", "user.name", "Release Audit Test")
+            git("config", "user.email", "release-audit@example.invalid")
+            manifest_path.write_text('{"status":"tag-ready"}\n', encoding="utf-8")
+            git("add", "--", "config/source_reconstruction_1_0.json")
+            git("commit", "-qm", "Release candidate")
+            candidate = git("rev-parse", "HEAD")
+            git("tag", "-a", tag, "-m", "Source Reconstruction 1.0")
+
+            manifest_path.write_text('{"status":"tagged"}\n', encoding="utf-8")
+            git("add", "--", "config/source_reconstruction_1_0.json")
+            git("commit", "-qm", "Record release tag")
+            self.assertEqual([], release_audit.audit_tagged(root, {"tag": tag}))
+
+            untracked = root / "untracked.txt"
+            untracked.write_text("not part of the release\n", encoding="utf-8")
+            errors = release_audit.audit_tagged(root, {"tag": tag})
+            self.assertTrue(any("dirty working tree" in error for error in errors))
+            untracked.unlink()
+
+            (root / "source.s").write_text("Source:\n", encoding="utf-8")
+            git("add", "--", "source.s")
+            git("commit", "-qm", "Change source after release")
+            errors = release_audit.audit_tagged(root, {"tag": tag})
+            self.assertTrue(any("does not identify this release" in error for error in errors))
+
+            git("tag", "-d", tag)
+            errors = release_audit.audit_tagged(root, {"tag": tag})
+            self.assertTrue(any("cannot be resolved" in error for error in errors))
+
+            git("tag", tag, candidate)
+            errors = release_audit.audit_tagged(root, {"tag": tag})
+            self.assertTrue(any("not annotated" in error for error in errors))
 
     def test_manifest_evidence_resolves(self) -> None:
         self.assertEqual([], self._audit_manifest(self._manifest()))
