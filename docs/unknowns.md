@@ -11166,3 +11166,33 @@ first bases remain, while the redundant generic sentence is retired. The
 secondary handler index `$C` still reaches an unresolved code/data overlay,
 and index `$E` is outside the observed selection clamp. `NAME-002` falls from
 204 to 184; no runtime conclusion is inferred from this static review.
+
+Nineteen circular weapon-selection records now cite the target-angle tables,
+directional-bit priority, modulo-eight slot offsets, radius threshold, and
+state transitions directly. The former close-delay label at `$017BEC` was
+incomplete: it falls through into `Weapon_AdvanceCurrentState`. It is renamed
+`WeaponSelect_StartCloseAndAdvanceState` with an explicit source comment.
+`NAME-002` falls from 184 to 165; the seven visual identities remain open.
+
+The weapon-setup review found eight misleading names across force-cursor
+placement, exit tilemap fill, vertical scroll, and straight-line sprite
+construction. The scroll audit had claimed an X position and one-unit step,
+but the code changes `SecondaryCameraYPos` by four. Nine more records reused
+a false closing-sprite-fade description; those paths actually handle exit
+input, confirmation, text, and two prompt sprites. Thirty-three records now
+cite their own instructions, and the two false generic sentences are guarded
+by the release audit. `NAME-002` falls from 165 to 144; boss visual identities
+remain unresolved.
+
+The 31 controller-layout and background records now cite exact input tests,
+palette writes, offset arithmetic, pattern rows, and DMA setup. A name that
+said background tiles were cleared was corrected to a patterned-row seeding
+loop: 20 iterations each write `$EEEEEEEE`, `$FFFFFFFF`, and six zero longs.
+Two bounds deserve separate static evidence and unresolved intent. The
+controller lookup scans 26 value bytes, but on a miss stores D1=26 despite
+only 26 TYPE text pointers. The background phase wrap to `$01500000` produces
+palette-table byte offset `$14`; from `$01F806` it reaches the next table at
+`$01F81A`, and from `$01F81A` it reaches the code entry at `$01F82E`.
+Neither condition is changed in this preservation source, and no claim is
+made about whether the corresponding runtime paths are reachable or intended.
+`NAME-002` falls from 144 to 113; the seven visual hypotheses remain open.

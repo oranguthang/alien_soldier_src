@@ -56,6 +56,8 @@ GENERIC_NAME_BASES = (
     "The local input, lookup, selection, or rendering operation acts on that controller-layout index or its stored flag byte.",
     "Boss_LoadAssetSet consumes this record as entity type, optional graphics-load-list pointer, and optional palette-command pointer; the caller and value's dispatch-table slot establish the stated owner or neutral entity type.",
     "The owning asset-set record points here, and Data_ProcessPointer consumes the tagged source/VRAM records through the $FFFF terminator.",
+    "The setup state table reaches this path after loadout and controller selection; it renders EXIT, handles confirmation/return input, or advances the closing sprite fade.",
+    "The routine compares the live setup-screen X position with its target and changes it by one signed unit until equal.",
 )
 
 

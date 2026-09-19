@@ -1404,7 +1404,7 @@ exclusive game modes overlay different state on the same physical storage.
 
 | Physical symbol | Address | Proven contextual overlays |
 |---|---:|---|
-| `SceneScratchLong0` | `$FFFF8128` | Weapon force index/scroll target, Xi-Tiger state/phase, ending completion/state, Game Over landscape index, stage-transition timer, and Epsilon 1 transition Y. |
+| `SceneScratchLong0` | `$FFFF8128` | Weapon force index/vertical-scroll target, Xi-Tiger state/phase, ending completion/state, Game Over landscape index, stage-transition timer, and Epsilon 1 transition Y. |
 | `SceneScratchLong1` | `$FFFF812C` | Weapon controller-layout index, Xi-Tiger motion step, and Epsilon 1 parallax position. |
 | `SceneScratchLong2` | `$FFFF8130` | Weapon background phase, Xi-Tiger state counter/palette level, and Epsilon 1 parallax step. |
 | `SceneScratchLong3` | `$FFFF8134` | Weapon highlight phase, Xi-Tiger wave phase/sprite X offset, and Epsilon 1 V-scroll value. |

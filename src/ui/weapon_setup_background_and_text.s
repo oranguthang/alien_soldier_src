@@ -19,6 +19,7 @@ WeaponSetup_RenderBackgroundPhase:                      ; CODE XREF: WeaponSetup
                 asr.w   #3,d0
                 subi.w  #$16,d0
                 andi.w  #$1E,d0
+; At wrap phase $01500000, index $14 reaches the following table/code word
                 move.w  WeaponSetup_BackgroundPaletteColor1Cycle(pc,d0.w),(PaletteActiveColor62).w
                 move.w  WeaponSetup_BackgroundPaletteColor2Cycle(pc,d0.w),(PaletteActiveColor63).w
                 movea.w #(WeaponSetupRasterLines-M68K_RAM),a0
@@ -83,7 +84,7 @@ WeaponSetup_BuildSecondOffsetTableLoop:                 ; CODE XREF: WeaponSetup
                 moveq   #$FFFFFFFF,d1
                 moveq   #0,d2
                 moveq   #$13,d7
-WeaponSetup_ClearBackgroundTileLoop:                    ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+10C   j  ; was: loc_1F92A
+WeaponSetup_SeedBackgroundTileRows:                     ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+10C   j  ; was: loc_1F92A
                 move.l  d0,(a0)+
                 move.l  d2,(a0)+
                 move.l  d2,(a0)+
@@ -92,7 +93,7 @@ WeaponSetup_ClearBackgroundTileLoop:                    ; CODE XREF: WeaponSetup
                 move.l  d2,(a0)+
                 move.l  d2,(a0)+
                 move.l  d2,(a0)+
-                dbf     d7,WeaponSetup_ClearBackgroundTileLoop
+                dbf     d7,WeaponSetup_SeedBackgroundTileRows
                 move.l  (WeaponSetupBgPhase).w,d0
                 subi.l  #Z80_RAM,d0
                 move.l  d0,d1
@@ -113,6 +114,7 @@ WeaponSetup_SelectFirstEvenDitherPattern:               ; CODE XREF: WeaponSetup
 WeaponSetup_DrawFirstDitherBandColumn:                  ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+132   j  ; was: loc_1F96A
                 bsr.s   WeaponSetup_WriteDitherColumn
                 swap    d0
+; MOVE.W above leaves D1's phase-derived high word intact; ADD.L uses all 32 bits
                 add.l   d1,d0
                 cmpi.l  #Z80_RAM,d0
                 bmi.s   WeaponSetup_DrawFirstDitherBandLoop
@@ -135,6 +137,7 @@ WeaponSetup_SelectSecondEvenDitherPattern:              ; CODE XREF: WeaponSetup
 WeaponSetup_DrawSecondDitherBandColumn:                 ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+166   j  ; was: loc_1F99E
                 bsr.s   WeaponSetup_WriteDitherColumn
                 swap    d0
+; As in the first band, the word-sized pattern load does not clear D1's high word
                 add.l   d1,d0
                 cmpi.l  #Z80_RAM,d0
                 bmi.s   WeaponSetup_DrawSecondDitherBandLoop

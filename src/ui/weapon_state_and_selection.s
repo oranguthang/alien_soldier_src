@@ -229,7 +229,7 @@ Weapon_ClearRuntimeParameters:                          ; CODE XREF: WeaponSelec
 WeaponSelect_Update:                                    ; DATA XREF: ROM:00017998   o  ; was: sub_17B8A
                 bsr.w   WeaponSelect_CommitSelectedSlot
                 tst.w   (PlayerDefeatPhase).w
-                bne.w   WeaponSelect_StartCloseDelay
+                bne.w   WeaponSelect_StartCloseAndAdvanceState
                 btst    #6,(PlayerActionStateFlags).w
                 bne.s   WeaponSelect_UpdateOpenState
                 btst    #0,(PlayerActionStateFlags).w
@@ -254,14 +254,15 @@ WeaponSelect_HandleOpenInput:                           ; CODE XREF: WeaponSelec
                 move.w  #$20,(WeaponMenuRadius).w       ; ' '
                 move.b  (PlayerPressedInput).w,d0
                 andi.b  #$70,d0                         ; 'p'
-                bne.s   WeaponSelect_StartCloseDelay
+                bne.s   WeaponSelect_StartCloseAndAdvanceState
                 rts
 ; ---------------------------------------------------------------------------
-WeaponSelect_StartCloseDelay:                           ; CODE XREF: WeaponSelect_Update+8   j  ; was: loc_17BEC
+WeaponSelect_StartCloseAndAdvanceState:                 ; CODE XREF: WeaponSelect_Update+8   j  ; was: loc_17BEC
                                         ; WeaponSelect_Update+5E   j
                 move.b  #$A7,d0
                 jsr     (Sound_QueueSFXRequest).l
                 move.w  #8,(WeaponStateCooldown).w
+; Fall through to advance the selected slot's weapon state
 ; End of function WeaponSelect_Update
 ; Advances the selected slot's weapon state and clears transient state
 Weapon_AdvanceCurrentState:                             ; CODE XREF: Player_InitializeStats+76   j  ; was: sub_17BFC

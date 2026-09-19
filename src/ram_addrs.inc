@@ -339,7 +339,7 @@ Epsilon1TransitionY         equ     SceneScratchLong0
 XiTigerStateOffset          equ     SceneScratchLong0
 EndingSequenceComplete      equ     SceneScratchLong0
 GameOverLandscapeIndex      equ     SceneScratchLong0
-WeaponSetupScrollTarget     equ     SceneScratchLong0+2
+WeaponSetupVScrollTarget    equ     SceneScratchLong0+2
 XiTigerPhaseCounter         equ     SceneScratchLong0+2
 EndingSequenceState         equ     SceneScratchLong0+2
 SceneScratchLong1           equ     $FFFF812C           ; was: dword_FF812C

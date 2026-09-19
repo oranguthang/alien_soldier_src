@@ -302,3 +302,30 @@ selection clamp. The redundant second sentence that merely cited assembler
 listing references is removed. The `$C` code/data-overlay slot remains
 explicitly unresolved; no unsupported name is assigned. `NAME-002` falls
 from 204 to 184 without changing source or ROM bytes.
+
+The four-slot weapon-selection pass replaces shared evidence in 19 records
+with their exact slot-offset, angle, radius, input-bit, and state operations.
+The old `WeaponSelect_StartCloseDelay` label hid a fallthrough: after queuing
+sound $A7 and setting cooldown eight, control enters
+`Weapon_AdvanceCurrentState` without returning. Its source label, provenance
+record, and comment now state the full transition. `NAME-002` falls from 184
+to 165 with byte identity preserved.
+
+The weapon-setup pass checks 33 addresses, including 21 previously known
+generic-basis records. It corrects force-cursor versus slot-cursor names,
+the exit tilemap-fill state, and a supposed three-sprite loop that has no
+back edge. More importantly, the setup scroll writes `SecondaryCameraYPos`
+by four, not an X position by one. Nine other bases falsely described a
+closing sprite fade. Both false sentences are added to the known detector
+before being retired with exact instruction evidence. The count falls from
+165 to 144 under 43 known templates; ROM bytes remain unchanged.
+
+The controller-layout and weapon-setup background pass reviews 31 addresses.
+Each state and branch now cites its input bit, index bound, or render write;
+the background records cite phase arithmetic, 97 raster-line words, two
+mirrored offset passes, twenty eight-longword pattern groups, and seven-byte
+dither columns. A `ClearBackgroundTileLoop` label was wrong: it seeds patterned
+rows, so it is now `WeaponSetup_SeedBackgroundTileRows`. `NAME-002` falls from
+144 to 113. Two ROM quirks are documented as static facts rather than guessed
+intent: the controller lookup can store out-of-range index 26 on a miss, and
+phase `$01500000` indexes one word beyond each ten-word palette data run.

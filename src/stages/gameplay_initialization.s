@@ -268,7 +268,7 @@ WeaponSetup_StateHandlerOffsets:    dc.w    WeaponSetup_HandleLoadoutState-Weapo
                                         ; DATA XREF: WeaponSetup_UpdateAndDispatchState+8   r
                 dc.w    WeaponSetup_HandleControlTypeInput-WeaponSetup_HandleLoadoutState
                 dc.w    WeaponSetup_HandleExitInput-WeaponSetup_HandleLoadoutState
-                dc.w    WeaponSetup_UpdateSlotFade-WeaponSetup_HandleLoadoutState
+                dc.w    WeaponSetup_UpdateExitTilemapFill-WeaponSetup_HandleLoadoutState
                 dc.w    WeaponSetup_LoadControlTestText-WeaponSetup_HandleLoadoutState
                 dc.w    WeaponSetup_WaitForConfirmInput-WeaponSetup_HandleLoadoutState
                 dc.w    WeaponSetup_IdleState-WeaponSetup_HandleLoadoutState
@@ -278,29 +278,29 @@ WeaponSetup_HandleLoadoutState:                         ; DATA XREF: WeaponSetup
                                         ; ROM:WeaponSetup_StateHandlerOffsets   o
                 bsr.w   WeaponSetup_RenderSlotSprites
                 bsr.w   WeaponSetup_UpdateHighlightPalette
-                bsr.w   WeaponSetup_UpdateHorizontalScroll
+                bsr.w   WeaponSetup_UpdateVerticalScroll
                 bne.w   WeaponSetup_StateWaitReturn
                 move.w  #$12,(PlayerScriptStateOffset).w
                 bsr.w   WeaponSetup_RefillAmmo
                 bsr.w   WeaponSetup_HandleLoadoutInput
                 btst    #0,(VBlankFrameCounter+1).w
-                bne.s   WeaponSetup_RenderSelectedSlotCursor
+                bne.s   WeaponSetup_RenderSelectedForceCursor
                 rts
 ; ---------------------------------------------------------------------------
-; Renders the cursor for the currently selected loadout slot
-WeaponSetup_RenderSelectedSlotCursor:                   ; CODE XREF: WeaponSetup_HandleLoadoutState+24   j  ; was: loc_1F176
+; Renders the cursor at the selected force in the current loadout slot
+WeaponSetup_RenderSelectedForceCursor:                  ; CODE XREF: WeaponSetup_HandleLoadoutState+24   j  ; was: loc_1F176
                 movea.w #(SharedSpriteScratch-M68K_RAM),a0
                 movea.w a0,a1
                 move.w  (WeaponSetupForceIndex).w,d0
-                move.w  WeaponSetup_SlotCursorYPositions(pc,d0.w),(a1)+
+                move.w  WeaponSetup_ForceCursorYPositions(pc,d0.w),(a1)+
                 move.w  #$B00,(a1)+
                 move.w  #$C6F0,(a1)+
-                move.w  WeaponSetup_SlotCursorXPositions(pc,d0.w),(a1)+
+                move.w  WeaponSetup_ForceCursorXPositions(pc,d0.w),(a1)+
                 move.w  #$FFFF,(a1)+
                 jmp     (Sprite_AppendOAMEntries).l
 ; End of function WeaponSetup_HandleLoadoutState
 ; ---------------------------------------------------------------------------
-WeaponSetup_SlotCursorXPositions:   dc.w    $97, $127, $97, $127, $97, $127  ; was: word_1F19A
+WeaponSetup_ForceCursorXPositions:  dc.w    $97, $127, $97, $127, $97, $127  ; was: word_1F19A
                                         ; DATA XREF: WeaponSetup_HandleLoadoutState+3E   r
-WeaponSetup_SlotCursorYPositions:   dc.w    $B8, $B8, $C8, $C8, $D8, $D8  ; was: word_1F1A6
+WeaponSetup_ForceCursorYPositions:  dc.w    $B8, $B8, $C8, $C8, $D8, $D8  ; was: word_1F1A6
                                         ; DATA XREF: WeaponSetup_HandleLoadoutState+32   r
