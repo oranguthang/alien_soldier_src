@@ -429,3 +429,13 @@ source slices reconstructed the old text exactly before four module headers
 were added. The layout now has 389 modules: 219 in the preferred band, 147
 shorter, 23 longer, and none over 1000. `make verify` and `make compare`
 confirmed byte identity; `make verify-symbols` matched all 15,833 records.
+
+The 811-line multi-boss metasprite registry has also been divided at whole
+owner groups `$034DB6` and `$0352A6`. Explicit filenames list the owners in
+each ROM-ordered group: Antroid through Xi-Tiger (280 lines), Madam Barbar
+through Sharpssteel (318), and Wolf Garopa/Valkirie/Z-Leo (217). The slices
+reconstructed the old file exactly before descriptive headers were added.
+The shared initializer format and Valkirie/Z-Leo dual-use data remain as
+previously audited. There are now 391 modules: 222 preferred, 147 shorter,
+22 longer, none over 1000. `make verify`, `make compare`, and
+`make verify-symbols` confirm unchanged ROM bytes and 15,833 audited addresses.

@@ -475,12 +475,13 @@ recorded in `name_audit.json`.
 
 The adjacent data audit renamed `boss_sprite_tables.s` to
 `boss_metasprite_definitions.s` and reduced the address-derived count to
-9,218. The 801-line module remains intact because it is one coherent registry
-for the shared initializer: directional frame pointers, inline descriptors,
-part radii, packed parent links/flags, and interpolation poses for twelve boss
-definition groups. Static evidence also shows deliberate type-punning in the
-original data. Valkirie reads one rotation table bytewise as a neutral pose, while
-Z-Leo and Valkirie Force interpret the shared block at `$0355A4` differently;
+9,218. At that stage the 801-line module was kept intact as one coherent
+registry for the shared initializer: directional frame pointers, inline
+descriptors, part radii, packed parent links/flags, and interpolation poses
+for twelve boss definition groups. Static evidence also shows deliberate
+type-punning in the original data. Valkirie reads one rotation table bytewise
+as a neutral pose, while Z-Leo and Valkirie Force interpret the shared block
+at `$0355A4` differently;
 the names preserve those dual roles instead of claiming a single false type.
 
 The `jetsripper_core.s` control-flow audit reduced the count to 9,171. All 47
@@ -11274,3 +11275,11 @@ state-`$2A` at `$05523C`, and the separate post-battle transition dispatcher
 at `$0555C8`. This does not reclassify any of the states as boss code or add
 evidence for character identities. `make verify`, `make compare`, and
 `make verify-symbols` confirm unchanged ROM bytes and exact-address names.
+
+The multi-boss metasprite registry is now three owner-named modules, split at
+`$034DB6` and `$0352A6` without dividing any descriptor, radius, link, or
+pose record. This revises the earlier layout judgment that one 801-line
+module was needed: the data still has one shared initializer format, but the
+ROM-ordered owner groups have clear boundaries. It does not resolve visual
+identities beyond existing static evidence. `make verify`, `make compare`,
+and `make verify-symbols` confirm preserved bytes and address provenance.

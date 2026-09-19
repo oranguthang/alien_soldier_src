@@ -33,7 +33,7 @@ cover each layout module exactly once and that the file counts stay current.
 | `0x02F1A2-0x030D8F` | orphaned radial-particle test, stage environment, yacht, stage 18, and stage 15 fragment hazards | 6 | static/runtime |
 | `0x030D90-0x0323E1` | stage 11 rising hazards, Gusthead linked chain, Destroyer Proto, and shared hit-reactive projectiles | 6 | static/runtime |
 | `0x0323E2-0x033F2F` | Victor, Wolf Garopa rewards, formation waves, Stage 21 asteroids, rising-shot effects, and Missiray projectiles | 8 | static/hypothesis |
-| `0x033F30-0x035613` | Stage 3 orbiting formation, shared metasprite code, and multi-boss metasprite definitions | 3 | static/hypothesis |
+| `0x033F30-0x035613` | Stage 3 orbiting formation, shared metasprite code, and multi-boss metasprite definitions | 5 | static/hypothesis |
 | `0x035614-0x0374C5` | Jetsripper and Shiper state, movement, and projectiles | 8 | hypothesis |
 | `0x0374C6-0x0394D7` | Antroid and Terobuster systems | 11 | hypothesis |
 | `0x0394D8-0x03B29D` | Shellshogun and Madam Barbar systems | 6 | hypothesis |

@@ -1431,9 +1431,21 @@
       "end": "0x03494B"
     },
     {
-      "file": "src/data/boss_metasprite_definitions.s",
+      "file": "src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s",
       "subsystem": "data",
       "start": "0x03494C",
+      "end": "0x034DB5"
+    },
+    {
+      "file": "src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s",
+      "subsystem": "data",
+      "start": "0x034DB6",
+      "end": "0x0352A5"
+    },
+    {
+      "file": "src/data/wolf_garopa_valkirie_z_leo_metasprites.s",
+      "subsystem": "data",
+      "start": "0x0352A6",
       "end": "0x035613"
     },
     {
