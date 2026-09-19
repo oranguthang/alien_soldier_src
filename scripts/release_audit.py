@@ -40,6 +40,7 @@ GENERIC_NAME_BASES = (
     "Direct palette-RAM accesses and the fade or color-update caller establish this palette-specific role.",
     "The renderer writes Genesis OAM Y/size-link/tile/X entries, clips them to the screen bounds, and chains them through 64 priority buckets.",
     "Bit 11 selects horizontal reflection, bit 15 terminates mapping entries or preserves object priority, and the local control flow establishes the narrower role stated by the symbol.",
+    "Bit 11 selects horizontal reflection; this table-frame path retains object bit 15 before XOR-merging entry attributes, and the local control flow establishes the narrower role stated by the symbol.",
     "Gfx_LoadPaletteCommand proves the destination/count/CRAM-word format, while the direct caller or Boss_LoadAssetSet record proves the owner scope; plural and bank names retain multiple embedded command boundaries without guessing visual colors.",
     "The local tests, loop direction, and completion writes establish the narrower branch role stated by the symbol.",
     "The local branch, timer, cache, pointer, or transfer operation establishes the narrower role stated by the symbol.",

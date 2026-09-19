@@ -426,6 +426,7 @@ Sprite_AppendOAMEntries:                                ; CODE XREF: Cutscene_Re
                 movea.l a0,a4
                 move.b  (SpriteOAMEntryCount).w,d4
                 movea.w (SpriteOAMWritePointer).w,a3
+                ; MOVEA preserves CCR: BEQ tests the loaded entry count
                 beq.w   Sprite_AppendOAMEntriesReturn
 Sprite_AppendOAMEntries_Loop:                           ; CODE XREF: Sprite_AppendOAMEntries+34   j  ; was: loc_259A
                 cmpi.b  #$50,d4                         ; 'P'

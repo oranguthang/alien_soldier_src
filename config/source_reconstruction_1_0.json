@@ -65,7 +65,7 @@
     {
       "id": "semantic_naming",
       "kind": "source",
-      "summary": "Every live address-derived identifier was replaced and 15,833 exact-address name records now exist. A wider duplicate scan exposed 457 records matching 17 additional templates; after reviewing timer-return and palette-fade paths, 398 known generic-basis records remain. Seven boss-identity records remain visual hypotheses.",
+      "summary": "Every live address-derived identifier was replaced and 15,833 exact-address name records now exist. After reviewing timer-return, palette-fade, OAM/mapping, and object-pipeline paths, 302 records still match known generic evidence sentences; seven boss-identity records remain visual hypotheses.",
       "evidence": [
         "provenance_and_unknowns",
         "files:config/name_audit.json"
@@ -193,7 +193,7 @@
     },
     "provenance_and_unknowns": {
       "status": "partial",
-      "statement": "No live definition is address-derived and every replaced name keeps a traceable marker. The expanded known generic-basis queue contains 398 records awaiting instruction-specific review; seven boss-identity records remain hypotheses.",
+      "statement": "No live definition is address-derived and every replaced name keeps a traceable marker. The expanded known generic-basis queue contains 302 records awaiting instruction-specific review; seven boss-identity records remain hypotheses.",
       "evidence": {
         "targets": [
           "lint",
@@ -455,9 +455,9 @@
     {
       "id": "generic_name_evidence_bases",
       "status": "partial",
-      "reason": "A wider duplicate scan exposed 457 records matching 17 additional generic sentences; after reviewing 18 timer-return and 41 palette-fade records, 398 remain without record-specific evidence.",
+      "reason": "A wider duplicate scan exposed 457 records matching 17 additional generic sentences; after reviewing 18 timer-return, 41 palette-fade, 66 OAM/mapping, and 30 object-pipeline records, 302 remain without record-specific evidence.",
       "registry": "NAME-002",
-      "control": "make release-audit recounts the curated set of 40 known generic basis sentences and refuses tag-ready status until the count is zero; a wider duplicate-basis review must also precede the final tag."
+      "control": "make release-audit recounts the curated set of 41 known generic basis sentences and refuses tag-ready status until the count is zero; a wider duplicate-basis review must also precede the final tag."
     },
     {
       "id": "provisional_boss_visual_identities",
@@ -719,7 +719,7 @@
     "declared_subsystems": 192,
     "definitions": 16928,
     "dma_transferred_payloads": 289,
-    "generic_evidence_bases": 398,
+    "generic_evidence_bases": 302,
     "hypothesis_name_records": 7,
     "modules": 383,
     "name_audit_records": 15833,

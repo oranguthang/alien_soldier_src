@@ -246,3 +246,21 @@ destination buffers, red/green/blue component clamp, progress threshold,
 or completion side effect. Four paths are kept separate: from black, to
 black, from white, and to white. `NAME-002` falls from 439 to 398 without
 changing ROM instructions.
+
+The sprite mapping and OAM pass reviews 66 records across priority-bucket
+initialization, linked OAM output, static and dynamic mappings, table-frame
+selection, and appended cutscene/world entries. Two previously shared generic
+bases are replaced per renderer record; a third table-frame variant is added
+to the detector before its six records are retired. `Sprite_AppendOAMEntries`
+had a subtle evidence error: `MOVEA` preserves CCR, so its `BEQ` tests the
+earlier `SpriteOAMEntryCount` load, not the OAM write pointer. The source now
+says this explicitly. `NAME-002` falls from 398 to 332 under 41 known
+templates; ROM bytes remain unchanged.
+
+The sprite object-pipeline pass replaces two shared boilerplate bases in 30
+records with exact-address evidence for list traversal, object flags, dynamic
+mapping cache and DMA queue handling, and two distinct timed-sequence formats.
+The active DMA paths call `Gfx_PrependDMATransferCommand`; the offset-sequence
+scan stores the next entry separately from resolution of the current mapping.
+`NAME-002` falls from 332 to 302 under the same 41-template detector. Source
+instructions and ROM bytes are unchanged.

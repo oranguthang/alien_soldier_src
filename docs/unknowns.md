@@ -11116,3 +11116,19 @@ buffer, DBF bound, and progress/step completion conditions. The static code
 distinguishes initial writes to both active and shadow palettes from later
 active-only updates. `NAME-002` falls from 439 to 398; visual identities
 remain provisional.
+
+Sixty-six priority-bucket, OAM, mapping, table-frame, and append records
+now cite their actual bounds, bit masks, loop termination, pointer writes,
+or frame-table fields instead of a shared renderer summary. Six table-frame
+records also retire a newly recognized generic priority-bit sentence.
+The append helper's `BEQ` at `$002596` uses the zero flag from loading
+`SpriteOAMEntryCount`: intervening `MOVEA` does not update CCR. Evidence
+and a source comment now state the tested field. `NAME-002` falls from 398
+to 332; seven visual identity hypotheses remain separate.
+
+Thirty object-pipeline name records now cite their concrete instructions and
+fields rather than a shared display-list description. The evidence distinguishes
+the dynamic-art cache at object field `$DC`, its tile-source list at `$E0`,
+the DMA queue head, and timed versus byte-offset sequence timers. The latter
+selects the next entry while returning the current mapping on the expiring
+timer call. `NAME-002` falls from 332 to 302; `NAME-003` remains at seven.
