@@ -4242,7 +4242,7 @@
       "evidence": "static",
       "basis": [
         "No source constructor or data owner has been established, and a bounded breakpoint run did not reach the entry during all 90,000 pinned TAS frames.",
-        "Its three table entries jump into existing Stage 18 projectile and falling-spawner code, so a generic projectile identity would overstate the evidence."
+        "The first state offset 0x0866 added to base 0x02FC4C resolves to 0x0304B2, the extension word of a bsr.w instruction; the other two offsets target Stage 15 fragment-emitter states. No gameplay identity follows from this table."
       ]
     },
     {

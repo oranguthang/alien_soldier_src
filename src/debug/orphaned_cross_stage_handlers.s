@@ -2,8 +2,8 @@
 ; The dispatch entry has no known constructor and was not reached in the pinned TAS
 ; The following terrain-animation companion has no live code or data reference
 
-; Unresolved entity dispatcher. Its three state targets deliberately reuse code
-; in the Stage 18 projectile and falling-spawner modules
+; Unresolved entity dispatcher. Its first table target is not a code entry;
+; the other two target Stage 15 fragment-emitter states
 OrphanedCrossStageEntityDispatch:                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2FC26
                 cmpi.w  #$70,$10(a5)                    ; 'p'
                 bpl.s   OrphanedCrossStageEntitySelectState
@@ -11,14 +11,14 @@ OrphanedCrossStageEntityDispatch:                       ; DATA XREF: ROM:Entity_
 OrphanedCrossStageEntitySelectState:                    ; CODE XREF: OrphanedCrossStageEntityDispatch+6   j
                 nop
                 move.w  4(a5),d0
-                movea.w OrphanedCrossStageEntityStateTable(pc,d0.w),a0  ; debug this link
+                movea.w OrphanedCrossStageEntityStateTable(pc,d0.w),a0  ; signed offset from the initializer base
                 adda.l  #OrphanedTerrainTileAnimationInit,a0
                 jmp     (a0)
 ; End of function OrphanedCrossStageEntityDispatch
 ; ---------------------------------------------------------------------------
 OrphanedCrossStageEntityStateTable: dc.w    Stage18_SegmentedWormUpdateFollower+2-OrphanedTerrainTileAnimationInit
                                         ; DATA XREF: OrphanedCrossStageEntityDispatch+14   r
-                                        ; debug this link
+                                        ; target $0304B2 is the displacement word of a bsr.w, not an entry
                 dc.w    Stage15_FragmentEmitterWaveSpawn-OrphanedTerrainTileAnimationInit
                 dc.w    Stage15_FragmentEmitterWaveCheckThreshold-OrphanedTerrainTileAnimationInit
 

@@ -10918,3 +10918,16 @@ former `Gfx_ScrollWideVRAMTransferParameters` name claimed a particular scroll
 mode from adjacency and transfer size alone. It is now
 `Gfx_UnidentifiedVRAMTransferParameters`, with `unknown` evidence in the exact-
 address name audit. The data bytes and the other transfer tuples are unchanged.
+
+## Orphaned cross-stage dispatch offset
+
+`OrphanedCrossStageEntityDispatch` has no known constructor and was not reached
+in the pinned 90,000-frame TAS. Its first state-table word at ROM `$02FC46` is
+`$0866`; adding the signed offset to the dispatch base `$02FC4C` gives
+`$0304B2`. The byte-identical ROM and assembler listing show `61 00 FD D6`
+at `$0304B0`: `$0304B2` is the displacement word of the `bsr.w` instruction,
+not a procedure entry. The other two table offsets resolve to the Stage 15
+fragment-emitter states at `$03051E` and `$030520`. This corrects the former
+claim that all three targets intentionally reused existing handlers. The
+first target's purpose, and whether any shipped path can select it, remain
+unknown; the table expressions and ROM bytes are preserved.
