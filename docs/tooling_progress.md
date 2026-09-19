@@ -629,3 +629,10 @@ directly to `VDP_CTRL`; it does not edit CRAM or the shadow words. A source
 comment and each address basis now say that precisely. Only the cycle has a
 symbolic caller in the current source; the other helpers are not declared
 globally unreachable from that fact alone.
+
+Six scroll-DMA queue records now separate the horizontal and vertical
+destinations, source-address encoding, register-11 mode bits, transfer lengths,
+and queue-head commit sites. The horizontal per-line command encodes `$1C0`
+words (448); the vertical per-column command encodes `$28` words (40); their
+full-screen branches each encode two words. The previous shared sentence
+described both routines at every address, including the return labels.

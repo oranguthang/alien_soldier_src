@@ -11451,3 +11451,10 @@ restore helper writes the saved register 1 and 7 shadow values. None writes
 CRAM or mutates the shadow words. The blank and restore helpers have no
 symbolic executable caller in the reconstructed source, which is a source
 reference finding, not proof of runtime dead code.
+
+The two scroll-DMA queue routines used one repeated basis across six entry,
+length-selection, and commit addresses. The local bases now identify
+`HScrollDMASource` versus `VScrollDMASource`, destination command, VDP source
+registers `$95..$97`, register-11 bit one versus bit two, and the encoded
+lengths two/`$1C0` or two/`$28` words. The commit labels publish the
+decremented queue pointer; they do not themselves choose a transfer mode.
