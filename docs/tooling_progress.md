@@ -612,3 +612,11 @@ than preserving the earlier CRAM mistake. In particular,
 the Stage 10 descriptor copies ROM `$1848..$1A47` into RAM
 `$FFFFEE00..$FFFFEFFF`, extending past its HBlank handler into adjacent ROM
 code. No copied bytes or descriptor lengths were changed.
+
+The nine READY/FIGHT banner-state records no longer inherit one sequence-wide
+description. Their bases now identify the delay expiry that installs the
+glyph source, the glyph-load completion and sound/timer setup, the held READY
+line, the FIGHT start and phase-split store, and the offset/velocity update
+that renders the moving line. The three return labels state their actual
+converging paths. This is instruction-level evidence; no timing or visual
+appearance was inferred from a screenshot.

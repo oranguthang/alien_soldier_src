@@ -11434,3 +11434,11 @@ now distinguish three VBlank initializers and seven installation lists;
 `$0014EE` is the formerly misidentified CRAM/VSRAM initializer.
 This is static source/listing evidence, not a claim that the overcopied tail
 executes as part of the HBlank handler.
+
+The READY/FIGHT banner has nine separate state and return entries. Their
+former shared basis described the entire sequence at every address, masking
+which entry loads glyphs, waits on a timer, stores the phase split, or updates
+the moving-line offset. The local bases now cite the corresponding state
+writes, sound IDs `$16` and `$17`, timer seeds `$60` and `$34`, and the
+`$2000` fixed-point velocity decrement. They establish control flow and data
+flow, not independent pixel-level proof of the displayed words.
