@@ -565,6 +565,7 @@ Player_CheckWeaponSelectInput_Start:                    ; CODE XREF: Player_Chec
                 clr.l   $1C(a5)
                 move.w  #$C,4(a5)
                 move.w  #4,$5C(a5)
+                ; The normal entry already excluded down+A; preserve this test
                 btst    #1,$69(a5)
                 beq.s   Player_CheckWeaponSelectInput_ReturnActivated
                 move.w  #8,$5C(a5)

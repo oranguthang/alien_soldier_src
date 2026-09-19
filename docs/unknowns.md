@@ -11413,3 +11413,12 @@ piece order in the ROM. Each basis therefore cites the actual mapping
 expression and `binclude` payload instead of treating neighbouring art
 addresses as a visual sequence. The binary payloads have not been decoded
 into pixel-level appearance claims by this static pass.
+
+The 23 weapon-selection code records formerly reused a family-wide button-A
+description. Their local bases now distinguish the A press, the down/up+A
+shooting-mode diversion, the negative `WeaponStateCooldown` gate, and the
+terrain-specific selector states. In the ordinary ground and ceiling entry
+paths, the start block retests a direction bit that was already rejected
+before the cooldown branch. The instructions remain byte-identical and are
+documented as redundant on that ordinary path; no global unreachability
+claim is made for the preserved instructions.

@@ -192,6 +192,7 @@ Player_CheckCeilingWeaponSelectInput_Start:             ; CODE XREF: Player_Chec
                 clr.l   $1C(a5)
                 move.w  #$20,4(a5)                      ; ' '
                 move.w  #$10,$5C(a5)
+                ; The normal entry already excluded up+A; preserve this test
                 btst    #0,$69(a5)
                 beq.s   Player_CheckCeilingWeaponSelectInput_ReturnActivated
                 move.w  #$14,$5C(a5)

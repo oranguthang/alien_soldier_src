@@ -593,3 +593,11 @@ and preserved `binclude` payload it supplies. Source comments explain why
 the physical ROM art order differs from the piece indices. This establishes
 pointer ownership and byte provenance, not an inferred appearance for any
 individual piece.
+
+The neighboring weapon-selection review replaces two shared button-A
+sentences in 23 normal, recovery, ceiling, and Seven Forces code records.
+Each basis now identifies its own pressed/held-input branch, signed cooldown
+gate, selector state, terrain exit, or sprite-render handoff. The normal
+ground and ceiling start paths retest a direction bit already excluded by
+their initial branch; comments preserve that observation without removing
+the original instructions or assuming no other entry could ever exist.
