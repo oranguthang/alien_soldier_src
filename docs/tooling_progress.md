@@ -449,3 +449,13 @@ exactly before adding file headers. Inventory is now 392 modules: 224 in the
 preferred band, 147 shorter, 21 longer, none over 1000. `make verify` and
 `make compare` confirm byte identity, and `make verify-symbols` confirms all
 15,833 name-audit addresses against the listing.
+
+The 765-line SFX payload module was divided at `$0967EC`, where the ROM-order
+track IDs jump from `$EF` to `$40`. One file holds request IDs `$A0`–`$EF`
+(401 lines); the next holds `$40`–`$7F`, then `$F0`–`$FC`, including the
+existing 32KB PCM alignment (367 lines). The source slices concatenated
+exactly before explanatory headers were added. Layout now has 393 modules:
+226 preferred, 147 shorter, 20 longer, none over 1000. The 20 long modules
+are all boss-specific, but their cohesion still needs review under
+`LAYOUT-001`. `make verify`, `make compare`, and `make verify-symbols` confirm
+ROM byte identity and all 15,833 audit addresses.

@@ -2163,9 +2163,15 @@
       "end": "0x094D4B"
     },
     {
-      "file": "src/sound/sfx_tracks.s",
+      "file": "src/sound/sfx_tracks_a0_to_ef.s",
       "subsystem": "sound",
       "start": "0x094D4C",
+      "end": "0x0967EB"
+    },
+    {
+      "file": "src/sound/sfx_tracks_40_to_7f_and_f0_to_fc.s",
+      "subsystem": "sound",
+      "start": "0x0967EC",
       "end": "0x097FFF"
     },
     {

@@ -2540,9 +2540,10 @@ was a Sonnet-name audit rather than a raw-label burn-down; provenance rises
 from 10,586 to 10,591 mappings, the audit registry rises from 6,768 to 6,773
 entries, and the ROM layout decreases from 341 to 340 modules.
 
-The sound-effect payload audit replaces the four hexadecimal storage buckets
+The sound-effect payload audit then replaced the four hexadecimal storage buckets
 `sfx_a0_cf.s`, `sfx_d0_df.s`, `sfx_e0_fc.s`, and `sfx_40_7f.s` with the
-single ROM-ordered `sound/sfx_tracks.s` data-family module. All 157 track
+single ROM-ordered `sound/sfx_tracks.s` data-family module. A later layout
+pass split that module at a request-ID discontinuity. All 157 track
 headers are now named by their proven request IDs in the `Sound_SFX_XX`
 namespace and have exact static audit/provenance records. No effect meaning is
 guessed from the payload bytes. The four `_End` definitions delimit extracted
@@ -11291,3 +11292,10 @@ as a separate subsystem; those public entries are still reached from the
 extended command table. The static command interpretations and evidence
 levels are unchanged. `make verify`, `make compare`, and `make verify-symbols`
 confirm the preserved ROM and exact-address registry.
+
+The SFX payload source is now split at `$0967EC`, the actual request-ID
+ordering break from `$EF` to `$40`. The second file also contains the later
+`$F0`–`$FC` records and the unchanged PCM alignment. The filenames state
+proven request IDs, not invented effect meanings. All 157 SFX headers and
+their exact-address audit records remain in ROM order; `make verify`,
+`make compare`, and `make verify-symbols` confirm unchanged bytes and names.
