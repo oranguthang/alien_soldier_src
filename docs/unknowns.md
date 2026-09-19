@@ -2454,8 +2454,8 @@ definitions are removed, lowering the ceiling from 5,350 to 5,333; provenance
 rises from 10,474 to 10,491 mappings, and 18 audit records take the registry
 from 6,598 to 6,616 entries.
 
-The sequence-command pass audits all 78 definitions in the cohesive 583-line
-`sound/sequence_commands.s` module at `0x083820-0x083CED`. Static parser and
+The sequence-command pass audited all 78 definitions in the then-current
+583-line `sound/sequence_commands.s` module at `0x083820-0x083CED`. Static parser and
 consumer flow confirms both ordered dispatch tables, the complete `$E0-$FE`
 command family, extended prefix `$FF`, FM instrument programming, carrier-only
 volume adjustment, stopped-SFX BGM restoration, relative control flow, and
@@ -2479,8 +2479,8 @@ by note start, note timeout, pause, SFX stop, and sequence-stop callers.
 The following global-control pass audits all 24 definitions in the former
 144-line `sound/global_control.s` range at `0x083CEE-0x083E6F`. These are not a
 separate subsystem: all four public entries are direct handlers of the
-extended sequence-command table immediately before them in ROM. The range is
-therefore merged into `sound/sequence_commands.s`, producing one cohesive
+extended sequence-command table immediately before them in ROM. The range was
+therefore merged into `sound/sequence_commands.s` at that stage, producing one
 726-line, 102-definition module and reducing the declared ROM layout from 343
 to 342 modules without changing a byte.
 
@@ -11283,3 +11283,11 @@ module was needed: the data still has one shared initializer format, but the
 ROM-ordered owner groups have clear boundaries. It does not resolve visual
 identities beyond existing static evidence. `make verify`, `make compare`,
 and `make verify-symbols` confirm preserved bytes and address provenance.
+
+The sequence-command source is now two adjacent sound modules at `$083B0A`:
+dispatch/immediate/FM-instrument commands, then channel, control-flow, and
+extended handlers. This does not reclassify the former global-control range
+as a separate subsystem; those public entries are still reached from the
+extended command table. The static command interpretations and evidence
+levels are unchanged. `make verify`, `make compare`, and `make verify-symbols`
+confirm the preserved ROM and exact-address registry.

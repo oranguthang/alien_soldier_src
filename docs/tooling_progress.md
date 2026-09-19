@@ -439,3 +439,13 @@ The shared initializer format and Valkirie/Z-Leo dual-use data remain as
 previously audited. There are now 391 modules: 222 preferred, 147 shorter,
 22 longer, none over 1000. `make verify`, `make compare`, and
 `make verify-symbols` confirm unchanged ROM bytes and 15,833 audited addresses.
+
+The 725-line sequence-command block was split at `$083B0A`, after the FM
+instrument parameter/register tables and before the channel-vibrato handler.
+The 355-line dispatch/instrument module and 372-line channel/extended-command
+module remain adjacent in `src/main.s`; command and extended-command dispatch
+still resolve to their original addresses. The old source slices concatenated
+exactly before adding file headers. Inventory is now 392 modules: 224 in the
+preferred band, 147 shorter, 21 longer, none over 1000. `make verify` and
+`make compare` confirm byte identity, and `make verify-symbols` confirms all
+15,833 name-audit addresses against the listing.

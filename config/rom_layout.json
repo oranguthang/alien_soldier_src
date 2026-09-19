@@ -2127,9 +2127,15 @@
       "end": "0x08381F"
     },
     {
-      "file": "src/sound/sequence_commands.s",
+      "file": "src/sound/sequence_dispatch_and_instrument_commands.s",
       "subsystem": "sound",
       "start": "0x083820",
+      "end": "0x083B09"
+    },
+    {
+      "file": "src/sound/sequence_channel_and_extended_commands.s",
+      "subsystem": "sound",
+      "start": "0x083B0A",
       "end": "0x083E6F"
     },
     {
