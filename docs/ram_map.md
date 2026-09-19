@@ -1031,8 +1031,8 @@ object update and rendering machinery.
 |---|---:|---|
 | `SharedEffectObjectPool` | `$FFFFBFC0` | Weapon, projectile, player-effect, and collision paths scan 96-byte object records from this base; common helpers clear between eight and seventeen consecutive records. |
 | `EffectCollisionOddStart` | `$FFFFC020` | Collision processing alternates between the pool base and this second 96-byte record on successive frame parities. |
-| `PlayerEffectObjectPool` | `$FFFFC2C0` | Base of eight 96-byte records used by player special attacks, weapon indicators, target sight, homing companions, Phoenix trails, and triple shots. |
-| `PlayerEffectAllocStart` | `$FFFFC320` | One record after the player-effect base; free-slot allocation scans seven records from here, and weapon selection uses the first four as indicators. |
+| `PlayerEffectObjectPool` | `$FFFFC2C0` | Base of eight 96-byte records used by player special attacks, weapon-selection sprites, projectile companions, target sight, Phoenix trails, and triple shots. |
+| `PlayerEffectAllocStart` | `$FFFFC320` | One record after the player-effect base; free-slot allocation scans seven records from here, and weapon selection uses the first four for its slot sprites. |
 | `PlayerSpecialObjectSlot` | `$FFFFC5C0` | Dedicated record initialized or cleared by player dash, teleport, projectile, impact, and Seven Forces paths and checked separately for special-attack collisions. |
 
 `Sys_ClearInitializationObjectPools` first clears one 96-byte record at each
@@ -1325,7 +1325,7 @@ structural `PrimaryEntity` names rather than a boss name.
 | `WeaponAnimationDataPtr` | `$FFFF8020` | Circle-attack setup and weapon icon mode install and consume an animation-data pointer here. |
 | `WeaponYMotionParameter` | `$FFFF8024` | Weapon setup derives a fixed-point vertical motion term here; impact particles add it to vertical velocity. |
 | `WeaponXMotionParameter` | `$FFFF8028` | The paired fixed-point term is added to horizontal velocity; other weapon modes intentionally reuse its halves as parameters. |
-| `WeaponModeParameter` | `$FFFF802C` | Weapon modes store either a motion-table pointer or a word-sized damage/count value here, so the neutral union name is intentional. |
+| `WeaponModeParameter` | `$FFFF802C` | Weapon modes store either a direction-vector pointer or a word-sized state value here: state 2 supplies projectile lifetime and state 4 supplies an ammo-threshold flag. The neutral union name is intentional. |
 | `WeaponMenuSpawnXOffset` | `$FFFF8032` | Weapon-select entry paths initialize this word; the rotating selection marker adds it to the player's X position. |
 | `WeaponMenuSpawnYOffset` | `$FFFF8034` | Weapon-select entry paths initialize this word; the rotating selection marker adds it to the player's Y position. |
 

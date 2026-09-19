@@ -11322,3 +11322,39 @@ and three local labels now describe those operations. This corrects the
 behavioral claim but not the visual owner: the entry remains one of seven
 `NAME-003` hypotheses until a pinned replay confirms it or the entire owner
 family receives neutral names.
+
+The wider duplicate-basis review found thirteen weapon state-eight records
+using the same whole-routine summary. Per-address instruction review found a
+specific mistaken label: `$017DDE` is a `dbf` continuation and selected-
+pointer store, while `$017DE8` loads and compares the next candidate's field
+`$24`. The names and evidence now distinguish these operations. The
+targeting path's broader visual behavior has not been inferred from this
+static control-flow review, and `NAME-002` remains open outside this cluster.
+
+The adjacent state-$0A handler was previously labelled as a weapon "gauge"
+from its palette writes. Static inspection establishes a direction-vector
+pointer selection and a four-word color cycle at palette slot 54, but not the
+visual owner of that slot; state $0C also writes it while animating an icon.
+The five state-$0A names and bases now describe motion and palette operations
+without a gauge claim. The wider duplicate-basis review still includes the
+remaining neighboring state groups.
+
+State `$02` provides a concrete correction to the earlier weapon-mode
+interpretation: its ammo-dependent `$08`–`$0E` word is copied by
+`Weapon_FireProjectile` into object field `$5E`. The initialization callback
+sets object type `$14`, and that type's update handler decrements `$5E` until
+the impact transition. Thus the value is a lifetime, not demonstrated
+damage; the two source names, audit bases, and `WeaponModeParameter` RAM-map
+description now say so. The neighboring state `$06` clamp and vector lookup
+were also renamed and evidenced at their own addresses. This does not settle
+visual identities of other weapon effects or close the wider `NAME-002` queue.
+
+The state-$04 and state-$08 loops had inherited "indicator" names from a
+whole-routine summary. Their free records are type `$A0`; that update handler
+uses field `$48` as an expected nearby parent type and copies the parent's
+position, tile, size, offsets, and sprite flags when it matches. State $04
+uses type `$22C` (spread projectile), while state $08 uses `$6C` (seeking
+projectile). Six labels now use the supported companion role, and the state-
+four exit names its actual reticle branch. This does not establish the exact
+on-screen appearance of the companion sprites; the semantic evidence is the
+parent relationship and object fields.

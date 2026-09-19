@@ -1,4 +1,4 @@
-Weapon_UpdateTargetingReticle:                          ; CODE XREF: Weapon_ConfigureState2Damage+22   j  ; was: sub_19292
+Weapon_UpdateTargetingReticle:                          ; CODE XREF: Weapon_ConfigureState2Lifetime+22   j  ; was: sub_19292
                                         ; sub_17C7C:loc_17CB0   j
                 subq.w  #1,(TargetReticleScanDelay).w
                 bpl.s   Weapon_UpdateTargetingReticle_Return
@@ -157,7 +157,7 @@ Weapon_DirectionVectorsSpeed11: dc.l    0, $22550, $4357C, $61C68, $7C72C  ; was
                 dc.l    $FFFBCA84, $FFFDDAB0, 0, $22550, $4357C
                 dc.l    $61C68, $7C72C, $92548, $A2980, $AC9DC
 Weapon_DirectionVectorsSpeed12: dc.l    0, $25740, $49770, $6AAA0, $87C30  ; was: dword_19772
-                                        ; DATA XREF: Weapon_ConfigureState10Gauge+C   o
+                                        ; DATA XREF: Weapon_ConfigureState10MotionAndPalette+C   o
                                         ; Weapon_SpawnHomingEffect+74   o
                 dc.l    $9FA20, $B1600, $BC4F0, $C0000, $BC4F0
                 dc.l    $B1600, $9FA20, $87C30, $6AAA0, $49770

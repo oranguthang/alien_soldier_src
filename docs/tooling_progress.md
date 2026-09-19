@@ -500,3 +500,41 @@ this state now describe the refill/oscillation, limit selection, and maximum
 check rather than an unproven arena transition. Their exact-address evidence
 was corrected, while the state entry retains hypothesis level because the
 Sunset Sting visual owner has not been confirmed by pinned runtime evidence.
+
+The thirteen state-eight weapon-targeting records that shared the same two
+whole-routine sentences now cite their own threshold, motion-table lookup,
+indicator initialization, lock-on scan, or collision-list selection
+instructions. The old `Weapon_State8CompareTargetValue` label at `$017DDE`
+actually sits on `dbf` and the final selected-pointer store; the comparison
+is at `$017DE8`. Both labels were corrected, with previous names retained in
+the exact-address audit. This removes one repeated-basis cluster from the
+wider `NAME-002` review without claiming that the entire review is closed.
+
+Five state-$0A weapon records repeated a claim that palette slot 54 was a
+"gauge". The code instead selects a direction-vector pointer from the active
+slot's value and writes one of four frame-indexed Genesis colors to both
+active and shadow palette slot 54; state $0C writes the same palette slot for
+its icon animation. No static consumer identifies the state-$0A color as a
+gauge. The five labels and their exact-address bases now state only the
+motion-index and palette-color operations; the former names remain traceable
+in the audit registry.
+
+The state-$02 weapon handler's former "damage" value is actually the initial
+projectile lifetime. Its ammo thresholds select even values `$08` through
+`$0E`; `Weapon_FireProjectile` copies that word to object field `$5E`, then
+`Weapon_InitProjectileSprite` changes the object to type `$14`, whose update
+handler decrements `$5E` as a timer. Two labels and the RAM-map explanation
+were corrected. Five state-$06 records now cite their own frame/slot speed
+choice, sine-derived velocity, ammo-offset clamp, or direction-vector lookup;
+the latter two labels were corrected from misleading table-selection/clamp
+names. Exact-address audit history and ROM bytes remain unchanged.
+
+State-$04 and state-$08 weapon setup were also calling six type-$A0 objects
+"indicators" without evidence. The actual type-$A0 handler checks its field
+`$48` against a nearby parent type and copies that parent's sprite transform.
+State $04 stores `$22C` there, the type assigned to spread projectiles; state
+$08 stores `$6C`, the seeking-projectile type. Four state-$04 and two
+state-$08 labels now identify companion initialization and continuation,
+while the state-$04 exit label names its branch to the targeting reticle.
+The RAM-map description distinguishes those companions from the actual
+weapon-selection slot sprites.
