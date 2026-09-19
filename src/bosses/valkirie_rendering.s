@@ -114,12 +114,12 @@ Anim_ReadValkiriePoseCommand:                           ; CODE XREF: Anim_Update
                 move.w  $58(a5),d0
                 bmi.w   Anim_PrepareValkiriePosePartTraversal
                 cmpi.b  #$80,(a1,d0.w)
-                bne.s   Anim_DecodeValkiriePoseCommand
+                bne.s   Anim_CheckValkiriePoseStopMarker
                 move.b  1(a1,d0.w),$23E(a5)
                 addq.w  #2,$58(a5)
                 bra.s   Anim_ReadValkiriePoseCommand
 ; ---------------------------------------------------------------------------
-Anim_DecodeValkiriePoseCommand:                         ; CODE XREF: Anim_UpdateValkiriePoseScript+18   j  ; was: loc_561B6
+Anim_CheckValkiriePoseStopMarker:                       ; CODE XREF: Anim_UpdateValkiriePoseScript+18   j  ; was: loc_561B6
                 move.w  (a1,d0.w),d3
                 cmpi.w  #$FFFE,d3
                 bne.s   Anim_ProcessValkiriePoseFrame

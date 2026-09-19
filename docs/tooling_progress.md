@@ -668,3 +668,11 @@ This is static instruction evidence, not a claim about visual ownership or
 runtime reachability.
 The old shared sentence is the 51st known generic basis rejected by
 `make release-audit`; zero records still match the curated detector.
+
+Nine Valkirie pose-script records at `$056190..$056224` now cite their own
+event-prefix, `$FFFE` stop, `$FFFF` loop, frame setup, interpolation, and
+part-traversal instructions. The label at `$0561B6` was narrowed from a
+general decoder to the stop-marker check it actually performs. The standalone
+RTS at `$0561C8` is identified only as a no-op, without claiming it is
+reachable. Their old sequence-wide sentence is now the 52nd rejected generic
+basis; `NAME-002` still has zero matches in the curated detector.
