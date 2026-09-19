@@ -338,7 +338,7 @@ Boss_JampanNoOpState50:                                 ; DATA XREF: ROM:0004922
                 rts
 ; End of function Boss_JampanNoOpState50
 
-; Begins defeat by settling orbit offsets and disabling controller collision
+; Shrinks the shield radius, then gates defeat setup on the primary offset
 Boss_JampanBeginDefeatState:                            ; DATA XREF: ROM:00049228   o  ; was: sub_49DB2
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 bsr.w   Boss_JampanUpdateShieldFormationGeometry
@@ -360,7 +360,7 @@ Boss_JampanIncreaseDefeatPrimaryOffset:                 ; CODE XREF: Boss_Jampan
 Boss_JampanUpdateDefeatSecondaryOffset:                 ; CODE XREF: Boss_JampanBeginDefeatState+18   j
                                         ; Boss_JampanBeginDefeatState+24   j
                 tst.w   (SharedPatternRow1Long1+2).w
-                beq.s   Boss_JampanFinishDefeatOffsetConvergence
+                beq.s   Boss_JampanCompleteDefeatAfterPrimaryOffsetZero
                 tst.w   (SharedPatternRow1Long2).w
                 bmi.s   Boss_JampanIncreaseDefeatSecondaryOffset
                 subq.w  #1,(SharedPatternRow1Long2).w
@@ -370,7 +370,7 @@ Boss_JampanIncreaseDefeatSecondaryOffset:               ; CODE XREF: Boss_Jampan
                 addq.w  #1,(SharedPatternRow1Long2).w
                 rts
 ; ---------------------------------------------------------------------------
-Boss_JampanFinishDefeatOffsetConvergence:               ; CODE XREF: Boss_JampanBeginDefeatState+2E   j
+Boss_JampanCompleteDefeatAfterPrimaryOffsetZero:        ; CODE XREF: Boss_JampanBeginDefeatState+2E   j
                 tst.w   (SharedPatternRow1Long1+2).w
                 bne.s   Boss_JampanBeginDefeatReturn
                 bclr    #2,$4C(a5)

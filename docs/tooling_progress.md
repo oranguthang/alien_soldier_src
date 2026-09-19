@@ -149,3 +149,10 @@ found 301 records elsewhere with fifteen more vacuous evidence sentences.
 `NAME-002` now tracks twenty known boilerplate sentences, not just the five
 Gusthead forms; 301 records await review. This is a broader audit boundary,
 not a regression in the Gusthead work.
+
+The primary and secondary options-screen audit replaced twenty generic bases
+with input-bit, timer, state, and relative-handler-table evidence. The Jampan
+attack/defeat audit replaced sixteen more and corrected a label that implied
+both defeat offsets converge, though the code only gates completion on the
+primary offset. The known `NAME-002` queue falls from 301 to 265; no ROM bytes
+changed.

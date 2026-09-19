@@ -65,7 +65,7 @@
     {
       "id": "semantic_naming",
       "kind": "source",
-      "summary": "Every live address-derived identifier was replaced and 15,833 exact-address name records now exist. The 60 Gusthead loop, return, and dispatch bases were reviewed, but 301 records elsewhere match known generic evidence sentences; seven boss-identity records remain visual hypotheses.",
+      "summary": "Every live address-derived identifier was replaced and 15,833 exact-address name records now exist. After reviewing Gusthead, primary/secondary options, and Jampan paths, 265 records still match known generic evidence sentences; seven boss-identity records remain visual hypotheses.",
       "evidence": [
         "provenance_and_unknowns",
         "files:config/name_audit.json"
@@ -193,7 +193,7 @@
     },
     "provenance_and_unknowns": {
       "status": "partial",
-      "statement": "No live definition is address-derived and every replaced name keeps a traceable marker. The known generic-basis queue contains 301 non-Gusthead records awaiting instruction-specific review; seven boss-identity records remain hypotheses.",
+      "statement": "No live definition is address-derived and every replaced name keeps a traceable marker. The known generic-basis queue contains 265 records awaiting instruction-specific review; seven boss-identity records remain hypotheses.",
       "evidence": {
         "targets": [
           "lint",
@@ -455,7 +455,7 @@
     {
       "id": "generic_name_evidence_bases",
       "status": "partial",
-      "reason": "After reviewing the 60 Gusthead loop, return, dispatch, and table records, a wider registry scan exposed 301 further records with generic evidence sentences across other subsystems. Their bases do not identify the record-specific field, branch, caller, or target.",
+      "reason": "After reviewing 60 Gusthead, 20 options-screen, and 16 Jampan records, 265 records still match known generic evidence sentences across other subsystems. Their bases do not identify the record-specific field, branch, caller, or target.",
       "registry": "NAME-002",
       "control": "make release-audit recounts the curated set of 20 known generic basis sentences and refuses tag-ready status until the count is zero; a wider duplicate-basis review must also precede the final tag."
     },
@@ -719,7 +719,7 @@
     "declared_subsystems": 192,
     "definitions": 16928,
     "dma_transferred_payloads": 289,
-    "generic_evidence_bases": 301,
+    "generic_evidence_bases": 265,
     "hypothesis_name_records": 7,
     "modules": 383,
     "name_audit_records": 15833,

@@ -11004,3 +11004,17 @@ exposed 301 additional records matching fifteen other clearly generic
 sentences, including vague state-convergence and control-flow claims in
 Medusa, Sirene, Valkirie, Sharpssteel, and UI code. `NAME-002` now counts these
 301 records; this curated list is not a proof that all other bases are strong.
+
+The primary and secondary options-screen pass replaces twenty of those bases
+with the actual `GameSubstateIndex`, `GameModeIndex`, controller-bit, timer,
+selection, and relative-handler-table operations. The fourth reachable entry
+of `UI_SecondaryOptionsHandlerIndices` remains a documented code/data overlay
+at `$009F84`; it was not assigned an invented sound-test purpose.
+
+The Jampan attack/defeat pass replaces sixteen more bases. Defeat code at
+`$049DDC` retests the primary offset `SharedPatternRow1Long1+2`: when that
+offset is zero, it skips the secondary-offset adjustment and enters the defeat
+setup without proving the secondary offset converged. The former
+`Boss_JampanFinishDefeatOffsetConvergence` claimed too much and is now
+`Boss_JampanCompleteDefeatAfterPrimaryOffsetZero`. ROM bytes are unchanged.
+`NAME-002` falls from 301 to 265; the seven visual hypotheses are unaffected.
