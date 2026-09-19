@@ -160,21 +160,21 @@ Entity_UpdateValkirieBattleState8:                      ; DATA XREF: ROM:000557C
                 beq.s   Entity_RenderValkirieBattleState8
                 jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$80,d0
-                bpl.s   Entity_ValkirieBattleState8CheckRandomAttack
+                bpl.s   Entity_ValkirieBattleState8CheckRandomStateSelection
                 bra.w   Entity_StartValkirieBattleState12
 ; ---------------------------------------------------------------------------
-Entity_ValkirieBattleState8CheckRandomAttack:           ; CODE XREF: Entity_UpdateValkirieBattleState8+12   j  ; was: loc_55966
+Entity_ValkirieBattleState8CheckRandomStateSelection:   ; CODE XREF: Entity_UpdateValkirieBattleState8+12   j  ; was: loc_55966
                 cmpi.w  #$700,$BC(a5)
-                bmi.s   Entity_ValkirieBattleState8CheckDualShot
+                bmi.s   Entity_ValkirieBattleState8CheckState22Selection
                 cmpi.w  #$840,$BC(a5)
-                bpl.s   Entity_ValkirieBattleState8CheckDualShot
+                bpl.s   Entity_ValkirieBattleState8CheckState22Selection
                 move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 beq.w   Entity_StartValkirieBattleState14
                 move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 beq.w   Entity_StartValkirieBattleState18
-Entity_ValkirieBattleState8CheckDualShot:               ; CODE XREF: Entity_UpdateValkirieBattleState8+1E   j  ; was: loc_5598E
+Entity_ValkirieBattleState8CheckState22Selection:       ; CODE XREF: Entity_UpdateValkirieBattleState8+1E   j  ; was: loc_5598E
                                         ; Entity_UpdateValkirieBattleState8+26   j
                 cmpi.w  #$720,$BC(a5)
                 bmi.s   Entity_ValkirieBattleState8SelectStateA
@@ -213,11 +213,11 @@ Entity_ValkirieBattleStateAHandleAnimationEvent:        ; CODE XREF: Entity_Upda
                 beq.s   Entity_RenderValkirieBattleStateA
                 jsr     Entity_GetValkiriePlayerDeltaAndSide(pc)  ; (pc)
                 nop
-                bmi.s   Entity_ValkirieBattleStateASelectRisingAttack
+                bmi.s   Entity_ValkirieBattleStateASelectStateCRise
                 cmpi.w  #$30,d0                         ; '0'
-                bmi.s   Entity_ValkirieBattleStateASelectRisingAttack
+                bmi.s   Entity_ValkirieBattleStateASelectStateCRise
                 cmpi.w  #$A0,d0
-                bpl.s   Entity_ValkirieBattleStateASelectRisingAttack
+                bpl.s   Entity_ValkirieBattleStateASelectStateCRise
                 move.w  d0,d1
                 cmpi.w  #$46,d1                         ; 'F'
                 bpl.s   Entity_ValkirieBattleStateASelectMediumVelocity
@@ -239,7 +239,7 @@ Entity_ValkirieBattleStateAStartCharge:                 ; CODE XREF: Entity_Upda
                 bsr.w   Entity_SetValkirieHorizontalVelocityByFacing
                 bra.w   Entity_StartValkirieBattleStateE
 ; ---------------------------------------------------------------------------
-Entity_ValkirieBattleStateASelectRisingAttack:          ; CODE XREF: Entity_UpdateValkirieBattleStateA+18   j  ; was: loc_55A30
+Entity_ValkirieBattleStateASelectStateCRise:            ; CODE XREF: Entity_UpdateValkirieBattleStateA+18   j  ; was: loc_55A30
                                         ; Entity_UpdateValkirieBattleStateA+1E   j
                 bra.s   Entity_StartValkirieBattleStateC
 ; ---------------------------------------------------------------------------
@@ -248,7 +248,7 @@ Entity_RenderValkirieBattleStateA:                      ; CODE XREF: Entity_Upda
                 nop
                 bra.w   Entity_RenderValkirieBattleAnimation
 ; ---------------------------------------------------------------------------
-Entity_StartValkirieBattleStateC:                       ; CODE XREF: Entity_UpdateValkirieBattleStateA:Entity_ValkirieBattleStateASelectRisingAttack   j  ; was: loc_55A3C
+Entity_StartValkirieBattleStateC:                       ; CODE XREF: Entity_UpdateValkirieBattleStateA:Entity_ValkirieBattleStateASelectStateCRise   j  ; was: loc_55A3C
                 addq.w  #2,4(a5)
                 clr.b   $23E(a5)
                 move.w  a5,d0
@@ -414,11 +414,11 @@ Entity_DecelerateValkirieState10PositivePartVelocity:   ; CODE XREF: Entity_Upda
 Entity_CheckValkirieState10PartEvents:                  ; CODE XREF: Entity_UpdateValkirieBattleState10+16   j  ; was: loc_55C28
                                         ; Entity_UpdateValkirieBattleState10+22   j
                 bclr    #2,$23E(a5)
-                beq.s   Entity_CheckValkirieState10CollisionEvent
+                beq.s   Entity_CheckValkirieState10CloseRangeEvent
                 lea     Valkirie_State10PartHideCommands(pc),a0
                 nop
                 bsr.w   Entity_ApplyValkiriePartHideCommands
-Entity_CheckValkirieState10CollisionEvent:              ; CODE XREF: Entity_UpdateValkirieBattleState10+3E   j  ; was: loc_55C3A
+Entity_CheckValkirieState10CloseRangeEvent:             ; CODE XREF: Entity_UpdateValkirieBattleState10+3E   j  ; was: loc_55C3A
                 bclr    #3,$23E(a5)
                 beq.s   Entity_RenderValkirieBattleState10
                 tst.w   (DifficultyMode).w

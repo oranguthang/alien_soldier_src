@@ -182,3 +182,23 @@ targets, and render paths local to each address. The unusual rightward
 velocity branch at `$056E44` is described as written, without assigning a
 speed-limit interpretation. `NAME-002` falls from 212 to 167; the count of
 known template sentences remains 23. No source instruction or ROM byte changed.
+
+The Valkirie battle-controller pass checks 38 state and branch records against
+their local instruction streams. Four labels were narrowed: random attack to
+random state selection, dual shot to state-$22 selection, rising attack to
+state-$C rise, and collision event to a close-range event check. No projectile,
+collision, or attack identity is inferred from those branches alone. The
+records now identify the relevant event bits, bounds, motion fields, part
+pointers, and transition targets. `NAME-002` falls from 167 to 129; ROM bytes
+remain unchanged.
+
+A second Valkirie battle-controller pass reviews 36 state-entry, state-update,
+and render-path records from its 19-entry dispatch table. Each now cites its
+local event bit, timer or pose field, selected script, and transition. Calls
+to the gated bullet-spawn helper are described as calls, not guaranteed
+spawns. `NAME-002` falls from 129 to 93; the 23-template detector is unchanged.
+
+Ten Valkirie auxiliary-group branches in the rendering module now cite the
+actual flag bits, angle limits, timer, sine-table lookup, and velocity fields
+at their addresses. The names were already narrow enough, so this pass
+updates evidence only. `NAME-002` falls from 93 to 83; no ROM bytes changed.

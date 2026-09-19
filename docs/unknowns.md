@@ -11051,3 +11051,25 @@ velocity takes a compare against positive `$24000` followed by `BPL`;
 the record states that exact test without inferring an intended speed cap.
 `NAME-002` decreases from 212 to 167. The seven boss visual identities in
 `NAME-003` are still hypotheses.
+
+Thirty-eight Valkirie battle-state records now cite exact event bits, branch
+conditions, field writes, and target states instead of generic convergence.
+Four prior labels overclaimed an attack, dual shot, rise attack, or collision;
+they now name random state selection, state-$22 selection, a state-$C rise,
+and a close-range event check. The state-$10 path gates its transition on
+event bit 3, nonzero DifficultyMode, relative player side, and D0<$80; it
+does not itself perform a collision test. `NAME-002` falls from 167 to 129.
+The seven `NAME-003` visual identities remain provisional.
+
+The remaining 36 known-template Valkirie battle-state records were reviewed
+against the 19-entry controller table and their actual state handlers. Their
+evidence now names specific event bits, timer and pose fields, selected scripts,
+and transitions. Projectile_SpawnValkirieBullet has a frame gate and free-slot
+check, so call sites only claim invocation, not a guaranteed bullet spawn.
+`NAME-002` decreases from 129 to 93; visual identities remain separate.
+
+The ten Valkirie auxiliary-group records formerly shared an attached/launch/
+rotation/velocity boilerplate sentence. They now cite the individual
+ValkirieAuxFlags bits, linked angles, flash timer, sine components, and
+velocity fields that establish each branch. `NAME-002` decreases from 93 to
+83; the `NAME-003` visual-identity queue is unchanged.
