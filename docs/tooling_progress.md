@@ -41,8 +41,9 @@ manifest's tracked-text counter. It was recounted from the current tree so
 
 `make find-unanalyzed` now selects delimited code routines whose current-name
 evidence is `hypothesis` in `config/name_audit.json`, in ROM order. The current
-tree yields seven code candidates; one hypothesis names data and is reported
-but not passed to a code perturbation run. Old unpinned `analysis_results.csv`
+tree yields seven code candidates. The former transfer-tuple hypothesis is
+now an explicit `unknown`, not a code perturbation candidate. Old unpinned
+`analysis_results.csv`
 cannot silently remove candidates. `analyze_procedures.py` resolves each name
 to its owning module, changes only a unique temporary worker copy, records
 module and ROM order in its output, and defaults to one worker. The old

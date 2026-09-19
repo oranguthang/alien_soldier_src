@@ -10,7 +10,8 @@ Gfx_FrontendAlternateVRAMTransferParameters:    dc.l    $FFFF7000, $FFFF6800, $F
 Gfx_ScrollVRAMTransferParameters:   dc.l    $FFFF7000, $FFFF6000, $FFFF4000, $6000  ; was: dword_11346
                                         ; DATA XREF: StoryScreen_FadeInAndStartScroll+1E   o
                                         ; ShipSequence_InitializePatternReveal+8C   o
-Gfx_ScrollWideVRAMTransferParameters:   dc.l    $FFFF7400, $FFFF6800, $FFFF4000, $14000
+; Four-longword transfer tuple; no source selector establishes its intended use
+Gfx_UnidentifiedVRAMTransferParameters: dc.l    $FFFF7400, $FFFF6800, $FFFF4000, $14000
 
 ; Each asset-set record stores an entity type, an optional LoadObjData list,
 ; and an optional palette command. Boss_LoadAssetSet consumes those fields

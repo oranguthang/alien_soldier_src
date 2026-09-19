@@ -10908,3 +10908,13 @@ The lesson worth keeping is about attribution. Three times the probe failed and
 three times the first reading was that the source was broken. Two of those were
 the probe. The way to tell them apart was cheap and should have been the first
 move each time: ask what the inserted bytes actually do at that spot.
+
+## Unselected VRAM transfer tuple
+
+The four longwords at ROM `$011356` have the same parameter shape as the
+neighboring VRAM transfer tuples. No symbolic source reference selects this
+record, and no pinned runtime observation establishes its intended use. The
+former `Gfx_ScrollWideVRAMTransferParameters` name claimed a particular scroll
+mode from adjacency and transfer size alone. It is now
+`Gfx_UnidentifiedVRAMTransferParameters`, with `unknown` evidence in the exact-
+address name audit. The data bytes and the other transfer tuples are unchanged.
