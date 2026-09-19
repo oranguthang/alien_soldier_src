@@ -11358,3 +11358,11 @@ projectile). Six labels now use the supported companion role, and the state-
 four exit names its actual reticle branch. This does not establish the exact
 on-screen appearance of the companion sprites; the semantic evidence is the
 parent relationship and object fields.
+
+The state-$0C icon path is statically traceable to the queued transfer, but
+its old `Load...Frame` name implied this block performed the DMA itself. It
+actually selects active/shadow palette color 54, an icon tile, an art-source
+pointer and VDP command, then jumps to the queue helper. The color table has
+two 16-word ramps selected by `ShootingMode`. Five exact-address records now
+state those local facts; the queue label and plural ramp label were corrected.
+No claim about when the queued DMA is executed was added.

@@ -538,3 +538,13 @@ state-$08 labels now identify companion initialization and continuation,
 while the state-$04 exit label names its branch to the targeting reticle.
 The RAM-map description distinguishes those companions from the actual
 weapon-selection slot sprites.
+
+The five state-$0C icon records also had one whole-routine evidence sentence.
+They now separately explain the null-pointer/terminal-frame returns, bounded
+frame advance, ShootingMode selection of the second 16-color ramp, and the
+tile/art-source preparation followed by a jump into
+`UI_QueueWeaponStateIconTransferFromSource`. The former `Load...Frame` label
+was too strong for a routine that only queues a DMA command; it is now
+`Weapon_QueueState12IconFrameTransfer`. The color table's plural name records
+its two ramps. This completes local review of the adjacent state-$02 through
+state-$0C groups, not the wider `NAME-002` registry.

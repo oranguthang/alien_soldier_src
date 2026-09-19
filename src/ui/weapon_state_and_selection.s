@@ -524,12 +524,12 @@ Weapon_State12AdvanceIconFrame:                         ; CODE XREF: Weapon_Upda
                 addq.w  #2,(WeaponTargetOrFrame).w
                 andi.w  #$1E,d0
                 tst.w   (ShootingMode).w
-                beq.s   Weapon_LoadState12IconFrame
+                beq.s   Weapon_QueueState12IconFrameTransfer
                 addi.w  #$20,d0                         ; ' '
 ; Selects the state-twelve palette/frame and queues its DMA transfer
-Weapon_LoadState12IconFrame:                            ; CODE XREF: Weapon_UpdateState12Icon+1E   j  ; was: loc_17E6A
-                move.w  Weapon_State12IconPaletteRamp(pc,d0.w),(PaletteActiveColor54).w
-                move.w  Weapon_State12IconPaletteRamp(pc,d0.w),(PaletteShadowColor54).w
+Weapon_QueueState12IconFrameTransfer:                   ; CODE XREF: Weapon_UpdateState12Icon+1E   j  ; was: loc_17E6A
+                move.w  Weapon_State12IconColorRamps(pc,d0.w),(PaletteActiveColor54).w
+                move.w  Weapon_State12IconColorRamps(pc,d0.w),(PaletteShadowColor54).w
                 lsr.w   #1,d0
                 andi.w  #$E,d0
                 movea.l (WeaponAnimationDataPtr).w,a0
@@ -540,7 +540,7 @@ Weapon_LoadState12IconFrame:                            ; CODE XREF: Weapon_Upda
                 jmp     UI_QueueWeaponStateIconTransferFromSource
 ; End of function Weapon_UpdateState12Icon
 ; ---------------------------------------------------------------------------
-Weapon_State12IconPaletteRamp:  dc.w    $EEE, $CEE, $AEE, $8EC, $6EC, $4EA, $2EA, $2E8, $2E8, $E6, $E6, $E4, $E4, $E2, $E2, $C0  ; was: word_17E98
-                                        ; DATA XREF: Weapon_UpdateState12Icon:Weapon_LoadState12IconFrame   r
+Weapon_State12IconColorRamps:   dc.w    $EEE, $CEE, $AEE, $8EC, $6EC, $4EA, $2EA, $2E8, $2E8, $E6, $E6, $E4, $E4, $E2, $E2, $C0  ; was: word_17E98
+                                        ; DATA XREF: Weapon_UpdateState12Icon:Weapon_QueueState12IconFrameTransfer   r
                                         ; Weapon_UpdateState12Icon+2A   r
                 dc.w    $EEE, $EEC, $EEA, $8CE, $6CE, $4AE, $2AE, $28E, $28E, $6E, $6E, $4E, $4E, $2E, $2E, $C
