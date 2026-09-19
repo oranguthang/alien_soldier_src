@@ -2145,15 +2145,33 @@
       "end": "0x0E867F"
     },
     {
-      "file": "src/data/player_sprite_mappings.s",
+      "file": "src/data/player_movement_and_dash_sprite_mappings.s",
       "subsystem": "data",
       "start": "0x0E8680",
+      "end": "0x0E8A19"
+    },
+    {
+      "file": "src/data/player_state_animation_sprite_mappings.s",
+      "subsystem": "data",
+      "start": "0x0E8A1A",
+      "end": "0x0E8E69"
+    },
+    {
+      "file": "src/data/player_special_and_death_sprite_mappings.s",
+      "subsystem": "data",
+      "start": "0x0E8E6A",
       "end": "0x0E9079"
     },
     {
-      "file": "src/data/shared_combat_sprite_mappings.s",
+      "file": "src/data/shared_combat_sprite_frames.s",
       "subsystem": "data",
       "start": "0x0E907A",
+      "end": "0x0E953B"
+    },
+    {
+      "file": "src/data/shared_combat_sprite_animations.s",
+      "subsystem": "data",
+      "start": "0x0E953C",
       "end": "0x0E98AF"
     },
     {

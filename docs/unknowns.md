@@ -2567,7 +2567,7 @@ registry from 6,930 to 6,965 records. Module count and the 5,259
 address-derived ceiling are unchanged.
 
 The shared-combat sprite-mapping pass reconstructs the cohesive
-`data/shared_combat_sprite_mappings.s` bank as 73 ROM-ordered frame records
+shared-combat mapping bank as 73 ROM-ordered frame records
 and 34 relative-offset animation streams. `Anim_UpdateFrame` proves the
 format by reading a frame-relative offset and its duration/control word;
 `Sprite_PrepareOAM` then consumes the resolved frame. All 106 remaining
@@ -2805,10 +2805,10 @@ Japanese ROM (`8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`), and all
 37 project tests pass against the resulting source and audit data.
 
 The player sprite-mapping audit resolves all 70 imported `word_E...`
-definitions in the complete `0x0E8680-0x0E9079` bank. This remains one
-cohesive 959-line `data/player_sprite_mappings.s` module: it is a single
-consumer family, fits the agreed 1,000-line ceiling, and has no natural owner
-boundary that would justify a cosmetic split.
+definitions in the complete `0x0E8680-0x0E9079` bank. At this stage the
+family was kept in a single module under the 1,000-line ceiling. A later
+layout review separated three complete mapping groups at their own record
+boundaries; no record or ROM range was divided internally.
 
 The names follow three kinds of static evidence. Directional, state-animation,
 weapon-animation, defeat, terrain-layout, and death-particle records use their
@@ -5258,7 +5258,7 @@ the first exact mapping and piece index; reuse by later mappings remains visible
 in the mapping source rather than being hidden behind an invented visual pose.
 
 The final 28 segments form the contiguous tail after the last piece referenced
-by `player_sprite_mappings.s`, but they are not unreferenced. A full-source
+by the player mapping family, but they are not unreferenced. A full-source
 assembly check caught that incomplete local classification before commit.
 Twenty-four are the three eight-direction art sets selected by the audited
 circle-attack frame tables; the other four are distinct DMA sources in the
@@ -11251,3 +11251,18 @@ and branches to object-block clearing; the label is now
 `Weapon_FinalizeStateTransition`. The curated `NAME-002` detector covers 50
 sentences with zero matches, but the wider duplicate-basis review is still
 open and `NAME-003` still has seven visual hypotheses.
+
+The player sprite-mapping bank was later split at complete record boundaries
+`$0E8A1A` and `$0E8E6A`. The three ROM-ordered modules now own movement/dash,
+state/fall/weapon animation, and phoenix/teleport/special/death mappings at
+345, 416, and 200 lines. This corrects the earlier claim that the entire
+family lacked a meaningful internal boundary. `make verify`, `make compare`,
+and `make verify-symbols` confirm unchanged ROM bytes and all 15,833 audited
+symbol addresses, including the 70 player mapping definitions.
+
+The shared-combat sprite bank is now separated at `$0E953C` into 73 frame
+records and 34 relative-offset animation streams. This is an ownership
+boundary, not a new claim that the mixed frame consumers depict one entity.
+The ordinal frame names remain neutral, with their `; was:` provenance intact.
+`make verify`, `make compare`, and `make verify-symbols` confirm the ROM and
+exact-address registry are unchanged by the module split.

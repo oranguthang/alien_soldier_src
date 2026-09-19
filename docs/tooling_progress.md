@@ -398,3 +398,24 @@ it is now `Weapon_FinalizeStateTransition`, matching its icon-transfer state,
 cooldown, and object-block effects. Two retired shared evidence sentences join
 the detector, bringing it from 48 to 50 known templates with zero matches.
 The rest of the duplicate-basis and visual-identity reviews remain open.
+
+The 958 content lines in the player sprite-mapping bank were divided only at
+the complete mapping records `$0E8A1A` and `$0E8E6A`. Three named modules now
+own movement/dash (345 lines), state/fall/weapon animation (416), and special/
+death mappings (200); `src/main.s` retains their exact ROM order. The source
+text slices concatenated byte-for-byte before three descriptive comments were
+added. The layout map now has 385 modules: 214 in the preferred 200–700 band,
+146 shorter, 25 longer, none over 1000. The rebuilt ROM passed `make verify`
+and `make compare` byte-for-byte, and `make verify-symbols` matched every
+15,833 name record to the freshly assembled listing.
+
+The next mapping-layout pass divided the shared-combat bank at `$0E953C`,
+between its 73 complete frame records and 34 relative-offset animation
+streams. The two files are 264 and 466 lines, and the original text slices
+concatenated exactly before their explanatory headers were adjusted. Include
+and layout order still follows the ROM. There are now 386 modules, 216 inside
+the preferred 200–700-line band, 146 shorter, and 24 longer; the maximum
+remains 986. `make verify` and `make compare` confirm byte identity, while
+`make verify-symbols` confirms all 15,833 audited addresses against the new
+listing. Numeric frame suffixes remain neutral because mixed consumers do not
+establish a shared visual identity.
