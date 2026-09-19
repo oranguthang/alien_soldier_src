@@ -96,9 +96,10 @@ sub_1234,Player_UpdateHealth,"Updates player health bar"
 make rename
 ```
 
-The legacy batch-renaming scripts still assume one monolithic source file and
-must not be used until they are made module-aware. Apply reviewed renames to
-the owning `src/**/*.s` module, update every reference, and run `make verify`.
+`make rename` now uses the module-aware renamer across `src/**/*.s` and
+`src/**/*.inc`; the old single-file mutator refuses to run. Review all changed
+modules, record the evidence for any new semantic claim, and run `make verify`
+before committing. This exploratory workflow is not release evidence.
 
 ### Step 5: Verify and Commit
 

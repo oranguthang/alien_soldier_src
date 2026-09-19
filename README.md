@@ -82,7 +82,8 @@ alien_soldier_src/
 | `generate_analysis_report.py` | Generates HTML report from analysis data |
 | `init_project.py` | Full project initialization (split → build → reference) |
 | `prepare_batch.py` | Prepares batch of procedures for documentation |
-| `rename_procedures.py` | Applies rename CSV to source file |
+| `rename_batch.py` | Applies a reviewed rename CSV across source modules and marks the research report |
+| `rename_procedures.py` | Retired single-file mutator; refuses to run |
 | `report_pointers.py` | Generates report from pointer debugging session |
 | `split_data_from_listing.py` | Extracts data sections from AS listing |
 | `split_data_from_rom.py` | Extracts and decompresses tile data from ROM |
@@ -123,8 +124,8 @@ make prepare-batch COUNT=40
 # 4. Apply renames to source
 make rename
 
-# 5. Verify changes
-make build && make compare
+# 5. Verify preservation identity
+make verify
 
 # 6. Commit changes
 git commit -am "Document N procedures"

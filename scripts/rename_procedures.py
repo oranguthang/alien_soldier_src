@@ -296,6 +296,12 @@ def update_analysis_report(report_file, renamed_procedures):
 
 
 def main():
+    print(
+        "ERROR: rename_procedures.py is retired because it edits one source file. "
+        "Use make rename or scripts/rename_batch.py for module-aware renames."
+    )
+    return 1
+
     parser = argparse.ArgumentParser(description='Apply procedure renames from database')
     parser.add_argument('--database', default='procedure_database.csv',
                        help='Procedure database CSV')

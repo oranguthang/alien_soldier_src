@@ -397,77 +397,24 @@ compare:
 # Usage: make set-movie MOVIE=tas|longplay|menus
 .PHONY: set-movie
 set-movie:
-ifndef MOVIE
-	@echo "ERROR: MOVIE parameter required!"
-	@echo ""
-	@echo "Usage: make set-movie MOVIE=<type>"
-	@echo ""
-	@echo "Examples:"
-	@echo "  make set-movie MOVIE=tas"
-	@exit 1
-else
-	@python -c "import os; os.makedirs('$(WORKFLOW_DIR)', exist_ok=True)"
-	@echo $(MOVIE) > $(WORKFLOW_DIR)/.movie
-	@echo "Movie type set to: $(MOVIE)"
-	@echo "Saved to $(WORKFLOW_DIR)/.movie"
-endif
+	@$(PYTHON) $(SCRIPTS_DIR)/research_movie.py set --marker $(WORKFLOW_DIR)/.movie --movie "$(MOVIE)"
 
 # Show current movie setting
 .PHONY: show-movie
 show-movie:
-	@if [ -f $(WORKFLOW_DIR)/.movie ]; then \
-		echo "Current movie: $$(cat $(WORKFLOW_DIR)/.movie)"; \
-	else \
-		echo "No movie set. Use: make set-movie MOVIE=tas"; \
-	fi
+	@$(PYTHON) $(SCRIPTS_DIR)/research_movie.py show --marker $(WORKFLOW_DIR)/.movie
 
 # Prepare batch of procedures for documentation
 # Usage: make prepare-batch COUNT=40
 BATCH_COUNT ?= 40
 .PHONY: prepare-batch
 prepare-batch:
-	@if [ ! -f $(WORKFLOW_DIR)/.movie ]; then \
-		echo "ERROR: No movie set!"; \
-		echo "First run: make set-movie MOVIE=tas"; \
-		exit 1; \
-	fi
-	@echo "Preparing batch of $(BATCH_COUNT) procedures..."
-	python $(SCRIPTS_DIR)/prepare_batch.py \
-		--report $(WORKFLOW_DIR)/analysis_report_$$(cat $(WORKFLOW_DIR)/.movie).csv \
-		--count $(BATCH_COUNT) \
-		--output $(WORKFLOW_DIR)/batch_procedures.txt \
-		--source $(SRC)
-	@echo ""
-	@echo "Batch prepared: $(WORKFLOW_DIR)/batch_procedures.txt"
-	@echo ""
-	@echo "Next steps:"
-	@echo "  1. Claude reads $(WORKFLOW_DIR)/batch_procedures.txt"
-	@echo "  2. Claude creates $(WORKFLOW_DIR)/rename_batch.csv with columns:"
-	@echo "     old_name,new_name,description"
-	@echo "  3. Run: make rename"
+	@$(PYTHON) $(SCRIPTS_DIR)/prepare_batch.py --movie-file $(WORKFLOW_DIR)/.movie --count $(BATCH_COUNT) --output $(WORKFLOW_DIR)/batch_procedures.txt --source $(SRC)
 
 # Apply renames from rename_batch.csv and mark as processed
 .PHONY: rename
 rename:
-	@if [ ! -f $(WORKFLOW_DIR)/.movie ]; then \
-		echo "ERROR: No movie set!"; \
-		exit 1; \
-	fi
-	@if [ ! -f $(WORKFLOW_DIR)/rename_batch.csv ]; then \
-		echo "ERROR: $(WORKFLOW_DIR)/rename_batch.csv not found!"; \
-		echo "Create it with columns: old_name,new_name,description"; \
-		exit 1; \
-	fi
-	@echo "Applying renames from $(WORKFLOW_DIR)/rename_batch.csv..."
-	python $(SCRIPTS_DIR)/rename_procedures.py \
-		--source $(SRC) \
-		--database $(WORKFLOW_DIR)/rename_batch.csv \
-		--report $(WORKFLOW_DIR)/analysis_report_$$(cat $(WORKFLOW_DIR)/.movie).csv
-	@echo ""
-	@echo "Renames applied! Next steps:"
-	@echo "  1. Review changes: git diff $(SRC)"
-	@echo "  2. Build and test: make build"
-	@echo "  3. Commit: git add $(SRC) && git commit"
+	@$(PYTHON) $(SCRIPTS_DIR)/rename_batch.py --database $(WORKFLOW_DIR)/rename_batch.csv --movie-file $(WORKFLOW_DIR)/.movie
 
 # Gens emulator paths
 GENS_DIR ?= ../gens_automation

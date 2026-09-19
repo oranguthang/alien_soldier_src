@@ -14,6 +14,31 @@ import re
 import argparse
 from pathlib import Path
 
+from research_movie import report_for_movie
+
+
+INCLUDE_RE = re.compile(r'^\s*include\s+"([^"]+\.s)"', re.IGNORECASE)
+
+
+def source_modules(source_file):
+    """Return the assembly modules named by the address-ordered include index."""
+    source_file = Path(source_file)
+    if source_file.name != 'main.s':
+        return [source_file]
+
+    project_dir = source_file.parent.parent
+    modules = []
+    for line in source_file.read_text(encoding='utf-8').splitlines():
+        match = INCLUDE_RE.match(line)
+        if match:
+            module = project_dir / match.group(1)
+            if not module.is_file():
+                raise FileNotFoundError(f'{source_file}: missing module {module}')
+            modules.append(module)
+    if not modules:
+        raise ValueError(f'{source_file}: no assembly modules found')
+    return modules
+
 
 def load_procedures_from_report(csv_file, count=40):
     """Load unprocessed procedures from analysis report CSV."""
@@ -49,8 +74,8 @@ def load_procedures_from_report(csv_file, count=40):
     return procedures
 
 
-def find_procedure(asm_file, proc_name):
-    """Find and extract procedure code from assembly file."""
+def find_procedure_in_file(asm_file, proc_name):
+    """Find and extract procedure code from one assembly module."""
     with open(asm_file, 'r', encoding='utf-8', errors='ignore') as f:
         lines = f.readlines()
 
@@ -66,26 +91,24 @@ def find_procedure(asm_file, proc_name):
     if start_line is None:
         return None
 
-    # Find procedure end (look for "; End of function" marker)
+    # Find the imported function boundary. A module is at most 1000 lines, so
+    # scanning it in full is cheap and avoids silently clipping long routines.
     end_line = None
-    end_pattern = re.compile(r'^; End of function\s+' + re.escape(proc_name))
+    end_pattern = re.compile(
+        r'^; End of function\s+' + re.escape(proc_name) + r'(?:\s|$)'
+    )
 
-    for i in range(start_line + 1, min(start_line + 500, len(lines))):
+    for i in range(start_line + 1, len(lines)):
         if end_pattern.match(lines[i]):
             end_line = i
             break
 
-    # If no end marker found, look for next procedure or significant gap
+    has_end_marker = end_line is not None
     if end_line is None:
-        for i in range(start_line + 1, min(start_line + 200, len(lines))):
-            # Stop at next procedure (sub_) or new named label
-            if re.match(r'^(sub_|loc_|[a-zA-Z_][a-zA-Z0-9_]*):($|\s)', lines[i]):
-                if lines[i].startswith('sub_') or not lines[i].startswith('loc_'):
-                    end_line = i - 1
-                    break
-
-    if end_line is None:
-        end_line = min(start_line + 100, len(lines) - 1)
+        # Without a boundary we must not claim that an arbitrary local label
+        # or 100-line slice is the entire procedure. Show the module remainder
+        # and mark the boundary as uncertain in the batch output.
+        end_line = len(lines) - 1
 
     # Extract procedure with context
     context_before = 3
@@ -94,22 +117,32 @@ def find_procedure(asm_file, proc_name):
     extract_start = max(0, start_line - context_before)
     extract_end = min(len(lines), end_line + context_after + 1)
 
-    return lines[extract_start:extract_end]
+    return lines[extract_start:extract_end], has_end_marker
+
+
+def find_procedure(asm_file, proc_name):
+    """Find a procedure in the include index or a single source module."""
+    for module in source_modules(asm_file):
+        found = find_procedure_in_file(module, proc_name)
+        if found is not None:
+            lines, has_end_marker = found
+            return module, lines, has_end_marker
+    return None
 
 
 def extract_procedure_code(proc_name, source_file):
-    """Extract procedure code from source file."""
-    lines = find_procedure(source_file, proc_name)
-
-    if lines is None:
+    """Extract procedure code and identify its owning module."""
+    found = find_procedure(source_file, proc_name)
+    if found is None:
         return f"Error: Procedure {proc_name} not found"
-
-    # Format output
-    output = []
-    for line in lines:
-        output.append(line.rstrip())
-
-    return '\n'.join(output)
+    module, lines, has_end_marker = found
+    boundary_note = (
+        "" if has_end_marker else
+        "Boundary: no matching End of function marker; showing module remainder\n"
+    )
+    return f"Source module: {module}\n{boundary_note}" + '\n'.join(
+        line.rstrip() for line in lines
+    )
 
 
 def format_sections(proc):
@@ -128,16 +161,25 @@ def format_sections(proc):
     return ', '.join(parts) if parts else 'none'
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description='Prepare batch of procedures for documentation')
-    parser.add_argument('--report', required=True, help='Analysis report CSV file')
+    report_input = parser.add_mutually_exclusive_group(required=True)
+    report_input.add_argument('--report', help='Analysis report CSV file')
+    report_input.add_argument('--movie-file', help='Selected movie marker')
     parser.add_argument('--count', type=int, default=40, help='Number of procedures')
     parser.add_argument('--output', required=True, help='Output file')
     parser.add_argument('--source', default='alien_soldier_j.s', help='Source assembly file')
 
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
-    report_file = Path(args.report)
+    try:
+        report_file = (
+            report_for_movie(Path(args.movie_file))
+            if args.movie_file else Path(args.report)
+        )
+    except ValueError as error:
+        print(f"Error: {error}")
+        return 1
     output_file = Path(args.output)
     source_file = Path(args.source)
 

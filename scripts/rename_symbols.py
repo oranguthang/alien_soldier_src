@@ -16,6 +16,28 @@ DEFINITION_RE = re.compile(
 PROVENANCE_RE = re.compile(r";\s*was:")
 
 
+def provenance_start(line: str) -> int | None:
+    """Locate a provenance marker outside quoted assembly literals."""
+    index = 0
+    while index < len(line):
+        quote = line[index]
+        if quote in {'"', "'"}:
+            index += 1
+            while index < len(line):
+                if line[index] == quote:
+                    index += 1
+                    if index < len(line) and line[index] == quote:
+                        index += 1
+                        continue
+                    break
+                index += 1
+            continue
+        if quote == ";" and PROVENANCE_RE.match(line, index):
+            return index
+        index += 1
+    return None
+
+
 def fail(message: str) -> None:
     print(f"[ERROR] {message}", file=sys.stderr)
     raise SystemExit(1)
@@ -28,13 +50,17 @@ def source_files() -> list[Path]:
 def load_renames(path: Path) -> list[tuple[str, str]]:
     renames: list[tuple[str, str]] = []
     with path.open(encoding="utf-8", newline="") as handle:
-        for row in csv.reader(handle):
+        for row_index, row in enumerate(csv.reader(handle)):
             if not row or row[0].startswith("#"):
                 continue
             if len(row) < 2:
                 fail(f"{path}: expected 'old,new', got {row!r}")
             old, new = row[0].strip(), row[1].strip()
-            if not old or old.lower() in {"old", "old_name"}:
+            if not old or (
+                row_index == 0
+                and old.lower() in {"old", "old_name"}
+                and new.lower() in {"new", "new_name"}
+            ):
                 continue
             renames.append((old, new))
     return renames
@@ -105,7 +131,17 @@ def apply_renames(
 
             definition = DEFINITION_RE.match(line)
             defines = definition.group(1) if definition else None
-            new_line, count = substitute_unquoted(line, pattern, mapping)
+            # The `was:` suffix is historical evidence, not a live reference.
+            # In particular, a previous name can be another symbol in this
+            # batch; rewriting it would silently falsify provenance.
+            marker = provenance_start(line)
+            if marker is not None:
+                new_prefix, count = substitute_unquoted(
+                    line[:marker], pattern, mapping
+                )
+                new_line = new_prefix + line[marker:]
+            else:
+                new_line, count = substitute_unquoted(line, pattern, mapping)
             replaced += count
 
             if provenance and defines in mapping and not PROVENANCE_RE.search(new_line):
@@ -122,7 +158,7 @@ def apply_renames(
     return replaced, annotated
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("csv_file", help="CSV of old,new symbol pairs")
     parser.add_argument(
@@ -130,7 +166,7 @@ def main() -> int:
         action="store_true",
         help="Do not append '; was: <old>' to definition lines",
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     csv_path = Path(args.csv_file)
     if not csv_path.is_file():

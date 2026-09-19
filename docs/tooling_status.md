@@ -3,12 +3,16 @@
 The release interface is the list in `config/release_0_5.json`. Those commands
 are module-aware and are covered by the release gate.
 
-Several older exploratory commands predate the split from
-`alien_soldier_j.s` to the address-ordered `src/main.s` translation unit:
-`analyze`, `debug-pointers`, `find-unanalyzed`, `prepare-batch`, and `rename`.
-They are retained as research material but are outside the release 0.5
-contract until their source mutation logic can address individual modules.
-They must not be used as evidence for preservation or semantic correctness.
+Several exploratory commands predate the split from `alien_soldier_j.s` to the
+address-ordered `src/main.s` translation unit: `analyze`, `debug-pointers`,
+`find-unanalyzed`, and `prepare-batch`. Their wider workflows remain outside
+the release interface and must not be used as evidence for preservation or
+semantic correctness. `make rename` now uses a module-aware renamer and
+preserves provenance, but a rename still needs independent semantic evidence
+and `make verify`; the research report's processed flag is not such evidence.
+The `set-movie`, `show-movie`, and `prepare-batch` recipes are portable Python
+calls, and batch extraction follows the ROM-ordered modules. Their report
+inputs remain exploratory rather than release evidence.
 
 Read-only trace parsing and report generation do not mutate source and remain
 useful, but their output is evidence only when its ROM, movie, emulator commit,

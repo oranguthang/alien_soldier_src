@@ -465,7 +465,7 @@
     {
       "id": "legacy_analysis_commands",
       "status": "unsupported",
-      "reason": "analyze, debug-pointers, find-unanalyzed, prepare-batch and rename predate the split into address-ordered modules and mutate a single translation unit.",
+      "reason": "The five exploratory commands analyze, debug-pointers, find-unanalyzed, prepare-batch and rename remain outside release evidence. The first three still depend on the old analysis model; prepare-batch reads address-ordered modules, and rename now edits modules through rename_symbols.py, but neither research result establishes semantic correctness.",
       "registry": "TOOL-001",
       "control": "They are outside the release interface in config/release_0_5.json, and docs/tooling_status.md states that their output is not evidence."
     },

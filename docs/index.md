@@ -22,6 +22,7 @@
 | [`unknowns.md`](unknowns.md) | What is still unresolved, and what would settle it |
 | [`modularization_plan.md`](modularization_plan.md) | How the single translation unit became modules |
 | [`tooling_status.md`](tooling_status.md) | Which commands are release evidence and which are research |
+| [`tooling_progress.md`](tooling_progress.md) | Incremental evidence for migrating legacy tools to modules |
 
 ## Evidence and hardware
 
