@@ -80,3 +80,10 @@ ROM-ordered modules. Its 57 ranges now count all 380 modules from
 `config/rom_layout.json`. Project lint checks range continuity,
 exactly one broad-range owner per module, and the count in each row; future
 semantic splits cannot silently leave the orientation map stale.
+
+The former long `stages/stage_and_boss_transition_states.s` was divided at
+the Missiray entry-state boundary `$00F7FA`. Its dispatch, table, asteroid,
+Destroyer Proto, Shield Viper, and Wolf Garopa block remains 583 lines;
+the Missiray/Stage 24/Z-Leo block is 278 lines in
+`stages/missiray_stage24_z_leo_transitions.s`. The source is now 381 modules:
+208 in the 200-700 line preference, 145 shorter, 28 longer, none over 1000.

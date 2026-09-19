@@ -65,6 +65,7 @@
                 include "src/stages/seven_forces_stage_states.s"
                 include "src/stages/seven_forces_transition_graphics.s"
                 include "src/stages/stage_and_boss_transition_states.s"
+                include "src/stages/missiray_stage24_z_leo_transitions.s"
                 include "src/stages/asteroid_and_destroyer_proto_scroll.s"
                 include "src/stages/stage_transition_backdrop_effects.s"
                 include "src/stages/wolf_garopa_arena_boundaries.s"

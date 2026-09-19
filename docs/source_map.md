@@ -12,7 +12,7 @@ cover each layout module exactly once and that the file counts stay current.
 | `0x004840-0x009321` | story, planet, credits, and ship sequences | 8 | mixed: static/hypothesis |
 | `0x009322-0x00C83D` | title/options/password UI, results, and palette assets | 8 | hypothesis |
 | `0x00C83E-0x00D6D5` | early-stage process states, Flying Neo train flow, Stage 9 transitions, and Terobuster intro effects | 4 | static/hypothesis |
-| `0x00D6D6-0x010025` | Flying Neo effects, later stage groups, boss transitions, and dispatch helpers | 15 | static/hypothesis |
+| `0x00D6D6-0x010025` | Flying Neo effects, later stage groups, boss transitions, and dispatch helpers | 16 | static/hypothesis |
 | `0x010026-0x010D15` | camera, scroll planes, and tilemap rendering | 5 | static/hypothesis |
 | `0x010D16-0x012B69` | DMA, asset transfer, Stage 3 tile resampling, and stage loading/configuration | 9 | static/hypothesis |
 | `0x012B6A-0x013ADD` | debug UI, HUD, and status display | 6 | static/hypothesis |

@@ -32,6 +32,12 @@ preserve that exact byte sequence at 560 and 329 lines respectively. In
 contrast, the long player sprite-mapping family remains together because a
 line-count-only split would obscure its shared consumer.
 
+The transition dispatcher and the asteroid, Destroyer Proto, Shield Viper,
+and Wolf Garopa entry states now end at ROM `$00F7F9`. The Missiray, Stage 24,
+and Z-Leo entry states begin at `$00F7FA` in
+`missiray_stage24_z_leo_transitions.s`. This is a complete function boundary;
+both modules are inside the preferred band at 583 and 278 lines.
+
 Definition-only `.inc` files are outside this limit. They will receive their
 own structure and policy as the RAM and hardware maps mature.
 

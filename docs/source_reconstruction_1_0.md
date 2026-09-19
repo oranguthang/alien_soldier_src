@@ -15,7 +15,7 @@ byte.
   toolchain and compares the result with the user-supplied Japanese cartridge
   dump byte by byte, not by hash alone, reproducing SHA-1
   `8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`.
-- **Source, not blobs.** All executable 68000 code is assembly source across 380
+- **Source, not blobs.** All executable 68000 code is assembly source across 381
   address-ordered modules indexed by `src/main.s`. Include order is ROM order;
   there is no linker, so `config/rom_layout.json` owns the memory map, the
   landmarks, the padding gap and every module range, and `make verify-layout`
@@ -61,7 +61,7 @@ that limits it. They are stated here rather than left implicit.
 | `PROFILE-001` | The European ROM. Only the Japanese cartridge is accepted. | unsupported |
 | `SND-001` | The Z80 sound driver program, which stays a verbatim payload and is never disassembled. | unsupported |
 | `NAME-001` | 513 `_End` aliases that follow their own `binclude` payload hold no separate record. | partial |
-| `LAYOUT-001` | Module sizes: 206 of 380 modules sit inside the preferred 200–700 line band, 145 are shorter and 29 are longer. | partial |
+| `LAYOUT-001` | Module sizes: 208 of 381 modules sit inside the preferred 200–700 line band, 145 are shorter and 28 are longer. | partial |
 | `TOOL-001` | Four exploratory commands remain outside release evidence; their source operations address modules. The obsolete pointer debugger is retired, and `verify-relocation` checks pointers across the current layout. | unsupported |
 | `TOOL-002` | The monolithic asset splitter is retired; `make split` extracts canonical data under the asset manifest. | unsupported |
 | `RELEASE-001` | The isolated 1.0 branch has not yet passed its final gate or received its final tag. | planned |

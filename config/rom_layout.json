@@ -624,6 +624,12 @@
       "file": "src/stages/stage_and_boss_transition_states.s",
       "subsystem": "stages",
       "start": "0x00F0F0",
+      "end": "0x00F7F9"
+    },
+    {
+      "file": "src/stages/missiray_stage24_z_leo_transitions.s",
+      "subsystem": "stages",
+      "start": "0x00F7FA",
       "end": "0x00FB23"
     },
     {
