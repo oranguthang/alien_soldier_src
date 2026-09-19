@@ -583,4 +583,13 @@ four primary/secondary sprite-frame pairs. The preserved terrain entry at
 `$015372` has no symbolic executable caller or state-table pointer in the
 current source, but that does not prove it never runs. Its name was narrowed
 from `Unused` to `Unreferenced`, with its original `; was:` marker retained.
-The adjacent Counter Force sprite-art records remain a separate audit group.
+The adjacent Counter Force sprite-art records were left for a separate pass.
+
+The 17 adjacent Counter Force mapping/art records have now been reviewed
+separately. Four mapping addresses are tied to the four ordered primary-frame
+table entries and their four, three, two, and four piece pointers. Each of
+the thirteen art addresses now names the exact mapping pointer expression
+and preserved `binclude` payload it supplies. Source comments explain why
+the physical ROM art order differs from the piece indices. This establishes
+pointer ownership and byte provenance, not an inferred appearance for any
+individual piece.

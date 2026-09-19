@@ -11404,4 +11404,12 @@ the current source, yet its wall/floor test and timer fallthrough are intact.
 `Player_UnreferencedCounterForceTerrainPath` describes that source-level
 finding without claiming global runtime unreachability; its former `Unused`
 name remains in the audit history. The sprite mappings and art pieces that
-share other family-wide bases still need their own review.
+shared other family-wide bases were deferred to the next pass.
+
+That adjacent review now covers four Counter Force primary mappings and
+thirteen art-piece starts. `Player_CounterForcePrimaryFrameTable` selects
+mapping records in order, but their art-piece pointers are not laid out in
+piece order in the ROM. Each basis therefore cites the actual mapping
+expression and `binclude` payload instead of treating neighbouring art
+addresses as a visual sequence. The binary payloads have not been decoded
+into pixel-level appearance claims by this static pass.

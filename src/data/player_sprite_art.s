@@ -272,6 +272,8 @@ Player_KnockbackPrimarySpriteArtPiece01:        binclude "data/artunc/sprite_F7A
 Player_KnockbackPrimarySpriteArtPiece01_End:            ; was: sprite_F7AF4_End
 Player_KnockbackPrimarySpriteArtPiece00:        binclude "data/artunc/sprite_F7B76.bin"  ; was: sprite_F7B76
 Player_KnockbackPrimarySpriteArtPiece00_End:            ; was: sprite_F7B76_End
+; Counter Force primary-frame art appears in ROM order, which differs from
+; the piece order of the four sprite mappings at $E8BC2..$E8C0A
 Player_CounterForcePrimarySpriteArt00Piece03:   binclude "data/artunc/sprite_F7C78.bin"  ; was: sprite_F7C78
 Player_CounterForcePrimarySpriteArt00Piece03_End:       ; was: sprite_F7C78_End
 Player_CounterForcePrimarySpriteArt00Piece01:   binclude "data/artunc/sprite_F7D7A.bin"  ; was: sprite_F7D7A

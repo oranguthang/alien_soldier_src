@@ -159,6 +159,8 @@ Player_KnockbackPrimarySpriteMapping:   dc.w    $800    ; DATA XREF: Player_Knoc
                 dc.w    $880C
                 dc.l    Player_KnockbackPrimarySpriteArtPiece02+$6000000
                 dc.w    $DBFE
+; Four primary Counter Force mappings selected by the frame table at $1735E
+; Piece indices follow pointer order inside each mapping, not ROM art order
 Player_CounterForcePrimarySpriteMapping00:  dc.w    $800  ; DATA XREF: ROM:Player_CounterForcePrimaryFrameTable   o  ; was: word_E8BC2
                 dc.l    Player_CounterForcePrimarySpriteArt00Piece00+$1000000
                 dc.w    $EAE5
