@@ -657,3 +657,14 @@ art-piece pointers. The animation state cycles `$48(a5)` through offsets
 mapping banks, frame 07 physically precedes frame 00; comments and the two
 frame-07 bases distinguish ROM order from animation order. No pose identity
 was inferred from the numeric frame index.
+
+Nine directional-spawner entries at `$02A154..$02A270` no longer share one
+sequence-wide sentence. Their exact-address bases distinguish setup, the
+signed X-acceleration choice, the timed radial-particle path, motion toward
+the player Y, even-frame trail allocation, and each return. The `$02A198`
+branch stores `$A000`, which the update sign-extends and adds to X velocity;
+its label now says negative X acceleration rather than merely alternate.
+This is static instruction evidence, not a claim about visual ownership or
+runtime reachability.
+The old shared sentence is the 51st known generic basis rejected by
+`make release-audit`; zero records still match the curated detector.

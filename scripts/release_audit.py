@@ -65,6 +65,7 @@ GENERIC_NAME_BASES = (
     "The local path selects, highlights, or navigates the encoded SHOOTING MODE, MOVING, and FIX strings and updates ShootingMode.",
     "WeaponStateIndex dispatches the shared weapon-state machine while WeaponSlotOffset selects one of the four WeaponSlotConfig words.",
     "The local cooldown, loadout-selection, state-transition, remaining-ammunition, or shared-parameter operations establish the narrower role stated by this symbol.",
+    "The initializer and update paths implement a two-phase spawner: timed radial particles followed by directional acceleration and horizontal trail emission.",
 )
 
 

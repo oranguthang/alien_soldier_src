@@ -111,11 +111,11 @@ Projectile_InitDirectionalSpawner:                      ; was: sub_2A154
                 move.w  #$400,8(a0)
                 move.w  #$F8FC,$A(a0)
                 btst    #$B,d0
-                beq.s   Projectile_SetDirectionalSpawnerAlternateAcceleration
+                beq.s   Projectile_SetDirectionalSpawnerNegativeXAcceleration
                 move.w  #$6000,$4C(a0)
                 rts
 ; ---------------------------------------------------------------------------
-Projectile_SetDirectionalSpawnerAlternateAcceleration:  ; CODE XREF: Projectile_InitDirectionalSpawner+3A   j  ; was: loc_2A198
+Projectile_SetDirectionalSpawnerNegativeXAcceleration:  ; CODE XREF: Projectile_InitDirectionalSpawner+3A   j  ; was: loc_2A198
                 move.w  #$A000,$4C(a0)
                 rts
 ; End of function Projectile_InitDirectionalSpawner
