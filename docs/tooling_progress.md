@@ -264,3 +264,33 @@ The active DMA paths call `Gfx_PrependDMATransferCommand`; the offset-sequence
 scan stores the next entry separately from resolution of the current mapping.
 `NAME-002` falls from 332 to 302 under the same 41-template detector. Source
 instructions and ROM bytes are unchanged.
+
+The stage-intro pass reviews 20 banner and sprite-layout records against their
+counter, state, glyph-loader, sound-request, and packed tile-index operations.
+The label at `$00AEF6` was misleading: it does not clamp X, but converges after
+the conditional cap and checks the stage-number sound timer. It is now named
+`StageIntro_CheckStageNumberSound`. `NAME-002` falls from 302 to 282; the label
+change preserves assembled bytes.
+
+The remaining-time bonus pass reviews 26 exact-address records covering its
+glyph setup, radial motion, hold, BCD score path, sprite writes, and tile
+layout. `Results_SlowTimeBonusSpin` did not change angle, and the subsequent
+`Results_FinishTimeBonusSpin` only waits before storing completion time. Their
+current names and the shared radial renderer now state those narrower roles;
+the dispatch table and cross-reference comments were updated together.
+`NAME-002` falls from 282 to 256, with byte identity retained.
+
+The shared message-render pass reviews 26 records across radial text movement,
+hold and wait states, sine/cosine sprite coordinates, tile-index expansion,
+glyph DMA setup, and compact line-sprite writing. The former fade-in and
+fade-out names were inaccurate: these states move Y and wait on a hold timer,
+without changing palette or brightness. The dispatcher, source cross-references,
+and audit names now say this. `NAME-002` falls from 256 to 230.
+
+The encoded message-script pass reviews 26 exact-address records for dispatch,
+glyph-row nibble substitution, DMA commands, and four-word tilemap chunks.
+`MessagePackedDigitsA/B` were incorrect RAM aliases: the two longwords are
+scratch copies for high and low pixel-nibble tests, so source and RAM map now
+name that role. The `$FFFE` command queues 256 words of tile art to VRAM
+`$5E00`; it does not write the tilemap, so its label is corrected to
+`MessageScript_QueueTileArtDMA`. `NAME-002` falls from 230 to 204.

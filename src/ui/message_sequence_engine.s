@@ -45,17 +45,17 @@ MessageSequence_HandlerTable:   dc.w    MessageSequence_Idle-MessageSequence_Adv
                 dc.w    Results_InitializeTimeBonus-MessageSequence_AdvanceState
                 dc.w    Results_LoadTimeBonusGlyphs-MessageSequence_AdvanceState
                 dc.w    Results_SpinInTimeBonus-MessageSequence_AdvanceState
-                dc.w    Results_SlowTimeBonusSpin-MessageSequence_AdvanceState
-                dc.w    Results_FinishTimeBonusSpin-MessageSequence_AdvanceState
+                dc.w    Results_ContractTimeBonusRadius-MessageSequence_AdvanceState
+                dc.w    Results_WaitThenStoreTimeBonus-MessageSequence_AdvanceState
                 dc.w    Results_AnimateTimeBonusEntry-MessageSequence_AdvanceState
                 dc.w    Results_HoldTimeBonus-MessageSequence_AdvanceState
                 dc.w    Results_AnimateTimeBonusExit-MessageSequence_AdvanceState
                 dc.w    Results_ApplyRemainingTimeBonus-MessageSequence_AdvanceState
                 dc.w    Results_ApplyRemainingTimeBonus-MessageSequence_AdvanceState
-                dc.w    Message_FadeInRadialText-MessageSequence_AdvanceState
-                dc.w    Message_FadeInRadialText-MessageSequence_AdvanceState
-                dc.w    Message_FadeInRadialText-MessageSequence_AdvanceState
-                dc.w    Message_FadeOutRadialText-MessageSequence_AdvanceState
+                dc.w    Message_MoveRadialTextIntoPlace-MessageSequence_AdvanceState
+                dc.w    Message_MoveRadialTextIntoPlace-MessageSequence_AdvanceState
+                dc.w    Message_MoveRadialTextIntoPlace-MessageSequence_AdvanceState
+                dc.w    Message_HoldRadialText-MessageSequence_AdvanceState
                 dc.w    Message_UpdateWaitTimer-MessageSequence_AdvanceState
                 dc.w    MessageSequence_Idle-MessageSequence_AdvanceState
                 dc.w    MessageSequence_Idle-MessageSequence_AdvanceState
@@ -206,7 +206,7 @@ MessageScript_DispatchCommand:                          ; DATA XREF: ROM:0000A9A
                 movea.l (MessageScriptCursor).w,a0
                 move.w  (a0),d0
                 cmpi.w  #$FFFE,d0
-                beq.w   MessageScript_QueueTilemapDMA
+                beq.w   MessageScript_QueueTileArtDMA
                 cmpi.w  #$FFFF,d0
                 bne.w   MessageScript_SetupGlyph
                 addq.w  #8,(MessageSequenceState).w
@@ -312,7 +312,7 @@ Message_QueueFontPatternFillDMA:                        ; CODE XREF: Message_Que
                 move.l  #$94009328,-(a1)
                 rts
 ; End of function Message_QueueFontPatternFillDMA
-; Builds one transparent glyph tile, queues its DMA, and writes tilemap words
+; Copies one glyph tile, substitutes zero pixel nibbles, and queues tile and tilemap DMA
 MessageScript_RenderGlyph:                              ; DATA XREF: ROM:0000A9AA   o  ; was: sub_AC74
                                         ; ROM:0000A9B8   o
                 movea.l (MessageGlyphSourcePtr).w,a0
@@ -331,37 +331,37 @@ MessageScript_DrawGlyph:                                ; CODE XREF: MessageScri
                 moveq   #$F,d7
 MessageScript_CopyGlyphRowLoop:                         ; CODE XREF: MessageScript_RenderGlyph+90   j  ; was: loc_AC98
                 move.l  (a0)+,d2
-                move.l  d2,(MessagePackedDigitsA).w
-                move.l  d2,(MessagePackedDigitsB).w
-                andi.b  #$F0,(MessagePackedDigitsA).w
+                move.l  d2,(MessageGlyphHiNibbleScratch).w
+                move.l  d2,(MessageGlyphLoNibbleScratch).w
+                andi.b  #$F0,(MessageGlyphHiNibbleScratch).w
                 bne.s   MessageScript_CheckGlyphNibble2
                 bset    #$1C,d2
 MessageScript_CheckGlyphNibble2:                        ; CODE XREF: MessageScript_RenderGlyph+34   j  ; was: loc_ACAE
-                andi.b  #$F,(MessagePackedDigitsB).w
+                andi.b  #$F,(MessageGlyphLoNibbleScratch).w
                 bne.s   MessageScript_CheckGlyphNibble3
                 bset    #$18,d2
 MessageScript_CheckGlyphNibble3:                        ; CODE XREF: MessageScript_RenderGlyph+40   j  ; was: loc_ACBA
-                andi.b  #$F0,(MessagePackedDigitsA+1).w
+                andi.b  #$F0,(MessageGlyphHiNibbleScratch+1).w
                 bne.s   MessageScript_CheckGlyphNibble4
                 bset    #$14,d2
 MessageScript_CheckGlyphNibble4:                        ; CODE XREF: MessageScript_RenderGlyph+4C   j  ; was: loc_ACC6
-                andi.b  #$F,(MessagePackedDigitsB+1).w
+                andi.b  #$F,(MessageGlyphLoNibbleScratch+1).w
                 bne.s   MessageScript_CheckGlyphNibble5
                 bset    #$10,d2
 MessageScript_CheckGlyphNibble5:                        ; CODE XREF: MessageScript_RenderGlyph+58   j  ; was: loc_ACD2
-                andi.b  #$F0,(MessagePackedDigitsA+2).w
+                andi.b  #$F0,(MessageGlyphHiNibbleScratch+2).w
                 bne.s   MessageScript_CheckGlyphNibble6
                 bset    #$C,d2
 MessageScript_CheckGlyphNibble6:                        ; CODE XREF: MessageScript_RenderGlyph+64   j  ; was: loc_ACDE
-                andi.b  #$F,(MessagePackedDigitsB+2).w
+                andi.b  #$F,(MessageGlyphLoNibbleScratch+2).w
                 bne.s   MessageScript_CheckGlyphNibble7
                 bset    #8,d2
 MessageScript_CheckGlyphNibble7:                        ; CODE XREF: MessageScript_RenderGlyph+70   j  ; was: loc_ACEA
-                andi.b  #$F0,(MessagePackedDigitsA+3).w
+                andi.b  #$F0,(MessageGlyphHiNibbleScratch+3).w
                 bne.s   MessageScript_CheckGlyphNibble8
                 bset    #4,d2
 MessageScript_CheckGlyphNibble8:                        ; CODE XREF: MessageScript_RenderGlyph+7C   j  ; was: loc_ACF6
-                andi.b  #$F,(MessagePackedDigitsB+3).w
+                andi.b  #$F,(MessageGlyphLoNibbleScratch+3).w
                 bne.s   MessageScript_StoreGlyphRow
                 bset    #0,d2
 MessageScript_StoreGlyphRow:                            ; CODE XREF: MessageScript_RenderGlyph+88   j  ; was: loc_AD02
@@ -419,8 +419,8 @@ MessageScript_RefreshGlyphTiles:                        ; CODE XREF: MessageScri
 MessageScript_WaitAndRefreshGlyphReturn:                ; CODE XREF: MessageScript_WaitAndRefreshGlyph+A   j  ; was: locret_ADAA
                 rts
 ; End of function MessageScript_WaitAndRefreshGlyph
-; Decodes a script DMA command and queues its ROM-to-VRAM tilemap transfer
-MessageScript_QueueTilemapDMA:                          ; CODE XREF: MessageScript_DispatchCommand+A   j  ; was: sub_ADAC
+; Decodes a script DMA command and queues 256 words of tile art to VRAM $5E00
+MessageScript_QueueTileArtDMA:                          ; CODE XREF: MessageScript_DispatchCommand+A   j  ; was: sub_ADAC
                 addq.w  #6,(MessageSequenceState).w
                 clr.w   (MessageTileChunkIndex).w
                 addq.l  #6,(MessageScriptCursor).w
@@ -447,7 +447,7 @@ MessageScript_QueueTilemapDMA:                          ; CODE XREF: MessageScri
                 move.l  #$94019300,-(a5)
                 move.w  a5,(VDPCommandQueueHead).w
                 rts
-; End of function MessageScript_QueueTilemapDMA
+; End of function MessageScript_QueueTileArtDMA
 ; Writes one four-word chunk of the script-provided tilemap
 MessageScript_RenderTilemapChunk:                       ; DATA XREF: ROM:0000A9AE   o  ; was: sub_AE0E
                                         ; ROM:0000A9BC   o

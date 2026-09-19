@@ -67,8 +67,9 @@ found 301 records elsewhere matching other generic sentences. Reviewing the
 options, Jampan, Sharpssteel, Sirene, Medusa, Valkirie, graphics/asset, and
 Missiray paths exhausted that initial queue. A wider duplicate scan then
 exposed 457 records matching 17 more generic sentences; 18 timer-return,
-41 palette-fade, 66 OAM/mapping, and 30 object-pipeline records have since been
-reviewed, leaving 302 (`NAME-002`). The counter covers 41 known sentences, not
+41 palette-fade, 66 OAM/mapping, 30 object-pipeline, 20 stage-intro, 26
+time-bonus, 26 message-render, and 26 message-script records have since been
+reviewed, leaving 204 (`NAME-002`). The counter covers 41 known sentences, not
 every possible explanation; repeated bases still need review before the 1.0
 tag. Seven visual boss identities remain hypotheses (`NAME-003`).
 

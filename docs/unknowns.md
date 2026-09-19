@@ -11132,3 +11132,30 @@ the dynamic-art cache at object field `$DC`, its tile-source list at `$E0`,
 the DMA queue head, and timed versus byte-offset sequence timers. The latter
 selects the next entry while returning the current mapping on the expiring
 timer call. `NAME-002` falls from 332 to 302; `NAME-003` remains at seven.
+
+Twenty stage-intro and emergency-banner records now identify their exact
+message states, glyph loading, timer thresholds, sound requests, sprite
+counts, and packed tile-index lists. The former
+`StageIntro_ClampStageNumberX` label at `$00AEF6` was corrected to
+`StageIntro_CheckStageNumberSound`: the optional cap occurs before that
+convergence point. `NAME-002` falls from 302 to 282; visual boss identities
+remain hypotheses.
+
+The 26 remaining-time bonus records now separate actual angle advancement
+from later radius contraction and a timed hold. Five labels were corrected:
+the two state entries, their returns, and the radial renderer. The four
+packed-BCD digits and the score-add path have distinct evidence. `NAME-002`
+falls from 282 to 256; no visual boss hypothesis is resolved by this pass.
+
+The 26 shared message-render records now cite exact timer, coordinate, packed
+tile-index, glyph-copy, and sprite-descriptor operations. Two former radial
+text fade states and their return labels were renamed for the actual Y motion
+and hold timer; neither state writes a fade or palette field. `NAME-002` falls
+from 256 to 230, while the seven boss-identity hypotheses remain open.
+
+Twenty-six encoded message-script records now distinguish the `$FFFE` tile-art
+DMA command from the later tilemap-chunk writer. The high/low nibble scratch
+RAM aliases replace misleading packed-digit names; zero source nibbles set
+the low bit of the corresponding pixel nibble before the 64-byte glyph tile
+is queued. The corrected source and RAM map keep the underlying addresses.
+`NAME-002` falls from 230 to 204; visual identities remain provisional.

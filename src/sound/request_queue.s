@@ -1,6 +1,6 @@
 ; Queues a BGM request unless music playback is disabled in the options flags
 Sound_QueueBGMRequest:                                  ; CODE XREF: EndingSequence_Initialize+A0   p  ; was: sub_34DA
-                                        ; Results_FinishTimeBonusSpin+14   p
+                                        ; Results_WaitThenStoreTimeBonus+14   p
                 btst    #1,(SoundDisableFlags+1).w
                 beq.s   Sound_QueueRequest
                 rts

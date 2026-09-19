@@ -92,7 +92,7 @@ Results_StorePhaseSplitTime:                            ; CODE XREF: BattleBanne
                 rts
 ; End of function Results_StorePhaseSplitTime
 ; Stores the remaining packed-BCD timer when the stage result is finalized
-Results_StoreStageCompletionTime:                       ; CODE XREF: Results_FinishTimeBonusSpin:Results_StoreTimeBonus   p  ; was: sub_1CE04
+Results_StoreStageCompletionTime:                       ; CODE XREF: Results_WaitThenStoreTimeBonus:Results_StoreTimeBonus   p  ; was: sub_1CE04
                                         ; Boss_ZLeoRunPostDefeatDelay+2E   j
                 movea.w #(StageCompletionTimes-M68K_RAM),a0
                 move.w  (StageTableIndex).w,d0

@@ -174,8 +174,8 @@ TileInterpStepsLeft         equ     SharedRuntimeWorkWord1
 Stage3PackedTilePtr         equ     SharedRuntimeWorkLong0
 Stage3ResampleGroupsM1      equ     SharedRuntimeWorkWord0
 Stage3ResamplePassesM1      equ     SharedRuntimeWorkWord1
-MessagePackedDigitsA        equ     SharedRuntimeWorkLong0
-MessagePackedDigitsB        equ     SharedRuntimeWorkLong1
+MessageGlyphHiNibbleScratch equ     SharedRuntimeWorkLong0
+MessageGlyphLoNibbleScratch equ     SharedRuntimeWorkLong1
 PaletteColorPair            equ     SharedRuntimeWorkLong0
 BossHealthPairScratch       equ     SharedRuntimeWorkLong0
 BossAssetPointerScratch     equ     SharedRuntimeWorkLong0
