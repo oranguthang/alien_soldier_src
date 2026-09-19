@@ -678,11 +678,22 @@ reachable. Their old sequence-wide sentence is now the 52nd rejected generic
 basis; `NAME-002` still has zero matches in the curated detector.
 
 The read-only semantic audit now reports exact duplicate-basis groups as a
-separate review queue, joined back to source modules. The current registry
-contains 254 repeated sentences across 1,212 exact-address uses; those are
-not 1,212 proven naming errors, since many are uniform ROM-ordered sprite or
-mapping records. All 1,212 uses currently resolve to a source module. The CLI
+separate review queue, joined back to source modules. At introduction, the
+registry contained 254 repeated sentences across 1,212 exact-address uses;
+those were not 1,212 proven naming errors, since many are uniform ROM-ordered
+sprite or mapping records. All 1,212 uses resolved to a source module. The CLI
 can list the largest groups or every member of a filtered group without a ROM
 build or emulator. The module join now scans all definitions, including names
 without a `; was:` marker; the unit test covers
 both marker-bearing and marker-free names plus repeated text within one record.
+
+The nine Sirene position/distortion records at `$05783C..$05799A` exposed a
+misleading shared premise: the first position pair is the real
+`PlayerXPosition`/`PlayerYPosition`, not a private effect anchor. The entry
+adds angle-derived deltas to the player coordinates; a separate `$70/$74(a5)`
+pair is then advanced and bounded before the routine writes mirrored plane-B
+horizontal and vertical scroll offsets. Branch names now describe the next
+operation at each address rather than a preceding clamp. The old nine-way
+sentence is the 53rd known generic basis and has zero remaining matches.
+The wider duplicate queue now contains 253 groups across 1,203 uses, with
+zero unmapped uses; it is not yet a closed semantic audit.

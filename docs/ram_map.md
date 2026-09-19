@@ -955,8 +955,8 @@ object update and rendering machinery.
 | `PlayerSpriteMapping` | `$FFFFA408` | Player rendering consumes the pointer, the secondary-object copier preserves it, and the motion-projectile path compares it with the teleport-dash mapping. |
 | `PlayerAnimationTimer` | `$FFFFA40C` | Animation paths count it down and reload frame delays; state setup commonly primes it with `$FFFF`. |
 | `PlayerSpriteAttributes` | `$FFFFA40E` | Initialized to `$4DC0`; facing, rendering, and cutscene paths manipulate its attribute bits. |
-| `PlayerXPosition` | `$FFFFA410` | Signed 16.16 world X coordinate consumed by camera, targeting, enemies, bosses, and projectile placement. |
-| `PlayerYPosition` | `$FFFFA414` | Signed 16.16 world Y coordinate consumed by camera, targeting, bosses, and projectile placement. |
+| `PlayerXPosition` | `$FFFFA410` | Signed 16.16 world X coordinate consumed by camera, targeting, enemies, bosses, and projectile placement. Sirene's active position/distortion routine also adds an angle-derived longword delta directly to it. |
+| `PlayerYPosition` | `$FFFFA414` | Signed 16.16 world Y coordinate consumed by camera, targeting, bosses, and projectile placement. Sirene's active position/distortion routine adds an angle-derived longword delta and caps its integer word at `$158`. |
 | `PlayerXVelocity` | `$FFFFA418` | Signed 16.16 horizontal velocity integrated into the X position by shared physics. |
 | `PlayerYVelocity` | `$FFFFA41C` | Signed 16.16 vertical velocity integrated into the Y position by shared physics. |
 | `PlayerOAMBucketOffset` | `$FFFFA420` | Renderers mask this byte with `$FC` and use it as a four-byte-aligned offset into the 64 OAM priority buckets. |

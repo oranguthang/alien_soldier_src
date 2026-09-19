@@ -67,6 +67,7 @@ GENERIC_NAME_BASES = (
     "The local cooldown, loadout-selection, state-transition, remaining-ammunition, or shared-parameter operations establish the narrower role stated by this symbol.",
     "The initializer and update paths implement a two-phase spawner: timed radial particles followed by directional acceleration and horizontal trail emission.",
     "The pose interpreter reads event commands, loop/end markers, frame delays, and frame-data offsets before updating the 19-angle interpolation buffer.",
+    "The routine updates two effect anchors, clamps their coordinates, and writes mirrored distortion-offset fields; it does not allocate a projectile.",
 )
 
 

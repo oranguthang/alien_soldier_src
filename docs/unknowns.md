@@ -11481,3 +11481,12 @@ the same offset. Frame 07 occurs before frame 00 in each physical ROM mapping
 run, so the suffix is a table index, not a ROM-order number or a proven visual
 pose. Each local audit basis now records its table offset, paired mapping,
 and observed number of art-piece pointers.
+
+Sirene's active routine at `$05783C` was previously described as moving two
+private effect anchors. Its first pair is actually the global 16.16 player
+position: it adds angle-derived deltas to `PlayerXPosition` and
+`PlayerYPosition`, then caps the player Y integer word at `$158`. The separate
+`$70/$74(a5)` coordinate is initialized by Sirene states, updated and bounded
+here, and later used as a periodic projectile origin. The code writes mirrored
+H/V-scroll RAM fields afterward; the visual appearance and player-control
+intent have not been confirmed by pinned runtime observation.

@@ -242,7 +242,7 @@ Boss_CheckSireneState12FacingChange:                    ; CODE XREF: Boss_Update
                 cmp.w   $54(a5),d1
                 bne.s   Boss_EnterSireneState14
                 bsr.w   Boss_SpawnSirenePeriodicProjectile
-                bsr.w   Boss_UpdateSireneBattleEffect
+                bsr.w   Boss_UpdateSireneBattlePositionsAndDistortion
                 lea     Sirene_ActivePoseScript(pc),a1
                 nop
                 bra.w   Boss_RenderSirenePose
@@ -268,7 +268,7 @@ Boss_UpdateSireneState14:                               ; DATA XREF: ROM:0005750
                 bra.w   Boss_ResetSireneState14PoseScript
 ; ---------------------------------------------------------------------------
 Boss_RenderSireneState14:                               ; CODE XREF: Boss_UpdateSireneState14   j  ; was: loc_57810
-                bsr.w   Boss_UpdateSireneBattleEffect
+                bsr.w   Boss_UpdateSireneBattlePositionsAndDistortion
                 movea.l $71C(a5),a1
                 bra.w   Boss_RenderSirenePose
 ; End of Sirene active-state controller
@@ -282,8 +282,8 @@ Sirene_State14PoseScriptSet1:   dc.l    Sirene_State14PoseScript0  ; DATA XREF: 
                 dc.l    Sirene_State14PoseScript1
                 dc.l    Sirene_State14PoseScript1
 
-; Update Sirene's effect anchors and write the two distortion-offset fields
-Boss_UpdateSireneBattleEffect:                          ; CODE XREF: Boss_UpdateSireneState12   p  ; was: sub_5783C
+; Move the player and auxiliary Sirene coordinate, then write mirrored scroll offsets
+Boss_UpdateSireneBattlePositionsAndDistortion:          ; CODE XREF: Boss_UpdateSireneState12   p  ; was: sub_5783C
                                         ; Boss_RenderSireneState14   p
                 bsr.w   Gfx_UpdateSireneBattleEffectPattern
                 move.w  (PlayerXPosition).w,d0
@@ -302,9 +302,9 @@ Boss_UpdateSireneBattleEffect:                          ; CODE XREF: Boss_Update
                 add.l   d0,(PlayerYPosition).w
                 add.l   d1,(PlayerXPosition).w
                 cmpi.w  #$159,(PlayerYPosition).w
-                bmi.s   Boss_ClampSireneEffectPrimaryYMaximum
+                bmi.s   Boss_UpdateSireneAuxiliaryPosition
                 move.w  #$158,(PlayerYPosition).w
-Boss_ClampSireneEffectPrimaryYMaximum:                  ; CODE XREF: Boss_UpdateSireneBattleEffect+48   j  ; was: loc_5788C
+Boss_UpdateSireneAuxiliaryPosition:                     ; CODE XREF: Boss_UpdateSireneBattlePositionsAndDistortion+48   j  ; was: loc_5788C
                 move.w  $70(a5),d0
                 move.w  $74(a5),d1
                 sub.w   (Entity57XPos).w,d0
@@ -321,21 +321,21 @@ Boss_ClampSireneEffectPrimaryYMaximum:                  ; CODE XREF: Boss_Update
                 add.l   d0,$74(a5)
                 add.l   d1,$70(a5)
                 cmpi.w  #$159,$74(a5)
-                bmi.s   Boss_ClampSireneEffectSecondaryYMaximum
+                bmi.s   Boss_CheckSireneAuxiliaryYMinimum
                 move.w  #$158,$74(a5)
-Boss_ClampSireneEffectSecondaryYMaximum:                ; CODE XREF: Boss_UpdateSireneBattleEffect+94   j  ; was: loc_578D8
+Boss_CheckSireneAuxiliaryYMinimum:                      ; CODE XREF: Boss_UpdateSireneBattlePositionsAndDistortion+94   j  ; was: loc_578D8
                 cmpi.w  #$7F,$74(a5)
-                bpl.s   Boss_ClampSireneEffectSecondaryYMinimum
+                bpl.s   Boss_CheckSireneAuxiliaryXMinimum
                 move.w  #$80,$74(a5)
-Boss_ClampSireneEffectSecondaryYMinimum:                ; CODE XREF: Boss_UpdateSireneBattleEffect+A2   j  ; was: loc_578E6
+Boss_CheckSireneAuxiliaryXMinimum:                      ; CODE XREF: Boss_UpdateSireneBattlePositionsAndDistortion+A2   j  ; was: loc_578E6
                 cmpi.w  #$5F,$70(a5)                    ; '_'
-                bpl.s   Boss_ClampSireneEffectSecondaryXMinimum
+                bpl.s   Boss_CheckSireneAuxiliaryXMaximum
                 move.w  #$60,$70(a5)                    ; '`'
-Boss_ClampSireneEffectSecondaryXMinimum:                ; CODE XREF: Boss_UpdateSireneBattleEffect+B0   j  ; was: loc_578F4
+Boss_CheckSireneAuxiliaryXMaximum:                      ; CODE XREF: Boss_UpdateSireneBattlePositionsAndDistortion+B0   j  ; was: loc_578F4
                 cmpi.w  #$1E1,$70(a5)
-                bmi.s   Boss_ClampSireneEffectSecondaryXMaximum
+                bmi.s   Boss_AdvanceSireneDistortionAccumulators
                 move.w  #$1E0,$70(a5)
-Boss_ClampSireneEffectSecondaryXMaximum:                ; CODE XREF: Boss_UpdateSireneBattleEffect+BE   j  ; was: loc_57902
+Boss_AdvanceSireneDistortionAccumulators:               ; CODE XREF: Boss_UpdateSireneBattlePositionsAndDistortion+BE   j  ; was: loc_57902
                 move.l  #$FFFFD000,$47C(a5)
                 move.l  #$FFFFEE00,$41C(a5)
                 move.l  #$FFFFE000,$5FC(a5)
@@ -351,10 +351,10 @@ Boss_ClampSireneEffectSecondaryXMaximum:                ; CODE XREF: Boss_Update
                 move.l  $4DC(a5),d3
                 move.l  $53C(a5),d5
                 btst    #0,(FrameCounter+1).w
-                bne.s   Boss_SelectSireneEffectAlternatePhase
+                bne.s   Gfx_PrepareSireneMirroredScrollWrites
                 move.l  $65C(a5),d3
                 move.l  $6BC(a5),d5
-Boss_SelectSireneEffectAlternatePhase:                  ; CODE XREF: Boss_UpdateSireneBattleEffect+114   j  ; was: loc_5795A
+Gfx_PrepareSireneMirroredScrollWrites:                  ; CODE XREF: Boss_UpdateSireneBattlePositionsAndDistortion+114   j  ; was: loc_5795A
                 movea.w #(HScrollPlaneBRow128-M68K_RAM),a0
                 movea.w a0,a1
                 moveq   #$B,d7
@@ -362,7 +362,7 @@ Boss_SelectSireneEffectAlternatePhase:                  ; CODE XREF: Boss_Update
                 move.w  (PrimaryCameraXPosition).w,d2
                 subi.w  #$60,d2                         ; '`'
                 neg.w   d2
-Gfx_WriteSireneWideDistortionOffsetsLoop:               ; CODE XREF: Boss_UpdateSireneBattleEffect+150   j  ; was: loc_5796E
+Gfx_WriteSireneMirroredHScrollRowsLoop:                 ; CODE XREF: Boss_UpdateSireneBattlePositionsAndDistortion+150   j  ; was: loc_5796E
                 lea     -$20(a1),a1
                 swap    d1
                 move.w  d2,d4
@@ -376,12 +376,12 @@ Gfx_WriteSireneWideDistortionOffsetsLoop:               ; CODE XREF: Boss_Update
                 swap    d1
                 add.l   d3,d1
                 lea     $20(a0),a0
-                dbf     d7,Gfx_WriteSireneWideDistortionOffsetsLoop
+                dbf     d7,Gfx_WriteSireneMirroredHScrollRowsLoop
                 movea.w #(VScrollPlaneBColumn10-M68K_RAM),a0
                 movea.w a0,a1
                 moveq   #9,d7
                 moveq   #0,d1
-Gfx_WriteSireneNarrowDistortionOffsetsLoop:             ; CODE XREF: Boss_UpdateSireneBattleEffect+170   j  ; was: loc_5799A
+Gfx_WriteSireneMirroredVScrollColumnsLoop:              ; CODE XREF: Boss_UpdateSireneBattlePositionsAndDistortion+170   j  ; was: loc_5799A
                 subq.w  #4,a1
                 swap    d1
                 move.w  d1,(a0)
@@ -391,9 +391,9 @@ Gfx_WriteSireneNarrowDistortionOffsetsLoop:             ; CODE XREF: Boss_Update
                 swap    d1
                 add.l   d5,d1
                 addq.w  #4,a0
-                dbf     d7,Gfx_WriteSireneNarrowDistortionOffsetsLoop
+                dbf     d7,Gfx_WriteSireneMirroredVScrollColumnsLoop
                 rts
-; End of function Boss_UpdateSireneBattleEffect
+; End of function Boss_UpdateSireneBattlePositionsAndDistortion
 ; Initialize the Sirene battle-effect object and display parameters
 Gfx_InitSireneBattleEffect:                             ; CODE XREF: Boss_UpdateSireneState10   p  ; was: sub_579B2
                 movea.w #(Entity57Type-M68K_RAM),a0
@@ -411,7 +411,7 @@ Gfx_InitSireneBattleEffect:                             ; CODE XREF: Boss_Update
                 rts
 ; End of function Gfx_InitSireneBattleEffect
 ; Write the alternating Sirene pattern and queue its VDP transfer
-Gfx_UpdateSireneBattleEffectPattern:                    ; CODE XREF: Boss_UpdateSireneBattleEffect   p  ; was: sub_579F4
+Gfx_UpdateSireneBattleEffectPattern:                    ; CODE XREF: Boss_UpdateSireneBattlePositionsAndDistortion   p  ; was: sub_579F4
                 movea.w #(SirenePatternBuffer-M68K_RAM),a0
                 move.l  #$D0D0D0D0,d0
                 move.l  #$DDDDDDDD,d1
