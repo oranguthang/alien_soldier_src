@@ -70,6 +70,7 @@ GENERIC_NAME_BASES = (
     "The routine updates two effect anchors, clamps their coordinates, and writes mirrored distortion-offset fields; it does not allocate a projectile.",
     "The routines interpret $FFFF/$FFFE pose commands, load frame data, calculate interpolation deltas, and prepare the pose buffer; no projectile slot is allocated.",
     "The helper and its branches derive or apply Valkirie facing-relative direction from the player delta and field $54.",
+    "The visible half of the blink returns here.",
 )
 
 

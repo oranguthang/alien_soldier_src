@@ -714,4 +714,14 @@ facing flag, but the code only proves that it triggers negation; the setter
 writes `$100` for nonnegative player X delta and is also called by Artemis.
 The formerly Valkirie-only helper now has a neutral shared name. The old
 eight-way sentence is the 55th rejected generic basis. The wider duplicate
-queue is now 251 groups across 1,186 uses, still with zero unmapped uses.
+queue contained 251 groups across 1,186 uses, still with zero unmapped uses.
+
+Six defeat-blink RTS records across generic, Stage 10, and Stage 12 enemy
+handlers no longer assert that only the visible half returns there. Each
+active-timer path sets object bit 7, then either keeps or clears it according
+to bit zero of timer byte `$49`, and both paths reach the same RTS. Their
+expiration branches differ: some queue SFX `$BC`, one checks the Stage 12
+yacht type before hiding or dropping a pickup, and the pickup arguments `7`
+and `$F` are random-size masks, not pickup type IDs. The old sentence is the
+56th rejected generic basis. The duplicate queue is now 250 groups across
+1,180 uses, with zero unmapped uses.

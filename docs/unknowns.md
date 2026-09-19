@@ -11505,3 +11505,10 @@ relative to that field: positive for nonzero `$54` with nonnegative delta or
 zero `$54` with negative delta, negative in the other two cases. The X-velocity
 helper negates its input when `$54` is nonzero. These are static field and
 branch facts; a visual left/right pose is not established by them alone.
+
+Six defeat-object return labels formerly claimed to belong only to the
+visible blink half. The active `$48` timer branches set object bit 7, test
+bit zero of `$49`, then either preserve or clear bit 7 before reaching the
+same RTS. The expired-timer paths instead explode, possibly queue SFX, and
+pass a random-size mask of `7` or `$F` to the pickup helper when applicable;
+those mask values are not pickup type identities.
