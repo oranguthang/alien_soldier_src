@@ -82,7 +82,7 @@ Frontend_InitializeSegaScreen:                          ; was: sub_1CF82
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
                 jsr     (Gfx_QueueLargeFontDMACommand81).l
-                lea     (FrontendFullPaletteCommand).l,a0
+                lea     (FrontendPaletteCommands).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 movea.l #Frontend_TitleAssetLoadDescriptors,a0
                 jsr     (LoadObjData).l

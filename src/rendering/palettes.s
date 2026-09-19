@@ -30,8 +30,8 @@ Gfx_LoadPaletteFromRelativeOffset:                      ; CODE XREF: Gfx_LoadMul
 ; ---------------------------------------------------------------------------
 StoryScreenPaletteOffsetList:   dc.w    (CreditsAndEarlyStagePaletteCommandBank+$82)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: StoryScreen_WaitForScrollAndLoadPalette+36   o  ; was: word_B944
                 dc.w    0
-OptionsScreenPaletteOffsetList: dc.w    FrontendFullPaletteCommand-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: UI_InitOptionsScreen+72   o  ; was: word_B948
-                dc.w    (FrontendFullPaletteCommand+$82)-Gfx_LoadPalettePreservingSharedColor
+OptionsScreenPaletteOffsetList: dc.w    FrontendPaletteCommands-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: UI_InitOptionsScreen+72   o  ; was: word_B948
+                dc.w    (FrontendPaletteCommands+$82)-Gfx_LoadPalettePreservingSharedColor
                 dc.w    0
 StageStartPaletteOffsetList:    dc.w    (CreditsAndEarlyStagePaletteCommandBank+$102)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: WeaponSetup_InitializeScreen+DC   o  ; was: word_B94E
                 dc.w    (CreditsAndEarlyStagePaletteCommandBank+$128)-Gfx_LoadPalettePreservingSharedColor
@@ -108,7 +108,7 @@ UnreferencedStage20VariantPaletteOffsetList:    dc.w    (Stage17PaletteCommandBa
                                         ; ROM:UnreferencedStage20Variant4ConfigRecord   o
 Stage20PaletteOffsetLists:  dc.w    (Stage17PaletteCommandBank+$A0)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: ROM:Stage20ConfigRecord   o  ; was: word_B9B8
                 dc.w    0
-                dc.w    SevenForcesArtemisTransitionPaletteCommands-Gfx_LoadPalettePreservingSharedColor
+                dc.w    SevenForcesArtemisTransitionPaletteCommand-Gfx_LoadPalettePreservingSharedColor
                 dc.w    0
 SevenForcesCutscenePaletteOffsetList:   dc.w    (SireneAndLateStagePaletteCommandBank+$1E)-Gfx_LoadPalettePreservingSharedColor  ; DATA XREF: Cutscene_SevenForcesLoadGraphics   o  ; was: word_B9C0
                 dc.w    (SireneAndLateStagePaletteCommandBank+$3E)-Gfx_LoadPalettePreservingSharedColor
@@ -169,7 +169,7 @@ Gfx_LoadPaletteCommand_CopyColors:                      ; CODE XREF: Gfx_LoadPal
 CommonPaletteCommand:   dc.b    $42, $E, 0, 0, $E, $EE, 0, $EE, 0, $AE, 0, $6E, 0, $E, 0, 4  ; was: byte_BA2A
                                         ; DATA XREF: Gfx_LoadMultiplePalettes+24   o
                 dc.b    0, $48, 2, $20, 4, $42, 8, $86, $C, $CA, 6, 0, 8, $40, $C, $84
-FrontendFullPaletteCommand: dc.b    0, $3F, 0, 0, 0, $60, $C, $EA, 0, 0, 0, 0, 0, 0, 0, 0  ; was: byte_BA4A
+FrontendPaletteCommands:    dc.b    0, $3F, 0, 0, 0, $60, $C, $EA, 0, 0, 0, 0, 0, 0, 0, 0  ; was: byte_BA4A
                                         ; DATA XREF: RegionRestricted+24   o
                                         ; StoryTitle_SetupLogoReveal+78   o
                 dc.b    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -215,7 +215,7 @@ Stage17PaletteCommandBank:              dc.b    $62, $E, 2, 0, $E, $EE, 0, $6E, 
                 dc.b    4, $46, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, 2, $44, 2, $42
 SevenForcesSylpheedTransitionPaletteCommand:    dc.b    $22, 6, 8, $CC, 2, $44, 4, $66, 6, $88, 8, $AA, 4, $66, 6, $88  ; was: byte_C00C
                                         ; DATA XREF: Entity_StartSevenForcesSylpheedTransition+16   o
-SevenForcesArtemisTransitionPaletteCommands:    dc.b    2, $1E, 0, 0, 0, $22, 2, $42, 6, $64, 0, $22, 2, $44, 4, $66  ; was: byte_C01C
+SevenForcesArtemisTransitionPaletteCommand: dc.b    2, $1E, 0, 0, 0, $22, 2, $42, 6, $64, 0, $22, 2, $44, 4, $66  ; was: byte_C01C
                                         ; DATA XREF: Entity_StartSevenForcesArtemisTransition+1C   o
                 dc.b    6, $88, $FF, $FF, 0, $22, 2, $44, 2, $66, 4, $AC, $A, $CE, $FF, $FF
                 dc.b    0, 0, 0, 0, 2, 0, 2, $22, 6, $44, 2, 0, 4, 0, 6, 0
@@ -280,7 +280,7 @@ Boss_SnakePaletteCommand:   dc.b    $62, 8, 0, 0, $E, $EE, 8, $CE, 6, $8C, 6, $6
                                         ; DATA XREF: Stage_LoadStage13Palette   o
                 dc.b    2, 2, 4, $4A
 EntityType1C0PaletteCommand:    dc.b    $62, $E, 0, 2, $E, $EE, $A, $AA, 6, $66, 2, $22, $F, $FF, $A, $EE  ; was: byte_C404
-                                        ; DATA XREF: ROM:00011538   o
+                                        ; DATA XREF: ROM:EntityType1C0AssetSet   o
                                         ; Identity beyond entity type $1C0 is unproven
                 dc.b    8, $CE, 6, $8C, 4, $6A, 2, $48, 0, $26, 0, 4, 0, 0, 0, $A
 Boss_VictorPaletteCommand:  dc.b    $62, $E, 0, 0, $E, $EE, $E, $CC, $E, $AA, $E, $88, $FF, $FF, $A, $46  ; was: byte_C424
@@ -336,7 +336,7 @@ EntityType3F4PaletteCommands:   dc.b    $62, $E, 0, 0, $E, $EE, $E, $CA, $C, $86
                 dc.b    $62, $E, 0, 0, $E, $EE, 2, 2, 4, $24, 6, $46, $F, $FF, 8, $68
                 dc.b    $A, $8A, $C, $AC, $E, $CE, 0, 4, 0, 8, 0, $C, 2, $4E, 6, $8E
 EntityType3FCPaletteCommands:   dc.b    $62, $E, 0, 0, $E, $EE, 2, $20, 4, $42, 4, $64, $F, $FF, 6, $AA  ; was: byte_C63E
-                                        ; DATA XREF: ROM:000115FC   o
+                                        ; DATA XREF: ROM:EntityType3FCAssetSet   o
                                         ; Identity beyond entity type $3FC is unproven
                 dc.b    4, $CE, 2, $8C, 2, $6A, 2, $46, 4, $24, 4, $44, 6, $66, $A, $AA
                 dc.b    $62, $E, 0, 0, $E, $EE, 8, $6E, 4, $2C, 2, 8, $F, $FF, 2, $24

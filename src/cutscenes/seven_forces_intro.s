@@ -876,7 +876,7 @@ Entity_StartSevenForcesArtemisTransition:               ; DATA XREF: ROM:000555E
                 move.w  #$428,d0
                 moveq   #0,d1
                 jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
-                lea     (SevenForcesArtemisTransitionPaletteCommands).l,a0
+                lea     (SevenForcesArtemisTransitionPaletteCommand).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 move.w  #$FFF2,$5E(a5)
                 bsr.w   Gfx_UpdateSevenForcesMultiRangePaletteFade

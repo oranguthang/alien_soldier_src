@@ -342,3 +342,23 @@ tagged source/destination pair before `$FFFF`, including Wolf Garopa's two tile
 art sources and the shared Valkirie/Sirene list. Two numeric source cross-
 references became symbolic, and the shared list now shows both owners.
 `NAME-002` falls from 81 to 52 without changing assembled bytes.
+
+The 35 palette-command records reached through boss asset sets now cite their
+exact owning pointer, header offsets, destination bytes, inclusive color counts,
+and first/last encoded color words. Epsilon 1 has three embedded commands;
+the `$3F4`, `$3FC`, and Z-Leo records have two each. The loader reads only one
+header per call, so later command boundaries are recorded as data, not as an
+automatic playback sequence. Two numeric cross-references became symbolic.
+`NAME-002` falls from 52 to 17; neutral entity types remain neutral.
+
+The remaining 17 palette records are now checked against the palette loader
+and all symbolic offset-list references. Three extracted banks split cleanly
+into 13, 5, and 9 complete commands; the inline Stage 17 bank contains four.
+Every statically listed nonzero offset lands on a command header. Two labels
+were corrected from the byte evidence: the frontend block contains two
+commands (`FrontendPaletteCommands`), while the Artemis transition contains
+one (`SevenForcesArtemisTransitionPaletteCommand`). The curated 43-sentence
+`NAME-002` queue reaches zero. This does not finish the wider duplicate-basis
+review or resolve the seven visual identities. The release-audit test now
+injects a known generic sentence to test the rejection path, instead of
+assuming the repository itself still contains one.

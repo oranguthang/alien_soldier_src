@@ -238,7 +238,7 @@ StoryTitle_SetupLogoReveal:                             ; DATA XREF: ROM:0000498
 StoryTitle_ClearPlaneATail:                             ; was: loc_4B96
                 move.w  d0,(a1)
                 dbf     d1,StoryTitle_ClearPlaneATail
-                movea.l #FrontendFullPaletteCommand,a0
+                movea.l #FrontendPaletteCommands,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 move.w  #$8300,d0
                 move.w  #$4680,d4

@@ -62,7 +62,7 @@ TitleScreen_FinalizeInitialization:                     ; CODE XREF: TitleScreen
                 move.w  #$A300,d0
                 move.w  #$4C0C,d4
                 jsr     (Text_QueueDoubleHeightStringWrapped).l
-                lea     (FrontendFullPaletteCommand).l,a0
+                lea     (FrontendPaletteCommands).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w

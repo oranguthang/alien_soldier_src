@@ -11207,3 +11207,15 @@ The 29 graphics-list records now specify their exact tag-6/tag-7 sources and
 destination words, including lists with more than one command or owner. The
 neutral entity-type art remains neutral; graphics pointers alone do not prove
 the historical character names. `NAME-002` falls from 81 to 52.
+
+Thirty-five asset-set palette records now have their encoded command headers
+and boundaries checked against `Gfx_LoadPaletteCommand`. The destination byte
+selects palette RAM buffers; the source does not prove the depicted colors or
+an identity for neutral entity types `$1C0`, `$3EC`, `$3F0`, `$3F4`, or `$3FC`.
+The known generic queue falls from 52 to 17; seven visual hypotheses remain.
+
+The final 17 curated generic palette bases have exact command boundaries and
+symbolic reference evidence. The known 43-sentence detector now returns zero;
+this is not a proof that all name evidence is unique or correct. The wider
+duplicate-basis search remains open under `NAME-002`, and seven visual boss
+identities remain hypotheses under `NAME-003`.

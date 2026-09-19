@@ -461,7 +461,7 @@ UI_ActivateSecondaryOptionsMenu:                        ; CODE XREF: UI_InitSeco
                 move.w  #$800,d0
                 moveq   #0,d1
                 jsr     (Tilemap_DirectTransferWithPrimaryDescriptor).l
-                lea     (FrontendFullPaletteCommand).l,a0
+                lea     (FrontendPaletteCommands).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 jsr     (Gfx_FadePaletteTransition).l
                 move.b  #0,(VDPReg18Shadow+1).w

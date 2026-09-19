@@ -53,7 +53,7 @@ class ReleaseAuditTests(unittest.TestCase):
         self.assertTrue(any("counter modules says" in error for error in errors), errors)
         self.assertEqual(len(contract["required_runtime_ids"]), manifest["counters"]["runtime_scenarios"])
 
-    def test_unresolved_names_block_tag_ready_status(self) -> None:
+    def test_provenance_and_hypotheses_block_tag_ready_status(self) -> None:
         manifest = self._manifest()
         manifest["status"] = "tag-ready"
         manifest["provenance"]["exact_address_records"] += 1
@@ -65,7 +65,6 @@ class ReleaseAuditTests(unittest.TestCase):
         )
         errors = release_audit.audit_counters(ROOT, manifest, policy, layout, {})
         self.assertTrue(any("provenance exact_address_records" in error for error in errors))
-        self.assertTrue(any("generic name-evidence bases" in error for error in errors))
         self.assertTrue(any("hypothesis-level name records" in error for error in errors))
 
     def test_template_name_evidence_blocks_tag_ready_status(self) -> None:

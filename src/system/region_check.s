@@ -20,7 +20,7 @@ RegionRestricted:                                       ; CODE XREF: Sys_CheckRe
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
                 jsr     (Gfx_QueueLargeFontDMACommand81).l
-                lea     (FrontendFullPaletteCommand).l,a0
+                lea     (FrontendPaletteCommands).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 move.w  #$8300,d0
                 move.w  #$438C,d4

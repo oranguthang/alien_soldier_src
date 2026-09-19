@@ -28,7 +28,7 @@ PasswordMenu_Activate:                                  ; CODE XREF: PasswordMen
                 move.w  d0,(SecondaryCameraXPos).w
                 move.w  d1,(SecondaryCameraYPos).w
                 jsr     (Tilemap_TransferFullMapDirectToVRAM).l
-                lea     (FrontendFullPaletteCommand).l,a0
+                lea     (FrontendPaletteCommands).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     PasswordMenu_PaletteOverrides(pc),a0
                 nop
