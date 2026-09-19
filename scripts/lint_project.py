@@ -11,6 +11,9 @@ from pathlib import Path
 
 
 MARKDOWN_LINK = re.compile(r"\[[^]]+\]\(([^)]+)\)")
+SOURCE_MAP_ROW = re.compile(
+    r"^\| `0x([0-9A-F]+)-0x([0-9A-F]+)` \|[^|]*\|\s*(\d+)\s*\|[^|]*\|$"
+)
 TEXT_SUFFIXES = {".s", ".inc", ".py", ".md", ".txt", ".json", ".dot"}
 TEXT_FILENAMES = {".gitattributes", ".gitignore", ".editorconfig", "Makefile"}
 
@@ -54,6 +57,68 @@ def check_text_hygiene(project_root: Path, path: Path, errors: list[str]) -> Non
             errors.append(f"{relative}:{number}: trailing whitespace")
 
 
+def check_source_map(project_root: Path, errors: list[str]) -> None:
+    """Keep the human-readable ROM ranges and file counts aligned with the layout."""
+    try:
+        layout = json.loads(
+            (project_root / "config/rom_layout.json").read_text(encoding="utf-8")
+        )
+        modules = [
+            (int(entry["start"], 0), int(entry["end"], 0))
+            for entry in layout["modules"]
+        ]
+        lines = (project_root / "docs/source_map.md").read_text(
+            encoding="utf-8"
+        ).splitlines()
+    except (
+        OSError, UnicodeError, json.JSONDecodeError, KeyError, TypeError, ValueError
+    ) as error:
+        errors.append(f"docs/source_map.md: cannot compare with ROM layout: {error}")
+        return
+    rows = []
+    for line_number, line in enumerate(lines, 1):
+        if not line.startswith("| `0x"):
+            continue
+        match = SOURCE_MAP_ROW.fullmatch(line)
+        if match is None:
+            errors.append(f"docs/source_map.md:{line_number}: malformed ROM range row")
+            continue
+        start = int(match.group(1), 16)
+        end = int(match.group(2), 16)
+        count = int(match.group(3))
+        rows.append((start, end, count, line_number))
+
+    if not modules or not rows:
+        errors.append("docs/source_map.md: no ROM modules or range rows")
+        return
+    next_start = modules[0][0]
+    for start, end, count, line_number in rows:
+        if start != next_start or end < start:
+            errors.append(
+                f"docs/source_map.md:{line_number}: ROM ranges are not contiguous"
+            )
+        owned = sum(
+            start <= module_start and module_end <= end
+            for module_start, module_end in modules
+        )
+        if owned != count:
+            errors.append(
+                f"docs/source_map.md:{line_number}: files count {count}, layout has {owned}"
+            )
+        next_start = end + 1
+    if next_start != modules[-1][1] + 1:
+        errors.append("docs/source_map.md: ROM ranges do not end at the final module")
+    for module_start, module_end in modules:
+        if sum(
+            start <= module_start and module_end <= end
+            for start, end, _, _ in rows
+        ) != 1:
+            errors.append(
+                f"docs/source_map.md: module 0x{module_start:06X}-0x{module_end:06X} "
+                "is not owned by exactly one range"
+            )
+
+
 def check(project_root: Path) -> list[str]:
     errors: list[str] = []
 
@@ -69,6 +134,8 @@ def check(project_root: Path) -> list[str]:
             json.loads(path.read_text(encoding="utf-8"))
         except (OSError, UnicodeError, json.JSONDecodeError) as error:
             errors.append(f"{path.relative_to(project_root)}: invalid JSON: {error}")
+
+    check_source_map(project_root, errors)
 
     python_files = sorted((project_root / "scripts").glob("*.py")) + sorted(
         (project_root / "tests").glob("*.py")

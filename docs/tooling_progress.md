@@ -73,3 +73,10 @@ were resolved against the existing assembler listing at their ROM addresses.
 Only comment text changed, and the provenance markers remain intact. Source
 lint now rejects a retired name in a `CODE XREF`, `DATA XREF`, or continuation
 `ROM:` comment, so this cleanup remains checkable.
+
+The broad `docs/source_map.md` table had 23 stale file counts and two boundaries
+that cut across a source module after the source was split into smaller
+ROM-ordered modules. Its 57 ranges now count all 380 modules from
+`config/rom_layout.json`. Project lint checks range continuity,
+exactly one broad-range owner per module, and the count in each row; future
+semantic splits cannot silently leave the orientation map stale.
