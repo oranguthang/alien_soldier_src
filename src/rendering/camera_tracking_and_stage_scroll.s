@@ -25,7 +25,7 @@ Stage18_AdvanceDestroyerMk2Scroll:                      ; CODE XREF: Stage18_Upd
                 bra.s   Stage18_RenderLockedTilemap
 ; End of function Stage18_UpdateDestroyerMk2Scroll
 ; Updates horizontal camera follow and renders the stage tilemap
-Camera_UpdateAndRenderStageTilemap:                     ; CODE XREF: Stage_UpdateLogic:loc_C8C6   p  ; was: sub_10060
+Camera_UpdateAndRenderStageTilemap:                     ; CODE XREF: Stage_UpdateLogic:Stage1_UpdateScrollToJetsripper   p  ; was: sub_10060
                                         ; sub_C92E   p
                 bsr.w   Camera_FollowPlayerBeyondHorizontalThreshold
                 bra.w   Tilemap_QueuePrimaryCameraColumnOffset158
@@ -45,7 +45,7 @@ Camera_AdvanceBossApproachScroll:                       ; CODE XREF: Camera_Upda
                 bra.w   Tilemap_QueuePrimaryCameraColumnOffset158
 ; End of function Camera_UpdateBossApproachAndRenderTilemap
 ; Updates the horizontal camera position towards the player
-Camera_UpdateHorizontalTowardsPlayer:                   ; CODE XREF: Camera_BossPhaseHandler:loc_C91A   p  ; was: sub_10086
+Camera_UpdateHorizontalTowardsPlayer:                   ; CODE XREF: Camera_BossPhaseHandler:Stage1_UpdateJetsripperCamera   p  ; was: sub_10086
                                         ; Camera_Stage2PhaseHandler+4   p
                 btst    #5,(PlayerActionStateFlags).w
                 bne.w   Camera_HorizontalUpdateReturn

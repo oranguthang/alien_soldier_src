@@ -258,7 +258,7 @@ SharedCombatSpriteFrame69:  dc.w    $4872, 0, $F8F8     ; DATA XREF: ROM:000E976
                 dc.w    $C872, 0, $F8F8
 SharedCombatSpriteFrame70:  dc.w    $C8DD, $200, $F4FC  ; DATA XREF: ROM:0003081C   o  ; was: word_E952A
                                         ; ROM:0003082C   o
-SharedCombatSpriteFrame71:  dc.w    $C8E0, $800, $FCF4  ; DATA XREF: ROM:off_30814   o  ; was: word_E9530
+SharedCombatSpriteFrame71:  dc.w    $C8E0, $800, $FCF4  ; DATA XREF: ROM:Projectile_FragmentSpriteFrames   o  ; was: word_E9530
                                         ; ROM:00030824   o
 SharedCombatSpriteFrame72:  dc.w    $C8E3, $A00, $F4F4  ; DATA XREF: ROM:00030818   o  ; was: word_E9536
                                         ; ROM:00030820   o

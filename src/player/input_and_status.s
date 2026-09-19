@@ -32,7 +32,7 @@ Player_UpdateCounterForceInput_StoreHealthDelta:        ; CODE XREF: Player_Upda
                 rts
 ; End of function Player_UpdateCounterForceInput
 ; Refreshes the player sprite priority bit from the global priority setting
-Player_UpdateSpritePriorityBit:                         ; CODE XREF: Player_Update:loc_15038   p  ; was: sub_16B5C
+Player_UpdateSpritePriorityBit:                         ; CODE XREF: Player_Update:Player_UpdateCoreAttributes   p  ; was: sub_16B5C
                                         ; sub_19DAE:Player_UpdateSevenForcesBattleFinalizeFrame   p
                 btst    #5,(PlayerActionStateFlags).w
                 bne.s   Player_UpdateSpritePriorityBit_Return

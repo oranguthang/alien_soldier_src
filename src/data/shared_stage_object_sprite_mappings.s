@@ -192,7 +192,7 @@ UnreferencedTeddyGroupAnimationB:   dc.w    Stage12_TeddyBearSpriteMappingG-*  ;
                 dc.w    UnreferencedTeddyGroupAnimationB-*
                 dc.w    0
 SharedFloaterDebrisProjectileAlternating5And4Animation: dc.w    SharedFloaterDebrisProjectileSpriteMappingA-*  ; DATA XREF: ROM:Enemy_Stage12FloatingAnimationMappings   o  ; was: off_1A0F1A
-                                        ; ROM:off_40318   o
+                                        ; ROM:Boss_GustheadRandomDebrisMappings   o
                 dc.w    5
                 dc.w    SharedFloaterDebrisProjectileSpriteMappingB-*
                 dc.w    4

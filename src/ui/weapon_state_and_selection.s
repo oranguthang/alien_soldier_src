@@ -539,6 +539,6 @@ Weapon_LoadState12IconFrame:                            ; CODE XREF: Weapon_Upda
 ; End of function Weapon_UpdateState12Icon
 ; ---------------------------------------------------------------------------
 Weapon_State12IconPaletteRamp:  dc.w    $EEE, $CEE, $AEE, $8EC, $6EC, $4EA, $2EA, $2E8, $2E8, $E6, $E6, $E4, $E4, $E2, $E2, $C0  ; was: word_17E98
-                                        ; DATA XREF: Weapon_UpdateState12Icon:loc_17E6A   r
+                                        ; DATA XREF: Weapon_UpdateState12Icon:Weapon_LoadState12IconFrame   r
                                         ; Weapon_UpdateState12Icon+2A   r
                 dc.w    $EEE, $EEC, $EEA, $8CE, $6CE, $4AE, $2AE, $28E, $28E, $6E, $6E, $4E, $4E, $2E, $2E, $C

@@ -76,7 +76,7 @@ Reset_BootstrapData:    dc.w    $8000                   ; DATA XREF: Reset+10   
                 dc.w    $F3ED, $5636, $E9E9, $8104, $8F02, $C000, 0, $4000, $10, $9FBF
                 dc.w    $DFFF
 ; ---------------------------------------------------------------------------
-Reset_InitRuntime:                                      ; CODE XREF: Reset:loc_28C   j  ; was: loc_2FA
+Reset_InitRuntime:                                      ; CODE XREF: Reset:Reset_EnterRuntime   j  ; was: loc_2FA
                 tst.w   (VDP_CTRL).l
                 move    #$2700,sr
                 move.w  #0,(IO_Z80RES).l

@@ -177,7 +177,7 @@ Weapon_DirectionVectorsSpeed13: dc.l    0, $28930, $4F964, $738D8, $93134  ; was
                 dc.l    $FFFB069C, $FFFD76D0, 0, $28930, $4F964
                 dc.l    $738D8, $93134, $ACEF8, $C0280, $CC004
 Player_AlternateLayoutMuzzleOffsets0:   dc.w    $E2E8, $F4E8, $E2E6, $FCE6, $ECFC, $1FC, $ECDA, $D2DA  ; was: word_198B2
-                                        ; DATA XREF: Player_HandleSpecialAttack:loc_16086   o
+                                        ; DATA XREF: Player_HandleSpecialAttack:Player_RenderSpecialAttackWithWeapon   o
                                         ; sub_16116:Player_RenderSpecialMoveRecovery_WithWeapon   o
 Player_AlternateLayoutMuzzleOffsets1:   dc.w    $E2E8, $F4E8, $E2E6, $FCE6, $FD0D, $120D, $FDEB, $E3EB  ; was: word_198C2
                                         ; DATA XREF: Player_RenderCeilingMotionWithWeapon+4A   o

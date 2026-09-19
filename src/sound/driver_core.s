@@ -62,7 +62,7 @@ Sound_ContinueSFXPSGChannelLoop:                        ; CODE XREF: Sound_Updat
                 dbf     d7,Sound_ProcessSFXPSGChannels
                 move.b  #$40,(SoundChannelGroupFlags).w  ; '@'
                 moveq   #1,d7
-Sound_ProcessSpecialSFXChannels:                        ; CODE XREF: Sound_UpdateDriver:loc_823D0   j  ; was: loc_823B8
+Sound_ProcessSpecialSFXChannels:                        ; CODE XREF: Sound_UpdateDriver:Sound_ContinueSpecialSFXChannelLoop   j  ; was: loc_823B8
                 adda.w  #$30,a5                         ; '0'
                 tst.b   (a5)
                 bpl.s   Sound_ContinueSpecialSFXChannelLoop
@@ -306,7 +306,7 @@ Sound_SaveChannelStateReturn:                           ; CODE XREF: Sound_SaveC
                 rts
 ; End of function Sound_SaveChannelState
 ; Handles sound channel note timer countdown and restarts playback
-Sound_HandleNoteTimer:                                  ; CODE XREF: Sound_ProcessChannel:loc_8256C   p  ; was: sub_8264C
+Sound_HandleNoteTimer:                                  ; CODE XREF: Sound_ProcessChannel:Sound_UpdateFMChannelEffects   p  ; was: sub_8264C
                                         ; sub_84A70:loc_84A86   p
                                         ; DATA XREF:
                 tst.b   $12(a5)

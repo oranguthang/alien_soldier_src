@@ -277,7 +277,7 @@ Physics_HandleLowerLeftInnerTerrain_Dispatch:           ; CODE XREF: Physics_Han
 ; End of function Physics_HandleLowerLeftInnerTerrain
 ; ---------------------------------------------------------------------------
 Physics_LowerLeftInnerResponseTable:    dc.w    Physics_TerrainEmptyHandler-Physics_HandleLowerRightInnerTerrain  ; was: off_1494C
-                                        ; DATA XREF: Physics_HandleLowerLeftInnerTerrain:loc_14940   r
+                                        ; DATA XREF: Physics_HandleLowerLeftInnerTerrain:Physics_HandleLowerLeftInnerTerrain_Dispatch   r
                 dc.w    Physics_ResolveLeftWallCollision-Physics_HandleLowerRightInnerTerrain
                 dc.w    Physics_TerrainEmptyHandler-Physics_HandleLowerRightInnerTerrain
                 dc.w    Physics_TerrainEmptyHandler-Physics_HandleLowerRightInnerTerrain
@@ -329,7 +329,7 @@ Physics_HandleLowerRightInnerTerrain_Dispatch:          ; CODE XREF: Physics_Han
 ; End of function Physics_HandleLowerRightInnerTerrain
 ; ---------------------------------------------------------------------------
 Physics_LowerRightInnerResponseTable:   dc.w    Physics_TerrainEmptyHandler-Physics_HandleLowerLeftOuterTerrain  ; was: off_149BE
-                                        ; DATA XREF: Physics_HandleLowerRightInnerTerrain:loc_149B2   r
+                                        ; DATA XREF: Physics_HandleLowerRightInnerTerrain:Physics_HandleLowerRightInnerTerrain_Dispatch   r
                 dc.w    Physics_ResolveRightWallCollision-Physics_HandleLowerLeftOuterTerrain
                 dc.w    Physics_TerrainEmptyHandler-Physics_HandleLowerLeftOuterTerrain
                 dc.w    Physics_TerrainEmptyHandler-Physics_HandleLowerLeftOuterTerrain

@@ -396,7 +396,7 @@ Gfx_DecompressLZSSToVRAMBatched_WaitFinal:              ; CODE XREF: Gfx_Decompr
                 bne.s   Gfx_DecompressLZSSToVRAMBatched_WaitFinal
                 rts
 ; End of function Gfx_DecompressLZSSToVRAMBatched
-Data_LZSSDecomp:                                        ; CODE XREF: LoadCompressedToRAM:loc_273C   p
+Data_LZSSDecomp:                                        ; CODE XREF: LoadCompressedToRAM:LoadCompressedToRAM_BlockLoop   p
                                         ; LoadCompressedToVRAM+14   p
                 movem.l d4-d7/a5,-(sp)
                 move.w  a2,d4

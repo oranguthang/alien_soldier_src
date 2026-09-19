@@ -379,7 +379,7 @@ Player_CheckCounterForceDashInput_Return:               ; CODE XREF: Player_Chec
                 rts
 ; End of function Player_CheckCounterForceDashInput
 ; Supplies facing-dependent position and velocity for the Counter Force effect
-Player_SpawnCounterForceEffect:                         ; CODE XREF: Player_GroundIdleState:loc_15286   p  ; was: sub_153BC
+Player_SpawnCounterForceEffect:                         ; CODE XREF: Player_GroundIdleState:Player_StartGroundCounterForce   p  ; was: sub_153BC
                                         ; sub_152FC   p
                 moveq   #$FFFFFFFC,d0
                 move.l  #$FFFC0000,d2

@@ -30,7 +30,7 @@ Enemy_DispatchBehaviorState:                            ; CODE XREF: Enemy_Behav
                 bra.w   Enemy_UpdateBehaviorAnimation
 ; End of function Enemy_BehaviorController
 ; Dispatches enemy to appropriate state handler
-Enemy_StateDispatcher:                                  ; CODE XREF: Enemy_BehaviorController:loc_2C6F8   p  ; was: sub_2C6FE
+Enemy_StateDispatcher:                                  ; CODE XREF: Enemy_BehaviorController:Enemy_DispatchBehaviorState   p  ; was: sub_2C6FE
                 clr.w   $5C(a5)
                 move.w  4(a5),d0
                 movea.w Enemy_BehaviorStateOffsets(pc,d0.w),a0
@@ -280,7 +280,7 @@ Enemy_PeriodicShotController_RunState:                  ; CODE XREF: Enemy_Perio
                 bra.w   Anim_UpdateEnemyAnimation
 ; End of function Enemy_PeriodicShotController
 ; Dispatches the four periodic-shot states by offset from the first
-Enemy_DispatchPeriodicShotState:                        ; CODE XREF: Enemy_PeriodicShotController:loc_2C9AE   p  ; was: sub_2C9B4
+Enemy_DispatchPeriodicShotState:                        ; CODE XREF: Enemy_PeriodicShotController:Enemy_PeriodicShotController_RunState   p  ; was: sub_2C9B4
                 clr.w   $5C(a5)
                 move.w  4(a5),d0
                 movea.w Enemy_PeriodicShotStateOffsets(pc,d0.w),a0

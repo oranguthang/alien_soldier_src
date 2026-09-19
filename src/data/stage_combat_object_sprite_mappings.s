@@ -78,7 +78,7 @@ Projectile_MissirayFallingShotSpriteAnimation:  dc.w    Projectile_MissirayVerti
                 dc.w    Projectile_MissirayVerticalShotSpriteMapping03-*
                 dc.w    $FF
 Stage18_SegmentedWormSpriteMapping00:   dc.w    $603A, $600, $F4F0  ; DATA XREF: Stage18_SegmentedWormSpawnSegments+B8   o  ; was: word_EB4A6
-                                        ; ROM:off_3007C   o
+                                        ; ROM:Stage18_SegmentedWormDirectionFramesA   o
                 dc.w    $E800, $A00, $F400
 Stage18_SegmentedWormSpriteMapping01:   dc.w    $6809, 0, $F313  ; DATA XREF: ROM:00030088   o  ; was: word_EB4B2
                                         ; ROM:00030098   o
@@ -105,8 +105,8 @@ Stage18_SegmentedWormSpriteMapping06:   dc.w    $7823, $900, $F6  ; DATA XREF: R
 Stage18_SegmentedWormSpriteMapping07:   dc.w    $6048, $800, $4F6  ; DATA XREF: ROM:000300C0   o  ; was: word_EB512
                                         ; ROM:000300D0   o
                 dc.w    $E040, $D00, $F4EE
-Stage18_SegmentedWormSpriteMapping08:   dc.w    $685D, 0, $F0F4  ; DATA XREF: ROM:off_30028   o  ; was: word_EB51E
-                                        ; ROM:off_300FC   o
+Stage18_SegmentedWormSpriteMapping08:   dc.w    $685D, 0, $F0F4  ; DATA XREF: ROM:Stage18_SegmentedWormInitialFrameTable   o  ; was: word_EB51E
+                                        ; ROM:Stage18_SegmentedWormDirectionFramesC   o
                 dc.w    $E855, $D00, $F8EC
 Stage18_SegmentedWormSpriteMapping09:   dc.w    $6866, 0, $BF7  ; DATA XREF: ROM:00030108   o  ; was: word_EB52A
                                         ; ROM:00030118   o

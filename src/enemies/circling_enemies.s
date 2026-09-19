@@ -127,7 +127,7 @@ Enemy_CirclingController_UpdateState:                   ; CODE XREF: Enemy_Circl
                 bra.w   Enemy_UpdateCirclingAnimation
 ; End of function Enemy_CirclingController
 ; Dispatches to circle enemy state handlers
-Enemy_DispatchCirclingState:                            ; CODE XREF: Enemy_CirclingController:loc_2D412   p  ; was: sub_2D418
+Enemy_DispatchCirclingState:                            ; CODE XREF: Enemy_CirclingController:Enemy_CirclingController_UpdateState   p  ; was: sub_2D418
                 clr.w   $5C(a5)
                 move.w  4(a5),d0
                 lea     Enemy_CirclingStateOffsets(pc,d0.w),a0

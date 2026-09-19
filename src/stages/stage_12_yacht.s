@@ -119,7 +119,7 @@ Stage12_YachtDestructionState:                          ; DATA XREF: ROM:0002F5E
 ; End of function Stage12_YachtBeginMotion
 ; ---------------------------------------------------------------------------
 Stage12_YachtDestructionPaletteCycle:   dc.w    $A, $E322, $E324, $E326, $E328, $E32A, $E32C, $E32E, $E332, $E334, $E336, $E338
-                                        ; DATA XREF: Stage12_YachtBeginMotion:loc_2F706   o
+                                        ; DATA XREF: Stage12_YachtBeginMotion:Stage12_YachtDestructionState   o
 
 ; Oscillates the yacht vertically between its two waterline limits
 Stage12_YachtUpdateVerticalBob:                         ; CODE XREF: Stage12_YachtBeginMotion+36   p  ; was: sub_2F73E
@@ -520,7 +520,7 @@ Stage12_TeddyBearShotReturn:                            ; CODE XREF: Stage12_Ted
                 rts
 ; End of function Stage12_TeddyBearFireDownwardShot
 ; Anchors the teddy bear to the yacht controller's position
-Stage12_TeddyBearAttachToYacht:                         ; CODE XREF: Stage12_TeddyBearFacePlayerDelay:loc_2FAE4   p  ; was: sub_2FBEA
+Stage12_TeddyBearAttachToYacht:                         ; CODE XREF: Stage12_TeddyBearFacePlayerDelay:Stage12_TeddyBearPilotAttachDelay   p  ; was: sub_2FBEA
                                         ; sub_2FB10   p
                 bset    #3,$E(a5)
                 movea.w #(Entity57Type-M68K_RAM),a0

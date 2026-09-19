@@ -64,3 +64,11 @@ references, including externally consumed cartridge-header fields; this is a
 review queue, not a dead-code count. The old single-file data splitter now
 refuses to run, because it would bypass canonical asset extraction and the
 manifest. `prepare_batch.py` also defaults to `src/main.s` for direct use.
+
+The imported cross-reference comments had 40 surviving address-derived symbol
+names in 28 modules, not the older documented count of 207. Thirty-three map
+uniquely through `; was:` provenance; the remaining seven table references
+were resolved against the existing assembler listing at their ROM addresses.
+Only comment text changed, and the provenance markers remain intact. Source
+lint now rejects a retired name in a `CODE XREF`, `DATA XREF`, or continuation
+`ROM:` comment, so this cleanup remains checkable.

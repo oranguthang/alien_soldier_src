@@ -661,7 +661,7 @@ Gfx_BugmaxLoadFirstOpeningTiles:                        ; CODE XREF: Boss_Bugmax
 ; End of function Boss_BugmaxWaitForFirstOpeningScrollThreshold
 ; ---------------------------------------------------------------------------
 Gfx_BugmaxFirstOpeningTileLoadDescriptor:   dc.w    $6330, $2000, $104, $BEBF, $C0C3, $C4C7, $C8CB, $CF  ; was: word_4C6AE
-                                        ; DATA XREF: Boss_BugmaxWaitForFirstOpeningScrollThreshold:loc_4C6A2   o
+                                        ; DATA XREF: Boss_BugmaxWaitForFirstOpeningScrollThreshold:Gfx_BugmaxLoadFirstOpeningTiles   o
 
 ; Spawn Bugmax transition debris from selected linked records
 Boss_BugmaxSpawnTransitionDebris:                       ; CODE XREF: Boss_BugmaxWaitForFirstOpeningScrollThreshold+18   p  ; was: sub_4C6BE
@@ -719,7 +719,7 @@ Gfx_BugmaxLoadSecondOpeningTiles:                       ; CODE XREF: Boss_Bugmax
 ; End of function Boss_BugmaxWaitForSecondOpeningScrollThreshold
 ; ---------------------------------------------------------------------------
 Gfx_BugmaxSecondOpeningTileLoadDescriptor:  dc.w    $6330, $2000, $104, $BCBD, $C1, $C5, $C9, $CD  ; was: word_4C768
-                                        ; DATA XREF: Boss_BugmaxWaitForSecondOpeningScrollThreshold:loc_4C75C   o
+                                        ; DATA XREF: Boss_BugmaxWaitForSecondOpeningScrollThreshold:Gfx_BugmaxLoadSecondOpeningTiles   o
 
 ; Initialize synchronized linked-part rotation
 Boss_BugmaxInitializeLinkedPartSpin:                    ; DATA XREF: ROM:0004C3E6   o  ; was: sub_4C778

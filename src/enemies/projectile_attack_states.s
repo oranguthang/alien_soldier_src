@@ -46,7 +46,7 @@ Enemy_ProjectileAttackController_UpdateState:           ; CODE XREF: Enemy_Proje
                 bra.w   Anim_UpdateProjectileAnimation
 ; End of function Enemy_ProjectileAttackController
 ; Dispatches projectile to state handler
-Enemy_DispatchProjectileAttackState:                    ; CODE XREF: Enemy_ProjectileAttackController:loc_2CC0C   p  ; was: sub_2CC12
+Enemy_DispatchProjectileAttackState:                    ; CODE XREF: Enemy_ProjectileAttackController:Enemy_ProjectileAttackController_UpdateState   p  ; was: sub_2CC12
                 clr.w   $5C(a5)
                 move.w  4(a5),d0
                 movea.w Enemy_ProjectileAttackStateOffsets(pc,d0.w),a0
@@ -229,7 +229,7 @@ Enemy_HomingAttackController_UpdateState:               ; CODE XREF: Enemy_Homin
                 bra.w   Anim_UpdateProjectileAnimation
 ; End of function Enemy_HomingAttackController
 ; Dispatches the homing-attack state
-Enemy_DispatchHomingAttackState:                        ; CODE XREF: Enemy_HomingAttackController:loc_2CE2E   p  ; was: sub_2CE34
+Enemy_DispatchHomingAttackState:                        ; CODE XREF: Enemy_HomingAttackController:Enemy_HomingAttackController_UpdateState   p  ; was: sub_2CE34
                 clr.w   $5C(a5)
                 move.w  4(a5),d0
                 movea.w Enemy_HomingAttackStateOffsets(pc,d0.w),a0

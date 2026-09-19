@@ -948,7 +948,7 @@ Boss_XiTigerInitializePoseChannels:                     ; CODE XREF: Boss_XiTige
 ; End of function Boss_XiTigerInitializePoseChannels
 ; ---------------------------------------------------------------------------
 Boss_XiTigerIdlePoseCommands:   dc.w    $F510, 0, $15, 0, $80DC, $F510, $10, $15, $10, $80DC, $FFFF  ; was: word_3E3D2
-                                        ; DATA XREF: Boss_XiTigerStartBossMessage:loc_3DA86   o
+                                        ; DATA XREF: Boss_XiTigerStartBossMessage:Boss_XiTigerUpdateActiveBattlePose   o
                                         ; Boss_XiTigerEnterIdleState:Boss_XiTigerUpdateIdlePose   o
 Boss_XiTigerLandingRecoveryPoseCommands:    dc.w    $F810, $70, $C, $70, $FFFE  ; was: word_3E3E8
                                         ; DATA XREF: Orphaned_XiTigerHoldRecoveryPoseAtFixedPosition+2C   o
@@ -964,7 +964,7 @@ Boss_XiTigerDashPreparationPoseCommands:    dc.w    $F414, $80, $16, $80  ; was:
 Boss_XiTigerCloseRangeJumpPreparationPoseCommands:  dc.w    $F410, $70, $18, $70, $FC0C, $A0, $C, $A0, $FFFE  ; was: word_3E444
                                         ; DATA XREF: Boss_XiTigerCloseRangeJumpPreparationState:Boss_XiTigerUpdateCloseRangeJumpPreparationPose   o
 Boss_XiTigerAirbornePoseCommands:   dc.w    $CA40, $B0, $FE0C, $B0, 8, $B0, $FFFE  ; was: word_3E456
-                                        ; DATA XREF: Boss_XiTigerFallingLanding:loc_3DA30   o
+                                        ; DATA XREF: Boss_XiTigerFallingLanding:Boss_XiTigerUpdateFallingPose   o
                                         ; Boss_XiTigerJumpRise:Boss_XiTigerUpdateJumpAirbornePose   o
 Boss_XiTigerLoopingAirbornePoseCommands:    dc.w    $C, $A0, $C, $B0, $FFFF  ; was: word_3E464
                                         ; DATA XREF: Orphaned_XiTigerStepStateBackOnButtonPress:Orphaned_XiTigerUpdateButtonRewindPose   o
@@ -973,7 +973,7 @@ Boss_XiTigerDefeatPoseCommands: dc.w    $E220, $C0, $E120, $70, $FFFF  ; was: wo
                                         ; DATA XREF: Boss_XiTigerDefeatLandingDelayState:Boss_XiTigerUpdateDefeatLandingPose   o
                                         ; Boss_XiTigerDefeatFadeState:Boss_XiTigerUpdateDefeatFadePose   o
 Boss_XiTigerBattleStartPoseCommands:    dc.w    $F058, $D0, $38, $D0, $EC50, $C0, $D040, $C0, $ED18, $10, $14, $10, $FFFE  ; was: word_3E478
-                                        ; DATA XREF: Boss_XiTigerBattleStart:loc_3DA64   o
+                                        ; DATA XREF: Boss_XiTigerBattleStart:Boss_XiTigerUpdateBattleStartPose   o
 Boss_XiTigerPoseTargets:    dc.w    $C8EC, $3860, $1038, $38F0, $8C50, $AC70, $6400, $E0FA, $D4F8, $3050, $1014, $1018, $9640, $9870, $50C0, $606  ; was: word_3E492
                                         ; DATA XREF: Boss_XiTigerUpdatePoseAnimation+5A   o
                 dc.w    $C4E4, $B470, $1010, $4000, $9080, $3070, $6EF8, $D0FA, $D600, $2000, $800, $5000, $A090, $5070, $6EF0, $D00C

@@ -38,6 +38,8 @@ RAW_RAM_ADDRESS = re.compile(
 REGISTER = re.compile(r"^(?:[da][0-7]|sp|pc|sr|ccr|usp)$", re.IGNORECASE)
 INCLUDE = re.compile(r'^\s*include\s+"([^"]+)"', re.IGNORECASE)
 WAS = re.compile(r";\s*was:\s*([A-Za-z_][A-Za-z0-9_]*)\s*$")
+XREF_COMMENT = re.compile(r";\s*(?:(?:CODE|DATA)\s+XREF:|ROM:)\s*([^;]*)")
+IDENTIFIER = re.compile(r"\b[A-Za-z_][A-Za-z0-9_]*\b")
 OWNER_TOKEN = re.compile(r"^[A-Z][a-z0-9]*")
 EMITTING = re.compile(
     r"^\s*(?:dc\.[bwl]|dcb\.[bwl]|binclude|incbin|org0?|align0?|cnop0?)\b",
@@ -95,6 +97,14 @@ def scan(policy: dict, project_root: Path) -> Inventory:
                     f"{where}: line has {len(line)} characters; "
                     f"limit is {style['maximum_line_length']}"
                 )
+            xref = XREF_COMMENT.search(line)
+            if xref:
+                for token in IDENTIFIER.findall(xref.group(1)):
+                    if address_name.fullmatch(token):
+                        errors.append(
+                            f"{where}: cross-reference comment uses retired "
+                            f"address-derived name {token}"
+                        )
             if style["definitions_column_zero"] and INDENTED_DEFINITION.match(line):
                 errors.append(f"{where}: global definition must start in column zero")
             if (

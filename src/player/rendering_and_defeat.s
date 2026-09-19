@@ -97,7 +97,7 @@ Player_SetWeaponAnimationData:                          ; CODE XREF: Player_Upda
 ; ---------------------------------------------------------------------------
 Player_WeaponAnimationTileOffsets:  dc.w    $FFFF, $FFFF, 0, $FFFF, $FFFF, 0  ; was: word_1702E
                                         ; DATA XREF: Player_UpdateWeaponAnim+3C   r
-Player_WeaponAnimationFrames:   dc.l    Player_WeaponAnimationSpriteMapping00  ; DATA XREF: Player_UpdateWeaponAnim:loc_17022   r  ; was: off_1703A
+Player_WeaponAnimationFrames:   dc.l    Player_WeaponAnimationSpriteMapping00  ; DATA XREF: Player_UpdateWeaponAnim:Player_SetWeaponAnimationData   r  ; was: off_1703A
                 dc.l    Player_WeaponAnimationSpriteMapping01
                 dc.l    Player_WeaponAnimationSpriteMapping02
                 dc.l    Player_WeaponAnimationSpriteMapping03

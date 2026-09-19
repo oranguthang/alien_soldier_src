@@ -18,7 +18,7 @@ UI_InitWeaponSelectionObject:                           ; CODE XREF: UI_WeaponSe
                 rts
 ; End of function UI_InitWeaponSelectionObject
 ; Updates weapon-selection animation, input, and selected-weapon state
-UI_UpdateWeaponSelectionObject:                         ; CODE XREF: UI_WeaponSelectionObject:loc_2BCF8   j  ; was: sub_2BBC0
+UI_UpdateWeaponSelectionObject:                         ; CODE XREF: UI_WeaponSelectionObject:UI_WeaponSelectionObject_Update   j  ; was: sub_2BBC0
                 move.b  #$7C,$20(a5)                    ; '|'
                 btst    #0,(FrameCounter+1).w
                 bne.s   UI_UpdateWeaponSelectionObject_UpdateAnimationHoldTimer

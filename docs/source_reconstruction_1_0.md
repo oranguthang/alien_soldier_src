@@ -34,6 +34,9 @@ byte.
   it replaced and the static evidence for the name it has now.
 - **Provenance is retained.** 16,053 `; was:` markers map current definitions to
   the imported labels they replaced.
+- **Cross-reference comments stay navigable.** Imported `CODE XREF`, `DATA XREF`
+  and continuation `ROM:` comments contain no retired address-derived symbol
+  names; `make lint` enforces this without touching the `; was:` markers.
 - **No address is formed from a literal.** No work RAM address is reached
   through a raw `$FFFFxxxx` immediate. `make lint` rejects one in any
   address-forming instruction with a ceiling of zero, so `movea.l`, `cmpa.l`,
@@ -59,7 +62,6 @@ that limits it. They are stated here rather than left implicit.
 | `SND-001` | The Z80 sound driver program, which stays a verbatim payload and is never disassembled. | unsupported |
 | `NAME-001` | 513 `_End` aliases that follow their own `binclude` payload hold no separate record. | partial |
 | `LAYOUT-001` | Module sizes: 204 of 379 modules sit inside the preferred 200–700 line band, 145 are shorter and 30 are longer. | partial |
-| `DOC-001` | 207 imported cross-reference comments still quote address-derived names that no longer define anything. | partial |
 | `TOOL-001` | Four exploratory commands remain outside release evidence; their source operations address modules. The obsolete pointer debugger is retired, and `verify-relocation` checks pointers across the current layout. | unsupported |
 | `TOOL-002` | The monolithic asset splitter is retired; `make split` extracts canonical data under the asset manifest. | unsupported |
 | `RELEASE-001` | The isolated 1.0 branch has not yet passed its final gate or received its final tag. | planned |
@@ -78,10 +80,6 @@ and its private tables are not split merely to reach a line count, and ROM order
 is preserved by include order, so a subsystem that is contiguous in ROM stays in
 one module even when that module is short or long. The 1000-line ceiling is the
 hard limit and no module reaches it.
-
-`DOC-001` is text, not identifiers. A stale name in a comment cannot be mistaken
-for a symbol that resolves, because the address-derived ceiling is zero and every
-RAM field has a name.
 
 ## Naming is not grandfathered
 

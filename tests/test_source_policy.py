@@ -122,6 +122,21 @@ class SourcePolicyTests(unittest.TestCase):
             errors = self._scan_module("Sys_Boot:\n                %s\n" % instruction)
             self.assertEqual([], [e for e in errors if "raw literal" in e], instruction)
 
+    def test_xref_comments_cannot_reintroduce_retired_names(self) -> None:
+        errors = self._scan_module(
+            "Sys_Boot: ; CODE XREF: Sys_Reset:sub_1234 p ; was: sub_5678\n"
+            "          ; ROM:sub_9ABC o\n"
+        )
+        stale = [error for error in errors if "cross-reference comment" in error]
+        self.assertEqual(2, len(stale), stale)
+        self.assertTrue(any("sub_1234" in error for error in stale), stale)
+        self.assertTrue(any("sub_9ABC" in error for error in stale), stale)
+
+        provenance_only = self._scan_module("Sys_Boot: ; was: sub_5678\n")
+        self.assertEqual(
+            [], [error for error in provenance_only if "cross-reference comment" in error]
+        )
+
     def _scan_one_definition(self, name: str) -> list[str]:
         body = "" if name == "Sys_Boot" else "Sys_Boot:\n"
         return self._scan_module(body + name + ":\n")

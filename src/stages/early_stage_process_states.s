@@ -68,7 +68,7 @@ EarlyStage_StateHandlerOffsets: dc.w    Stage1_InitializeScrollState-Stage1_Init
 
 ; Updates stage logic and scroll
 Stage1_InitializeScrollState:                           ; DATA XREF: Stage_DispatchEarlyStageState+4   o  ; was: sub_C8C2
-                                        ; ROM:off_C84A   o
+                                        ; ROM:EarlyStage_StateHandlerOffsets   o
                 addq.w  #2,(StageStateOffset).w
 ; Updates stage scroll position and checks for phase transition at specific coordinate
 Stage1_UpdateScrollToJetsripper:                        ; DATA XREF: ROM:0000C84C   o  ; was: loc_C8C6

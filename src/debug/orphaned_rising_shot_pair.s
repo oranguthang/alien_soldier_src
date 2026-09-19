@@ -96,7 +96,7 @@ Orphaned_RisingShotPairFirePeriodReturn:                ; CODE XREF: Orphaned_Ri
                 rts
 ; End of function Orphaned_RisingShotPairFirePeriod
 ; Periodically creates a type-$3C4 Missiray falling shot
-Orphaned_RisingShotPairFireFallingShot:                 ; CODE XREF: Orphaned_RisingShotPairInitDelay:loc_33806   p  ; was: sub_338EC
+Orphaned_RisingShotPairFireFallingShot:                 ; CODE XREF: Orphaned_RisingShotPairInitDelay:Orphaned_RisingShotPairWaitAndFire   p  ; was: sub_338EC
                 move.w  (FrameCounter).w,d7
                 andi.w  #$3F,d7                         ; '?'
                 bne.s   Orphaned_RisingShotPairFallingShotReturn

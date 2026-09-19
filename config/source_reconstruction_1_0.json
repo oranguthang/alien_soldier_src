@@ -458,13 +458,6 @@
       "control": "The 1000-line ceiling is a hard limit that make lint enforces and no module reaches it, and config/rom_layout.json declares every module range."
     },
     {
-      "id": "stale_cross_reference_comments",
-      "status": "partial",
-      "reason": "Two hundred and seven imported cross-reference comments across 95 modules still quote address-derived names that no longer define anything. They are comment text, not identifiers.",
-      "registry": "DOC-001",
-      "control": "No live definition is address-derived, which make lint enforces with a ceiling of zero, so the stale text cannot be mistaken for a symbol that resolves."
-    },
-    {
       "id": "legacy_analysis_commands",
       "status": "unsupported",
       "reason": "The exploratory commands analyze, find-unanalyzed, prepare-batch and rename remain outside release evidence. Their source operations address ROM-ordered modules, but the emulator analysis path has not been rerun under the pinned runtime contract. The obsolete debug-pointers and report-pointers CLIs refuse to run; make verify-relocation is the module-aware pointer gate. Batch reports and rename flags do not establish semantic correctness.",

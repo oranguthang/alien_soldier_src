@@ -136,7 +136,7 @@ Enemy_Stage10WaspController_DispatchAndRender:          ; CODE XREF: Enemy_Stage
                 bra.w   Enemy_UpdateHorizontalFlipFromVelocity
 ; End of function Enemy_Stage10WaspController
 ; Dispatches the Stage 10 wasp's current state
-Enemy_DispatchStage10WaspState:                         ; CODE XREF: Enemy_Stage10WaspController:loc_2E114   p  ; was: sub_2E11E
+Enemy_DispatchStage10WaspState:                         ; CODE XREF: Enemy_Stage10WaspController:Enemy_Stage10WaspController_DispatchAndRender   p  ; was: sub_2E11E
                 clr.w   $5C(a5)
                 move.w  4(a5),d0
                 lea     Enemy_Stage10WaspStateOffsets(pc,d0.w),a0

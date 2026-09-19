@@ -219,7 +219,7 @@ Projectile_FallingSpawner_Return:                       ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_FallingSpawner
 ; Spawns 4 projectiles in pattern with sound
-Enemy_SpawnQuadProjectiles:                             ; CODE XREF: Enemy_SpawnDifficultyProjectilePattern:loc_2D664   j  ; was: sub_2A5B6
+Enemy_SpawnQuadProjectiles:                             ; CODE XREF: Enemy_SpawnDifficultyProjectilePattern:Enemy_SpawnDifficultyProjectilePattern_Base   j  ; was: sub_2A5B6
                                         ; Projectile_ViblackSideShotBeginBurst+14   j
                 movea.w a5,a0
                 move.l  #SharedCombatSpriteAnimation05,8(a5)
@@ -519,7 +519,7 @@ Projectile_FallWithGravity_Return:                      ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_FallWithGravity
 ; Applies global stage attribute bits to the projectile sprite
-Projectile_ApplyGlobalAttributes:                       ; CODE XREF: Projectile_FallWithGravity:loc_2A80C   p  ; was: sub_2A824
+Projectile_ApplyGlobalAttributes:                       ; CODE XREF: Projectile_FallWithGravity:Projectile_FallWithGravity_Update   p  ; was: sub_2A824
                 andi.w  #$E7FF,$E(a5)
                 move.w  (GlobalSpriteFlipBits).w,d0
                 or.w    d0,$E(a5)

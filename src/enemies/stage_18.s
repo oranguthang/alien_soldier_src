@@ -624,7 +624,7 @@ Stage18_SegmentedWormSegmentFollow:                     ; DATA XREF: ROM:000304A
                 beq.w   Entity_UpdateReturn
 ; End of function Stage18_SegmentedWormSegmentFollow
 ; Propagates predecessor motion and updates the segment direction frame
-Stage18_SegmentedWormUpdateFollower:                    ; DATA XREF: ROM:off_2FC46   o  ; was: sub_304B0
+Stage18_SegmentedWormUpdateFollower:                    ; DATA XREF: ROM:OrphanedCrossStageEntityStateTable   o  ; was: sub_304B0
                 bsr.w   Stage18_SegmentedWormAdvanceFollower
                 addi.l  #$2000,$1C(a5)
                 move.w  $54(a5),d0

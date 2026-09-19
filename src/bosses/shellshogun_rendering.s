@@ -147,7 +147,7 @@ Boss_ShellshogunOrbitingPartSourcesAndRadii:    dc.w    $C620, $20, $CF20, 8, $C
                                         ; DATA XREF: Boss_ShellshogunUpdateOrbitingParts+46   o
 
 ; Selects the linked part and derives its wrapped rotation from the pose
-Boss_ShellshogunUpdateLinkedPartRotation:               ; CODE XREF: Boss_ShellshogunSlamAttackInit:loc_39A8A   p  ; was: sub_39FF6
+Boss_ShellshogunUpdateLinkedPartRotation:               ; CODE XREF: Boss_ShellshogunSlamAttackInit:Boss_ShellshogunSlamPreparationState   p  ; was: sub_39FF6
                                         ; sub_39E5A   p
                 move.w  #$C860,$23E(a5)
                 move.w  $296(a5),d0
