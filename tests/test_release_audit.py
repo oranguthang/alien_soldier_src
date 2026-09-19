@@ -7,6 +7,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -43,6 +44,44 @@ class ReleaseAuditTests(unittest.TestCase):
         errors = release_audit.audit_counters(ROOT, manifest, policy, layout, {})
         self.assertTrue(any("counter modules says" in error for error in errors), errors)
         self.assertEqual(len(contract["required_runtime_ids"]), manifest["counters"]["runtime_scenarios"])
+
+    def test_unresolved_names_block_tag_ready_status(self) -> None:
+        manifest = self._manifest()
+        manifest["status"] = "tag-ready"
+        manifest["provenance"]["exact_address_records"] += 1
+        policy = json.loads(
+            (ROOT / "config/source_policy.json").read_text(encoding="utf-8")
+        )
+        layout = json.loads(
+            (ROOT / "config/rom_layout.json").read_text(encoding="utf-8")
+        )
+        errors = release_audit.audit_counters(ROOT, manifest, policy, layout, {})
+        self.assertTrue(any("provenance exact_address_records" in error for error in errors))
+        self.assertTrue(any("hypothesis-level name records" in error for error in errors))
+
+    def test_template_name_evidence_blocks_tag_ready_status(self) -> None:
+        manifest = self._manifest()
+        manifest["status"] = "tag-ready"
+        policy = json.loads(
+            (ROOT / "config/source_policy.json").read_text(encoding="utf-8")
+        )
+        layout = json.loads(
+            (ROOT / "config/rom_layout.json").read_text(encoding="utf-8")
+        )
+        original_load = release_audit.load
+
+        def load_with_template(root: Path, relative: str) -> dict:
+            result = original_load(root, relative)
+            if relative == "config/name_audit.json":
+                result["records"][0]["basis"].append(
+                    "The name follows the instruction-level condition or side effect "
+                    "and its in-module callers."
+                )
+            return result
+
+        with mock.patch.object(release_audit, "load", side_effect=load_with_template):
+            errors = release_audit.audit_counters(ROOT, manifest, policy, layout, {})
+        self.assertTrue(any("generic name-evidence bases" in error for error in errors))
 
     def test_weakened_scope_and_threshold_are_rejected(self) -> None:
         contract = json.loads(

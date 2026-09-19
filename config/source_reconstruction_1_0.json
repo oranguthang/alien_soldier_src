@@ -65,7 +65,7 @@
     {
       "id": "semantic_naming",
       "kind": "source",
-      "summary": "Every address-derived identifier was replaced and the result audited module by module: 15,831 exact-address records, each with the previous name, the imported name and the static evidence behind the current one.",
+      "summary": "Every live address-derived identifier was replaced and 15,833 exact-address name records now exist. Template evidence is exhausted, but seven provisional boss-identity records still require pinned visual confirmation or neutral names.",
       "evidence": [
         "provenance_and_unknowns",
         "files:config/name_audit.json"
@@ -192,8 +192,8 @@
       }
     },
     "provenance_and_unknowns": {
-      "status": "satisfied",
-      "statement": "No live definition is address-derived, every replaced name keeps a traceable marker, and every provenance-mapped current name has an exact-address record with static evidence.",
+      "status": "partial",
+      "statement": "No live definition is address-derived and every replaced name keeps a traceable marker. Exact-address records cover current names with no template bases; seven boss-identity records remain hypotheses pending pinned visual confirmation or neutral names.",
       "evidence": {
         "targets": [
           "lint",
@@ -208,7 +208,8 @@
         "artifacts": []
       },
       "excluded": [
-        "NAME-001"
+        "NAME-001",
+        "NAME-003"
       ]
     },
     "memory_map": {
@@ -451,6 +452,13 @@
       "control": "make semantic-audit classifies them, and reports zero other pending end labels and zero modules remaining, so nothing else hides behind the classification."
     },
     {
+      "id": "provisional_boss_visual_identities",
+      "status": "partial",
+      "reason": "Seven exact-address boss-name records have hypothesis-level visual identities. Static dispatch or object-family evidence does not independently establish the pictured boss.",
+      "registry": "NAME-003",
+      "control": "make release-audit recounts hypothesis_name_records and refuses tag-ready status until the count is zero. Pinned runtime evidence must confirm each identity, or its name must become behavior-only."
+    },
+    {
       "id": "module_line_targets",
       "status": "partial",
       "reason": "The preferred module size is 200 to 700 lines. 211 of 383 modules are inside it, 146 are shorter and 26 are longer, because the module rule forbids splitting a procedure from its private tables merely to reach a line count.",
@@ -647,8 +655,8 @@
         "sha256": "5613637d267cf8d0bf3ff1e396d7929526cd5221cb8af06349528c8bedced1a0"
       }
     ],
-    "exact_address_records": 15831,
-    "provenance_markers": 4828
+    "exact_address_records": 15833,
+    "provenance_markers": 16053
   },
   "required_documents": [
     "docs/assembly_style.md",
@@ -703,6 +711,8 @@
     "declared_subsystems": 192,
     "definitions": 16928,
     "dma_transferred_payloads": 289,
+    "generic_evidence_bases": 0,
+    "hypothesis_name_records": 7,
     "modules": 383,
     "name_audit_records": 15833,
     "provenance_mappings": 16053,

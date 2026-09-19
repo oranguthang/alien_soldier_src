@@ -29,9 +29,11 @@ byte.
   one of 192 declared subsystems, derives from a symbol that exists, or is a
   declared hardware exception. The vocabulary is a closed list in
   `config/source_policy.json`; a new owner token fails lint.
-- **Evidence behind every name.** `config/name_audit.json` holds 15,833
-  exact-address records. Each carries the address, the imported name, the name
-  it replaced and the static evidence for the name it has now.
+- **Name evidence is traceable, with a declared review debt.**
+  `config/name_audit.json` holds 15,833 exact-address records with imported
+  and current names. The Gusthead template-basis queue is closed (`NAME-002`);
+  seven boss-identity records remain visual hypotheses (`NAME-003`), not
+  semantically confirmed names.
 - **Provenance is retained.** 16,053 `; was:` markers map current definitions to
   the imported labels they replaced.
 - **Cross-reference comments stay navigable.** Imported `CODE XREF`, `DATA XREF`
@@ -61,6 +63,7 @@ that limits it. They are stated here rather than left implicit.
 | `PROFILE-001` | The European ROM. Only the Japanese cartridge is accepted. | unsupported |
 | `SND-001` | The Z80 sound driver program, which stays a verbatim payload and is never disassembled. | unsupported |
 | `NAME-001` | 513 `_End` aliases that follow their own `binclude` payload hold no separate record. | partial |
+| `NAME-003` | Seven boss-identity names remain provisional until pinned visual evidence or behavior-only renaming. | partial |
 | `LAYOUT-001` | Module sizes: 211 of 383 modules sit inside the preferred 200–700 line band, 146 are shorter and 26 are longer. | partial |
 | `TOOL-001` | Four exploratory commands remain outside release evidence; their source operations address modules. The obsolete pointer debugger is retired, and `verify-relocation` checks pointers across the current layout. | unsupported |
 | `TOOL-002` | The monolithic asset splitter is retired; `make split` extracts canonical data under the asset manifest. | unsupported |

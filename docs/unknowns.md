@@ -10932,3 +10932,57 @@ fragment-emitter states at `$03051E` and `$030520`. This corrects the former
 claim that all three targets intentionally reused existing handlers. The
 first target's purpose, and whether any shipped path can select it, remain
 unknown; the table expressions and ROM bytes are preserved.
+
+## Gusthead name-evidence debt
+
+Thirteen of the original 70 template-basis Gusthead records now cite specific
+instructions and consumers. The root update chooses scrolling-debris drift
+from `StageMotionXDelta` before state `$50` and from negative half of
+`GustheadArenaVelocity` afterwards; the spawner and updater in
+`bosses/gusthead_tentacles.s` consume that shared value. The former
+`Boss_GustheadCheckStageExit` only starts the health-zero defeat state and is
+now `Boss_GustheadCheckDefeatTrigger`. The former segment-radius label also
+copies arm/segment indices and advances to the next `$60`-byte record, so it
+is now `Boss_GustheadFinalizeSegmentSetup`. These changes preserve the
+`loc_3F1FC` and `loc_3F38C` provenance markers and ROM bytes.
+
+At that checkpoint fifty-seven Gusthead records still used a template basis.
+Their existing names are not promoted to confirmed merely because the registry
+says `static`;
+each needs an instruction-level review, correction, or neutralization before
+the Source Reconstruction 1.0 tag. `NAME-002` and the recounted
+`generic_evidence_bases` counter keep this debt explicit.
+
+A subsequent instruction-level pass through the target-movement and
+joint-oscillation states replaced eighteen more template bases. The remaining
+count is 39. The reviewed paths select horizontal targets `$E0`/`$160`, step
+root X by `$8000`, step root Y by one pixel, reverse vertical and middle-joint
+acceleration at signed speed limits, and advance the bounce-turn table after
+its fourth entry. No gameplay bytes or labels changed in this pass.
+
+The next ten records cover the angle-to-velocity entrypoints and the descent
+state. The selected outer/middle/inner angle is masked with `$1FE`; object
+flag bits zero and one gate the sine-derived X and Y components before the
+shared path writes fields `$18` and `$1C`. Consequently the old
+`Boss_GustheadSetSelectedVerticalVelocity` and
+`Boss_GustheadStoreSelectedJointVelocity` names were misleading: they are now
+`Boss_GustheadCalculateVerticalVelocityFromAngle` and
+`Boss_GustheadStoreAngleDerivedVelocities`. The descent path waits for Y
+`$F0`, seeds vertical velocity/acceleration, aligns three joint angles, then
+returns to pattern-choice state `$10`. The remaining template-basis count is
+29; ROM bytes and provenance aliases are unchanged.
+
+The final 29 Gusthead records now cite the instructions behind fragment and
+final-phase states, angle-history propagation, detached-segment handling,
+debris construction, arena scroll scaling, and joint advancement. At ROM
+`$03FE8C`, the branch tests `DifficultyMode`, not arena side: the former
+`Boss_GustheadOffsetArenaAngleForRightSide` label is now
+`Boss_GustheadUseNonzeroDifficultyAngleOffset`. The exact-address audit and
+source agree, and `NAME-002` is closed with zero template bases.
+
+`NAME-003` tracks the seven remaining hypothesis-level boss-name records.
+Their object relationships and state flow are partly supported statically,
+but the visual identities were inferred from unpinned replay or adjacency.
+Each needs a repeatable capture with the pinned emulator or a neutral,
+behavior-only name before the Source Reconstruction 1.0 tag. The release
+audit recounts this queue and blocks `tag-ready` while it is nonzero.

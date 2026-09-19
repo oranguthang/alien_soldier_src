@@ -60,6 +60,12 @@ name the header format gives them.
 Descriptions and maps must state the level when a reader could otherwise
 mistake a hypothesis for a confirmed fact.
 
+An `evidence` value alone is not proof: its `basis` must identify the relevant
+instruction, field, table, caller, or observation. The Gusthead template-basis
+queue (`NAME-002`) is closed at zero. Seven visual boss identities remain
+hypotheses (`NAME-003`); pinned runtime evidence or behavior-only names are
+required before the 1.0 tag.
+
 ## Mechanical style
 
 - Global labels and EQU definitions begin in column zero; instructions and

@@ -102,3 +102,34 @@ shared renderer block (544 lines); `ui/message_scripts_and_glyph_lists.s`
 owns the battle-banner records, boss/ship selectors, glyph lists, and encoded
 scripts (213 lines). Inventory is 383 modules: 211 in the preferred band,
 146 shorter, 26 longer, none over 1000.
+
+The Gusthead name audit had 70 `static` records with the same generic basis
+sentence. Thirteen were checked against the root update, segment setup,
+pattern selector, joint sweep, and debris consumers; each now cites the
+instruction or data flow it relies on. Two overstated names were corrected:
+`CheckStageExit` actually gates the defeat state, and `StoreSegmentRadius`
+also finishes the segment record. Fifty-seven template bases remain as
+`NAME-002` debt, recounted by `make release-audit`. The release requirement is
+marked partial until that number reaches zero.
+
+The next Gusthead pass resolved eighteen more template bases in one coherent
+movement/state span: horizontal and vertical target selection, signed step
+directions, vertical and middle-joint speed limits, oscillation-cycle exit,
+and the bounce-turn angle table. Each basis now names the relevant field,
+comparison, and branch effect. `NAME-002` falls from 57 to 39; no source
+instructions or label identities changed in this pass.
+
+A further pass verified the outer, middle, and inner joint-angle velocity
+entrypoints and the descent/re-alignment states. Ten template bases now name
+the sampled angle, flag-gated sine calculation, output fields, and transition
+conditions. Two labels that falsely implied an early store or a joint-speed
+write now describe calculation of Y velocity and storage of the resulting
+root X/Y components. `NAME-002` falls from 39 to 29; byte identity is retained.
+
+The remaining 29 Gusthead template bases have been checked against concrete
+instructions and consumers across combat, detached segments, debris, arena
+scroll, and joint history. One name falsely attributed a difficulty-dependent
+angle offset to arena side; it now names the `DifficultyMode` condition.
+`NAME-002` reaches zero. Seven provisional visual boss-identity records are
+tracked separately as `NAME-003`, with a manifest counter and tag-ready gate;
+this pass does not claim runtime confirmation for them.

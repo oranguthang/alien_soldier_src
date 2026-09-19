@@ -327,11 +327,11 @@ Boss_GustheadFinalBattleAttackState:                    ; DATA XREF: ROM:0003F2A
                 bsr.w   Boss_GustheadMoveTowardVerticalTarget
                 move.w  (PrimaryCameraXPosition).w,d1
                 tst.w   (DifficultyMode).w
-                bne.s   Boss_GustheadOffsetArenaAngleForRightSide
+                bne.s   Boss_GustheadUseNonzeroDifficultyAngleOffset
                 addi.w  #$40,d1                         ; '@'
                 bra.s   Boss_GustheadCheckFinalBattleAttackAngle
 ; ---------------------------------------------------------------------------
-Boss_GustheadOffsetArenaAngleForRightSide:              ; CODE XREF: Boss_GustheadFinalBattleAttackState+18   j  ; was: loc_3FE8C
+Boss_GustheadUseNonzeroDifficultyAngleOffset:           ; CODE XREF: Boss_GustheadFinalBattleAttackState+18   j  ; was: loc_3FE8C
                 subi.w  #$10,d1
 Boss_GustheadCheckFinalBattleAttackAngle:               ; CODE XREF: Boss_GustheadFinalBattleAttackState+1E   j  ; was: loc_3FE90
                 move.w  d1,d0

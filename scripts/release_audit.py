@@ -237,6 +237,10 @@ def audit_counters(
     inventory = lint_source.scan(policy, root)
     ram_map = (root / "src/ram_addrs.inc").read_text(encoding="utf-8")
     name_audit = load(root, "config/name_audit.json")
+    generic_basis = (
+        "The name follows the instruction-level condition or side effect "
+        "and its in-module callers."
+    )
     actual = {
         "modules": len(layout["modules"]),
         "assets": stats.get("assets", -1),
@@ -245,6 +249,14 @@ def audit_counters(
         "definitions": len(inventory.definitions),
         "provenance_mappings": len(inventory.provenance),
         "name_audit_records": len(name_audit["records"]),
+        "generic_evidence_bases": sum(
+            generic_basis in record.get("basis", [])
+            for record in name_audit["records"]
+        ),
+        "hypothesis_name_records": sum(
+            record.get("evidence") == "hypothesis"
+            for record in name_audit["records"]
+        ),
         "ram_fields": len(RAM_EQUATE.findall(ram_map)),
         "declared_subsystems": len(policy["naming"]["subsystem_vocabulary"]),
         "resolved_branch_targets": inventory.call_targets,
@@ -262,6 +274,24 @@ def audit_counters(
     missing = sorted(set(actual) - set(declared))
     if missing:
         errors.append(f"the manifest leaves these counters undeclared: {missing}")
+    provenance = manifest.get("provenance", {})
+    for field, source in (
+        ("exact_address_records", "name_audit_records"),
+        ("provenance_markers", "provenance_mappings"),
+    ):
+        if provenance.get(field) != actual[source]:
+            errors.append(
+                f"provenance {field} says {provenance.get(field)} "
+                f"but the source has {actual[source]}"
+            )
+    if manifest.get("status") in {"tag-ready", "tagged"} and actual[
+        "generic_evidence_bases"
+    ]:
+        errors.append("tag-ready release retains generic name-evidence bases")
+    if manifest.get("status") in {"tag-ready", "tagged"} and actual[
+        "hypothesis_name_records"
+    ]:
+        errors.append("tag-ready release retains hypothesis-level name records")
     stats["counters"] = len(declared)
     return errors
 

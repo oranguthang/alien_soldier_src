@@ -29,14 +29,14 @@ Boss_GustheadSelectDebrisDrift:                         ; CODE XREF: Boss_Gusthe
                 cmpi.w  #$50,4(a5)                      ; 'P'
                 bcc.s   Boss_GustheadUseArenaMotionDebrisDrift
                 move.l  (StageMotionXDelta).w,(SharedPatternRow1Long2).w
-                bra.s   Boss_GustheadCheckStageExit
+                bra.s   Boss_GustheadCheckDefeatTrigger
 ; ---------------------------------------------------------------------------
 Boss_GustheadUseArenaMotionDebrisDrift:                 ; CODE XREF: Boss_GustheadUpdateAndDispatchState+42   j  ; was: loc_3F1F0
                 move.l  (GustheadArenaVelocity).w,d0
                 asr.l   #1,d0
                 neg.l   d0
                 move.l  d0,(SharedPatternRow1Long2).w
-Boss_GustheadCheckStageExit:                            ; CODE XREF: Boss_GustheadUpdateAndDispatchState+4A   j  ; was: loc_3F1FC
+Boss_GustheadCheckDefeatTrigger:                        ; CODE XREF: Boss_GustheadUpdateAndDispatchState+4A   j  ; was: loc_3F1FC
                 btst    #2,(BossColorEffectFlags).w
                 bne.s   Boss_GustheadUpdatePaletteAndScreenX
                 btst    #1,(BossColorEffectFlags).w
@@ -166,11 +166,11 @@ Boss_GustheadSetupSegmentLoop:                          ; CODE XREF: Boss_Gusthe
                 tst.b   d0
                 bne.s   Boss_GustheadUseInnerSegmentRadius
                 move.w  #$28,$48(a0)                    ; '('
-                bra.s   Boss_GustheadStoreSegmentRadius
+                bra.s   Boss_GustheadFinalizeSegmentSetup
 ; ---------------------------------------------------------------------------
 Boss_GustheadUseInnerSegmentRadius:                     ; CODE XREF: Boss_GustheadInitializeRootAndParts+AC   j  ; was: loc_3F386
                 move.w  #$18,$48(a0)
-Boss_GustheadStoreSegmentRadius:                        ; CODE XREF: Boss_GustheadInitializeRootAndParts+B4   j  ; was: loc_3F38C
+Boss_GustheadFinalizeSegmentSetup:                      ; CODE XREF: Boss_GustheadInitializeRootAndParts+B4   j  ; was: loc_3F38C
                 move.w  #$80,d1
                 add.w   d1,$48(a0)
                 move.b  d5,$4B(a0)
@@ -651,17 +651,17 @@ Boss_GustheadFourWayArcVolleyLoop:                      ; CODE XREF: Boss_Gusthe
 Boss_GustheadFourWayArcVolleyReturn:                    ; CODE XREF: Boss_GustheadSpawnFourWayArcVolley+E   j  ; was: locret_3F930
                 rts
 ; End of function Boss_GustheadSpawnFourWayArcVolley
-; Retrieves first tentacle angle value for Gusthead boss
+; Selects the outer-joint angle for root X/Y velocity calculation
 Boss_GustheadSetVelocityFromOuterJointAngle:            ; was: sub_3F932
                 move.w  (SharedPatternRow0Long0).w,d0
                 bra.s   Boss_GustheadSetVelocityFromSelectedJointAngle
 ; End of function Boss_GustheadSetVelocityFromOuterJointAngle
-; Retrieves second tentacle angle value for Gusthead boss
+; Selects the middle-joint angle for root X/Y velocity calculation
 Boss_GustheadSetVelocityFromMiddleJointAngle:           ; was: sub_3F938
                 move.w  (SharedPatternRow0Long1).w,d0
                 bra.s   Boss_GustheadSetVelocityFromSelectedJointAngle
 ; End of function Boss_GustheadSetVelocityFromMiddleJointAngle
-; Calculates velocity components from angle for Gusthead boss
+; Selects the inner-joint angle and calculates root X/Y velocity components
 Boss_GustheadSetVelocityFromInnerJointAngle:            ; CODE XREF: Boss_GustheadBouncePatternState+6   p  ; was: sub_3F93E
                 move.w  (SharedPatternRow0Long2).w,d0
 Boss_GustheadSetVelocityFromSelectedJointAngle:         ; CODE XREF: Boss_GustheadSetVelocityFromOuterJointAngle+4   j  ; was: loc_3F942
@@ -670,18 +670,18 @@ Boss_GustheadSetVelocityFromSelectedJointAngle:         ; CODE XREF: Boss_Gusthe
                 lea     (Math_SineTable).l,a1
                 moveq   #0,d1
                 btst    #0,$4B(a5)
-                beq.s   Boss_GustheadSetSelectedVerticalVelocity
+                beq.s   Boss_GustheadCalculateVerticalVelocityFromAngle
                 move.w  (a1,d0.w),d1
                 ext.l   d1
                 add.l   d1,d1
-Boss_GustheadSetSelectedVerticalVelocity:               ; CODE XREF: Boss_GustheadSetVelocityFromInnerJointAngle+16   j  ; was: loc_3F95E
+Boss_GustheadCalculateVerticalVelocityFromAngle:        ; CODE XREF: Boss_GustheadSetVelocityFromInnerJointAngle+16   j  ; was: loc_3F95E
                 moveq   #0,d2
                 btst    #1,$4B(a5)
-                beq.s   Boss_GustheadStoreSelectedJointVelocity
+                beq.s   Boss_GustheadStoreAngleDerivedVelocities
                 move.w  -$80(a1,d0.w),d2
                 ext.l   d2
                 asl.l   #4,d2
-Boss_GustheadStoreSelectedJointVelocity:                ; CODE XREF: Boss_GustheadSetVelocityFromInnerJointAngle+28   j  ; was: loc_3F970
+Boss_GustheadStoreAngleDerivedVelocities:               ; CODE XREF: Boss_GustheadSetVelocityFromInnerJointAngle+28   j  ; was: loc_3F970
                 move.l  d1,$18(a5)
                 move.l  d2,$1C(a5)
                 rts
