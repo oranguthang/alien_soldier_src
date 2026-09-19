@@ -224,3 +224,12 @@ the unsigned branch waits while the object's Y is at least `$60` and advances
 only below `$60`. Its state and return names, references, and basis now say
 that directly. `NAME-002` falls from 38 to 14; only Missiray remains in the
 current known-template queue.
+
+The final fourteen Missiray return records in the previous 23-template
+detector now cite their actual loader flag, segment-ready byte, attack
+sequence offset, timer, or palette-frame gate. That queue reached zero.
+A broader duplicate-basis scan immediately exposed 457 records matching
+seventeen additional boilerplate sentences across rendering, palettes,
+UI, and asset families. The release audit now tracks 40 known templates.
+This is expanded accounting, not a reversal of the reviewed source work;
+the 457 records require address-specific evidence before the 1.0 tag.

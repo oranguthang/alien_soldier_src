@@ -11094,3 +11094,12 @@ The former shield-descent state at `$049E9A` is renamed by its literal
 unsigned condition: it waits while `TwentyNinthEntityYPos >= $60` and
 advances below `$60`. `NAME-002` falls from 38 to 14; only the Missiray
 return-template records remain in that known queue.
+
+The fourteen remaining Missiray return records from the earlier detector
+have been checked against their local loader, timer, segment, and palette
+branches. The old 23-sentence `NAME-002` queue reached zero, but a wider
+scan found seventeen more repeated boilerplate sentences covering 457
+records. `make release-audit` now counts all 40 known templates. This is
+an explicit expansion of semantic-review debt, not evidence that those
+rendering, UI, palette, or asset names are wrong. The seven visual identity
+hypotheses remain a separate queue.

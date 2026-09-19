@@ -38,6 +38,23 @@ GENERIC_NAME_BASES = (
     "The 19-entry controller table selects this path for the matching field-4 state code; the body processes that state animation events and transitions.",
     "All documented speed-limit branches converge at this shared return address.",
     "Direct palette-RAM accesses and the fade or color-update caller establish this palette-specific role.",
+    "The renderer writes Genesis OAM Y/size-link/tile/X entries, clips them to the screen bounds, and chains them through 64 priority buckets.",
+    "Bit 11 selects horizontal reflection, bit 15 terminates mapping entries or preserves object priority, and the local control flow establishes the narrower role stated by the symbol.",
+    "Gfx_LoadPaletteCommand proves the destination/count/CRAM-word format, while the direct caller or Boss_LoadAssetSet record proves the owner scope; plural and bank names retain multiple embedded command boundaries without guessing visual colors.",
+    "The local tests, loop direction, and completion writes establish the narrower branch role stated by the symbol.",
+    "The local branch, timer, cache, pointer, or transfer operation establishes the narrower role stated by the symbol.",
+    "The local timer, radial-distance update, sprite write, branch, or return directly establishes the narrower role stated by the symbol name.",
+    "Its callers and destination fields distinguish rendering work from game-state, score, or player behavior.",
+    "The immediate nibble test, attribute branch, DMA setup, tilemap write, loop, or return establishes the narrower role stated by the symbol name.",
+    "The local cursor, slot offset, direction bits, tile position, or force-name operation establishes the narrower role stated by the symbol.",
+    "Call and branch references in the fresh assembler listing confirm the definition address and scope.",
+    "The local comparison, delay, clamp, loop, or return at this address directly establishes the narrower role stated by the symbol name.",
+    "The local angle, radius, directional-bit, slot-offset, or close-transition operations establish the narrower role stated by this symbol.",
+    "The counting frames return here.",
+    "The local phase, offset-table, tile-buffer, palette, dither-pattern, or VDP queue operation establishes the narrower role stated by the symbol.",
+    "The local input, lookup, selection, or rendering operation acts on that controller-layout index or its stored flag byte.",
+    "Boss_LoadAssetSet consumes this record as entity type, optional graphics-load-list pointer, and optional palette-command pointer; the caller and value's dispatch-table slot establish the stated owner or neutral entity type.",
+    "The owning asset-set record points here, and Data_ProcessPointer consumes the tagged source/VRAM records through the $FFFF terminator.",
 )
 
 

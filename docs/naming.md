@@ -64,10 +64,10 @@ An `evidence` value alone is not proof: its `basis` must identify the relevant
 instruction, field, table, caller, or observation. Sixty Gusthead template
 bases have now been replaced with record-specific evidence, but a wider scan
 found 301 records elsewhere matching other generic sentences. Reviewing the
-options, Jampan, Sharpssteel, Sirene, Medusa, and Valkirie paths reduced this
-known queue to 14
-(`NAME-002`).
-The counter covers a curated set of known sentences, not every possible weak
+options, Jampan, Sharpssteel, Sirene, Medusa, Valkirie, graphics/asset, and
+Missiray paths exhausted that initial queue. A wider duplicate scan then
+exposed 457 records matching 17 more generic sentences (`NAME-002`). The
+counter covers a curated set of 40 known sentences, not every possible weak
 explanation; repeated bases still need review before the 1.0 tag. Seven visual
 boss identities remain hypotheses (`NAME-003`).
 
