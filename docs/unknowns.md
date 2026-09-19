@@ -11242,3 +11242,12 @@ queue, or graphics finalization. The former fixed-mode input label at
 mode and was renamed. `NAME-002` remains open outside the curated 48-template
 set, which currently has zero matches; `NAME-003` still has seven visual
 hypotheses.
+
+Ten weapon-state entries that shared a broad state-machine summary now cite
+their own cooldown, active-slot, display-index, transition, or saved-slot
+operations. `Weapon_CommitStateIndex` at `$017C40` was an overclaim because
+that path only derives `WeaponIconTransferState` from D0, clears the cooldown,
+and branches to object-block clearing; the label is now
+`Weapon_FinalizeStateTransition`. The curated `NAME-002` detector covers 50
+sentences with zero matches, but the wider duplicate-basis review is still
+open and `NAME-003` still has seven visual hypotheses.

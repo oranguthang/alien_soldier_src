@@ -63,6 +63,8 @@ GENERIC_NAME_BASES = (
     "MessageSequenceState directly indexes the ROM-ordered handler table; this entry dispatches, advances, ends, or finalizes that shared stage/result/boss/cutscene message state machine.",
     "The local state test, table lookup, state write, or graphics-finalization call establishes the narrower role stated by the symbol name.",
     "The local path selects, highlights, or navigates the encoded SHOOTING MODE, MOVING, and FIX strings and updates ShootingMode.",
+    "WeaponStateIndex dispatches the shared weapon-state machine while WeaponSlotOffset selects one of the four WeaponSlotConfig words.",
+    "The local cooldown, loadout-selection, state-transition, remaining-ammunition, or shared-parameter operations establish the narrower role stated by this symbol.",
 )
 
 

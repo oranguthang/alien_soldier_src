@@ -389,3 +389,12 @@ nonzero MOVING mode when D1 is zero, so it is now
 `WeaponSetup_CheckMovingModeInput`. The curated detector grows from 45 to 48
 sentences and still has zero matches. This static review does not establish
 the seven visual boss identities or close the remaining duplicate-basis scan.
+
+Ten weapon-state records in the same wider scan now cite their precise active-
+slot pointer, signed cooldown tests, relative handler-table lookup, display-
+index mapping, transient-field clearing, and saved-slot restoration. The
+label at `$017C40` did not write `WeaponStateIndex` as its former name claimed;
+it is now `Weapon_FinalizeStateTransition`, matching its icon-transfer state,
+cooldown, and object-block effects. Two retired shared evidence sentences join
+the detector, bringing it from 48 to 50 known templates with zero matches.
+The rest of the duplicate-basis and visual-identity reviews remain open.

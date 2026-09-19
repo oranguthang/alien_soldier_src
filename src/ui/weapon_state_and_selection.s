@@ -209,7 +209,7 @@ WeaponSelect_CheckDirectionalBit2:                      ; CODE XREF: WeaponSelec
                 move.w  #6,(WeaponMenuSlotOffset).w
                 rts
 ; End of function WeaponSelect_HandleDirectionalInput
-; Clears shared weapon damage, motion, targeting, and icon parameters
+; Clears shared weapon targeting, icon, animation, motion, and mode parameters
 Weapon_ClearRuntimeParameters:                          ; CODE XREF: WeaponSelect_Initialize+1A   p  ; was: sub_17B5E
                                         ; Weapon_AdvanceCurrentState+16   p
                 moveq   #0,d0
@@ -264,7 +264,7 @@ WeaponSelect_StartCloseAndAdvanceState:                 ; CODE XREF: WeaponSelec
                 move.w  #8,(WeaponStateCooldown).w
 ; Fall through to advance the selected slot's weapon state
 ; End of function WeaponSelect_Update
-; Advances the selected slot's weapon state and clears transient state
+; Advances the active slot's weapon state and clears transient state
 Weapon_AdvanceCurrentState:                             ; CODE XREF: Player_InitializeStats+76   j  ; was: sub_17BFC
                                         ; WeaponSetup_HandleLoadoutInput+7A   p
                 movea.w (WeaponSlotOffset).w,a0
@@ -287,7 +287,7 @@ Weapon_CommitStateTransition:                           ; CODE XREF: WeaponSelec
 ; ---------------------------------------------------------------------------
 Weapon_CheckRestoreSavedSlot:                           ; CODE XREF: Weapon_CommitStateTransition+4   j  ; was: loc_17C26
                 cmpi.w  #$12,d0
-                bmi.s   Weapon_CommitStateIndex
+                bmi.s   Weapon_FinalizeStateTransition
 Weapon_RestoreSavedSlot:                                ; CODE XREF: Weapon_CommitStateTransition+A   j  ; was: loc_17C2C
                 movea.w (WeaponSavedSlotOffset).w,a0
                 move.w  a0,(WeaponSlotOffset).w
@@ -295,7 +295,8 @@ Weapon_RestoreSavedSlot:                                ; CODE XREF: Weapon_Comm
                 move.w  (a0),d0
                 addq.w  #2,d0
                 move.w  d0,(WeaponStateIndex).w
-Weapon_CommitStateIndex:                                ; CODE XREF: Weapon_CommitStateTransition+10   j  ; was: loc_17C40
+; Updates icon-transfer state, clears cooldown, and resets transient objects
+Weapon_FinalizeStateTransition:                         ; CODE XREF: Weapon_CommitStateTransition+10   j  ; was: loc_17C40
                 asl.w   #1,d0
                 move.w  d0,(WeaponIconTransferState).w
                 clr.w   (WeaponStateCooldown).w
