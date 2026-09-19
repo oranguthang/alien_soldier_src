@@ -56,7 +56,7 @@ Boss_SunsetStingStates: dc.w    Boss_SunsetStingInit-*  ; DATA XREF: Boss_Sunset
                 dc.w    Boss_SunsetStingRotateSegmentsPositiveState-*
                 dc.w    Boss_SunsetStingRotateSegmentsNegativeState-*
                 dc.w    Boss_SunsetStingBrakeSegmentRotationState-*
-                dc.w    Boss_SunsetStingWaitForArenaTransitionState-*
+                dc.w    Boss_SunsetStingRefillCounterAndOscillateState-*
                 dc.w    Boss_SunsetStingBeginDefeatState-*
                 dc.w    Boss_SunsetStingDefeatWobbleState-*
                 dc.w    Boss_SunsetStingFinalDefeatState-*
@@ -534,10 +534,10 @@ Boss_SunsetStingBrakeSegmentRotationUpdate:             ; CODE XREF: Boss_Sunset
                 beq.w   Boss_SunsetStingNextState
                 rts
 ; End of function Boss_SunsetStingBrakeSegmentRotationState
-; Oscillates the controller while waiting for the arena transition to finish
-Boss_SunsetStingWaitForArenaTransitionState:            ; DATA XREF: ROM:00042AAC   o  ; was: sub_4309E
+; Oscillates the controller while refilling the boss counter to its HUD maximum
+Boss_SunsetStingRefillCounterAndOscillateState:         ; DATA XREF: ROM:00042AAC   o  ; was: sub_4309E
                 bset    #7,4(a5)
-                bne.s   Boss_SunsetStingArenaTransitionUpdate
+                bne.s   Boss_SunsetStingCounterRefillOscillationUpdate
                 clr.b   (PlaneAScrollModeFlags).w
                 move.b  #1,(PlaneBScrollModeFlags).w
                 move.b  #0,(VDPReg11Shadow+1).w
@@ -547,25 +547,25 @@ Boss_SunsetStingWaitForArenaTransitionState:            ; DATA XREF: ROM:00042AA
                 move.w  #$14,$4A(a5)
                 move.l  #$FFFFF000,$58(a5)
                 move.w  #1,$1C(a5)
-Boss_SunsetStingArenaTransitionUpdate:                  ; CODE XREF: Boss_SunsetStingWaitForArenaTransitionState+6   j  ; was: loc_430D8
+Boss_SunsetStingCounterRefillOscillationUpdate:         ; CODE XREF: Boss_SunsetStingRefillCounterAndOscillateState+6   j  ; was: loc_430D8
                 move.l  $58(a5),d0
                 add.l   d0,$1C(a5)
                 moveq   #1,d7
                 swap    d7
                 tst.w   $58(a5)
-                bpl.s   Boss_SunsetStingArenaTransitionSelectOscillationLimit
+                bpl.s   Boss_SunsetStingSelectOscillationLimit
                 neg.l   d7
-Boss_SunsetStingArenaTransitionSelectOscillationLimit:  ; CODE XREF: Boss_SunsetStingWaitForArenaTransitionState+4A   j  ; was: loc_430EC
+Boss_SunsetStingSelectOscillationLimit:                 ; CODE XREF: Boss_SunsetStingRefillCounterAndOscillateState+4A   j  ; was: loc_430EC
                 cmp.l   $1C(a5),d7
-                bne.s   Boss_SunsetStingArenaTransitionCheckComplete
+                bne.s   Boss_SunsetStingCheckCounterMaximum
                 neg.l   $58(a5)
-Boss_SunsetStingArenaTransitionCheckComplete:           ; CODE XREF: Boss_SunsetStingWaitForArenaTransitionState+52   j  ; was: loc_430F6
+Boss_SunsetStingCheckCounterMaximum:                    ; CODE XREF: Boss_SunsetStingRefillCounterAndOscillateState+52   j  ; was: loc_430F6
                 addq.w  #2,(BossCombatCounter).w
                 btst    #0,(BossCounterMaxFlag).w
                 beq.w   Boss_SunsetStingReturn
                 move.w  #4,4(a5)
                 rts
-; End of function Boss_SunsetStingWaitForArenaTransitionState
+; End of function Boss_SunsetStingRefillCounterAndOscillateState
 ; Starts the defeat sequence and moves both core objects into alignment
 Boss_SunsetStingBeginDefeatState:                       ; DATA XREF: ROM:00042AAE   o  ; was: sub_4310C
                 move.b  #1,(SoundFadeOutDelay).w

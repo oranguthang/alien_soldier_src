@@ -11313,3 +11313,12 @@ is now the adjacent controller/geometry and opening-state modules, divided
 at the real `Boss_BugmaxMainStateHandlers` table at `$04C3D8`. This is a
 source-ownership change only; it neither upgrades the older static label
 evidence nor establishes any provisional visual identity.
+
+At `$04309E`, the former Sunset Sting `WaitForArenaTransition` explanation
+incorrectly called `BossCounterMaxFlag` a stage-effect flag. The disassembly
+adds two to `BossCombatCounter` each frame and returns to state four only
+when the HUD reports the counter reached `BossCombatCounterMax`. The state
+and three local labels now describe those operations. This corrects the
+behavioral claim but not the visual owner: the entry remains one of seven
+`NAME-003` hypotheses until a pinned replay confirms it or the entire owner
+family receives neutral names.

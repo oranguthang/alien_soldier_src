@@ -491,3 +491,12 @@ than padded with unrelated code. The layout now has 398 modules: 232 within
 the preferred 200–700 band, 149 shorter, 17 longer, with an 869-line
 maximum. `make verify`, `make compare`, and `make verify-symbols` confirm
 canonical bytes and all 15,833 exact-address name-audit records.
+
+The Sunset Sting state at `$04309E` exposed a false visual-transition
+description in the name audit. Its state body increments `BossCombatCounter`
+by two and exits only on `BossCounterMaxFlag` bit zero; the gameplay HUD sets
+that bit when it clamps the counter to `BossCombatCounterMax`. Four labels in
+this state now describe the refill/oscillation, limit selection, and maximum
+check rather than an unproven arena transition. Their exact-address evidence
+was corrected, while the state entry retains hypothesis level because the
+Sunset Sting visual owner has not been confirmed by pinned runtime evidence.
