@@ -2888,8 +2888,9 @@ shows three distinct but cooperating flows in its 754-line ROM-ordered range:
 the `STAGE` number and flashing `EMERGENCY` entry banners (states `$50-$5E`),
 the post-boss remaining-time bonus (states `$2E-$40`), and the shared radial
 text/boss-message script support. The cohesive module is therefore renamed
-`ui/stage_message_sequences.s`; it remains within the agreed 300--1,000-line
-range and is not cosmetically fragmented.
+`ui/stage_message_sequences.s`. That was the first semantic pass; a later
+review found a genuine code/data ownership boundary at ROM `$00B43E` and
+separated the script bank into `ui/message_scripts_and_glyph_lists.s`.
 
 Cross-checking the glyph lists and consumers corrects the false names
 `Player_Initialize`, score display, grade display, victory message, and weapon

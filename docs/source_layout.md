@@ -45,6 +45,13 @@ handlers in `ship_piece_and_debris.s`. That module is 167 lines, below the
 preferred band because the actor family is complete there; merging unrelated
 timeline helpers into it would hide the ownership boundary.
 
+The stage-entry and time-bonus states, radial-text renderer, and their shared
+helpers occupy the 544-line `stage_message_sequences.s` module. The boundary
+at ROM `$00B43E` separates a 213-line message-script bank containing battle
+banner descriptors, boss/ship script selectors, glyph lists, and encoded
+scripts. It is `message_scripts_and_glyph_lists.s`; the encoded script bytes
+remain untouched.
+
 Definition-only `.inc` files are outside this limit. They will receive their
 own structure and policy as the RAM and hardware maps mature.
 

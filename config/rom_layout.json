@@ -534,6 +534,12 @@
       "file": "src/ui/stage_message_sequences.s",
       "subsystem": "ui",
       "start": "0x00AE9A",
+      "end": "0x00B43D"
+    },
+    {
+      "file": "src/ui/message_scripts_and_glyph_lists.s",
+      "subsystem": "ui",
+      "start": "0x00B43E",
       "end": "0x00B8FF"
     },
     {

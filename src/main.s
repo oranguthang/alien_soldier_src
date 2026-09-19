@@ -50,6 +50,7 @@
                 include "src/ui/password_screen.s"
                 include "src/ui/message_sequence_engine.s"
                 include "src/ui/stage_message_sequences.s"
+                include "src/ui/message_scripts_and_glyph_lists.s"
                 include "src/rendering/palettes.s"
                 include "src/stages/early_stage_process_states.s"
                 include "src/stages/stage7_transition_and_stage8_train_flying_neo.s"

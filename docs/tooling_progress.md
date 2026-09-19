@@ -94,3 +94,11 @@ tables. `cutscenes/ship_sequence.s` now keeps the complete timeline and its
 private pattern/arrival data at 644 lines; `cutscenes/ship_piece_and_debris.s`
 owns the cohesive 167-line actor block. Inventory is 382 modules: 209 inside
 the preferred size band, 146 shorter, 27 longer, none over 1000.
+
+The former long UI message module contained a separate message-script and
+glyph-list bank after the completed sprite-line writer at ROM `$00B43E`.
+`ui/stage_message_sequences.s` now holds the stage-entry, time-bonus, and
+shared renderer block (544 lines); `ui/message_scripts_and_glyph_lists.s`
+owns the battle-banner records, boss/ship selectors, glyph lists, and encoded
+scripts (213 lines). Inventory is 383 modules: 211 in the preferred band,
+146 shorter, 26 longer, none over 1000.
