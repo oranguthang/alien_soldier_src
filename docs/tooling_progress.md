@@ -480,3 +480,14 @@ Before the header, the two source slices concatenated exactly to the old
 file. The layout now has 396 modules: 230 preferred, 148 shorter, 18 longer,
 with an 878-line maximum. `make verify`, `make compare`, and
 `make verify-symbols` confirm unchanged ROM bytes and address provenance.
+
+The 878-line Deep Strider source has three procedural regions in ROM order:
+controller/intro/battle (488 lines), defeat and dive-motion helpers (224),
+then linked-part rendering and angled projectile creation (166). Boundaries
+are the `Boss_DeepStriderBeginDefeat` entry at `$03EBCA` and
+`Boss_DeepStriderUpdateParts` at `$03EED8`; concatenation of the three files
+is exactly the prior source. The short final module is kept cohesive rather
+than padded with unrelated code. The layout now has 398 modules: 232 within
+the preferred 200–700 band, 149 shorter, 17 longer, with an 869-line
+maximum. `make verify`, `make compare`, and `make verify-symbols` confirm
+canonical bytes and all 15,833 exact-address name-audit records.

@@ -1653,9 +1653,21 @@
       "end": "0x03E581"
     },
     {
-      "file": "src/bosses/deep_strider.s",
+      "file": "src/bosses/deep_strider_controller_and_battle.s",
       "subsystem": "bosses",
       "start": "0x03E582",
+      "end": "0x03EBC9"
+    },
+    {
+      "file": "src/bosses/deep_strider_defeat_and_dive_helpers.s",
+      "subsystem": "bosses",
+      "start": "0x03EBCA",
+      "end": "0x03EED7"
+    },
+    {
+      "file": "src/bosses/deep_strider_parts_and_projectiles.s",
+      "subsystem": "bosses",
+      "start": "0x03EED8",
       "end": "0x03F113"
     },
     {

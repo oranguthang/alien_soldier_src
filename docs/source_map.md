@@ -38,7 +38,7 @@ cover each layout module exactly once and that the file counts stay current.
 | `0x0374C6-0x0394D7` | Antroid and Terobuster systems | 11 | hypothesis |
 | `0x0394D8-0x03B29D` | Shellshogun and Madam Barbar systems | 6 | hypothesis |
 | `0x03B29E-0x03D0AD` | Joker and Flying Neo systems | 5 | hypothesis |
-| `0x03D0AE-0x040CED` | Caterpillar, Xi-Tiger, Deep Strider, Gusthead, and Snake | 10 | hypothesis |
+| `0x03D0AE-0x040CED` | Caterpillar, Xi-Tiger, Deep Strider, Gusthead, and Snake | 12 | hypothesis |
 | `0x040CEE-0x045ACF` | Sunset Sting, Viblack, and Back Stringer systems | 12 | hypothesis |
 | `0x045AD0-0x04912D` | Epsilon 1 and Sharpssteel systems | 9 | hypothesis |
 | `0x04912E-0x04BEBB` | Jampan and Destroyer MK2 systems | 7 | hypothesis |
