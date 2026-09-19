@@ -2114,9 +2114,10 @@ The following Seven Forces cutscene ownership pass corrected the adjacent
 `0x054B84-0x05575D` boundary. `cutscenes/seven_forces_intro.s` contained the
 controller and its state-offset table through `0x054F9D`, while the states
 selected by that same table were isolated as `bosses/seven_forces_forms.s`.
-The two pieces are now one 941-line, ROM-ordered cutscene module, and
-`rom_layout.json` records the combined range as a single owner. This also
-reduces the layout from 341 to 340 modules without changing emitted bytes.
+At that stage the two pieces were merged into one 941-line, ROM-ordered
+cutscene module, and `rom_layout.json` recorded the combined range as one
+owner. This reduced the layout from 341 to 340 modules without changing
+emitted bytes. A later split keeps every part under `cutscenes/`.
 
 This structural merge deliberately does not endorse the 46 address-derived
 or 52 inherited semantic definitions in the combined module. Their
@@ -2156,7 +2157,7 @@ explosion, final-fade, and transition behavior.
 The final Seven Forces intro pass audited all 19 definitions in
 `0x055460-0x05575D`, removed the last three address-derived labels from the
 941-line module, raised provenance to 9,939 mappings, and took the registry to
-5,804 entries. `cutscenes/seven_forces_intro.s` now has zero live
+5,804 entries. The then-current `cutscenes/seven_forces_intro.s` had zero live
 address-derived definitions.
 
 The former `Boss_MedusaBattleStart` is actually a nine-entry post-battle
@@ -11266,3 +11267,10 @@ boundary, not a new claim that the mixed frame consumers depict one entity.
 The ordinal frame names remain neutral, with their `; was:` provenance intact.
 `make verify`, `make compare`, and `make verify-symbols` confirm the ROM and
 exact-address registry are unchanged by the module split.
+
+The former monolithic Seven Forces intro is now four ROM-ordered cutscene
+modules. The boundaries are the Valkirie state-C entry at `$054F9E`, Sirene
+state-`$2A` at `$05523C`, and the separate post-battle transition dispatcher
+at `$0555C8`. This does not reclassify any of the states as boss code or add
+evidence for character identities. `make verify`, `make compare`, and
+`make verify-symbols` confirm unchanged ROM bytes and exact-address names.

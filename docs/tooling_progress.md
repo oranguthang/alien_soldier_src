@@ -419,3 +419,13 @@ remains 986. `make verify` and `make compare` confirm byte identity, while
 `make verify-symbols` confirms all 15,833 audited addresses against the new
 listing. Numeric frame suffixes remain neutral because mixed consumers do not
 establish a shared visual identity.
+
+The 939 content lines of the Seven Forces intro were split at complete state
+and function boundaries `$054F9E`, `$05523C`, and `$0555C8`. Four cutscene
+modules now own setup/debug (321 lines), form sequences (207), finale and
+effects (283), and post-battle transitions (132); all remain under
+`cutscenes/`, preserving the earlier ownership correction. The original
+source slices reconstructed the old text exactly before four module headers
+were added. The layout now has 389 modules: 219 in the preferred band, 147
+shorter, 23 longer, and none over 1000. `make verify` and `make compare`
+confirmed byte identity; `make verify-symbols` matched all 15,833 records.
