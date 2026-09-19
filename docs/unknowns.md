@@ -11366,3 +11366,12 @@ pointer and VDP command, then jumps to the queue helper. The color table has
 two 16-word ramps selected by `ShootingMode`. Five exact-address records now
 state those local facts; the queue label and plural ramp label were corrected.
 No claim about when the queued DMA is executed was added.
+
+The palette-fade audit's 41 records retained two identical whole-routine
+sentences despite their address-specific third sentences. The local bases
+were checked against `src/rendering/palette_fades.s`, and only the local
+sentence is now retained per address. At `$000F20`, the old text incorrectly
+called the byte read from `PaletteFadeProgress` the low byte; the 68000's
+big-endian word layout makes it the high byte. The other local claims match
+their branch, clamp, palette-store or return sites. This static correction
+does not supply runtime evidence or settle the wider `NAME-002` queue.

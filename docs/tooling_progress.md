@@ -548,3 +548,11 @@ was too strong for a routine that only queues a DMA command; it is now
 `Weapon_QueueState12IconFrameTransfer`. The color table's plural name records
 its two ramps. This completes local review of the adjacent state-$02 through
 state-$0C groups, not the wider `NAME-002` registry.
+
+The 41 full-screen palette-fade records were checked again at their own
+addresses. Each already had a local instruction-level basis, so the two
+identical whole-routine sentences were removed from every record. One local
+basis at `$000F20` was wrong: `move.b (PaletteFadeProgress).w,d5` reads the
+high byte of that word on the 68000, not its low byte. The basis and source
+header now say so. This removes a repeated-basis cluster without changing
+the assembled fade or closing the wider `NAME-002` review.

@@ -1,6 +1,7 @@
 ; Applies a 64-color fade between the active and shadow palettes
 ; PaletteFillColor selects the black or white endpoint; the sign of
 ; PaletteFadeStep selects whether PaletteFadeProgress advances or retreats
+; The high byte of PaletteFadeProgress supplies the per-channel delta
 Palette_UpdateFullScreenFade:                           ; was: sub_EF4
                 tst.b   (GameplayControlFlags).w
                 bpl.w   Palette_UpdateFullScreenFade_SelectTarget
