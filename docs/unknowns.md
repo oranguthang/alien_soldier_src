@@ -11473,3 +11473,11 @@ or clear range. At `$02BD30`, `cmp.w PlayerMaxHealth` branches on inequality,
 so the former `IfHealthNeeded` name was too strong: a value above maximum also
 enters pickup initialization. The new name states only that health differs
 from maximum. The old name remains in the exact-address audit history.
+
+The directional-movement mappings have sixteen primary/secondary records,
+eight per table. `Player_RenderDirectionalMovement` increments its frame
+offset by four and masks it with `$1C`, then reads both longword tables at
+the same offset. Frame 07 occurs before frame 00 in each physical ROM mapping
+run, so the suffix is a table index, not a ROM-order number or a proven visual
+pose. Each local audit basis now records its table offset, paired mapping,
+and observed number of art-piece pointers.

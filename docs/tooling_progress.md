@@ -649,3 +649,11 @@ caller names each entry and then describe its local work; no global runtime
 dead-code conclusion is inferred. The pickup entry at `$02BD30` was renamed:
 its condition is health unequal to maximum, not health below maximum. The
 two clear helpers retain their measured 8 KiB and 128-byte ranges.
+
+Sixteen directional-movement primary/secondary sprite mappings now cite their
+actual longword-table index and byte offset, partner stream, and count of
+art-piece pointers. The animation state cycles `$48(a5)` through offsets
+`$00,$04,...,$1C` and indexes both tables with the same value. In both ROM
+mapping banks, frame 07 physically precedes frame 00; comments and the two
+frame-07 bases distinguish ROM order from animation order. No pose identity
+was inferred from the numeric frame index.

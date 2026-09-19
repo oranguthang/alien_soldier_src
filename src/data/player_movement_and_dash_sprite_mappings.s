@@ -29,6 +29,7 @@ Player_PhoenixDashAttackSpriteMapping:  dc.w    $800    ; DATA XREF: Player_Init
                 dc.w    $8818
                 dc.l    Player_PhoenixDashAttackSpriteArtPiece06+$F000000
                 dc.w    $E1ED
+; Frame 07 precedes frame 00 in ROM; the primary pointer table selects 00..07
 Player_DirectionalPrimarySpriteMapping07:   dc.w    $800  ; DATA XREF: ROM:00016FA8   o  ; was: word_E86E2
                 dc.l    Player_DirectionalPrimarySpriteArt07Piece00+$E000000
                 dc.w    $E0E9
@@ -128,6 +129,7 @@ Player_DirectionalPrimarySpriteMapping06:   dc.w    $800  ; DATA XREF: ROM:00016
                 dc.w    $880B
                 dc.l    Player_DirectionalPrimarySpriteArt06Piece04+$E000000
                 dc.w    $E1E7
+; The secondary pointer table has the same 00..07 order despite this ROM order
 Player_DirectionalSecondarySpriteMapping07: dc.w    $800  ; DATA XREF: ROM:00016FC8   o  ; was: word_E87EA
                 dc.l    Player_DirectionalSecondarySpriteArt07Piece00+$5000000
                 dc.w    $10FA

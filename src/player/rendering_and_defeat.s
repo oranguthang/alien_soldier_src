@@ -24,6 +24,7 @@ Player_RenderDirectionalMovement_PlayStepSound:         ; CODE XREF: Player_Rend
                 jsr     (Sound_QueueSFXRequest).l
 ; Selects both frame streams and submits their sprite pieces
 Player_RenderDirectionalMovement_SubmitFrame:           ; CODE XREF: Player_RenderDirectionalMovement+3A   j  ; was: loc_16F7C
+                ; D1 is a shared longword-table offset: 0, 4, ... $1C
                 movea.l Player_DirectionalMovementPrimaryFrames(pc,d1.w),a1
                 movea.l Player_DirectionalMovementSecondaryFrames(pc,d1.w),a2
                 moveq   #0,d5
