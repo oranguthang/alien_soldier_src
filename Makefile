@@ -233,7 +233,7 @@ MOVIE_FILE_menus = movies/alien_soldier_j_menus.gmv
 MAX_FRAMES_tas = 90000
 MAX_FRAMES_longplay = 0
 MAX_FRAMES_menus = 0
-ANALYSIS_WORKERS = 24
+ANALYSIS_WORKERS ?= 1
 ANALYSIS_GRID_COLS = 6
 ANALYSIS_FRAMESKIP = 8
 ANALYSIS_INTERVAL = 20
@@ -326,32 +326,13 @@ ifndef MOVIE
 	@exit 1
 else
 	@echo "Analyzing procedures with $(MOVIE) ($(ANALYSIS_WORKERS) workers)..."
-	python $(SCRIPTS_DIR)/analyze_procedures.py \
-		--project-dir . \
-		--source $(SRC) \
-		--rom $(ROM) \
-		--movie $(MOVIE_FILE_$(MOVIE)) \
-		--reference reference/$(MOVIE) \
-		--diffs diffs/$(MOVIE) \
-		--procedures-file $(PROCEDURES_FILE) \
-		--workers $(ANALYSIS_WORKERS) \
-		--grid-cols $(ANALYSIS_GRID_COLS) \
-		--frameskip $(ANALYSIS_FRAMESKIP) \
-		--interval $(ANALYSIS_INTERVAL) \
-		$(if $(MAX_FRAMES_$(MOVIE)),--max-frames $(MAX_FRAMES_$(MOVIE)),) \
-		--max-diffs $(ANALYSIS_MAX_DIFFS) \
-		--diff-color $(ANALYSIS_DIFF_COLOR)
+	@$(PYTHON) $(SCRIPTS_DIR)/analyze_procedures.py --project-dir . --source $(SRC) --rom $(ROM) --movie $(MOVIE_FILE_$(MOVIE)) --reference reference/$(MOVIE) --diffs diffs/$(MOVIE) --gens "$(GENS_EXE)" --procedures-file $(PROCEDURES_FILE) --workers $(ANALYSIS_WORKERS) --grid-cols $(ANALYSIS_GRID_COLS) --frameskip $(ANALYSIS_FRAMESKIP) --interval $(ANALYSIS_INTERVAL) $(if $(MAX_FRAMES_$(MOVIE)),--max-frames $(MAX_FRAMES_$(MOVIE)),) --max-diffs $(ANALYSIS_MAX_DIFFS) --diff-color $(ANALYSIS_DIFF_COLOR)
 endif
 
 # Find which procedures are not yet analyzed and save to file
 .PHONY: find-unanalyzed
 find-unanalyzed:
-	@echo "Finding unanalyzed procedures..."
-	@python -c "import os; os.makedirs('$(WORKFLOW_DIR)', exist_ok=True)"
-	@python $(SCRIPTS_DIR)/find_unnamed_procedures.py \
-		--list \
-		--exclude-analyzed analysis_results.csv \
-		--output $(PROCEDURES_FILE)
+	@$(PYTHON) $(SCRIPTS_DIR)/find_review_procedures.py --source $(SRC) --audit config/name_audit.json --output $(PROCEDURES_FILE)
 	@echo "Saved to $(PROCEDURES_FILE)"
 
 # Generate analysis report
@@ -480,52 +461,15 @@ build-gens:
 	@echo "Build complete: $(GENS_EXE)"
 
 # Debug pointer issues by testing data blocks from END of ROM
-# Usage: make debug-pointers MOVIE=tas|longplay|menus [START=1BD000] [END=100000]
+# Retired: the old debugger mutates a monolithic file and can delete diff data.
+# Use verify-relocation for the address-ordered source instead.
 .PHONY: debug-pointers
 debug-pointers:
-ifndef MOVIE
-	@echo "ERROR: MOVIE parameter required!"
-	@echo ""
-	@echo "Usage: make debug-pointers MOVIE=<type> [START=<hex>] [END=<hex>]"
-	@echo ""
-	@echo "Examples:"
-	@echo "  make debug-pointers MOVIE=tas"
-	@echo "  make debug-pointers MOVIE=tas START=1BD000 END=100000"
-	@exit 1
-else
-	@echo "Debugging pointers with $(MOVIE) movie ($(ANALYSIS_WORKERS) workers)..."
-	@echo "Results will be saved to: diffs/$(MOVIE)/pointers/"
-	python $(SCRIPTS_DIR)/debug_pointers.py \
-		--project-dir . \
-		--source $(SRC) \
-		--rom $(ROM) \
-		--movie $(MOVIE_FILE_$(MOVIE)) \
-		--gens-exe $(GENS_EXE) \
-		--reference reference/$(MOVIE) \
-		--diffs diffs/$(MOVIE) \
-		--workers $(ANALYSIS_WORKERS) \
-		--grid-cols $(ANALYSIS_GRID_COLS) \
-		--interval $(ANALYSIS_INTERVAL) \
-		--frameskip $(ANALYSIS_FRAMESKIP) \
-		--diff-color $(ANALYSIS_DIFF_COLOR) \
-		$(if $(MAX_FRAMES_$(MOVIE)),--max-frames $(MAX_FRAMES_$(MOVIE)),) \
-		$(if $(START),--start-address $(START),) \
-		$(if $(END),--end-address $(END),)
-endif
+	@$(PYTHON) $(SCRIPTS_DIR)/debug_pointers.py
 
-# Analyze pointer debug results and generate report
+# Retired with the old pointer debugger; preserved as a safe diagnostic.
 report-pointers:
-ifndef MOVIE
-	@echo "ERROR: MOVIE parameter required!"
-	@echo ""
-	@echo "Usage: make report-pointers MOVIE=<type>"
-	@echo ""
-	@echo "Examples:"
-	@echo "  make report-pointers MOVIE=tas"
-	@exit 1
-else
-	python $(SCRIPTS_DIR)/report_pointers.py --diffs-dir diffs/$(MOVIE)
-endif
+	@$(PYTHON) $(SCRIPTS_DIR)/report_pointers.py
 
 # Trace CPU execution after breakpoint
 # Usage: make trace MOVIE=tas BP=0xNNNN [FRAMES=20] [LOG=trace.log]
@@ -752,9 +696,9 @@ help:
 	@echo "  make play MOVIE=longplay TURBO=1 MUTE=1   - Faster, silent"
 	@echo ""
 	@echo "Analysis workflow (requires MOVIE=tas|longplay|menus):"
-	@echo "  1. make find-unanalyzed        - Generate list of unanalyzed procedures"
+	@echo "  1. make find-unanalyzed        - Queue hypothesis-level code for review"
 	@echo "  2. make reference MOVIE=tas    - Generate reference screenshots"
-	@echo "  3. make analyze MOVIE=tas      - Analyze procedures"
+	@echo "  3. make analyze MOVIE=tas      - Explore candidates (one worker by default)"
 	@echo "  4. make report MOVIE=tas       - Generate analysis report"
 	@echo ""
 	@echo "Documentation workflow (Claude + human):"
@@ -773,7 +717,7 @@ help:
 	@echo ""
 	@echo "Debugging (pointer issues):"
 	@echo "  make reference MOVIE=tas       - Generate reference (required first!)"
-	@echo "  make debug-pointers MOVIE=tas [START=1BD000] [END=100000]"
+	@echo "  make verify-relocation        - Check pointers after moving code and data"
 	@echo "     -> Tests data blocks by inserting padding ($(ANALYSIS_WORKERS) parallel workers)"
 	@echo "     -> Works backwards from END to minimize displacement"
 	@echo "     -> Collects 10 genstate dumps + screenshots when diff found"

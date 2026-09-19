@@ -2,8 +2,8 @@
 """
 ROM Procedure Analyzer (Parallel)
 
-Analyzes which procedures affect visual output by:
-1. Disabling each sub_XXXXX procedure (adding RTS at start)
+Analyzes which reviewed code procedures affect visual output by:
+1. Disabling each named procedure in its owning ROM-ordered module
 2. Building modified ROM
 3. Comparing screenshots with reference during TAS playback
 4. Recording first frame where difference occurs
@@ -21,57 +21,56 @@ import csv
 import tempfile
 from pathlib import Path
 from concurrent.futures import ProcessPoolExecutor, as_completed
-from multiprocessing import Manager
 import time
 
-
-def find_procedures(source_file):
-    """Find all sub_XXXXX procedures in the source file."""
-    procedures = []
-    pattern = re.compile(r'^(sub_[0-9A-Fa-f]+):')
-
-    with open(source_file, 'r', encoding='utf-8') as f:
-        for line_num, line in enumerate(f, 1):
-            match = pattern.match(line)
-            if match:
-                procedures.append({
-                    'name': match.group(1),
-                    'line': line_num
-                })
-
-    return procedures
+from prepare_batch import source_modules
 
 
 def load_procedures_from_file(procedures_file, source_file):
-    """Load procedure names from file and find their line numbers in source."""
-    procedures = []
+    """Resolve named code procedures to one owning module each."""
+    names = [
+        line.strip()
+        for line in Path(procedures_file).read_text(encoding='utf-8').splitlines()
+        if line.strip() and not line.lstrip().startswith('#')
+    ]
+    if len(names) != len(set(names)):
+        raise ValueError(f'{procedures_file}: duplicate procedure name')
+    if any(not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', name) for name in names):
+        raise ValueError(f'{procedures_file}: invalid procedure name')
 
-    # Read procedure names from file (one per line)
-    with open(procedures_file, 'r', encoding='utf-8') as f:
-        proc_names = [line.strip() for line in f if line.strip()]
-
-    # Find line numbers in source file
-    # Support both sub_* and loc_* patterns
-    pattern = re.compile(r'^((sub|loc)_[0-9A-Fa-f]+):')
-    line_map = {}
-
-    with open(source_file, 'r', encoding='utf-8') as f:
-        for line_num, line in enumerate(f, 1):
-            match = pattern.match(line)
-            if match:
-                line_map[match.group(1)] = line_num
-
-    # Build procedure list with line numbers
-    for name in proc_names:
-        if name in line_map:
-            procedures.append({
+    source = Path(source_file)
+    project_dir = source.resolve().parent.parent
+    wanted = set(names)
+    found = {}
+    for module_index, module in enumerate(source_modules(source)):
+        lines = module.read_text(encoding='utf-8').splitlines()
+        function_ends = {
+            match.group(1) for line in lines
+            if (match := re.match(r'^; End of function\s+([A-Za-z_][A-Za-z0-9_]*)(?:\s|$)', line))
+        }
+        for line_num, line in enumerate(lines, 1):
+            match = re.match(r'^([A-Za-z_][A-Za-z0-9_]*):', line)
+            if not match or match.group(1) not in wanted:
+                continue
+            name = match.group(1)
+            if name in found:
+                raise ValueError(f'{name}: defined in more than one source module')
+            if name not in function_ends:
+                raise ValueError(f'{module}:{line_num}: {name} has no function end marker')
+            found[name] = {
                 'name': name,
-                'line': line_map[name]
-            })
-        else:
-            print(f"Warning: Procedure {name} not found in source file")
-
-    return procedures
+                'module': module.resolve().relative_to(project_dir).as_posix(),
+                'line': line_num,
+                'position': (module_index, line_num),
+            }
+    missing = [name for name in names if name not in found]
+    if missing:
+        raise ValueError(f'procedures not found in source modules: {", ".join(missing)}')
+    ordered = sorted(found.values(), key=lambda item: item['position'])
+    return [
+        {key: value for key, value in item.items() if key != 'position'} | {'order': index}
+        for index, item in enumerate(ordered)
+    ]
 
 
 def disable_procedure(source_file, proc_name):
@@ -84,7 +83,9 @@ def disable_procedure(source_file, proc_name):
     def replacer(match):
         return match.group(1) + '\n\trts\t; DISABLED BY ANALYZER'
 
-    new_content = pattern.sub(replacer, content, count=1)
+    new_content, count = pattern.subn(replacer, content)
+    if count != 1:
+        raise ValueError(f'{source_file}: expected one definition of {proc_name}, found {count}')
 
     with open(source_file, 'w', encoding='utf-8') as f:
         f.write(new_content)
@@ -92,28 +93,15 @@ def disable_procedure(source_file, proc_name):
 
 def setup_worker_dir(project_dir, proc_name, temp_base):
     """Create isolated worker directory with project copy."""
-    worker_dir = os.path.join(temp_base, proc_name)
-
-    # Clean and recreate
-    if os.path.exists(worker_dir):
-        shutil.rmtree(worker_dir)
-    os.makedirs(worker_dir)
-
-    # Copy essential files
-    src_file = os.path.join(project_dir, 'alien_soldier_j.s')
-    shutil.copy(src_file, worker_dir)
-
-    # Copy Makefile
-    shutil.copy(os.path.join(project_dir, 'Makefile'), worker_dir)
-
-    # Copy directories (symlinks require admin on Windows)
-    for dirname in ['bin', 'data', 'src', 'scripts']:
-        src_path = os.path.join(project_dir, dirname)
-        dst_path = os.path.join(worker_dir, dirname)
-        if os.path.exists(src_path) and not os.path.exists(dst_path):
-            shutil.copytree(src_path, dst_path)
-
-    return worker_dir
+    worker_dir = Path(temp_base) / proc_name
+    worker_dir.mkdir()
+    project = Path(project_dir)
+    shutil.copy2(project / 'Makefile', worker_dir / 'Makefile')
+    for dirname in ('bin', 'data', 'src', 'scripts', 'assets', 'config'):
+        shutil.copytree(project / dirname, worker_dir / dirname)
+    # A perturbation build is intentionally not byte-identical. Its private
+    # worker needs extracted assets, not another copy of the user's ROM dump.
+    return str(worker_dir)
 
 
 def build_rom(worker_dir):
@@ -134,12 +122,8 @@ def run_comparison(gens_exe, rom_file, movie_file, reference_dir, diffs_dir,
 
     Returns: (first_visual_diff_frame, visual_diff_count, first_memory_diff_frame, memory_diff_count)
     """
-    proc_diffs_dir = os.path.join(diffs_dir, proc_name)
-    if os.path.exists(proc_diffs_dir):
-        for f in os.listdir(proc_diffs_dir):
-            os.remove(os.path.join(proc_diffs_dir, f))
-    else:
-        os.makedirs(proc_diffs_dir)
+    os.makedirs(diffs_dir, exist_ok=True)
+    proc_diffs_dir = tempfile.mkdtemp(prefix=f'{proc_name}_', dir=diffs_dir)
 
     # Emulator must run from its own directory to find DLLs
     gens_dir = os.path.dirname(gens_exe)
@@ -169,7 +153,12 @@ def run_comparison(gens_exe, rom_file, movie_file, reference_dir, diffs_dir,
     if diff_color:
         cmd.extend(['-diff-color', diff_color])
 
-    subprocess.run(cmd, capture_output=True, cwd=gens_dir)
+    replay = subprocess.run(cmd, capture_output=True, cwd=gens_dir)
+    if replay.returncode != 0:
+        raise RuntimeError(
+            f'emulator exited with code {replay.returncode}: '
+            f'{replay.stderr.decode(errors="replace")[-500:]}'
+        )
 
     # Find visual diffs (PNG files, excluding _diff.png files which are visualizations)
     visual_diffs = sorted([f for f in os.listdir(proc_diffs_dir)
@@ -212,7 +201,7 @@ def analyze_single_procedure(args_tuple):
     try:
         # Setup worker directory (unique per procedure)
         worker_dir = setup_worker_dir(project_dir, proc_name, temp_base)
-        source_file = os.path.join(worker_dir, 'alien_soldier_j.s')
+        source_file = os.path.join(worker_dir, proc['module'])
         rom_file = os.path.join(worker_dir, 'asbuilt.bin')
 
         # Disable procedure
@@ -223,6 +212,8 @@ def analyze_single_procedure(args_tuple):
         if not success:
             return {
                 'procedure': proc_name,
+                'module': proc['module'],
+                'order': proc['order'],
                 'line': proc['line'],
                 'first_visual_frame': 'BUILD_ERROR',
                 'visual_diff_count': 0,
@@ -250,6 +241,8 @@ def analyze_single_procedure(args_tuple):
 
         return {
             'procedure': proc_name,
+            'module': proc['module'],
+            'order': proc['order'],
             'line': proc['line'],
             'first_visual_frame': first_visual if first_visual else '',
             'visual_diff_count': visual_count,
@@ -261,6 +254,8 @@ def analyze_single_procedure(args_tuple):
     except Exception as e:
         return {
             'procedure': proc_name,
+            'module': proc['module'],
+            'order': proc['order'],
             'line': proc['line'],
             'first_visual_frame': f'ERROR: {str(e)}',
             'visual_diff_count': 0,
@@ -273,6 +268,9 @@ def analyze_single_procedure(args_tuple):
 def analyze_procedures(args):
     """Main analysis loop with parallel execution."""
     project_dir = str(Path(args.project_dir).resolve())
+    if args.workers < 1 or args.grid_cols < 1:
+        print('Error: workers and grid columns must be positive')
+        return 1
 
     # Check procedures file first (required)
     if not args.procedures_file:
@@ -316,8 +314,16 @@ def analyze_procedures(args):
 
     # Load procedures from file
     print(f"Loading procedures from {args.procedures_file}...")
-    procedures = load_procedures_from_file(procedures_file, source_file)
+    try:
+        procedures = load_procedures_from_file(procedures_file, source_file)
+    except (OSError, ValueError) as error:
+        print(f'Error: {error}')
+        return 1
     print(f"Loaded {len(procedures)} procedures from file")
+
+    if not procedures:
+        print('No hypothesis-level code procedures to analyze')
+        return 0
 
     if args.limit:
         procedures = procedures[:args.limit]
@@ -335,11 +341,9 @@ def analyze_procedures(args):
     # Create directories
     os.makedirs(diffs_dir, exist_ok=True)
 
-    # Create temp directory for workers
-    temp_base = os.path.join(project_dir, 'tmp', 'analyze_workers')
-    if os.path.exists(temp_base):
-        shutil.rmtree(temp_base)
-    os.makedirs(temp_base)
+    # Create a unique, self-owned workspace; never delete a pre-existing tree.
+    temp_workspace = tempfile.TemporaryDirectory(prefix='alien_analysis_')
+    temp_base = temp_workspace.name
 
     # Grid layout for window positioning
     grid_cols = args.grid_cols
@@ -388,18 +392,17 @@ def analyze_procedures(args):
 
     print("\n" + "=" * 60)
 
-    # Cleanup temp directories
     print("Cleaning up temporary files...")
-    shutil.rmtree(temp_base, ignore_errors=True)
+    temp_workspace.cleanup()
 
-    # Sort results by line number
-    results.sort(key=lambda x: x['line'] if isinstance(x['line'], int) else 0)
+    # Keep the queue's ROM order, not unrelated line numbers across modules.
+    results.sort(key=lambda x: x['order'])
 
     # Save results
     print(f"Saving results to {results_file}...")
     with open(results_file, 'w', newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=[
-            'procedure', 'line', 'first_visual_frame', 'visual_diff_count',
+            'procedure', 'module', 'order', 'line', 'first_visual_frame', 'visual_diff_count',
             'first_memory_frame', 'memory_diff_count', 'status'
         ])
         writer.writeheader()
@@ -428,7 +431,7 @@ def analyze_procedures(args):
 def main():
     parser = argparse.ArgumentParser(description='Analyze ROM procedures for visual impact')
     parser.add_argument('--project-dir', default='.', help='Project directory')
-    parser.add_argument('--source', default='alien_soldier_j.s', help='Source file')
+    parser.add_argument('--source', default='src/main.s', help='ROM-ordered source include index')
     parser.add_argument('--rom', default='asbuilt.bin', help='Built ROM file')
     parser.add_argument('--movie', default='dammit,truncated-aliensoldier.gmv', help='TAS movie file')
     parser.add_argument('--reference', default='reference', help='Reference screenshots directory')
@@ -445,7 +448,7 @@ def main():
     parser.add_argument('--procedures-file', help='File with list of procedures to analyze (one per line)')
     parser.add_argument('--limit', type=int, help='Limit number of procedures to analyze')
     parser.add_argument('--start-from', help='Start from specific procedure name')
-    parser.add_argument('--workers', '-j', type=int, default=4, help='Number of parallel workers')
+    parser.add_argument('--workers', '-j', type=int, default=1, help='Number of parallel workers')
 
     args = parser.parse_args()
     return analyze_procedures(args)

@@ -465,9 +465,16 @@
     {
       "id": "legacy_analysis_commands",
       "status": "unsupported",
-      "reason": "The five exploratory commands analyze, debug-pointers, find-unanalyzed, prepare-batch and rename remain outside release evidence. The first three still depend on the old analysis model; prepare-batch reads address-ordered modules, and rename now edits modules through rename_symbols.py, but neither research result establishes semantic correctness.",
+      "reason": "The exploratory commands analyze, find-unanalyzed, prepare-batch and rename remain outside release evidence. Their source operations address ROM-ordered modules, but the emulator analysis path has not been rerun under the pinned runtime contract. The obsolete debug-pointers and report-pointers CLIs refuse to run; make verify-relocation is the module-aware pointer gate. Batch reports and rename flags do not establish semantic correctness.",
       "registry": "TOOL-001",
       "control": "They are outside the release interface in config/release_0_5.json, and docs/tooling_status.md states that their output is not evidence."
+    },
+    {
+      "id": "legacy_asset_splitter",
+      "status": "unsupported",
+      "reason": "The old split_data_from_listing.py rewrote one source file and emitted binary payloads without the canonical ROM asset manifest. Its CLI is retired; preservation extraction is make split.",
+      "registry": "TOOL-002",
+      "control": "The retired CLI refuses to mutate source or data, while make split uses the canonical ROM and assets/manifest.json."
     },
     {
       "id": "frame_image_comparison",
@@ -701,6 +708,6 @@
     "resolved_branch_targets": 16102,
     "runtime_expectations": 78,
     "runtime_scenarios": 12,
-    "tracked_text_files": 480
+    "tracked_text_files": 492
   }
 }

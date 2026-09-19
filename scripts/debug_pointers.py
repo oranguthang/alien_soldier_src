@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""
-Debug pointer issues by inserting padding before data blocks.
-Tests blocks from END of ROM backwards to minimize displacement.
-Uses parallel execution with progress tracking.
+"""Retired monolithic pointer experiment; kept only as historical source.
+
+The CLI refuses to run. The module-aware release replacement is
+``make verify-relocation``.
 """
 
 import os
@@ -292,6 +292,13 @@ def test_single_block(args_tuple):
 
 
 def main():
+    print(
+        "ERROR: the monolithic pointer debugger is retired. It selects extinct "
+        "address-derived labels and can delete prior diff output. Use "
+        "make verify-relocation for the module-aware pointer check."
+    )
+    return 1
+
     parser = argparse.ArgumentParser(
         description='Debug pointer issues by testing data blocks'
     )

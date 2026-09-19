@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""
-Split large data blocks from assembly source to binary files.
-Parses dc.b/dc.w/dc.l directly from source, converts to binary,
-and replaces with binclude directives.
+"""Retired single-file data splitter, retained as historical source.
+
+The CLI refuses to run: it bypassed the preservation asset manifest and
+cannot operate on the ROM-ordered modules. The canonical extraction path is
+``make split``.
 """
 
 import re
@@ -250,6 +251,13 @@ def replace_with_binclude(lines, blocks, data_dir):
 
 
 def main():
+    print(
+        "ERROR: split_data_from_listing.py is retired. It would rewrite one "
+        "source file and generate payloads outside the asset manifest. "
+        "Use make split for canonical ROM extraction."
+    )
+    return 1
+
     parser = argparse.ArgumentParser(
         description='Split large data blocks to binary files with binclude')
     parser.add_argument('--source', default='alien_soldier_j.s',

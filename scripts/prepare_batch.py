@@ -168,7 +168,7 @@ def main(argv=None):
     report_input.add_argument('--movie-file', help='Selected movie marker')
     parser.add_argument('--count', type=int, default=40, help='Number of procedures')
     parser.add_argument('--output', required=True, help='Output file')
-    parser.add_argument('--source', default='alien_soldier_j.s', help='Source assembly file')
+    parser.add_argument('--source', default='src/main.s', help='ROM-ordered source include index')
 
     args = parser.parse_args(argv)
 

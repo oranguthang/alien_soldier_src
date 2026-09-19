@@ -60,7 +60,8 @@ that limits it. They are stated here rather than left implicit.
 | `NAME-001` | 513 `_End` aliases that follow their own `binclude` payload hold no separate record. | partial |
 | `LAYOUT-001` | Module sizes: 204 of 379 modules sit inside the preferred 200–700 line band, 145 are shorter and 30 are longer. | partial |
 | `DOC-001` | 207 imported cross-reference comments still quote address-derived names that no longer define anything. | partial |
-| `TOOL-001` | Five exploratory commands remain outside release evidence; `prepare-batch` and `rename` now address modules, while the other three retain the old analysis model. | unsupported |
+| `TOOL-001` | Four exploratory commands remain outside release evidence; their source operations address modules. The obsolete pointer debugger is retired, and `verify-relocation` checks pointers across the current layout. | unsupported |
+| `TOOL-002` | The monolithic asset splitter is retired; `make split` extracts canonical data under the asset manifest. | unsupported |
 | `commit_body_convention` | Commits made before this manifest carry a title and attribution without a body. | partial |
 | `frame_image_comparison` | Pixel comparison. The runtime layer checks state, not frames. | planned |
 | `linux_aggregate_gate` | A gate run on Linux. The vendored Linux toolchain is present but untested. | partial |

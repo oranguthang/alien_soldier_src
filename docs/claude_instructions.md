@@ -269,6 +269,6 @@ make set-movie MOVIE=tas
 make prepare-batch COUNT=40   # Create batch
 /document                     # Claude documents (creates rename_batch.csv)
 make rename                   # Apply renames
-make build && make compare    # Verify
+make verify                   # Verify byte identity
 git commit                    # Save progress
 ```

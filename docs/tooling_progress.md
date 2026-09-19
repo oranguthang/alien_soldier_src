@@ -34,3 +34,33 @@ Python movie selector instead of POSIX `if`, `cat`, or shell redirection. The
 batch command selects its report from the validated movie marker and extracts
 source from the 379 ordered modules. Focused tests exercise the CLI arguments
 and report selection without launching the emulator.
+
+The extra tracked Python, test, and documentation files changed the release
+manifest's tracked-text counter. It was recounted from the current tree so
+`make release-audit` remains a useful drift detector after this migration.
+
+`make find-unanalyzed` now selects delimited code routines whose current-name
+evidence is `hypothesis` in `config/name_audit.json`, in ROM order. The current
+tree yields seven code candidates; one hypothesis names data and is reported
+but not passed to a code perturbation run. Old unpinned `analysis_results.csv`
+cannot silently remove candidates. `analyze_procedures.py` resolves each name
+to its owning module, changes only a unique temporary worker copy, records
+module and ROM order in its output, and defaults to one worker. The old
+monolithic finder CLI refuses to run. These are static and isolated-test
+results only: no emulator batch was run, so the findings are not release
+runtime evidence.
+
+The old `debug-pointers` and `report-pointers` CLIs are now retired. Their
+address-derived data-label search cannot select the current semantic source,
+and their cleanup could delete prior diff directories. They fail before any
+worker, emulator, or filesystem cleanup starts, directing maintainers to
+`make verify-relocation`, the module-aware pointer gate already used by
+`make release-check`. Existing diff data was not removed.
+
+The direct `find_unreferenced_labels.py` command now scans all ROM-ordered
+modules and included equates as one source graph, excluding comments and
+quoted payload paths. On this tree it finds 399 labels without symbolic
+references, including externally consumed cartridge-header fields; this is a
+review queue, not a dead-code count. The old single-file data splitter now
+refuses to run, because it would bypass canonical asset extraction and the
+manifest. `prepare_batch.py` also defaults to `src/main.s` for direct use.

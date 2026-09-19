@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""
-Analyze pointer debug results and generate report.
-Removes empty directories and builds frame range -> max address mapping.
+"""Retired report for the monolithic pointer experiment.
+
+The CLI refuses to run and never removes old diff directories. Use
+``make verify-relocation`` for the current source layout.
 """
 
 import os
@@ -177,6 +178,13 @@ def generate_report(frame_ranges):
 
 
 def main():
+    print(
+        "ERROR: the legacy pointer report is retired with debug-pointers. "
+        "It used address-derived labels and removed prior diff directories. "
+        "Use make verify-relocation for the current source layout."
+    )
+    return 1
+
     parser = argparse.ArgumentParser(
         description='Analyze pointer debug results'
     )

@@ -74,18 +74,20 @@ alien_soldier_src/
 | `compare_roms.py` | Binary comparison of built vs original ROM |
 | `compare_states.py` | Compares emulator state dumps (RAM, VRAM, registers) |
 | `compare_traces.py` | Compares two CPU traces for divergence |
-| `debug_pointers.py` | Binary search for pointer issues (24 parallel workers) |
+| `debug_pointers.py` | Retired unsafe monolithic pointer debugger; refuses to run |
 | `extract_data_addrs.py` | Parses listing to extract binclude addresses → data_addrs.txt |
 | `extract_symbols.py` | Exports canonical ROM/RAM/hardware symbols from AS listing |
-| `find_unnamed_procedures.py` | Lists procedures still named `sub_*`, `loc_*` |
-| `find_unreferenced_labels.py` | Finds labels with no references (dead code) |
+| `find_review_procedures.py` | Lists hypothesis-level code procedures in ROM order for research |
+| `find_unnamed_procedures.py` | Retired monolithic-disassembly finder; refuses to run |
+| `find_unreferenced_labels.py` | Finds ROM labels without symbolic cross-module references; not proof of dead code |
 | `generate_analysis_report.py` | Generates HTML report from analysis data |
 | `init_project.py` | Full project initialization (split → build → reference) |
 | `prepare_batch.py` | Prepares batch of procedures for documentation |
 | `rename_batch.py` | Applies a reviewed rename CSV across source modules and marks the research report |
 | `rename_procedures.py` | Retired single-file mutator; refuses to run |
-| `report_pointers.py` | Generates report from pointer debugging session |
-| `split_data_from_listing.py` | Extracts data sections from AS listing |
+| `report_pointers.py` | Retired report for the old pointer debugger; refuses to run |
+| `verify_relocation.py` | Checks module-aware pointer relocation without emulator replay |
+| `split_data_from_listing.py` | Retired single-file asset splitter; refuses to run |
 | `split_data_from_rom.py` | Extracts and decompresses tile data from ROM |
 | `source_inventory.py` | Measures module sizes, generic paths, provenance, and address-derived names |
 | `unpack_data.py` | Decompresses LZSS data from artcomp/ to uncompressed/ |
@@ -137,10 +139,10 @@ Automated procedure analysis using emulator screenshots:
 # 1. Generate reference screenshots (required once)
 make reference MOVIE=tas
 
-# 2. Find procedures that need analysis
+# 2. Select hypothesis-level code procedures from the name audit
 make find-unanalyzed
 
-# 3. Run automated analysis
+# 3. Run exploratory perturbation analysis (one worker by default)
 make analyze MOVIE=tas
 
 # 4. Generate HTML report
@@ -160,19 +162,16 @@ make build
 make debug MOVIE=tas
 ```
 
-### Debugging Workflow (Pointer Issues)
-Binary search for problematic ROM regions:
+### Checking Pointer Relocation
+Perturb the ROM layout and require pointers to follow their symbols:
 ```bash
-# 1. Generate reference (required)
-make reference MOVIE=tas
-
-# 2. Run pointer debugger (24 parallel workers)
-make debug-pointers MOVIE=tas START=1BD000 END=100000
-# → Tests by inserting padding at different addresses
-# → Works backwards from END to minimize displacement
-# → Stops when first visual difference found
-# → Saves state dumps and screenshots for analysis
+make verify-relocation
 ```
+
+The old `debug-pointers` and `report-pointers` commands are retired: they
+searched address-derived labels that no longer exist and could remove prior
+diff output. The relocation verifier addresses the current modules and does
+not mutate `src/`.
 
 ### CPU Tracing Workflow
 Detailed execution analysis with binary traces:

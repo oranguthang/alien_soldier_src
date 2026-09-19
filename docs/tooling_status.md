@@ -3,16 +3,30 @@
 The release interface is the list in `config/release_0_5.json`. Those commands
 are module-aware and are covered by the release gate.
 
-Several exploratory commands predate the split from `alien_soldier_j.s` to the
-address-ordered `src/main.s` translation unit: `analyze`, `debug-pointers`,
-`find-unanalyzed`, and `prepare-batch`. Their wider workflows remain outside
-the release interface and must not be used as evidence for preservation or
-semantic correctness. `make rename` now uses a module-aware renamer and
-preserves provenance, but a rename still needs independent semantic evidence
-and `make verify`; the research report's processed flag is not such evidence.
+The exploratory commands `analyze`, `find-unanalyzed`, `prepare-batch`, and
+`rename` remain outside the release interface. The
+`find-unanalyzed` queue now selects hypothesis-level code procedures from the
+name audit in ROM order. `analyze` resolves those names to owning modules and
+perturbs a private worker copy, one worker by default; its emulator workflow
+has not been rerun against the pinned host and movie, so its output is not
+release evidence.
+`debug-pointers` and `report-pointers` are retired safely: their old
+address-name search found no current targets, and their cleanup could remove
+prior diff data. `make verify-relocation` is the module-aware pointer check
+used by the release gate. `make rename` preserves provenance, but a rename
+still needs independent semantic evidence and `make verify`; the report's
+processed flag is not proof.
 The `set-movie`, `show-movie`, and `prepare-batch` recipes are portable Python
 calls, and batch extraction follows the ROM-ordered modules. Their report
 inputs remain exploratory rather than release evidence.
+
+`find_unreferenced_labels.py` scans the ROM-ordered modules and their included
+equate files, so references across module boundaries count. Its output means
+only "no symbolic source reference": cartridge-header fields, raw-address
+uses and runtime-computed references can still be live. The legacy
+`split_data_from_listing.py` CLI is retired because it rewrote one source file
+and emitted binaries outside the preservation asset manifest; use `make split`
+for canonical extraction.
 
 Read-only trace parsing and report generation do not mutate source and remain
 useful, but their output is evidence only when its ROM, movie, emulator commit,

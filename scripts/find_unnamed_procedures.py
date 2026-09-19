@@ -232,6 +232,13 @@ def format_output(sub_labels: List[Tuple[str, int]],
 
 
 def main():
+    print(
+        "ERROR: find_unnamed_procedures.py targets the retired monolithic "
+        "disassembly. Use make find-unanalyzed for the module-aware "
+        "hypothesis review queue."
+    )
+    return 1
+
     parser = argparse.ArgumentParser(
         description='Find unnamed procedures in Alien Soldier disassembly'
     )
@@ -321,4 +328,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    raise SystemExit(main())
