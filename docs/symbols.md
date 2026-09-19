@@ -14,6 +14,9 @@ to the Mega Drive's 24-bit address bus.
 `make verify-symbols` guards against parser regressions. It currently requires
 at least 15,000 addressed symbols, all ROM landmarks declared in
 `config/rom_layout.json`, and every base RAM symbol used by
-`config/runtime_scenarios.json`. The count is a coverage floor, not a semantic
-quality score: address-derived names remain tracked as unknowns until evidence
-supports better names.
+`config/runtime_scenarios.json`. It also checks every one of the 15,833
+`config/name_audit.json` current names against its exact assembled address in
+the listing, retaining same-address aliases that the canonical export omits.
+Sign-extended RAM EQU values are compared on the 24-bit bus. The count is a
+coverage floor, not a semantic quality score; correctness of a name still
+requires its own evidence.

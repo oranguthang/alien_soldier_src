@@ -572,6 +572,8 @@ symbols: $(LISTING)
 verify-symbols: symbols
 	@$(PYTHON) $(SCRIPTS_DIR)/verify_symbols.py \
 		--symbols $(if $(SYMBOLS),$(SYMBOLS),$(SYMBOLS_FILE)) \
+		--listing $(LISTING) \
+		--name-audit config/name_audit.json \
 		--layout $(ROM_LAYOUT) \
 		--runtime $(RUNTIME_SCENARIOS) \
 		--minimum 15000

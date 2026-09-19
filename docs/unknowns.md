@@ -11219,3 +11219,9 @@ symbolic reference evidence. The known 43-sentence detector now returns zero;
 this is not a proof that all name evidence is unique or correct. The wider
 duplicate-basis search remains open under `NAME-002`, and seven visual boss
 identities remain hypotheses under `NAME-003`.
+
+The exact-address registry had two wrong `nullsub`-derived addresses; both
+were corrected from the freshly assembled listing. The symbol gate now checks
+every one of the 15,833 records against its assembled address, not just the
+35 layout/runtime landmarks. This verifies address provenance, not semantic
+identity; the wider duplicate-basis and visual-identity reviews remain open.

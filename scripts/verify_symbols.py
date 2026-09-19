@@ -8,6 +8,8 @@ import json
 from pathlib import Path
 import re
 
+from extract_symbols import EQU, LABEL, LISTING_ROW, SOURCE_COLUMN
+
 
 SYMBOL_ROW = re.compile(r"^([0-9A-Fa-f]{8})\s+([A-Za-z_][A-Za-z0-9_]*)$")
 
@@ -38,6 +40,59 @@ def load_symbols(path: Path) -> tuple[dict[int, str], dict[str, int], list[str]]
         by_address[address] = name
         by_name[name] = address
     return by_address, by_name, errors
+
+
+def load_all_listing_names(path: Path) -> tuple[dict[str, int], list[str]]:
+    """Keep aliases discarded by the canonical symbol export."""
+    by_name: dict[str, int] = {}
+    errors: list[str] = []
+    with path.open(encoding="latin-1") as listing:
+        for line_number, line in enumerate(listing, 1):
+            row = LISTING_ROW.match(line)
+            if not row or len(line) <= SOURCE_COLUMN:
+                continue
+            source = line[SOURCE_COLUMN:].lstrip()
+            label = LABEL.match(source)
+            equ = EQU.match(source)
+            if label:
+                name = label.group(1)
+                address = int(row.group(1), 16) & 0xFFFFFF
+            elif equ:
+                name = equ.group(1)
+                address = int(equ.group(2), 16) & 0xFFFFFF
+            else:
+                continue
+            previous = by_name.setdefault(name, address)
+            if previous != address:
+                errors.append(
+                    f"{path}:{line_number}: {name} has listing addresses "
+                    f"0x{previous:06X} and 0x{address:06X}"
+                )
+    return by_name, errors
+
+
+def validate_name_audit_addresses(
+    records: list[dict], listing_names: dict[str, int]
+) -> list[str]:
+    """Compare every provenance record to its assembled, 24-bit bus address."""
+    errors: list[str] = []
+    seen: set[str] = set()
+    for record in records:
+        name = record["current_name"]
+        if name in seen:
+            errors.append(f"duplicate name-audit record for {name}")
+        seen.add(name)
+        if name not in listing_names:
+            errors.append(f"name-audit symbol missing from listing: {name}")
+            continue
+        expected = number(record["address"]) & 0xFFFFFF
+        actual = listing_names[name]
+        if expected != actual:
+            errors.append(
+                f"name-audit {name} says 0x{expected:06X}; "
+                f"listing has 0x{actual:06X}"
+            )
+    return errors
 
 
 def required_symbols(layout: dict, runtime: dict) -> dict[str, int]:
@@ -81,6 +136,8 @@ def main() -> int:
     parser.add_argument("--symbols", required=True)
     parser.add_argument("--layout", required=True)
     parser.add_argument("--runtime", required=True)
+    parser.add_argument("--listing", required=True)
+    parser.add_argument("--name-audit", required=True)
     parser.add_argument("--minimum", type=int, default=15000)
     args = parser.parse_args()
 
@@ -89,6 +146,10 @@ def main() -> int:
     runtime = json.loads(Path(args.runtime).read_text(encoding="utf-8"))
     required = required_symbols(layout, runtime)
     errors.extend(validate(by_address, by_name, required, args.minimum))
+    listing_names, listing_errors = load_all_listing_names(Path(args.listing))
+    errors.extend(listing_errors)
+    name_records = json.loads(Path(args.name_audit).read_text(encoding="utf-8"))["records"]
+    errors.extend(validate_name_audit_addresses(name_records, listing_names))
     if errors:
         for error in errors:
             print(f"[ERROR] {error}")
@@ -98,6 +159,10 @@ def main() -> int:
     print(
         f"[OK] symbols: {len(by_address)} canonical addresses "
         f"({rom} ROM, {mapped} RAM/hardware), {len(required)} contract symbols"
+    )
+    print(
+        f"[OK] name provenance: {len(name_records)} exact-address records "
+        "match the assembler listing"
     )
     return 0
 

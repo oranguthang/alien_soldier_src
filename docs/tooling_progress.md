@@ -362,3 +362,10 @@ one (`SevenForcesArtemisTransitionPaletteCommand`). The curated 43-sentence
 review or resolve the seven visual identities. The release-audit test now
 injects a known generic sentence to test the rejection path, instead of
 assuming the repository itself still contains one.
+
+An exact-address audit of all 15,833 name records against the assembler
+listing found two false addresses inherited from numeric `nullsub` IDs:
+`WeaponSetup_IdleState` is `$01F494`, not `$000053`, and the unreferenced
+visual-asset RTS is `$012110`, not `$01210E`. `make verify-symbols` now checks
+every audit name against the uncollapsed listing, including aliases and
+24-bit-normalized RAM equates, so a wrong address cannot pass the release gate.
