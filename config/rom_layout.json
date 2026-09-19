@@ -1635,9 +1635,21 @@
       "end": "0x03D813"
     },
     {
-      "file": "src/bosses/xi_tiger_core.s",
+      "file": "src/bosses/xi_tiger_battle_states.s",
       "subsystem": "bosses",
       "start": "0x03D814",
+      "end": "0x03DEB9"
+    },
+    {
+      "file": "src/bosses/xi_tiger_defeat_and_rendering.s",
+      "subsystem": "bosses",
+      "start": "0x03DEBA",
+      "end": "0x03E21B"
+    },
+    {
+      "file": "src/bosses/xi_tiger_pose_animation.s",
+      "subsystem": "bosses",
+      "start": "0x03E21C",
       "end": "0x03E581"
     },
     {

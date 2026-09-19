@@ -459,3 +459,14 @@ exactly before explanatory headers were added. Layout now has 393 modules:
 are all boss-specific, but their cohesion still needs review under
 `LAYOUT-001`. `make verify`, `make compare`, and `make verify-symbols` confirm
 ROM byte identity and all 15,833 audit addresses.
+
+The 986-line Xi-Tiger core is now three adjacent ROM-order modules: 509 lines
+of battle states, 286 lines of defeat/rendering, and 191 lines of pose
+animation. The split points are the `Boss_XiTigerBeginDefeatLeap` entry at
+`$03DEBA` and `Boss_XiTigerUpdatePoseAnimation` at `$03E21C`; concatenating
+the three source bodies reproduces the old file line for line. The shared
+`Boss_ApplyDefeatPaletteFade` entry stays in its original ROM position inside
+the defeat/rendering module; Shellshogun still calls it across modules. The
+layout now contains 395 modules: 228 preferred, 148 shorter, 19 longer, with
+an 887-line maximum. `make verify`, `make compare`, and `make verify-symbols`
+confirm the canonical ROM bytes and all 15,833 name-audit addresses.

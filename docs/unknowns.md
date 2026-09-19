@@ -11299,3 +11299,11 @@ ordering break from `$EF` to `$40`. The second file also contains the later
 proven request IDs, not invented effect meanings. All 157 SFX headers and
 their exact-address audit records remain in ROM order; `make verify`,
 `make compare`, and `make verify-symbols` confirm unchanged bytes and names.
+
+The earlier `bosses/xi_tiger_core.s` audit notes above are historical: that
+module has since been divided at the confirmed `$03DEBA` defeat-leap and
+`$03E21C` pose-animation entries. Its shared
+`Boss_ApplyDefeatPaletteFade` routine remains at `$03E1AA` within the
+Xi-Tiger defeat/rendering ROM-order slice, despite Shellshogun callers. This
+physical placement does not establish exclusive Xi-Tiger ownership or settle
+any of the seven provisional visual boss identities.
