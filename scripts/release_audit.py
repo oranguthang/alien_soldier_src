@@ -35,6 +35,8 @@ GENERIC_NAME_BASES = (
     "Direct control flow enters here while installing the matching even value in controller field 4 and initializing that state fields.",
     "This state convergence path loads its pose script and branches to the shared Valkirie animation/metasprite renderer.",
     "The 19-entry controller table selects this path for the matching field-4 state code; the body processes that state animation events and transitions.",
+    "All documented speed-limit branches converge at this shared return address.",
+    "Direct palette-RAM accesses and the fade or color-update caller establish this palette-specific role.",
 )
 
 

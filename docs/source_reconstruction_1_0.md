@@ -32,9 +32,9 @@ byte.
 - **Name evidence is traceable, with a declared review debt.**
   `config/name_audit.json` holds 15,833 exact-address records with imported
   and current names. The 60 Gusthead loop, return, dispatch, and table bases
-  have been reviewed, as have 20 options-screen and 16 Jampan bases. Another
-  265 records still match known generic evidence sentences (`NAME-002`). Seven
-  boss-identity records remain visual hypotheses
+  have been reviewed, as have 20 options-screen, 16 Jampan, and 35 Sharpssteel
+  records. Another 239 records match known generic evidence sentences
+  (`NAME-002`). Seven boss-identity records remain visual hypotheses
   (`NAME-003`); neither pending group is semantically confirmed.
 - **Provenance is retained.** 16,053 `; was:` markers map current definitions to
   the imported labels they replaced.
@@ -65,7 +65,7 @@ that limits it. They are stated here rather than left implicit.
 | `PROFILE-001` | The European ROM. Only the Japanese cartridge is accepted. | unsupported |
 | `SND-001` | The Z80 sound driver program, which stays a verbatim payload and is never disassembled. | unsupported |
 | `NAME-001` | 513 `_End` aliases that follow their own `binclude` payload hold no separate record. | partial |
-| `NAME-002` | 265 records still match known generic evidence sentences; a wider duplicate-basis review is also pending. | partial |
+| `NAME-002` | 239 records still match known generic evidence sentences; a wider duplicate-basis review is also pending. | partial |
 | `NAME-003` | Seven boss-identity names remain provisional until pinned visual evidence or behavior-only renaming. | partial |
 | `LAYOUT-001` | Module sizes: 211 of 383 modules sit inside the preferred 200–700 line band, 146 are shorter and 26 are longer. | partial |
 | `TOOL-001` | Four exploratory commands remain outside release evidence; their source operations address modules. The obsolete pointer debugger is retired, and `verify-relocation` checks pointers across the current layout. | unsupported |

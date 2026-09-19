@@ -59,7 +59,7 @@ Boss_SharpssteelBeginBladeShotBurst:                    ; CODE XREF: Boss_Sharps
                 move.w  #$FFFF,$C(a5)
                 clr.w   $23E(a5)
                 move.w  #3,$11C(a5)
-; Emits three triggered bursts while steering toward the shared X target
+; Emits pose-triggered blade shots while steering toward the player
 Boss_SharpssteelBladeShotBurstState:                    ; DATA XREF: ROM:00047C8E   o  ; was: loc_485AE
                 btst    #1,$23E(a5)
                 beq.s   Boss_SharpssteelCheckBladeShotBurstRepeat
@@ -72,7 +72,7 @@ Boss_SharpssteelCheckBladeShotBurstRepeat:              ; CODE XREF: Boss_Sharps
                 subq.w  #1,$11C(a5)
                 bmi.s   Boss_SharpssteelFinishBladeShotBurst
 Boss_SharpssteelUpdateBladeShotBurstMotion:             ; CODE XREF: Boss_SharpssteelWaitForComplexAlignmentState+DC   j
-                bsr.w   Boss_SharpssteelSteerTowardSharedHorizontalTarget
+                bsr.w   Boss_SharpssteelSteerTowardPlayerX
                 bsr.w   Boss_SharpssteelUpdateVerticalOscillation
                 lea     Boss_SharpssteelComplexExitPoseCommands(pc),a1
                 nop
@@ -97,7 +97,7 @@ Boss_SharpssteelUpdateVerticalOscillation:              ; CODE XREF: Boss_Sharps
                 move.l  $1C(a5),d0
                 bpl.s   Boss_SharpssteelAccelerateOscillationUpward
                 cmpi.w  #$170,$14(a5)
-                bmi.s   Boss_SharpssteelReverseVerticalOscillation
+                bmi.s   Boss_SharpssteelToggleVerticalOscillationPhase
                 cmpi.l  #$FFFE8000,d0
                 bmi.s   Boss_SharpssteelUpdateVerticalOscillationReturn
 Boss_SharpssteelAccelerateOscillationUpward:            ; CODE XREF: Boss_SharpssteelUpdateVerticalOscillation+A   j
@@ -108,44 +108,44 @@ Boss_SharpssteelUpdateDownwardOscillation:              ; CODE XREF: Boss_Sharps
                 move.l  $1C(a5),d0
                 bmi.s   Boss_SharpssteelAccelerateOscillationDownward
                 cmpi.w  #$172,$14(a5)
-                bpl.s   Boss_SharpssteelReverseVerticalOscillation
+                bpl.s   Boss_SharpssteelToggleVerticalOscillationPhase
                 cmpi.l  #$18000,d0
                 bpl.s   Boss_SharpssteelUpdateVerticalOscillationReturn
 Boss_SharpssteelAccelerateOscillationDownward:          ; CODE XREF: Boss_SharpssteelUpdateVerticalOscillation+2A   j
                 addi.l  #$E00,$1C(a5)
                 rts
 ; ---------------------------------------------------------------------------
-Boss_SharpssteelReverseVerticalOscillation:             ; CODE XREF: Boss_SharpssteelUpdateVerticalOscillation+12   j
+Boss_SharpssteelToggleVerticalOscillationPhase:         ; CODE XREF: Boss_SharpssteelUpdateVerticalOscillation+12   j
                                         ; Boss_SharpssteelUpdateVerticalOscillation+32   j
                 eori.w  #2,$11E(a5)
 Boss_SharpssteelUpdateVerticalOscillationReturn:        ; CODE XREF: Boss_SharpssteelUpdateVerticalOscillation+1A   j
                                         ; Boss_SharpssteelUpdateVerticalOscillation+3A   j
                 rts
 ; End of function Boss_SharpssteelUpdateVerticalOscillation
-; Accelerates horizontal velocity toward the shared target, with speed limits
-Boss_SharpssteelSteerTowardSharedHorizontalTarget:      ; CODE XREF: Boss_SharpssteelWaitForComplexAlignmentState:Boss_SharpssteelUpdateBladeShotBurstMotion   p  ; was: sub_48652
+; Accelerates horizontal velocity toward PlayerCenterX, with speed limits
+Boss_SharpssteelSteerTowardPlayerX:                     ; CODE XREF: Boss_SharpssteelWaitForComplexAlignmentState:Boss_SharpssteelUpdateBladeShotBurstMotion   p  ; was: sub_48652
                 move.w  (PlayerCenterX).w,d0
                 sub.w   $10(a5),d0
-                bpl.s   Boss_SharpssteelHandleRightTarget
+                bpl.s   Boss_SharpssteelHandlePlayerRightOfRoot
                 move.l  $18(a5),d0
-                bpl.s   Boss_SharpssteelAccelerateTowardLeftTarget
+                bpl.s   Boss_SharpssteelAccelerateLeftTowardPlayer
                 cmpi.l  #$FFFD8000,$18(a5)
                 bmi.s   Boss_SharpssteelHorizontalSteeringReturn
-Boss_SharpssteelAccelerateTowardLeftTarget:             ; CODE XREF: Boss_SharpssteelSteerTowardSharedHorizontalTarget+E   j
+Boss_SharpssteelAccelerateLeftTowardPlayer:             ; CODE XREF: Boss_SharpssteelSteerTowardPlayerX+E   j
                 subi.l  #$3000,$18(a5)
-Boss_SharpssteelHorizontalSteeringReturn:               ; CODE XREF: Boss_SharpssteelSteerTowardSharedHorizontalTarget+18   j
-                                        ; Boss_SharpssteelSteerTowardSharedHorizontalTarget+32   j
+Boss_SharpssteelHorizontalSteeringReturn:               ; CODE XREF: Boss_SharpssteelSteerTowardPlayerX+18   j
+                                        ; Boss_SharpssteelSteerTowardPlayerX+32   j
                 rts
 ; ---------------------------------------------------------------------------
-Boss_SharpssteelHandleRightTarget:                      ; CODE XREF: Boss_SharpssteelSteerTowardSharedHorizontalTarget+8   j
+Boss_SharpssteelHandlePlayerRightOfRoot:                ; CODE XREF: Boss_SharpssteelSteerTowardPlayerX+8   j
                 move.l  $18(a5),d0
-                bmi.s   Boss_SharpssteelAccelerateTowardRightTarget
+                bmi.s   Boss_SharpssteelAccelerateRightTowardPlayer
                 cmpi.l  #$28000,$18(a5)
                 bpl.s   Boss_SharpssteelHorizontalSteeringReturn
-Boss_SharpssteelAccelerateTowardRightTarget:            ; CODE XREF: Boss_SharpssteelSteerTowardSharedHorizontalTarget+28   j
+Boss_SharpssteelAccelerateRightTowardPlayer:            ; CODE XREF: Boss_SharpssteelSteerTowardPlayerX+28   j
                 addi.l  #$3000,$18(a5)
                 rts
-; End of function Boss_SharpssteelSteerTowardSharedHorizontalTarget
+; End of function Boss_SharpssteelSteerTowardPlayerX
 ; Runs blade pose commands, palette updates, core frames, and part rendering
 Boss_SharpssteelUpdateBladeAssembly:                    ; CODE XREF: Boss_SharpssteelRunBladeEntranceDelayState+A   j  ; was: sub_48690
                                         ; Boss_SharpssteelWaitForPlayerAfterBladeEntranceState+A   j

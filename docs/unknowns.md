@@ -11018,3 +11018,16 @@ setup without proving the secondary offset converged. The former
 `Boss_JampanFinishDefeatOffsetConvergence` claimed too much and is now
 `Boss_JampanCompleteDefeatAfterPrimaryOffsetZero`. ROM bytes are unchanged.
 `NAME-002` falls from 301 to 265; the seven visual hypotheses are unaffected.
+
+The Sharpssteel blade/oscillation/palette pass reviews 35 exact-address
+records. Twenty-six were already in the known generic-basis queue; seven more
+used two newly recognized boilerplate sentences for speed-limit returns and
+palette paths. The remaining two changes correct an earlier imprecise target
+description and the unsupported claim of exactly three shot bursts.
+`Boss_SharpssteelSteerTowardPlayerX` reads `PlayerCenterX` directly, not a
+shared target. `Boss_SharpssteelToggleVerticalOscillationPhase` changes bit 1
+of field `$11E`; it does not negate vertical velocity at that point. The
+three-initialized burst counter exits after its decrement becomes negative,
+so the number of actual shot spawns is left to the pose-event stream rather
+than asserted from the counter alone. `NAME-002` falls from 265 to 239;
+the `NAME-003` hypotheses remain seven.

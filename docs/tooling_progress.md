@@ -156,3 +156,11 @@ attack/defeat audit replaced sixteen more and corrected a label that implied
 both defeat offsets converge, though the code only gates completion on the
 primary offset. The known `NAME-002` queue falls from 301 to 265; no ROM bytes
 changed.
+
+The Sharpssteel blade, vertical-oscillation, horizontal-steering, and palette
+pass reviewed 35 records: 26 previously counted generic bases, seven bases
+from two newly recognized boilerplate sentences, and two separate imprecise
+claims. The source now names direct steering toward `PlayerCenterX` and the
+toggle of acceleration phase rather than a supposed shared target or instant
+velocity reversal. The known `NAME-002` queue falls from 265 to 239, with
+22 boilerplate sentences covered by the release audit.
