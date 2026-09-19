@@ -38,6 +38,13 @@ and Z-Leo entry states begin at `$00F7FA` in
 `missiray_stage24_z_leo_transitions.s`. This is a complete function boundary;
 both modules are inside the preferred band at 583 and 278 lines.
 
+The ship-arrival timeline, pattern reveal, and their private graphics tables
+remain together in a 644-line `ship_sequence.s` module. The ROM boundary at
+`$008F90` starts the separate piece/debris spawning scripts and object update
+handlers in `ship_piece_and_debris.s`. That module is 167 lines, below the
+preferred band because the actor family is complete there; merging unrelated
+timeline helpers into it would hide the ownership boundary.
+
 Definition-only `.inc` files are outside this limit. They will receive their
 own structure and policy as the RAM and hardware maps mature.
 

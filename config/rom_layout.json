@@ -486,6 +486,12 @@
       "file": "src/cutscenes/ship_sequence.s",
       "subsystem": "cutscenes",
       "start": "0x0086F0",
+      "end": "0x008F8F"
+    },
+    {
+      "file": "src/cutscenes/ship_piece_and_debris.s",
+      "subsystem": "cutscenes",
+      "start": "0x008F90",
       "end": "0x009321"
     },
     {

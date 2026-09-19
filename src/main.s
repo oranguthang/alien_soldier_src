@@ -42,6 +42,7 @@
                 include "src/cutscenes/ending_starfield_and_planet.s"
                 include "src/math/sine.s"
                 include "src/cutscenes/ship_sequence.s"
+                include "src/cutscenes/ship_piece_and_debris.s"
                 include "src/ui/title_screen.s"
                 include "src/ui/options_menu_controllers.s"
                 include "src/ui/options_shared_helpers_and_assets.s"

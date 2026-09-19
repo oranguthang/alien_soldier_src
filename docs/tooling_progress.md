@@ -87,3 +87,10 @@ Destroyer Proto, Shield Viper, and Wolf Garopa block remains 583 lines;
 the Missiray/Stage 24/Z-Leo block is 278 lines in
 `stages/missiray_stage24_z_leo_transitions.s`. The source is now 381 modules:
 208 in the 200-700 line preference, 145 shorter, 28 longer, none over 1000.
+
+The former long ship-arrival source had a second, actor-owned ROM block starting
+at `$008F90`: two timed spawn scripts and the ship-piece/debris handlers and
+tables. `cutscenes/ship_sequence.s` now keeps the complete timeline and its
+private pattern/arrival data at 644 lines; `cutscenes/ship_piece_and_debris.s`
+owns the cohesive 167-line actor block. Inventory is 382 modules: 209 inside
+the preferred size band, 146 shorter, 27 longer, none over 1000.
