@@ -11041,3 +11041,13 @@ description is added to the audited boilerplate set before retirement, so
 `NAME-002` decreases from 239 to 212 under a 23-sentence curated detector.
 These are static evidence claims, not a visual confirmation of Sirene's
 identity; the seven `NAME-003` records remain provisional.
+
+Forty-five Medusa controller labels have now been reviewed against their
+eleven-entry state-offset table and local code. The former shared
+state-membership sentence is replaced by address-specific evidence for
+controller input, pose-script selection, velocity and position fields,
+command values 2/4/6/8, and state transitions. At `$056E44`, a negative
+velocity takes a compare against positive `$24000` followed by `BPL`;
+the record states that exact test without inferring an intended speed cap.
+`NAME-002` decreases from 212 to 167. The seven boss visual identities in
+`NAME-003` are still hypotheses.

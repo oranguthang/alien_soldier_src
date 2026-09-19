@@ -65,7 +65,7 @@
     {
       "id": "semantic_naming",
       "kind": "source",
-      "summary": "Every live address-derived identifier was replaced and 15,833 exact-address name records now exist. After reviewing Gusthead, options, Jampan, Sharpssteel, and Sirene paths, 212 records still match known generic evidence sentences; seven boss-identity records remain visual hypotheses.",
+      "summary": "Every live address-derived identifier was replaced and 15,833 exact-address name records now exist. After reviewing Gusthead, options, Jampan, Sharpssteel, Sirene, and Medusa paths, 167 records still match known generic evidence sentences; seven boss-identity records remain visual hypotheses.",
       "evidence": [
         "provenance_and_unknowns",
         "files:config/name_audit.json"
@@ -193,7 +193,7 @@
     },
     "provenance_and_unknowns": {
       "status": "partial",
-      "statement": "No live definition is address-derived and every replaced name keeps a traceable marker. The known generic-basis queue contains 212 records awaiting instruction-specific review; seven boss-identity records remain hypotheses.",
+      "statement": "No live definition is address-derived and every replaced name keeps a traceable marker. The known generic-basis queue contains 167 records awaiting instruction-specific review; seven boss-identity records remain hypotheses.",
       "evidence": {
         "targets": [
           "lint",
@@ -455,7 +455,7 @@
     {
       "id": "generic_name_evidence_bases",
       "status": "partial",
-      "reason": "After reviewing Gusthead, options-screen, Jampan, Sharpssteel, and Sirene records, 212 records still match known generic evidence sentences across other subsystems. Their bases do not identify the record-specific field, branch, caller, or target.",
+      "reason": "After reviewing Gusthead, options-screen, Jampan, Sharpssteel, Sirene, and Medusa records, 167 records still match known generic evidence sentences across other subsystems. Their bases do not identify the record-specific field, branch, caller, or target.",
       "registry": "NAME-002",
       "control": "make release-audit recounts the curated set of 23 known generic basis sentences and refuses tag-ready status until the count is zero; a wider duplicate-basis review must also precede the final tag."
     },
@@ -719,7 +719,7 @@
     "declared_subsystems": 192,
     "definitions": 16928,
     "dma_transferred_payloads": 289,
-    "generic_evidence_bases": 212,
+    "generic_evidence_bases": 167,
     "hypothesis_name_records": 7,
     "modules": 383,
     "name_audit_records": 15833,

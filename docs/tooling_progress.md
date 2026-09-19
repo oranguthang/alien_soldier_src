@@ -174,3 +174,11 @@ release audit's known-template list, so this pass closes it explicitly.
 `NAME-002` falls from 239 to 212 across 23 known boilerplate sentences.
 No source instruction or ROM byte changed; visual boss identity remains a
 separate seven-record hypothesis queue.
+
+The Medusa controller pass checks 45 state entries and branch labels against
+the actual dispatch table and instructions. Their evidence now records the
+input bits, pose and velocity fields, command values, timers, transition
+targets, and render paths local to each address. The unusual rightward
+velocity branch at `$056E44` is described as written, without assigning a
+speed-limit interpretation. `NAME-002` falls from 212 to 167; the count of
+known template sentences remains 23. No source instruction or ROM byte changed.
