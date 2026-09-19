@@ -22,6 +22,7 @@ GENERIC_NAME_BASES = (
     "The state or subtype becomes a table offset here before an indirect jump.",
     "State-table membership, explicit writes to controller field 4, and direct branch flow establish this Medusa state-machine control point without assigning an unverified attack name.",
     "State-table membership, explicit writes to controller field 4, and direct branch flow establish this Sirene state-machine control point without assigning an unverified attack name.",
+    "The routines interpret pose commands, interpolate frame data, distribute values across the 28-part Sirene metasprite, and begin shared part traversal.",
     "Direct branches inside the named Valkirie controller state establish this convergence path observable role.",
     "Incoming control flow and the fields read or written at this address establish the narrowly stated helper role.",
     "All documented wait, timer, or convergence branches at this state converge on this shared return.",

@@ -164,3 +164,13 @@ claims. The source now names direct steering toward `PlayerCenterX` and the
 toggle of acceleration phase rather than a supposed shared target or instant
 velocity reversal. The known `NAME-002` queue falls from 265 to 239, with
 22 boilerplate sentences covered by the release audit.
+
+The Sirene pass reviews 43 exact-address records. Twenty-seven state-machine
+records now cite the controller field, branch, timer, or state-specific side
+effect that supports each name. Sixteen pose-render and interpolation records
+formerly shared a single broad sentence; each now cites its actual command,
+loop bound, field, or helper call. The latter sentence is added to the
+release audit's known-template list, so this pass closes it explicitly.
+`NAME-002` falls from 239 to 212 across 23 known boilerplate sentences.
+No source instruction or ROM byte changed; visual boss identity remains a
+separate seven-record hypothesis queue.

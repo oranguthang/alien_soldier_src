@@ -11031,3 +11031,13 @@ three-initialized burst counter exits after its decrement becomes negative,
 so the number of actual shot spawns is left to the pose-event stream rather
 than asserted from the counter alone. `NAME-002` falls from 265 to 239;
 the `NAME-003` hypotheses remain seven.
+
+The Sirene state-machine and pose-render pass reviews 43 exact-address names.
+Twenty-seven entries in the controller-state block now cite local state writes,
+branch tests, timers, or setup effects rather than generic table membership.
+Sixteen pose-script and part-propagation entries now cite their exact command
+bytes, loop bounds, work fields, and interpolation helpers. Their shared
+description is added to the audited boilerplate set before retirement, so
+`NAME-002` decreases from 239 to 212 under a 23-sentence curated detector.
+These are static evidence claims, not a visual confirmation of Sirene's
+identity; the seven `NAME-003` records remain provisional.
