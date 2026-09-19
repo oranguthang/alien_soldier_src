@@ -375,7 +375,7 @@ Gfx_QueueVerticalScrollDMA_CommitCommand:               ; CODE XREF: Gfx_QueueVe
                 rts
 ; End of function Gfx_QueueVerticalScrollDMA
 ; Closes a frame-timing debug pass by cycling backdrop color indices 15..0,
-; then restoring the normal display-enable and backdrop-register shadows
+; then writing the display-enable and backdrop shadow values back to the VDP
 Gfx_CycleBackdropColorIndices:                          ; CODE XREF: Sys_GameplayMainLoop+230   j  ; was: sub_12E0
                 tst.b   (FrameTimingDebugFlag).w
                 bpl.w   Gfx_CycleBackdropColorIndices_Return

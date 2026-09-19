@@ -11442,3 +11442,12 @@ the moving-line offset. The local bases now cite the corresponding state
 writes, sound IDs `$16` and `$17`, timer seeds `$60` and `$34`, and the
 `$2000` fixed-point velocity decrement. They establish control flow and data
 flow, not independent pixel-level proof of the displayed words.
+
+The frame-timing backdrop group had seven records repeating a whole-helper
+claim. Local inspection confirms that the cycling loop writes register 7
+commands `$870F..$8700` directly to `VDP_CTRL`; the blank helper writes a
+temporary register 1 value with display bit six cleared and `$8700`; the
+restore helper writes the saved register 1 and 7 shadow values. None writes
+CRAM or mutates the shadow words. The blank and restore helpers have no
+symbolic executable caller in the reconstructed source, which is a source
+reference finding, not proof of runtime dead code.

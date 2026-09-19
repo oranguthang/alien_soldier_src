@@ -620,3 +620,12 @@ line, the FIGHT start and phase-split store, and the offset/velocity update
 that renders the moving line. The three return labels state their actual
 converging paths. This is instruction-level evidence; no timing or visual
 appearance was inferred from a screenshot.
+
+Seven frame-timing backdrop records now distinguish the 16-command register
+7 cycle from the separate blank and restore helpers. The cycle uses indices
+`$F..0`, and all three paths are gated by the signed
+`FrameTimingDebugFlag`. The code writes temporary or saved register values
+directly to `VDP_CTRL`; it does not edit CRAM or the shadow words. A source
+comment and each address basis now say that precisely. Only the cycle has a
+symbolic caller in the current source; the other helpers are not declared
+globally unreachable from that fact alone.
