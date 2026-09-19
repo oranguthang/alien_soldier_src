@@ -75,6 +75,11 @@ or banked palette-command records have since been reviewed. The curated
 `NAME-002` detector now has zero matches across 52 known sentences. A wider
 duplicate-basis review is still required before the 1.0 tag; zero matches do
 not prove every explanation or name correct.
+The read-only `make semantic-audit` now counts the wider duplicate queue, and
+`--duplicate-bases` on its underlying script locates each repeated sentence
+by address and source module. The queue includes legitimate uniform data
+tables, so each group still needs a semantic decision rather than automatic
+rejection.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

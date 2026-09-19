@@ -14,6 +14,49 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_duplicate_bases_join_addresses_to_modules_once_per_record(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "src"
+            source.mkdir()
+            (source / "first.s").write_text(
+                "First: ; was: sub_10\n", encoding="utf-8"
+            )
+            (source / "second.s").write_text("Second:\n", encoding="utf-8")
+            audit = root / "audit.json"
+            audit.write_text(
+                json.dumps(
+                    {
+                        "records": [
+                            {
+                                "address": "0x000010",
+                                "current_name": "First",
+                                "basis": ["shared explanation", "shared explanation", "solo"],
+                            },
+                            {
+                                "address": "0x000020",
+                                "current_name": "Second",
+                                "basis": ["shared explanation"],
+                            },
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            groups = semantic_audit_queue.duplicate_basis_groups(audit, source)
+
+            self.assertEqual(["shared explanation"], [group.basis for group in groups])
+            self.assertEqual(
+                [
+                    ("0x000010", "First", (source / "first.s").as_posix()),
+                    ("0x000020", "Second", (source / "second.s").as_posix()),
+                ],
+                [
+                    (item.address, item.current_name, item.file)
+                    for item in groups[0].references
+                ],
+            )
+
     def test_queue_scans_modules_and_excludes_audited_current_names(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

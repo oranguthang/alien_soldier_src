@@ -676,3 +676,13 @@ general decoder to the stop-marker check it actually performs. The standalone
 RTS at `$0561C8` is identified only as a no-op, without claiming it is
 reachable. Their old sequence-wide sentence is now the 52nd rejected generic
 basis; `NAME-002` still has zero matches in the curated detector.
+
+The read-only semantic audit now reports exact duplicate-basis groups as a
+separate review queue, joined back to source modules. The current registry
+contains 254 repeated sentences across 1,212 exact-address uses; those are
+not 1,212 proven naming errors, since many are uniform ROM-ordered sprite or
+mapping records. All 1,212 uses currently resolve to a source module. The CLI
+can list the largest groups or every member of a filtered group without a ROM
+build or emulator. The module join now scans all definitions, including names
+without a `; was:` marker; the unit test covers
+both marker-bearing and marker-free names plus repeated text within one record.
