@@ -278,6 +278,8 @@ UI_StoreAndRenderBGMTestSelection:                      ; CODE XREF: UI_UpdateBG
                 bra.w   Options_QueueStagedTileDMA
 ; End of function UI_UpdateBGMTest
 ; ---------------------------------------------------------------------------
+; 22 records of 32 bytes; normal menu navigation selects indices 0..$14
+; and leaves the final record preserved outside that selection range
 Options_BGMTestEntries: binclude "data/other/options_bgm_test_entries.bin"  ; was: word_998C
 Options_BGMTestEntries_End:                             ; was: word_998C_End
 
@@ -299,16 +301,16 @@ UI_UpdateSFXTestSelection:                              ; CODE XREF: UI_UpdateSF
                 btst    #0,(VBlankFrameCounter+1).w
                 bne.s   UI_StoreAndRenderSFXTestSelection
                 btst    #2,(OptionsHeldCopy).w
-                bne.s   UI_SelectPreviousSFXTestID
+                bne.s   UI_SelectPreviousSFXTestIndex
                 btst    #3,(OptionsHeldCopy).w
-                bne.s   UI_SelectNextSFXTestID
+                bne.s   UI_SelectNextSFXTestIndex
                 bra.s   UI_StoreAndRenderSFXTestSelection
 ; ---------------------------------------------------------------------------
 UI_CheckSFXTestPrimaryInput:                            ; CODE XREF: UI_UpdateSFXTest+1E   j  ; was: loc_9C86
                 btst    #2,(OptionsPressedCopy).w
-                beq.s   UI_CheckNextSFXTestID
+                beq.s   UI_CheckNextSFXTestInput
                 move.w  #6,(OptionsCursorFlashTimer).w
-UI_SelectPreviousSFXTestID:                             ; CODE XREF: UI_UpdateSFXTest+2E   j  ; was: loc_9C94
+UI_SelectPreviousSFXTestIndex:                          ; CODE XREF: UI_UpdateSFXTest+2E   j  ; was: loc_9C94
                 movem.l d0,-(sp)
                 move.b  #4,d0
                 jsr     (Sound_QueueRequest).l
@@ -322,11 +324,11 @@ UI_DecrementSFXTestSelection:                           ; CODE XREF: UI_UpdateSF
                 subq.b  #1,d0
                 bra.s   UI_StoreAndRenderSFXTestSelection
 ; ---------------------------------------------------------------------------
-UI_CheckNextSFXTestID:                                  ; CODE XREF: UI_UpdateSFXTest+40   j  ; was: loc_9CB4
+UI_CheckNextSFXTestInput:                               ; CODE XREF: UI_UpdateSFXTest+40   j  ; was: loc_9CB4
                 btst    #3,(OptionsPressedCopy).w
                 beq.s   UI_StoreAndRenderSFXTestSelection
                 move.w  #6,(OptionsCursorFlashTimer).w
-UI_SelectNextSFXTestID:                                 ; CODE XREF: UI_UpdateSFXTest+36   j  ; was: loc_9CC2
+UI_SelectNextSFXTestIndex:                              ; CODE XREF: UI_UpdateSFXTest+36   j  ; was: loc_9CC2
                 movem.l d0,-(sp)
                 move.b  #4,d0
                 jsr     (Sound_QueueRequest).l
@@ -366,16 +368,16 @@ UI_UpdateVoiceTestSelection:                            ; CODE XREF: UI_UpdateVo
                 btst    #0,(VBlankFrameCounter+1).w
                 bne.s   UI_StoreAndRenderVoiceTestSelection
                 btst    #2,(OptionsHeldCopy).w
-                bne.s   UI_SelectPreviousVoiceTestID
+                bne.s   UI_SelectPreviousVoiceTestIndex
                 btst    #3,(OptionsHeldCopy).w
-                bne.s   UI_SelectNextVoiceTestID
+                bne.s   UI_SelectNextVoiceTestIndex
                 bra.s   UI_StoreAndRenderVoiceTestSelection
 ; ---------------------------------------------------------------------------
 UI_CheckVoiceTestPrimaryInput:                          ; CODE XREF: UI_UpdateVoiceTest+1E   j  ; was: loc_9D36
                 btst    #2,(OptionsPressedCopy).w
-                beq.s   UI_CheckNextVoiceTestID
+                beq.s   UI_CheckNextVoiceTestInput
                 move.w  #6,(OptionsCursorFlashTimer).w
-UI_SelectPreviousVoiceTestID:                           ; CODE XREF: UI_UpdateVoiceTest+2E   j  ; was: loc_9D44
+UI_SelectPreviousVoiceTestIndex:                        ; CODE XREF: UI_UpdateVoiceTest+2E   j  ; was: loc_9D44
                 tst.b   d0
                 bne.s   UI_DecrementVoiceTestSelection
                 move.b  #$25,d0                         ; '%'
@@ -385,11 +387,11 @@ UI_DecrementVoiceTestSelection:                         ; CODE XREF: UI_UpdateVo
                 subq.w  #1,d0
                 bra.s   UI_StoreAndRenderVoiceTestSelection
 ; ---------------------------------------------------------------------------
-UI_CheckNextVoiceTestID:                                ; CODE XREF: UI_UpdateVoiceTest+40   j  ; was: loc_9D52
+UI_CheckNextVoiceTestInput:                             ; CODE XREF: UI_UpdateVoiceTest+40   j  ; was: loc_9D52
                 btst    #3,(OptionsPressedCopy).w
                 beq.s   UI_StoreAndRenderVoiceTestSelection
                 move.w  #6,(OptionsCursorFlashTimer).w
-UI_SelectNextVoiceTestID:                               ; CODE XREF: UI_UpdateVoiceTest+36   j  ; was: loc_9D60
+UI_SelectNextVoiceTestIndex:                            ; CODE XREF: UI_UpdateVoiceTest+36   j  ; was: loc_9D60
                 cmpi.b  #$25,d0                         ; '%'
                 bne.s   UI_IncrementVoiceTestSelection
                 clr.b   d0

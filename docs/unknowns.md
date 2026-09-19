@@ -11375,3 +11375,22 @@ called the byte read from `PaletteFadeProgress` the low byte; the 68000's
 big-endian word layout makes it the high byte. The other local claims match
 their branch, clamp, palette-store or return sites. This static correction
 does not supply runtime evidence or settle the wider `NAME-002` queue.
+
+The options SFX and voice-test handlers use `OptionsSFXIndex` and
+`OptionsVoiceIndex` to navigate, then map those indices to request IDs only
+on submission. Six inherited `...TestID` branch names conflated those steps;
+they now say index or input, and all eighteen affected audit records carry
+local evidence. The voice table contains 19 words (38 bytes), exactly the
+normal index range `0..$25`. The SFX low/high tables contain 156 bytes, but
+normal selection wraps at `$98`, so its final three request bytes `$FB`,
+`$FC`, and `$FF` are not chosen by ordinary menu navigation. Whether another
+path can assign an out-of-range index or read those bytes remains unproven;
+the bytes and table names are preserved.
+
+The BGM-test asset at `$998C..$9C4C` contains 22 fixed 32-byte records.
+`UI_UpdateBGMTest` multiplies `OptionsBGMIndex` by 32 to select one, but the
+normal previous/next handlers wrap that index within `0..$14`, covering only
+21 records. The eighth reviewed BGM-test basis now documents this limit,
+and seven branch bases describe their local copy, input, index or DMA work.
+The last record remains intact; its use outside normal menu navigation is
+unknown rather than declared dead.

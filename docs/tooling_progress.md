@@ -556,3 +556,21 @@ basis at `$000F20` was wrong: `move.b (PaletteFadeProgress).w,d5` reads the
 high byte of that word on the 68000, not its low byte. The basis and source
 header now say so. This removes a repeated-basis cluster without changing
 the assembled fade or closing the wider `NAME-002` review.
+
+The SFX and voice-test menu paths exposed another two boilerplate clusters:
+18 records now state their own held/pressed-input gate, wrap boundary, index
+change, BCD-render destination or request-table range. Six branch labels
+called a selection index a request ID or called an input test an ID test;
+they now identify the actual index/input operation. Voice navigation covers
+all 38 table bytes (indices zero through `$25`). SFX navigation covers
+combined-table indices zero through `$98`; the trailing `$FB/$FC/$FF` request
+bytes are present in ROM but outside that normal navigation range. This is
+static menu-flow evidence, not a claim that no other state can read them.
+
+The adjacent BGM-test path has eight more formerly duplicated bases. The
+selected 32-byte record supplies a request byte and 15 label tile words;
+the render path stages one row verbatim and a second row with each tile word
+incremented, then queues two tile DMA operations. Its preserved payload is
+704 bytes, or 22 records, while the normal menu wraps at index `$14` and
+therefore selects 21. All eight records now state address-local operations;
+the final record's other possible uses are not inferred.
