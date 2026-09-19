@@ -11073,3 +11073,9 @@ rotation/velocity boilerplate sentence. They now cite the individual
 ValkirieAuxFlags bits, linked angles, flash timer, sine components, and
 velocity fields that establish each branch. `NAME-002` decreases from 93 to
 83; the `NAME-003` visual-identity queue is unchanged.
+
+The graphics/asset follow-up replaces fifteen shared palette, tile-index,
+DMA, and asset-set bases with exact local evidence. This includes the `$FF`
+block-list sentinel, sixteen-word tile loops, the Z80 bus retry, and the
+distinct timed Sirene asset records `$01168A`/`$011694`. `NAME-002` falls
+from 83 to 68; these are static source claims, not runtime observations.

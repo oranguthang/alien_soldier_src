@@ -202,3 +202,9 @@ Ten Valkirie auxiliary-group branches in the rendering module now cite the
 actual flag bits, angle limits, timer, sine-table lookup, and velocity fields
 at their addresses. The names were already narrow enough, so this pass
 updates evidence only. `NAME-002` falls from 93 to 83; no ROM bytes changed.
+
+Fifteen palette, tile-index, font-DMA, and boss-asset records now cite their
+actual pointer or sentinel, loop bounds, bit masks, bus-acquisition branch,
+or asset-table fields. The two timed Sirene records distinguish their type,
+graphics pointer, and palette command. `NAME-002` falls from 83 to 68;
+ROM bytes remain unchanged.
