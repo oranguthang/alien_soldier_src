@@ -208,3 +208,19 @@ actual pointer or sentinel, loop bounds, bit masks, bus-acquisition branch,
 or asset-table fields. The two timed Sirene records distinguish their type,
 graphics pointer, and palette command. `NAME-002` falls from 83 to 68;
 ROM bytes remain unchanged.
+
+The Jampan core follow-up reviews 30 previously generic branch/return bases.
+Two state names were corrected: `$0496AA` waits for `MessageSequenceState`,
+not object clearing; `$049898` waits for `BossCounterMaxFlag` bit 0, not a
+stage-motion flag. Their return labels and state-record evidence were
+updated too. The 30 records now cite their actual counters, fields, branch
+conditions, or transition writes. `NAME-002` falls from 68 to 38; `; was:`
+provenance and ROM bytes remain unchanged.
+
+The Jampan attack/defeat follow-up replaces 24 shared return bases with their
+actual timer, radius, angle, offset, palette-index, or object-position exit
+condition. The former shield-descent label at `$049E9A` was misleading:
+the unsigned branch waits while the object's Y is at least `$60` and advances
+only below `$60`. Its state and return names, references, and basis now say
+that directly. `NAME-002` falls from 38 to 14; only Missiray remains in the
+current known-template queue.

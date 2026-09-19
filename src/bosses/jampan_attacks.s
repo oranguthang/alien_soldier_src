@@ -418,16 +418,16 @@ Boss_JampanDefeatExplosionHoldState:                    ; DATA XREF: ROM:0004922
 Boss_JampanDefeatExplosionHoldReturn:                   ; CODE XREF: Boss_JampanDefeatExplosionHoldState+E   j
                 rts
 ; End of function Boss_JampanDefeatExplosionHoldState
-; Waits for the shield object to descend to Y $60
-Boss_JampanWaitForDefeatShieldDescentState:             ; DATA XREF: ROM:0004922E   o  ; was: sub_49E9A
+; Waits for the shield object's Y to fall below $60
+Boss_JampanWaitForDefeatShieldYBelow60State:            ; DATA XREF: ROM:0004922E   o  ; was: sub_49E9A
                 jsr     (Boss_UpdateDefeatExplosionAndSpawnDebris).l
                 cmpi.w  #$60,(TwentyNinthEntityYPos).w  ; '`'
-                bcc.s   Boss_JampanWaitForDefeatShieldDescentReturn
+                bcc.s   Boss_JampanWaitForDefeatShieldYBelow60Return
                 clr.l   (TwentyNinthEntityYVel).w
                 addq.w  #2,4(a5)
-Boss_JampanWaitForDefeatShieldDescentReturn:            ; CODE XREF: Boss_JampanWaitForDefeatShieldDescentState+C   j
+Boss_JampanWaitForDefeatShieldYBelow60Return:           ; CODE XREF: Boss_JampanWaitForDefeatShieldYBelow60State+C   j
                 rts
-; End of function Boss_JampanWaitForDefeatShieldDescentState
+; End of function Boss_JampanWaitForDefeatShieldYBelow60State
 ; Advances the defeat palette-fade index to $0F
 Boss_JampanFadeDefeatPaletteOutState:                   ; DATA XREF: ROM:00049230   o  ; was: sub_49EB2
                 bsr.s   Boss_JampanApplyDefeatPaletteFade

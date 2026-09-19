@@ -66,13 +66,13 @@ Boss_JampanStateHandlers:   dc.w    Boss_JampanWaitForEncounterActivationState-*
                 dc.w    Boss_JampanNormalizeOpeningAnglesState-*
                 dc.w    Boss_JampanWaitForOpeningSidePartState-*
                 dc.w    Boss_JampanNormalizeOpeningOffsetState-*
-                dc.w    Boss_JampanWaitForOpeningObjectClearState-*
+                dc.w    Boss_JampanWaitForOpeningMessageCompletionState-*
                 dc.w    Boss_JampanWaitForOpeningSidePartsState-*
                 dc.w    Boss_JampanSelectAttackState-*
                 dc.w    Boss_JampanDampOrbitOffsetsState-*
                 dc.w    Boss_JampanBounceUntilSettledState-*
                 dc.w    Boss_JampanMoveToScreenThresholdState-*
-                dc.w    Boss_JampanWaitForStageMotionFlagState-*
+                dc.w    Boss_JampanWaitForBossCounterMaxFlagState-*
                 dc.w    Boss_JampanBalanceHorizontalAngleState-*
                 dc.w    Boss_JampanRiseToAttackHeightState-*
                 dc.w    Boss_JampanInitializeOffsetAttackState-*
@@ -102,7 +102,7 @@ Boss_JampanStateHandlers:   dc.w    Boss_JampanWaitForEncounterActivationState-*
                 dc.w    Boss_JampanBeginDefeatState-*
                 dc.w    Boss_JampanDefeatFallState-*
                 dc.w    Boss_JampanDefeatExplosionHoldState-*
-                dc.w    Boss_JampanWaitForDefeatShieldDescentState-*
+                dc.w    Boss_JampanWaitForDefeatShieldYBelow60State-*
                 dc.w    Boss_JampanFadeDefeatPaletteOutState-*
                 dc.w    Boss_JampanResetAfterDefeatFadeState-*
                 dc.w    Boss_JampanFadeDefeatPaletteInState-*
@@ -387,19 +387,19 @@ Boss_JampanFinishOpeningOffsetNormalization:            ; CODE XREF: Boss_Jampan
                 jsr     (Sound_QueueBGMOrStop).l
                 rts
 ; End of function Boss_JampanNormalizeOpeningOffsetState
-; Waits for the stage-owned object counter to clear
-Boss_JampanWaitForOpeningObjectClearState:              ; DATA XREF: ROM:000491E6   o  ; was: sub_496AA
+; Waits for the opening message sequence to complete
+Boss_JampanWaitForOpeningMessageCompletionState:        ; DATA XREF: ROM:000491E6   o  ; was: sub_496AA
                 bsr.w   Boss_JampanTrackVerticalOrbitOffset
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 tst.w   (MessageSequenceState).w
-                bne.s   Boss_JampanWaitForOpeningObjectClearReturn
+                bne.s   Boss_JampanWaitForOpeningMessageCompletionReturn
                 clr.b   (BossColorEffectFlags).w
                 move.w  #1,(TertiaryEntityWork52).w
                 move.w  #1,(FifthEntityWork52).w
                 addq.w  #2,4(a5)
-Boss_JampanWaitForOpeningObjectClearReturn:             ; CODE XREF: Boss_JampanWaitForOpeningObjectClearState+C   j
+Boss_JampanWaitForOpeningMessageCompletionReturn:       ; CODE XREF: Boss_JampanWaitForOpeningMessageCompletionState+C   j
                 rts
-; End of function Boss_JampanWaitForOpeningObjectClearState
+; End of function Boss_JampanWaitForOpeningMessageCompletionState
 ; Waits for the linked side parts before enabling the next pair
 Boss_JampanWaitForOpeningSidePartsState:                ; DATA XREF: ROM:000491E8   o  ; was: sub_496CE
                 bsr.w   Boss_JampanTrackVerticalOrbitOffset
@@ -557,19 +557,19 @@ Boss_JampanUpdateScreenThresholdMovement:               ; CODE XREF: Boss_Jampan
 Boss_JampanMoveToScreenThresholdReturn:                 ; CODE XREF: Boss_JampanMoveToScreenThresholdState+2E   j
                 rts
 ; End of function Boss_JampanMoveToScreenThresholdState
-; Waits for stage motion flag zero before advancing
-Boss_JampanWaitForStageMotionFlagState:                 ; DATA XREF: ROM:000491F2   o  ; was: sub_49898
+; Waits for bit zero of the boss-counter maximum flag before advancing
+Boss_JampanWaitForBossCounterMaxFlagState:              ; DATA XREF: ROM:000491F2   o  ; was: sub_49898
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 addq.w  #8,(BossCombatCounter).w
                 btst    #0,(BossCounterMaxFlag).w
-                beq.s   Boss_JampanWaitForStageMotionFlagReturn
+                beq.s   Boss_JampanWaitForBossCounterMaxFlagReturn
                 move.w  #$40,$48(a5)                    ; '@'
                 move.w  #2,(SecondaryEntityWork52).w
                 move.w  #2,(QuaternaryEntityWork52).w
                 addq.w  #2,4(a5)
-Boss_JampanWaitForStageMotionFlagReturn:                ; CODE XREF: Boss_JampanWaitForStageMotionFlagState+E   j
+Boss_JampanWaitForBossCounterMaxFlagReturn:             ; CODE XREF: Boss_JampanWaitForBossCounterMaxFlagState+E   j
                 rts
-; End of function Boss_JampanWaitForStageMotionFlagState
+; End of function Boss_JampanWaitForBossCounterMaxFlagState
 ; Converges the horizontal-angle accumulator on $100 while moving
 Boss_JampanBalanceHorizontalAngleState:                 ; DATA XREF: ROM:000491F4   o  ; was: sub_498C0
                 cmpi.w  #$100,(SharedPatternRow0Long2).w

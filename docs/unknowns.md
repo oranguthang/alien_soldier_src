@@ -11079,3 +11079,18 @@ DMA, and asset-set bases with exact local evidence. This includes the `$FF`
 block-list sentinel, sixteen-word tile loops, the Z80 bus retry, and the
 distinct timed Sirene asset records `$01168A`/`$011694`. `NAME-002` falls
 from 83 to 68; these are static source claims, not runtime observations.
+
+Thirty Jampan core branch and return records now cite the exact wait field,
+timer, orbit offset, or state write at each address. Two earlier state names
+were overclaims: `$0496AA` checks `MessageSequenceState`, not an object
+counter, and `$049898` checks `BossCounterMaxFlag` bit 0, not a generic stage
+motion flag. Names, references, and the inaccurate state evidence were
+corrected. `NAME-002` falls from 68 to 38; the visual-hypothesis queue is
+unchanged.
+
+Twenty-four Jampan attack, defeat, and post-defeat return records now cite
+their own timer, radius, angle, offset, palette, or object-position test.
+The former shield-descent state at `$049E9A` is renamed by its literal
+unsigned condition: it waits while `TwentyNinthEntityYPos >= $60` and
+advances below `$60`. `NAME-002` falls from 38 to 14; only the Missiray
+return-template records remain in that known queue.
