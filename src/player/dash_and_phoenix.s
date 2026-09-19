@@ -462,7 +462,7 @@ Player_InitFallState:                                   ; CODE XREF: Player_Grou
                                         ; Player_GroundCrouchState+16   j
                 clr.w   (PlayerAirMoveUsedFlags).w
                 clr.w   $52(a5)
-Player_InitFallState_Finish:                            ; CODE XREF: Player_UnusedCounterForceTerrainState+18   j  ; was: loc_15C3C
+Player_InitFallState_Finish:                            ; CODE XREF: Player_UnreferencedCounterForceTerrainPath+18   j  ; was: loc_15C3C
                                         ; Player_DashAttackState+5E   j
                 bclr    #0,(CounterForceTriggerFlag).w
                 move.w  #6,4(a5)

@@ -366,7 +366,7 @@ Player_AlternateAnimationLayoutTable:   dc.l    Player_AlternateLayoutSpriteMapp
 
 ; Advances and renders the four-frame Counter Force pose
 Player_UpdateCounterForceAnimation:                     ; CODE XREF: Player_GroundCounterForceState+2E   j  ; was: sub_17334
-                                        ; Player_UnusedCounterForceTerrainState+26   j
+                                        ; Player_UnreferencedCounterForceTerrainPath+26   j
                 subq.w  #1,$C(a5)
                 bpl.s   Player_RenderCounterForceFrame
                 move.w  #2,$C(a5)

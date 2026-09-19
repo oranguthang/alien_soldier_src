@@ -232,7 +232,7 @@ Player_HandleRespawnGravity:                            ; DATA XREF: ROM:0001509
 ; End of function Player_HandleDeathSequence
 ; Enters state $00, the grounded standing state
 Player_InitGroundIdleState:                             ; CODE XREF: Player_GroundCounterForceState+18   j  ; was: sub_151EE
-                                        ; Player_UnusedCounterForceTerrainState+10   j
+                                        ; Player_UnreferencedCounterForceTerrainPath+10   j
                 move.b  #$7F,(PlayerInputMask).w
                 bclr    #0,(CounterForceTriggerFlag).w
                 clr.w   (PlayerAirMoveUsedFlags).w
@@ -350,7 +350,7 @@ Player_AirCounterForceState_CheckUpperTerrain:          ; CODE XREF: Player_AirC
                 bra.s   Player_UpdateCounterForceStateTimer
 ; End of function Player_AirCounterForceState
 ; Unreferenced Counter Force terrain/timer path preserved from the original ROM
-Player_UnusedCounterForceTerrainState:                  ; was: sub_15372
+Player_UnreferencedCounterForceTerrainPath:             ; was: sub_15372
                 jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
                 bsr.w   Physics_LowerTerrainCheckWrapper
@@ -363,7 +363,7 @@ Player_UpdateCounterForceStateTimer:                    ; CODE XREF: Player_AirC
                 move.l  #$1800,d1
                 bsr.w   Player_DecelerateHorizontalVelocity
                 bra.w   Player_UpdateCounterForceAnimation
-; End of function Player_UnusedCounterForceTerrainState
+; End of function Player_UnreferencedCounterForceTerrainPath
 ; Detects the C-plus-down chord that turns grounded Counter Force into a dash
 Player_CheckCounterForceDashInput:                      ; CODE XREF: Player_GroundCounterForceState+1C   p  ; was: sub_1539C
                 btst    #5,$6A(a5)

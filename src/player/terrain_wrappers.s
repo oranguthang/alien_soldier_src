@@ -211,7 +211,7 @@ Player_DecelerateHorizontalVelocityFast:                ; CODE XREF: Player_Grou
 ; End of function Player_DecelerateHorizontalVelocityFast
 ; Decelerates horizontal velocity towards zero
 Player_DecelerateHorizontalVelocity:                    ; CODE XREF: Player_GroundCounterForceState+2A   p  ; was: sub_16EAA
-                                        ; Player_UnusedCounterForceTerrainState+22   p
+                                        ; Player_UnreferencedCounterForceTerrainPath+22   p
                 move.l  $18(a5),d0
                 bmi.s   Player_DecelerateHorizontalVelocity_IncreaseNegative
                 sub.l   d1,d0

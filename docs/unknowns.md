@@ -11394,3 +11394,14 @@ normal previous/next handlers wrap that index within `0..$14`, covering only
 and seven branch bases describe their local copy, input, index or DMA work.
 The last record remains intact; its use outside normal menu navigation is
 unknown rather than declared dead.
+
+The Counter Force family audit no longer uses the same two whole-family
+sentences as evidence for 26 different code and table addresses. Each now
+records its own state transition, timer operation, constructor field, frame
+pointer, offset pair or input gate. The entry at `$015372` is particularly
+uncertain: it is not named by an executable branch or state-table entry in
+the current source, yet its wall/floor test and timer fallthrough are intact.
+`Player_UnreferencedCounterForceTerrainPath` describes that source-level
+finding without claiming global runtime unreachability; its former `Unused`
+name remains in the audit history. The sprite mappings and art pieces that
+share other family-wide bases still need their own review.

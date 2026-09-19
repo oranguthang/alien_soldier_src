@@ -574,3 +574,13 @@ incremented, then queues two tile DMA operations. Its preserved payload is
 704 bytes, or 22 records, while the normal menu wraps at index `$14` and
 therefore selects 21. All eight records now state address-local operations;
 the final record's other possible uses are not inferred.
+
+The 26 Counter Force code, branch, and frame-table records that shared two
+family-wide sentences now carry one address-specific basis each. The review
+followed grounded, airborne, ceiling, and Seven Forces state timers; the
+effect constructor and position handoff; the C-plus-down dash check; and the
+four primary/secondary sprite-frame pairs. The preserved terrain entry at
+`$015372` has no symbolic executable caller or state-table pointer in the
+current source, but that does not prove it never runs. Its name was narrowed
+from `Unused` to `Unreferenced`, with its original `; was:` marker retained.
+The adjacent Counter Force sprite-art records remain a separate audit group.
