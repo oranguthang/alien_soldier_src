@@ -11196,3 +11196,14 @@ palette-table byte offset `$14`; from `$01F806` it reaches the next table at
 Neither condition is changed in this preservation source, and no claim is
 made about whether the corresponding runtime paths are reachable or intended.
 `NAME-002` falls from 144 to 113; the seven visual hypotheses remain open.
+
+Thirty-two boss asset-set records now cite the exact direct caller, entity
+type, graphics-list pointer, and palette-command pointer. The three dormant
+late-phase records at `$0115A8`, `$0115C4`, and `$0115E0` keep neutral
+entity-type names: these static references do not establish a boss identity.
+`NAME-002` falls from 113 to 81; `NAME-003` remains seven visual hypotheses.
+
+The 29 graphics-list records now specify their exact tag-6/tag-7 sources and
+destination words, including lists with more than one command or owner. The
+neutral entity-type art remains neutral; graphics pointers alone do not prove
+the historical character names. `NAME-002` falls from 81 to 52.

@@ -38,7 +38,8 @@ byte.
   18 timer-return, 41 palette-fade, 66 OAM/mapping, 30 object-pipeline, 20
   stage-intro, 26 time-bonus, 26 message-render, 26 message-script, 20
   options-menu, 19 weapon-selection, 33 weapon-setup loadout, and 31
-  controller/background records were then reviewed, leaving 113 (`NAME-002`).
+  controller/background, 32 boss asset-set, and 29 graphics-list records were
+  then reviewed, leaving 52 (`NAME-002`).
   Seven boss-identity records remain visual hypotheses (`NAME-003`); neither
   pending group is semantically confirmed.
 - **Provenance is retained.** 16,053 `; was:` markers map current definitions to
@@ -70,7 +71,7 @@ that limits it. They are stated here rather than left implicit.
 | `PROFILE-001` | The European ROM. Only the Japanese cartridge is accepted. | unsupported |
 | `SND-001` | The Z80 sound driver program, which stays a verbatim payload and is never disassembled. | unsupported |
 | `NAME-001` | 513 `_End` aliases that follow their own `binclude` payload hold no separate record. | partial |
-| `NAME-002` | 113 records match the expanded 43-sentence generic detector; a further duplicate-basis review is pending. | partial |
+| `NAME-002` | 52 records match the expanded 43-sentence generic detector; a further duplicate-basis review is pending. | partial |
 | `NAME-003` | Seven boss-identity names remain provisional until pinned visual evidence or behavior-only renaming. | partial |
 | `LAYOUT-001` | Module sizes: 211 of 383 modules sit inside the preferred 200–700 line band, 146 are shorter and 26 are longer. | partial |
 | `TOOL-001` | Four exploratory commands remain outside release evidence; their source operations address modules. The obsolete pointer debugger is retired, and `verify-relocation` checks pointers across the current layout. | unsupported |

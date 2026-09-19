@@ -329,3 +329,16 @@ rows, so it is now `WeaponSetup_SeedBackgroundTileRows`. `NAME-002` falls from
 144 to 113. Two ROM quirks are documented as static facts rather than guessed
 intent: the controller lookup can store out-of-range index 26 on a miss, and
 phase `$01500000` indexes one word beyond each ten-word palette data run.
+
+The boss asset-set pass checks 32 exact-address records against their direct
+callers, entity-type words, optional graphics lists, and palette commands.
+The source `DATA XREF` comments now name the current callers, including both
+Jampan paths. Types `$3EC`, `$3F0`, and `$3F4` remain neutral because their
+dormant callers and asset pointers do not prove a visual identity. `NAME-002`
+falls from 113 to 81; the seven separate visual hypotheses remain open.
+
+The 29 graphics-load lists now cite their referencing asset sets and every
+tagged source/destination pair before `$FFFF`, including Wolf Garopa's two tile
+art sources and the shared Valkirie/Sirene list. Two numeric source cross-
+references became symbolic, and the shared list now shows both owners.
+`NAME-002` falls from 81 to 52 without changing assembled bytes.

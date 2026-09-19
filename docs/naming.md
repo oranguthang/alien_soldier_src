@@ -69,8 +69,9 @@ Missiray paths exhausted that initial queue. A wider duplicate scan then
 exposed 457 records matching 17 more generic sentences; 18 timer-return,
 41 palette-fade, 66 OAM/mapping, 30 object-pipeline, 20 stage-intro, 26
 time-bonus, 26 message-render, 26 message-script, 20 options-menu, 19
-weapon-selection, 33 weapon-setup loadout, and 31 controller/background
-records have since been reviewed, leaving 113 (`NAME-002`). The counter covers
+weapon-selection, 33 weapon-setup loadout, 31 controller/background, and 32
+boss asset-set and 29 graphics-list records have since been reviewed, leaving
+52 (`NAME-002`). The counter covers
 43 known sentences, not every possible explanation; repeated bases still need
 review before the 1.0 tag.
 Seven visual boss identities remain hypotheses (`NAME-003`).

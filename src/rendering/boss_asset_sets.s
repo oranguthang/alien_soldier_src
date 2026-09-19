@@ -16,7 +16,7 @@ Gfx_UnidentifiedVRAMTransferParameters: dc.l    $FFFF7400, $FFFF6800, $FFFF4000,
 ; Each asset-set record stores an entity type, an optional LoadObjData list,
 ; and an optional palette command. Boss_LoadAssetSet consumes those fields
 Boss_JetsripperAssetSet:    dc.w    $E4                 ; field_0  ; was: stru_11366
-                                        ; DATA XREF: Stage_InitBossIntro+28   o
+                                        ; DATA XREF: Stage1_InitializeJetsripperEncounter   o
                 dc.l    Boss_JetsripperGraphicsLoadList  ; field_2
                 dc.l    Boss_JetsripperPaletteCommand   ; field_6
 Boss_JetsripperGraphicsLoadList:    dc.w    7           ; field_0  ; was: stru_11370
@@ -25,7 +25,7 @@ Boss_JetsripperGraphicsLoadList:    dc.w    7           ; field_0  ; was: stru_1
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 Boss_AntroidAssetSet:   dc.w    $30                     ; field_0  ; was: stru_1137A
-                                        ; DATA XREF: Camera_TransitionToBossArena+28   o
+                                        ; DATA XREF: Stage2_InitializeAntroidEncounter   o
                 dc.l    Boss_AntroidGraphicsLoadList    ; field_2
                 dc.l    Boss_AntroidPaletteCommand      ; field_6
 Boss_AntroidGraphicsLoadList:   dc.w    7               ; field_0  ; was: stru_11384
@@ -34,7 +34,7 @@ Boss_AntroidGraphicsLoadList:   dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 Boss_ShellshogunAssetSet:   dc.w    $F4                 ; field_0  ; was: stru_1138E
-                                        ; DATA XREF: Camera_LockToBossArena+28   o
+                                        ; DATA XREF: Stage3_InitializeShellshogunEncounter   o
                 dc.l    Boss_ShellshogunGraphicsLoadList  ; field_2
                 dc.l    Boss_ShellshogunPaletteCommand  ; field_6
 Boss_ShellshogunGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_11398
@@ -46,11 +46,11 @@ Boss_ShellshogunGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_ShiperAssetSet:    dc.w    $24                     ; field_0  ; was: stru_113AA
-                                        ; DATA XREF: Camera_FollowTarget+34   o
+                                        ; DATA XREF: Stage4_InitializeShiperEncounter   o
                 dc.l    0                               ; field_2
                 dc.l    Boss_ShiperPaletteCommand       ; field_6
 Boss_MadamBarbarAssetSet:   dc.w    $118                ; field_0  ; was: stru_113B4
-                                        ; DATA XREF: Boss_MadamBarbarScrollInit+2A   o
+                                        ; DATA XREF: Stage5_InitializeMadamBarbarEncounter   o
                 dc.l    Boss_MadamBarbarGraphicsLoadList  ; field_2
                 dc.l    Boss_MadamBarbarPaletteCommand  ; field_6
 Boss_MadamBarbarGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_113BE
@@ -62,7 +62,7 @@ Boss_MadamBarbarGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_JokerAssetSet: dc.w    $15C                        ; field_0  ; was: stru_113D0
-                                        ; DATA XREF: Stage_InitJokerBoss+2A   o
+                                        ; DATA XREF: Stage6_InitializeJokerEncounter   o
                 dc.l    Boss_JokerGraphicsLoadList      ; field_2
                 dc.l    Boss_JokerPaletteCommand        ; field_6
 Boss_JokerGraphicsLoadList: dc.w    7                   ; field_0  ; was: stru_113DA
@@ -74,7 +74,7 @@ Boss_JokerGraphicsLoadList: dc.w    7                   ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_TerobusterAssetSet:    dc.w    $B4                 ; field_0  ; was: stru_113EC
-                                        ; DATA XREF: Stage_InitTerobusterBoss+50   o
+                                        ; DATA XREF: Stage7_InitializeTerobusterEncounter   o
                 dc.l    Boss_TerobusterGraphicsLoadList  ; field_2
                 dc.l    Boss_TerobusterPaletteCommand   ; field_6
 Boss_TerobusterGraphicsLoadList:    dc.w    7           ; field_0  ; was: stru_113F6
@@ -86,7 +86,7 @@ Boss_TerobusterGraphicsLoadList:    dc.w    7           ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_FlyingNeoAssetSet: dc.w    $154                    ; field_0  ; was: stru_11408
-                                        ; DATA XREF: Stage8_InitializeFlyingNeoEncounter+A   o
+                                        ; DATA XREF: Stage8_InitializeFlyingNeoEncounter   o
                 dc.l    Boss_FlyingNeoGraphicsLoadList  ; field_2
                 dc.l    0                               ; field_6
 Boss_FlyingNeoGraphicsLoadList: dc.w    7               ; field_0  ; was: stru_11412
@@ -98,7 +98,7 @@ Boss_FlyingNeoGraphicsLoadList: dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_XiTigerAssetSet:   dc.w    $114                    ; field_0  ; was: stru_11424
-                                        ; DATA XREF: Stage9_InitializeXiTigerEncounter+3A   o
+                                        ; DATA XREF: Stage9_LoadXiTigerEncounterAssets   o
                 dc.l    Boss_XiTigerGraphicsLoadList    ; field_2
                 dc.l    Boss_XiTigerPaletteCommand      ; field_6
 Boss_XiTigerGraphicsLoadList:   dc.w    7               ; field_0  ; was: stru_1142E
@@ -110,7 +110,7 @@ Boss_XiTigerGraphicsLoadList:   dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_DeepStriderAssetSet:   dc.w    $19C                ; field_0  ; was: stru_11440
-                                        ; DATA XREF: Stage10_InitializeDeepStriderEncounter+26   o
+                                        ; DATA XREF: Stage10_InitializeDeepStriderEncounter   o
                 dc.l    Boss_DeepStriderGraphicsLoadList  ; field_2
                 dc.l    Boss_DeepStriderPaletteCommand  ; field_6
 Boss_DeepStriderGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_1144A
@@ -119,7 +119,7 @@ Boss_DeepStriderGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_1
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 Boss_GustheadAssetSet:  dc.w    $1B0                    ; field_0  ; was: stru_11454
-                                        ; DATA XREF: Stage11_InitializeGustheadEncounter+26   o
+                                        ; DATA XREF: Stage11_InitializeGustheadEncounter   o
                 dc.l    Boss_GustheadGraphicsLoadList   ; field_2
                 dc.l    Boss_GustheadPaletteCommand     ; field_6
 Boss_GustheadGraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1145E
@@ -128,7 +128,7 @@ Boss_GustheadGraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 Boss_SharpssteelAssetSet:   dc.w    $21C                ; field_0  ; was: stru_11468
-                                        ; DATA XREF: Stage12_InitializeSharpssteelEncounter+12   o
+                                        ; DATA XREF: Stage12_InitializeSharpssteelEncounter   o
                 dc.l    Boss_SharpssteelGraphicsLoadList  ; field_2
                 dc.l    Boss_SharpssteelPaletteCommand  ; field_6
 Boss_SharpssteelGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_11472
@@ -137,7 +137,7 @@ Boss_SharpssteelGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_1
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 Boss_BugmaxAssetSet:    dc.w    $300                    ; field_0  ; was: stru_1147C
-                                        ; DATA XREF: Stage13_UpdateBugmaxApproach+38   o
+                                        ; DATA XREF: Stage13_InitializeBugmaxEncounter   o
                 dc.l    Boss_BugmaxGraphicsLoadList     ; field_2
                 dc.l    Boss_BugmaxPaletteCommand       ; field_6
 Boss_BugmaxGraphicsLoadList:    dc.w    7               ; field_0  ; was: stru_11486
@@ -149,7 +149,7 @@ Boss_BugmaxGraphicsLoadList:    dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_VictorAssetSet:    dc.w    $3C0                    ; field_0  ; was: stru_11498
-                                        ; DATA XREF: Stage14_InitializeVictorEncounter+24   o
+                                        ; DATA XREF: Stage14_InitializeVictorEncounter   o
                 dc.l    Boss_VictorGraphicsLoadList     ; field_2
                 dc.l    Boss_VictorPaletteCommand       ; field_6
 Boss_VictorGraphicsLoadList:    dc.w    7               ; field_0  ; was: stru_114A2
@@ -161,7 +161,7 @@ Boss_VictorGraphicsLoadList:    dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_SunsetStingAssetSet:   dc.w    $1EC                ; field_0  ; was: stru_114B4
-                                        ; DATA XREF: Stage15_InitializeSunsetStingEncounter+2E   o
+                                        ; DATA XREF: Stage15_InitializeSunsetStingEncounter   o
                 dc.l    Boss_SunsetStingGraphicsLoadList  ; field_2
                 dc.l    Boss_SunsetStingPaletteCommand  ; field_6
 Boss_SunsetStingGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_114BE
@@ -173,7 +173,7 @@ Boss_SunsetStingGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_BackStringerAssetSet:  dc.w    $314                ; field_0  ; was: stru_114D0
-                                        ; DATA XREF: Boss_ViblackTransitionTimerState+14   o
+                                        ; DATA XREF: Boss_ViblackTransitionTimerState   o
                 dc.l    Boss_BackStringerGraphicsLoadList  ; field_2
                 dc.l    Boss_BackStringerPaletteCommand  ; field_6
 Boss_BackStringerGraphicsLoadList:  dc.w    7           ; field_0  ; was: stru_114DA
@@ -182,8 +182,8 @@ Boss_BackStringerGraphicsLoadList:  dc.w    7           ; field_0  ; was: stru_1
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 Boss_JampanAssetSet:    dc.w    $218                    ; field_0  ; was: stru_114E4
-                                        ; DATA XREF: Stage19_InitializeJampanEncounter+28   o
-                                        ; UnreferencedStage20Variant1_InitializeJampanPhase+1A   o
+                                        ; DATA XREF: Stage19_InitializeJampanEncounter   o
+                                        ; UnreferencedStage20Variant1_InitializeJampanPhase   o
                 dc.l    Boss_JampanGraphicsLoadList     ; field_2
                 dc.l    Boss_JampanPaletteCommand       ; field_6
 Boss_JampanGraphicsLoadList:    dc.w    7               ; field_0  ; was: stru_114EE
@@ -195,7 +195,7 @@ Boss_JampanGraphicsLoadList:    dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_Epsilon1AssetSet:  dc.w    $264                    ; field_0  ; was: stru_11500
-                                        ; DATA XREF: Stage17_InitializeEpsilon1Encounter+8   o
+                                        ; DATA XREF: Stage17_InitializeEpsilon1Encounter   o
                 dc.l    Boss_Epsilon1GraphicsLoadList   ; field_2
                 dc.l    Boss_Epsilon1PaletteCommands    ; field_6
 Boss_Epsilon1GraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1150A
@@ -207,7 +207,7 @@ Boss_Epsilon1GraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_DestroyerMK2AssetSet:  dc.w    $240                ; field_0  ; was: stru_1151C
-                                        ; DATA XREF: Stage18_InitializeDestroyerMk2Encounter+30   o
+                                        ; DATA XREF: Stage18_InitializeDestroyerMk2Encounter   o
                 dc.l    Boss_DestroyerMK2GraphicsLoadList  ; field_2
                 dc.l    Boss_DestroyerMK2PaletteCommand  ; field_6
 Boss_DestroyerMK2GraphicsLoadList:  dc.w    7           ; field_0  ; was: stru_11526
@@ -226,7 +226,7 @@ EntityType1C0AssetSet:
                 dc.l    EntityType1C0GraphicsLoadList   ; Graphics structure pointer
                 dc.l    EntityType1C0PaletteCommand     ; Palette data pointer
 EntityType1C0GraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_11542
-                                        ; DATA XREF: ROM:00011538   o
+                                        ; DATA XREF: ROM:EntityType1C0AssetSet   o
                 dc.l    EntityType1C0TileArt            ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
@@ -234,7 +234,7 @@ EntityType1C0GraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_ShieldViperAssetSet:   dc.w    $34C                ; field_0  ; was: stru_11554
-                                        ; DATA XREF: StageTransition_LoadShieldViperAssets+14   o
+                                        ; DATA XREF: StageTransition_LoadShieldViperAssets   o
                 dc.l    Boss_ShieldViperGraphicsLoadList  ; field_2
                 dc.l    Boss_ShieldViperPaletteCommand  ; field_6
 Boss_ShieldViperGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_1155E
@@ -243,7 +243,7 @@ Boss_ShieldViperGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_1
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 Boss_DestroyerProtoAssetSet:    dc.w    $3B8            ; field_0  ; was: stru_11568
-                                        ; DATA XREF: StageTransition_LoadDestroyerProtoAssets+10   o
+                                        ; DATA XREF: StageTransition_LoadDestroyerProtoAssets   o
                 dc.l    Boss_DestroyerProtoGraphicsLoadList  ; field_2
                 dc.l    Boss_DestroyerProtoPaletteCommand  ; field_6
 Boss_DestroyerProtoGraphicsLoadList:    dc.w    7       ; field_0  ; was: stru_11572
@@ -255,7 +255,7 @@ Boss_DestroyerProtoGraphicsLoadList:    dc.w    7       ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_WolfGaropaAssetSet:    dc.w    $3E8                ; field_0  ; was: stru_11584
-                                        ; DATA XREF: StageTransition_LoadWolfGaropaAssets+14   o
+                                        ; DATA XREF: StageTransition_LoadWolfGaropaAssets   o
                 dc.l    Boss_WolfGaropaGraphicsLoadList  ; field_2
                 dc.l    Boss_WolfGaropaPaletteCommand   ; field_6
 Boss_WolfGaropaGraphicsLoadList:    dc.w    7           ; field_0  ; was: stru_1158E
@@ -272,7 +272,7 @@ Boss_WolfGaropaGraphicsLoadList:    dc.w    7           ; field_0  ; was: stru_1
 ; Stage 18's dormant late-phase table references this record. The ROM proves
 ; entity type $3EC and its assets, but not the imported "Lambda Bunny" identity
 EntityType3ECAssetSet:  dc.w    $3EC                    ; entity type  ; was: stru_115A8
-                                        ; DATA XREF: UnreferencedStage20Variant2_InitializeEntity3ECPhase+1A   o
+                                        ; DATA XREF: UnreferencedStage20Variant2_InitializeEntity3ECPhase   o
                 dc.l    EntityType3ECGraphicsLoadList   ; Graphics structure pointer
                 dc.l    EntityType3ECPaletteCommand     ; Palette data pointer
 EntityType3ECGraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_115B2
@@ -285,7 +285,7 @@ EntityType3ECGraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $FFFF
 ; Stage 18's dormant late-phase table references this identity-unknown record
 EntityType3F0AssetSet:  dc.w    $3F0                    ; entity type  ; was: stru_115C4
-                                        ; DATA XREF: UnreferencedStage20Variant3_InitializeEntity3F0Phase+1A   o
+                                        ; DATA XREF: UnreferencedStage20Variant3_InitializeEntity3F0Phase   o
                 dc.l    EntityType3F0GraphicsLoadList   ; Graphics structure pointer
                 dc.l    EntityType3F0PaletteCommand     ; Palette data pointer
 EntityType3F0GraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_115CE
@@ -298,7 +298,7 @@ EntityType3F0GraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $FFFF
 ; Stage 18's dormant late-phase table references this identity-unknown record
 EntityType3F4AssetSet:  dc.w    $3F4                    ; entity type  ; was: stru_115E0
-                                        ; DATA XREF: UnreferencedStage20Variant4_InitializeEntity3F4Phase+1A   o
+                                        ; DATA XREF: UnreferencedStage20Variant4_InitializeEntity3F4Phase   o
                 dc.l    EntityType3F4GraphicsLoadList   ; Graphics structure pointer
                 dc.l    EntityType3F4PaletteCommands    ; Palette data pointer
 EntityType3F4GraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_115EA
@@ -317,7 +317,7 @@ EntityType3FCAssetSet:
                 dc.l    EntityType3FCGraphicsLoadList   ; Graphics structure pointer
                 dc.l    EntityType3FCPaletteCommands    ; Palette data pointer
 EntityType3FCGraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_11606
-                                        ; DATA XREF: ROM:000115FC   o
+                                        ; DATA XREF: ROM:EntityType3FCAssetSet   o
                 dc.l    EntityType3FCTileArt            ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
@@ -325,7 +325,7 @@ EntityType3FCGraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_ZLeoAssetSet:  dc.w    $3F8                        ; field_0  ; was: stru_11618
-                                        ; DATA XREF: StageTransition_LoadZLeoAssets+2A   o
+                                        ; DATA XREF: StageTransition_LoadZLeoAssets   o
                 dc.l    Boss_ZLeoGraphicsLoadList       ; field_2
                 dc.l    Boss_ZLeoPaletteCommands        ; field_6
 Boss_ZLeoGraphicsLoadList:  dc.w    7                   ; field_0  ; was: stru_11622
@@ -340,7 +340,7 @@ Boss_ZLeoGraphicsLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_MissirayAssetSet:  dc.w    $3D0                    ; field_0  ; was: stru_1163C
-                                        ; DATA XREF: StageTransition_LoadMissirayAssets+10   o
+                                        ; DATA XREF: StageTransition_LoadMissirayAssets   o
                 dc.l    Boss_MissirayGraphicsLoadList   ; field_2
                 dc.l    Boss_MissirayPaletteCommand     ; field_6
 Boss_MissirayGraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_11646
@@ -352,25 +352,26 @@ Boss_MissirayGraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 SevenForcesValkirieAssetSet:    dc.w    $42C            ; field_0  ; was: stru_11658
-                                        ; DATA XREF: Entity_SevenForcesValkirieFadeInStateC+36   o
+                                        ; DATA XREF: Entity_SevenForcesValkirieFadeInStateC   o
                 dc.l    SevenForcesValkirieGraphicsLoadList  ; field_2
                 dc.l    SevenForcesValkiriePaletteCommand  ; field_6
 SevenForcesValkirieGraphicsLoadList:    dc.w    7       ; field_0  ; was: stru_11662
                                         ; DATA XREF: ROM:SevenForcesValkirieAssetSet   o
+                                        ; SevenForcesSireneTimedAssetSetA   o
                                         ; ROM:SevenForcesSireneTimedAssetSetA   o
                 dc.l    SevenForcesValkirieTileArt      ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 SevenForcesMedusaAssetSet:  dc.w    $430                ; field_0  ; was: stru_1166C
-                                        ; DATA XREF: Entity_SevenForcesStartMedusaEntranceState10+4A   o
+                                        ; DATA XREF: Entity_SevenForcesUpdateMedusaEntranceState12   o
                 dc.l    0                               ; field_2
                 dc.l    SevenForcesMedusaPaletteCommand  ; field_6
 SevenForcesSireneAssetSet:  dc.w    $434                ; field_0  ; was: stru_11676
-                                        ; DATA XREF: Entity_SevenForcesSireneHoldState2E+1A   o
+                                        ; DATA XREF: Entity_SevenForcesSireneHoldState2E   o
                 dc.l    0                               ; field_2
                 dc.l    SevenForcesSirenePaletteCommand  ; field_6
 SevenForcesArtemisAssetSet: dc.w    $438                ; field_0  ; was: stru_11680
-                                        ; DATA XREF: Entity_SevenForcesStartArtemisEntranceState22+78   o
+                                        ; DATA XREF: Entity_SevenForcesUpdateArtemisEntranceState24   o
                 dc.l    0                               ; field_2
                 dc.l    SevenForcesArtemisPaletteCommand  ; field_6
 SevenForcesSireneTimedAssetSetB:    dc.w    $43C        ; field_0  ; was: stru_1168A
@@ -382,7 +383,7 @@ SevenForcesSireneTimedAssetSetA:    dc.w    $440        ; field_0  ; was: stru_1
                 dc.l    SevenForcesValkirieGraphicsLoadList  ; field_2
                 dc.l    SevenForcesSireneTimedPaletteCommandA  ; field_6
 SevenForcesSylpheedAssetSet:    dc.w    $444            ; field_0  ; was: stru_1169E
-                                        ; DATA XREF: Entity_SevenForcesStartSylpheedEntranceState18+50   o
+                                        ; DATA XREF: Entity_SevenForcesUpdateSylpheedEntranceState1A   o
                 dc.l    0                               ; field_2
                 dc.l    SevenForcesSylpheedPaletteCommand  ; field_6
 
