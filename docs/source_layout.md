@@ -24,6 +24,13 @@ development release contract, and the Source Reconstruction 1.0 contract.
 rejects a release threshold that attempts to weaken the destination contract.
 The same audit rejects generic module filenames declared in the ROM layout.
 
+The current 17 modules above the preferred 700-line target are all concrete
+boss modules (703–869 lines); none exceeds the hard ceiling. Their length
+alone is not grounds for another split: a proposed boundary must isolate a
+coherent state family or private-data owner without separating a procedure
+from its tables. The size inventory is a review queue, not a waiver for
+unexamined semantics.
+
 The former 889-line `ui/options_screen.s` had a real ownership boundary at
 ROM `$009F8E`: both options-menu controllers and their selection table end
 before the shared BCD/DMA, cursor, and UI asset helpers begin. The ordered
