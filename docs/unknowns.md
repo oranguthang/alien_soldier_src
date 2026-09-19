@@ -11103,3 +11103,9 @@ records. `make release-audit` now counts all 40 known templates. This is
 an explicit expansion of semantic-review debt, not evidence that those
 rendering, UI, palette, or asset names are wrong. The seven visual identity
 hypotheses remain a separate queue.
+
+The 18 return paths that repeated "The counting frames return here" have
+now been checked across Z-Leo, shared object/effect helpers, and enemy states.
+Their evidence identifies the concrete countdown field, branch sense, and
+completion write where present. `NAME-002` falls from 457 to 439 under the
+expanded 40-template detector; no source instruction or ROM byte changed.

@@ -66,7 +66,8 @@ bases have now been replaced with record-specific evidence, but a wider scan
 found 301 records elsewhere matching other generic sentences. Reviewing the
 options, Jampan, Sharpssteel, Sirene, Medusa, Valkirie, graphics/asset, and
 Missiray paths exhausted that initial queue. A wider duplicate scan then
-exposed 457 records matching 17 more generic sentences (`NAME-002`). The
+exposed 457 records matching 17 more generic sentences; 18 timer-return
+records have since been reviewed, leaving 439 (`NAME-002`). The
 counter covers a curated set of 40 known sentences, not every possible weak
 explanation; repeated bases still need review before the 1.0 tag. Seven visual
 boss identities remain hypotheses (`NAME-003`).

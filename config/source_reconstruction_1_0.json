@@ -65,7 +65,7 @@
     {
       "id": "semantic_naming",
       "kind": "source",
-      "summary": "Every live address-derived identifier was replaced and 15,833 exact-address name records now exist. The first curated generic-basis queue was reviewed through Missiray, but a wider duplicate scan exposed 457 records matching 17 additional templates; seven boss-identity records remain visual hypotheses.",
+      "summary": "Every live address-derived identifier was replaced and 15,833 exact-address name records now exist. A wider duplicate scan exposed 457 records matching 17 additional templates; after reviewing 18 timer-return paths, 439 known generic-basis records remain. Seven boss-identity records remain visual hypotheses.",
       "evidence": [
         "provenance_and_unknowns",
         "files:config/name_audit.json"
@@ -193,7 +193,7 @@
     },
     "provenance_and_unknowns": {
       "status": "partial",
-      "statement": "No live definition is address-derived and every replaced name keeps a traceable marker. The expanded known generic-basis queue contains 457 records awaiting instruction-specific review; seven boss-identity records remain hypotheses.",
+      "statement": "No live definition is address-derived and every replaced name keeps a traceable marker. The expanded known generic-basis queue contains 439 records awaiting instruction-specific review; seven boss-identity records remain hypotheses.",
       "evidence": {
         "targets": [
           "lint",
@@ -455,7 +455,7 @@
     {
       "id": "generic_name_evidence_bases",
       "status": "partial",
-      "reason": "The 14 Missiray return records were reviewed, exhausting the prior queue. A wider duplicate-basis scan exposed 457 records matching 17 additional generic sentences in rendering, palette, UI, and asset families; these bases still lack record-specific evidence.",
+      "reason": "The 14 Missiray return records exhausted the prior queue. A wider duplicate scan exposed 457 records matching 17 additional generic sentences; after reviewing 18 timer-return records, 439 remain without record-specific evidence.",
       "registry": "NAME-002",
       "control": "make release-audit recounts the curated set of 40 known generic basis sentences and refuses tag-ready status until the count is zero; a wider duplicate-basis review must also precede the final tag."
     },
@@ -719,7 +719,7 @@
     "declared_subsystems": 192,
     "definitions": 16928,
     "dma_transferred_payloads": 289,
-    "generic_evidence_bases": 457,
+    "generic_evidence_bases": 439,
     "hypothesis_name_records": 7,
     "modules": 383,
     "name_audit_records": 15833,

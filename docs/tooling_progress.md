@@ -233,3 +233,9 @@ seventeen additional boilerplate sentences across rendering, palettes,
 UI, and asset families. The release audit now tracks 40 known templates.
 This is expanded accounting, not a reversal of the reviewed source work;
 the 457 records require address-specific evidence before the 1.0 tag.
+
+The first follow-up on the expanded queue replaces the 18 exact-match
+"The counting frames return here" records with their actual timer, flag,
+state, or spawn-gate condition. These include five Z-Leo ending states and
+thirteen object, effect, and enemy paths. `NAME-002` falls from 457 to 439;
+the broader 40-template detector remains in force.
