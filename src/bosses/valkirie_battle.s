@@ -187,7 +187,7 @@ Entity_ValkirieBattleState8SelectStateA:                ; CODE XREF: Entity_Upda
                 bra.w   Entity_StartValkirieBattleStateA
 ; ---------------------------------------------------------------------------
 Entity_RenderValkirieBattleState8:                      ; CODE XREF: Entity_UpdateValkirieBattleState8+6   j  ; was: loc_559AA
-                bsr.w   Entity_FaceValkirieTowardPlayer
+                bsr.w   Entity_SetFacingField54FromPlayerXDelta
                 lea     Valkirie_State4To8PoseScript(pc),a1
                 nop
                 bra.w   Entity_RenderValkirieBattleAnimation
@@ -211,7 +211,7 @@ Entity_UpdateValkirieBattleStateA:                      ; CODE XREF: Entity_Upda
 Entity_ValkirieBattleStateAHandleAnimationEvent:        ; CODE XREF: Entity_UpdateValkirieBattleStateA+4   j  ; was: loc_559E2
                 bclr    #0,$23E(a5)
                 beq.s   Entity_RenderValkirieBattleStateA
-                jsr     Entity_GetValkiriePlayerDeltaAndSide(pc)  ; (pc)
+                jsr     Entity_GetValkiriePlayerDeltaAndRelativeSign(pc)  ; (pc)
                 nop
                 bmi.s   Entity_ValkirieBattleStateASelectStateCRise
                 cmpi.w  #$30,d0                         ; '0'
@@ -423,7 +423,7 @@ Entity_CheckValkirieState10CloseRangeEvent:             ; CODE XREF: Entity_Upda
                 beq.s   Entity_RenderValkirieBattleState10
                 tst.w   (DifficultyMode).w
                 beq.s   Entity_RenderValkirieBattleState10
-                bsr.w   Entity_GetValkiriePlayerDeltaAndSide
+                bsr.w   Entity_GetValkiriePlayerDeltaAndRelativeSign
                 bmi.s   Entity_RenderValkirieBattleState10
                 cmpi.w  #$80,d0
                 bpl.s   Entity_RenderValkirieBattleState10
@@ -572,7 +572,7 @@ Entity_CheckValkirieState12ExitEvent:                   ; CODE XREF: Entity_Upda
                 beq.s   Entity_RenderValkirieBattleState12
                 subq.w  #1,$11C(a5)
                 bmi.w   Entity_ExitValkirieBattleState12
-                jsr     Entity_GetValkiriePlayerDeltaAndSide(pc)  ; (pc)
+                jsr     Entity_GetValkiriePlayerDeltaAndRelativeSign(pc)  ; (pc)
                 nop
                 bmi.w   Entity_ExitValkirieBattleState12
                 cmpi.w  #$80,d0
@@ -759,7 +759,7 @@ Entity_StartValkirieState1CPartFlash:                   ; CODE XREF: Entity_Upda
                 move.l  #$F808F808,$2CC(a5)
                 rts
 ; End of function Entity_StartValkirieState1CPartFlash
-; Sets X-velocity from d0, negates if facing flag ($54) indicates left direction
+; Store d0 as X velocity, negating it only when direction field $54 is nonzero
 Entity_SetValkirieHorizontalVelocityByFacing:           ; CODE XREF: Entity_UpdateValkirieBattleStateA:Entity_ValkirieBattleStateAStartCharge   p  ; was: sub_55FD8
                                         ; Entity_UpdateValkirieBattleStateA+82   p
                 tst.w   $54(a5)
@@ -793,36 +793,36 @@ Entity_SelectValkirieActivePartPair:                    ; CODE XREF: Entity_Upda
                 bset    d2,2(a0)
                 rts
 ; End of function Entity_SelectValkirieActivePartPair
-; Return player deltas and a facing-relative side sign in d3
-Entity_GetValkiriePlayerDeltaAndSide:                   ; CODE XREF: Entity_UpdateValkirieBattleStateA+12   p  ; was: sub_5601A
+; Return player deltas; d3 is positive for $54!=0/dx>=0 or $54==0/dx<0
+Entity_GetValkiriePlayerDeltaAndRelativeSign:           ; CODE XREF: Entity_UpdateValkirieBattleStateA+12   p  ; was: sub_5601A
                                         ; Entity_UpdateValkirieBattleState10+58   p
                 jsr     (Physics_GetPlayerDelta).l
                 tst.w   $54(a5)
-                beq.s   Entity_CheckValkiriePlayerSideForFacingZero
+                beq.s   Entity_CheckValkirieDeltaForZeroFacing
                 tst.w   d1
-                bmi.s   Entity_SetValkiriePlayerSideNegative
-Entity_SetValkiriePlayerSidePositive:                   ; CODE XREF: Entity_GetValkiriePlayerDeltaAndSide+16   j  ; was: loc_5602A
+                bmi.s   Entity_SetValkirieRelativeSignNegative
+Entity_SetValkirieRelativeSignPositive:                 ; CODE XREF: Entity_GetValkiriePlayerDeltaAndRelativeSign+16   j  ; was: loc_5602A
                 moveq   #1,d3
                 rts
 ; ---------------------------------------------------------------------------
-Entity_CheckValkiriePlayerSideForFacingZero:            ; CODE XREF: Entity_GetValkiriePlayerDeltaAndSide+A   j  ; was: loc_5602E
+Entity_CheckValkirieDeltaForZeroFacing:                 ; CODE XREF: Entity_GetValkiriePlayerDeltaAndRelativeSign+A   j  ; was: loc_5602E
                 tst.w   d1
-                bmi.s   Entity_SetValkiriePlayerSidePositive
-Entity_SetValkiriePlayerSideNegative:                   ; CODE XREF: Entity_GetValkiriePlayerDeltaAndSide+E   j  ; was: loc_56032
+                bmi.s   Entity_SetValkirieRelativeSignPositive
+Entity_SetValkirieRelativeSignNegative:                 ; CODE XREF: Entity_GetValkiriePlayerDeltaAndRelativeSign+E   j  ; was: loc_56032
                 moveq   #$FFFFFFFF,d3
                 rts
-; End of function Entity_GetValkiriePlayerDeltaAndSide
-; Set Valkirie facing field $54 from the horizontal player delta
-Entity_FaceValkirieTowardPlayer:                        ; CODE XREF: Entity_UpdateValkirieBattleState8:Entity_RenderValkirieBattleState8   p  ; was: sub_56036
+; End of function Entity_GetValkiriePlayerDeltaAndRelativeSign
+; Shared by Valkirie and Artemis: set field $54 to zero for player-left, $100 otherwise
+Entity_SetFacingField54FromPlayerXDelta:                ; CODE XREF: Entity_UpdateValkirieBattleState8:Entity_RenderValkirieBattleState8   p  ; was: sub_56036
                                         ; Boss_UpdateArtemisStateE+6   p
                 jsr     (Physics_GetPlayerDelta).l
                 clr.w   $54(a5)
                 tst.w   d1
-                bmi.s   Entity_FaceValkirieTowardPlayerReturn
+                bmi.s   Entity_SetFacingField54FromPlayerXDeltaReturn
                 move.w  #$100,$54(a5)
-Entity_FaceValkirieTowardPlayerReturn:                  ; CODE XREF: Entity_FaceValkirieTowardPlayer+C   j  ; was: locret_5604A
+Entity_SetFacingField54FromPlayerXDeltaReturn:          ; CODE XREF: Entity_SetFacingField54FromPlayerXDelta+C   j  ; was: locret_5604A
                 rts
-; End of function Entity_FaceValkirieTowardPlayer
+; End of function Entity_SetFacingField54FromPlayerXDelta
 ; Advance Valkirie pose animation and render all 25 metasprite parts
 Entity_RenderValkirieBattleAnimation:                   ; CODE XREF: Entity_UpdateValkirieBattleState2+2E   j  ; was: sub_5604C
                                         ; Entity_StartValkirieBattleState4+52   j

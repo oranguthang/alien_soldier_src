@@ -704,5 +704,14 @@ interpolation, and pose-buffer operations. Four labels were narrowed to the
 specific marker check, loop check, part-traversal preparation, or delta
 calculation they perform. The standalone RTS at `$05707C` remains a no-op
 with no symbolic source caller, not a claim of runtime unreachability. Its
-old nine-way sentence is the 54th rejected generic basis. The wider queue
-is now 252 groups across 1,194 uses, still with zero unmapped uses.
+old nine-way sentence is the 54th rejected generic basis. After this pass the
+wider queue contained 252 groups across 1,194 uses, with zero unmapped uses.
+
+Eight Valkirie direction/sign records at `$055FD8..$05604A` now distinguish
+the conditional negation of X velocity, the exact `d3=+1/-1` conditions, and
+the shared field-$54 setter. The old comment called nonzero `$54` a leftward
+facing flag, but the code only proves that it triggers negation; the setter
+writes `$100` for nonnegative player X delta and is also called by Artemis.
+The formerly Valkirie-only helper now has a neutral shared name. The old
+eight-way sentence is the 55th rejected generic basis. The wider duplicate
+queue is now 251 groups across 1,186 uses, still with zero unmapped uses.

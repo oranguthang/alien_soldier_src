@@ -230,7 +230,7 @@ Boss_ReturnArtemisToStateE:                             ; was: sub_5818A
 Boss_UpdateArtemisStateE:                               ; DATA XREF: ROM:00057F2C   o  ; was: sub_5818C
                 tst.w   $58(a5)
                 bpl.s   Boss_RenderArtemisStateE
-                jsr     (Entity_FaceValkirieTowardPlayer).l
+                jsr     (Entity_SetFacingField54FromPlayerXDelta).l
                 cmpi.w  #$A0,d0
                 bpl.s   Boss_SelectArtemisStateEFollowup
                 cmpi.w  #$E0,$BC(a5)

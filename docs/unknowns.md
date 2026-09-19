@@ -11497,3 +11497,11 @@ RTS at `$05707C` has no symbolic source caller or table reference; this is
 not proof that raw-address or external paths cannot reach it. The nine audit
 records now describe their individual instructions rather than claiming the
 entire interpreter operation at each label.
+
+The direction helper at `$056036` is shared by Valkirie state 8 and Artemis
+state E. It sets entity field `$54` to zero for negative signed player X delta
+and `$100` otherwise. The adjacent Valkirie helper reports a sign in `d3`
+relative to that field: positive for nonzero `$54` with nonnegative delta or
+zero `$54` with negative delta, negative in the other two cases. The X-velocity
+helper negates its input when `$54` is nonzero. These are static field and
+branch facts; a visual left/right pose is not established by them alone.
