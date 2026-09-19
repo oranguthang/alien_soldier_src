@@ -691,7 +691,7 @@ loaded tile base with the active palette or orientation bits.
 | `ForcedPositionFlags` | `$FFFF825C` | Bits zero and two request normal or immediate placement; bit one handshakes between the player state and the publishing contact object. |
 | `PlayerAirMoveUsedFlags` (`PlayerAirDashUsedFlag`, `PlayerAirShotUsedFlag`) | `$FFFF8224` | The two byte flags prevent another dash or special shot while the player remains in the same airborne action lifetime; grounded, landing, and reset states clear the pair. |
 | `PlayerKnockbackXVel` | `$FFFF8300` | Hostile collision records the damaging object's horizontal velocity; player knockback consumes it when nonzero and otherwise derives direction from facing. |
-| `PhoenixAttackStatus` | `$FFFF8304` | Full-health checks publish the signed health/max difference here; Phoenix dash paths require zero, then reuse the word as the `$78`-to-zero particle/status countdown. |
+| `PhoenixAttackStatus` | `$FFFF8304` | The Counter Force input tail and selected dash checks publish the signed health/max difference here; Phoenix dash paths require zero, then reuse the word as the `$78`-to-zero particle/status countdown. |
 | `CombatHitFlags` | `$FFFF8308` | Successful weapon collision publishes target status bits and a hit bit; Epsilon 1 consumes bits two and zero as forced-state and direction events. |
 | `DashActiveWriteOnly` | `$FFFF809C` | Ordinary, Phoenix, and Seven Forces dash paths write one on active frames; no 68000 source path reads the word. |
 | `StageMotionYDelta` | `$FFFF830A` | Stage 12 publishes the paired signed 16.16 vertical motion; shared physics and pickup movement consume it as global compensation. |
@@ -699,7 +699,7 @@ loaded tile base with the active palette or orientation bits.
 | `TransientValueScreenX` | `$FFFF8264` | Transient-value rendering uses this as the first digit X and advances by eight; its source writer is not reconstructed. |
 | `TransientValueScreenY` | `$FFFF8266` | Rendering moves this Y upward every other frame and clamps it at `$A0`. |
 | `HealthDeltaDisplayTimer` | `$FFFF8268` | Damage and pickups load `$30`; it paces HUD health convergence and expires the transient value. |
-| `CounterForceInputTimer` | `$FFFF826A` | The first B-button press opens a 16-frame window; another press before expiry raises `CounterForceTriggerFlag`. |
+| `CounterForceInputTimer` | `$FFFF826A` | The updater decrements this before testing B. A first press seeds `$10`; a second press during the next 16 update calls raises `CounterForceTriggerFlag`. |
 | `CounterForceTriggerFlag` | `$FFFF826C` | Bit zero requests the terrain-specific Counter Force state and is cleared by ordinary player-state resets. |
 | `SoundFadeOutDelay` | `$FFFF830E` | Scene and boss-transition writers load one or two frames; VBlank decrements the byte and queues sound control request 1, the music fade-out command, when it expires. |
 | `ExplosionSoundDelay` | `$FFFF809E` | Defeat and barrage sequences load a delay; shared explosion-projectile helpers count it down before enabling their randomized explosion sound cadence. |

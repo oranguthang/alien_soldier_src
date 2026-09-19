@@ -51,12 +51,12 @@ Pickup_InitializeSelectedSizeThunk:                     ; CODE XREF: Unreference
                                         ; UnreferencedPickup_SpawnLargeFromCurrentObjectViaThunk+4   j
                 bra.s   Pickup_InitializeSelectedSize
 ; End of function Pickup_InitializeSelectedSizeThunk
-; Unreferenced entry that suppresses creation while the player's health is full
-UnreferencedPickup_InitializeSelectedSizeIfHealthNeeded:
+; Unreferenced entry that suppresses creation only when health equals maximum
+UnreferencedPickup_InitializeSelectedSizeIfHealthDiffersFromMax:
                 move.w  (PlayerHealth).w,d0             ; was: sub_2BD30
                 cmp.w   (PlayerMaxHealth).w,d0
                 bne.s   Pickup_InitializeSelectedSize
-Pickup_DeactivateTargetObject:                          ; CODE XREF: UnreferencedPickup_InitializeSelectedSizeIfHealthNeeded+1C   j  ; was: loc_2BD3A
+Pickup_DeactivateTargetObject:                          ; CODE XREF: UnreferencedPickup_InitializeSelectedSizeIfHealthDiffersFromMax+1C   j  ; was: loc_2BD3A
                 move.w  #$10,(a0)
                 bset    #4,2(a0)
                 rts

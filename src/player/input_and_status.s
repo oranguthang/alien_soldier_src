@@ -24,6 +24,7 @@ Player_UpdateCounterForceInput_CheckFirstPress:         ; CODE XREF: Player_Upda
                 btst    #4,$6A(a5)
                 beq.s   Player_UpdateCounterForceInput_StoreHealthDelta
                 move.w  #$10,(CounterForceInputTimer).w
+; Every input path reaches this health-delta store, even without a B press
 Player_UpdateCounterForceInput_StoreHealthDelta:        ; CODE XREF: Player_UpdateCounterForceInput+C   j  ; was: loc_16B4E
                                         ; Player_UpdateCounterForceInput+14   j
                 move.w  (PlayerHealth).w,d0

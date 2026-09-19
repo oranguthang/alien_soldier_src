@@ -11458,3 +11458,18 @@ length-selection, and commit addresses. The local bases now identify
 registers `$95..$97`, register-11 bit one versus bit two, and the encoded
 lengths two/`$1C0` or two/`$28` words. The commit labels publish the
 decremented queue pointer; they do not themselves choose a transfer mode.
+
+The Counter Force input updater decrements `CounterForceInputTimer` before
+testing pressed B input. Its negative path rearms to `$FFFF`, then starts
+`$10` on a first press; a later press while nonnegative sets trigger bit zero.
+Every path, including frames without B input, then writes `PlayerHealth` minus
+`PlayerMaxHealth` to `PhoenixAttackStatus`. Five former whole-routine bases
+now distinguish those local operations and the two RAM fields.
+
+Six pickup/system entrypoints remain unreferenced by symbolic executable
+calls or tables in this source, but that does not establish global runtime
+deadness. Their bases now cite their actual copy, size selection, comparison,
+or clear range. At `$02BD30`, `cmp.w PlayerMaxHealth` branches on inequality,
+so the former `IfHealthNeeded` name was too strong: a value above maximum also
+enters pickup initialization. The new name states only that health differs
+from maximum. The old name remains in the exact-address audit history.

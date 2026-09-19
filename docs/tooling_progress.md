@@ -636,3 +636,16 @@ and queue-head commit sites. The horizontal per-line command encodes `$1C0`
 words (448); the vertical per-column command encodes `$28` words (40); their
 full-screen branches each encode two words. The previous shared sentence
 described both routines at every address, including the return labels.
+
+Five Counter Force input/field records now state their own countdown, trigger
+write, first-press rearm, or unconditional health-delta store. The timer is
+decremented before input testing; a first B press seeds `$10`, and a second
+press during the next sixteen updates sets trigger bit zero. The RAM map now
+describes both that ordering and the `PhoenixAttackStatus` publication.
+
+Six source-unreferenced pickup and RAM-clear entries were also checked at
+their exact starts. Their audit bases now say only that no symbolic executable
+caller names each entry and then describe its local work; no global runtime
+dead-code conclusion is inferred. The pickup entry at `$02BD30` was renamed:
+its condition is health unequal to maximum, not health below maximum. The
+two clear helpers retain their measured 8 KiB and 128-byte ranges.
