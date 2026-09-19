@@ -42,7 +42,7 @@ cover each layout module exactly once and that the file counts stay current.
 | `0x040CEE-0x045ACF` | Sunset Sting, Viblack, and Back Stringer systems | 12 | hypothesis |
 | `0x045AD0-0x04912D` | Epsilon 1 and Sharpssteel systems | 9 | hypothesis |
 | `0x04912E-0x04BEBB` | Jampan and Destroyer MK2 systems | 7 | hypothesis |
-| `0x04BEBC-0x04DDD1` | Bugmax systems | 4 | hypothesis |
+| `0x04BEBC-0x04DDD1` | Bugmax systems | 5 | hypothesis |
 | `0x04DDD2-0x050CD3` | Shield Viper and Wolf Garopa systems | 8 | hypothesis |
 | `0x050CD4-0x0537A7` | Valkirie transition, Z-Leo, and Valkirie Force | 8 | hypothesis |
 | `0x0537A8-0x05575D` | Missiray and Seven Forces projectile/introduction controller | 9 | hypothesis |

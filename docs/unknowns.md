@@ -11307,3 +11307,9 @@ module has since been divided at the confirmed `$03DEBA` defeat-leap and
 Xi-Tiger defeat/rendering ROM-order slice, despite Shellshogun callers. This
 physical placement does not establish exclusive Xi-Tiger ownership or settle
 any of the seven provisional visual boss identities.
+
+The earlier `bosses/bugmax_core.s` audit note is also historical. That file
+is now the adjacent controller/geometry and opening-state modules, divided
+at the real `Boss_BugmaxMainStateHandlers` table at `$04C3D8`. This is a
+source-ownership change only; it neither upgrades the older static label
+evidence nor establishes any provisional visual identity.

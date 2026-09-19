@@ -1857,9 +1857,15 @@
       "end": "0x04BEBB"
     },
     {
-      "file": "src/bosses/bugmax_core.s",
+      "file": "src/bosses/bugmax_controller_and_geometry.s",
       "subsystem": "bosses",
       "start": "0x04BEBC",
+      "end": "0x04C3D7"
+    },
+    {
+      "file": "src/bosses/bugmax_opening_states.s",
+      "subsystem": "bosses",
+      "start": "0x04C3D8",
       "end": "0x04C937"
     },
     {

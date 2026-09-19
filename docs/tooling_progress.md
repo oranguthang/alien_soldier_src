@@ -470,3 +470,13 @@ the defeat/rendering module; Shellshogun still calls it across modules. The
 layout now contains 395 modules: 228 preferred, 148 shorter, 19 longer, with
 an 887-line maximum. `make verify`, `make compare`, and `make verify-symbols`
 confirm the canonical ROM bytes and all 15,833 name-audit addresses.
+
+The 887-line Bugmax controller module is now two ROM-order owner slices.
+`bugmax_controller_and_geometry.s` keeps the main handler, geometry modes,
+and state dispatcher (427 lines); `bugmax_opening_states.s` starts at the
+actual main-state table `$04C3D8` and owns encounter setup, opening scroll
+thresholds, and linked-part spin (461 lines, including one new header).
+Before the header, the two source slices concatenated exactly to the old
+file. The layout now has 396 modules: 230 preferred, 148 shorter, 18 longer,
+with an 878-line maximum. `make verify`, `make compare`, and
+`make verify-symbols` confirm unchanged ROM bytes and address provenance.
