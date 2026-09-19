@@ -239,3 +239,10 @@ The first follow-up on the expanded queue replaces the 18 exact-match
 state, or spawn-gate condition. These include five Z-Leo ending states and
 thirteen object, effect, and enemy paths. `NAME-002` falls from 457 to 439;
 the broader 40-template detector remains in force.
+
+The full-screen palette-fade pass replaces 41 generic local-branch bases.
+Each record now distinguishes its black/white direction, source and
+destination buffers, red/green/blue component clamp, progress threshold,
+or completion side effect. Four paths are kept separate: from black, to
+black, from white, and to white. `NAME-002` falls from 439 to 398 without
+changing ROM instructions.

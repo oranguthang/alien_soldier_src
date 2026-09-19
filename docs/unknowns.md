@@ -11109,3 +11109,10 @@ now been checked across Z-Leo, shared object/effect helpers, and enemy states.
 Their evidence identifies the concrete countdown field, branch sense, and
 completion write where present. `NAME-002` falls from 457 to 439 under the
 expanded 40-template detector; no source instruction or ROM byte changed.
+
+All 41 full-screen palette-fade records that shared a generic local-test
+sentence now cite their concrete channel masks, color endpoints, source
+buffer, DBF bound, and progress/step completion conditions. The static code
+distinguishes initial writes to both active and shadow palettes from later
+active-only updates. `NAME-002` falls from 439 to 398; visual identities
+remain provisional.
