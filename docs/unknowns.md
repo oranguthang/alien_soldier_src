@@ -11422,3 +11422,15 @@ paths, the start block retests a direction bit that was already rejected
 before the cooldown branch. The instructions remain byte-identical and are
 documented as redundant on that ordinary path; no global unreachability
 claim is made for the preserved instructions.
+
+The HBlank installation descriptors exposed an over-broad audit sentence:
+`LoadFuncToRAM` does not stop copying at the handler's `rte`. It reads the
+source length word, divides by four, and copies exactly that many longwords
+to `$FFFFEE00`. Several fixed lengths include neighbouring ROM instructions;
+the Stage 10 descriptor is the largest, copying `$200` bytes from `$1848`
+through `$1A47` into `$FFFFEE00..$FFFFEFFF`, although the named handler ends
+before the following VBlank initializer at `$1904`. Ten exact-address bases
+now distinguish three VBlank initializers and seven installation lists;
+`$0014EE` is the formerly misidentified CRAM/VSRAM initializer.
+This is static source/listing evidence, not a claim that the overcopied tail
+executes as part of the HBlank handler.

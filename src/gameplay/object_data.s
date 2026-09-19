@@ -20,6 +20,8 @@ LoadObjDataHandlers:    dc.l    LoadFuncToRAM           ; was: off_2650
                 dc.l    LoadCompressedToRAM
                 dc.l    LoadCompressedToVRAM
 
+; The source word supplies a fixed byte count, not the extent through RTE
+; Some HBlank descriptors therefore copy adjacent ROM bytes after the handler
 LoadFuncToRAM:                                          ; DATA XREF: ROM:LoadObjDataHandlers   o
                                         ; ROM:00002660   o
                 movea.l (a0)+,a1

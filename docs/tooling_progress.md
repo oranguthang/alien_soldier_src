@@ -601,3 +601,14 @@ gate, selector state, terrain exit, or sprite-render handoff. The normal
 ground and ceiling start paths retest a direction bit already excluded by
 their initial branch; comments preserve that observation without removing
 the original instructions or assuming no other entry could ever exist.
+
+Ten raster-effect initialization/descriptor records now have local evidence
+instead of a shared claim that the loader copies only the following handler.
+`LoadFuncToRAM` actually reads an explicit byte count at the ROM source and
+copies that many longwords into `HBlankRAMCode` at `$FFFFEE00`. The seven
+reviewed descriptors request `$20`, `$40`, or `$200` bytes. The third VBlank
+initializer at `$0014EE` also now cites its actual VSRAM-two command rather
+than preserving the earlier CRAM mistake. In particular,
+the Stage 10 descriptor copies ROM `$1848..$1A47` into RAM
+`$FFFFEE00..$FFFFEFFF`, extending past its HBlank handler into adjacent ROM
+code. No copied bytes or descriptor lengths were changed.
