@@ -294,3 +294,11 @@ scratch copies for high and low pixel-nibble tests, so source and RAM map now
 name that role. The `$FFFE` command queues 256 words of tile art to VRAM
 `$5E00`; it does not write the tilemap, so its label is corrected to
 `MessageScript_QueueTileArtDMA`. `NAME-002` falls from 230 to 204.
+
+The primary and secondary options-menu pass checks 20 records against their
+existing instruction-specific bases. Their first basis already identifies
+the exact state gate, input bits, cursor offsets, dispatch table, or secondary
+selection clamp. The redundant second sentence that merely cited assembler
+listing references is removed. The `$C` code/data-overlay slot remains
+explicitly unresolved; no unsupported name is assigned. `NAME-002` falls
+from 204 to 184 without changing source or ROM bytes.

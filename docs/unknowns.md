@@ -11159,3 +11159,10 @@ RAM aliases replace misleading packed-digit names; zero source nibbles set
 the low bit of the corresponding pixel nibble before the 64-byte glyph tile
 is queued. The corrected source and RAM map keep the underlying addresses.
 `NAME-002` falls from 230 to 204; visual identities remain provisional.
+
+The 20 options-menu records with listing-reference boilerplate were checked
+against the primary and secondary input/dispatch code. Their already precise
+first bases remain, while the redundant generic sentence is retired. The
+secondary handler index `$C` still reaches an unresolved code/data overlay,
+and index `$E` is outside the observed selection clamp. `NAME-002` falls from
+204 to 184; no runtime conclusion is inferred from this static review.
