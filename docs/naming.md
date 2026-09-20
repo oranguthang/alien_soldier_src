@@ -80,6 +80,13 @@ The read-only `make semantic-audit` now counts the wider duplicate queue, and
 by address and source module. The queue includes legitimate uniform data
 tables, so each group still needs a semantic decision rather than automatic
 rejection.
+Accepted uniform groups are recorded in `config/duplicate_basis_reviews.json`
+with a reason and exact address, name, and module membership. The release audit
+reopens a review if its membership changes and blocks `tag-ready` while any
+group remains unreviewed. The eight `Player_AnimationFrameTable` mapping
+entries are the first accepted group: the frame helper masks its index with
+`$1C` and the eight table slots point to those mappings in order. This does
+not assert what any frame looks like. The remaining queue has 247 groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

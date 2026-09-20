@@ -50,6 +50,11 @@ see the largest groups with addresses and source modules, or add
 `--basis-contains TEXT` to inspect every member of a matching group. Repetition
 is a review queue, not proof of a bad name: ROM-ordered mapping records can
 share a valid format explanation.
+Reviewed groups live in `config/duplicate_basis_reviews.json`; their exact
+addresses, current names, and modules must still match. The ordinary duplicate
+listing omits accepted groups, while the summary reports both accepted and
+open counts. `make release-audit` rejects a drifted review and will refuse
+`tag-ready` while any group remains open.
 
 `make trace` passes an inert screenshot interval to the pinned emulator. This
 is required because that emulator currently evaluates its maximum-frame and

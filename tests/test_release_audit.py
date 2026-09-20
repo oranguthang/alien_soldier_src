@@ -66,6 +66,7 @@ class ReleaseAuditTests(unittest.TestCase):
         errors = release_audit.audit_counters(ROOT, manifest, policy, layout, {})
         self.assertTrue(any("provenance exact_address_records" in error for error in errors))
         self.assertTrue(any("hypothesis-level name records" in error for error in errors))
+        self.assertTrue(any("unreviewed duplicate name-evidence bases" in error for error in errors))
 
     def test_template_name_evidence_blocks_tag_ready_status(self) -> None:
         manifest = self._manifest()

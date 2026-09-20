@@ -9,6 +9,7 @@ from dataclasses import asdict, dataclass
 import json
 from pathlib import Path
 import re
+import sys
 
 
 DEFINITION = re.compile(
@@ -132,10 +133,81 @@ def duplicate_basis_groups(
     )
 
 
+def unreviewed_duplicate_bases(
+    groups: list[DuplicateBasis], reviews_path: Path, project_root: Path
+) -> tuple[list[DuplicateBasis], list[str]]:
+    """Accept only reviewed groups whose exact members still match the source.
+
+    Review is about a repeated evidence sentence, not a waiver for future
+    names or addresses. Any change to its membership reopens the decision.
+    """
+    reviews = json.loads(reviews_path.read_text(encoding="utf-8"))
+    errors: list[str] = []
+    if (
+        not isinstance(reviews, dict)
+        or reviews.get("schema_version") != 1
+        or not isinstance(reviews.get("reviews"), list)
+    ):
+        return groups, [f"{reviews_path}: expected schema_version 1 and reviews list"]
+    by_basis = {group.basis: group for group in groups}
+    root_resolved = project_root.resolve()
+    reviewed: set[str] = set()
+    for review in reviews["reviews"]:
+        if not isinstance(review, dict):
+            errors.append(f"{reviews_path}: review must be an object")
+            continue
+        basis = review.get("basis")
+        if not isinstance(basis, str) or not basis:
+            errors.append(f"{reviews_path}: review has no basis sentence")
+            continue
+        if basis in reviewed:
+            errors.append(f"{reviews_path}: duplicate review for {basis!r}")
+            continue
+        reviewed.add(basis)
+        if not isinstance(review.get("reason"), str) or not review["reason"].strip():
+            errors.append(f"{reviews_path}: {basis!r} has no review reason")
+        group = by_basis.get(basis)
+        if group is None:
+            errors.append(
+                f"{reviews_path}: reviewed basis no longer forms a duplicate: {basis!r}"
+            )
+            continue
+        if any(reference.file is None for reference in group.references):
+            errors.append(f"{reviews_path}: {basis!r} has unmapped source members")
+            continue
+        actual = sorted(
+            (
+                reference.address,
+                reference.current_name,
+                Path(reference.file).resolve().relative_to(root_resolved).as_posix(),
+            )
+            for reference in group.references
+        )
+        members = review.get("members")
+        if not isinstance(members, list) or not all(
+            isinstance(member, dict)
+            and all(
+                isinstance(member.get(key), str)
+                for key in ("address", "current_name", "file")
+            )
+            for member in members
+        ):
+            errors.append(f"{reviews_path}: {basis!r} has invalid members")
+            continue
+        expected = sorted(
+            (member["address"], member["current_name"], member["file"])
+            for member in members
+        )
+        if actual != expected:
+            errors.append(f"{reviews_path}: reviewed members drifted for {basis!r}")
+    return [group for group in groups if group.basis not in reviewed], errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source-root", default="src")
     parser.add_argument("--audit", default="config/name_audit.json")
+    parser.add_argument("--reviews", default="config/duplicate_basis_reviews.json")
     parser.add_argument("--limit", type=int, default=25)
     parser.add_argument("--json", action="store_true", dest="as_json")
     parser.add_argument("--duplicate-bases", action="store_true")
@@ -150,16 +222,23 @@ def main() -> int:
     source_root = Path(args.source_root)
     provenance, pending = pending_records(source_root, audit_path)
     duplicates = duplicate_basis_groups(audit_path, source_root)
+    unreviewed, review_errors = unreviewed_duplicate_bases(
+        duplicates, Path(args.reviews), source_root.parent
+    )
+    if review_errors:
+        for error in review_errors:
+            print(f"[ERROR] {error}", file=sys.stderr)
+        return 1
     duplicate_occurrences = sum(len(group.references) for group in duplicates)
     unmapped_basis_uses = sum(
         reference.file is None
         for group in duplicates
         for reference in group.references
     )
-    selected = duplicates
+    selected = unreviewed
     if args.basis_contains:
         needle = args.basis_contains.casefold()
-        selected = [group for group in duplicates if needle in group.basis.casefold()]
+        selected = [group for group in unreviewed if needle in group.basis.casefold()]
     binary_end_aliases = [item for item in pending if item.binary_backed_end]
     other_end_names = [
         item
@@ -180,6 +259,10 @@ def main() -> int:
                     "actionable_upper_bound": len(actionable),
                     "duplicate_basis_groups": len(duplicates),
                     "duplicate_basis_occurrences": duplicate_occurrences,
+                    "reviewed_duplicate_basis_groups": (
+                        len(duplicates) - len(unreviewed)
+                    ),
+                    "unreviewed_duplicate_basis_groups": len(unreviewed),
                     "unmapped_basis_uses": unmapped_basis_uses,
                     "duplicate_bases": (
                         [asdict(group) for group in selected]
@@ -208,7 +291,8 @@ def main() -> int:
     print(
         f"[INFO] {len(duplicates)} repeated basis sentences across "
         f"{duplicate_occurrences} exact-address uses "
-        f"({unmapped_basis_uses} unmapped); repetition needs review, "
+        f"({unmapped_basis_uses} unmapped); {len(duplicates) - len(unreviewed)} "
+        f"reviewed, {len(unreviewed)} open; repetition needs review, "
         "not automatic rejection"
     )
     for file, count in by_file.most_common(max(args.limit, 0)):

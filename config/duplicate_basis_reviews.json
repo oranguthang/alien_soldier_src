@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "reviews": [
+    {
+      "basis": "Player_AnimationFrameTable selects this sprite mapping at the stated index after masking the animation accumulator to eight entries.",
+      "reason": "Player_AdvanceAnimationFrame masks the accumulator with $1C and indexes the eight longwords of Player_AnimationFrameTable. Its slots 0 through 7 point in order to these eight mapping labels. The identical sentence states only that shared table relationship; it does not infer the appearance of any frame.",
+      "members": [
+        {"address": "0x0E8A1A", "current_name": "Player_StateAnimationSpriteMapping00", "file": "src/data/player_state_animation_sprite_mappings.s"},
+        {"address": "0x0E8A4A", "current_name": "Player_StateAnimationSpriteMapping01", "file": "src/data/player_state_animation_sprite_mappings.s"},
+        {"address": "0x0E8A82", "current_name": "Player_StateAnimationSpriteMapping02", "file": "src/data/player_state_animation_sprite_mappings.s"},
+        {"address": "0x0E8ABA", "current_name": "Player_StateAnimationSpriteMapping03", "file": "src/data/player_state_animation_sprite_mappings.s"},
+        {"address": "0x0E8AE2", "current_name": "Player_StateAnimationSpriteMapping04", "file": "src/data/player_state_animation_sprite_mappings.s"},
+        {"address": "0x0E8B12", "current_name": "Player_StateAnimationSpriteMapping05", "file": "src/data/player_state_animation_sprite_mappings.s"},
+        {"address": "0x0E8B4A", "current_name": "Player_StateAnimationSpriteMapping06", "file": "src/data/player_state_animation_sprite_mappings.s"},
+        {"address": "0x0E8B82", "current_name": "Player_StateAnimationSpriteMapping07", "file": "src/data/player_state_animation_sprite_mappings.s"}
+      ]
+    }
+  ]
+}

@@ -744,3 +744,14 @@ allowed step can cross the threshold, so they are not hard saturation limits.
 The source names, comments, and seven affected audit bases now reflect the
 two-entry flow. The old six-way sentence is the 58th rejected generic basis;
 the wider queue now contains 248 groups across 1,167 uses, none unmapped.
+
+The first valid duplicate-basis group is now explicitly reviewed rather than
+silently left in the queue: eight `Player_StateAnimationSpriteMapping00..07`
+records describe the same `Player_AnimationFrameTable` relationship. The frame
+helper masks its accumulator with `$1C`, and the eight ordered longwords select
+exactly those mappings. `config/duplicate_basis_reviews.json` pins the basis,
+the eight addresses, names, modules, and the reason; any membership drift
+fails the audit. A regression test also pins the consumer's `$1C` mask and
+eight pointer slots, so the acceptance cannot outlive that evidence unnoticed.
+The queue is still 248 total groups, one accepted and 247
+unreviewed. This validates the review mechanism, not the remaining groups.

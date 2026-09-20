@@ -11,6 +11,7 @@ import re
 
 import lint_project
 import lint_source
+import semantic_audit_queue
 
 
 HEX_DIGEST = re.compile(r"^[0-9a-f]+$")
@@ -304,6 +305,13 @@ def audit_counters(
     inventory = lint_source.scan(policy, root)
     ram_map = (root / "src/ram_addrs.inc").read_text(encoding="utf-8")
     name_audit = load(root, "config/name_audit.json")
+    duplicates = semantic_audit_queue.duplicate_basis_groups(
+        root / "config/name_audit.json", root / "src"
+    )
+    unreviewed, review_errors = semantic_audit_queue.unreviewed_duplicate_bases(
+        duplicates, root / "config/duplicate_basis_reviews.json", root
+    )
+    errors.extend(review_errors)
     actual = {
         "modules": len(layout["modules"]),
         "assets": stats.get("assets", -1),
@@ -313,6 +321,8 @@ def audit_counters(
         "provenance_mappings": len(inventory.provenance),
         "name_audit_records": len(name_audit["records"]),
         "generic_evidence_bases": count_generic_name_bases(name_audit["records"]),
+        "reviewed_duplicate_basis_groups": len(duplicates) - len(unreviewed),
+        "unreviewed_duplicate_basis_groups": len(unreviewed),
         "hypothesis_name_records": sum(
             record.get("evidence") == "hypothesis"
             for record in name_audit["records"]
@@ -352,6 +362,10 @@ def audit_counters(
         "hypothesis_name_records"
     ]:
         errors.append("tag-ready release retains hypothesis-level name records")
+    if manifest.get("status") in {"tag-ready", "tagged"} and unreviewed:
+        errors.append(
+            "tag-ready release retains unreviewed duplicate name-evidence bases"
+        )
     stats["counters"] = len(declared)
     return errors
 
