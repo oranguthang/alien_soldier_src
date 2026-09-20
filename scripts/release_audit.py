@@ -71,6 +71,7 @@ GENERIC_NAME_BASES = (
     "The routines interpret $FFFF/$FFFE pose commands, load frame data, calculate interpolation deltas, and prepare the pose buffer; no projectile slot is allocated.",
     "The helper and its branches derive or apply Valkirie facing-relative direction from the player delta and field $54.",
     "The visible half of the blink returns here.",
+    "The backward loop edge repeats the owning routine's named operation over its fixed linked-object or output range.",
 )
 
 

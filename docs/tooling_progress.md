@@ -723,5 +723,13 @@ to bit zero of timer byte `$49`, and both paths reach the same RTS. Their
 expiration branches differ: some queue SFX `$BC`, one checks the Stage 12
 yacht type before hiding or dropping a pickup, and the pickup arguments `7`
 and `$F` are random-size masks, not pickup type IDs. The old sentence is the
-56th rejected generic basis. The duplicate queue is now 250 groups across
-1,180 uses, with zero unmapped uses.
+56th rejected generic basis. After this pass the duplicate queue contained
+250 groups across 1,180 uses, with zero unmapped uses.
+
+Seven Missiray loop labels at `$053838..$053CF0` now distinguish their exact
+four- or eight-segment ranges, `$60`-byte record stride, V-scroll bounds,
+ready-flag scan, offset clear, activation fields, and defeat-timer table.
+All seven are real loop entries, so their names remain; the shared sentence
+was inadequate evidence because it attached the same operation to different
+loops. It is now the 57th rejected generic basis. The wider queue contains
+249 groups across 1,173 uses, with zero unmapped uses.
