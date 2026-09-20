@@ -988,3 +988,13 @@ field. An exact-member review and regression test pin the eleven targets,
 three orders, loop/end commands, and pointer assignments. No visual
 transformation stage is asserted. The queue remains 240 groups across 1,019
 uses: sixteen reviewed, 224 open.
+
+The eleven Bird mappings are all selected by relative frame entries in four
+animation streams. Streams 00/01 traverse frames 00-06 in the same forward
+and backward order with different delays; 02 loops among 07-09, and 03
+selects 09/08/07/10 before its `$FF` end. The four pointers appear in
+`Enemy_BirdAnimationMappings`, and each mapping ends in a high-bit sprite
+command. An exact-member review and test pin the stream orders, loop/end
+markers, selector entries, and mapping endings, without asserting visual
+poses or gameplay reachability of every selector. The queue remains 240
+groups across 1,019 uses: seventeen reviewed, 223 open.

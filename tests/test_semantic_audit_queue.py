@@ -16,6 +16,68 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_bird_mapping_review_pins_four_streams_and_mapping_ends(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item
+            for item in reviews
+            if item["basis"].startswith("Named Enemy_Bird animation streams select")
+        )
+        expected = {f"Enemy_BirdSpriteMapping{index:02}" for index in range(11)}
+        self.assertEqual(expected, {member["current_name"] for member in review["members"]})
+        self.assertEqual(
+            {"src/data/bird_animation_mappings.s"},
+            {member["file"] for member in review["members"]},
+        )
+        data = (ROOT / "src/data/bird_animation_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        streams = [
+            data.split(f"Enemy_BirdAnimation{index:02}:", 1)[1].split(
+                f"Enemy_BirdAnimation{index + 1:02}:", 1
+            )[0]
+            if index < 3
+            else data.split("Enemy_BirdAnimation03:", 1)[1]
+            for index in range(4)
+        ]
+        targets = [
+            re.findall(r"\bdc\.w\s+Enemy_BirdSpriteMapping(\d\d)-\*", stream)
+            for stream in streams
+        ]
+        self.assertEqual(
+            ["00", "01", "02", "03", "04", "05", "06", "05", "04", "03", "02", "01"],
+            targets[0],
+        )
+        self.assertEqual(targets[0], targets[1])
+        self.assertEqual(["07", "08", "09", "08"], targets[2])
+        self.assertEqual(["09", "08", "07", "10"], targets[3])
+        self.assertEqual(
+            expected,
+            {f"Enemy_BirdSpriteMapping{index}" for stream in targets for index in stream},
+        )
+        for index, stream in enumerate(streams[:3]):
+            with self.subTest(stream=index):
+                self.assertIn(f"Enemy_BirdAnimation{index:02}-*", stream)
+                self.assertRegex(stream, r"(?m)^\s*dc\.w\s+0\s*$")
+        self.assertRegex(streams[3], r"(?m)^\s*dc\.w\s+\$FF\s*$")
+        for name in expected:
+            with self.subTest(mapping=name):
+                body = re.search(
+                    r"(?ms)^" + re.escape(name) + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    data,
+                )
+                self.assertIsNotNone(body)
+                rows = re.findall(r"\bdc\.w\s+([^;\r\n]+)", body.group(1))
+                self.assertTrue(int(rows[-1].split(",")[0].strip()[1:], 16) & 0x8000)
+        bird = (ROOT / "src/enemies/bird_enemy.s").read_text(encoding="utf-8")
+        self.assertEqual(
+            [f"{index:02}" for index in range(4)],
+            re.findall(r"\bdc\.l\s+Enemy_BirdAnimation(\d\d)\b", bird),
+        )
+        self.assertIn("Enemy_BirdAnimationMappings(pc,d0.w),8(a5)", bird)
+
     def test_missiray_bullet_mapping_review_pins_three_animation_streams(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

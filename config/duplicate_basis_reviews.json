@@ -459,6 +459,23 @@
         {"address":"0x0ED108","current_name":"Projectile_MissirayBulletSpriteFrame09","file":"src/data/shield_viper_and_missiray_mappings.s"},
         {"address":"0x0ED126","current_name":"Projectile_MissirayBulletSpriteFrame10","file":"src/data/shield_viper_and_missiray_mappings.s"}
       ]
+    },
+    {
+      "basis": "Named Enemy_Bird animation streams select this sprite mapping; the numeric suffix preserves ROM order without guessing a pose.",
+      "reason": "All eleven mappings are relative dc.w Mapping-* targets in Enemy_BirdAnimation00 through 03. Streams 00 and 01 traverse frames 00-06 forward and backward with different delays; streams 02 and 03 use frames 07-10. The four stream pointers are entries of Enemy_BirdAnimationMappings, indexed by Enemy_UpdateBirdAnimation. Every mapping ends in a high-bit sprite command; streams 00-02 loop to themselves with zero delay and stream 03 ends with $FF. This establishes membership and structural interpretation, not visual pose identities or reachability of each selector during gameplay.",
+      "members": [
+        {"address":"0x0EA6B4","current_name":"Enemy_BirdSpriteMapping00","file":"src/data/bird_animation_mappings.s"},
+        {"address":"0x0EA6D8","current_name":"Enemy_BirdSpriteMapping01","file":"src/data/bird_animation_mappings.s"},
+        {"address":"0x0EA6FC","current_name":"Enemy_BirdSpriteMapping02","file":"src/data/bird_animation_mappings.s"},
+        {"address":"0x0EA714","current_name":"Enemy_BirdSpriteMapping03","file":"src/data/bird_animation_mappings.s"},
+        {"address":"0x0EA72C","current_name":"Enemy_BirdSpriteMapping04","file":"src/data/bird_animation_mappings.s"},
+        {"address":"0x0EA744","current_name":"Enemy_BirdSpriteMapping05","file":"src/data/bird_animation_mappings.s"},
+        {"address":"0x0EA75C","current_name":"Enemy_BirdSpriteMapping06","file":"src/data/bird_animation_mappings.s"},
+        {"address":"0x0EA77A","current_name":"Enemy_BirdSpriteMapping07","file":"src/data/bird_animation_mappings.s"},
+        {"address":"0x0EA792","current_name":"Enemy_BirdSpriteMapping08","file":"src/data/bird_animation_mappings.s"},
+        {"address":"0x0EA7AA","current_name":"Enemy_BirdSpriteMapping09","file":"src/data/bird_animation_mappings.s"},
+        {"address":"0x0EA7C2","current_name":"Enemy_BirdSpriteMapping10","file":"src/data/bird_animation_mappings.s"}
+      ]
     }
   ]
 }

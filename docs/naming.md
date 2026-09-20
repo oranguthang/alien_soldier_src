@@ -150,7 +150,10 @@ mappings, five projectile mappings, and one intro-only part mapping; these now
 have separate owner names and exact table-slot evidence. Eleven Missiray
 bullet mappings do share a valid stream-membership claim: three distinct
 animation streams reference every frame, with frame 00 shared by two streams.
-The repeated-basis queue has 224 open groups.
+The eleven Bird mappings likewise have exact members across four streams:
+00/01 share frames 00-06, while 02/03 use frames 07-10. The stream selector
+table is explicit; frame names still do not claim visual pose identities.
+The repeated-basis queue has 223 open groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style
