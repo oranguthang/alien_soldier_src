@@ -1100,3 +1100,16 @@ state those distinct effects, with a test pinning the direct groups, linked
 tails, and absence of value writes in the disable/core paths. The old sentence
 is the 80th rejected generic basis. The queue falls to 235 groups across 982
 uses: twenty-three reviewed, 212 open.
+
+Sirene's type-$490 projectile had a `...TowardPlayer` label, but its motion
+path subtracts projectile coordinates from `Entity57XPos/YPos`, not any player
+coordinate. `Gfx_InitSireneBattleEffect` initializes that slot as type `$48C`
+for this encounter. The label is now `...TowardEntity57`; its prior semantic
+name and original IDA marker remain in the audit/provenance. The other five
+labels in the former shared group now have separate evidence for bounds,
+removal flag, status gating, pickup initialization, and type-$160 conversion.
+The weapon-setup highlight group likewise separates its phase update, writes
+to palette colors 49/50, and two eight-word tables; the generic sentence had
+incorrectly included the background palette. Two new regression tests pin
+these paths. The old sentences are the 81st and 82nd rejected bases. The
+queue falls to 233 groups across 971 uses: twenty-three reviewed, 210 open.

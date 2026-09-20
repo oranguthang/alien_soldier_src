@@ -96,6 +96,8 @@ GENERIC_NAME_BASES = (
     "Direct state dispatch and record consumption establish this Medusa entity role.",
     "The encounter initializer consumes this parallel-table entry while configuring the sixteen orbiting parts.",
     "Direct operations on entity collision field $21 and collision-value field $26 establish this collision role.",
+    "The type-$490 update checks screen bounds, follows a status-driven conversion and pickup path, or steers toward the player with the arctangent and sine tables.",
+    "The weapon-setup renderer indexes or writes these values directly while updating its highlight/background palette animation.",
 )
 
 

@@ -754,7 +754,7 @@ Projectile_ProcessSireneHomingInBounds:                 ; CODE XREF: Projectile_
                 tst.w   (StageSpawnCountdown).w
                 bpl.s   Projectile_ConvertSireneHomingToParticle
                 bclr    #7,$22(a5)
-                beq.s   Projectile_HomeSireneProjectileTowardPlayer
+                beq.s   Projectile_SteerSireneHomingTowardEntity57
                 bclr    #4,$22(a5)
                 beq.s   Projectile_ConvertSireneHomingToParticle
                 move.w  (FrameCounter).w,d0
@@ -777,7 +777,8 @@ Projectile_ConvertSireneHomingToParticle:               ; CODE XREF: Projectile_
                 move.l  #SharedCombatSpriteAnimation00,8(a5)
                 jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
-Projectile_HomeSireneProjectileTowardPlayer:            ; CODE XREF: Projectile_UpdateSireneHoming+38   j  ; was: loc_57E7E
+; Sirene's battle-effect initializer sets Entity57 to type $48C, not the player
+Projectile_SteerSireneHomingTowardEntity57:             ; CODE XREF: Projectile_UpdateSireneHoming+38   j  ; was: loc_57E7E
                 move.w  (Entity57XPos).w,d0
                 move.w  (Entity57YPos).w,d1
                 sub.w   $10(a5),d0

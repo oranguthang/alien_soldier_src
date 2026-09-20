@@ -936,6 +936,122 @@ class SemanticAuditQueueTests(unittest.TestCase):
         self.assertEqual("0x572B0", asset["address"])
         self.assertEqual("0x573E6", asset["end"])
 
+    def test_sirene_type490_steers_toward_entity57_not_player(self) -> None:
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        by_address = {record["address"]: record for record in records}
+        source = (ROOT / "src/bosses/sirene.s").read_text(encoding="utf-8")
+        cases = {
+            "0x057DF4": (
+                "Projectile_UpdateSireneHoming",
+                ("cmpi.w  #$88,$14(a5)", "cmpi.w  #$26C,d0"),
+            ),
+            "0x057E18": (
+                "Projectile_RemoveSireneHomingOutsideBounds",
+                ("bset    #4,2(a5)", "rts"),
+            ),
+            "0x057E20": (
+                "Projectile_ProcessSireneHomingInBounds",
+                ("tst.w   (StageSpawnCountdown).w", "bclr    #7,$22(a5)"),
+            ),
+            "0x057E54": (
+                "Projectile_InitSireneHomingPickupDrop",
+                ("move.w  $10(a5),$10(a0)", "jsr     (Pickup_SelectRandomSize).l"),
+            ),
+            "0x057E66": (
+                "Projectile_ConvertSireneHomingToParticle",
+                ("move.b  #$2F,d0", "jmp     Sprite_InitType160FromCurrent"),
+            ),
+            "0x057E7E": (
+                "Projectile_SteerSireneHomingTowardEntity57",
+                ("move.w  (Entity57XPos).w,d0", "jsr     (Math_Arctan2Lookup).l"),
+            ),
+        }
+        bases = []
+        for address, (name, instructions) in cases.items():
+            with self.subTest(address=address):
+                record = by_address[address]
+                self.assertEqual(name, record["current_name"])
+                self.assertEqual("static", record["evidence"])
+                self.assertEqual(1, len(record["basis"]))
+                bases.extend(record["basis"])
+                block = re.search(
+                    r"(?ms)^" + re.escape(name) + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    source,
+                )
+                self.assertIsNotNone(block)
+                for instruction in instructions:
+                    self.assertIn(instruction, block.group(1))
+        self.assertEqual(len(cases), len(set(bases)))
+        self.assertEqual(
+            "Projectile_HomeSireneProjectileTowardPlayer",
+            by_address["0x057E7E"]["previous_name"],
+        )
+        self.assertEqual("loc_57E7E", by_address["0x057E7E"]["legacy_name"])
+        self.assertNotIn("Projectile_HomeSireneProjectileTowardPlayer", source)
+        effect_init = source.split("Gfx_InitSireneBattleEffect:", 1)[1].split(
+            "Gfx_UpdateSireneBattleEffectPattern:", 1
+        )[0]
+        self.assertIn("movea.w #(Entity57Type-M68K_RAM),a0", effect_init)
+        self.assertIn("move.w  #$48C,(a0)", effect_init)
+        steering = source.split("Projectile_SteerSireneHomingTowardEntity57:", 1)[1]
+        self.assertIn("move.w  (Entity57YPos).w,d1", steering)
+        self.assertIn("add.l   d0,$14(a5)", steering)
+        self.assertIn("add.l   d1,$10(a5)", steering)
+        self.assertNotIn("PlayerXPosition", steering)
+        self.assertNotIn("PlayerYPosition", steering)
+
+    def test_weapon_setup_highlight_palette_roles_are_not_background(self) -> None:
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        by_address = {record["address"]: record for record in records}
+        source = (ROOT / "src/ui/weapon_setup_screen.s").read_text(
+            encoding="utf-8"
+        )
+        cases = {
+            "0x01F7BE": ("WeaponSetup_UpdateHighlightPalette", "WeaponSetupHighlight"),
+            "0x01F7D0": (
+                "WeaponSetup_AdvanceHighlightPaletteCycle",
+                "subq.w  #2,(WeaponSetupHighlight).w",
+            ),
+            "0x01F7D4": (
+                "WeaponSetup_WriteHighlightPaletteColors",
+                "andi.w  #$E,d0",
+            ),
+            "0x01F7E6": (
+                "WeaponSetup_HighlightPaletteColor1Cycle",
+                "dc.w    $400, $400",
+            ),
+            "0x01F7F6": (
+                "WeaponSetup_HighlightPaletteColor2Cycle",
+                "dc.w    $EEE, $EEC",
+            ),
+        }
+        bases = []
+        for address, (name, instruction) in cases.items():
+            with self.subTest(address=address):
+                record = by_address[address]
+                self.assertEqual(name, record["current_name"])
+                self.assertEqual("static", record["evidence"])
+                self.assertEqual(1, len(record["basis"]))
+                bases.extend(record["basis"])
+                block = re.search(
+                    r"(?ms)^" + re.escape(name) + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    source,
+                )
+                self.assertIsNotNone(block)
+                self.assertIn(instruction, block.group(1))
+        self.assertEqual(len(cases), len(set(bases)))
+        writer = source.split("WeaponSetup_WriteHighlightPaletteColors:", 1)[1].split(
+            "WeaponSetup_HighlightPaletteColor1Cycle:", 1
+        )[0]
+        self.assertIn("(PaletteActiveColor49).w", writer)
+        self.assertIn("(PaletteActiveColor50).w", writer)
+        for name in (
+            "WeaponSetup_HighlightPaletteColor1Cycle",
+            "WeaponSetup_HighlightPaletteColor2Cycle",
+        ):
+            table = source.split(name + ":", 1)[1].splitlines()[0]
+            self.assertEqual(8, len(table.split(";", 1)[0].split(",")))
+
     def test_stage10_wasp_review_pins_streams_and_mapping_ends(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
