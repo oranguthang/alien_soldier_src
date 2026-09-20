@@ -1546,3 +1546,30 @@ some mapping pointers within its eight slots; no A/B/C visual-pose claim is
 made. A source test pins table extents, pointer forms and owner setup paths.
 The queue is now 201 repeated groups across 862 uses, with seventy reviewed
 and 131 open.
+
+The Xi-Tiger cutscene asset-list audit removed an over-broad shared evidence
+sentence. Its first three entries are not interchangeable: type 7 routes
+`XiTigerCutsceneTileArt` through `LoadCompressedToVRAM` at VRAM `$6000`, while
+type 6 routes `XiTigerCutsceneMappingDataA` and `B` through
+`LoadCompressedToRAM` at RAM `$FFFF4000` and `$FFFF6000` respectively. The
+loader's handler table and destination-register setup establish these paths;
+the distinct source forms (binary include versus inline bytes) are retained.
+This transport evidence alone does not prove the semantic content of the two
+payloads currently named `MappingDataA` and `MappingDataB`.
+A focused test pins the three list entries, handler dispatch and exact audit
+records. This removes one repeated-basis group rather than accepting it: 200
+groups across 859 uses remain, with seventy reviewed and 130 open.
+
+The following Xi-Tiger reader pass resolved those two payload roles. The
+existing LZSS unpacker produces 1,352 bytes (676 words) from the `$11A644`
+binary include and 64 bytes from the inline `$11A61A` stream. During
+`XiTigerCutscene_InitializeReveal`, both direct tilemap transfer entries use
+`Gfx_TitleAndZLeoVRAMTransferParameters`, whose second and third pointers are
+`$FFFF6000` and `$FFFF4000`. `Tilemap_TransferFullMapDirectToVRAM` reads byte
+block indices through the second pointer and tilemap words through the third.
+The two symbols were therefore renamed to `XiTigerCutsceneTilemapBlockIndices`
+and `XiTigerCutsceneTilemapWordSource`; `config/name_audit.json` retains the
+earlier Sonnet names as `previous_name` and the IDA names as `legacy_name`.
+The expanded test pins decoded lengths and hashes, descriptor order, reader
+instructions and exact name records. This is static evidence, not a claim
+about the visual appearance of the cutscene.

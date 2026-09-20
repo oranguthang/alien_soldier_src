@@ -15,16 +15,18 @@ XiTigerCutscene_LoadAssets:                             ; DATA XREF: ROM:StageTr
                 jmp     CutsceneProjection_Initialize
 ; End of function XiTigerCutscene_LoadAssets
 ; ---------------------------------------------------------------------------
-XiTigerCutscene_AssetLoadDescriptors:   dc.w    7       ; field_0  ; was: stru_1E8A4
+; Each entry is a LoadObjData type, source pointer, and destination word
+; Type 7 writes decompressed bytes to VRAM; type 6 writes them to RAM
+XiTigerCutscene_AssetLoadDescriptors:   dc.w    7       ; type 7; was: stru_1E8A4
                                         ; DATA XREF: XiTigerCutscene_LoadAssets   o
-                dc.l    XiTigerCutsceneTileArt          ; field_2
-                dc.w    $6000                           ; field_6
-                dc.w    6                               ; field_0
-                dc.l    XiTigerCutsceneMappingDataA     ; field_2
-                dc.w    $4000                           ; field_6
-                dc.w    6                               ; field_0
-                dc.l    XiTigerCutsceneMappingDataB     ; field_2
-                dc.w    $6000                           ; field_6
+                dc.l    XiTigerCutsceneTileArt          ; compressed source
+                dc.w    $6000                           ; VRAM destination
+                dc.w    6                               ; type 6; tilemap words
+                dc.l    XiTigerCutsceneTilemapWordSource  ; 676 decoded words
+                dc.w    $4000                           ; RAM destination $FFFF4000
+                dc.w    6                               ; type 6; block indices
+                dc.l    XiTigerCutsceneTilemapBlockIndices  ; 64 decoded bytes
+                dc.w    $6000                           ; RAM destination $FFFF6000
                 dc.w    3                               ; field_0
                 dc.l    XiTigerCutsceneType3Data0000    ; field_2
                 dc.w    0                               ; field_6
