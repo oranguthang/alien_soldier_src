@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "corrections": [
+    {
+      "address": "0x019EB2",
+      "current_name": "Player_CheckSevenForcesWeaponSelectInput_NotActivated",
+      "old_basis": "Missing pressed bit six or nonnegative WeaponStateCooldown reaches this branch, which clears D0 and returns.",
+      "new_basis": "Clear pressed bit six reaches this zero-D0 return directly. With bit six set, down held toggles Seven Forces shooting mode first; only the no-down path tests WeaponStateCooldown and returns here when it is nonnegative."
+    },
+    {
+      "address": "0x016702",
+      "current_name": "Player_CheckCeilingWeaponSelectInput_NotActivated",
+      "old_basis": "Missing pressed bit six or nonnegative WeaponStateCooldown reaches this branch, which clears D0 and returns.",
+      "new_basis": "Clear pressed bit six reaches this zero-D0 return directly. With bit six set, up held toggles ceiling shooting mode first; only the no-up path tests WeaponStateCooldown and returns here when it is nonnegative."
+    },
+    {
+      "address": "0x0147D4",
+      "current_name": "Physics_CheckLowerTerrainWhenDescending_Return",
+      "old_basis": "Shared by the final miss and by all three rising guards.",
+      "new_basis": "The final right-outer tile miss and the three negative-velocity guards return here. Each guard tests $1C(a5) after a center or outer tile hit and skips lower-terrain handling while that word is negative."
+    },
+    {
+      "address": "0x0148AE",
+      "current_name": "Physics_CheckUpperTerrainWhenRising_Return",
+      "old_basis": "Shared by the final miss and by all three rising guards.",
+      "new_basis": "The final right-outer tile miss and the three nonnegative-velocity guards return here. Each guard tests $1C(a5) after a center or outer tile hit and skips upper-terrain handling while that word is nonnegative."
+    },
+    {
+      "address": "0x0568E4",
+      "current_name": "Entity_SetValkirieAuxiliaryFastHorizontalVelocity",
+      "old_basis": "The helper selects +$2C000 or -$2C000 horizontal velocity in field $1F8 from event field $23E.",
+      "new_basis": "This entry tests $23E(a5), stores +$2C000 in $1F8(a5) when nonzero, or branches to the negative-velocity store when zero."
+    },
+    {
+      "address": "0x0568F4",
+      "current_name": "Entity_SetValkirieAuxiliaryFastNegativeVelocity",
+      "old_basis": "The helper selects +$2C000 or -$2C000 horizontal velocity in field $1F8 from event field $23E.",
+      "new_basis": "The zero-$23E branch from the fast auxiliary entry stores signed -$2C000 in $1F8(a5) and returns; this label is the negative store, not the selector."
+    },
+    {
+      "address": "0x0568FE",
+      "current_name": "Entity_SetValkirieAuxiliarySlowHorizontalVelocity",
+      "old_basis": "The helper clears part flag six, arms timer four, and selects +$12000 or -$12000 horizontal velocity in field $1F8.",
+      "new_basis": "This entry clears $21(a5) bit six, arms timer four in $5C(a5), and tests $23E(a5) before storing +$12000 or branching to the negative store in $1F8(a5)."
+    },
+    {
+      "address": "0x05691A",
+      "current_name": "Entity_SetValkirieAuxiliarySlowNegativeVelocity",
+      "old_basis": "The helper clears part flag six, arms timer four, and selects +$12000 or -$12000 horizontal velocity in field $1F8.",
+      "new_basis": "The zero-$23E branch from the slow auxiliary entry stores signed -$12000 in $1F8(a5) and returns; the flag clear and timer write belong to the preceding entry."
+    }
+  ]
+}

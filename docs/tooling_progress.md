@@ -1774,3 +1774,17 @@ effects. Five focused tests pin the source gates and review membership.
 The queue remains 169 repeated groups across 792 uses, 121 reviewed and 48
 open. The weapon-selection cooldown sentence remains open because its
 directional-toggle path bypasses that test. No ASM or visual claims changed.
+
+The oversized `config/name_audit.json` now has a guarded exact-address basis
+correction tool. `scripts/patch_name_audit_bases.py` dry-runs by default,
+requires the expected current name and old basis, validates the resulting
+JSON, and atomically writes only changed record lines with `--write`. Its
+first ledger in `config/name_audit_basis_corrections.json` repairs eight
+records: ceiling versus Seven Forces weapon-selection exits, lower negative-
+velocity versus upper nonnegative-velocity terrain returns, and Valkirie's
+fast/slow entrypoints versus their negative-velocity branches. The change to
+`name_audit.json` is exactly eight removed and eight added lines; no source
+instruction changed. A test pins the updater's idempotence and each corrected
+branch. The repeated-basis queue is now 165 groups across 784 uses, 121
+reviewed and 44 open. This removes four misleading shared sentences rather
+than accepting them as equivalent evidence.
