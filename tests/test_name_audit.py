@@ -16,6 +16,62 @@ DEFINITION = re.compile(
 
 
 class NameAuditTests(unittest.TestCase):
+    def test_antroid_mapping_names_follow_blink_and_rotation_tables(self) -> None:
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        reviewed = [
+            record
+            for record in records
+            if re.fullmatch(
+                r"Boss_AntroidSpriteMapping\d\d", record["previous_name"] or ""
+            )
+        ]
+        self.assertEqual(18, len(reviewed))
+        self.assertEqual(18, len({record["basis"][0] for record in reviewed}))
+        mappings = (ROOT / "src/data/antroid_sprite_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        tables = (
+            ROOT / "src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"
+        ).read_text(encoding="utf-8")
+        rendering = (ROOT / "src/bosses/antroid_rendering.s").read_text(
+            encoding="utf-8"
+        )
+        core = (ROOT / "src/bosses/antroid_core.s").read_text(encoding="utf-8")
+        self.assertNotRegex(
+            mappings + tables + rendering + core,
+            r"\bBoss_AntroidSpriteMapping\d\d\b",
+        )
+        definitions = set(
+            re.findall(r"(?m)^(Boss_Antroid\w+(?:Mapping|Frame\d\d)):", mappings)
+        )
+        self.assertEqual({record["current_name"] for record in reviewed}, definitions)
+
+        primary = tables.split("Boss_AntroidPrimaryRotationFrames:", 1)[1].split(
+            "Boss_AntroidSecondaryRotationFrames:", 1
+        )[0]
+        secondary = tables.split("Boss_AntroidSecondaryRotationFrames:", 1)[1].split(
+            "Boss_AntroidInlineSpriteDescriptorA:", 1
+        )[0]
+        self.assertEqual(
+            [f"{index:02}" for index in reversed(range(8))],
+            re.findall(
+                r"\bdc\.l\s+Boss_AntroidPrimaryRotationFrame(\d\d)\b", primary
+            ),
+        )
+        self.assertEqual(
+            [f"{index:02}" for index in range(8)],
+            re.findall(
+                r"\bdc\.l\s+Boss_AntroidSecondaryRotationFrame(\d\d)\b",
+                secondary,
+            ),
+        )
+        blink = rendering.split("Boss_AntroidRenderBlinkingPose:", 1)[1].split(
+            "; End of function Boss_AntroidRenderBlinkingPose", 1
+        )[0]
+        self.assertIn("move.l  #Boss_AntroidBlinkDefaultMapping,$C8(a5)", blink)
+        self.assertIn("move.l  #Boss_AntroidBlinkAlternateMapping,$C8(a5)", blink)
+        self.assertIn("move.l  #Boss_AntroidSecondaryRotationFrame00,8(a0)", core)
+
     def test_shield_viper_mapping_names_follow_exact_consumers(self) -> None:
         records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
         reviewed = [

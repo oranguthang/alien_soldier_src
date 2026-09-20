@@ -78,6 +78,7 @@ GENERIC_NAME_BASES = (
     "Anim_UpdateFrame consumes this ROM-ordered stream as frame-relative offsets paired with duration or control words. The numeric suffix avoids assigning one visual role to a table shared by heterogeneous consumers.",
     "Bugmax constructors, linked-part descriptors, or the two local relative-offset animations select this ROM-ordered sprite frame. The suffix avoids inventing a body-part identity where consumers overlap.",
     "Shield Viper initialization, body descriptors, or defeat records select this ROM-ordered sprite mapping record; the suffix does not guess a visual pose.",
+    "Boss_Antroid pointer tables or direct assignments select this sprite mapping; the numeric suffix preserves ROM order without guessing a visual pose.",
 )
 
 

@@ -174,7 +174,7 @@ Boss_AntroidJumpSlamLaunchSecondArc:                    ; CODE XREF: Boss_Antroi
                 move.w  #$FFFF,$C(a5)
                 move.b  #$D0,d0
                 jsr     (Sound_QueueSFXRequest).l
-                move.l  #Boss_AntroidSpriteMapping00,$C8(a5)
+                move.l  #Boss_AntroidBlinkAlternateMapping,$C8(a5)
                 move.w  #5,(PlaneAShakeLevel).w
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
@@ -204,7 +204,7 @@ Boss_AntroidJumpSlamResolveSecondLanding:               ; CODE XREF: Boss_Antroi
                 addq.w  #2,4(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
-                move.l  #Boss_AntroidSpriteMapping01,$C8(a5)
+                move.l  #Boss_AntroidBlinkDefaultMapping,$C8(a5)
                 clr.w   $56(a5)
                 move.w  #$A,$17C(a5)
                 move.w  a5,$48(a5)
@@ -229,7 +229,7 @@ Boss_AntroidJumpSlamBeginRetryWait:                     ; CODE XREF: Boss_Antroi
                 moveq   #$30,d0                         ; '0'
                 bsr.w   Boss_AntroidEnterStateWithFirstPartSlot
                 move.w  #3,(PlaneAShakeLevel).w
-                move.l  #Boss_AntroidSpriteMapping00,$C8(a5)
+                move.l  #Boss_AntroidBlinkAlternateMapping,$C8(a5)
                 clr.w   $56(a5)
 ; Waits for animation phase 3 before retrying the jump-slam launch
 Boss_AntroidJumpSlamRetryWait:                          ; DATA XREF: ROM:0003753E   o  ; was: loc_37C8C

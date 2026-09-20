@@ -1,23 +1,23 @@
 ; Metasprite definitions for Antroid, Terobuster, Shellshogun, and Xi-Tiger
 ; Antroid directional frames, child descriptors, radii, links, and neutral pose
-Boss_AntroidPrimaryRotationFrames:  dc.l    Boss_AntroidSpriteMapping09  ; DATA XREF: ROM:000349CA   o  ; was: off_3494C
+Boss_AntroidPrimaryRotationFrames:  dc.l    Boss_AntroidPrimaryRotationFrame07  ; DATA XREF: ROM:000349CA   o  ; was: off_3494C
                                         ; ROM:000349D2   o
-                dc.l    Boss_AntroidSpriteMapping08
-                dc.l    Boss_AntroidSpriteMapping07
-                dc.l    Boss_AntroidSpriteMapping06
-                dc.l    Boss_AntroidSpriteMapping05
-                dc.l    Boss_AntroidSpriteMapping04
-                dc.l    Boss_AntroidSpriteMapping03
-                dc.l    Boss_AntroidSpriteMapping02
-Boss_AntroidSecondaryRotationFrames:    dc.l    Boss_AntroidSpriteMapping10  ; DATA XREF: ROM:000349D6   o  ; was: off_3496C
+                dc.l    Boss_AntroidPrimaryRotationFrame06
+                dc.l    Boss_AntroidPrimaryRotationFrame05
+                dc.l    Boss_AntroidPrimaryRotationFrame04
+                dc.l    Boss_AntroidPrimaryRotationFrame03
+                dc.l    Boss_AntroidPrimaryRotationFrame02
+                dc.l    Boss_AntroidPrimaryRotationFrame01
+                dc.l    Boss_AntroidPrimaryRotationFrame00
+Boss_AntroidSecondaryRotationFrames:    dc.l    Boss_AntroidSecondaryRotationFrame00  ; DATA XREF: ROM:000349D6   o  ; was: off_3496C
                                         ; ROM:000349EE   o
-                dc.l    Boss_AntroidSpriteMapping11
-                dc.l    Boss_AntroidSpriteMapping12
-                dc.l    Boss_AntroidSpriteMapping13
-                dc.l    Boss_AntroidSpriteMapping14
-                dc.l    Boss_AntroidSpriteMapping15
-                dc.l    Boss_AntroidSpriteMapping16
-                dc.l    Boss_AntroidSpriteMapping17
+                dc.l    Boss_AntroidSecondaryRotationFrame01
+                dc.l    Boss_AntroidSecondaryRotationFrame02
+                dc.l    Boss_AntroidSecondaryRotationFrame03
+                dc.l    Boss_AntroidSecondaryRotationFrame04
+                dc.l    Boss_AntroidSecondaryRotationFrame05
+                dc.l    Boss_AntroidSecondaryRotationFrame06
+                dc.l    Boss_AntroidSecondaryRotationFrame07
 Boss_AntroidInlineSpriteDescriptorA:        dc.w    $305, $F00, $F0F0  ; DATA XREF: ROM:000349BA   o  ; was: word_3498C
 Boss_AntroidInlineSpriteDescriptorB:        dc.w    $325, $A00, $F4F4  ; DATA XREF: ROM:Boss_AntroidPrimaryMetaspriteDescriptors   o  ; was: word_34992
 Boss_AntroidInlineSpriteDescriptorC:        dc.w    $315, $F00, $F0F0  ; DATA XREF: ROM:000349C2   o  ; was: word_34998
@@ -27,7 +27,7 @@ Boss_AntroidInlineSpriteDescriptorF:        dc.w    $300, $500, $F8F8  ; DATA XR
 Boss_AntroidInlineSpriteDescriptorG:        dc.w    $304, 0, $FCFC  ; DATA XREF: ROM:000349EA   o  ; was: word_349B0
 Boss_AntroidPrimaryMetaspriteDescriptors:   dc.l    Boss_AntroidInlineSpriteDescriptorB+1  ; DATA XREF: Boss_AntroidInitializeBattleState+E   o  ; was: off_349B6
                 dc.l    Boss_AntroidInlineSpriteDescriptorA+1
-                dc.l    Boss_AntroidSpriteMapping01+$400000
+                dc.l    Boss_AntroidBlinkDefaultMapping+$400000
                 dc.l    Boss_AntroidInlineSpriteDescriptorC+1
 Boss_AntroidSecondaryMetaspriteDescriptors: dc.l    Boss_AntroidInlineSpriteDescriptorD+1  ; DATA XREF: Boss_AntroidInitializeBattleState+28   o  ; was: off_349C6
                 dc.l    Boss_AntroidPrimaryRotationFrames

@@ -857,3 +857,14 @@ targets and their terminators. Streams named `UnreferencedTeddyGroupAnimation*`
 have no proven source caller; neither the review nor the test claims runtime
 reachability or a particular visual pose. The 246 groups remain; nine are
 reviewed and 237 open.
+
+The former 18-way Antroid mapping basis also mixed owners. Two direct
+mappings are selected as default and alternate by the blink renderer and
+reused by state paths. The primary rotation table points to eight mapping
+records in reverse ROM order; the secondary table points to eight in forward
+order, with its first mapping also assigned directly to linked records.
+Those 18 definitions now have role-specific names and individual address-
+level bases. A regression test pins both pointer orders, the blink selector,
+and the direct secondary-frame assignment. The old common sentence is the
+63rd rejected generic basis. The queue drops to 245 groups across 1,102
+uses: nine reviewed, 236 open.
