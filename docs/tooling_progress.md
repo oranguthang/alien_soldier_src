@@ -1761,3 +1761,16 @@ has four six-tick frames; their separate initializers store the streams in
 object field 8. Three focused tests pin the instructions and member lists.
 The repeated-basis queue is 169 groups across 792 uses, 115 reviewed and 54
 open. No ASM instructions or visual identities changed.
+
+Six paired return/data bases now have exact-member reviews. Zero animation
+selector `$5C(a5)` returns without overwriting the behavior or wasp animation
+pointer. The READY/FIGHT static and moving banner descriptors are distinct
+two-longword records feeding the shared line renderer. Terobuster's attack A
+and B compare different pose-cursor pairs and reverse the equality branch
+when selecting part order. Stage 11 fish braking and inner/outer edge waits
+have different velocity tests and boundary thresholds. Two Z-Leo marker waits
+share the `$1E0` X threshold but use `BCS` versus `BLT` and different arrival
+effects. Five focused tests pin the source gates and review membership.
+The queue remains 169 repeated groups across 792 uses, 121 reviewed and 48
+open. The weapon-selection cooldown sentence remains open because its
+directional-toggle path bypasses that test. No ASM or visual claims changed.

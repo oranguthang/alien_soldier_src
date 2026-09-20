@@ -1374,6 +1374,54 @@
         {"address":"0x0ECBD0","current_name":"Projectile_BugmaxSpreadSpriteAnimation","file":"src/data/bugmax_sprite_mappings.s"},
         {"address":"0x0ECBDC","current_name":"Projectile_BugmaxSineSpriteAnimation","file":"src/data/bugmax_sprite_mappings.s"}
       ]
+    },
+    {
+      "basis": "States that requested no animation return here.",
+      "reason": "Enemy_UpdateBehaviorAnimation and Enemy_UpdateStage10WaspAnimation each load $5C(a5) and branch to their own RTS when it is zero. Nonzero state indices instead subtract four, load a different animation-pointer table into 8(a5), and clear timer $C(a5). The common claim covers only the zero-index early return; the two pointer tables remain separate.",
+      "members": [
+        {"address":"0x02C54E","current_name":"Enemy_UpdateBehaviorAnimation_Return","file":"src/enemies/spawn_and_movement.s"},
+        {"address":"0x02E0AC","current_name":"Enemy_UpdateStage10WaspAnimation_Return","file":"src/enemies/stage_10_wasp_and_falling_shot.s"}
+      ]
+    },
+    {
+      "basis": "The READY/FIGHT state handlers pass this compact two-entry line descriptor to the shared message sprite-line renderer.",
+      "reason": "BattleBanner_StaticSpriteLine is two longwords $C6A0010A/$680B0004, selected by HoldReadyLine and StartFightLine. BattleBanner_MovingSpriteLine is $C6AA00FF/$680B0006, selected by AnimateFightLine. Both paths feed Message_RenderLine or Message_RenderLineWithOffsets, which reach Message_WriteSpriteLine; the descriptor values and motion behavior are distinct.",
+      "members": [
+        {"address":"0x00B43E","current_name":"BattleBanner_StaticSpriteLine","file":"src/ui/message_scripts_and_glyph_lists.s"},
+        {"address":"0x00B446","current_name":"BattleBanner_MovingSpriteLine","file":"src/ui/message_scripts_and_glyph_lists.s"}
+      ]
+    },
+    {
+      "basis": "The active pose cursor selects which part order is installed before returning to the decision state.",
+      "reason": "Missile attack A chooses d0 from 8/$18 using $A(a5), then branches to SelectPartOrderA when $58(a5)==d0 and to B otherwise. Attack B chooses $10/$20 but reverses the equality branch: non-equality selects A, equality selects B. Both exits use the pose cursor for the final A/B order choice, not the same threshold or polarity.",
+      "members": [
+        {"address":"0x0387D8","current_name":"Boss_TerobusterMissileAttackAExitByPose","file":"src/bosses/terobuster_core.s"},
+        {"address":"0x038892","current_name":"Boss_TerobusterMissileAttackBExitByPose","file":"src/bosses/terobuster_core.s"}
+      ]
+    },
+    {
+      "basis": "The braking frames return here.",
+      "reason": "The outward brake adds signed $4000 steps to horizontal velocity $18(a5), then returns while TST.L finds it nonzero; reaching zero selects fish Mapping02 and advances state. The inward brake uses opposite signed steps and branches directly on the post-add result, then selects Mapping01 and advances state at zero. The shared claim covers only the in-progress return.",
+      "members": [
+        {"address":"0x02ED9A","current_name":"Enemy_Stage11FishBrakeOutwardMotionState_Return","file":"src/enemies/stage_11_fish.s"},
+        {"address":"0x02EE42","current_name":"Enemy_Stage11FishBrakeInwardMotionState_Return","file":"src/enemies/stage_11_fish.s"}
+      ]
+    },
+    {
+      "basis": "The frames before the edge return here.",
+      "reason": "The inner-edge wait returns above $E0 when $E(a5) bit three is set or below $160 when it is clear, then selects Mapping00 and advances state at the edge. The outer-edge wait returns below $1A0 in its bit-three-set branch or above $A0 in its clear branch, then zeroes horizontal velocity, selects Mapping00, arms timer $40, and enters state 8. The common basis only describes the premature-edge return.",
+      "members": [
+        {"address":"0x02EE0A","current_name":"Enemy_Stage11FishWaitForInnerEdgeState_Return","file":"src/enemies/stage_11_fish.s"},
+        {"address":"0x02EEBE","current_name":"Enemy_Stage11FishWaitForOuterEdgeState_Return","file":"src/enemies/stage_11_fish.s"}
+      ]
+    },
+    {
+      "basis": "The frames before the marker arrives return here.",
+      "reason": "Both Z-Leo states compare PrimaryEntityXPos against $1E0 and return while the position is below that threshold. WaitMarkerPosition uses BCS and clears X velocity before advancing; WaitForMarkerEnd first increments X velocity by $1000, uses BLT, then increments a separate flag and arms timer $80 before advancing. The shared claim is limited to the below-threshold gate.",
+      "members": [
+        {"address":"0x02219A","current_name":"Boss_ZLeoWaitMarkerPosition_Return","file":"src/credits/z_leo_sequence.s"},
+        {"address":"0x0222DC","current_name":"Boss_ZLeoWaitForMarkerEnd_Return","file":"src/credits/z_leo_sequence.s"}
+      ]
     }
   ]
 }
