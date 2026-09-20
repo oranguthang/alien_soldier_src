@@ -1788,3 +1788,16 @@ instruction changed. A test pins the updater's idempotence and each corrected
 branch. The repeated-basis queue is now 165 groups across 784 uses, 121
 reviewed and 44 open. This removes four misleading shared sentences rather
 than accepting them as equivalent evidence.
+
+Five paired table and control-flow bases now have exact-member reviews.
+Player secondary mapping A and B are alternate FrameCounter-bit variants with
+different first art-piece pointers. Sirene state `$14` selects a four-pointer
+set using `$54(a5)` and a masked random phase; the sets end in different pose
+scripts. Sharpssteel graphics sets A/B each feed six distinct mapping pointers
+to the common blade-part loop. Antroid leap A/B share the `$C70..$D10`
+coordinate test but have different exit targets. The title-character left and
+right row paths each run sixteen iterations while advancing the source by
+`$C` versus four bytes. Five focused tests pin the source pointers, branches,
+and loop strides without claiming identical appearance. The queue is 165
+repeated groups across 784 uses, 126 reviewed and 39 open. ASM and runtime
+visual assertions are unchanged.

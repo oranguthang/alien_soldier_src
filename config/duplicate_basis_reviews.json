@@ -1422,6 +1422,46 @@
         {"address":"0x02219A","current_name":"Boss_ZLeoWaitMarkerPosition_Return","file":"src/credits/z_leo_sequence.s"},
         {"address":"0x0222DC","current_name":"Boss_ZLeoWaitForMarkerEnd_Return","file":"src/credits/z_leo_sequence.s"}
       ]
+    },
+    {
+      "basis": "Special-attack, recovery, and Seven Forces rendering paths select this secondary mapping as one of two frame-counter variants.",
+      "reason": "Player_HandleSpecialAttack, Player_RenderSpecialMoveRecovery, and the Seven Forces renderers initialize a2 to MappingA, test FrameCounter low-byte bit zero, and replace a2 with MappingB when the bit is clear. MappingA begins with an A art-piece pointer; MappingB begins with a distinct B art-piece pointer. The shared claim is the selection relationship, not identical sprite artwork.",
+      "members": [
+        {"address":"0x0E8F3A","current_name":"Player_SpecialAttackSecondarySpriteMappingA","file":"src/data/player_special_and_death_sprite_mappings.s"},
+        {"address":"0x0E8F6A","current_name":"Player_SpecialAttackSecondarySpriteMappingB","file":"src/data/player_special_and_death_sprite_mappings.s"}
+      ]
+    },
+    {
+      "basis": "State $14 chooses one of these four-entry pose-script pointer sets from the facing selector and the random phase.",
+      "reason": "Boss_EnterSireneState14 initializes a0 to Set0, switches to Set1 when $54(a5) is zero, masks RandomNumberState with $C, and reads one of four longwords into $71C(a5). Set0 contains Script0/0/2/2, whereas Set1 contains Script0/0/1/1. The choice is proven by the pointers, not by visual pose identity.",
+      "members": [
+        {"address":"0x05781C","current_name":"Sirene_State14PoseScriptSet0","file":"src/bosses/sirene.s"},
+        {"address":"0x05782C","current_name":"Sirene_State14PoseScriptSet1","file":"src/bosses/sirene.s"}
+      ]
+    },
+    {
+      "basis": "The corresponding graphics-set routine consumes these six pointers while configuring embedded blade parts.",
+      "reason": "ConfigureBladeGraphicsSetA loads MappingsA and branches to the shared six-iteration ApplyBladeGraphicsSet loop. ConfigureBladeGraphicsSetB loads MappingsB and falls through to that same loop. Both tables contain six longword pointers, with different A/B mapping owners and different setup attribute values; the shared claim is only their consumption by the loop.",
+      "members": [
+        {"address":"0x04890A","current_name":"Boss_SharpssteelBladeGraphicsMappingsB","file":"src/bosses/sharpssteel_blades.s"},
+        {"address":"0x048922","current_name":"Boss_SharpssteelBladeGraphicsMappingsA","file":"src/bosses/sharpssteel_blades.s"}
+      ]
+    },
+    {
+      "basis": "The normal phase checks the derived screen coordinate against the bounded $C70..$D10 interval.",
+      "reason": "Both Antroid leap branches compare $BC(a5) to $C70 and $D10 only when $1DE(a5) is zero. A exits to its finish path outside the half-open interval, while B exits to Boss_AntroidReturnToNeutralLoadAnimation; both decrement $11C(a5) inside the interval. The shared basis covers the numeric range test, not the different exit targets.",
+      "members": [
+        {"address":"0x037830","current_name":"Boss_AntroidLeapAttackACheckScreenRange","file":"src/bosses/antroid_core.s"},
+        {"address":"0x0378FE","current_name":"Boss_AntroidLeapAttackBCheckScreenRange","file":"src/bosses/antroid_core.s"}
+      ]
+    },
+    {
+      "basis": "The path advances the source and destination row bases before repeating the sixteen-row loop.",
+      "reason": "Both title-character row continuations add four to a2, copy it to a1, and DBF d6 back to their respective row starts after d6 is initialized to $F. The left path advances source a0 by $C after reverse byte reads; the right path advances a0 by four after forward reads. The shared sentence is about row-base progression, not identical source traversal.",
+      "members": [
+        {"address":"0x004DBC","current_name":"StoryTitle_CharacterLeftAdvanceRow","file":"src/cutscenes/story_screen_and_title_transition.s"},
+        {"address":"0x004E16","current_name":"StoryTitle_CharacterRightAdvanceRow","file":"src/cutscenes/story_screen_and_title_transition.s"}
+      ]
     }
   ]
 }
