@@ -129,7 +129,10 @@ primary and secondary rotation frames, with reverse and forward table order
 verified; the first secondary frame also has direct linked-record assignments.
 An eleventh exact-member review pins 13 Stage 10 Wasp mappings to the four
 selector streams and high-bit terminators; selector `0C` is also assigned by
-the defeat-conversion path. The remaining queue has 230 groups.
+the defeat-conversion path. A twelfth exact-member review confirms 13
+Sharpssteel byte streams are loaded into the blade-pose interpreter and end
+with its command terminators; that test does not certify their visual poses.
+The remaining queue has 229 groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

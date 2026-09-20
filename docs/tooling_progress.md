@@ -925,3 +925,12 @@ directly in the defeat-conversion path. An exact-member review and regression
 test pin all targets, mapping endings, the four table slots, and this second
 assignment without claiming an exclusive runtime role or visual pose. The
 241 groups remain: eleven reviewed, 230 open.
+
+The 13 Sharpssteel pose-command records share a valid interpreter-level
+claim. Each is a `dc.b` stream loaded by a named `lea ... (pc),a1` site in
+the core or blade module; the assembly update path calls
+`Boss_SharpssteelRunBladePoseCommands`, and manual control calls it directly.
+Each stream ends in `$FF,$FF` or `$FF,$FE`. An exact-member review and test
+pin the 13 names, source references, terminators, and interpreter connection.
+They do not, by themselves, prove the higher-level visual pose names. The
+241 groups remain: twelve reviewed, 229 open.

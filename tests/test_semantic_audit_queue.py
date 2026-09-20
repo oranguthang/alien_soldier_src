@@ -15,6 +15,60 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_sharpssteel_pose_stream_review_pins_interpreter_inputs(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item
+            for item in reviews
+            if item["basis"].startswith("The named Sharpssteel state or controller")
+        )
+        self.assertEqual(13, len(review["members"]))
+        self.assertEqual(
+            {"src/bosses/sharpssteel_blades.s"},
+            {member["file"] for member in review["members"]},
+        )
+        expected = {member["current_name"] for member in review["members"]}
+        core = (ROOT / "src/bosses/sharpssteel_core.s").read_text(
+            encoding="utf-8"
+        )
+        blades = (ROOT / "src/bosses/sharpssteel_blades.s").read_text(
+            encoding="utf-8"
+        )
+        loaded = set(
+            re.findall(
+                r"\blea\s+(Boss_Sharpssteel\w+PoseCommands)\(pc\),a1",
+                core + blades,
+            )
+        )
+        self.assertEqual(expected, loaded)
+        for name in expected:
+            with self.subTest(name=name):
+                stream = re.search(
+                    r"(?ms)^" + re.escape(name) + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    blades,
+                )
+                self.assertIsNotNone(stream)
+                operands = re.findall(r"\bdc\.b\s+([^;\r\n]+)", stream.group(1))
+                values = [
+                    int(token.strip()[1:], 16)
+                    if token.strip().startswith("$")
+                    else int(token.strip())
+                    for row in operands
+                    for token in row.split(",")
+                ]
+                self.assertIn(values[-2:], ([0xFF, 0xFF], [0xFF, 0xFE]))
+        assembly = blades.split("Boss_SharpssteelUpdateBladeAssembly:", 1)[1].split(
+            "Boss_SharpssteelUpdateBladePresentation:", 1
+        )[0]
+        self.assertIn("bsr.w   Boss_SharpssteelRunBladePoseCommands", assembly)
+        self.assertRegex(
+            core,
+            r"lea\s+Boss_SharpssteelManualControlPoseCommands\(pc\),a1"
+            r"[\s\S]*?bsr\.w\s+Boss_SharpssteelRunBladePoseCommands",
+        )
+
     def test_stage10_wasp_review_pins_streams_and_mapping_ends(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

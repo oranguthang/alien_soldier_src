@@ -373,6 +373,25 @@
         {"address":"0x0EB1F4","current_name":"Enemy_Stage10WaspSpriteMappingL","file":"src/data/stage10_wasp_sprite_mappings.s"},
         {"address":"0x0EB236","current_name":"Enemy_Stage10WaspSpriteMappingM","file":"src/data/stage10_wasp_sprite_mappings.s"}
       ]
+    },
+    {
+      "basis": "The named Sharpssteel state or controller loads this byte stream directly into the blade pose-command interpreter.",
+      "reason": "All 13 members are dc.b command streams in sharpssteel_blades.s and each is loaded into a1 by a lea in sharpssteel_core.s or sharpssteel_blades.s. The manual-control path calls Boss_SharpssteelRunBladePoseCommands directly; the other named paths enter Boss_SharpssteelUpdateBladeAssembly, which begins with that call. Each stream ends in $FF,$FF or $FF,$FE. This shared basis proves data type and interpreter connection, not the higher-level visual identity of the pose.",
+      "members": [
+        {"address":"0x048BA6","current_name":"Boss_SharpssteelManualControlPoseCommands","file":"src/bosses/sharpssteel_blades.s"},
+        {"address":"0x048BB0","current_name":"Boss_SharpssteelHighSpeedPoseCommands","file":"src/bosses/sharpssteel_blades.s"},
+        {"address":"0x048BCC","current_name":"Boss_SharpssteelRightwardPoseCommands","file":"src/bosses/sharpssteel_blades.s"},
+        {"address":"0x048BE8","current_name":"Boss_SharpssteelAssemblyTriggerPoseCommands","file":"src/bosses/sharpssteel_blades.s"},
+        {"address":"0x048C0A","current_name":"Boss_SharpssteelAssemblyDelayPoseCommands","file":"src/bosses/sharpssteel_blades.s"},
+        {"address":"0x048C1E","current_name":"Boss_SharpssteelOpeningTurnPoseCommands","file":"src/bosses/sharpssteel_blades.s"},
+        {"address":"0x048C2C","current_name":"Boss_SharpssteelAssemblyThresholdPoseCommands","file":"src/bosses/sharpssteel_blades.s"},
+        {"address":"0x048C3A","current_name":"Boss_SharpssteelAssemblySweepPoseCommands","file":"src/bosses/sharpssteel_blades.s"},
+        {"address":"0x048C4C","current_name":"Boss_SharpssteelFarRangeAttackPoseCommands","file":"src/bosses/sharpssteel_blades.s"},
+        {"address":"0x048C6E","current_name":"Boss_SharpssteelCloseRangeAttackPoseCommands","file":"src/bosses/sharpssteel_blades.s"},
+        {"address":"0x048C90","current_name":"Boss_SharpssteelDivePoseCommands","file":"src/bosses/sharpssteel_blades.s"},
+        {"address":"0x048C9E","current_name":"Boss_SharpssteelComplexOscillationPoseCommands","file":"src/bosses/sharpssteel_blades.s"},
+        {"address":"0x048CBA","current_name":"Boss_SharpssteelComplexExitPoseCommands","file":"src/bosses/sharpssteel_blades.s"}
+      ]
     }
   ]
 }
