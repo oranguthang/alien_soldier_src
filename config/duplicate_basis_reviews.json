@@ -896,6 +896,33 @@
         {"address":"0x0E9DCC","current_name":"Enemy_BehaviorSpriteMapping13","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"},
         {"address":"0x0E9DF0","current_name":"Enemy_BehaviorSpriteMapping14","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"}
       ]
+    },
+    {
+      "basis": "Stage18_SegmentedWormDirectionFramesA references this address-ordered worm mapping.",
+      "reason": "The first pointer in Stage18_SegmentedWormDirectionFrameTables selects A. Its sixteen entries use indices 00/03/02/01 twice, then 00/01/02/03 twice; exact mappings 01, 02, and 03 each occur four times. The suffixes describe ROM order, not a guessed cardinal direction or pose.",
+      "members": [
+        {"address":"0x0EB4B2","current_name":"Stage18_SegmentedWormSpriteMapping01","file":"src/data/stage_combat_object_sprite_mappings.s"},
+        {"address":"0x0EB4CA","current_name":"Stage18_SegmentedWormSpriteMapping02","file":"src/data/stage_combat_object_sprite_mappings.s"},
+        {"address":"0x0EB4D6","current_name":"Stage18_SegmentedWormSpriteMapping03","file":"src/data/stage_combat_object_sprite_mappings.s"}
+      ]
+    },
+    {
+      "basis": "Stage18_SegmentedWormDirectionFramesB references this address-ordered worm mapping.",
+      "reason": "The second pointer in Stage18_SegmentedWormDirectionFrameTables selects B. Its sixteen entries use indices 04/07/06/05 twice, then 04/05/06/07 twice; exact mappings 05, 06, and 07 each occur four times. No visual direction is inferred from the table position.",
+      "members": [
+        {"address":"0x0EB4FA","current_name":"Stage18_SegmentedWormSpriteMapping05","file":"src/data/stage_combat_object_sprite_mappings.s"},
+        {"address":"0x0EB506","current_name":"Stage18_SegmentedWormSpriteMapping06","file":"src/data/stage_combat_object_sprite_mappings.s"},
+        {"address":"0x0EB512","current_name":"Stage18_SegmentedWormSpriteMapping07","file":"src/data/stage_combat_object_sprite_mappings.s"}
+      ]
+    },
+    {
+      "basis": "Stage18_SegmentedWormDirectionFramesC references this address-ordered worm mapping.",
+      "reason": "The third pointer in Stage18_SegmentedWormDirectionFrameTables selects C. Its sixteen entries use indices 08/11/10/09 twice, then 08/09/10/11 twice; exact mappings 09, 10, and 11 each occur four times. The reviewed claim is table membership, not an unobserved sprite pose.",
+      "members": [
+        {"address":"0x0EB52A","current_name":"Stage18_SegmentedWormSpriteMapping09","file":"src/data/stage_combat_object_sprite_mappings.s"},
+        {"address":"0x0EB542","current_name":"Stage18_SegmentedWormSpriteMapping10","file":"src/data/stage_combat_object_sprite_mappings.s"},
+        {"address":"0x0EB54E","current_name":"Stage18_SegmentedWormSpriteMapping11","file":"src/data/stage_combat_object_sprite_mappings.s"}
+      ]
     }
   ]
 }

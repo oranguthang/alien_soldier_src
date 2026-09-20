@@ -1497,3 +1497,18 @@ relative jump. These descriptions deliberately keep mapping names in ROM
 order without guessing visual poses. Source comments and a focused test pin
 the stream shapes and resolver behavior. The queue is unchanged at 202
 repeated groups across 865 uses, with fifty-seven reviewed and 145 open.
+
+The next static pass separated Medusa's pose entry, its per-part worker, and
+its four-part offset helper: the entry updates the pose and begins traversal,
+the worker initializes four group bases and calls the helper four times, and
+the helper adds one offset to four word pairs. Their inherited `ShootPattern`
+names had already been removed; exact-address evidence now matches the new
+roles. Three Stage 18 segmented-worm direction tables received exact-member
+reviews. Each has sixteen pointer slots: the first eight visit the base,
+third, second, and first variant twice, and the last eight reverse that variant
+order twice. A lightweight test pins the table entries without assigning
+unobserved visual directions. The queue is 201 repeated groups across 862
+uses, with sixty reviewed and 141 open. The pinned emulator checkout passes
+`make verify-toolchain`, but the existing runtime scenarios do not capture the
+seven provisional `NAME-003` bosses. No late-game replay was run in this
+low-memory pass, so those identities remain hypotheses.
