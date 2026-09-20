@@ -247,8 +247,8 @@ Boss_AntroidPaletteCommand: dc.b    $62, $E, 0, 0, $E, $EE, $E, $CC, $C, $AA, $A
 Boss_ShellshogunPaletteCommand: dc.b    $62, $E, 0, 0, $E, $EE, $E, $CC, $C, $AA, $A, $88, 0, 0, 2, 4  ; was: byte_C292
                                         ; DATA XREF: ROM:Boss_ShellshogunAssetSet   o
                 dc.b    0, $2A, 2, $6E, 4, $40, 0, $88, 8, $CC, 2, $24, 0, $48, 6, $8C
-Boss_ShiperPaletteCommand:  dc.b    $62, $E, 0, 0, $C, $EE, $C, $CC, $A, $AA, 6, $66, 0, 0, 4, $8C  ; was: byte_C2B2
-                                        ; DATA XREF: ROM:Boss_ShiperAssetSet   o
+Boss_SniperHoneyviperPaletteCommand:    dc.b    $62, $E, 0, 0, $C, $EE, $C, $CC, $A, $AA, 6, $66, 0, 0, 4, $8C  ; was: byte_C2B2
+                                        ; DATA XREF: ROM:Boss_SniperHoneyviperAssetSet   o
                 dc.b    2, $6A, 0, $48, 0, $26, 4, $6A, 2, $2A, 0, 4, 8, $88, 4, $44
 Boss_MadamBarbarPaletteCommand: dc.b    $62, $E, 2, 2, $C, $EE, $A, $AA, 8, $88, 6, $66, 0, 0, 2, 4  ; was: byte_C2D2
                                         ; DATA XREF: ROM:Boss_MadamBarbarAssetSet   o

@@ -1,10 +1,10 @@
-; Shiper destruction debris, line-scroll shaping, and angled effect spawning
+; Sniper Honeyviper destruction debris, line-scroll shaping, and angled effect spawning
 
 ; Spawns random debris particle sprites during boss destruction
-Boss_ShiperSpawnDebris:                                 ; CODE XREF: Boss_ShiperUpdateDefeatEffectsAndMotion+6   p  ; was: sub_36FEE
+Boss_SniperHoneyviperSpawnDebris:                       ; CODE XREF: Boss_SniperHoneyviperUpdateDefeatEffectsAndMotion+6   p  ; was: sub_36FEE
                 move.w  #3,(PlaneAShakeLevel).w
                 jsr     (Projectile_PrepareImpactSpawn).l
-                bne.s   Boss_ShiperSpawnDebrisReturn
+                bne.s   Boss_SniperHoneyviperSpawnDebrisReturn
                 jsr     (Sprite_InitType58FromTable).l
                 clr.b   $20(a0)
                 move.w  #$FFFA,$1C(a0)
@@ -23,23 +23,23 @@ Boss_ShiperSpawnDebris:                                 ; CODE XREF: Boss_Shiper
                 ext.l   d0
                 asl.l   #2,d0
                 move.l  d0,$18(a0)
-Boss_ShiperSpawnDebrisReturn:                           ; CODE XREF: Boss_ShiperSpawnDebris+C   j  ; was: locret_37046
+Boss_SniperHoneyviperSpawnDebrisReturn:                 ; CODE XREF: Boss_SniperHoneyviperSpawnDebris+C   j  ; was: locret_37046
                 rts
-; End of function Boss_ShiperSpawnDebris
-; Rebuilds Shiper's line-scroll spans and derives its screen position
-Boss_ShiperUpdatePositionAndLineScroll:                 ; CODE XREF: Boss_ShiperInitializeEncounterEntities+140   j  ; was: sub_37048
-                                        ; Boss_ShiperUpdateMotionPipeline   p
+; End of function Boss_SniperHoneyviperSpawnDebris
+; Rebuilds Sniper Honeyviper's line-scroll spans and derives its screen position
+Boss_SniperHoneyviperUpdatePositionAndLineScroll:       ; CODE XREF: Boss_SniperHoneyviperInitializeEncounterEntities+140   j  ; was: sub_37048
+                                        ; Boss_SniperHoneyviperUpdateMotionPipeline   p
                 movea.w #(HScrollPlaneBRow32-M68K_RAM),a0
                 moveq   #$FFFFFF80,d0
                 move.w  #$BF,d7
-Boss_ShiperScrollInitializeLineOffsets:                 ; CODE XREF: Boss_ShiperUpdatePositionAndLineScroll+E   j  ; was: loc_37052
+Boss_SniperHoneyviperScrollInitializeLineOffsets:       ; CODE XREF: Boss_SniperHoneyviperUpdatePositionAndLineScroll+E   j  ; was: loc_37052
                 move.w  d0,(a0)
                 addq.w  #4,a0
-                dbf     d7,Boss_ShiperScrollInitializeLineOffsets
+                dbf     d7,Boss_SniperHoneyviperScrollInitializeLineOffsets
                 move.w  $50(a5),d0
-                bmi.s   Boss_ShiperScrollUpdateCoordinates
+                bmi.s   Boss_SniperHoneyviperScrollUpdateCoordinates
                 moveq   #0,d0
-Boss_ShiperScrollUpdateCoordinates:                     ; CODE XREF: Boss_ShiperUpdatePositionAndLineScroll+16   j  ; was: loc_37062
+Boss_SniperHoneyviperScrollUpdateCoordinates:           ; CODE XREF: Boss_SniperHoneyviperUpdatePositionAndLineScroll+16   j  ; was: loc_37062
                 add.w   $74(a5),d0
                 subi.w  #$3A,d0                         ; ':'
                 move.w  d0,$14(a5)
@@ -48,7 +48,7 @@ Boss_ShiperScrollUpdateCoordinates:                     ; CODE XREF: Boss_Shiper
                 move.w  d0,$10(a5)
                 moveq   #$17,d0
                 sub.w   $74(a5),d0
-                move.w  d0,(ShiperRasterControl).w
+                move.w  d0,(SniperHoneyviperRasterControl).w
                 moveq   #0,d6
                 move.w  $70(a5),d6
                 subi.w  #$A8,d6
@@ -58,10 +58,10 @@ Boss_ShiperScrollUpdateCoordinates:                     ; CODE XREF: Boss_Shiper
                 addi.w  #-$1BFE,d2
                 movea.w d2,a1
                 moveq   #$32,d7                         ; '2'
-Boss_ShiperScrollFillUpperSpan:                         ; CODE XREF: Boss_ShiperUpdatePositionAndLineScroll+5C   j  ; was: loc_370A0
+Boss_SniperHoneyviperScrollFillUpperSpan:               ; CODE XREF: Boss_SniperHoneyviperUpdatePositionAndLineScroll+5C   j  ; was: loc_370A0
                 move.w  d6,(a1)
                 subq.w  #4,a1
-                dbf     d7,Boss_ShiperScrollFillUpperSpan
+                dbf     d7,Boss_SniperHoneyviperScrollFillUpperSpan
                 move.w  $74(a5),d7
                 sub.w   $14(a5),d7
                 subi.w  #$38,d7                         ; '8'
@@ -75,13 +75,13 @@ Boss_ShiperScrollFillUpperSpan:                         ; CODE XREF: Boss_Shiper
                 move.w  #0,d1
                 asr.l   #4,d1
                 subq.w  #1,d7
-Boss_ShiperScrollInterpolateSpan:                       ; CODE XREF: Boss_ShiperUpdatePositionAndLineScroll+90   j  ; was: loc_370CE
+Boss_SniperHoneyviperScrollInterpolateSpan:             ; CODE XREF: Boss_SniperHoneyviperUpdatePositionAndLineScroll+90   j  ; was: loc_370CE
                 move.w  d6,(a1)
                 subq.w  #4,a1
                 swap    d6
                 add.l   d1,d6
                 swap    d6
-                dbf     d7,Boss_ShiperScrollInterpolateSpan
+                dbf     d7,Boss_SniperHoneyviperScrollInterpolateSpan
                 moveq   #$FFFFFFD0,d1
                 move.w  $14(a5),d0
                 sub.w   d0,d1
@@ -91,12 +91,12 @@ Boss_ShiperScrollInterpolateSpan:                       ; CODE XREF: Boss_Shiper
                 move.w  $10(a5),d6
                 subi.w  #$A8,d6
                 moveq   #$45,d7                         ; 'E'
-Boss_ShiperScrollFillLowerSpan:                         ; CODE XREF: Boss_ShiperUpdatePositionAndLineScroll+B6   j  ; was: loc_370FA
+Boss_SniperHoneyviperScrollFillLowerSpan:               ; CODE XREF: Boss_SniperHoneyviperUpdatePositionAndLineScroll+B6   j  ; was: loc_370FA
                 move.w  d6,(a1)
                 subq.w  #4,a1
-                dbf     d7,Boss_ShiperScrollFillLowerSpan
+                dbf     d7,Boss_SniperHoneyviperScrollFillLowerSpan
                 rts
-; End of function Boss_ShiperUpdatePositionAndLineScroll
+; End of function Boss_SniperHoneyviperUpdatePositionAndLineScroll
 ; Unreferenced helper that spawns a type-$94 object at a random table angle
 Orphaned_SpawnType94RandomAngle:                        ; was: sub_37104
                 btst    #0,(FrameCounter+1).w

@@ -512,16 +512,16 @@ object, and the sine helper returns its value in `d2` rather than writing a
 vertical-velocity field. The shared four-direction renderer is now explicitly
 named for both end pieces because live callers use it for the head and tail.
 
-The adjacent Jetsripper-projectile/Shiper boundary audit reduced the count to
+The adjacent Jetsripper-projectile/Sniper Honeyviper boundary audit reduced the count to
 9,129. `projectiles/jetsripper.s` now ends with its palette update at `$036419`;
-the following Shiper main handler, state table, encounter initializer, no-op,
-and background configuration moved into `bosses/shiper_core.s` without moving
+the following Sniper Honeyviper main handler, state table, encounter initializer, no-op,
+and background configuration moved into `bosses/sniper_honeyviper_core.s` without moving
 any ROM byte. This corrects a subsystem ownership error, not merely a file-size
 split. Static control flow also disproved the generated player-distance and
-player-proximity claims: the two routines respectively run Shiper's complete
+player-proximity claims: the two routines respectively run Sniper Honeyviper's complete
 state machine and begin its encounter/background transition.
 
-The `shiper_core.s` state audit reduced the count to 9,100. Its 29 imported
+The `sniper_honeyviper_core.s` state audit reduced the count to 9,100. Its 29 imported
 labels now identify the asset and tile-DMA descriptors, auxiliary-part setup,
 signed attack selection, motion-state exits, and defeat cleanup. The generated
 `WaitDescend` name was removed because the routine never reads a position or
@@ -529,7 +529,7 @@ velocity; it waits on accumulated movement coordinate `$16C`. These names
 remain static claims about visible data flow, not assertions about unobserved
 animation intent.
 
-The `shiper_movement.s` audit reduced the count to 9,059. Its 41 imported
+The `sniper_honeyviper_movement.s` audit reduced the count to 9,059. Its 41 imported
 labels now expose the movement and rotation dispatch tables, signed horizontal
 acceleration, bounded rotation phases, vertical integration, sprite jitter,
 two independently oscillating tentacle angles, rotation history, and the
@@ -537,11 +537,11 @@ five-part chain traversal. The coherent 526-line module remains intact; its
 size reflects one connected movement/geometry subsystem rather than an
 arbitrary ROM slice.
 
-The adjacent Shiper projectile audit reduced the count to 9,030 and exposed a
-previously hidden subsystem boundary. The old `projectiles/shiper.s` container
-mixed Shiper line-scroll/effects, a Shellshogun debris spawner, and Shiper's
+The adjacent Sniper Honeyviper projectile audit reduced the count to 9,030 and exposed a
+previously hidden subsystem boundary. The old `projectiles/sniper_honeyviper.s` container
+mixed Sniper Honeyviper line-scroll/effects, a Shellshogun debris spawner, and Sniper Honeyviper's
 two projectile handlers. Those ranges are now separate ROM-ordered modules.
-Object types `$98` and `$35C` link the two Shiper spawners to their dispatch
+Object types `$98` and `$35C` link the two Sniper Honeyviper spawners to their dispatch
 handlers, which is the static basis for replacing the broad imported names
 `Enemy_BossProjectileMovement` and `Enemy_BounceRotateProjectile`.
 
@@ -1729,7 +1729,7 @@ in `FF80C8`, and publishes `MessageSequenceState` as its wait gate; it never rea
 tests victory. It was first corrected to `UI_StartBossMessage` and is now the
 more subsystem-specific `BossMessage_Start`, with named special-message,
 selector, pointer-store, and pointer-table labels. The derived Bugmax,
-Missiray, and Shiper victory/defeat names and several stale audit descriptions
+Missiray, and Sniper Honeyviper victory/defeat names and several stale audit descriptions
 were corrected with it; those states only start or wait for the same message
 gate before ordinary battle flow resumes.
 
@@ -2747,7 +2747,7 @@ mixed-owner data containers. `caterpillar_jetsripper_and_antroid_mappings.s`
 and `terobuster_shellshogun_and_xi_tiger_mappings.s` interleaved records for
 eight independently consumed entities and omitted several of those owners from
 their filenames. They are now exact ROM-ordered modules for Caterpillar,
-Jetsripper, Antroid, Terobuster, Shellshogun, Shiper's tentacle, Xi-Tiger, and
+Jetsripper, Antroid, Terobuster, Shellshogun, Sniper Honeyviper's tentacle, Xi-Tiger, and
 Madam Barbar. The split replaces two modules with eight and takes the layout
 from 341 to 347 modules.
 
@@ -4858,7 +4858,7 @@ from 2,270 to 2,254 without changing the module count or ROM order.
 The defeat-transition audit replaces a set of plausible-sounding but false
 Sonnet labels. `Effect_InitPlayerSpawn` never created a player: seven boss
 defeat paths use it to create transition entity `$150` at the owner's
-coordinates. The Shiper/Terobuster helper similarly creates alternate
+coordinates. The Sniper Honeyviper/Terobuster helper similarly creates alternate
 transition entity `$354`, not an explosion. Their parallel five-state object
 machines are now distinguished as the standard `TransitionEffect` and the
 statically narrower `AlternateTransition` paths.
@@ -4990,7 +4990,7 @@ The early-stage process-state pass replaces the generic
 authoritative boundaries inside its shared relative-offset table: Stages 1-7
 begin at offsets `$00`, `$0A`, `$12`, `$22`, `$2E`, `$38`, and `$40`.
 Combining those boundaries with the boss asset sets proves consecutive
-Jetsripper, Antroid, Shellshogun, Shiper, Madam Barbar, Joker, and Terobuster
+Jetsripper, Antroid, Shellshogun, Sniper Honeyviper, Madam Barbar, Joker, and Terobuster
 state families. The dispatcher retains the later Stage 8 and Stage 9 table
 entries because the ROM stores one contiguous early-stage table, while this
 module's implementations end in the Stage 7 transition range.
@@ -4999,7 +4999,7 @@ This evidence corrects generated camera-centric descriptions rather than only
 prefixing them with stage numbers. The former `Camera_ClampToBounds` never
 changes a camera bound: it fills 128 raster words from the negated secondary
 horizontal offset and 72 from the negated primary camera. It is now
-`Stage4_FillShiperHorizontalRasterOffsets`. The former
+`Stage4_FillSniperHoneyviperHorizontalRasterOffsets`. The former
 `Stage_UpdateScrollOffset` derives two countdown-scaled arguments and
 tail-calls `Gfx_ApplyRGBDeltaToPaletteEntries_LoadEntryCount`; it is now the Terobuster intro
 fade helper. The post-Shellshogun four-longword payload is named only as the
@@ -5219,7 +5219,7 @@ The player scripted-input pass corrects the ownership of
 `cutscenes/stage_intros.s`: all 28 dispatch entries operate on the player
 record and synthesize controller input or control player motion. The coherent
 357-line state machine therefore moves to
-`player/scripted_input_sequences.s`. Static producers identify the post-Shiper,
+`player/scripted_input_sequences.s`. Static producers identify the post-Sniper Honeyviper,
 post-Terobuster, post-Bugmax, Flying Neo, Xi-Tiger, Viblack, post-Jampan, and
 Stage 20 sequences without treating the whole module as a generic cutscene
 bucket.
@@ -5340,7 +5340,7 @@ The gameplay tile-art pass removes all 50 address-derived definitions from
 `Stage_SharedTileSourceTable` retain their mechanically visible compact-command
 indices `$00` through `$0C`; their visual subjects are not guessed. Direct
 asset lists prove the Stage 10 enemy pair, the shared Stage 22/24 source,
-Stage 15, Shiper, the Stage 3 orbiting formation, Caterpillar, the Xi-Tiger
+Stage 15, Sniper Honeyviper, the Stage 3 orbiting formation, Caterpillar, the Xi-Tiger
 entrance and cutscene source, and the eight named boss sources. The otherwise
 unreached source at `$0FEB6E` remains explicitly `Unreferenced`.
 
@@ -6315,7 +6315,7 @@ The twelfth-through-sixteenth record pass replaces twelve raw equates. The
 twelfth record receives type, flags, coordinate, and signed 16.16 velocity
 names from the two ship-grid sequences. Four later record bases are proven by
 the `$60` pool stride and fixed-slot users in Flying Neo, Sharpssteel, Bugmax,
-Antroid, Shiper, and Artemis. Valkirie targeting additionally proves the
+Antroid, Sniper Honeyviper, and Artemis. Valkirie targeting additionally proves the
 fourteenth record's integer X/Y coordinate halves.
 
 All twelve fields receive exact-address audit records and RAM-map entries.
@@ -6939,7 +6939,7 @@ is populated by several layout copiers and consumed by their HBlank handlers;
 Z-Leo uses a contextual build view there, then copies four eight-byte command
 segments into `RasterSecondaryBuffer`. The latter is executed through the
 `ZLeoRasterCommands` view, but the boss-transition builder independently reads
-band samples through `BossBackdropBandSource`. Shiper's adjacent staging word
+band samples through `BossBackdropBandSource`. Sniper Honeyviper's adjacent staging word
 has its own complete producer and one-word layout consumer.
 
 The three RAM aliases add provenance and exact-address audit mappings.
@@ -7439,7 +7439,7 @@ tile-interpolation dispatcher uses the word as block C's payload-length header
 and submits the same address to the VRAM loader. Password rendering treats the
 address as a 24-byte terminated primary text buffer. Flying Neo initializes a
 generated four-quadrant sine table from the address and reads longword samples
-as linked-part vertical offsets. Shiper's independently generated table also
+as linked-part vertical offsets. Sniper Honeyviper's independently generated table also
 reaches the word through its `$FFFF9400` base, so `SharedSceneOverlayWord`
 remains the physical identity while `TileInterpolationBlockC`,
 `PasswordPrimaryBuffer`, and `FlyingNeoSineTable` expose direct consumers.
@@ -7453,7 +7453,7 @@ The `$FFFF9A00` pass models another mutually exclusive geometry workspace.
 Transition and Game Over paths generate, copy, and expand raster rows from the
 base; the boss-backdrop builder copies seven 32-byte blocks into it. Flying
 Neo reads the address as the quarter-cycle-shifted cosine view of its generated
-trigonometric table. Shiper shifts five delayed rotation words there, while
+trigonometric table. Sniper Honeyviper shifts five delayed rotation words there, while
 the Shield Viper effect updates 96 longword offset accumulators and publishes
 their high words to H-scroll RAM. `SharedGeometryWorkspace` therefore remains
 the physical identity, with six consumer-specific aliases at direct accesses.
@@ -7465,7 +7465,7 @@ enforced address-derived ceiling falls from 30 to 29 RAM equates.
 
 The `$FFFF9500` pass separates another five-way overlay. Transition code copies
 working output blocks to the base and the raster-layout dispatcher consumes
-them for standard, alternate, or Flying Neo layouts. Shiper reads the address
+them for standard, alternate, or Flying Neo layouts. Sniper Honeyviper reads the address
 as the quarter-cycle cosine view of its table generated from `$FFFF9400`.
 Sirene writes and queues a 32-byte alternating pattern there. Z-Leo drop
 projectiles set the same word as a frame-local event flag, which the boss
@@ -7608,24 +7608,24 @@ from 3,045 to 3,031 and its actionable upper bound from 2,532 to 2,518;
 provenance remains 16,051.
 
 The three-name-module semantic batch audits all fifteen pending names in
-`flying_neo_rendering.s`, `medusa.s`, `shiper_scroll_and_effects.s`,
+`flying_neo_rendering.s`, `medusa.s`, `sniper_honeyviper_scroll_and_effects.s`,
 `game_variables.s`, and `object_pool_clearing.s`. Flying Neo's render wrapper,
 metasprite entry, and defeat fade, Medusa's two frame-gated sound helpers,
-Shiper's debris emitter, and the fixed-count object-pool clearing entries are
+Sniper Honeyviper's debris emitter, and the fixed-count object-pool clearing entries are
 confirmed from their callers and field effects. The Medusa binclude-end symbol
 is recorded as an alias of the following state-$A schedule at the same address,
 not as a duplicate audit record.
 
-Static control flow rejects six pending Sonnet descriptions. Shiper's scroll
+Static control flow rejects six pending Sonnet descriptions. Sniper Honeyviper's scroll
 helper also derives boss position, so it becomes
-`Boss_ShiperUpdatePositionAndLineScroll`. The purported Shiper angled-shot
+`Boss_SniperHoneyviperUpdatePositionAndLineScroll`. The purported Sniper Honeyviper angled-shot
 helper has no code or data references; only its type-$94 allocation and random
 sine-table velocity are proved, so it becomes
 `Orphaned_SpawnType94RandomAngle`. The three `UI_*` entries are actually the
 password-selected, fresh-game, and shared game-session initialization paths,
 and the 96-byte clearing loop label denotes one object-block iteration. The
 already audited return label of the orphaned helper is corrected at the same
-time, removing its unsupported Shiper ownership.
+time, removing its unsupported Sniper Honeyviper ownership.
 
 Fourteen new exact-address records plus one same-address alias raise the audit
 registry from 13,313 to 13,327. The reproducible semantic-review queue falls
@@ -8379,7 +8379,7 @@ pending queue falls from 2,676 to 2,662 and its actionable upper bound from
 the 379-module layout remain unchanged. The Bugmax debris-spawner module now
 has zero pending current names.
 
-The 13 pending top-level entries in `bosses/shiper_movement.s` are audited as
+The 13 pending top-level entries in `bosses/sniper_honeyviper_movement.s` are audited as
 one ordered movement pipeline. Each active caller first updates line scroll and
 screen position, then runs the vertical bounce and auxiliary sprite anchors,
 dispatches horizontal motion through field `$5C`, and finally integrates
@@ -8408,7 +8408,7 @@ positions five consecutive chain-part records with Y clamped at `$144`.
 Thirteen exact-address records raise the registry from 13,680 to 13,693. The
 pending queue falls from 2,662 to 2,649 and its actionable upper bound from
 2,149 to 2,136; provenance, the 513 classified binary-backed end aliases, and
-the 379-module layout remain unchanged. `bosses/shiper_movement.s` now has zero
+the 379-module layout remain unchanged. `bosses/sniper_honeyviper_movement.s` now has zero
 pending current names.
 
 The remaining 14 internal boundaries in
@@ -8434,10 +8434,10 @@ pending queue falls from 2,649 to 2,635 and its actionable upper bound from
 the 379-module layout remain unchanged. The orphaned radial-particle test module
 now has zero pending current names.
 
-The 17 pending entries in `bosses/shiper_core.s` are audited together with 18
+The 17 pending entries in `bosses/sniper_honeyviper_core.s` are audited together with 18
 already registered internal names whose old movement wording depended on the
 same false model. Offsets `$70/$74/$78/$7C` are the standard X, Y, X-velocity,
-and Y-velocity fields of Shiper's embedded second 96-byte entity record. They
+and Y-velocity fields of Sniper Honeyviper's embedded second 96-byte entity record. They
 are distinct from the bounce position/velocity pair at `$50/$54`. The former
 `RiseState` and `DecelerateVertical` routines actually brake negative and
 positive second-entity X velocity toward zero and then wait for the separate
@@ -8464,7 +8464,7 @@ final fade-out; the two already accurate defeat state names are retained.
 Seventeen exact-address records raise the registry from 13,707 to 13,724. The
 pending queue falls from 2,635 to 2,618 and its actionable upper bound from
 2,122 to 2,105; provenance, the 513 classified binary-backed end aliases, and
-the 379-module layout remain unchanged. `bosses/shiper_core.s` now has zero
+the 379-module layout remain unchanged. `bosses/sniper_honeyviper_core.s` now has zero
 pending current names.
 
 The 14 pending entries in `bosses/jetsripper_segments.s` are audited together
@@ -10559,7 +10559,7 @@ both directions and the entry point chooses the sign.
 Three names claimed work the routines do not do.
 `Projectile_UpdateWithImpactFrames` updates nothing: it finds a free slot,
 selects one of two impact-frame tables, and clears `d0` so the caller sees `Z`
-set. `Boss_ShiperSpawnDebris` shows the contract exactly — `jsr`, `bne` to skip,
+set. `Boss_SniperHoneyviperSpawnDebris` shows the contract exactly — `jsr`, `bne` to skip,
 then `Sprite_InitType58FromTable` with `a0` and `a1` already loaded. It and its
 two siblings become `Projectile_PrepareImpactSpawn`,
 `Projectile_PrepareImpactSpawnAfterDelay` and

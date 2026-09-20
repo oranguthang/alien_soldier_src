@@ -1467,19 +1467,19 @@
       "end": "0x036419"
     },
     {
-      "file": "src/bosses/shiper_core.s",
+      "file": "src/bosses/sniper_honeyviper_core.s",
       "subsystem": "bosses",
       "start": "0x03641A",
       "end": "0x036A19"
     },
     {
-      "file": "src/bosses/shiper_movement.s",
+      "file": "src/bosses/sniper_honeyviper_movement.s",
       "subsystem": "bosses",
       "start": "0x036A1A",
       "end": "0x036FED"
     },
     {
-      "file": "src/bosses/shiper_scroll_and_effects.s",
+      "file": "src/bosses/sniper_honeyviper_scroll_and_effects.s",
       "subsystem": "bosses",
       "start": "0x036FEE",
       "end": "0x03715F"
@@ -1491,7 +1491,7 @@
       "end": "0x0371E7"
     },
     {
-      "file": "src/projectiles/shiper.s",
+      "file": "src/projectiles/sniper_honeyviper.s",
       "subsystem": "projectiles",
       "start": "0x0371E8",
       "end": "0x0374C5"
@@ -2325,7 +2325,7 @@
       "end": "0x0EB9E9"
     },
     {
-      "file": "src/data/shiper_tentacle_sprite_mappings.s",
+      "file": "src/data/sniper_honeyviper_tentacle_sprite_mappings.s",
       "subsystem": "data",
       "start": "0x0EB9EA",
       "end": "0x0EBA19"

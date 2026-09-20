@@ -153,7 +153,7 @@ animation streams reference every frame, with frame 00 shared by two streams.
 The eleven Bird mappings likewise have exact members across four streams:
 00/01 share frames 00-06, while 02/03 use frames 07-10. The stream selector
 table is explicit; frame names still do not claim visual pose identities.
-Shiper's eight tentacle mappings are all reached through one indexed
+Sniper Honeyviper's eight tentacle mappings are all reached through one indexed
 direction-frame table, not through unspecified direct assignments. The exact
 eight slots and both tentacle mapping writes are checked, but the ROM-order
 suffixes do not claim visible directions. Medusa's seven direct pose scripts

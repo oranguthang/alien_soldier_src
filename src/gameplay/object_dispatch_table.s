@@ -8,7 +8,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Proj
                 dc.l    Effect_UpdateImpactParticleSpawner
                 dc.l    Enemy_BehaviorController
                 dc.l    Pickup_MaxHealthUpgradeMain
-                dc.l    Boss_ShiperMainHandler
+                dc.l    Boss_SniperHoneyviperMainHandler
                 dc.l    Entity_NullUpdateHandler4
                 dc.l    Entity_NullUpdateHandler4
                 dc.l    Boss_AntroidMainHandler
@@ -37,7 +37,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Proj
                 dc.l    Enemy_ProjectileAttackController
                 dc.l    Enemy_BirdController
                 dc.l    Physics_AccelerateUpward
-                dc.l    Projectile_ShiperOscillatingShot
+                dc.l    Projectile_SniperHoneyviperOscillatingShot
                 dc.l    Effect_AnimateAndExpire
                 dc.l    Effect_UpdateCompanionFromParent
                 dc.l    Anim_UpdateWithGlobalAttributes
@@ -59,7 +59,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Proj
                 dc.l    Boss_JetsripperMainHandler
                 dc.l    Boss_JetsripperClampY
                 dc.l    Boss_JetsripperUpdateFallingSegment
-                dc.l    Boss_ShiperMainHandler
+                dc.l    Boss_SniperHoneyviperMainHandler
                 dc.l    Boss_ShellshogunMainHandler
                 dc.l    FrontendCursor_NoOpUpdate
                 dc.l    TerrainTileAnimation_EvenFrameHandler
@@ -214,7 +214,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Proj
                 dc.l    Enemy_UpdateBouncingObject
                 dc.l    AlternateTransition_ObjectMain
                 dc.l    Projectile_BackStringerChainFalling
-                dc.l    Projectile_ShiperBouncingShot
+                dc.l    Projectile_SniperHoneyviperBouncingShot
                 dc.l    Projectile_BackStringerReboundShotMain
                 dc.l    Projectile_SharpssteelFallingShotMain
                 dc.l    Stage12_TeddyBearMain

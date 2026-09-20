@@ -30,7 +30,7 @@ Orphaned_CalculateAngleBetweenObjects:
                 rts
 ; End of function Orphaned_CalculateAngleBetweenObjects
 ; Calculates sine/cosine values in all four quadrants and stores in lookup tables
-Math_CalculateSineCosineTable:                          ; CODE XREF: Boss_ShiperLoadInitialAssetsAfterBackgroundRows+26   j  ; was: sub_1B44C
+Math_CalculateSineCosineTable:                          ; CODE XREF: Boss_SniperHoneyviperLoadInitialAssetsAfterBackgroundRows+26   j  ; was: sub_1B44C
                                         ; Boss_FlyingNeoInit+1C   p
                 movea.w a0,a1
                 adda.w  #$200,a1

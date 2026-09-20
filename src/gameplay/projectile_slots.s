@@ -82,7 +82,7 @@ Projectile_FindFreeSlotForward8:                        ; CODE XREF: Stage7_Spaw
                 beq.w   Projectile_FindFreeSlotForward_Return
                 lea     $60(a0),a0
 ; Scans four consecutive 96-byte records forward from the caller-supplied A0
-Projectile_FindFreeSlotForward4:                        ; CODE XREF: Boss_ShiperSpawnOscillatingShot+16   p  ; was: loc_1C144
+Projectile_FindFreeSlotForward4:                        ; CODE XREF: Boss_SniperHoneyviperSpawnOscillatingShot+16   p  ; was: loc_1C144
                                         ; Boss_TerobusterSpawnHomingMissile+22   p
                 move.w  (a0),d0
                 beq.w   Projectile_FindFreeSlotForward_Return

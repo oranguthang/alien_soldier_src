@@ -32,8 +32,8 @@ Boss_TerobusterTileArt:                 binclude "data/artcomp/tiles_109546.bin"
 Boss_TerobusterTileArt_End:                             ; was: tiles_109546_End
 Boss_ShellshogunTileArt:                binclude "data/artcomp/tiles_10B9FE.bin"  ; was: tiles_10B9FE
 Boss_ShellshogunTileArt_End:                            ; was: tiles_10B9FE_End
-Boss_ShiperTileArt:                     binclude "data/artcomp/tiles_10DA6C.bin"  ; was: tiles_10DA6C
-Boss_ShiperTileArt_End:                                 ; was: tiles_10DA6C_End
+Boss_SniperHoneyviperTileArt:           binclude "data/artcomp/tiles_10DA6C.bin"  ; was: tiles_10DA6C
+Boss_SniperHoneyviperTileArt_End:                       ; was: tiles_10DA6C_End
 Boss_Stage3OrbitingFormationTileArt:    binclude "data/artcomp/tiles_10F51C.bin"  ; was: tiles_10F51C
 Boss_Stage3OrbitingFormationTileArt_End:                ; was: tiles_10F51C_End
 Stage9CaterpillarTileArt:               binclude "data/artcomp/tiles_10F840.bin"  ; was: tiles_10F840

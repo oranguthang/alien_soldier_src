@@ -999,9 +999,9 @@ markers, selector entries, and mapping endings, without asserting visual
 poses or gameplay reachability of every selector. The queue remains 240
 groups across 1,019 uses: seventeen reviewed, 223 open.
 
-The Shiper tentacle mapping sentence suggested pointer tables or direct
+The Sniper Honeyviper tentacle mapping sentence suggested pointer tables or direct
 assignments, but all eight mapping labels are referenced only by the
-eight-entry `Boss_ShiperTentacleDirectionFrames` table. The movement routine
+eight-entry `Boss_SniperHoneyviperTentacleDirectionFrames` table. The movement routine
 masks each of two angles to `$E0`, shifts by three to index the table's
 longword slots, then stores selected pointers in fields `$1E8` and `$2A8`.
 The replacement shared basis states this exact table role without inventing

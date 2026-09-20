@@ -850,7 +850,7 @@ repeats the resulting four-word group into `HorizontalScrollProfile`.
 | `ShieldViperRowVRAMPos` | `$FFFF9DFC` | The Shield Viper transition advances this word by `$80` after each queued 64-word backdrop row and passes the adjusted value as the VDP destination. |
 | `ShieldViperRowIndex` | `$FFFF9DFE` | Each queued Shield Viper row derives its repeated tile word from this index, increments it, and completes the row-build phase after twelve rows. |
 | `ActiveRasterBuffer` (`ZLeoRasterBuildBuffer` overlay) | `$FFFF9E00` | Layout copiers populate this common HBlank stream for several modes; Z-Leo builds its four eight-byte command segments here before they are copied to the secondary buffer. |
-| `ShiperRasterControl` | `$FFFF9E02` | Shiper derives this VScroll control word from its vertical extent, and the selected layout copies it into the first active raster word. |
+| `SniperHoneyviperRasterControl` | `$FFFF9E02` | Sniper Honeyviper derives this VScroll control word from its vertical extent, and the selected layout copies it into the first active raster word. |
 | `BossBackdropLeadBands` | `$FFFF9E0E` | The boss-backdrop builder reads the first nine word samples from here into the leading active raster bands. |
 | `BossTransitionRaster` | `$FFFF9E1E` | The raster-layout copier writes three 64-byte blocks from the transition workspace to this contextual destination. |
 | `RasterSecondaryBuffer` (`ZLeoRasterCommands`, `BossBackdropBandSource` overlays) | `$FFFF9E40` | Z-Leo copies and executes a 32-byte raster command stream here; the mutually exclusive boss-backdrop builder reads its remaining band samples from the same base. |
@@ -1233,7 +1233,7 @@ structural `PrimaryEntity` names rather than a boss name.
 | `FourteenthEntityXPos` | `$FFFFCB10` | 14 | Valkirie targeting reads the record's integer X coordinate. |
 | `FourteenthEntityYPos` | `$FFFFCB14` | 14 | Valkirie targeting reads the record's integer Y coordinate. |
 | `FifteenthEntityType` | `$FFFFCB60` | 15 | Bugmax and Antroid select this fixed object record. |
-| `SixteenthEntityType` | `$FFFFCBC0` | 16 | Shiper and Artemis select this fixed object record. |
+| `SixteenthEntityType` | `$FFFFCBC0` | 16 | Sniper Honeyviper and Artemis select this fixed object record. |
 | `SixteenthEntityWork56` | `$FFFFCC16` | 16 | Sirene uses this owner-specific work byte as a pose-grid anchor. |
 | `SeventeenthEntityType` | `$FFFFCC20` | 17 | Destroyer MK2 fragments and Medusa pose parts traverse from this record. |
 | `EighteenthEntityType` | `$FFFFCC80` | 18 | Enemy-projectile allocation and Valkirie selection use this record base. |
@@ -1464,7 +1464,7 @@ runtime trace.
 |---|---|---|
 | `SharedSceneOverlayWord` | `TileInterpolationBlockC` | The three-block dispatcher writes a `$60`-byte payload length here and submits the same address as the third interpolated-tile source. |
 | `SharedSceneOverlayWord` | `PasswordPrimaryBuffer` | Password code clears 24 bytes, appends terminator `$FF`, copies the selected text record, and passes this buffer to the wrapped double-height renderer. |
-| `SharedSceneOverlayWord` | `FlyingNeoSineTable` | Flying Neo generates the four-quadrant trigonometric table from this base and reads its longword samples as linked-part vertical offsets. Shiper's separate table also reaches the physical word indirectly from its `$FFFF9400` base. |
+| `SharedSceneOverlayWord` | `FlyingNeoSineTable` | Flying Neo generates the four-quadrant trigonometric table from this base and reads its longword samples as linked-part vertical offsets. Sniper Honeyviper's separate table also reaches the physical word indirectly from its `$FFFF9400` base. |
 
 ## Reviewed shared scene overlay at `$FFFF9500`
 
@@ -1472,7 +1472,7 @@ runtime trace.
 |---|---|---|
 | `SharedSceneOverlayBase` | `TransitionWorkingBuffer` | Transition modes copy four or seven 32-byte output blocks here; the standard and alternate raster-layout handlers consume those blocks. |
 | `SharedSceneOverlayBase` | `FlyingNeoRasterBuffer` | The Flying Neo raster-layout handler copies one 64-byte block from this base into the active raster buffer. |
-| `SharedSceneOverlayBase` | `ShiperCosineTable` | Shiper reads this quarter-cycle view of the trigonometric table generated from `$FFFF9400` as tentacle X offsets. |
+| `SharedSceneOverlayBase` | `SniperHoneyviperCosineTable` | Sniper Honeyviper reads this quarter-cycle view of the trigonometric table generated from `$FFFF9400` as tentacle X offsets. |
 | `SharedSceneOverlayBase` | `SirenePatternBuffer` | Sirene writes and queues a 32-byte alternating pattern here before applying frame-parity marker patches. |
 | `SharedSceneOverlayBase` | `ZLeoDropProjectileFlag` | Every active Z-Leo drop projectile sets the word; the boss renderer tests it for the rising-return palette branch and the boss core clears it once per update. |
 
@@ -1501,7 +1501,7 @@ the following contextual views:
 | `SharedGeometryWorkspace` | `GameOverRasterSource` | Game Over copies sixteen 32-byte blocks from this base and the raster-layout copier consumes seven 64-byte blocks from it. |
 | `SharedGeometryWorkspace` | `BossBackdropWorkBuffer` | The encounter-backdrop builder copies seven 32-byte blocks into this destination before constructing its paired band buffers. |
 | `SharedGeometryWorkspace` | `FlyingNeoCosineTable` | Flying Neo reads the quarter-cycle-shifted view of the generated sine table here as linked-part horizontal offsets. |
-| `SharedGeometryWorkspace` | `ShiperRotationHistory` | Shiper shifts five delayed angle words here and uses them to index its generated X/Y trigonometric tables. |
+| `SharedGeometryWorkspace` | `SniperHoneyviperRotationHistory` | Sniper Honeyviper shifts five delayed angle words here and uses them to index its generated X/Y trigonometric tables. |
 | `SharedGeometryWorkspace` | `ShieldViperOffsetTable` | The effect updates 96 longword accumulators with progressively negative deltas and copies each high word into Plane B H-scroll rows. |
 
 ## Reviewed shared scene data buffer at `$FFFF9800`

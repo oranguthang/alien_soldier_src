@@ -22,12 +22,12 @@ EarlyStage_StateHandlerOffsets: dc.w    Stage1_InitializeScrollState-Stage1_Init
                 dc.w    Stage3_InitializePostShellshogunTransition-Stage1_InitializeScrollState
                 dc.w    Stage3_WaitForPostShellshogunRows-Stage1_InitializeScrollState
                 dc.w    Stage3_EnterStage4-Stage1_InitializeScrollState
-                dc.w    Stage4_UpdateScrollToShiper-Stage1_InitializeScrollState
-                dc.w    Stage4_InitializeShiperEncounter-Stage1_InitializeScrollState
-                dc.w    Stage4_InitializeShiperRasterRows-Stage1_InitializeScrollState
-                dc.w    Stage4_UpdateShiperEncounter-Stage1_InitializeScrollState
-                dc.w    Stage4_WaitForShiperMessage-Stage1_InitializeScrollState
-                dc.w    Stage4_CheckShiperTransitionReady-Stage1_InitializeScrollState
+                dc.w    Stage4_UpdateScrollToSniperHoneyviper-Stage1_InitializeScrollState
+                dc.w    Stage4_InitializeSniperHoneyviperEncounter-Stage1_InitializeScrollState
+                dc.w    Stage4_InitializeSniperHoneyviperRasterRows-Stage1_InitializeScrollState
+                dc.w    Stage4_UpdateSniperHoneyviperEncounter-Stage1_InitializeScrollState
+                dc.w    Stage4_WaitForSniperHoneyviperMessage-Stage1_InitializeScrollState
+                dc.w    Stage4_CheckSniperHoneyviperTransitionReady-Stage1_InitializeScrollState
                 dc.w    Stage5_InitializeScrollState-Stage1_InitializeScrollState
                 dc.w    Stage5_UpdateScrollToMadamBarbar-Stage1_InitializeScrollState
                 dc.w    Stage5_InitializeMadamBarbarEncounter-Stage1_InitializeScrollState
@@ -264,23 +264,23 @@ Stage3_EnterStage4:                                     ; DATA XREF: ROM:0000C86
                 bra.w   *+4
 ; ---------------------------------------------------------------------------
 ; Updates smooth scrolling camera transitions at $1A78
-Stage4_UpdateScrollToShiper:                            ; CODE XREF: Stage3_EnterStage4+14   j  ; was: loc_CACC
+Stage4_UpdateScrollToSniperHoneyviper:                  ; CODE XREF: Stage3_EnterStage4+14   j  ; was: loc_CACC
                                         ; DATA XREF: ROM:0000C86C   o
                 bsr.w   Camera_UpdateAndRenderStageTilemap
                 bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 cmpi.w  #$1A78,(PrimaryCameraXPosition).w
-                bmi.s   Stage4_UpdateScrollToShiper_Return
+                bmi.s   Stage4_UpdateScrollToSniperHoneyviper_Return
                 bra.w   Stage_TransitionToNextPhase
 ; ---------------------------------------------------------------------------
-Stage4_UpdateScrollToShiper_Return:                     ; CODE XREF: Stage3_EnterStage4+26   j  ; was: locret_CAE0
+Stage4_UpdateScrollToSniperHoneyviper_Return:           ; CODE XREF: Stage3_EnterStage4+26   j  ; was: locret_CAE0
                 rts
 ; End of function Stage3_EnterStage4
 ; Camera following target with offset
-Stage4_InitializeShiperEncounter:                       ; DATA XREF: ROM:0000C86E   o  ; was: sub_CAE2
+Stage4_InitializeSniperHoneyviperEncounter:             ; DATA XREF: ROM:0000C86E   o  ; was: sub_CAE2
                 bsr.w   Camera_UpdateBossApproachAndRenderTilemap
                 bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 cmpi.w  #$1AF8,(PrimaryCameraXPosition).w
-                bmi.s   Stage4_InitializeShiperEncounter_Return
+                bmi.s   Stage4_InitializeSniperHoneyviperEncounter_Return
                 addq.w  #2,(StageStateOffset).w
                 clr.l   (CameraXDelta).w
                 move.w  #$1AF8,d0
@@ -289,85 +289,85 @@ Stage4_InitializeShiperEncounter:                       ; DATA XREF: ROM:0000C86
                 move.w  d0,(CameraXUpperBound).w
                 move.b  #$10,(PlaneAScrollModeFlags).w
                 move.b  #4,(PlaneBScrollModeFlags).w
-                lea     (Boss_ShiperAssetSet).l,a1
+                lea     (Boss_SniperHoneyviperAssetSet).l,a1
                 jsr     (Boss_LoadAssetSet).l
-                bsr.s   Stage4_FillShiperHorizontalRasterOffsets
-Stage4_InitializeShiperEncounter_Return:                ; CODE XREF: Stage4_InitializeShiperEncounter+E   j  ; was: locret_CB24
+                bsr.s   Stage4_FillSniperHoneyviperHorizontalRasterOffsets
+Stage4_InitializeSniperHoneyviperEncounter_Return:      ; CODE XREF: Stage4_InitializeSniperHoneyviperEncounter+E   j  ; was: locret_CB24
                 rts
-; End of function Stage4_InitializeShiperEncounter
+; End of function Stage4_InitializeSniperHoneyviperEncounter
 ; Sets camera boundary limits
-Stage4_InitializeShiperRasterRows:                      ; DATA XREF: ROM:0000C870   o  ; was: sub_CB26
+Stage4_InitializeSniperHoneyviperRasterRows:            ; DATA XREF: ROM:0000C870   o  ; was: sub_CB26
                 move.b  #3,(VDPReg11Shadow+1).w
                 bsr.w   Scroll_UpdateQuarterHorizontalPosition
-                bra.s   Stage4_FillShiperHorizontalRasterOffsets
-; End of function Stage4_InitializeShiperRasterRows
+                bra.s   Stage4_FillSniperHoneyviperHorizontalRasterOffsets
+; End of function Stage4_InitializeSniperHoneyviperRasterRows
 ; Handles camera logic during stage transition checking boss state
-Stage4_UpdateShiperEncounter:                           ; DATA XREF: ROM:0000C872   o  ; was: sub_CB32
+Stage4_UpdateSniperHoneyviperEncounter:                 ; DATA XREF: ROM:0000C872   o  ; was: sub_CB32
                 tst.w   (Entity_ObjectPool).w
-                bne.s   Stage4_UpdateShiperEncounterCamera
+                bne.s   Stage4_UpdateSniperHoneyviperEncounterCamera
                 addq.w  #2,(StageStateOffset).w
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
-                bra.s   Stage4_WaitForShiperMessage
+                bra.s   Stage4_WaitForSniperHoneyviperMessage
 ; ---------------------------------------------------------------------------
-Stage4_UpdateShiperEncounterCamera:                     ; CODE XREF: Stage4_UpdateShiperEncounter+4   j  ; was: loc_CB44
+Stage4_UpdateSniperHoneyviperEncounterCamera:           ; CODE XREF: Stage4_UpdateSniperHoneyviperEncounter+4   j  ; was: loc_CB44
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 bsr.w   Scroll_UpdateQuarterHorizontalPosition
-                bsr.s   Stage4_FillShiperHorizontalRasterOffsets
+                bsr.s   Stage4_FillSniperHoneyviperHorizontalRasterOffsets
                 move.w  #$C0,(SecondaryCameraXPos).w
                 rts
-; End of function Stage4_UpdateShiperEncounter
+; End of function Stage4_UpdateSniperHoneyviperEncounter
 ; Clamps camera position to boundaries
-Stage4_FillShiperHorizontalRasterOffsets:               ; CODE XREF: Stage4_InitializeShiperEncounter+40   p  ; was: sub_CB56
+Stage4_FillSniperHoneyviperHorizontalRasterOffsets:     ; CODE XREF: Stage4_InitializeSniperHoneyviperEncounter+40   p  ; was: sub_CB56
                                         ; Camera_SetBounds+A   j
                 movea.w #(HorizontalScrollProfile-M68K_RAM),a0
                 move.w  (SecondaryCameraXPos).w,d0
                 neg.w   d0
                 moveq   #$7F,d7
-Stage4_FillShiperSecondaryRasterOffsets:                ; CODE XREF: Stage4_FillShiperHorizontalRasterOffsets+E   j  ; was: loc_CB62
+Stage4_FillSniperHoneyviperSecondaryRasterOffsets:      ; CODE XREF: Stage4_FillSniperHoneyviperHorizontalRasterOffsets+E   j  ; was: loc_CB62
                 move.w  d0,(a0)+
-                dbf     d7,Stage4_FillShiperSecondaryRasterOffsets
+                dbf     d7,Stage4_FillSniperHoneyviperSecondaryRasterOffsets
                 move.w  (PrimaryCameraXPosition).w,d0
                 neg.w   d0
                 moveq   #$47,d7                         ; 'G'
-Stage4_FillShiperPrimaryRasterOffsets:                  ; CODE XREF: Stage4_FillShiperHorizontalRasterOffsets+1C   j  ; was: loc_CB70
+Stage4_FillSniperHoneyviperPrimaryRasterOffsets:        ; CODE XREF: Stage4_FillSniperHoneyviperHorizontalRasterOffsets+1C   j  ; was: loc_CB70
                 move.w  d0,(a0)+
-                dbf     d7,Stage4_FillShiperPrimaryRasterOffsets
+                dbf     d7,Stage4_FillSniperHoneyviperPrimaryRasterOffsets
                 rts
-; End of function Stage4_FillShiperHorizontalRasterOffsets
+; End of function Stage4_FillSniperHoneyviperHorizontalRasterOffsets
 ; Waits for scroll position then advances stage phase
-Stage4_WaitForShiperMessage:                            ; CODE XREF: Stage4_UpdateShiperEncounter+10   j  ; was: sub_CB78
+Stage4_WaitForSniperHoneyviperMessage:                  ; CODE XREF: Stage4_UpdateSniperHoneyviperEncounter+10   j  ; was: sub_CB78
                                         ; DATA XREF: ROM:0000C874   o
-                bsr.s   Stage4_UpdateShiperCameraAndRasterRows
+                bsr.s   Stage4_UpdateSniperHoneyviperCameraAndRasterRows
                 tst.w   (MessageSequenceState).w
-                bne.s   Stage4_WaitForShiperMessage_Return
+                bne.s   Stage4_WaitForSniperHoneyviperMessage_Return
                 addq.w  #2,(StageStateOffset).w
                 move.w  #2,(PlayerScriptStateOffset).w
-Stage4_WaitForShiperMessage_Return:                     ; CODE XREF: Stage4_WaitForShiperMessage+6   j  ; was: locret_CB8A
+Stage4_WaitForSniperHoneyviperMessage_Return:           ; CODE XREF: Stage4_WaitForSniperHoneyviperMessage+6   j  ; was: locret_CB8A
                 rts
-; End of function Stage4_WaitForShiperMessage
+; End of function Stage4_WaitForSniperHoneyviperMessage
 ; Updates camera position and calculates scroll registers
-Stage4_UpdateShiperCameraAndRasterRows:                 ; CODE XREF: Stage4_WaitForShiperMessage   p  ; was: sub_CB8C
+Stage4_UpdateSniperHoneyviperCameraAndRasterRows:       ; CODE XREF: Stage4_WaitForSniperHoneyviperMessage   p  ; was: sub_CB8C
                                         ; sub_CB9E   p
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 bsr.w   Scroll_UpdateQuarterHorizontalPosition
-                bsr.s   Stage4_FillShiperHorizontalRasterOffsets
+                bsr.s   Stage4_FillSniperHoneyviperHorizontalRasterOffsets
                 move.w  #$C0,(SecondaryCameraXPos).w
                 rts
-; End of function Stage4_UpdateShiperCameraAndRasterRows
+; End of function Stage4_UpdateSniperHoneyviperCameraAndRasterRows
 ; Checks if stage transition is ready based on enemy and boss state
-Stage4_CheckShiperTransitionReady:                      ; DATA XREF: ROM:0000C876   o  ; was: sub_CB9E
-                bsr.s   Stage4_UpdateShiperCameraAndRasterRows
+Stage4_CheckSniperHoneyviperTransitionReady:            ; DATA XREF: ROM:0000C876   o  ; was: sub_CB9E
+                bsr.s   Stage4_UpdateSniperHoneyviperCameraAndRasterRows
                 tst.w   (GameplayExitMode).w
-                bne.s   Stage4_CheckShiperTransitionReady_Return
+                bne.s   Stage4_CheckSniperHoneyviperTransitionReady_Return
                 tst.w   (ScriptedInputActive).w
-                bne.s   Stage4_CheckShiperTransitionReady_Return
+                bne.s   Stage4_CheckSniperHoneyviperTransitionReady_Return
                 move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
                 bra.w   Stage_StartInterstageTransition
 ; ---------------------------------------------------------------------------
-Stage4_CheckShiperTransitionReady_Return:               ; CODE XREF: Stage4_CheckShiperTransitionReady+6   j  ; was: locret_CBB8
+Stage4_CheckSniperHoneyviperTransitionReady_Return:     ; CODE XREF: Stage4_CheckSniperHoneyviperTransitionReady+6   j  ; was: locret_CBB8
                                         ; Stage_CheckTransitionReady+C   j
                 rts
-; End of function Stage4_CheckShiperTransitionReady
+; End of function Stage4_CheckSniperHoneyviperTransitionReady
 ; Updates automatic stage scrolling and checks for phase transition
 Stage5_InitializeScrollState:                           ; DATA XREF: ROM:0000C878   o  ; was: sub_CBBA
                 addq.w  #2,(StageStateOffset).w

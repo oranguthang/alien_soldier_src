@@ -46,10 +46,10 @@ Boss_ShellshogunGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_1
                 dc.l    SharedBossMappingData2020       ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
-Boss_ShiperAssetSet:    dc.w    $24                     ; field_0  ; was: stru_113AA
-                                        ; DATA XREF: Stage4_InitializeShiperEncounter   o
+Boss_SniperHoneyviperAssetSet:  dc.w    $24             ; field_0  ; was: stru_113AA
+                                        ; DATA XREF: Stage4_InitializeSniperHoneyviperEncounter   o
                 dc.l    0                               ; field_2
-                dc.l    Boss_ShiperPaletteCommand       ; field_6
+                dc.l    Boss_SniperHoneyviperPaletteCommand  ; field_6
 Boss_MadamBarbarAssetSet:   dc.w    $118                ; field_0  ; was: stru_113B4
                                         ; DATA XREF: Stage5_InitializeMadamBarbarEncounter   o
                 dc.l    Boss_MadamBarbarGraphicsLoadList  ; field_2

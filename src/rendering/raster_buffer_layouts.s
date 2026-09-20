@@ -73,7 +73,7 @@ RasterBuffer_CopyFliesLayout:                           ; DATA XREF: ROM:00029E4
 ; End of function RasterBuffer_CopyFliesLayout
 ; Copies one raster control word into its active slot
 RasterBuffer_CopyControlWord:                           ; DATA XREF: ROM:00029E48   o  ; was: sub_29EC8
-                move.w  (ShiperRasterControl).w,(ActiveRasterBuffer).w
+                move.w  (SniperHoneyviperRasterControl).w,(ActiveRasterBuffer).w
                 rts
 ; End of function RasterBuffer_CopyControlWord
 ; Copies the Flying Neo raster layout

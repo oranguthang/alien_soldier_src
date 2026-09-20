@@ -16,7 +16,7 @@
 ; Segment type: Pure code
 ; segment "ROM"
 ; ROM segment
-Sys_VectorTable:    dc.l    $FFFFFF00                   ; DATA XREF: ROM:Boss_ShiperAssetSet   o  ; was: dword_0
+Sys_VectorTable:    dc.l    $FFFFFF00                   ; DATA XREF: ROM:Boss_SniperHoneyviperAssetSet   o  ; was: dword_0
                                         ; ROM:Boss_FlyingNeoAssetSet   o
                 dc.l    Reset
                 dc.l    BusErr

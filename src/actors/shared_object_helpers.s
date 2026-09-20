@@ -44,7 +44,7 @@ Projectile_PrepareImpactSpawnAfterDelay:                ; CODE XREF: Enemy_ShipS
                 move.w  #$FFFF,(ExplosionSoundDelay).w
 ; End of function Projectile_PrepareImpactSpawnAfterDelay
 ; Finds a free slot, selects one of two impact-frame tables, and reports success in Z
-Projectile_PrepareImpactSpawn:                          ; CODE XREF: Boss_ShiperSpawnDebris+6   p  ; was: sub_2A39C
+Projectile_PrepareImpactSpawn:                          ; CODE XREF: Boss_SniperHoneyviperSpawnDebris+6   p  ; was: sub_2A39C
                                         ; Boss_AntroidSpawnRamDebris+8   p
                 move.w  (FrameCounter).w,d0
                 move.w  d0,d1
@@ -275,7 +275,7 @@ Sprite_InitType58Default:
 ; End of function Sprite_InitType58Default
 ; Initializes object type 58 from the table in a1
 Sprite_InitType58FromTable:                             ; CODE XREF: Projectile_SpawnFourDirectional+1E   p  ; was: sub_2A64C
-                                        ; Boss_ShiperSpawnDebris+E   p
+                                        ; Boss_SniperHoneyviperSpawnDebris+E   p
                 bsr.w   Sprite_InitFromTable
                 move.w  #$58,(a0)                       ; 'X'
                 rts

@@ -22,42 +22,42 @@ Player_DispatchScriptedInputState:                      ; CODE XREF: Player_Upda
                 move.w  d0,(ScriptedPlayerWorldX).w
                 move.w  (PlayerScriptStateOffset).w,d0
                 movea.w PlayerScript_StateHandlerOffsets(pc,d0.w),a0
-                adda.l  #PlayerScript_InitializePostShiperRunState02,a0
+                adda.l  #PlayerScript_InitializePostSniperHoneyviperRunState02,a0
                 jmp     (a0)
 ; End of function Player_DispatchScriptedInputState
 ; ---------------------------------------------------------------------------
-PlayerScript_StateHandlerOffsets:   dc.w    PlayerScript_NoOpAndSharedReturn-PlayerScript_InitializePostShiperRunState02  ; was: off_19A34
+PlayerScript_StateHandlerOffsets:   dc.w    PlayerScript_NoOpAndSharedReturn-PlayerScript_InitializePostSniperHoneyviperRunState02  ; was: off_19A34
                                         ; DATA XREF: Player_DispatchScriptedInputState+18   r
-                dc.w    PlayerScript_InitializePostShiperRunState02-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_InitializePostTerobusterRunState04-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_WaitForStatusClearState06-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_WaitForRunDelayState08-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_MoveRightPastTargetState0A-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_HoldRightCThenAdvanceState0C-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_FinishRunAtScreenX200State0E-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_WaitForStatusThenResumeRunState10-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_HoldBState12-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_NoOpAndSharedReturn-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_BeginFlyingNeoApproachState16-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_MoveToFlyingNeoTargetState18-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_InitializeFlyingNeoEntryState1A-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_UpdateFlyingNeoEntryState1C-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_FinishFlyingNeoEntryState1E-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_WaitForXiTigerIntroState20-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_InitializePostBugmaxRunState22-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_WaitForStatusClearState06-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_WaitForRunDelayState08-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_MoveRightPastPostBugmaxTargetState28-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_FinishPostBugmaxRunAtScreenX200State2A-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_WaitForPostBugmaxStatusState2C-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_EmitUpCWhenStatusBit6SetState2E-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_StartViblackPlayerState30-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_InitializePostJampanRunState32-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_FaceRightAndEmitUpCState34-PlayerScript_InitializePostShiperRunState02
-                dc.w    PlayerScript_FaceLeftAndEmitUpCState36-PlayerScript_InitializePostShiperRunState02
+                dc.w    PlayerScript_InitializePostSniperHoneyviperRunState02-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_InitializePostTerobusterRunState04-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_WaitForStatusClearState06-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_WaitForRunDelayState08-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_MoveRightPastTargetState0A-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_HoldRightCThenAdvanceState0C-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_FinishRunAtScreenX200State0E-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_WaitForStatusThenResumeRunState10-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_HoldBState12-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_NoOpAndSharedReturn-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_BeginFlyingNeoApproachState16-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_MoveToFlyingNeoTargetState18-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_InitializeFlyingNeoEntryState1A-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_UpdateFlyingNeoEntryState1C-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_FinishFlyingNeoEntryState1E-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_WaitForXiTigerIntroState20-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_InitializePostBugmaxRunState22-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_WaitForStatusClearState06-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_WaitForRunDelayState08-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_MoveRightPastPostBugmaxTargetState28-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_FinishPostBugmaxRunAtScreenX200State2A-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_WaitForPostBugmaxStatusState2C-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_EmitUpCWhenStatusBit6SetState2E-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_StartViblackPlayerState30-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_InitializePostJampanRunState32-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_FaceRightAndEmitUpCState34-PlayerScript_InitializePostSniperHoneyviperRunState02
+                dc.w    PlayerScript_FaceLeftAndEmitUpCState36-PlayerScript_InitializePostSniperHoneyviperRunState02
 
-; Initialize the post-Shiper scripted run toward world X $1BF8
-PlayerScript_InitializePostShiperRunState02:            ; DATA XREF: Player_DispatchScriptedInputState+1C   o  ; was: sub_19A6C
+; Initialize the post-Sniper Honeyviper scripted run toward world X $1BF8
+PlayerScript_InitializePostSniperHoneyviperRunState02:  ; DATA XREF: Player_DispatchScriptedInputState+1C   o  ; was: sub_19A6C
                                         ; ROM:PlayerScript_StateHandlerOffsets   o
                 move.w  #$1BF8,(ScriptedInputTargetX).w
                 move.w  #$16,(ScriptedInputDelay).w
@@ -66,7 +66,7 @@ PlayerScript_InitializePostShiperRunState02:            ; DATA XREF: Player_Disp
                 move.w  #2,(ScriptedInputActive).w
                 move.w  #$100,(ScriptedInputTimeout).w
                 rts
-; End of function PlayerScript_InitializePostShiperRunState02
+; End of function PlayerScript_InitializePostSniperHoneyviperRunState02
 ; Initialize the post-Terobuster scripted run toward world X $12C0
 PlayerScript_InitializePostTerobusterRunState04:        ; DATA XREF: ROM:00019A38   o  ; was: sub_19A90
                 move.w  #$12C0,(ScriptedInputTargetX).w

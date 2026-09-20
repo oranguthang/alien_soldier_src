@@ -6,7 +6,7 @@ TransitionEffect_ReplaceOwnerAndClearObjects:           ; CODE XREF: EndingSeque
                 jmp     Object_ClearEntityRecordsExceptTwoTypes
 ; End of function TransitionEffect_ReplaceOwnerAndClearObjects
 ; Spawns the alternate transition object at the current object's position
-AlternateTransition_SpawnAtOwner:                       ; CODE XREF: Boss_ShiperDefeatSequence+58   p  ; was: sub_2690E
+AlternateTransition_SpawnAtOwner:                       ; CODE XREF: Boss_SniperHoneyviperDefeatSequence+58   p  ; was: sub_2690E
                                         ; Boss_TerobusterDefeatFadeState+38   p
                 movea.w #(SecondaryEntityType-M68K_RAM),a0
                 move.w  #$354,(a0)

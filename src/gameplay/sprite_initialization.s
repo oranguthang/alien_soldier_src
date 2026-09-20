@@ -34,7 +34,7 @@ Effect_RandomVerticalVelocityTable: dc.l    $FFFE8000, $FFFF8000, $8000, $18000 
 
 ; Clears specific flags from object buffer
 Sprite_ClearObjectFlags:                                ; CODE XREF: Boss_JetsripperDeathInit+A   p  ; was: sub_1B980
-                                        ; Boss_ShiperBeginDefeat+6   p
+                                        ; Boss_SniperHoneyviperBeginDefeat+6   p
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 moveq   #$3C,d7                         ; '<'
                 move.b  #$92,d0
@@ -50,7 +50,7 @@ Sprite_ClearObjectFlags_Next:                           ; CODE XREF: Sprite_Clea
 ; End of function Sprite_ClearObjectFlags
 ; Initializes a group of objects from a terminated descriptor table
 Object_InitGroupFromTable:                              ; CODE XREF: Object_InitGroupFromTable+42   j  ; was: sub_1B9A0
-                                        ; Boss_ShiperInitializeEncounterEntities+136   p
+                                        ; Boss_SniperHoneyviperInitializeEncounterEntities+136   p
                 move.w  (a1)+,d0
                 cmpi.w  #$FFFE,d0
                 bne.s   Object_InitGroupFromTable_InitializeEntry
@@ -96,8 +96,8 @@ Boss_ShellshogunObjectInitTable:    dc.w    $C620, $5014, $E61A, $E61A, $E818, $
                 dc.w    $CD40, $5020, $F808, $F808, $F808, $F808, $5005
                 dc.w    $CE00, $1020, $F808, $F808, 0, 0, 5
                 dc.w    $FFFE
-Boss_ShiperObjectInitTable: dc.w    $C620, $5008, $C808, $E214, $C808, $E214, $3C00  ; was: word_1BA9E
-                                        ; DATA XREF: Boss_ShiperInitializeEncounterEntities+130   o
+Boss_SniperHoneyviperObjectInitTable:   dc.w    $C620, $5008, $C808, $E214, $C808, $E214, $3C00  ; was: word_1BA9E
+                                        ; DATA XREF: Boss_SniperHoneyviperInitializeEncounterEntities+130   o
                 dc.w    $C680, $5008, $C000, $D81C, $C000, $D81C, $3C00
                 dc.w    $CB60, $5020, $F40C, $F40C, $FA06, $FA06, $7F05
                 dc.w    $CAA0, $5020, $F40C, $F40C, $F808, $F808, $7F05

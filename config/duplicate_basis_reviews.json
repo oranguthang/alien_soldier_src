@@ -478,17 +478,17 @@
       ]
     },
     {
-      "basis": "Boss_ShiperTentacleDirectionFrames selects this tentacle mapping through one of its eight indexed longword slots; the suffix records mapping ROM order, not a direction or visual pose.",
-      "reason": "The sole source references to all eight mapping definitions are the eight dc.l entries of Boss_ShiperTentacleDirectionFrames, in slot order 04/03/02/01/00/07/06/05. Boss_ShiperUpdateTentaclesAndChainParts loads that table into a1, masks each of two angles with $E0, shifts by three to obtain byte offsets 0 through $1C, and copies the selected longword to the two tentacle part mapping fields $1E8 and $2A8. Each mapping is a one-sprite record with a high-bit first command. This proves table membership and source ownership, not visual direction names or that all eight slots are reached at runtime.",
+      "basis": "Boss_SniperHoneyviperTentacleDirectionFrames selects this tentacle mapping through one of its eight indexed longword slots; the suffix records mapping ROM order, not a direction or visual pose.",
+      "reason": "The sole source references to all eight mapping definitions are the eight dc.l entries of Boss_SniperHoneyviperTentacleDirectionFrames, in slot order 04/03/02/01/00/07/06/05. Boss_SniperHoneyviperUpdateTentaclesAndChainParts loads that table into a1, masks each of two angles with $E0, shifts by three to obtain byte offsets 0 through $1C, and copies the selected longword to the two tentacle part mapping fields $1E8 and $2A8. Each mapping is a one-sprite record with a high-bit first command. This proves table membership and source ownership, not visual direction names or that all eight slots are reached at runtime.",
       "members": [
-        {"address":"0x0EB9EA","current_name":"Boss_ShiperTentacleSpriteMapping00","file":"src/data/shiper_tentacle_sprite_mappings.s"},
-        {"address":"0x0EB9F0","current_name":"Boss_ShiperTentacleSpriteMapping01","file":"src/data/shiper_tentacle_sprite_mappings.s"},
-        {"address":"0x0EB9F6","current_name":"Boss_ShiperTentacleSpriteMapping02","file":"src/data/shiper_tentacle_sprite_mappings.s"},
-        {"address":"0x0EB9FC","current_name":"Boss_ShiperTentacleSpriteMapping03","file":"src/data/shiper_tentacle_sprite_mappings.s"},
-        {"address":"0x0EBA02","current_name":"Boss_ShiperTentacleSpriteMapping04","file":"src/data/shiper_tentacle_sprite_mappings.s"},
-        {"address":"0x0EBA08","current_name":"Boss_ShiperTentacleSpriteMapping05","file":"src/data/shiper_tentacle_sprite_mappings.s"},
-        {"address":"0x0EBA0E","current_name":"Boss_ShiperTentacleSpriteMapping06","file":"src/data/shiper_tentacle_sprite_mappings.s"},
-        {"address":"0x0EBA14","current_name":"Boss_ShiperTentacleSpriteMapping07","file":"src/data/shiper_tentacle_sprite_mappings.s"}
+        {"address":"0x0EB9EA","current_name":"Boss_SniperHoneyviperTentacleSpriteMapping00","file":"src/data/sniper_honeyviper_tentacle_sprite_mappings.s"},
+        {"address":"0x0EB9F0","current_name":"Boss_SniperHoneyviperTentacleSpriteMapping01","file":"src/data/sniper_honeyviper_tentacle_sprite_mappings.s"},
+        {"address":"0x0EB9F6","current_name":"Boss_SniperHoneyviperTentacleSpriteMapping02","file":"src/data/sniper_honeyviper_tentacle_sprite_mappings.s"},
+        {"address":"0x0EB9FC","current_name":"Boss_SniperHoneyviperTentacleSpriteMapping03","file":"src/data/sniper_honeyviper_tentacle_sprite_mappings.s"},
+        {"address":"0x0EBA02","current_name":"Boss_SniperHoneyviperTentacleSpriteMapping04","file":"src/data/sniper_honeyviper_tentacle_sprite_mappings.s"},
+        {"address":"0x0EBA08","current_name":"Boss_SniperHoneyviperTentacleSpriteMapping05","file":"src/data/sniper_honeyviper_tentacle_sprite_mappings.s"},
+        {"address":"0x0EBA0E","current_name":"Boss_SniperHoneyviperTentacleSpriteMapping06","file":"src/data/sniper_honeyviper_tentacle_sprite_mappings.s"},
+        {"address":"0x0EBA14","current_name":"Boss_SniperHoneyviperTentacleSpriteMapping07","file":"src/data/sniper_honeyviper_tentacle_sprite_mappings.s"}
       ]
     },
     {

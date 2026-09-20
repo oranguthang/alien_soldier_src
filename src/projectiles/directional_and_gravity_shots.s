@@ -381,7 +381,7 @@ Projectile_DelayedCollisionShotDescriptorTable: dc.l    Projectile_AimedDelayedC
 
 ; Initialize the aimed delayed-collision-shot descriptor
 Projectile_InitializeAimedDelayedCollisionShot:         ; CODE XREF: Enemy_SpawnDifficultyProjectilePattern+1E   p  ; was: sub_2B4BE
-                                        ; Projectile_ShiperOscillatingShot+3A   p
+                                        ; Projectile_SniperHoneyviperOscillatingShot+3A   p
                 lea     Projectile_AimedDelayedCollisionShotDescriptor(pc),a4
                 nop
 Projectile_InitializeDelayedCollisionShotFromDescriptor:  ; CODE XREF: Boss_DestroyerMK2SpawnProjectedShot+14   j  ; was: loc_2B4C4
