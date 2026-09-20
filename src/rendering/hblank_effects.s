@@ -28,11 +28,11 @@ VBlank_Epsilon1ScrollEffect_ApplyRegisters:             ; CODE XREF: VBlank_Epsi
                 rts
 ; End of function VBlank_Epsilon1ScrollEffect
 ; ---------------------------------------------------------------------------
-HBlank_ApplyEpsilon1VScrollAndPlaneMode_InstallList:    dc.w    0  ; field_0  ; was: stru_19CC
+HBlank_ApplyEpsilon1VScrollAndPlaneMode_InstallList:    dc.w    0  ; LoadFuncToRAM  ; was: stru_19CC
                                         ; DATA XREF: VBlank_Epsilon1ScrollEffect+14   o
-                dc.l    HBlank_ApplyEpsilon1VScrollAndPlaneMode_CopyLength  ; field_2
-                dc.w    $EE00                           ; field_6
-                dc.w    $FFFF
+                dc.l    HBlank_ApplyEpsilon1VScrollAndPlaneMode_CopyLength  ; ROM source
+                dc.w    $EE00                           ; RAM destination
+                dc.w    $FFFF                           ; end of list
 HBlank_ApplyEpsilon1VScrollAndPlaneMode_CopyLength: dc.w    $200  ; DATA XREF: ROM:HBlank_ApplyEpsilon1VScrollAndPlaneMode_InstallList   o  ; was: word_19D6
 
 ; Writes the computed vertical scroll to VSRAM slot 2, then switches
@@ -184,11 +184,11 @@ VBlank_InitZLeoRasterEffect_UpdateRegisters:            ; CODE XREF: VBlank_Init
                 rts
 ; End of function VBlank_InitZLeoRasterEffect
 ; ---------------------------------------------------------------------------
-HBlank_ApplyZLeoRasterCommands_InstallList: dc.w    0   ; field_0  ; was: stru_1B6E
+HBlank_ApplyZLeoRasterCommands_InstallList: dc.w    0   ; LoadFuncToRAM  ; was: stru_1B6E
                                         ; DATA XREF: VBlank_InitZLeoRasterEffect+12   o
-                dc.l    HBlank_ApplyZLeoRasterCommands_CopyLength  ; field_2
-                dc.w    $EE00                           ; field_6
-                dc.w    $FFFF
+                dc.l    HBlank_ApplyZLeoRasterCommands_CopyLength  ; ROM source
+                dc.w    $EE00                           ; RAM destination
+                dc.w    $FFFF                           ; end of list
 HBlank_ApplyZLeoRasterCommands_CopyLength:  dc.w    $200  ; DATA XREF: ROM:HBlank_ApplyZLeoRasterCommands_InstallList   o  ; was: word_1B78
 
 ; Consumes Z-Leo's VDP-control and VScroll command stream after a fixed delay
@@ -283,11 +283,11 @@ VBlank_InitSevenForcesWindowEffect_UpdateRegisters:     ; CODE XREF: VBlank_Init
                 rts
 ; End of function VBlank_InitSevenForcesWindowEffect
 ; ---------------------------------------------------------------------------
-HBlank_SetWindowPositionAfterDelay_InstallList: dc.w    0  ; field_0  ; was: stru_1C6C
+HBlank_SetWindowPositionAfterDelay_InstallList: dc.w    0  ; LoadFuncToRAM  ; was: stru_1C6C
                                         ; DATA XREF: VBlank_InitSevenForcesWindowEffect+12   o
-                dc.l    HBlank_SetWindowPositionAfterDelay_CopyLength  ; field_2
-                dc.w    $EE00                           ; field_6
-                dc.w    $FFFF
+                dc.l    HBlank_SetWindowPositionAfterDelay_CopyLength  ; ROM source
+                dc.w    $EE00                           ; RAM destination
+                dc.w    $FFFF                           ; end of list
 HBlank_SetWindowPositionAfterDelay_CopyLength:  dc.w    $200  ; DATA XREF: ROM:HBlank_SetWindowPositionAfterDelay_InstallList   o  ; was: word_1C76
 
 ; Writes VDP register 17 ($910A) and register 18 ($9200) after a fixed delay

@@ -1512,3 +1512,14 @@ uses, with sixty reviewed and 141 open. The pinned emulator checkout passes
 `make verify-toolchain`, but the existing runtime scenarios do not capture the
 seven provisional `NAME-003` bosses. No late-game replay was run in this
 low-memory pass, so those identities remain hypotheses.
+
+The HBlank fixed-copy audit corrected six related claims. Three operation-zero
+install lists point at source words `$0019D6`, `$001B78`, and `$001C76`, each
+containing `$200`, and target RAM `$FFFFEE00`. `LoadFuncToRAM` divides that
+byte count by four and copies 128 longwords. It does not stop at the HBlank
+handler's `RTE`: the first source range `$0019D8..$001BD7` includes the next
+install list at `$001B6E`, and the second `$001B7A..$001D79` includes the next
+at `$001C6C`. Source comments now name operation, source, destination, and
+terminator instead of inherited `field_0/2/6` labels. An exact-member review
+and lightweight test pin the three copy-length records. The queue remains
+201 repeated groups across 862 uses, with sixty-one reviewed and 140 open.

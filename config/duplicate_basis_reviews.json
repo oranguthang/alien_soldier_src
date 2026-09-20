@@ -923,6 +923,15 @@
         {"address":"0x0EB542","current_name":"Stage18_SegmentedWormSpriteMapping10","file":"src/data/stage_combat_object_sprite_mappings.s"},
         {"address":"0x0EB54E","current_name":"Stage18_SegmentedWormSpriteMapping11","file":"src/data/stage_combat_object_sprite_mappings.s"}
       ]
+    },
+    {
+      "basis": "LoadFuncToRAM reads this $200 source word as a byte count and copies 512 bytes starting at the following ROM byte to RAM $FFFFEE00; RTE does not terminate the fixed copy.",
+      "reason": "Each of the three install lists has operation 0, a pointer to its own $200 source word, destination $EE00, and $FFFF terminator. LoadObjData operation 0 selects LoadFuncToRAM, which shifts the source word right by two and executes 128 longword copies. The source ranges start at $0019D8, $001B7A, and $001C78; the first two 512-byte ranges extend across the next install list. These are exact fixed-copy fields, not disassembled handler extents.",
+      "members": [
+        {"address":"0x0019D6","current_name":"HBlank_ApplyEpsilon1VScrollAndPlaneMode_CopyLength","file":"src/rendering/hblank_effects.s"},
+        {"address":"0x001B78","current_name":"HBlank_ApplyZLeoRasterCommands_CopyLength","file":"src/rendering/hblank_effects.s"},
+        {"address":"0x001C76","current_name":"HBlank_SetWindowPositionAfterDelay_CopyLength","file":"src/rendering/hblank_effects.s"}
+      ]
     }
   ]
 }
