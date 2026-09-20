@@ -1329,3 +1329,16 @@ shared sentence naming Stage 18 as a direct consumer had no matching source
 installation; it was removed from the records and became the 98th rejected
 generic basis. The valid structural sentence now has an exact-member review.
 The queue falls to 219 groups across 916 uses: forty-three reviewed, 176 open.
+
+The Xi-Tiger rotation-frame group now has an exact-member review. Its four
+eight-pointer tables A/C traverse rotation set A forward/reverse, while B/D
+do the same for set B. All four appear in the metasprite descriptor array
+passed by `Boss_XiTigerSetup` to the linked-part initializer; ROM-order
+suffixes do not assert screen direction. A separate review pins four pose
+initialization wrappers at `$0507DC/$051808/$051A9C/$056238`: each passes
+`$12` in D7 and the shared pattern workspace to the same byte-to-word
+initializer. The `dbf` loop therefore initializes nineteen channels, each
+with a zero delta. The original Valkirie debug-viewer wrapper uses `$10`
+instead and is deliberately excluded. Focused regression tests pin the
+tables, callers, wrapper instructions, and shared loop. The queue remains
+219 groups across 916 uses: forty-five reviewed, 174 open.

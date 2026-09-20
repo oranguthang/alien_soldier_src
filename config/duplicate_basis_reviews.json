@@ -766,6 +766,26 @@
         {"address":"0x1A0CB2","current_name":"SharedProjectileSpriteMappingC","file":"src/data/shared_stage_object_sprite_mappings.s"},
         {"address":"0x1A0CB8","current_name":"SharedProjectileSpriteMappingD","file":"src/data/shared_stage_object_sprite_mappings.s"}
       ]
+    },
+    {
+      "basis": "Xi-Tiger's descriptors reference this directional mapping-pointer table.",
+      "reason": "Boss_XiTigerSetup passes Boss_XiTigerMetaspriteDescriptors to Sprite_InitializeLinkedMetaspriteParts, whose rotation-frame branch stores the table pointer. That descriptor list references all four A-D tables, sometimes with high-bit attributes. Each table holds eight longword mapping pointers: A and C traverse Xi-Tiger rotation set A in ascending and descending order, while B and D do the same for set B. The suffixes record ROM order, not a visual direction.",
+      "members": [
+        {"address":"0x034C64","current_name":"Boss_XiTigerRotationFramesA","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"},
+        {"address":"0x034C84","current_name":"Boss_XiTigerRotationFramesB","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"},
+        {"address":"0x034CA4","current_name":"Boss_XiTigerRotationFramesC","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"},
+        {"address":"0x034CC4","current_name":"Boss_XiTigerRotationFramesD","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"}
+      ]
+    },
+    {
+      "basis": "The wrapper supplies D7 value eighteen and the shared interpolation workspace to Anim_InitializePoseChannelsFromBytes.",
+      "reason": "Each of the four reviewed wrappers executes moveq #$12,d7, points a1 at SharedPatternRow0Long0, and tail-jumps to Anim_InitializePoseChannelsFromBytes with source bytes in a0. The shared routine writes one shifted word and one zero-delta word per source byte, then dbf d7 repeats: an initial $12 means nineteen channels. One original Valkirie viewer wrapper instead passes $10 and is deliberately not included.",
+      "members": [
+        {"address":"0x0507DC","current_name":"Boss_WolfGaropaInitializePoseChannels","file":"src/projectiles/wolf_garopa.s"},
+        {"address":"0x051808","current_name":"Debug_ValkirieSecondaryViewerInitializePoseChannels","file":"src/debug/valkirie_secondary_composite_viewer.s"},
+        {"address":"0x051A9C","current_name":"Debug_ValkirieTertiaryViewerInitializePoseChannels","file":"src/debug/valkirie_tertiary_composite_viewer.s"},
+        {"address":"0x056238","current_name":"Boss_ValkirieInitializePoseChannels","file":"src/bosses/valkirie_rendering.s"}
+      ]
     }
   ]
 }

@@ -2460,6 +2460,126 @@ class SemanticAuditQueueTests(unittest.TestCase):
             helper,
         )
 
+    def test_xi_tiger_rotation_review_pins_both_reversed_frame_sets(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item for item in reviews
+            if item["basis"] == (
+                "Xi-Tiger's descriptors reference this directional "
+                "mapping-pointer table."
+            )
+        )
+        names = [f"Boss_XiTigerRotationFrames{suffix}" for suffix in "ABCD"]
+        self.assertEqual(
+            [
+                (f"0x{address:06X}", name,
+                 "src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s")
+                for address, name in zip(
+                    (0x34C64, 0x34C84, 0x34CA4, 0x34CC4), names
+                )
+            ],
+            [
+                (item["address"], item["current_name"], item["file"])
+                for item in review["members"]
+            ],
+        )
+        source = (
+            ROOT / "src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"
+        ).read_text(encoding="utf-8")
+        tables = []
+        for name in names:
+            block = re.search(
+                rf"(?ms)^{name}:(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                source,
+            )
+            self.assertIsNotNone(block)
+            pointers = re.findall(r"\bdc\.l\s+([A-Za-z_]\w+)", block.group(1))
+            self.assertEqual(8, len(pointers))
+            tables.append(pointers)
+        self.assertEqual(tables[0], list(reversed(tables[2])))
+        self.assertEqual(tables[1], list(reversed(tables[3])))
+        for table, set_name in zip(tables, "ABAB"):
+            self.assertTrue(
+                all(pointer.startswith(f"Boss_XiTigerRotationSet{set_name}Frame")
+                    for pointer in table)
+            )
+        descriptors = source.split("Boss_XiTigerMetaspriteDescriptors:", 1)[1].split(
+            "Boss_XiTigerPartRadii:", 1
+        )[0]
+        for name in names:
+            self.assertRegex(descriptors, rf"\bdc\.l\s+{name}(?:\+\$[0-9A-F]+)?\b")
+        core = (ROOT / "src/bosses/xi_tiger_battle_states.s").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("movea.l #Boss_XiTigerMetaspriteDescriptors,a0", core)
+        self.assertIn("jsr     (Sprite_InitializeLinkedMetaspriteParts).l", core)
+        helper = (ROOT / "src/rendering/boss_metasprites.s").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("move.l  d4,$4C(a4)", helper)
+
+    def test_pose_channel_review_pins_nineteen_channel_wrappers(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item for item in reviews
+            if item["basis"] == (
+                "The wrapper supplies D7 value eighteen and the shared "
+                "interpolation workspace to Anim_InitializePoseChannelsFromBytes."
+            )
+        )
+        expected = (
+            ("0x0507DC", "Boss_WolfGaropaInitializePoseChannels",
+             "src/projectiles/wolf_garopa.s"),
+            ("0x051808", "Debug_ValkirieSecondaryViewerInitializePoseChannels",
+             "src/debug/valkirie_secondary_composite_viewer.s"),
+            ("0x051A9C", "Debug_ValkirieTertiaryViewerInitializePoseChannels",
+             "src/debug/valkirie_tertiary_composite_viewer.s"),
+            ("0x056238", "Boss_ValkirieInitializePoseChannels",
+             "src/bosses/valkirie_rendering.s"),
+        )
+        self.assertEqual(
+            list(expected),
+            [
+                (item["address"], item["current_name"], item["file"])
+                for item in review["members"]
+            ],
+        )
+        for _, name, path in expected:
+            with self.subTest(name=name):
+                source = (ROOT / path).read_text(encoding="utf-8")
+                wrapper = source.split(name + ":", 1)[1].split(
+                    "; End of function " + name, 1
+                )[0]
+                self.assertRegex(
+                    wrapper,
+                    r"(?s)moveq\s+#\$12,d7.*?"
+                    r"movea\.w #\(SharedPatternRow0Long0-M68K_RAM\),a1.*?"
+                    r"jmp\s+Anim_InitializePoseChannelsFromBytes",
+                )
+        helper = (ROOT / "src/rendering/boss_metasprites.s").read_text(
+            encoding="utf-8"
+        ).split("Anim_InitializePoseChannelsFromBytes:", 1)[1].split(
+            "; End of function Anim_InitializePoseChannelsFromBytes", 1
+        )[0]
+        for instruction in (
+            "moveq   #0,d1", "move.b  (a0)+,d0", "asl.w   #8,d0",
+            "move.w  d0,(a1)+", "move.w  d1,(a1)+",
+            "dbf     d7,Anim_InitializePoseChannelsFromBytesNextChannel",
+        ):
+            self.assertIn(instruction, helper)
+        original_viewer = (
+            ROOT / "src/debug/valkirie_composite_viewer.s"
+        ).read_text(encoding="utf-8").split(
+            "Debug_ValkirieViewerInitializePoseChannels:", 1
+        )[1].split(
+            "; End of function Debug_ValkirieViewerInitializePoseChannels", 1
+        )[0]
+        self.assertIn("moveq   #$10,d7", original_viewer)
+
     def test_shared_projectile_mapping_review_pins_three_timing_streams(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
