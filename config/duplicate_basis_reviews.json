@@ -1214,6 +1214,46 @@
         {"address":"0x02B2EE","current_name":"Projectile_TwoSpeedShotReturn","file":"src/projectiles/directional_and_gravity_shots.s"},
         {"address":"0x02B43A","current_name":"Projectile_Type254TwoSpeedShotReturn","file":"src/projectiles/directional_and_gravity_shots.s"}
       ]
+    },
+    {
+      "basis": "Both completion paths continue from here into the recurring Sirene camera-shake update.",
+      "reason": "Stage_SevenForcesAdvanceSireneShake and Stage_SevenForcesFinishSireneShake each contain an unconditional BRA to Stage_SevenForcesUpdateSireneShake. Both are also branch targets when SceneSequenceFlags is clear. The first transition otherwise queues sound and moves the player, whereas the second arms SevenForcesTimer; the shared claim covers only the camera-shake continuation.",
+      "members": [
+        {"address":"0x00EA02","current_name":"Stage_SevenForcesAdvanceSireneShake","file":"src/stages/seven_forces_stage_states.s"},
+        {"address":"0x00EA20","current_name":"Stage_SevenForcesFinishSireneShake","file":"src/stages/seven_forces_stage_states.s"}
+      ]
+    },
+    {
+      "basis": "Both ordinary and wrapped source-pointer paths converge here before continuing the 52-byte row.",
+      "reason": "The left and right completed-logo loops each initialize d5=$33, so DBF admits 52 source-byte iterations per row. Each ContinueSource label executes DBF d5 to its own NextSourceByte label. The left loop decrements a0 and wraps it by -$78; the right increments a0 and wraps it by +$78, so the shared sentence covers only the convergence and row count.",
+      "members": [
+        {"address":"0x005060","current_name":"StoryTitle_CompletedLogoLeftContinueSource","file":"src/cutscenes/story_screen_and_title_transition.s"},
+        {"address":"0x0050CC","current_name":"StoryTitle_CompletedLogoRightContinueSource","file":"src/cutscenes/story_screen_and_title_transition.s"}
+      ]
+    },
+    {
+      "basis": "Both pose-cursor anchor choices converge here to copy the selected linked-object pointer into fields $48/$4A before updating parts.",
+      "reason": "Both Madam Barbar Anchor labels set the chosen linked object's Y word $14(a0) to $C8, copy a0 into $48(a5) and $4A(a5), then branch to Boss_MadamBarbarUpdateParts. The left-side selector chooses between entities 26/27 at pose offsets 8/$C, while the right-side selector chooses 28/29 at 4/$10. The shared claim does not merge those candidate lists.",
+      "members": [
+        {"address":"0x03A856","current_name":"Boss_MadamBarbarAnchorPlayerLeftSidePose","file":"src/bosses/madam_barbar_core.s"},
+        {"address":"0x03A8D2","current_name":"Boss_MadamBarbarAnchorPlayerRightSidePose","file":"src/bosses/madam_barbar_core.s"}
+      ]
+    },
+    {
+      "basis": "Both prefixed and ordinary commands converge here to read the control word and test stop marker $FFFE.",
+      "reason": "Madam Barbar and Joker each branch around an optional $80 sound-command prefix to a ReadPoseControlWord label, or consume that prefix and fall through to the same label. Each label reads (a1,d0.w) into d3, compares it with $FFFE, stores the stop word in $58(a5), and returns when equal. Their later loop-command and interpolation paths remain separate.",
+      "members": [
+        {"address":"0x03AC10","current_name":"Boss_MadamBarbarReadPoseControlWord","file":"src/bosses/madam_barbar_core.s"},
+        {"address":"0x03BCE0","current_name":"Boss_JokerReadPoseControlWord","file":"src/bosses/joker_rendering.s"}
+      ]
+    },
+    {
+      "basis": "Both slot-selection paths converge here to bind the active part, align its Y coordinate, and render the metasprite.",
+      "reason": "Terobuster missile attacks A and B each choose between SixthEntityType and EleventhEntityType according to $A(a5) and pose-cursor thresholds. Their BindPart labels perform the same four instructions: store a0 in $48(a5) and $4A(a5), set Y $14(a0) to $14C, and branch to Boss_TerobusterUpdateMetaspriteAndProjectile. A tests pose range 5..$17 and B tests $10..$1F; the review covers only the common bind and dispatch.",
+      "members": [
+        {"address":"0x038814","current_name":"Boss_TerobusterMissileAttackABindPart","file":"src/bosses/terobuster_core.s"},
+        {"address":"0x0388DE","current_name":"Boss_TerobusterMissileAttackBBindPart","file":"src/bosses/terobuster_core.s"}
+      ]
     }
   ]
 }

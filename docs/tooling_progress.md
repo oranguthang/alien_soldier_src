@@ -1703,3 +1703,14 @@ VRAM destinations, and their second loaded archives do not claim the separate
 unreferenced archives that follow. Focused tests pin table order, source form,
 and archive boundaries without inferring appearance. The queue is now 177
 repeated groups across 808 uses, with ninety-five reviewed and 82 open.
+
+Five paired transition/control bases now have exact-member reviews limited to
+their common instructions: the two Sirene shake continuations, mirrored
+52-source-byte logo rows, Madam Barbar pose anchors, Madam Barbar/Joker pose
+stop-word gates, and Terobuster linked-part binding. Variant-specific timer,
+pointer direction, object slots, and pose ranges remain distinct. Sniper
+Honeyviper's opposite-signed braking returns and Bugmax's spread/sine volley
+returns were instead given four address-specific explanations. Five focused
+tests check the shared instructions and the differing conditions. The queue
+is 175 repeated groups across 804 uses, with one hundred reviewed and 75 open.
+No ROM instructions or gameplay visual claims changed.
