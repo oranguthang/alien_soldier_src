@@ -1749,3 +1749,15 @@ its control flow: pressed bit six with the relevant direction held toggles
 shooting mode before the cooldown test, so nonnegative cooldown alone does not
 always reach the not-activated return. That wording has not been accepted as
 evidence. No ROM instructions or visual claims changed.
+
+Four further grouped reviews separate routine entrypoints from their bodies
+and distinguish similarly shaped data. The horizontal and vertical scroll
+clearers each store four zero longwords per DBF iteration, but start at
+`HScrollBuffer`/`VScrollBuffer` with `$7F`/9 initial counters: 2,048 and 160
+bytes respectively. Valkirie's Y=$140 wrapper calls the active-pair swapper;
+only the wrapper writes the second selected part's Y position afterward.
+Bugmax's spread animation has two two-tick frames, whereas the sine animation
+has four six-tick frames; their separate initializers store the streams in
+object field 8. Three focused tests pin the instructions and member lists.
+The repeated-basis queue is 169 groups across 792 uses, 115 reviewed and 54
+open. No ASM instructions or visual identities changed.

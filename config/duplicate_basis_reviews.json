@@ -1342,6 +1342,38 @@
         {"address":"0x059DA2","current_name":"SevenForcesRotationFrameTable2","file":"src/rendering/seven_forces_metasprites.s"},
         {"address":"0x059E62","current_name":"SevenForcesRotationFrameTable8","file":"src/rendering/seven_forces_metasprites.s"}
       ]
+    },
+    {
+      "basis": "The helper disables the pair stored at offsets $48/$4A, stores d0/d1 as the new pair, and enables both selected part objects.",
+      "reason": "Entity_SelectValkirieActivePartPair is the body that clears bit zero for pointers in $48/$4A(a5), stores d0/d1 into those fields, and sets bit zero on the new pointers. Entity_SelectValkirieActivePartPairAtY140 calls that body and then writes $140 to the second selected part's Y word. The common claim covers the shared call effect, not the wrapper's additional Y placement.",
+      "members": [
+        {"address":"0x055FE6","current_name":"Entity_SelectValkirieActivePartPairAtY140","file":"src/bosses/valkirie_battle.s"},
+        {"address":"0x055FF2","current_name":"Entity_SelectValkirieActivePartPair","file":"src/bosses/valkirie_battle.s"}
+      ]
+    },
+    {
+      "basis": "The loop clears 128 groups of four longwords beginning at HScrollBuffer, exactly the 2,048-byte horizontal-scroll workspace.",
+      "reason": "Gfx_ClearHScrollBuffer initializes a0 to HScrollBuffer, d0 to zero and d1 to $7F; Gfx_ClearHScrollBuffer_Loop is the fall-through body with four postincrement longword stores and DBF. That is 128 iterations times 16 bytes = 2048 bytes, ending at VScrollBuffer ($FFFFEC00). The entry and loop are separate addresses within one routine.",
+      "members": [
+        {"address":"0x0030EC","current_name":"Gfx_ClearHScrollBuffer","file":"src/system/memory_initialization.s"},
+        {"address":"0x0030F6","current_name":"Gfx_ClearHScrollBuffer_Loop","file":"src/system/memory_initialization.s"}
+      ]
+    },
+    {
+      "basis": "The loop clears ten groups of four longwords beginning at VScrollBuffer, exactly the 160-byte vertical-scroll workspace; it does not traverse entity slots.",
+      "reason": "Gfx_ClearVScrollBuffer initializes a0 to VScrollBuffer, d0 to zero and d1 to nine; its loop performs four postincrement longword stores under DBF. Ten iterations cover 160 bytes from $FFFFEC00 through $FFFFEC9F. The entry and loop are separate addresses within the same buffer-clear routine.",
+      "members": [
+        {"address":"0x003104","current_name":"Gfx_ClearVScrollBuffer","file":"src/system/memory_initialization.s"},
+        {"address":"0x00310E","current_name":"Gfx_ClearVScrollBuffer_Loop","file":"src/system/memory_initialization.s"}
+      ]
+    },
+    {
+      "basis": "The named Bugmax projectile initializer stores this relative-offset sprite animation in object field 8, and Anim_ResolveTimedMappingFrame consumes its frame-offset and duration pairs.",
+      "reason": "Projectile_InitBugmaxSpread stores the two-frame, two-tick SpreadSpriteAnimation in 8(a0); Projectile_InitBugmaxSine stores the four-frame, six-tick SineSpriteAnimation there. Anim_ResolveTimedMappingFrame reads the relative frame word and following timer, then advances the sequence cursor. The shared claim is about the storage and consumer format, not identical projectile appearance.",
+      "members": [
+        {"address":"0x0ECBD0","current_name":"Projectile_BugmaxSpreadSpriteAnimation","file":"src/data/bugmax_sprite_mappings.s"},
+        {"address":"0x0ECBDC","current_name":"Projectile_BugmaxSineSpriteAnimation","file":"src/data/bugmax_sprite_mappings.s"}
+      ]
     }
   ]
 }
