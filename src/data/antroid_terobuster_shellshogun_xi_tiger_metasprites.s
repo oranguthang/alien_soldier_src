@@ -194,40 +194,40 @@ Boss_ShellshogunNeutralPose:    dc.w    $40, $6070, $40E0  ; DATA XREF: Boss_She
                 dc.w    $8000, $4000, $7080
                 dc.w    $E080, $A000
 ; Xi-Tiger directional frames and metasprite definition
-Boss_XiTigerRotationFramesA:    dc.l    Boss_XiTigerSpriteMapping01  ; DATA XREF: ROM:00034D16   o  ; was: off_34C64
+Boss_XiTigerRotationFramesA:    dc.l    Boss_XiTigerRotationSetAFrame00  ; DATA XREF: ROM:00034D16   o  ; was: off_34C64
                                         ; ROM:00034D1E   o
-                dc.l    Boss_XiTigerSpriteMapping02
-                dc.l    Boss_XiTigerSpriteMapping03
-                dc.l    Boss_XiTigerSpriteMapping04
-                dc.l    Boss_XiTigerSpriteMapping05
-                dc.l    Boss_XiTigerSpriteMapping06
-                dc.l    Boss_XiTigerSpriteMapping07
-                dc.l    Boss_XiTigerSpriteMapping08
-Boss_XiTigerRotationFramesB:    dc.l    Boss_XiTigerSpriteMapping10  ; DATA XREF: ROM:00034D3E   o  ; was: off_34C84
-                dc.l    Boss_XiTigerSpriteMapping11
-                dc.l    Boss_XiTigerSpriteMapping12
-                dc.l    Boss_XiTigerSpriteMapping13
-                dc.l    Boss_XiTigerSpriteMapping14
-                dc.l    Boss_XiTigerSpriteMapping15
-                dc.l    Boss_XiTigerSpriteMapping16
-                dc.l    Boss_XiTigerSpriteMapping17
-Boss_XiTigerRotationFramesC:    dc.l    Boss_XiTigerSpriteMapping08  ; DATA XREF: ROM:00034D02   o  ; was: off_34CA4
+                dc.l    Boss_XiTigerRotationSetAFrame01
+                dc.l    Boss_XiTigerRotationSetAFrame02
+                dc.l    Boss_XiTigerRotationSetAFrame03
+                dc.l    Boss_XiTigerRotationSetAFrame04
+                dc.l    Boss_XiTigerRotationSetAFrame05
+                dc.l    Boss_XiTigerRotationSetAFrame06
+                dc.l    Boss_XiTigerRotationSetAFrame07
+Boss_XiTigerRotationFramesB:    dc.l    Boss_XiTigerRotationSetBFrame00  ; DATA XREF: ROM:00034D3E   o  ; was: off_34C84
+                dc.l    Boss_XiTigerRotationSetBFrame01
+                dc.l    Boss_XiTigerRotationSetBFrame02
+                dc.l    Boss_XiTigerRotationSetBFrame03
+                dc.l    Boss_XiTigerRotationSetBFrame04
+                dc.l    Boss_XiTigerRotationSetBFrame05
+                dc.l    Boss_XiTigerRotationSetBFrame06
+                dc.l    Boss_XiTigerRotationSetBFrame07
+Boss_XiTigerRotationFramesC:    dc.l    Boss_XiTigerRotationSetAFrame07  ; DATA XREF: ROM:00034D02   o  ; was: off_34CA4
                                         ; ROM:00034D0A   o
-                dc.l    Boss_XiTigerSpriteMapping07
-                dc.l    Boss_XiTigerSpriteMapping06
-                dc.l    Boss_XiTigerSpriteMapping05
-                dc.l    Boss_XiTigerSpriteMapping04
-                dc.l    Boss_XiTigerSpriteMapping03
-                dc.l    Boss_XiTigerSpriteMapping02
-                dc.l    Boss_XiTigerSpriteMapping01
-Boss_XiTigerRotationFramesD:    dc.l    Boss_XiTigerSpriteMapping17  ; DATA XREF: ROM:00034D56   o  ; was: off_34CC4
-                dc.l    Boss_XiTigerSpriteMapping16
-                dc.l    Boss_XiTigerSpriteMapping15
-                dc.l    Boss_XiTigerSpriteMapping14
-                dc.l    Boss_XiTigerSpriteMapping13
-                dc.l    Boss_XiTigerSpriteMapping12
-                dc.l    Boss_XiTigerSpriteMapping11
-                dc.l    Boss_XiTigerSpriteMapping10
+                dc.l    Boss_XiTigerRotationSetAFrame06
+                dc.l    Boss_XiTigerRotationSetAFrame05
+                dc.l    Boss_XiTigerRotationSetAFrame04
+                dc.l    Boss_XiTigerRotationSetAFrame03
+                dc.l    Boss_XiTigerRotationSetAFrame02
+                dc.l    Boss_XiTigerRotationSetAFrame01
+                dc.l    Boss_XiTigerRotationSetAFrame00
+Boss_XiTigerRotationFramesD:    dc.l    Boss_XiTigerRotationSetBFrame07  ; DATA XREF: ROM:00034D56   o  ; was: off_34CC4
+                dc.l    Boss_XiTigerRotationSetBFrame06
+                dc.l    Boss_XiTigerRotationSetBFrame05
+                dc.l    Boss_XiTigerRotationSetBFrame04
+                dc.l    Boss_XiTigerRotationSetBFrame03
+                dc.l    Boss_XiTigerRotationSetBFrame02
+                dc.l    Boss_XiTigerRotationSetBFrame01
+                dc.l    Boss_XiTigerRotationSetBFrame00
 Boss_XiTigerInlineSpriteDescriptorA:    dc.w    $62D4, $500, $F8F8  ; DATA XREF: ROM:00034D3A   o  ; was: word_34CE4
                                         ; ROM:00034D52   o
 Boss_XiTigerInlineSpriteDescriptorB:    dc.w    $62D8, $A00, $F4F4  ; DATA XREF: ROM:00034D06   o  ; was: word_34CEA
@@ -236,17 +236,17 @@ Boss_XiTigerInlineSpriteDescriptorC:    dc.w    $62E1, $A00, $F4F4  ; DATA XREF:
                                         ; ROM:00034D4A   o
 Boss_XiTigerMetaspriteDescriptors:  dc.l    0           ; DATA XREF: Boss_XiTigerSetup+10   o  ; was: dword_34CF6
                 dc.l    Boss_XiTigerGroundedBodyMapping+$400000
-                dc.l    Boss_XiTigerSpriteMapping00+$400000
+                dc.l    Boss_XiTigerDirectDescriptorFrame00+$400000
                 dc.l    Boss_XiTigerRotationFramesC
                 dc.l    Boss_XiTigerInlineSpriteDescriptorB+1
                 dc.l    Boss_XiTigerRotationFramesC
                 dc.l    0
-                dc.l    Boss_XiTigerSpriteMapping00-$7C00000
+                dc.l    Boss_XiTigerDirectDescriptorFrame00-$7C00000
                 dc.l    Boss_XiTigerRotationFramesA+$18000000
                 dc.l    Boss_XiTigerInlineSpriteDescriptorB+1-$8000000
                 dc.l    Boss_XiTigerRotationFramesA+$18000000
                 dc.l    0
-                dc.l    Boss_XiTigerSpriteMapping09+$400000
+                dc.l    Boss_XiTigerDirectDescriptorFrame01+$400000
                 dc.l    0
                 dc.l    Boss_XiTigerRotationFramesA+$18000000
                 dc.l    Boss_XiTigerInlineSpriteDescriptorC+1

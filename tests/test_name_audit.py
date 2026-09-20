@@ -16,6 +16,83 @@ DEFINITION = re.compile(
 
 
 class NameAuditTests(unittest.TestCase):
+    def test_xi_tiger_mapping_names_follow_forward_reverse_tables(self) -> None:
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        reviewed = [
+            record
+            for record in records
+            if re.fullmatch(
+                r"Boss_XiTigerSpriteMapping\d\d", record["previous_name"] or ""
+            )
+        ]
+        self.assertEqual(18, len(reviewed))
+        self.assertEqual(18, len({record["basis"][0] for record in reviewed}))
+        mappings = (ROOT / "src/data/xi_tiger_sprite_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        descriptors = (
+            ROOT / "src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"
+        ).read_text(encoding="utf-8")
+        self.assertNotRegex(
+            mappings + descriptors, r"\bBoss_XiTigerSpriteMapping\d\d\b"
+        )
+        self.assertEqual(
+            {record["current_name"] for record in reviewed},
+            set(
+                re.findall(
+                    r"(?m)^(Boss_XiTiger(?:DirectDescriptorFrame\d\d|RotationSet[AB]Frame\d\d)):",
+                    mappings,
+                )
+            ),
+        )
+        for family, forward, reverse in (
+            ("A", "A", "C"),
+            ("B", "B", "D"),
+        ):
+            for table, expected in (
+                (forward, range(8)),
+                (reverse, reversed(range(8))),
+            ):
+                start = f"Boss_XiTigerRotationFrames{table}:"
+                section = descriptors.split(start, 1)[1].split("\nBoss_", 1)[0]
+                self.assertEqual(
+                    [f"{index:02}" for index in expected],
+                    re.findall(
+                        rf"\bdc\.l\s+Boss_XiTigerRotationSet{family}Frame(\d\d)\b",
+                        section,
+                    ),
+                )
+        descriptor_table = descriptors.split(
+            "Boss_XiTigerMetaspriteDescriptors:", 1
+        )[1].split("Boss_XiTigerPartRadii:", 1)[0]
+        descriptor_entries = [
+            entry.strip()
+            for entry in re.findall(r"\bdc\.l\s+([^;\r\n]+)", descriptor_table)
+        ]
+        self.assertEqual(
+            "Boss_XiTigerDirectDescriptorFrame00+$400000", descriptor_entries[2]
+        )
+        self.assertEqual(
+            "Boss_XiTigerDirectDescriptorFrame00-$7C00000", descriptor_entries[7]
+        )
+        self.assertEqual(
+            "Boss_XiTigerDirectDescriptorFrame01+$400000", descriptor_entries[12]
+        )
+        self.assertEqual(
+            2, descriptor_table.count("Boss_XiTigerDirectDescriptorFrame00")
+        )
+        self.assertEqual(
+            1, descriptor_table.count("Boss_XiTigerDirectDescriptorFrame01")
+        )
+        for name in (
+            "Boss_XiTigerDirectDescriptorFrame00",
+            "Boss_XiTigerDirectDescriptorFrame01",
+        ):
+            rotation_tables = descriptors.split("Boss_XiTigerRotationFramesA:", 1)[
+                1
+            ].split("Boss_XiTigerInlineSpriteDescriptorA:", 1)[0]
+            self.assertNotIn(name, rotation_tables)
+
     def test_jetsripper_mapping_names_follow_segment_tables(self) -> None:
         records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
         reviewed = [

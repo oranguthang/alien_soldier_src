@@ -879,3 +879,13 @@ and exact-address bases. A regression test pins the four, sixteen, four,
 and two pointer orders plus both direct assignments. The old sentence is
 the 64th rejected generic basis. The queue drops to 244 groups across
 1,084 uses: nine reviewed, 235 open.
+
+The 18-way Xi-Tiger mapping basis mixed two direct metasprite-descriptor
+entries with two eight-frame rotation sets. Frames 01-08 are selected by
+forward table A and reverse table C; frames 10-17 by forward B and reverse D.
+The other two mappings occupy descriptor slots 2 and 7, and slot 12, with
+attribute arithmetic; neither belongs to the rotation tables. The source and
+exact-address audit now use role-specific names and per-slot evidence. A
+regression test pins all four eight-pointer orders and three direct descriptor
+references. The old sentence is the 65th rejected generic basis. The queue
+drops to 243 groups across 1,066 uses: nine reviewed, 234 open.

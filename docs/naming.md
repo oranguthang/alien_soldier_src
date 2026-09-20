@@ -72,7 +72,7 @@ time-bonus, 26 message-render, 26 message-script, 20 options-menu, 19
 weapon-selection, 33 weapon-setup loadout, 31 controller/background, 32 boss
 asset-set, 29 graphics-list, 35 asset-set palette-command, and 17 standalone
 or banked palette-command records have since been reviewed. The curated
-`NAME-002` detector now has zero matches across 64 known sentences. A wider
+`NAME-002` detector now has zero matches across 65 known sentences. A wider
 duplicate-basis review is still required before the 1.0 tag; zero matches do
 not prove every explanation or name correct.
 The read-only `make semantic-audit` now counts the wider duplicate queue, and
@@ -115,7 +115,10 @@ and exact-address bases now follow those consumers; the primary table runs
 in reverse ROM order. Jetsripper's 18-way sentence mixed a shared initial
 segment mapping, head/body/tail tables, a direct dive-windup mapping, and a
 two-frame movement cycle; those owners now have separate names and evidence.
-The remaining queue has 235 groups.
+Xi-Tiger's 18-way sentence likewise hid two direct metasprite entries and two
+eight-frame rotation sets, each consumed once forward and once backward. The
+names and exact-address bases now follow those four tables and descriptor
+slots. The remaining queue has 234 groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style
