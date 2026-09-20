@@ -16,6 +16,46 @@ DEFINITION = re.compile(
 
 
 class NameAuditTests(unittest.TestCase):
+    def test_shared_explosion_entries_have_distinct_evidence(self) -> None:
+        records = {
+            record["address"]: record
+            for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        names = (
+            ("0x02A2A2", "Effect_InitSharedExplosionFromCurrent"),
+            ("0x02A2A4", "Effect_InitSharedExplosion"),
+            ("0x02A2C8", "Effect_ConfigureSharedExplosion"),
+        )
+        bases = []
+        for address, name in names:
+            self.assertEqual(name, records[address]["current_name"])
+            self.assertEqual("static", records[address]["evidence"])
+            bases.append(records[address]["basis"][0])
+        self.assertEqual(3, len(set(bases)))
+        self.assertIn("a5 to a0", bases[0])
+        self.assertIn("type $C4", bases[1])
+        self.assertIn("SFX $BC", bases[2])
+
+        source = (ROOT / "src/projectiles/shared_boss_projectiles.s").read_text(
+            encoding="utf-8"
+        )
+        adapter = source.split("Effect_InitSharedExplosionFromCurrent:", 1)[1].split(
+            "Effect_InitSharedExplosion:", 1
+        )[0]
+        initializer = source.split("Effect_InitSharedExplosion:", 1)[1].split(
+            "Effect_ConfigureSharedExplosion:", 1
+        )[0]
+        finisher = source.split("Effect_ConfigureSharedExplosion:", 1)[1].split(
+            "; End of function", 1
+        )[0]
+        self.assertIn("movea.w a5,a0", adapter)
+        self.assertIn("move.w  #$C4,(a0)", initializer)
+        self.assertIn("move.l  #$FFFDC000,$1C(a0)", initializer)
+        self.assertIn("btst    #4,$E(a0)", initializer)
+        self.assertIn("move.l  #SharedCombatSpriteAnimation01,8(a0)", finisher)
+        self.assertIn("move.b  #$BC,d0", finisher)
+        self.assertNotIn("#$C4", finisher)
+
     def test_death_sequence_mappings_are_separate_from_particle_oam(self) -> None:
         records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
         by_address = {record["address"]: record for record in records}

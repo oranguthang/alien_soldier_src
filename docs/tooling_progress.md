@@ -1392,3 +1392,24 @@ canonical ROM at all 70 sampled TAS frames through frame 7000 and all 118
 sampled longplay frames through frame 23600, including Stage 4. The earlier
 saved full-shift image proved to be the godmode variant and cannot establish
 a preservation-build regression.
+
+The shared explosion initializer had one whole-routine evidence sentence at
+three different entry addresses. `$02A2A2` only adapts current object a5 to
+target a0; `$02A2A4` sets type `$C4`, initial velocity, and directional tile
+attribute; `$02A2C8` finishes sprite/counter/shake fields and queues SFX
+`$BC`. Their exact-address records now state those roles separately, and a
+regression test pins the instructions and boundaries. The duplicate-basis
+queue falls to 214 groups across 901 uses: forty-seven reviewed, 167 open.
+
+Three shared-stage mapping claims were checked against their exact source
+members. Both Stage 12/Gusthead floater streams reference mappings A/B/A/C in
+the same order but use 5/4 versus 3/2 durations; the Sharpssteel falling-shot
+loop installs only the 5/4 stream. The Stage 10 beetle initializer and
+controller both install its A/B/A/C loop with 2/3 durations. Three repeated
+claims are now registered as exact-member reviews with a source-structure
+test. The shared projectile streams still have distinct 2/4/8 duration data,
+but their previously shared direct-consumer sentence overstated the 2- and
+8-tick streams: those have only Snake selector slots 1 and 3 as direct
+symbolic consumers, while the 4-tick stream also has enemy, projectile, and
+boss installs. Splitting that sentence removes one more repeated group. The
+queue is now 213 groups across 898 uses, fifty reviewed and 163 open.

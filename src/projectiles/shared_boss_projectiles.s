@@ -206,10 +206,11 @@ Projectile_DragNegativeHorizontalVelocity:              ; CODE XREF: Projectile_
                 addi.l  #$2000,$18(a5)
                 rts
 ; End of function Projectile_UpdateGravityAndHorizontalDrag
-; Initialize the shared explosion effect from the current object
+; Select the current object as the target of the shared explosion initializer
 Effect_InitSharedExplosionFromCurrent:                  ; CODE XREF: Projectile_UpdateOscillatingContactHazardType2B4+80   p  ; was: sub_2A2A2
                                         ; Projectile_UpdateTopFallingHazardType108+36   j
                 movea.w a5,a0
+; Set the target's type, initial velocity, and directional tile attribute
 Effect_InitSharedExplosion:                             ; CODE XREF: Boss_SunsetStingDebrisPartMain+30   p  ; was: loc_2A2A4
                                         ; Boss_SunsetStingUpdateScatteredBodyPart+30   p
                 move.w  #$C4,(a0)
@@ -220,7 +221,7 @@ Effect_InitSharedExplosion:                             ; CODE XREF: Boss_Sunset
                 beq.s   Effect_ConfigureSharedExplosion
                 bset    #$C,d0
                 neg.l   $1C(a0)
-; Install the shared explosion sprite, motion, counters, and sound
+; Finish a prepared target's sprite, counters, shake, and sound
 Effect_ConfigureSharedExplosion:                        ; CODE XREF: Effect_InitSharedExplosionFromCurrent+1C   j  ; was: loc_2A2C8
                 move.w  d0,$E(a0)
                 move.w  #$E500,2(a0)

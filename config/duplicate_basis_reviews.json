@@ -492,6 +492,33 @@
       ]
     },
     {
+      "basis": "Both alternating shared streams reference this high-bit-terminated sprite mapping.",
+      "reason": "Both relative-offset streams in src/data/shared_stage_object_sprite_mappings.s name A, B, A, C in that order and loop. Each of the three mapping records is a single six-byte command whose first word has bit 15 set. The claim is only shared stream membership, not a visual pose identity.",
+      "members": [
+        {"address":"0x1A0CBE","current_name":"SharedFloaterDebrisProjectileSpriteMappingA","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0CC4","current_name":"SharedFloaterDebrisProjectileSpriteMappingB","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0CCA","current_name":"SharedFloaterDebrisProjectileSpriteMappingC","file":"src/data/shared_stage_object_sprite_mappings.s"}
+      ]
+    },
+    {
+      "basis": "The streams are selected by the Stage 12 floating-object table and Gusthead debris table; the 5/4 stream is also assigned to a Sharpssteel projectile.",
+      "reason": "Enemy_Stage12FloatingAnimationMappings and Boss_GustheadRandomDebrisMappings each point to both alternating streams, while Projectile_SharpssteelEmitFallingShotLoop assigns the 5/4 stream directly. Both streams contain the same A/B/A/C mapping set, with different duration words.",
+      "members": [
+        {"address":"0x1A0CBE","current_name":"SharedFloaterDebrisProjectileSpriteMappingA","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0CC4","current_name":"SharedFloaterDebrisProjectileSpriteMappingB","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0CCA","current_name":"SharedFloaterDebrisProjectileSpriteMappingC","file":"src/data/shared_stage_object_sprite_mappings.s"}
+      ]
+    },
+    {
+      "basis": "Enemy_Stage10BeetleLoopAnimation references this high-bit-terminated sprite mapping, and both the beetle initializer and controller install that stream.",
+      "reason": "The beetle stream's relative targets are A/B/A/C with duration words 2/3/2/3 and a self-loop. Enemy_Stage10BeetleInit and Enemy_Stage10BeetleController both write its address to field 8. A, B, and C are distinct six-byte high-bit-terminated mapping records, so the repeated membership statement has exact members.",
+      "members": [
+        {"address":"0x1A0CDC","current_name":"Enemy_Stage10BeetleSpriteMappingA","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0CE2","current_name":"Enemy_Stage10BeetleSpriteMappingB","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0CE8","current_name":"Enemy_Stage10BeetleSpriteMappingC","file":"src/data/shared_stage_object_sprite_mappings.s"}
+      ]
+    },
+    {
       "basis": "The named Medusa state loads this word stream through lea Script(pc),a1 before Boss_RenderMedusaPose invokes Boss_UpdateMedusaPoseScript; $FFFE stops the script and $FFFF loops it.",
       "reason": "These seven dc.w command streams each have a direct lea Script(pc),a1 in a Medusa state handler, followed by a call or branch to Boss_RenderMedusaPose, which invokes Boss_UpdateMedusaPoseScript. Each stream ends in $FFFE or $FFFF. The state-A/C and state-10 scripts also have pointer stores for linked objects; the common claim does not assert exclusive direct use. Medusa_PoseFrameData is excluded: initialization stores its base in $35C(a5), and the interpreter adds script offsets to that base. Medusa_InitialPoseChannelValues already has separate evidence showing initial fixed-point values, not delays.",
       "members": [
