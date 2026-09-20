@@ -1258,3 +1258,12 @@ records now carry separate instruction evidence. A regression test pins both
 table selectors, the six-entry mapping lists, and the writer loop. The broad
 shared sentence is the 93rd rejected generic basis. The queue falls to 224
 groups across 936 uses: thirty-seven reviewed, 187 open.
+
+The five Stage 24 scene-object mappings from `$0ECE18` through `$0ECE7E` share a
+valid structural basis: the type-$410 object receives
+`Stage24SceneObject_SpriteAnimation`, whose relative-offset stream names these
+five mappings in order after frame 00, with timing words 8/8/9/8/8. An
+exact-member review and regression test pin the type assignment, dispatch-table
+slot, animation pointer, stream order, and relative-offset renderer. No visual
+frame identity is inferred. The queue remains 224 groups across 936 uses: thirty-eight
+reviewed, 186 open.

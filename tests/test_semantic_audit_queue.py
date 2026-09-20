@@ -2531,6 +2531,63 @@ class SemanticAuditQueueTests(unittest.TestCase):
         )
         self.assertEqual(8, len(slots))
 
+    def test_stage24_scene_animation_review_pins_all_five_later_frames(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item for item in reviews
+            if item["basis"].startswith("The type-$410 Stage 24 object's")
+        )
+        mappings = (
+            ROOT / "src/data/seven_forces_valkirie_and_stage24_mappings.s"
+        ).read_text(encoding="utf-8")
+        animation = mappings.split("Stage24SceneObject_SpriteAnimation:", 1)[1].split(
+            "Stage24SceneObject_CompositeSpriteFrame:", 1
+        )[0]
+        slots = re.findall(
+            r"dc\.w\s+(Stage24SceneObject_SpriteFrame\d\d)-\*\s*"
+            r"(?:;[^\n]*\n\s*)?dc\.w\s+(\d+)",
+            animation,
+        )
+        self.assertRegex(
+            animation,
+            r"(?s)^\s+dc\.w\s+Stage24SceneObject_SpriteFrame00-\*.*?"
+            r"\n\s+dc\.w\s+9\b",
+        )
+        self.assertEqual(
+            [(f"Stage24SceneObject_SpriteFrame{index:02d}", str(duration))
+             for index, duration in enumerate((8, 8, 9, 8, 8), start=1)],
+            slots,
+        )
+        self.assertEqual(
+            [name for name, _ in slots],
+            [member["current_name"] for member in review["members"]],
+        )
+        self.assertIn("dc.w    Stage24SceneObject_SpriteAnimation-*", animation)
+        stage = (ROOT / "src/stages/stage_24_scene_object.s").read_text(
+            encoding="utf-8"
+        )
+        transition = (
+            ROOT / "src/stages/missiray_stage24_z_leo_transitions.s"
+        ).read_text(encoding="utf-8")
+        self.assertIn("move.w  #$410,(a0)", transition)
+        self.assertIn("move.l  #Stage24SceneObject_SpriteAnimation,8(a5)", stage)
+        dispatch_table = (
+            ROOT / "src/gameplay/object_dispatch_table.s"
+        ).read_text(encoding="utf-8").split(
+            "; Fourth no-op entity update handler", 1
+        )[0]
+        dispatch_slots = re.findall(r"\bdc\.l\s+([A-Za-z_]\w+)", dispatch_table)
+        self.assertEqual(
+            "Stage24SceneObject_DispatchState", dispatch_slots[0x410 // 4]
+        )
+        renderer = (ROOT / "src/rendering/sprite_object_pipeline.s").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("bsr.w   Anim_ResolveTimedMappingFrame", renderer)
+        self.assertIn("adda.w  (a4),a4", renderer)
+
     def test_duplicate_bases_join_addresses_to_modules_once_per_record(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

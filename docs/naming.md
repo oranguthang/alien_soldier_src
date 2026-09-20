@@ -208,7 +208,9 @@ limited to their first `$FFFF` terminator; two trailing strings after
 scroll DMA buffers and the longword fields that point to them now have
 separate per-address evidence. Sharpssteel's two blade-graphics table selectors
 are now distinguished from the shared writer entry and six-part loop by
-per-address instruction evidence. The repeated-basis queue has 187 open groups.
+per-address instruction evidence. Five Stage 24 scene-object animation frames
+now have an exact-member review that pins their relative-offset stream order
+without asserting a visual pose. The repeated-basis queue has 186 open groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

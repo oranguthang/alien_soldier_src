@@ -705,6 +705,17 @@
         {"address":"0x00A232","current_name":"Options_SuperEasyLabelTiles","file":"src/ui/options_shared_helpers_and_assets.s"},
         {"address":"0x00A248","current_name":"Options_SuperHardLabelTiles","file":"src/ui/options_shared_helpers_and_assets.s"}
       ]
+    },
+    {
+      "basis": "The type-$410 Stage 24 object's relative-offset animation selects this sprite mapping record; the frame suffix preserves ROM order.",
+      "reason": "StageTransition_InitializeStage24SceneObjects assigns type $410 to Entity57; slot $410/4 of Entity_UpdateHandlerTable dispatches its Stage24SceneObject states, and HoldExpandedFrame installs Stage24SceneObject_SpriteAnimation in field 8. The animation lists the five reviewed mapping labels as consecutive Frame01-Frame05 relative offsets after Frame00, with timing words 8/8/9/8/8; Anim_ResolveTimedMappingFrame resolves such offsets for Sprite_RenderObjectList. The suffix follows ROM and stream order, not an inferred appearance.",
+      "members": [
+        {"address":"0x0ECE18","current_name":"Stage24SceneObject_SpriteFrame01","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECE30","current_name":"Stage24SceneObject_SpriteFrame02","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECE42","current_name":"Stage24SceneObject_SpriteFrame03","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECE60","current_name":"Stage24SceneObject_SpriteFrame04","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECE7E","current_name":"Stage24SceneObject_SpriteFrame05","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"}
+      ]
     }
   ]
 }
