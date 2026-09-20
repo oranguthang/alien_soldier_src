@@ -22,6 +22,7 @@ Boss_UpdateSireneBattleEffects:                         ; CODE XREF: Boss_Update
                 jsr     (Gfx_UpdateBossPaletteColorFade).l
                 moveq   #$C,d0
                 jsr     (Gfx_UpdateSevenForcesBattlePalette).l
+; Resolve the even-numbered state offset and jump to its handler
 Boss_DispatchSireneState:                               ; CODE XREF: Boss_UpdateSirene+4   j  ; was: loc_574E8
                                         ; Boss_UpdateSirene+C   j
                 move.w  4(a5),d0
@@ -30,6 +31,7 @@ Boss_DispatchSireneState:                               ; CODE XREF: Boss_Update
                 jmp     (a0)
 ; End of function Boss_UpdateSirene
 ; ---------------------------------------------------------------------------
+; Eleven relative handler offsets for states $00 through $14
 Boss_SireneStateOffsets:    dc.w    Boss_InitSireneState0-Boss_InitSireneState0  ; was: off_574F8
                                         ; DATA XREF: Boss_UpdateSirene+54   r
                 dc.w    Boss_UpdateSireneState2-Boss_InitSireneState0

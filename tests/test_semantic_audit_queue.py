@@ -16,6 +16,67 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_medusa_and_sirene_roots_dispatchers_and_tables_have_separate_evidence(self) -> None:
+        records = {
+            item["address"]: item
+            for item in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        cases = (
+            ("Medusa", "src/bosses/medusa.s", ("0x05699C", "0x0569E0", "0x0569F0")),
+            ("Sirene", "src/bosses/sirene.s", ("0x057498", "0x0574E8", "0x0574F8")),
+        )
+        all_bases = []
+        for owner, path, addresses in cases:
+            with self.subTest(owner=owner):
+                root_name = f"Boss_Update{owner}"
+                dispatch_name = f"Boss_Dispatch{owner}State"
+                table_name = f"Boss_{owner}StateOffsets"
+                entries = [records[address] for address in addresses]
+                self.assertEqual(
+                    [root_name, dispatch_name, table_name],
+                    [entry["current_name"] for entry in entries],
+                )
+                self.assertTrue(all(len(entry["basis"]) == 1 for entry in entries))
+                all_bases.extend(entry["basis"][0] for entry in entries)
+
+                source = (ROOT / path).read_text(encoding="utf-8")
+                root = source.split(root_name + ":", 1)[1].split(
+                    dispatch_name + ":", 1
+                )[0]
+                dispatch = source.split(dispatch_name + ":", 1)[1].split(
+                    "; End of function " + root_name, 1
+                )[0]
+                table = source.split(table_name + ":", 1)[1].split(
+                    f"Boss_Init{owner}State0:", 1
+                )[0]
+                self.assertIn(f"beq.w   {dispatch_name}", root)
+                self.assertIn(f"beq.s   {dispatch_name}", root)
+                self.assertIn("tst.w   (BossHealth).w", root)
+                self.assertIn("jmp     Boss_QueueSevenForcesPostBattleTransition", root)
+                self.assertIn("jsr     (Gfx_UpdateBossPaletteColorFade).l", root)
+                self.assertNotIn("BossHealth", dispatch)
+                self.assertNotIn("Gfx_UpdateBossPaletteColorFade", dispatch)
+                self.assertIn("move.w  4(a5),d0", dispatch)
+                self.assertIn(f"movea.w {table_name}(pc,d0.w),a0", dispatch)
+                self.assertIn(f"adda.l  #Boss_Init{owner}State0,a0", dispatch)
+                self.assertIn("jmp     (a0)", dispatch)
+                targets = re.findall(
+                    rf"\bdc\.w\s+(Boss_(?:Init|Update){owner}State[0-9A-F]+)"
+                    rf"-Boss_Init{owner}State0",
+                    table,
+                )
+                self.assertEqual(
+                    list(range(0, 0x16, 2)),
+                    [int(re.search(r"State([0-9A-F]+)$", target).group(1), 16)
+                     for target in targets],
+                )
+                if owner == "Medusa":
+                    self.assertIn("bsr.w   Entity_UpdateMedusaScriptedSpawnSequence", root)
+                else:
+                    self.assertIn("move.b  #$C1,d0", root)
+                    self.assertIn("bclr    #7,(PlayerRestrictionFlags).w", root)
+        self.assertEqual(6, len(set(all_bases)))
+
     def test_stage_configuration_reviews_pin_record_layout_and_dispatch(self) -> None:
         reviews = {
             item["basis"]: item

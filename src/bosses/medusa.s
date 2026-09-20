@@ -1,3 +1,4 @@
+; Handle Medusa completion, battle effects, scripted spawns, then state dispatch
 Boss_UpdateMedusa:                                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_5699C
                 tst.w   4(a5)
                 beq.w   Boss_DispatchMedusaState
@@ -19,6 +20,7 @@ Boss_UpdateMedusaBattleEffects:                         ; CODE XREF: Boss_Update
                 moveq   #6,d0
                 jsr     (Gfx_UpdateSevenForcesBattlePalette).l
                 bsr.w   Entity_UpdateMedusaScriptedSpawnSequence
+; Resolve the even-numbered state offset and jump to its handler
 Boss_DispatchMedusaState:                               ; CODE XREF: Boss_UpdateMedusa+4   j  ; was: loc_569E0
                                         ; Boss_UpdateMedusa+C   j
                 move.w  4(a5),d0
@@ -27,6 +29,7 @@ Boss_DispatchMedusaState:                               ; CODE XREF: Boss_Update
                 jmp     (a0)
 ; End of function Boss_UpdateMedusa
 ; ---------------------------------------------------------------------------
+; Eleven relative handler offsets for states $00 through $14
 Boss_MedusaStateOffsets:    dc.w    Boss_InitMedusaState0-Boss_InitMedusaState0  ; was: off_569F0
                                         ; DATA XREF: Boss_UpdateMedusa+48   r
                 dc.w    Boss_UpdateMedusaState2-Boss_InitMedusaState0

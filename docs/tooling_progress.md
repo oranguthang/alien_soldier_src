@@ -1366,3 +1366,14 @@ matching wrapper's `lea`, with no static caller of those wrappers. This does
 not rule out indirect runtime entry. Exact-member reviews and a regression
 test pin both groups. The queue stays at 217 groups across 910 uses:
 forty-seven reviewed, 170 open.
+
+The Medusa and Sirene state-machine roots, dispatch entries, and offset tables
+had shared whole-routine claims at three addresses each. The roots alone
+handle health/defeat and palette effects; Medusa's root also runs its scripted
+spawn sequence, while Sirene's defeat path queues SFX `$C1` and clears the
+player restriction bit. Their dispatch labels only read controller field 4,
+index one of eleven relative word offsets, and jump to the selected handler.
+The tables are data, not effect handlers. Six exact-address basis records now
+state those separate roles, with comments and a regression test pinning the
+branch gates and table entries. Both old three-member sentences disappear:
+215 groups across 904 uses, forty-seven reviewed and 168 open.
