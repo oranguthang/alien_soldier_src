@@ -26,4 +26,6 @@ SevenForcesVictoryCutsceneMappingData6000:              ; was: byte_1BCFFE
                 dc.b    $36, $20, $2F, $2E, 0, $80, $3F, $90, $49, $80, $3F, $90, $51, $80, $3F, $90, $59, 1, $25, $26, $90, $61, 1, $2A, $2B, $90, $69, 1, $30, $31, $55, 0
                 dc.b    0, $42, $25, $26, $42, $27, $28, $B8, $77, $FF
 SevenForcesVictoryCutsceneMappingData4020:  binclude "data/mappings/byte_1BD048.bin"  ; was: byte_1BD048
+UnreferencedSevenForcesCutsceneTileArt:     binclude "data/mappings/byte_1BE2CA.bin"  ; second archive at original ROM $1BE2CA
+UnreferencedSevenForcesCutscenePostArtData: binclude "data/mappings/byte_1BE722.bin"  ; 64-byte non-archive tail at original ROM $1BE722
 SevenForcesVictoryCutsceneMappingData4020_End:          ; was: byte_1BD048_End

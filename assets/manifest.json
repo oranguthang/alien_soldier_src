@@ -135,18 +135,36 @@
       "path": "artcomp/tiles_104B22.bin",
       "region": "artcomp",
       "address": "0x104B22",
+      "end": "0x104F32",
+      "size": 1040,
+      "sha1": "c35bf628732af931e664afb4ef987a79911255a5"
+    },
+    {
+      "name": "tiles_104F32",
+      "path": "artcomp/tiles_104F32.bin",
+      "region": "artcomp",
+      "address": "0x104F32",
       "end": "0x105196",
-      "size": 1652,
-      "sha1": "f8d97a0283320fc63212595793f4c4e2e1520772"
+      "size": 612,
+      "sha1": "8cb9764d35472b306ca4ad19358c35415c0e725f"
     },
     {
       "name": "tiles_105196",
       "path": "artcomp/tiles_105196.bin",
       "region": "artcomp",
       "address": "0x105196",
+      "end": "0x105B9E",
+      "size": 2568,
+      "sha1": "4d86274b0a20fe83c8357628328b378c26ee5718"
+    },
+    {
+      "name": "tiles_105B9E",
+      "path": "artcomp/tiles_105B9E.bin",
+      "region": "artcomp",
+      "address": "0x105B9E",
       "end": "0x1067C2",
-      "size": 5676,
-      "sha1": "8eab3e5dc7e7beb1bca0ecc21e07af9d4a24ea87"
+      "size": 3108,
+      "sha1": "e3941b0c96f63bd0451c75512448151046d9d5cd"
     },
     {
       "name": "tiles_1067C2",
@@ -342,9 +360,18 @@
       "path": "artcomp/tiles_121932.bin",
       "region": "artcomp",
       "address": "0x121932",
+      "end": "0x123172",
+      "size": 6208,
+      "sha1": "c20fc2539e6d5d14932b13325c2b8699ee6a2dfe"
+    },
+    {
+      "name": "tiles_123172",
+      "path": "artcomp/tiles_123172.bin",
+      "region": "artcomp",
+      "address": "0x123172",
       "end": "0x1233B4",
-      "size": 6786,
-      "sha1": "84174d132cc719448f569370c310ee3156453ffe"
+      "size": 578,
+      "sha1": "134ab6e3533f6537dd5e8373d6ac14b9857d89c8"
     },
     {
       "name": "tiles_1233B4",
@@ -387,9 +414,18 @@
       "path": "artcomp/tiles_12772E.bin",
       "region": "artcomp",
       "address": "0x12772E",
+      "end": "0x1291DE",
+      "size": 6832,
+      "sha1": "44bef6bd248e04afa0fda8b33efbf1b90fd341b6"
+    },
+    {
+      "name": "tiles_1291DE",
+      "path": "artcomp/tiles_1291DE.bin",
+      "region": "artcomp",
+      "address": "0x1291DE",
       "end": "0x12AB8C",
-      "size": 13406,
-      "sha1": "44e124abcd572ec6662f2cc5d1f0e3844c7ede3e"
+      "size": 6574,
+      "sha1": "80f721afa6564ed911d9adfe05bf319b49d3a17f"
     },
     {
       "name": "tiles_12AB8C",
@@ -468,9 +504,18 @@
       "path": "artcomp/tiles_136512.bin",
       "region": "artcomp",
       "address": "0x136512",
+      "end": "0x138EE4",
+      "size": 10706,
+      "sha1": "65c8e870bfc0f3351edd2a299c20695a49597ad5"
+    },
+    {
+      "name": "tiles_138EE4",
+      "path": "artcomp/tiles_138EE4.bin",
+      "region": "artcomp",
+      "address": "0x138EE4",
       "end": "0x13963E",
-      "size": 12588,
-      "sha1": "b3443843ab38e03ddd3f2e2794db1d8b8ce1a90f"
+      "size": 1882,
+      "sha1": "24a7f6a94bcaf7dc969c45b15372ddd34d6c10eb"
     },
     {
       "name": "tiles_13963E",
@@ -495,9 +540,18 @@
       "path": "artcomp/tiles_13C166.bin",
       "region": "artcomp",
       "address": "0x13C166",
+      "end": "0x13D42A",
+      "size": 4804,
+      "sha1": "badd9ca9194e7247976d7c5235829ca21b1d42f3"
+    },
+    {
+      "name": "tiles_13D42A",
+      "path": "artcomp/tiles_13D42A.bin",
+      "region": "artcomp",
+      "address": "0x13D42A",
       "end": "0x13F4B0",
-      "size": 13130,
-      "sha1": "c02bd82455c224795720cf91858685aaeb70dc65"
+      "size": 8326,
+      "sha1": "c83357f3849b89c3f65dfceb79cc9b92494de841"
     },
     {
       "name": "tiles_14AE08",
@@ -864,9 +918,9 @@
       "path": "artcomp/tiles_19BF9E.bin",
       "region": "artcomp",
       "address": "0x19BF9E",
-      "end": "0x19C4A4",
-      "size": 1286,
-      "sha1": "8af7b88773e0ba9b0ad2cc0ba10113d6bf79ddf5"
+      "end": "0x19C492",
+      "size": 1268,
+      "sha1": "14752a5076ed35c11e9385a79e94f5c854ab7bd0"
     },
     {
       "name": "tiles_19C77E",
@@ -4005,9 +4059,18 @@
       "path": "mappings/byte_1889B0.bin",
       "region": "mappings",
       "address": "0x1889B0",
+      "end": "0x188A16",
+      "size": 102,
+      "sha1": "4a4afd83a04b4be6795fa1608972d3de5fe59461"
+    },
+    {
+      "name": "byte_188A16",
+      "path": "mappings/byte_188A16.bin",
+      "region": "mappings",
+      "address": "0x188A16",
       "end": "0x189D38",
-      "size": 5000,
-      "sha1": "20bea852e3d5ff41a3c14a7974d39476e1d585f8"
+      "size": 4898,
+      "sha1": "89ec7fba9f84eacb714f07abcf6d37de2977f375"
     },
     {
       "name": "byte_18CC50",
@@ -4098,6 +4161,15 @@
       "end": "0x19BA44",
       "size": 2382,
       "sha1": "f987086e819d9d43fd66a360107c490efd1a2ec5"
+    },
+    {
+      "name": "byte_19C492",
+      "path": "mappings/byte_19C492.bin",
+      "region": "mappings",
+      "address": "0x19C492",
+      "end": "0x19C4A4",
+      "size": 18,
+      "sha1": "97d652321e10e858977aa8bea26a100c3051b9a1"
     },
     {
       "name": "byte_19FACA",
@@ -4266,9 +4338,27 @@
       "path": "mappings/byte_1BD048.bin",
       "region": "mappings",
       "address": "0x1BD048",
+      "end": "0x1BE2CA",
+      "size": 4738,
+      "sha1": "b0e326800a5d0fce390ea5d90058da0958dc2061"
+    },
+    {
+      "name": "byte_1BE2CA",
+      "path": "mappings/byte_1BE2CA.bin",
+      "region": "mappings",
+      "address": "0x1BE2CA",
+      "end": "0x1BE722",
+      "size": 1112,
+      "sha1": "fead711318560dd1699eb5dbeba06373e9d5c93d"
+    },
+    {
+      "name": "byte_1BE722",
+      "path": "mappings/byte_1BE722.bin",
+      "region": "mappings",
+      "address": "0x1BE722",
       "end": "0x1BE762",
-      "size": 5914,
-      "sha1": "ce26981a0b5e245bcd34f0e618ea113d3fe4cefc"
+      "size": 64,
+      "sha1": "669ffe4a1409f71032c0c940b46ca80c56ae747c"
     },
     {
       "name": "byte_1C0FB2",

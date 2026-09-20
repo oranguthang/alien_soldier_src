@@ -43,11 +43,12 @@ SharedMappingData7000:                      dc.b    0, $6E, $1F, 0, 1, 2, 3, 4, 
                 dc.b    $1D, $1E, $1F, $3F, 0, $84, $3F, $5F, 0, 0, $5F, 0, 0, $D8, $A7, $20, $FF, $98, $E1, $84, 9, $C4, $CC, $2F, 7, $C4, $DF, 0, 4, $8D, $24, $95
                 dc.b    $29, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $96, $DE, $82, $F7, $F8, $1F, $FC, $3F, $FC, $5F
                 dc.b    $EB, $49, $83, $79, $F3, $67, $83, $9B, $F3, $87, $83, $BD, $EB, $9F, $EB, $DF
-Stage1AndShellshogunSharedTileArt:  binclude "data/artcomp/tiles_19BAB4.bin"  ; was: tiles_19BAB4
+Stage1AndShellshogunSharedTileArt:          binclude "data/artcomp/tiles_19BAB4.bin"  ; was: tiles_19BAB4
 Stage1AndShellshogunSharedTileArt_End:                  ; was: tiles_19BAB4_End
-Stage1Phase2TileArt1:               binclude "data/artcomp/tiles_19BC68.bin"  ; was: tiles_19BC68
+Stage1Phase2TileArt1:                       binclude "data/artcomp/tiles_19BC68.bin"  ; was: tiles_19BC68
 Stage1Phase2TileArt1_End:                               ; was: tiles_19BC68_End
-Stage7InitialTileArt:               binclude "data/artcomp/tiles_19BE86.bin"  ; was: tiles_19BE86
+Stage7InitialTileArt:                       binclude "data/artcomp/tiles_19BE86.bin"  ; was: tiles_19BE86
 Stage7InitialTileArt_End:                               ; was: tiles_19BE86_End
-Stage1Phase3AndStage8TileArt2:      binclude "data/artcomp/tiles_19BF9E.bin"  ; was: tiles_19BF9E
+Stage1Phase3AndStage8TileArt2:              binclude "data/artcomp/tiles_19BF9E.bin"  ; was: tiles_19BF9E
+UnreferencedPostStageTileArtSpriteMapping:  binclude "data/mappings/byte_19C492.bin"  ; three-command mapping tail at original ROM $19C492
 Stage1Phase3AndStage8TileArt2_End:                      ; was: tiles_19BF9E_End

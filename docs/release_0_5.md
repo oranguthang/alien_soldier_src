@@ -10,7 +10,7 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
 - `make verify` compares directly with the user-supplied canonical dump.
 - Original padding, checksum path, region path, and all previously differing
   bytes are restored.
-- The ROM and all 579 extracted segments have pinned sizes, ranges, and hashes.
+- The ROM and all 589 extracted segments have pinned sizes, ranges, and hashes.
 - Vendored assembler/converter files and the emulator commit are pinned.
 - Ordinary cleanup preserves extracted private assets.
 - `src/main.s` is an address-ordered index over 398 modules with a checked
@@ -46,7 +46,7 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
 
 The contract does not require invented semantics. No live address-derived
 definitions remain in executable, preserved-ROM, or RAM source. The exact-
-address audit registry contains 15,833 records. A further 513 provenance-mapped
+address audit registry contains 15,843 records. A further 513 provenance-mapped
 current names do not yet appear as current-name or alias records; this is an
 upper-bound semantic review queue because aliases that share an address must
 be folded into one record. `make semantic-audit` identifies 513 binary-backed

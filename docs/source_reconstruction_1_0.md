@@ -30,7 +30,7 @@ byte.
   declared hardware exception. The vocabulary is a closed list in
   `config/source_policy.json`; a new owner token fails lint.
 - **Name evidence is traceable, with a declared review debt.**
-  `config/name_audit.json` holds 15,833 exact-address records with imported
+  `config/name_audit.json` holds 15,843 exact-address records with imported
   and current names. The 60 Gusthead loop, return, dispatch, and table bases
   have been reviewed, as have 20 options-screen, 70 Jampan, 35 Sharpssteel, and
   43 Sirene, 45 Medusa, 84 Valkirie, 15 graphics/asset, and 14 Missiray records.
@@ -72,7 +72,7 @@ that limits it. They are stated here rather than left implicit.
 | --- | --- | --- |
 | `PROFILE-001` | The European ROM. Only the Japanese cartridge is accepted. | unsupported |
 | `SND-001` | The Z80 sound driver program, which stays a verbatim payload and is never disassembled. | unsupported |
-| `NAME-001` | 513 `_End` aliases that follow their own `binclude` payload hold no separate record. | partial |
+| `NAME-001` | 513 `_End` aliases mark the end of contiguous `binclude` spans and hold no separate record; some spans now contain multiple assets. | partial |
 | `NAME-002` | Zero records match the curated 98-sentence generic detector; forty-seven repeated groups are accepted with exact members, and 168 remain open. | partial |
 | `NAME-003` | Seven boss-identity names remain provisional until pinned visual evidence or behavior-only renaming. | partial |
 | `LAYOUT-001` | Module sizes: 232 of 398 modules sit inside the preferred 200–700 line band, 149 are shorter and 17 are longer. | partial |

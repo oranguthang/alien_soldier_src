@@ -162,7 +162,7 @@ Stage_LoadStage7VisualAssets:                           ; DATA XREF: ROM:00011DF
 ; End of function Stage_LoadStage7VisualAssets
 ; ---------------------------------------------------------------------------
 Stage7TileAssetCommands:    dc.w    0, $6000, 4, $7000, 7  ; was: word_11F6C
-                dc.l    Stage15TileArt+$410
+                dc.l    Stage15TileArt2
                 dc.w    $8000, $FFFF
                                         ; DATA XREF: Stage_LoadStage7VisualAssets+C   o
 
@@ -279,7 +279,7 @@ Stage_LoadStage16VisualAssets:                          ; DATA XREF: ROM:00011E0
 ; End of function Stage_LoadStage16VisualAssets
 ; ---------------------------------------------------------------------------
 Stage16TileAssetCommands:   dc.w    $C, $6000, 7        ; was: word_120A6
-                dc.l    Boss_VictorTileArt_End+$1840
+                dc.l    Boss_BackStringerTileArt2
                 dc.w    $7000, $FFFF
                                         ; DATA XREF: Stage_LoadStage16VisualAssets+C   o
 
@@ -300,7 +300,7 @@ Stage_LoadStage18VisualAssets:                          ; DATA XREF: ROM:00011E0
 ; End of function Stage_LoadStage18VisualAssets
 ; ---------------------------------------------------------------------------
 Stage18TileAssetCommands:   dc.w    $C, $6000, 7        ; was: word_120E2
-                dc.l    Stage22And24TileArt+$A08
+                dc.l    Stage22And24TileArt2
                 dc.w    $7000, $FFFF
                                         ; DATA XREF: Stage_LoadStage18VisualAssets+C   o
 

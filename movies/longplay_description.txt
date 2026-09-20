@@ -12,7 +12,7 @@ Frames, Scene
 14080-16080, Rolling mini-boss (Stage 3)
 16100-21000, Shellshogun boss
 21020-23260, Stage 4
-23280-26140, Shiper Honeyviper boss
+23280-26140, Sniper Honeyviper boss
 26160-26360, Stage 4 to 5 transition
 26380-27660, Stage 5
 27680-35500, Madam Barbar boss

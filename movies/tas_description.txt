@@ -10,7 +10,7 @@ Frames, Scene
 3360-3440, Rolling mini-boss (Stage 3)
 3460-4860, Shellshogun boss
 4880-5200, Stage 4
-5220-6700, Shiper Honeyviper boss
+5220-6700, Sniper Honeyviper boss
 6720-6880, Stage 4 to 5 transition
 6900-7140, Stage 5
 7160-8820, Madam Barbar boss
@@ -82,7 +82,7 @@ Frames, Scene
 79180-79680, Joker (credits)
 79700-80180, Epsilon1 (credits)
 80200-80700, Shellshogun (credits)
-80720-81240, Shiper Honeyviper (credits)
+80720-81240, Sniper Honeyviper (credits)
 81260-81780, Madam Barbar (credits)
 81800-82300, Destroyer Prototype (credits)
 82320-82800, Flying-Neo (credits)

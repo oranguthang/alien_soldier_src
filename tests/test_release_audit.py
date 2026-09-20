@@ -45,7 +45,7 @@ class ReleaseAuditTests(unittest.TestCase):
         errors, stats = release_audit.audit(ROOT, contract)
         errors = [error for error in errors if not error.startswith("tag-ready status claimed")]
         self.assertEqual([], errors)
-        self.assertEqual(579, stats["assets"])
+        self.assertEqual(589, stats["assets"])
         self.assertGreaterEqual(stats["modules"], 26)
         self.assertEqual(12, stats["runtime_scenarios"])
         self.assertGreaterEqual(stats["runtime_expectations"], 60)

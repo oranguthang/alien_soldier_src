@@ -65,7 +65,7 @@
     {
       "id": "semantic_naming",
       "kind": "source",
-      "summary": "Every live address-derived identifier was replaced and 15,833 exact-address name records now exist. The curated 98-sentence generic evidence detector has zero matches after message, weapon-setup, weapon-state, directional-spawner, Valkirie-pose, Sirene-position, Medusa-pose, Sirene-pose, shared-facing, defeat-blink, Missiray-loop, Medusa-velocity, shared-sprite, Bugmax-frame, Shield Viper mapping, Antroid mapping, Jetsripper mapping, Xi-Tiger mapping, Madam Barbar mapping, Terobuster mapping, Destroyer Proto mapping, Shiper tentacle mapping, player death-sequence mapping, Sharpssteel pose-command/collision/blade-graphics, Medusa falling-part/spawn-sequence, Jampan orbit-table, Sirene type-$490/battle-effect, weapon-setup highlight-palette, midgame lightning-mapping, Wolf Garopa type-$424/orb, Missiray indexed-transfer, HBlank copy-window, Valkirie auxiliary-velocity, Seven Forces palette, scroll-DMA RAM, Stage 12 Teddy Bear streams, tilemap transfer descriptors, and shared projectile animations; a wider duplicate-basis review and seven boss-identity visual hypotheses remain open.",
+      "summary": "Every live address-derived identifier was replaced and 15,843 exact-address name records now exist. The curated 98-sentence generic evidence detector has zero matches after message, weapon-setup, weapon-state, directional-spawner, Valkirie-pose, Sirene-position, Medusa-pose, Sirene-pose, shared-facing, defeat-blink, Missiray-loop, Medusa-velocity, shared-sprite, Bugmax-frame, Shield Viper mapping, Antroid mapping, Jetsripper mapping, Xi-Tiger mapping, Madam Barbar mapping, Terobuster mapping, Destroyer Proto mapping, Shiper tentacle mapping, player death-sequence mapping, Sharpssteel pose-command/collision/blade-graphics, Medusa falling-part/spawn-sequence, Jampan orbit-table, Sirene type-$490/battle-effect, weapon-setup highlight-palette, midgame lightning-mapping, Wolf Garopa type-$424/orb, Missiray indexed-transfer, HBlank copy-window, Valkirie auxiliary-velocity, Seven Forces palette, scroll-DMA RAM, Stage 12 Teddy Bear streams, tilemap transfer descriptors, and shared projectile animations; a wider duplicate-basis review and seven boss-identity visual hypotheses remain open.",
       "evidence": [
         "provenance_and_unknowns",
         "files:config/name_audit.json"
@@ -101,7 +101,7 @@
     {
       "id": "asset_extraction",
       "kind": "tooling",
-      "summary": "579 data segments are extracted from the user-supplied image by a recorded recipe, hash-pinned in assets/manifest.json and never tracked.",
+      "summary": "589 data segments are extracted from the user-supplied image by a recorded recipe, hash-pinned in assets/manifest.json and never tracked.",
       "evidence": [
         "private_inputs",
         "files:assets/manifest.json"
@@ -448,14 +448,14 @@
     {
       "id": "binary_backed_end_aliases",
       "status": "partial",
-      "reason": "Five hundred and thirteen _End labels immediately follow their own binclude payload and carry no separate semantic claim, so they hold no exact-address record of their own.",
+      "reason": "Five hundred and thirteen _End labels mark the end of a contiguous binclude span and carry no separate semantic claim, so they hold no exact-address record of their own. Some legacy spans now include a second archive or a post-archive tail.",
       "registry": "NAME-001",
       "control": "make semantic-audit classifies them, and reports zero other pending end labels and zero modules remaining, so nothing else hides behind the classification."
     },
     {
       "id": "generic_name_evidence_bases",
       "status": "partial",
-      "reason": "The curated 98-sentence detector has zero matches after reviewing palette-command, weapon-setup, message-dispatch, weapon-state, directional-spawner, Valkirie-pose, Sirene-position, Medusa-pose, Sirene-pose, shared-facing, defeat-blink, Missiray-loop, Medusa-velocity, shared-sprite, Bugmax-frame, Shield Viper mapping, Antroid mapping, Jetsripper mapping, Xi-Tiger mapping, Madam Barbar mapping, Terobuster mapping, Destroyer Proto mapping, Shiper tentacle mapping, Medusa pose-data, player death-sequence, Sharpssteel pose-command/collision/blade-graphics, Medusa falling-part/spawn-sequence, Jampan orbit-table, Sirene type-$490/battle-effect, weapon-setup highlight-palette, midgame lightning-mapping, Wolf Garopa type-$424/orb, Missiray indexed-transfer, HBlank copy-window, Valkirie auxiliary-velocity, Seven Forces palette, scroll-DMA RAM, Stage 12 Teddy Bear streams, tilemap transfer descriptors, and shared projectile animations. Of 215 repeated-basis groups, forty-seven have exact-member reviews and 168 still require decisions. Two executable weapon-setup text handlers, one two-list Continue palette record, three indirectly selected airborne Valkirie scripts, the Medusa and Sirene frame-data bases, three distinct palette-reset entry points, and the separate Medusa and Sirene root/dispatcher/table roles were removed from otherwise shared claims. Zero detector matches do not prove all 15,833 name records semantically correct.",
+      "reason": "The curated 98-sentence detector has zero matches after reviewing palette-command, weapon-setup, message-dispatch, weapon-state, directional-spawner, Valkirie-pose, Sirene-position, Medusa-pose, Sirene-pose, shared-facing, defeat-blink, Missiray-loop, Medusa-velocity, shared-sprite, Bugmax-frame, Shield Viper mapping, Antroid mapping, Jetsripper mapping, Xi-Tiger mapping, Madam Barbar mapping, Terobuster mapping, Destroyer Proto mapping, Shiper tentacle mapping, Medusa pose-data, player death-sequence, Sharpssteel pose-command/collision/blade-graphics, Medusa falling-part/spawn-sequence, Jampan orbit-table, Sirene type-$490/battle-effect, weapon-setup highlight-palette, midgame lightning-mapping, Wolf Garopa type-$424/orb, Missiray indexed-transfer, HBlank copy-window, Valkirie auxiliary-velocity, Seven Forces palette, scroll-DMA RAM, Stage 12 Teddy Bear streams, tilemap transfer descriptors, and shared projectile animations. Of 215 repeated-basis groups, forty-seven have exact-member reviews and 168 still require decisions. Two executable weapon-setup text handlers, one two-list Continue palette record, three indirectly selected airborne Valkirie scripts, the Medusa and Sirene frame-data bases, three distinct palette-reset entry points, and the separate Medusa and Sirene root/dispatcher/table roles were removed from otherwise shared claims. Zero detector matches do not prove all 15,843 name records semantically correct.",
       "registry": "NAME-002",
       "control": "make release-audit recounts the curated set of 98 known generic basis sentences, validates the exact members in config/duplicate_basis_reviews.json, and refuses tag-ready status until both generic_evidence_bases and unreviewed_duplicate_basis_groups are zero."
     },
@@ -612,7 +612,7 @@
     {
       "rule_id": "assets/ holds only manifests, hashes and extraction recipes",
       "actual_path": "assets/manifest.json with data/data_addrs.txt",
-      "reason": "The extraction recipe is a separate address table consumed by scripts/split_data_from_rom.py, and the 579 extracted segments are generated into data/ and never tracked.",
+      "reason": "The extraction recipe is a separate address table consumed by scripts/split_data_from_rom.py, and the 589 extracted segments are generated into data/ and never tracked.",
       "equivalent_control": "make check-assets verifies every segment against assets/manifest.json, and tests/test_clean_policy.py checks that the generated tree is removable and untracked."
     },
     {
@@ -663,12 +663,13 @@
         "sha256": "5613637d267cf8d0bf3ff1e396d7929526cd5221cb8af06349528c8bedced1a0"
       }
     ],
-    "exact_address_records": 15833,
+    "exact_address_records": 15843,
     "provenance_markers": 16053
   },
   "required_documents": [
     "docs/assembly_style.md",
     "docs/naming.md",
+    "docs/payload_archives.md",
     "docs/provenance.md",
     "docs/ram_map.md",
     "docs/release_0_5.md",
@@ -715,21 +716,21 @@
     "data/cutscenes/"
   ],
   "counters": {
-    "assets": 579,
+    "assets": 589,
     "declared_subsystems": 192,
-    "definitions": 16928,
+    "definitions": 16938,
     "dma_transferred_payloads": 289,
     "generic_evidence_bases": 0,
     "hypothesis_name_records": 7,
     "modules": 398,
-    "name_audit_records": 15833,
+    "name_audit_records": 15843,
     "provenance_mappings": 16053,
     "reviewed_duplicate_basis_groups": 47,
     "ram_fields": 1293,
     "resolved_branch_targets": 16102,
     "runtime_expectations": 78,
     "runtime_scenarios": 12,
-    "tracked_text_files": 512,
+    "tracked_text_files": 514,
     "unreviewed_duplicate_basis_groups": 168
   }
 }

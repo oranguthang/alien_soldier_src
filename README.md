@@ -101,7 +101,7 @@ make init               # Initialize project (requires original ROM)
 make build              # Assemble source → asbuilt.bin (2MB)
 make verify             # Require byte identity with the Japanese cartridge dump
 make compare            # Compare an existing build without reassembling
-make check-assets       # Validate all 579 extracted private segments
+make check-assets       # Validate all 589 extracted private segments
 make split              # Re-extract binary data from original ROM
 make clean              # Remove build artifacts; preserve extracted data
 make symbols            # Extract symbols from listing file

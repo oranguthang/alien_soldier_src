@@ -1377,3 +1377,13 @@ The tables are data, not effect handlers. Six exact-address basis records now
 state those separate roles, with comments and a regression test pinning the
 branch gates and table entries. Both old three-member sentences disappear:
 215 groups across 904 uses, forty-seven reviewed and 168 open.
+
+The payload-boundary audit imported the preservation finding from the parallel
+repacker worktree without importing repacker code. Eight concatenated LZSS
+archives now have distinct `binclude` names, and three commands point directly
+to the second archive. Independent header checks found two more non-archive
+tails (64 and 18 bytes), which were separated and neutrally named. The 589
+extracted ranges remain byte-identical to the Japanese ROM. A lightweight
+regression test covers archive boundaries and all three former interior
+pointers; `docs/payload_archives.md` records the evidence and the still-open
+Stage 4 rendering regression before Sniper Honeyviper.

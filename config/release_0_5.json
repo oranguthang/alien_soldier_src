@@ -17,7 +17,7 @@
     }
   ],
   "thresholds": {
-    "asset_count": 579,
+    "asset_count": 589,
     "minimum_module_count": 26,
     "max_module_lines": 1000,
     "minimum_provenance_mappings": 4822,

@@ -25,6 +25,7 @@ TeleportTileArt_End:                                    ; was: tiles_120E1C_End
 Boss_VictorTileArt:         binclude "data/artcomp/tiles_120FF8.bin"  ; was: tiles_120FF8
 Boss_VictorTileArt_End:                                 ; was: tiles_120FF8_End
 Boss_BackStringerTileArt:   binclude "data/artcomp/tiles_121932.bin"  ; was: tiles_121932
+Boss_BackStringerTileArt2:  binclude "data/artcomp/tiles_123172.bin"  ; second archive at original ROM $123172
 Boss_BackStringerTileArt_End:                           ; was: tiles_121932_End
 Boss_Epsilon1TileArt:       binclude "data/artcomp/tiles_1233B4.bin"  ; was: tiles_1233B4
 Boss_Epsilon1TileArt_End:                               ; was: tiles_1233B4_End
@@ -37,30 +38,33 @@ EntityType3ECTileArt:       binclude "data/artcomp/tiles_125902.bin"  ; entity t
 EntityType3ECTileArt_End:                               ; was: tiles_125902_End
 EntityType3F0TileArt:   binclude "data/artcomp/tiles_12772E.bin"  ; entity type $3F0 art  ; was: tiles_12772E
                                         ; Referenced by EntityType3F0GraphicsLoadList
+UnreferencedEntityType3F0TileArt2:  binclude "data/artcomp/tiles_1291DE.bin"  ; second archive at original ROM $1291DE
 EntityType3F0TileArt_End:                               ; was: tiles_12772E_End
-Boss_BugmaxTileArt:     binclude "data/artcomp/tiles_12AB8C.bin"  ; was: tiles_12AB8C
+Boss_BugmaxTileArt:                 binclude "data/artcomp/tiles_12AB8C.bin"  ; was: tiles_12AB8C
 Boss_BugmaxTileArt_End:                                 ; was: tiles_12AB8C_End
-EntityType3FCTileArt:   binclude "data/artcomp/tiles_12D012.bin"  ; entity type $3FC art  ; was: tiles_12D012
+EntityType3FCTileArt:               binclude "data/artcomp/tiles_12D012.bin"  ; entity type $3FC art  ; was: tiles_12D012
                                         ; Referenced by EntityType3FCGraphicsLoadList
 EntityType3FCTileArt_End:                               ; was: tiles_12D012_End
 EntityType3F4TileArt:   binclude "data/artcomp/tiles_12E96C.bin"  ; entity type $3F4 art  ; was: tiles_12E96C
                                         ; Referenced by EntityType3F4GraphicsLoadList
 EntityType3F4TileArt_End:                               ; was: tiles_12E96C_End
-SevenForcesValkirieTileArt: binclude "data/artcomp/tiles_130B4E.bin"  ; was: tiles_130B4E
+SevenForcesValkirieTileArt:     binclude "data/artcomp/tiles_130B4E.bin"  ; was: tiles_130B4E
 SevenForcesValkirieTileArt_End:                         ; was: tiles_130B4E_End
-Stage20TileArt:             binclude "data/artcomp/tiles_132E9A.bin"  ; was: tiles_132E9A
+Stage20TileArt:                 binclude "data/artcomp/tiles_132E9A.bin"  ; was: tiles_132E9A
 Stage20TileArt_End:                                     ; was: tiles_132E9A_End
-Boss_ShieldViperTileArt:    binclude "data/artcomp/tiles_1338F2.bin"  ; was: tiles_1338F2
+Boss_ShieldViperTileArt:        binclude "data/artcomp/tiles_1338F2.bin"  ; was: tiles_1338F2
 Boss_ShieldViperTileArt_End:                            ; was: tiles_1338F2_End
-Boss_MissirayTileArt:       binclude "data/artcomp/tiles_134F02.bin"  ; was: tiles_134F02
+Boss_MissirayTileArt:           binclude "data/artcomp/tiles_134F02.bin"  ; was: tiles_134F02
 Boss_MissirayTileArt_End:                               ; was: tiles_134F02_End
-Boss_WolfGaropaTileArt0:    binclude "data/artcomp/tiles_1355D6.bin"  ; was: tiles_1355D6
+Boss_WolfGaropaTileArt0:        binclude "data/artcomp/tiles_1355D6.bin"  ; was: tiles_1355D6
 Boss_WolfGaropaTileArt0_End:                            ; was: tiles_1355D6_End
-Boss_WolfGaropaTileArt1:    binclude "data/artcomp/tiles_136512.bin"  ; was: tiles_136512
+Boss_WolfGaropaTileArt1:        binclude "data/artcomp/tiles_136512.bin"  ; was: tiles_136512
+UnreferencedWolfGaropaTileArt2: binclude "data/artcomp/tiles_138EE4.bin"  ; second archive at original ROM $138EE4
 Boss_WolfGaropaTileArt1_End:                            ; was: tiles_136512_End
-Boss_DestroyerProtoTileArt: binclude "data/artcomp/tiles_13963E.bin"  ; was: tiles_13963E
+Boss_DestroyerProtoTileArt:     binclude "data/artcomp/tiles_13963E.bin"  ; was: tiles_13963E
 Boss_DestroyerProtoTileArt_End:                         ; was: tiles_13963E_End
-Boss_ZLeoTileArt0:          binclude "data/artcomp/tiles_13A92A.bin"  ; was: tiles_13A92A
+Boss_ZLeoTileArt0:              binclude "data/artcomp/tiles_13A92A.bin"  ; was: tiles_13A92A
 Boss_ZLeoTileArt0_End:                                  ; was: tiles_13A92A_End
-Boss_ZLeoTileArt1:          binclude "data/artcomp/tiles_13C166.bin"  ; was: tiles_13C166
+Boss_ZLeoTileArt1:              binclude "data/artcomp/tiles_13C166.bin"  ; was: tiles_13C166
+UnreferencedZLeoTileArt2:       binclude "data/artcomp/tiles_13D42A.bin"  ; second archive at original ROM $13D42A
 Boss_ZLeoTileArt1_End:                                  ; was: tiles_13C166_End

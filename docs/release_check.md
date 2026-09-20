@@ -21,7 +21,7 @@
    history for ROM-derived payloads.
 
 The gate intentionally performs a clean build. `make clean` preserves the
-user-supplied ROM, all 579 extracted segments, movies, traces, workflow files,
+user-supplied ROM, all 589 extracted segments, movies, traces, workflow files,
 source backups, emulator configuration, and other maintainer evidence.
 
 The declarative inputs are in `config/release_0_5.json` for the gate itself and

@@ -63,9 +63,10 @@ ResultsPostStageCompletionMappingData2020:  dc.b    0, $9F, $22, 0, $21, 1, 0, 2
                 dc.b    $16, 1, 9, $16, $61, 1, $31, $32, $33, 1, 9, $33, $BC, $BF, 0, $17, $65, 1, $18, $10, 5, $34, $35, $36, $22, $C4, $BF, 0, $19, $84, $3D, 0
                 dc.b    $1A, $84, $BF, 0, $37, $80, $3D, 1, 1, $38, $BC, $FF, 0, $1B, $60, 1, $1C, $1D, $85, $23, 0, $39, $60, 1, $3A, $3B, $FC, $9D, $56, 0, 0, 0
                 dc.b    0, $FF
-StoryScreenTileArt0000:     binclude "data/artcomp/tiles_18530A.bin"  ; was: tiles_18530A
+StoryScreenTileArt0000:             binclude "data/artcomp/tiles_18530A.bin"  ; was: tiles_18530A
 StoryScreenTileArt0000_End:                             ; was: tiles_18530A_End
-StoryScreenMappingData4000: binclude "data/mappings/byte_1885A4.bin"  ; was: byte_1885A4
+StoryScreenMappingData4000:         binclude "data/mappings/byte_1885A4.bin"  ; was: byte_1885A4
 StoryScreenMappingData4000_End:                         ; was: byte_1885A4_End
-StoryScreenMappingData6000: binclude "data/mappings/byte_1889B0.bin"  ; was: byte_1889B0
+StoryScreenMappingData6000:         binclude "data/mappings/byte_1889B0.bin"  ; was: byte_1889B0
+UnreferencedIntroSceneSpriteArt:    binclude "data/mappings/byte_188A16.bin"  ; second archive at original ROM $188A16
 StoryScreenMappingData6000_End:                         ; was: byte_1889B0_End

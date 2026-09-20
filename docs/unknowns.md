@@ -2,6 +2,17 @@
 
 The machine-readable thresholds live in `config/source_policy.json`.
 
+The shifted-payload build in the parallel repacker worktree has a rendering
+regression: a platform before Sniper Honeyviper in Stage 4 disappears. A
+16-byte shift of all payloads failed before the eight-archive split, and an
+8 KiB shift failed; the split's effect on the 16-byte case was not retested.
+The source list for Stage 4 uses two shared-table indices, not any of the three
+formerly interior archive pointers fixed in `src/stages/visual_asset_loading.s`.
+The precise tile source, stale pointer, and influence of ROM growth are not yet
+known. The two archive-adjacent tails at `$1BE722` and `$19C492` are also
+unassigned beyond their observable command-like byte structure. See
+`docs/payload_archives.md`.
+
 At the start of release 0.5 work the source contained 10,497 defined symbols
 with neutral address-derived names: 9,493 ROM labels and 1,004 RAM equates.
 This is a burn-down ceiling: new such names fail lint, while evidence-backed
