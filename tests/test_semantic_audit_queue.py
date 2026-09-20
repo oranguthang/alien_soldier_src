@@ -16,6 +16,49 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_shiper_tentacle_mappings_follow_one_indexed_direction_table(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item
+            for item in reviews
+            if item["basis"].startswith("Boss_ShiperTentacleDirectionFrames selects")
+        )
+        expected = {f"Boss_ShiperTentacleSpriteMapping{index:02}" for index in range(8)}
+        self.assertEqual(expected, {member["current_name"] for member in review["members"]})
+        self.assertEqual(
+            {"src/data/shiper_tentacle_sprite_mappings.s"},
+            {member["file"] for member in review["members"]},
+        )
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        for record in records:
+            if record["current_name"] in expected:
+                self.assertEqual(review["basis"], record["basis"][0])
+        movement = (ROOT / "src/bosses/shiper_movement.s").read_text(
+            encoding="utf-8"
+        )
+        table = movement.split("Boss_ShiperTentacleDirectionFrames:", 1)[1]
+        self.assertEqual(
+            ["04", "03", "02", "01", "00", "07", "06", "05"],
+            re.findall(r"\bdc\.l\s+Boss_ShiperTentacleSpriteMapping(\d\d)", table),
+        )
+        self.assertIn("movea.l #Boss_ShiperTentacleDirectionFrames,a1", movement)
+        self.assertEqual(2, movement.count("andi.w  #$E0,d2"))
+        self.assertEqual(2, movement.count("asr.w   #3,d2"))
+        for field in ("$1E8", "$2A8"):
+            self.assertIn(f"move.l  (a1,d2.w),{field}(a5)", movement)
+        mappings = (ROOT / "src/data/shiper_tentacle_sprite_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        for name in expected:
+            with self.subTest(name=name):
+                match = re.search(
+                    rf"(?m)^{name}:\s+dc\.w\s+\$([0-9A-F]+)", mappings
+                )
+                self.assertIsNotNone(match)
+                self.assertTrue(int(match.group(1), 16) & 0x8000)
+
     def test_bird_mapping_review_pins_four_streams_and_mapping_ends(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

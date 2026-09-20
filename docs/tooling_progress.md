@@ -998,3 +998,14 @@ command. An exact-member review and test pin the stream orders, loop/end
 markers, selector entries, and mapping endings, without asserting visual
 poses or gameplay reachability of every selector. The queue remains 240
 groups across 1,019 uses: seventeen reviewed, 223 open.
+
+The Shiper tentacle mapping sentence suggested pointer tables or direct
+assignments, but all eight mapping labels are referenced only by the
+eight-entry `Boss_ShiperTentacleDirectionFrames` table. The movement routine
+masks each of two angles to `$E0`, shifts by three to index the table's
+longword slots, then stores selected pointers in fields `$1E8` and `$2A8`.
+The replacement shared basis states this exact table role without inventing
+visual direction names; an exact-member review and test pin slot order
+04/03/02/01/00/07/06/05 and one-sprite terminators. The old sentence is the
+69th rejected generic basis. The queue remains 240 groups across 1,019 uses:
+eighteen reviewed, 222 open.

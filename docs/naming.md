@@ -72,7 +72,7 @@ time-bonus, 26 message-render, 26 message-script, 20 options-menu, 19
 weapon-selection, 33 weapon-setup loadout, 31 controller/background, 32 boss
 asset-set, 29 graphics-list, 35 asset-set palette-command, and 17 standalone
 or banked palette-command records have since been reviewed. The curated
-`NAME-002` detector now has zero matches across 68 known sentences. A wider
+`NAME-002` detector now has zero matches across 69 known sentences. A wider
 duplicate-basis review is still required before the 1.0 tag; zero matches do
 not prove every explanation or name correct.
 The read-only `make semantic-audit` now counts the wider duplicate queue, and
@@ -153,7 +153,11 @@ animation streams reference every frame, with frame 00 shared by two streams.
 The eleven Bird mappings likewise have exact members across four streams:
 00/01 share frames 00-06, while 02/03 use frames 07-10. The stream selector
 table is explicit; frame names still do not claim visual pose identities.
-The repeated-basis queue has 223 open groups.
+Shiper's eight tentacle mappings are all reached through one indexed
+direction-frame table, not through unspecified direct assignments. The exact
+eight slots and both tentacle mapping writes are checked, but the ROM-order
+suffixes do not claim visible directions. The repeated-basis queue has 222
+open groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style
