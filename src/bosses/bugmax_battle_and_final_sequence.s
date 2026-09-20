@@ -18,7 +18,7 @@ Boss_BugmaxInitializeBattleObjectChains:                ; DATA XREF: ROM:0004C3F
                 move.l  d0,$1C(a5)
                 move.w  #$100,(SharedPatternRow0Long5+2).w
                 move.b  #$40,$20(a5)                    ; '@'
-                move.l  #Boss_BugmaxSpriteFrame06,8(a5)
+                move.l  #Boss_BugmaxBattleControllerFrame,8(a5)
                 move.w  #$300,$E(a5)
                 move.w  #$CD80,2(a5)
                 move.w  #$80,$26(a5)
@@ -28,7 +28,7 @@ Boss_BugmaxInitializeBattleObjectChains:                ; DATA XREF: ROM:0004C3F
                 move.w  #0,$4C(a5)
                 move.w  #0,$4E(a5)
                 movea.w #(SecondaryEntityType-M68K_RAM),a0
-                move.l  #Boss_BugmaxSpriteFrame02,8(a0)
+                move.l  #Boss_BugmaxCentralPartToggleFrame00,8(a0)
                 move.w  $E(a5),$E(a0)
                 move.w  2(a5),2(a0)
                 move.w  #$80,$26(a0)
@@ -107,27 +107,27 @@ Boss_BugmaxSeedPrimaryPositionHistoryLoop:              ; CODE XREF: Boss_Bugmax
 Boss_BugmaxPrimaryLinkedPartDescriptors:    dc.w    $5C  ; field_0  ; was: stru_4CB06
                                         ; DATA XREF: Boss_BugmaxInitializeBattleObjectChains+F2   o
                 dc.w    0                               ; field_2
-                dc.l    Boss_BugmaxSpriteFrame07        ; field_4
+                dc.l    Boss_BugmaxPrimaryLinkFrame00   ; field_4
                 dc.w    $40                             ; field_0
                 dc.w    $FFDC                           ; field_2
-                dc.l    Boss_BugmaxSpriteFrame08        ; field_4
+                dc.l    Boss_BugmaxPrimaryLinkFrame01   ; field_4
                 dc.w    $30                             ; field_0
                 dc.w    $FFD4                           ; field_2
-                dc.l    Boss_BugmaxSpriteFrame08        ; field_4
+                dc.l    Boss_BugmaxPrimaryLinkFrame01   ; field_4
                 dc.w    $2C                             ; field_0
                 dc.w    $FFC8                           ; field_2
-                dc.l    Boss_BugmaxSpriteFrame09        ; field_4
+                dc.l    Boss_BugmaxPrimaryLinkFrame02   ; field_4
                 dc.w    $28                             ; field_0
                 dc.w    $FFB8                           ; field_2
-                dc.l    Boss_BugmaxSpriteFrame09        ; field_4
-Boss_BugmaxSecondaryLinkedPartMappings: dc.l    Boss_BugmaxSpriteFrame04  ; DATA XREF: Boss_BugmaxInitializeBattleObjectChains+116   o  ; was: off_4CB2E
-                dc.l    Boss_BugmaxSpriteFrame04
-                dc.l    Boss_BugmaxSpriteFrame04
-                dc.l    Boss_BugmaxSpriteFrame05
-                dc.l    Boss_BugmaxSpriteFrame05
-                dc.l    Boss_BugmaxSpriteFrame05
-                dc.l    Boss_BugmaxSpriteFrame05
-                dc.l    Boss_BugmaxSpriteFrame05
+                dc.l    Boss_BugmaxPrimaryLinkFrame02   ; field_4
+Boss_BugmaxSecondaryLinkedPartMappings: dc.l    Boss_BugmaxSecondaryLinkFrame00  ; DATA XREF: Boss_BugmaxInitializeBattleObjectChains+116   o  ; was: off_4CB2E
+                dc.l    Boss_BugmaxSecondaryLinkFrame00
+                dc.l    Boss_BugmaxSecondaryLinkFrame00
+                dc.l    Boss_BugmaxSecondaryLinkFrame01
+                dc.l    Boss_BugmaxSecondaryLinkFrame01
+                dc.l    Boss_BugmaxSecondaryLinkFrame01
+                dc.l    Boss_BugmaxSecondaryLinkFrame01
+                dc.l    Boss_BugmaxSecondaryLinkFrame01
 
 ; Advance the linked assembly rotation until shared angle $140
 Boss_BugmaxRotateLinkedAssemblyToward140:               ; DATA XREF: ROM:0004C3F2   o  ; was: sub_4CB4E

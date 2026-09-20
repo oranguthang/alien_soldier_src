@@ -811,3 +811,14 @@ common TYPE prefix, the matching decimal digit codes (`1` for zero through
 `$A` for nine), single-digit spacer, and `$FF` terminator. That makes the
 `TYPE 1` through `TYPE 26` claim checkable rather than inferred from labels.
 Seven duplicate-basis groups are reviewed; 241 remain open.
+
+The former 23-way Bugmax frame basis combined unrelated owners into one
+sentence. The source now separates two hit-fragment mappings, two central
+toggle mappings, secondary and primary linked-part frames, battle/opening
+controller frames, three angle-selected central frames, three opening linked
+frames, and spread/sine projectile frames. Each exact-address record cites its
+specific table slot, initializer store, angle condition, or animation entry;
+the old sentence is the 61st rejected generic basis. A regression test checks
+the role-specific source references, linked-part pointer orders, two animation
+streams, and the absence of the retired 23 names. The wider queue shrinks to
+247 groups across 1,141 uses: seven reviewed and 240 still open.

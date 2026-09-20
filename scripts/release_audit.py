@@ -76,6 +76,7 @@ GENERIC_NAME_BASES = (
     "The helper compares Medusa X against a requested target and changes signed horizontal velocity by fixed acceleration steps within hard limits.",
     "Anim_UpdateFrame resolves signed relative offsets to this ROM-ordered sprite-frame record before Sprite_PrepareOAM consumes it. The numeric suffix states ordering only and does not claim a visual identity.",
     "Anim_UpdateFrame consumes this ROM-ordered stream as frame-relative offsets paired with duration or control words. The numeric suffix avoids assigning one visual role to a table shared by heterogeneous consumers.",
+    "Bugmax constructors, linked-part descriptors, or the two local relative-offset animations select this ROM-ordered sprite frame. The suffix avoids inventing a body-part identity where consumers overlap.",
 )
 
 

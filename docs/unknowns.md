@@ -3939,7 +3939,7 @@ The final record at `0x0EC82E` is a manifest-backed 750-byte asset rather than
 a single six-byte mapping. Both metasprite descriptor blocks reference it, and
 its size covers 125 six-byte sprite records. It is therefore named as packed
 Valkirie sprite mappings, with an exclusive end at `0x0ECB1C`. That end is
-co-addressed with `Boss_BugmaxSpriteFrame00`, so the boundary retains its own
+co-addressed with `Projectile_BugmaxHitFragmentFrame00`, so the boundary retains its own
 provenance marker but deliberately shares the next module's one address-level
 audit record instead of creating a duplicate.
 

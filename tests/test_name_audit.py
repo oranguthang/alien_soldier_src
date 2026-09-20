@@ -16,6 +16,86 @@ DEFINITION = re.compile(
 
 
 class NameAuditTests(unittest.TestCase):
+    def test_bugmax_frame_names_match_their_static_consumers(self) -> None:
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        reviewed = [
+            record for record in records
+            if re.fullmatch(r"Boss_BugmaxSpriteFrame\d\d", record["previous_name"] or "")
+        ]
+        self.assertEqual(23, len(reviewed))
+        names = {record["current_name"] for record in reviewed}
+        projectile = (ROOT / "src/projectiles/bugmax.s").read_text(encoding="utf-8")
+        opening = (ROOT / "src/bosses/bugmax_opening_states.s").read_text(
+            encoding="utf-8"
+        )
+        battle = (ROOT / "src/bosses/bugmax_battle_and_final_sequence.s").read_text(
+            encoding="utf-8"
+        )
+        movement = (ROOT / "src/bosses/bugmax_movement.s").read_text(
+            encoding="utf-8"
+        )
+        data = (ROOT / "src/data/bugmax_sprite_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        all_source = projectile + opening + battle + movement + data
+        self.assertNotRegex(all_source, r"\bBoss_BugmaxSpriteFrame\d\d\b")
+        selected = set(
+            re.findall(
+                r"\b(?:dc\.l|move\.l|dc\.w)\s+#?((?:Boss|Projectile)_Bugmax\w*Frame\w*)",
+                all_source,
+            )
+        )
+        self.assertEqual(names, selected)
+
+        def pointer_suffixes(source: str, start: str, end: str, family: str) -> list[str]:
+            section = source.split(start + ":", 1)[1].split(end + ":", 1)[0]
+            return re.findall(r"\bdc\.l\s+" + re.escape(family) + r"(\d\d)\b", section)
+
+        self.assertEqual(
+            ["00", "01"],
+            pointer_suffixes(
+                projectile, "Boss_BugmaxStandardHitFragmentMappings",
+                "Gfx_BugmaxApplyWavePaletteOffset", "Projectile_BugmaxHitFragmentFrame",
+            ),
+        )
+        self.assertEqual(
+            ["00", "01", "01", "02", "02"],
+            pointer_suffixes(
+                opening, "Boss_BugmaxLinkedPartDescriptors",
+                "Gfx_BugmaxLoadInitialTiles", "Boss_BugmaxOpeningLinkFrame",
+            ),
+        )
+        self.assertEqual(
+            ["00", "01", "01", "02", "02"],
+            pointer_suffixes(
+                battle, "Boss_BugmaxPrimaryLinkedPartDescriptors",
+                "Boss_BugmaxSecondaryLinkedPartMappings", "Boss_BugmaxPrimaryLinkFrame",
+            ),
+        )
+        secondary = battle.split("Boss_BugmaxSecondaryLinkedPartMappings:", 1)[1].split(
+            "Boss_BugmaxRotateLinkedAssemblyToward140:", 1
+        )[0]
+        self.assertEqual(
+            ["00"] * 3 + ["01"] * 5,
+            re.findall(r"\bdc\.l\s+Boss_BugmaxSecondaryLinkFrame(\d\d)\b", secondary),
+        )
+        angle = opening.split("Boss_BugmaxSelectCentralPartFrameByAngle:", 1)[1].split(
+            "; End of function Boss_BugmaxSelectCentralPartFrameByAngle", 1
+        )[0]
+        for role in ("Lower", "Middle", "Upper"):
+            self.assertIn(f"Boss_BugmaxCentralPart{role}AngleFrame", angle)
+        for family, count in (("Spread", 2), ("Sine", 4)):
+            self.assertEqual(
+                [f"{index:02}" for index in range(count)],
+                re.findall(
+                    r"\bdc\.w\s+Projectile_Bugmax" + family + r"Frame(\d\d)-\*",
+                    data,
+                ),
+            )
+        self.assertIn("move.l  #Boss_BugmaxCentralPartToggleFrame01,8(a0)", movement)
+        self.assertIn("move.l  #Boss_BugmaxBattleControllerFrame,8(a5)", battle)
+        self.assertIn("move.l  #Boss_BugmaxOpeningControllerFrame,8(a5)", opening)
+
     def test_records_are_unique_and_traceable(self) -> None:
         audit = json.loads(AUDIT.read_text(encoding="utf-8"))
         policy = json.loads(SOURCE_POLICY.read_text(encoding="utf-8"))

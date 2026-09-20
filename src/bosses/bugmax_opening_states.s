@@ -66,7 +66,7 @@ Boss_BugmaxInitializeEncounterState:                    ; DATA XREF: ROM:Boss_Bu
                 move.w  d0,$10(a5)
                 move.w  #$C8,$14(a5)
                 move.b  #$40,$20(a5)                    ; '@'
-                move.l  #Boss_BugmaxSpriteFrame13,8(a5)
+                move.l  #Boss_BugmaxOpeningControllerFrame,8(a5)
                 move.w  #$300,$E(a5)
                 eori.w  #$800,$E(a5)
                 move.w  #$CD80,2(a5)
@@ -78,7 +78,7 @@ Boss_BugmaxInitializeEncounterState:                    ; DATA XREF: ROM:Boss_Bu
                 move.w  #$40,$50(a5)                    ; '@'
                 movea.w #(SecondaryEntityType-M68K_RAM),a0
                 move.w  #$10,(a0)
-                move.l  #Boss_BugmaxSpriteFrame12,8(a0)
+                move.l  #Boss_BugmaxCentralPartUpperAngleFrame,8(a0)
                 move.w  $E(a5),$E(a0)
                 move.w  2(a5),2(a0)
                 move.l  #$F010F808,$28(a0)
@@ -138,19 +138,19 @@ Boss_BugmaxInitializeEncounterReturn:                   ; CODE XREF: Boss_Bugmax
 Boss_BugmaxLinkedPartDescriptors:   dc.w    $5C         ; field_0  ; was: stru_4C5BE
                                         ; DATA XREF: Boss_BugmaxInitializeEncounterState+12C   o
                 dc.w    $FF                             ; field_2
-                dc.l    Boss_BugmaxSpriteFrame14        ; field_4
+                dc.l    Boss_BugmaxOpeningLinkFrame00   ; field_4
                 dc.w    $40                             ; field_0
                 dc.w    $FF                             ; field_2
-                dc.l    Boss_BugmaxSpriteFrame15        ; field_4
+                dc.l    Boss_BugmaxOpeningLinkFrame01   ; field_4
                 dc.w    $30                             ; field_0
                 dc.w    $FF                             ; field_2
-                dc.l    Boss_BugmaxSpriteFrame15        ; field_4
+                dc.l    Boss_BugmaxOpeningLinkFrame01   ; field_4
                 dc.w    $2C                             ; field_0
                 dc.w    $FF                             ; field_2
-                dc.l    Boss_BugmaxSpriteFrame16        ; field_4
+                dc.l    Boss_BugmaxOpeningLinkFrame02   ; field_4
                 dc.w    $28                             ; field_0
                 dc.w    $FF                             ; field_2
-                dc.l    Boss_BugmaxSpriteFrame16        ; field_4
+                dc.l    Boss_BugmaxOpeningLinkFrame02   ; field_4
 
 ; Load the initial Bugmax tile set
 Gfx_BugmaxLoadInitialTiles:                             ; CODE XREF: Boss_BugmaxInitializeEncounterState+148   p  ; was: sub_4C5E6
@@ -379,17 +379,17 @@ Boss_BugmaxSelectCentralPartFrameByAngle:               ; CODE XREF: Boss_Bugmax
                 cmpi.w  #$170,d0
                 bhi.s   Boss_BugmaxSelectUpperAngleCentralPartFrame
                 ori.w   #$800,$E(a0)
-                move.l  #Boss_BugmaxSpriteFrame11,8(a0)
+                move.l  #Boss_BugmaxCentralPartMiddleAngleFrame,8(a0)
                 rts
 ; ---------------------------------------------------------------------------
 Boss_BugmaxSelectUpperAngleCentralPartFrame:            ; CODE XREF: Boss_BugmaxSelectCentralPartFrameByAngle+26   j  ; was: loc_4C864
                 ori.w   #$800,$E(a0)
-                move.l  #Boss_BugmaxSpriteFrame12,8(a0)
+                move.l  #Boss_BugmaxCentralPartUpperAngleFrame,8(a0)
                 rts
 ; ---------------------------------------------------------------------------
 Boss_BugmaxSelectLowerAngleCentralPartFrame:            ; CODE XREF: Boss_BugmaxSelectCentralPartFrameByAngle+20   j  ; was: loc_4C874
                 ori.w   #$800,$E(a0)
-                move.l  #Boss_BugmaxSpriteFrame10,8(a0)
+                move.l  #Boss_BugmaxCentralPartLowerAngleFrame,8(a0)
                 rts
 ; End of function Boss_BugmaxSelectCentralPartFrameByAngle
 ; Reverse and randomize linked-part angular offsets during the timed state

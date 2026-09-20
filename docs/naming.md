@@ -72,7 +72,7 @@ time-bonus, 26 message-render, 26 message-script, 20 options-menu, 19
 weapon-selection, 33 weapon-setup loadout, 31 controller/background, 32 boss
 asset-set, 29 graphics-list, 35 asset-set palette-command, and 17 standalone
 or banked palette-command records have since been reviewed. The curated
-`NAME-002` detector now has zero matches across 60 known sentences. A wider
+`NAME-002` detector now has zero matches across 61 known sentences. A wider
 duplicate-basis review is still required before the 1.0 tag; zero matches do
 not prove every explanation or name correct.
 The read-only `make semantic-audit` now counts the wider duplicate queue, and
@@ -98,8 +98,10 @@ from the masked eight-slot renderer. A fifth accepted group covers the 33
 animation streams. A sixth covers 30 Shellshogun mappings selected by six
 rotation tables, direct metasprite/body assignments, or the rotating-part
 frame table. A seventh covers the 26 encoded TYPE strings, with table order
-and decimal bytes checked against their names. The remaining queue has 241
-groups.
+and decimal bytes checked against their names. The old 23-way Bugmax sentence
+was not valid for hit fragments, central-part selection, linked-part tables,
+and two projectile animations; those names and bases are now role-specific.
+The remaining queue has 240 groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

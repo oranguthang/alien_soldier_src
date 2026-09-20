@@ -538,5 +538,5 @@ Boss_BugmaxHitFragmentEmissionReturn:                   ; CODE XREF: Boss_Bugmax
                 rts
 ; End of function Boss_BugmaxEmitHitFragmentFromCurrentPart
 ; ---------------------------------------------------------------------------
-Boss_BugmaxStandardHitFragmentMappings: dc.l    Boss_BugmaxSpriteFrame00  ; DATA XREF: Boss_BugmaxEmitHitFragmentFromCurrentPart+F6   r  ; was: off_4DA1A
-                dc.l    Boss_BugmaxSpriteFrame01
+Boss_BugmaxStandardHitFragmentMappings: dc.l    Projectile_BugmaxHitFragmentFrame00  ; DATA XREF: Boss_BugmaxEmitHitFragmentFromCurrentPart+F6   r  ; was: off_4DA1A
+                dc.l    Projectile_BugmaxHitFragmentFrame01
