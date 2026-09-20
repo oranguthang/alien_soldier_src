@@ -1300,3 +1300,11 @@ pattern and palette words, so it is now named
 evidence and a regression test pins the instructions and branch boundary.
 The old sentence is the 96th rejected generic basis. The queue falls to 221
 groups across 924 uses: forty-one reviewed, 180 open.
+
+The four Phase Pattern state returns at `$02D136/$02D154/$02D170/$02D18A`
+share a valid but narrow timer basis. Each state decrements `$48(a5)` and
+branches to its own RTS while nonzero; when zero, each performs a different
+animation, motion, or state update before falling through to that RTS. An
+exact-member review and test pin the four branch targets, countdowns, state
+table membership, and distinct expiry writes. The queue remains 221 groups
+across 924 uses: forty-two reviewed, 179 open.

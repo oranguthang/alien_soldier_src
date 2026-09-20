@@ -2162,6 +2162,55 @@ class SemanticAuditQueueTests(unittest.TestCase):
             "move.l  #Enemy_Stage10WaspSelector0CAnimation,8(a5)", wasp
         )
 
+    def test_phase_pattern_return_review_pins_four_countdowns(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item for item in reviews
+            if item["basis"] == "The frames before that timer expires return here."
+        )
+        records = {
+            record["address"]: record
+            for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        source = (ROOT / "src/enemies/phase_and_debris_states.s").read_text(
+            encoding="utf-8"
+        )
+        cases = (
+            ("0x02D136", "WaitBeforeAttack", ("move.w  #$14,$5C(a5)",
+                                                "addq.w  #2,4(a5)")),
+            ("0x02D154", "BeginHorizontalMotion", ("move.w  #$1C,$5C(a5)",
+                                                       "move.w  #$FFFF,$18(a5)")),
+            ("0x02D170", "StopHorizontalMotion", ("clr.w   $18(a5)",
+                                                      "move.w  #$18,$5C(a5)")),
+            ("0x02D18A", "Restart", ("move.w  #$100,$48(a5)",
+                                          "move.w  #2,4(a5)")),
+        )
+        expected_members = []
+        for address, suffix, expiry_instructions in cases:
+            with self.subTest(address=address):
+                state = f"Enemy_PhasePattern_{suffix}"
+                return_label = state + "_Return"
+                expected_members.append((address, return_label))
+                self.assertEqual(return_label, records[address]["current_name"])
+                self.assertEqual([review["basis"]], records[address]["basis"])
+                body = source.split(state + ":", 1)[1].split(
+                    "; End of function " + state, 1
+                )[0]
+                self.assertIn("subq.w  #1,$48(a5)", body)
+                self.assertIn(f"bne.s   {return_label}", body)
+                self.assertIn(return_label + ":", body)
+                self.assertRegex(body, rf"(?s){return_label}:.*?\n\s+rts")
+                self.assertIn(f"dc.w    {state}-*", source)
+                for instruction in expiry_instructions:
+                    self.assertIn(instruction, body)
+        self.assertEqual(
+            expected_members,
+            [(item["address"], item["current_name"])
+             for item in review["members"]],
+        )
+
     def test_phase_pattern_review_pins_seven_streams_and_mapping_ends(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

@@ -746,6 +746,16 @@
         {"address":"0x034DF6","current_name":"Boss_MadamBarbarRotationFramesC","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"},
         {"address":"0x034E16","current_name":"Boss_MadamBarbarRotationFramesD","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"}
       ]
+    },
+    {
+      "basis": "The frames before that timer expires return here.",
+      "reason": "All four Phase Pattern states start by decrementing $48(a5) and use bne.s to reach their own return label while the countdown is nonzero. At zero, each performs its distinct state/animation/motion update and falls through to the same RTS: WaitBeforeAttack selects $14 and state +2; BeginHorizontalMotion selects $1C and sets $18 to -1; StopHorizontalMotion clears $18 and selects $18; Restart restores the $100 wait, animation 4, and state 2. The shared sentence covers only the nonzero-countdown branch, not identical expiry effects.",
+      "members": [
+        {"address":"0x02D136","current_name":"Enemy_PhasePattern_WaitBeforeAttack_Return","file":"src/enemies/phase_and_debris_states.s"},
+        {"address":"0x02D154","current_name":"Enemy_PhasePattern_BeginHorizontalMotion_Return","file":"src/enemies/phase_and_debris_states.s"},
+        {"address":"0x02D170","current_name":"Enemy_PhasePattern_StopHorizontalMotion_Return","file":"src/enemies/phase_and_debris_states.s"},
+        {"address":"0x02D18A","current_name":"Enemy_PhasePattern_Restart_Return","file":"src/enemies/phase_and_debris_states.s"}
+      ]
     }
   ]
 }

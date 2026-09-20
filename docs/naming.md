@@ -217,8 +217,9 @@ and the Back Stringer/Madam Barbar rotation tables now have exact-member
 reviews tied to their linked-part initialization arrays. Sirene's effect
 initializer, pattern selector, shared buffer/VDP writer, and alternate-color
 branch now have separate instruction evidence; the last branch's label names
-its actual pattern and palette writes. There are 180 open repeated-basis
-groups.
+its actual pattern and palette writes. Four Phase Pattern state-return labels
+now have an exact-member review: the shared timer branch is supported, while
+their expiry effects differ. There are 179 open repeated-basis groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style
