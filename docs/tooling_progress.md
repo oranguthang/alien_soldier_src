@@ -1611,3 +1611,17 @@ wrong. Three transition state machines each pass a separate type-7,
 review. Focused tests pin all three relationships. The repeated-basis queue
 is 194 groups across 845 uses: seventy-five reviewed, 119 open. No visual
 owner was inferred.
+
+Four more repeated-basis groups received instruction-level decisions. The
+Missiray bullet's initial, transform, and loop sprite streams have different
+installers and frame/duration sequences, so their formerly shared sentence
+was replaced with separate exact-address evidence. Bird vertical acceleration
+and the fish's inward/outward horizontal acceleration have different velocity
+fields and thresholds; their three return labels likewise no longer share a
+generic claim. The three gravity-related returns now identify their distinct
+entrypoint context, increment, and `$80` gate. By contrast, the headered and
+headerless byte-stream DMA parsers really do have identical four-instruction
+`$FF` terminal blocks; their exact members and earlier parser difference are
+recorded in the accepted review. Four focused tests pin these source facts.
+The queue is now 191 repeated groups across 836 uses, seventy-six reviewed
+and 115 open. No emulator or visual identity claim was involved.

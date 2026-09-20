@@ -1054,6 +1054,14 @@
         {"address":"0x026A4E","current_name":"TransitionEffect_GraphicsLoadDescriptor","file":"src/effects/defeat_transition_control.s"},
         {"address":"0x027982","current_name":"TunnelTransition_GraphicsLoadDescriptor","file":"src/effects/tunnel_transition.s"}
       ]
+    },
+    {
+      "basis": "A 0xFF marker flushes the final DMA length and publishes the updated command-queue head and staging-data cursor.",
+      "reason": "Both byte-stream parsers branch to their own FinishStream label for marker $FF. The exact terminal instruction blocks are identical: write d1 to -(a1), store a1 as VDPCommandQueueHead, store a2 as VDPStagingDataCursor, and return. Their earlier record parsing differs (headered versus headerless), but that distinction does not change this terminal action.",
+      "members": [
+        {"address":"0x001DA2","current_name":"Gfx_QueueHeaderedByteStreamDMA_FinishStream","file":"src/rendering/dma_queue.s"},
+        {"address":"0x001E1C","current_name":"Gfx_QueueByteStreamDMA_FinishStream","file":"src/rendering/dma_queue.s"}
+      ]
     }
   ]
 }
