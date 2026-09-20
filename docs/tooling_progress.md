@@ -934,3 +934,15 @@ Each stream ends in `$FF,$FF` or `$FF,$FE`. An exact-member review and test
 pin the 13 names, source references, terminators, and interpreter connection.
 They do not, by themselves, prove the higher-level visual pose names. The
 241 groups remain: twelve reviewed, 229 open.
+
+The 12-way shared palette-offset-list sentence contained one exception.
+`ContinueScreenPaletteOffsetLists` holds two consecutive zero-terminated
+four-offset lists at `$00B95A` and `$00B964`, while `Continue_InitializeScreen`
+passes a direct pointer only to the first. Its exact-address basis now states
+both lists and leaves the second list's reachability unresolved. The other
+11 records each define one terminated signed-offset list, have a screen,
+cutscene, or stage-configuration source pointer, and are consumed by
+`Gfx_LoadMultiplePalettes` relative to `Gfx_LoadPalettePreservingSharedColor`.
+An exact-member review and test pin their terminations, offset expressions,
+static owners, and the loader arithmetic. The queue remains 241 groups over
+1,033 uses: thirteen reviewed, 228 open.

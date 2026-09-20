@@ -392,6 +392,23 @@
         {"address":"0x048C9E","current_name":"Boss_SharpssteelComplexOscillationPoseCommands","file":"src/bosses/sharpssteel_blades.s"},
         {"address":"0x048CBA","current_name":"Boss_SharpssteelComplexExitPoseCommands","file":"src/bosses/sharpssteel_blades.s"}
       ]
+    },
+    {
+      "basis": "Gfx_LoadMultiplePalettes consumes these signed words as a zero-terminated list relative to Gfx_LoadPalettePreservingSharedColor; the named stage or screen is the static pointer owner.",
+      "reason": "Each of these 11 records defines one zero-terminated list of dc.w offsets relative to Gfx_LoadPalettePreservingSharedColor and has a named screen, cutscene, or stage configuration pointer in source. Gfx_LoadMultiplePalettes reads the signed word, stops at zero, extends it and adds the preserving-loader base before loading the command. ContinueScreenPaletteOffsetLists is excluded because it contains two consecutive lists and only the first has a direct source pointer; its separate address basis states that limit.",
+      "members": [
+        {"address":"0x00B944","current_name":"StoryScreenPaletteOffsetList","file":"src/rendering/palettes.s"},
+        {"address":"0x00B948","current_name":"OptionsScreenPaletteOffsetList","file":"src/rendering/palettes.s"},
+        {"address":"0x00B94E","current_name":"StageStartPaletteOffsetList","file":"src/rendering/palettes.s"},
+        {"address":"0x00B96E","current_name":"ResultsScreenPaletteOffsetList","file":"src/rendering/palettes.s"},
+        {"address":"0x00B982","current_name":"CreditsAndPlanetPaletteOffsetList","file":"src/rendering/palettes.s"},
+        {"address":"0x00B988","current_name":"EarlyStagePaletteOffsetList","file":"src/rendering/palettes.s"},
+        {"address":"0x00B98C","current_name":"ShellshogunStagePaletteOffsetList","file":"src/rendering/palettes.s"},
+        {"address":"0x00B996","current_name":"Stage8InitialPaletteOffsetList","file":"src/rendering/palettes.s"},
+        {"address":"0x00B9A0","current_name":"XiTigerCutscenePaletteOffsetList","file":"src/rendering/palettes.s"},
+        {"address":"0x00B9AC","current_name":"Stage17PaletteOffsetList","file":"src/rendering/palettes.s"},
+        {"address":"0x00B9C0","current_name":"SevenForcesCutscenePaletteOffsetList","file":"src/rendering/palettes.s"}
+      ]
     }
   ]
 }

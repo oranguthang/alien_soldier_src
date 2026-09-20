@@ -11532,3 +11532,10 @@ X takes the positive-step branch. The negative and positive velocity tests
 skip a step when already beyond their respective thresholds; they do not
 clamp the new value after a permitted `$2000` step. The old separate-function
 comment and hard-limit evidence were therefore unsupported.
+
+`ContinueScreenPaletteOffsetLists` at `$00B95A` contains two identical
+four-offset lists, separately terminated at `$00B962` and `$00B96C`.
+`Continue_InitializeScreen` passes `$00B95A` to `Gfx_LoadMultiplePalettes`;
+the second list starts at `$00B964` and has no direct symbolic source pointer.
+That is static evidence about the current source, not proof that raw-address
+or external paths cannot reach the second list.

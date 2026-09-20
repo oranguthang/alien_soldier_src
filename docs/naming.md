@@ -132,7 +132,10 @@ selector streams and high-bit terminators; selector `0C` is also assigned by
 the defeat-conversion path. A twelfth exact-member review confirms 13
 Sharpssteel byte streams are loaded into the blade-pose interpreter and end
 with its command terminators; that test does not certify their visual poses.
-The remaining queue has 229 groups.
+Eleven palette-offset lists also have a common loader-format claim and exact
+static owners. The two-list Continue record was excluded from that group:
+only its first list has a direct source pointer, and the second list's
+reachability is unresolved. The remaining queue has 228 groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

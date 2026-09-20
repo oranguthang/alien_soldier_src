@@ -15,6 +15,69 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_palette_offset_list_review_excludes_two_list_continue_record(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item
+            for item in reviews
+            if item["basis"].startswith("Gfx_LoadMultiplePalettes consumes these signed words")
+        )
+        owners = {
+            "StoryScreenPaletteOffsetList": "src/cutscenes/story_screen_and_title_transition.s",
+            "OptionsScreenPaletteOffsetList": "src/ui/options_menu_controllers.s",
+            "StageStartPaletteOffsetList": "src/stages/gameplay_initialization.s",
+            "ResultsScreenPaletteOffsetList": "src/ui/results_screen.s",
+            "CreditsAndPlanetPaletteOffsetList": "src/cutscenes/ending_sequence_credits.s",
+            "EarlyStagePaletteOffsetList": "src/stages/configuration_records.s",
+            "ShellshogunStagePaletteOffsetList": "src/stages/early_stage_process_states.s",
+            "Stage8InitialPaletteOffsetList": "src/stages/configuration_records.s",
+            "XiTigerCutscenePaletteOffsetList": "src/cutscenes/xi_tiger.s",
+            "Stage17PaletteOffsetList": "src/stages/configuration_records.s",
+            "SevenForcesCutscenePaletteOffsetList": "src/stages/seven_forces_transition_graphics.s",
+        }
+        self.assertEqual(set(owners), {member["current_name"] for member in review["members"]})
+        self.assertEqual(
+            {"src/rendering/palettes.s"},
+            {member["file"] for member in review["members"]},
+        )
+        palette_source = (ROOT / "src/rendering/palettes.s").read_text(
+            encoding="utf-8"
+        )
+        for name, owner_path in owners.items():
+            with self.subTest(name=name):
+                record = re.search(
+                    r"(?ms)^" + re.escape(name) + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    palette_source,
+                )
+                self.assertIsNotNone(record)
+                operands = [
+                    row.strip()
+                    for row in re.findall(r"\bdc\.w\s+([^;\r\n]+)", record.group(1))
+                ]
+                self.assertEqual("0", operands[-1])
+                self.assertEqual(1, operands.count("0"))
+                self.assertTrue(
+                    all(
+                        row.endswith("-Gfx_LoadPalettePreservingSharedColor")
+                        for row in operands[:-1]
+                    )
+                )
+                owner = (ROOT / owner_path).read_text(encoding="utf-8")
+                self.assertRegex(
+                    owner,
+                    r"(?m)^\s*(?:lea|movea\.l|dc\.l)\s+[^;\r\n]*\b"
+                    + re.escape(name)
+                    + r"\b",
+                )
+        continue_record = palette_source.split(
+            "ContinueScreenPaletteOffsetLists:", 1
+        )[1].split("ResultsScreenPaletteOffsetList:", 1)[0]
+        self.assertEqual(2, len(re.findall(r"\bdc\.w\s+0\b", continue_record)))
+        self.assertIn("move.w  (a4)+,d0", palette_source)
+        self.assertIn("addi.l  #Gfx_LoadPalettePreservingSharedColor,d0", palette_source)
+
     def test_sharpssteel_pose_stream_review_pins_interpreter_inputs(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
