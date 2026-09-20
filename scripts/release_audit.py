@@ -103,6 +103,8 @@ GENERIC_NAME_BASES = (
     "The Wolf Garopa orb updater indexes these four tile/mapping pairs from the global animation phase.",
     "This state waits while the transfer-status word is negative, then advances and invokes the named Missiray tile-set loader.",
     "This descriptor field supplies the 0x20-byte copy length for the following HBlank code block.",
+    "Direct control flow and field accesses establish this rendering or auxiliary-group role.",
+    "All Seven Force battle handlers call this palette path, which either restores three base colors or copies a frame-indexed three-color flash set.",
 )
 
 

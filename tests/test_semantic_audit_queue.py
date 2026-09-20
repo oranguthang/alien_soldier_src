@@ -16,6 +16,85 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_valkirie_velocity_and_seven_forces_palette_evidence_is_local(self) -> None:
+        records = {
+            record["address"]: record
+            for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        expected = {
+            "0x0568AC": "Entity_AdjustValkirieAuxiliaryNegativeVerticalVelocity",
+            "0x0568BC": "Entity_AdjustValkirieAuxiliaryHorizontalVelocity",
+            "0x0568D2": "Entity_AdjustValkirieAuxiliaryNegativeHorizontalVelocity",
+            "0x056942": "Gfx_UpdateSevenForcesBattlePalette",
+            "0x05695E": "Gfx_ApplySevenForcesBattleFlashPalette",
+            "0x056972": "SevenForces_BattleFlashPaletteColors",
+        }
+        self.assertEqual(
+            expected,
+            {address: records[address]["current_name"] for address in expected},
+        )
+        self.assertEqual(
+            6, len({tuple(records[address]["basis"]) for address in expected})
+        )
+        source = (ROOT / "src/bosses/valkirie_rendering.s").read_text(
+            encoding="utf-8"
+        )
+        velocity_cases = (
+            (
+                expected["0x0568AC"], expected["0x0568BC"],
+                ("add.l   d0,$1FC(a5)", "bpl.s   Entity_AdjustValkirieAuxiliaryHorizontalVelocity",
+                 "cmp.l   $1FC(a5),d2", "move.l  d2,$1FC(a5)"),
+            ),
+            (
+                expected["0x0568BC"], expected["0x0568D2"],
+                ("tst.l   d3", "bmi.s   Entity_AdjustValkirieAuxiliaryNegativeHorizontalVelocity",
+                 "add.l   d1,$1F8(a5)", "cmp.l   $1F8(a5),d3", "move.l  d3,$1F8(a5)"),
+            ),
+            (
+                expected["0x0568D2"], "Entity_UpdateValkirieAuxiliaryGroupReturn",
+                ("add.l   d1,$1F8(a5)", "cmp.l   $1F8(a5),d3",
+                 "move.l  d3,$1F8(a5)"),
+            ),
+        )
+        for name, next_name, instructions in velocity_cases:
+            block = source.split(name + ":", 1)[1].split(next_name + ":", 1)[0]
+            for instruction in instructions:
+                self.assertIn(instruction, block)
+        palette = source.split("Gfx_UpdateSevenForcesBattlePalette:", 1)[1].split(
+            "SevenForces_BattleFlashPaletteColors:", 1
+        )[0]
+        self.assertIn("btst    #0,(FrameCounter+1).w", palette)
+        self.assertIn("bne.s   Gfx_ApplySevenForcesBattleFlashPalette", palette)
+        for index in (61, 62, 63):
+            self.assertIn(
+                f"(PaletteShadowColor{index}).w,(PaletteActiveColor{index}).w",
+                palette,
+            )
+        for offset in ("", "+2", "+4"):
+            self.assertIn(f"SevenForces_BattleFlashPaletteColors{offset}(pc,d0.w)", palette)
+        table = source.split("SevenForces_BattleFlashPaletteColors:", 1)[1]
+        words = [
+            value.strip()
+            for row in re.findall(r"\bdc\.w\s+([^;\r\n]+)", table)
+            for value in row.split(",")
+        ]
+        self.assertEqual(21, len(words))
+        callers = (
+            ("valkirie_battle.s", "0"), ("medusa.s", "6"),
+            ("sirene.s", "$C"), ("artemis_core.s", "$12"),
+            ("unidentified_seven_force.s", "$18"),
+            ("valkirie_alternate.s", "$1E"), ("sylpheed_core.s", "$24"),
+        )
+        for filename, offset in callers:
+            with self.subTest(caller=filename):
+                caller = (ROOT / "src/bosses" / filename).read_text(encoding="utf-8")
+                call = caller.index("Gfx_UpdateSevenForcesBattlePalette")
+                preceding = caller[max(0, call - 150):call]
+                self.assertRegex(preceding, rf"moveq\s+#{re.escape(offset)},d0\b")
+        self.assertIn("d0 is not computed from the frame count", records[
+            "0x05695E"
+        ]["basis"][0])
+
     def test_hblank_copy_lengths_are_windows_not_handler_extents(self) -> None:
         records = {
             record["address"]: record

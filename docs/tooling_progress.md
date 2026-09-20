@@ -1213,3 +1213,15 @@ records now state the individual start/end addresses and spill lengths; a
 test pins the install-list pointers, `$20` fields, handler boundaries, and
 loader loop. The old statement is the 87th rejected generic basis. The
 queue falls to 230 groups across 958 uses: thirty-six reviewed, 194 open.
+
+The four Valkirie-rendering labels that shared a vague control-flow sentence
+were distinct: three branches update/clamp `$1FC/$1F8(a5)` against signed
+scaled targets, while the fourth writes active Seven Forces palette colors.
+The palette's other shared sentence was also wrong: `FrameCounter` bit zero
+chooses restore versus flash, but seven battle callers supply fixed byte
+offsets `0,6,$C,$12,$18,$1E,$24` into the 21-word color table. The six
+records now have local instruction or caller evidence, and the source comment
+no longer calls the triplet frame-selected. A regression test pins the three
+velocity paths, seven callers, table size and three palette writes. The old
+sentences become the 88th and 89th rejected generic bases. The queue falls
+to 228 groups across 952 uses: thirty-six reviewed, 192 open.
