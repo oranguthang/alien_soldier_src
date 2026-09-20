@@ -16,6 +16,39 @@ DEFINITION = re.compile(
 
 
 class NameAuditTests(unittest.TestCase):
+    def test_weapon_ammo_clamps_keep_distinct_costs(self) -> None:
+        records = {
+            record["address"]: record
+            for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        source = (ROOT / "src/weapons/firing.s").read_text(encoding="utf-8")
+        cases = (
+            ("0x0182EC", "Weapon_FireFourShotSpread", "$14", "$12", 8, "SetupLoop"),
+            ("0x018378", "Weapon_FireBulletHandler", "4", "3", 2, "SetupObject"),
+            ("0x01845C", "Weapon_FireBeamWeapon", "2", "1", 4, "SetupObject"),
+        )
+        for address, prefix, normal, zero, surcharge, next_label in cases:
+            with self.subTest(address=address):
+                subtract_label = prefix + "_SubtractAmmo"
+                before = source.split(prefix + ":", 1)[1].split(
+                    subtract_label + ":", 1
+                )[0]
+                clamp = source.split(subtract_label + ":", 1)[1].split(
+                    prefix + "_" + next_label + ":", 1
+                )[0]
+                self.assertIn("tst.w   (ShootingMode).w", before)
+                self.assertIn(f"subq.w  #{surcharge},$10(a4)", before)
+                self.assertIn(f"move.w  #{normal},d0", before)
+                self.assertIn(f"move.w  #{zero},d0", before)
+                self.assertIn("tst.b   (DifficultyMode).w", before)
+                self.assertIn("sub.w   d0,$10(a4)", clamp)
+                self.assertIn("clr.w   $10(a4)", clamp)
+                self.assertIn(zero, records[address]["basis"][0])
+
+        orphan = records["0x018326"]["basis"][0]
+        self.assertIn("computed indirect call is not excluded", orphan)
+        self.assertIn("; No known static caller: a bare return", source)
+
     def test_valkirie_part_command_entry_loop_and_exit_roles(self) -> None:
         audit = {
             record["address"]: record

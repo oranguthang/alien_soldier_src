@@ -319,6 +319,7 @@ Weapon_FireFourShotSpread_SelectAmmoCost:               ; CODE XREF: Weapon_Fire
                 tst.b   (DifficultyMode).w
                 bne.s   Weapon_FireFourShotSpread_SubtractAmmo
                 move.w  #$12,d0
+; Charge $12 on zero difficulty or $14 otherwise, after any mode surcharge
 Weapon_FireFourShotSpread_SubtractAmmo:                 ; CODE XREF: Weapon_FireFourShotSpread+2A   j  ; was: loc_182EC
                 sub.w   d0,$10(a4)
                 bpl.s   Weapon_FireFourShotSpread_SetupLoop
@@ -341,7 +342,7 @@ Weapon_InitSpreadProjectileState:                       ; DATA XREF: Weapon_Init
                 move.b  #1,$23(a5)
                 rts
 ; End of function Weapon_InitSpreadProjectileState
-; Unreachable: a bare return with no reference of any kind
+; No known static caller: a bare return between the spread and bullet handlers
 Orphaned_WeaponEmptySpreadProjectileHandler:            ; was: nullsub_46
                 rts
 ; End of function Orphaned_WeaponEmptySpreadProjectileHandler
@@ -373,6 +374,7 @@ Weapon_FireBulletHandler_SelectAmmoCost:                ; CODE XREF: Weapon_Fire
                 tst.b   (DifficultyMode).w
                 bne.s   Weapon_FireBulletHandler_SubtractAmmo
                 move.w  #3,d0
+; Charge 3 on zero difficulty or 4 otherwise, after any mode surcharge
 Weapon_FireBulletHandler_SubtractAmmo:                  ; CODE XREF: Weapon_FireBulletHandler+4A   j  ; was: loc_18378
                 sub.w   d0,$10(a4)
                 bpl.s   Weapon_FireBulletHandler_SetupObject
@@ -446,6 +448,7 @@ Weapon_FireBeamWeapon_SelectAmmoCost:                   ; CODE XREF: Weapon_Fire
                 tst.b   (DifficultyMode).w
                 bne.s   Weapon_FireBeamWeapon_SubtractAmmo
                 move.w  #1,d0
+; Charge 1 on zero difficulty or 2 otherwise, after any mode surcharge
 Weapon_FireBeamWeapon_SubtractAmmo:                     ; CODE XREF: Weapon_FireBeamWeapon+58   j  ; was: loc_1845C
                 sub.w   d0,$10(a4)
                 bpl.s   Weapon_FireBeamWeapon_SetupObject

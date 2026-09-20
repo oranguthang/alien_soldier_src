@@ -1461,3 +1461,16 @@ test pins these distinctions. The queue is now 207 repeated groups across
 that none of the 398 source modules exceeds 1000 lines; all 17 above the
 preferred 700-line band are boss-specific (largest: 869 lines). No mechanical
 split is warranted from line length alone.
+
+The next combat-state pass removed two more repeated claims. Three ammo-clamp
+labels do all clamp negative ammo to zero, but the four-shot spread charges
+`$12/$14`, the bullet handler `3/4`, and the beam handler `1/2` on zero/nonzero
+difficulty, after distinct mode surcharges of `8`, `2`, and `4`. Their audit
+records and source comments now state those costs individually. A nearby bare
+`rts` remains orphaned in the static source and ROM-pointer scan; the audit no
+longer claims a computed indirect call is impossible. Three Jampan branch
+targets likewise now describe their own operations: starting the shield-cycle
+delay, stepping Y toward `$F0`, and enabling the alternate oscillation state.
+Two lightweight regression tests pin these control-flow and instruction facts.
+The queue is 205 repeated groups across 874 uses: fifty-four reviewed and
+151 open.
