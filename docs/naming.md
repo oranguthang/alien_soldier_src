@@ -212,8 +212,10 @@ per-address instruction evidence. Five Stage 24 scene-object animation frames
 now have an exact-member review that pins their relative-offset stream order
 without asserting a visual pose. Four Stage 12 Teddy Bear streams now use
 variant names: their direct callers are unidentified, but indirect runtime
-reachability has not been ruled out. The repeated-basis queue has 184 open
-groups.
+reachability has not been ruled out. Antroid's secondary inline descriptors
+and the Back Stringer/Madam Barbar rotation tables now have exact-member
+reviews tied to their linked-part initialization arrays. There are 181 open
+repeated-basis groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

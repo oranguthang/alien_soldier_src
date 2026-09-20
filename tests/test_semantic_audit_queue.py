@@ -2159,6 +2159,125 @@ class SemanticAuditQueueTests(unittest.TestCase):
             helpers,
         )
 
+    def test_boss_metasprite_descriptor_reviews_pin_member_tables(self) -> None:
+        reviews = {
+            review["basis"]: review
+            for review in json.loads(
+                (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+            )["reviews"]
+        }
+        antroid = (
+            ROOT / "src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"
+        ).read_text(encoding="utf-8")
+        antroid_review = reviews[
+            "Antroid's secondary descriptor array references this three-word inline sprite descriptor."
+        ]
+        self.assertEqual(
+            [
+                (f"0x{address:06X}", f"Boss_AntroidInlineSpriteDescriptor{suffix}")
+                for address, suffix in zip(
+                    (0x3499E, 0x349A4, 0x349AA, 0x349B0), "DEFG"
+                )
+            ],
+            [
+                (item["address"], item["current_name"])
+                for item in antroid_review["members"]
+            ],
+        )
+        secondary = antroid.split(
+            "Boss_AntroidSecondaryMetaspriteDescriptors:", 1
+        )[1].split("Boss_AntroidPrimaryPartRadii:", 1)[0]
+        secondary_slots = re.findall(r"\bdc\.l\s+([^\s;]+)", secondary)
+        for suffix, index in (("D", 0), ("F", 2), ("E", 7), ("G", 9)):
+            name = f"Boss_AntroidInlineSpriteDescriptor{suffix}"
+            self.assertEqual(name + "+1", secondary_slots[index])
+            descriptor = antroid.split(name + ":", 1)[1].split("\n", 1)[0]
+            words = descriptor.split("dc.w", 1)[1].split(";", 1)[0].split(",")
+            self.assertEqual(3, len(words))
+        antroid_core = (ROOT / "src/bosses/antroid_core.s").read_text(encoding="utf-8")
+        self.assertIn(
+            "movea.l #Boss_AntroidSecondaryMetaspriteDescriptors,a0", antroid_core
+        )
+        self.assertIn(
+            "jsr     (Sprite_InitializeAdditionalLinkedMetaspriteParts).l",
+            antroid_core,
+        )
+
+        metasprites = (
+            ROOT / "src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"
+        ).read_text(encoding="utf-8")
+        cases = (
+            (
+                "BackStringer", "Back Stringer",
+                (0x350E6, 0x35106, 0x35126, 0x35146),
+                "src/bosses/back_stringer_core.s",
+            ),
+            (
+                "MadamBarbar", "Madam Barbar",
+                (0x34DB6, 0x34DD6, 0x34DF6, 0x34E16),
+                "src/bosses/madam_barbar_core.s",
+            ),
+        )
+        for owner, display_name, addresses, core_path in cases:
+            with self.subTest(owner=owner):
+                basis = (
+                    f"{display_name}'s "
+                    "descriptors reference this directional mapping-pointer table."
+                )
+                review = reviews[basis]
+                names = [f"Boss_{owner}RotationFrames{suffix}" for suffix in "ABCD"]
+                self.assertEqual(
+                    [
+                        (f"0x{address:06X}", name)
+                        for address, name in zip(addresses, names)
+                    ],
+                    [
+                        (item["address"], item["current_name"])
+                        for item in review["members"]
+                    ],
+                )
+                tables = []
+                for name in names:
+                    block = re.search(
+                        rf"(?ms)^{name}:(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                        metasprites,
+                    )
+                    self.assertIsNotNone(block)
+                    pointers = re.findall(
+                        r"\bdc\.l\s+([A-Za-z_]\w+)", block.group(1)
+                    )
+                    self.assertEqual(8, len(pointers))
+                    self.assertTrue(
+                        all(
+                            pointer.startswith(f"Boss_{owner}Rotation")
+                            for pointer in pointers
+                        )
+                    )
+                    tables.append(pointers)
+                self.assertEqual(tables[0], list(reversed(tables[1])))
+                self.assertEqual(tables[2], list(reversed(tables[3])))
+                descriptors = metasprites.split(
+                    f"Boss_{owner}MetaspriteDescriptors:", 1
+                )[1].split(f"Boss_{owner}PartRadii:", 1)[0]
+                for name in names:
+                    self.assertRegex(
+                        descriptors, rf"\bdc\.l\s+{name}(?:\+\$[0-9A-F]+)?\b"
+                    )
+                core = (ROOT / core_path).read_text(encoding="utf-8")
+                self.assertIn(f"movea.l #Boss_{owner}MetaspriteDescriptors,a0", core)
+                self.assertIn("jsr     (Sprite_InitializeLinkedMetaspriteParts).l", core)
+        helper = (ROOT / "src/rendering/boss_metasprites.s").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(
+            "bne.s   Sprite_InitializeLinkedMetaspritePartsUseInlineDescriptor",
+            helper,
+        )
+        self.assertIn(
+            "beq.s   Sprite_InitializeLinkedMetaspritePartsUseRotationFrames",
+            helper,
+        )
+
     def test_teddy_bear_mapping_review_pins_stream_targets_and_terminators(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

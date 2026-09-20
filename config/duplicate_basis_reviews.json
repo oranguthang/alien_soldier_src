@@ -716,6 +716,36 @@
         {"address":"0x0ECE60","current_name":"Stage24SceneObject_SpriteFrame04","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
         {"address":"0x0ECE7E","current_name":"Stage24SceneObject_SpriteFrame05","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"}
       ]
+    },
+    {
+      "basis": "Antroid's secondary descriptor array references this three-word inline sprite descriptor.",
+      "reason": "The secondary Antroid metasprite descriptor array includes D/F/E/G at slots 0/2/7/9, each with the +1 inline-descriptor marker. At $03499E/$0349A4/$0349AA/$0349B0, each target contains exactly three dc.w fields before the next label. Boss_AntroidInitializeBattleState passes this array to Sprite_InitializeAdditionalLinkedMetaspriteParts, whose low-bit branch handles inline descriptors. The letters encode ROM order, not visual identity.",
+      "members": [
+        {"address":"0x03499E","current_name":"Boss_AntroidInlineSpriteDescriptorD","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"},
+        {"address":"0x0349A4","current_name":"Boss_AntroidInlineSpriteDescriptorE","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"},
+        {"address":"0x0349AA","current_name":"Boss_AntroidInlineSpriteDescriptorF","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"},
+        {"address":"0x0349B0","current_name":"Boss_AntroidInlineSpriteDescriptorG","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"}
+      ]
+    },
+    {
+      "basis": "Back Stringer's descriptors reference this directional mapping-pointer table.",
+      "reason": "Back Stringer's linked-part initializer receives Boss_BackStringerMetaspriteDescriptors. That descriptor list references each A-D rotation table, with repeated C/A/D/B slots and attribute flags; the common metasprite initializer follows its rotation-frame branch. Each table holds eight dc.l mapping pointers. A/B traverse set A in opposite orders, and C/D traverse set C in opposite orders. No on-screen direction is assigned to any suffix.",
+      "members": [
+        {"address":"0x0350E6","current_name":"Boss_BackStringerRotationFramesA","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"},
+        {"address":"0x035106","current_name":"Boss_BackStringerRotationFramesB","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"},
+        {"address":"0x035126","current_name":"Boss_BackStringerRotationFramesC","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"},
+        {"address":"0x035146","current_name":"Boss_BackStringerRotationFramesD","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"}
+      ]
+    },
+    {
+      "basis": "Madam Barbar's descriptors reference this directional mapping-pointer table.",
+      "reason": "Madam Barbar's setup passes Boss_MadamBarbarMetaspriteDescriptors to Sprite_InitializeLinkedMetaspriteParts. That descriptor list references each A-D rotation table, sometimes with high-bit attribute flags; the initializer's rotation-frame branch handles them. Each table holds eight dc.l mapping pointers. B reverses A's set-A order, while C/D traverse set B in ascending/descending order. No on-screen direction is assigned to any suffix.",
+      "members": [
+        {"address":"0x034DB6","current_name":"Boss_MadamBarbarRotationFramesA","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"},
+        {"address":"0x034DD6","current_name":"Boss_MadamBarbarRotationFramesB","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"},
+        {"address":"0x034DF6","current_name":"Boss_MadamBarbarRotationFramesC","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"},
+        {"address":"0x034E16","current_name":"Boss_MadamBarbarRotationFramesD","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"}
+      ]
     }
   ]
 }

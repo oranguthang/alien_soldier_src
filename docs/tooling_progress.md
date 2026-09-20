@@ -1277,3 +1277,14 @@ The uncertainty about runtime reachability remains explicit in the unknowns
 registry. Their two old shared sentences are the 94th and 95th rejected
 generic bases. The queue falls to 222 groups across 928 uses: thirty-eight
 reviewed, 184 open.
+
+Three metasprite basis groups have exact-member reviews rather than relying
+on shared prose alone. Antroid's four three-word inline descriptors D-G occupy
+secondary array slots 0/7/2/9 respectively in ROM-letter order D/E/F/G,
+with the `+1` marker that selects the inline-descriptor branch. Back Stringer
+and Madam Barbar each have four eight-longword rotation tables A-D reached
+from their linked-part descriptor arrays. In both families B reverses A and
+D reverses C; the suffixes do not claim a particular on-screen compass
+direction. One regression test pins all twelve members, array references,
+table lengths, reversal relationships, and initializer calls. The queue
+remains 222 groups across 928 uses: forty-one reviewed, 181 open.
