@@ -255,14 +255,14 @@ Projectile_FragmentVelocityY:
                 dc.l    0, $FFFD2BEC
                 dc.l    $FFFC0000, $FFFD2BEC
 Projectile_FragmentSpriteFrames:
-                dc.l    SharedCombatSpriteFrame71
-                dc.l    SharedCombatSpriteFrame72
-                dc.l    SharedCombatSpriteFrame70
-                dc.l    SharedCombatSpriteFrame72
-                dc.l    SharedCombatSpriteFrame71
-                dc.l    SharedCombatSpriteFrame72
-                dc.l    SharedCombatSpriteFrame70
-                dc.l    SharedCombatSpriteFrame72
+                dc.l    Projectile_FragmentSpriteFrame01
+                dc.l    Projectile_FragmentSpriteFrame02
+                dc.l    Projectile_FragmentSpriteFrame00
+                dc.l    Projectile_FragmentSpriteFrame02
+                dc.l    Projectile_FragmentSpriteFrame01
+                dc.l    Projectile_FragmentSpriteFrame02
+                dc.l    Projectile_FragmentSpriteFrame00
+                dc.l    Projectile_FragmentSpriteFrame02
 Projectile_FragmentOrientationAttributes:
                 dc.w    $800, $1800, $1800, $1000, 0, 0, $800, $800
 

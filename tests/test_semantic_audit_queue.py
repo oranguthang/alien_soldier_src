@@ -15,6 +15,76 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_shared_combat_reviews_match_relative_streams_and_renderer(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        frames_review = next(
+            review for review in reviews
+            if review["basis"].startswith("A SharedCombatSpriteAnimation stream names")
+        )
+        animations_review = next(
+            review for review in reviews
+            if review["basis"].startswith("Anim_ResolveTimedMappingFrame reads")
+        )
+        streams = (ROOT / "src/data/shared_combat_sprite_animations.s").read_text(
+            encoding="utf-8"
+        )
+        frame_targets = set(
+            re.findall(r"\bdc\.w\s+(SharedCombatSpriteFrame\d\d)-\*", streams)
+        )
+        self.assertIn("SharedCombatSpriteFrame06", frame_targets)
+        frame_targets.remove("SharedCombatSpriteFrame06")
+        self.assertEqual(
+            {member["current_name"] for member in frames_review["members"]},
+            frame_targets,
+        )
+        stream_headers = set(
+            re.findall(
+                r"(?m)^(SharedCombatSpriteAnimation\d\d):\s+dc\.w\s+SharedCombatSpriteFrame\d\d-\*",
+                streams,
+            )
+        )
+        self.assertEqual(
+            {member["current_name"] for member in animations_review["members"]},
+            stream_headers,
+        )
+        renderer = (ROOT / "src/rendering/sprite_object_pipeline.s").read_text(
+            encoding="utf-8"
+        )
+        self.assertRegex(renderer, r"bsr\.w\s+Anim_ResolveTimedMappingFrame")
+        self.assertRegex(renderer, r"bsr\.w\s+Sprite_RenderMapping")
+        resolver = renderer.split("Anim_ResolveTimedMappingFrame:", 1)[1].split(
+            "; End of function Anim_ResolveTimedMappingFrame", 1
+        )[0]
+        self.assertRegex(resolver, r"addq\.w\s+#4,a4")
+        self.assertRegex(resolver, r"adda\.w\s+\(a4\),a4")
+        self.assertRegex(resolver, r"move\.w\s+2\(a4\),d0")
+
+    def test_fragment_frames_are_direct_stage15_table_entries(self) -> None:
+        stage = (ROOT / "src/stages/stage_15_fragment_hazards.s").read_text(
+            encoding="utf-8"
+        )
+        table = stage.split("Projectile_FragmentSpriteFrames:", 1)[1].split(
+            "Projectile_FragmentOrientationAttributes:", 1
+        )[0]
+        slots = re.findall(r"\bdc\.l\s+(Projectile_FragmentSpriteFrame\d\d)\b", table)
+        self.assertEqual(
+            [
+                "Projectile_FragmentSpriteFrame01",
+                "Projectile_FragmentSpriteFrame02",
+                "Projectile_FragmentSpriteFrame00",
+                "Projectile_FragmentSpriteFrame02",
+                "Projectile_FragmentSpriteFrame01",
+                "Projectile_FragmentSpriteFrame02",
+                "Projectile_FragmentSpriteFrame00",
+                "Projectile_FragmentSpriteFrame02",
+            ],
+            slots,
+        )
+        self.assertRegex(stage, r"move\.l\s+Projectile_FragmentSpriteFrames\(pc,d0\.w\),8\(a0\)")
+        self.assertRegex(stage, r"move\.l\s+\(a1,d0\.w\),8\(a0\)")
+
     def test_reviewed_player_mapping_group_still_matches_its_consumer(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

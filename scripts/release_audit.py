@@ -74,6 +74,8 @@ GENERIC_NAME_BASES = (
     "The visible half of the blink returns here.",
     "The backward loop edge repeats the owning routine's named operation over its fixed linked-object or output range.",
     "The helper compares Medusa X against a requested target and changes signed horizontal velocity by fixed acceleration steps within hard limits.",
+    "Anim_UpdateFrame resolves signed relative offsets to this ROM-ordered sprite-frame record before Sprite_PrepareOAM consumes it. The numeric suffix states ordering only and does not claim a visual identity.",
+    "Anim_UpdateFrame consumes this ROM-ordered stream as frame-relative offsets paired with duration or control words. The numeric suffix avoids assigning one visual role to a table shared by heterogeneous consumers.",
 )
 
 

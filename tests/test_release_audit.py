@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import copy
+import re
 import subprocess
 import sys
 import tempfile
@@ -17,6 +18,18 @@ import release_audit  # noqa: E402
 
 
 class ReleaseAuditTests(unittest.TestCase):
+    def test_name_evidence_does_not_cite_retired_renderer_names(self) -> None:
+        records = json.loads(
+            (ROOT / "config/name_audit.json").read_text(encoding="utf-8")
+        )["records"]
+        retired = re.compile(r"\b(?:Anim_UpdateFrame|Sprite_PrepareOAM)\b")
+        offenders = [
+            record["address"]
+            for record in records
+            if any(retired.search(basis) for basis in record.get("basis", []))
+        ]
+        self.assertEqual([], offenders)
+
     def test_all_known_template_name_bases_are_counted(self) -> None:
         for basis in release_audit.GENERIC_NAME_BASES:
             with self.subTest(basis=basis):

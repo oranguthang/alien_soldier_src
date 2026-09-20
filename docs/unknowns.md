@@ -2571,14 +2571,21 @@ address-derived ceiling are unchanged.
 
 The shared-combat sprite-mapping pass reconstructs the cohesive
 shared-combat mapping bank as 73 ROM-ordered frame records
-and 34 relative-offset animation streams. `Anim_UpdateFrame` proves the
+and 34 relative-offset animation streams. `Anim_ResolveTimedMappingFrame` proves the
 format by reading a frame-relative offset and its duration/control word;
-`Sprite_PrepareOAM` then consumes the resolved frame. All 106 remaining
+the ordinary draw path then passes the resolved mapping to
+`Sprite_RenderMapping`. All 106 remaining
 `word_E...` and `off_E...` definitions in the bank are replaced with typed,
 stable indices, while the already semantic frame at `0x0E90C2` is audited
 again. Its generated `SharedCombatSpriteFrameDataBase` name is rejected:
 every animation offset is relative to the word containing it, so there is no
 single shared base address.
+
+A later exact-address review found that frames 70–72 are not selected through
+the animation streams. `Projectile_FragmentSpriteFrames` selects them directly
+in the Stage 15 fragment creation and response paths. They now have
+`Projectile_FragmentSpriteFrame00..02` names and separate evidence; the other
+69 formerly shared-basis frame records are verified as stream targets.
 
 The indices deliberately make no visual-content claim. Static consumers give
 the following narrower evidence; entries described as internal have no live

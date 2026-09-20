@@ -1,4 +1,4 @@
-; Shared combat sprite frames referenced by the following animation streams
+; Shared combat sprite frames followed by three Stage 15 fragment frames
 ; Numeric suffixes preserve ROM order without guessing a visual identity shared by unrelated users
 ; Known consumers and unresolved visual roles are recorded in docs/unknowns.md
 
@@ -256,9 +256,9 @@ SharedCombatSpriteFrame68:  dc.w    $4874, 0, $F8F8     ; DATA XREF: ROM:000E976
 SharedCombatSpriteFrame69:  dc.w    $4872, 0, $F8F8     ; DATA XREF: ROM:000E9768   o  ; was: word_E9518
                 dc.w    $C878, 0, $FCFC
                 dc.w    $C872, 0, $F8F8
-SharedCombatSpriteFrame70:  dc.w    $C8DD, $200, $F4FC  ; DATA XREF: ROM:0003081C   o  ; was: word_E952A
+Projectile_FragmentSpriteFrame00:   dc.w    $C8DD, $200, $F4FC  ; DATA XREF: ROM:0003081C   o  ; was: word_E952A
                                         ; ROM:0003082C   o
-SharedCombatSpriteFrame71:  dc.w    $C8E0, $800, $FCF4  ; DATA XREF: ROM:Projectile_FragmentSpriteFrames   o  ; was: word_E9530
+Projectile_FragmentSpriteFrame01:   dc.w    $C8E0, $800, $FCF4  ; DATA XREF: ROM:Projectile_FragmentSpriteFrames   o  ; was: word_E9530
                                         ; ROM:00030824   o
-SharedCombatSpriteFrame72:  dc.w    $C8E3, $A00, $F4F4  ; DATA XREF: ROM:00030818   o  ; was: word_E9536
+Projectile_FragmentSpriteFrame02:   dc.w    $C8E3, $A00, $F4F4  ; DATA XREF: ROM:00030818   o  ; was: word_E9536
                                         ; ROM:00030820   o

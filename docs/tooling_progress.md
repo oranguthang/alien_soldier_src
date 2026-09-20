@@ -755,3 +755,22 @@ fails the audit. A regression test also pins the consumer's `$1C` mask and
 eight pointer slots, so the acceptance cannot outlive that evidence unnoticed.
 The queue is still 248 total groups, one accepted and 247
 unreviewed. This validates the review mechanism, not the remaining groups.
+
+The largest remaining duplicate sentence exposed a real scope error. It
+claimed that `Anim_UpdateFrame` and `Sprite_PrepareOAM` connected all 72
+shared-combat frame records, but those are retired names and the final three
+records are not animation-stream targets at all. The actual resolver is
+`Anim_ResolveTimedMappingFrame`, and the ordinary draw path calls
+`Sprite_RenderMapping`. The 69 stream-referenced frames now cite that path;
+their exact target set is accepted with a regression check against every
+relative `dc.w Frame-*` operand. The three excluded records are Stage 15
+fragment mappings selected directly in `Projectile_FragmentSpriteFrames`;
+they now have `Projectile_FragmentSpriteFrame00..02` names and individual
+zero-based table-slot evidence. The neighboring 33 shared animation headers
+also cite the current resolver and have a separate exact-member review. Six
+other bases and `docs/unknowns.md` were corrected where they still used the
+retired resolver name. A test rejects those retired names in current evidence
+while preserving them in `previous_name` provenance. Both old repeated
+sentences are now rejected by the
+curated detector as entries 59 and 60. The wider queue remains 248 groups,
+with three reviewed, 245 open, and 1,164 exact-address uses in total.

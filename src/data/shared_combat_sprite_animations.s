@@ -1,7 +1,7 @@
 ; Relative-offset animation streams for shared combat sprite frames
 ; ---------------------------------------------------------------------------
-; Anim_ResolveTimedMappingFrame reads each stream as frame-relative offsets paired with
-; duration or control words, then passes the resolved frame to Sprite_RenderMapping
+; Anim_ResolveTimedMappingFrame reads frame-relative offsets paired with timing words
+; The ordinary Sprite_RenderObjectList draw path passes the mapping to Sprite_RenderMapping
 SharedCombatSpriteAnimation00:  dc.w    SharedCombatSpriteFrame06-*  ; DATA XREF: ShipPiece_UpdateCountdown+20   o  ; was: off_E953C
                                         ; ROM:Boss_ZLeoParticleSpritePointers   o
                 dc.w    1

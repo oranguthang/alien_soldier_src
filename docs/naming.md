@@ -72,7 +72,7 @@ time-bonus, 26 message-render, 26 message-script, 20 options-menu, 19
 weapon-selection, 33 weapon-setup loadout, 31 controller/background, 32 boss
 asset-set, 29 graphics-list, 35 asset-set palette-command, and 17 standalone
 or banked palette-command records have since been reviewed. The curated
-`NAME-002` detector now has zero matches across 58 known sentences. A wider
+`NAME-002` detector now has zero matches across 60 known sentences. A wider
 duplicate-basis review is still required before the 1.0 tag; zero matches do
 not prove every explanation or name correct.
 The read-only `make semantic-audit` now counts the wider duplicate queue, and
@@ -86,7 +86,11 @@ reopens a review if its membership changes and blocks `tag-ready` while any
 group remains unreviewed. The eight `Player_AnimationFrameTable` mapping
 entries are the first accepted group: the frame helper masks its index with
 `$1C` and the eight table slots point to those mappings in order. This does
-not assert what any frame looks like. The remaining queue has 247 groups.
+not assert what any frame looks like. Two more accepted groups cover 69 shared
+combat mapping records actually reached by relative-offset animation streams
+and 33 stream headers consumed by `Anim_ResolveTimedMappingFrame`. Three
+Stage 15 fragment mappings were excluded from that mapping group and renamed
+for their direct pointer-table consumer. The remaining queue has 245 groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style
