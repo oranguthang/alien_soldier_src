@@ -1342,3 +1342,14 @@ with a zero delta. The original Valkirie debug-viewer wrapper uses `$10`
 instead and is deliberately excluded. Focused regression tests pin the
 tables, callers, wrapper instructions, and shared loop. The queue remains
 219 groups across 916 uses: forty-five reviewed, 174 open.
+
+The palette-reset audit found that three labels at `$01CDB4/$01CDB8/$01CDC0`
+had inherited the same whole-routine evidence despite different entry roles.
+The first calls `Stage_LoadTimeLimit`; the second is a direct entry after that
+call and initializes A0/D0/D7 for a 64-longword clear; the third is only the
+`dbf` loop over those preloaded registers and then falls through to set
+`MessageMode` to 4. The loop is now named `UI_ClearPaletteBuffers_Loop` and
+each address has distinct instruction-level evidence. A regression test pins
+the entry boundaries, palette-buffer addresses, and loop. The two repeated
+claims are removed: 217 groups across 910 uses, forty-five reviewed and 172
+open. The assembly instructions are unchanged.

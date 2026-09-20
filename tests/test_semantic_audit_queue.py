@@ -16,6 +16,42 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_ui_palette_reset_entries_do_not_share_one_routine_claim(self) -> None:
+        records = {
+            record["address"]: record
+            for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        names = (
+            "UI_ResetPaletteAndMessageMode",
+            "UI_ResetPaletteAndMessageMode_Clear",
+            "UI_ClearPaletteBuffers_Loop",
+        )
+        entries = [records[address] for address in ("0x01CDB4", "0x01CDB8", "0x01CDC0")]
+        self.assertEqual(list(names), [entry["current_name"] for entry in entries])
+        self.assertEqual(3, len({entry["basis"][0] for entry in entries}))
+        self.assertTrue(all(len(entry["basis"]) == 1 for entry in entries))
+
+        source = (ROOT / "src/system/game_variables.s").read_text(encoding="utf-8")
+        root = source.split(names[0] + ":", 1)[1].split(names[1] + ":", 1)[0]
+        clear = source.split(names[1] + ":", 1)[1].split(names[2] + ":", 1)[0]
+        loop = source.split(names[2] + ":", 1)[1].split(
+            "; End of function UI_ResetPaletteAndMessageMode", 1
+        )[0]
+        self.assertIn("bsr.w   Stage_LoadTimeLimit", root)
+        self.assertNotIn("Stage_LoadTimeLimit", clear)
+        for instruction in (
+            "movea.w #(PaletteActiveBuffer-M68K_RAM),a0",
+            "moveq   #0,d0", "moveq   #$3F,d7",
+        ):
+            self.assertIn(instruction, clear)
+            self.assertNotIn(instruction, loop)
+        self.assertIn("move.l  d0,(a0)+", loop)
+        self.assertIn("dbf     d7,UI_ClearPaletteBuffers_Loop", loop)
+        self.assertIn("move.w  #4,(MessageMode).w", loop)
+        ram = (ROOT / "src/ram_addrs.inc").read_text(encoding="utf-8")
+        self.assertRegex(ram, r"PaletteActiveBuffer\s+equ\s+\$FFFFE300")
+        self.assertRegex(ram, r"PaletteShadowBuffer\s+equ\s+\$FFFFE380")
+
     def test_tilemap_transfer_descriptors_cover_direct_and_queued_consumers(self) -> None:
         records = {
             record["address"]: record

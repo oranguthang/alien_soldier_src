@@ -62,18 +62,19 @@ StageEntry_ClearTransientState:                         ; was: sub_1CDA8
                 clr.w   (WeaponStateIndex).w
                 clr.w   (RasterLayoutOffset).w
 ; End of function StageEntry_ClearTransientState
-; Clears both 128-byte palette buffers and resets the message option to 4
+; Loads the stage time limit, clears both palette buffers, and resets message mode
 UI_ResetPaletteAndMessageMode:                          ; CODE XREF: StageEntry_InitializeGameplayState+58   p  ; was: sub_1CDB4
                 bsr.w   Stage_LoadTimeLimit
+; Direct entry skips the time-limit load but performs the same palette reset
 UI_ResetPaletteAndMessageMode_Clear:                    ; CODE XREF: UI_UpdateOptionsScreen+12   j  ; was: loc_1CDB8
                                         ; UI_UpdateSecondaryOptionsMenu+12   j
                 movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 moveq   #0,d0
                 moveq   #$3F,d7                         ; '?'
-; Clears 64 longwords spanning the active and shadow palette buffers
-UI_ClearPaletteBuffers:                                 ; CODE XREF: UI_ResetPaletteAndMessageMode+E   j  ; was: loc_1CDC0
+; Writes one longword per iteration using the registers set above
+UI_ClearPaletteBuffers_Loop:                            ; CODE XREF: UI_ResetPaletteAndMessageMode+E   j  ; was: loc_1CDC0
                 move.l  d0,(a0)+
-                dbf     d7,UI_ClearPaletteBuffers
+                dbf     d7,UI_ClearPaletteBuffers_Loop
                 move.w  #4,(MessageMode).w
                 rts
 ; End of function UI_ResetPaletteAndMessageMode
