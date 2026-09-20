@@ -1166,6 +1166,30 @@
         {"address":"0xFFFF9400","current_name":"SharedPatternRow0Long0","file":"src/ram_addrs.inc"},
         {"address":"0xFFFF9420","current_name":"SharedPatternRow1Long0","file":"src/ram_addrs.inc"}
       ]
+    },
+    {
+      "basis": "After initialization, execution enters here to test the segment's health and dispatch defeat to the shared explosion handler.",
+      "reason": "Both Caterpillar entity handlers skip initialization once state word 4(a5) is set, then enter their own Update label. Each tests $24(a5), branches on nonnegative value to its own Position label, and otherwise jumps to Boss_CaterpillarSpawnExplosion. The four-phase handler initializes $24 to $58, whereas the two-phase handler initializes it to $6E; their later mapping cycles differ and are not covered by this common sentence.",
+      "members": [
+        {"address":"0x03D332","current_name":"Boss_CaterpillarUpdateFourPhaseSegment","file":"src/bosses/caterpillar.s"},
+        {"address":"0x03D3C4","current_name":"Boss_CaterpillarUpdateTwoPhaseSegment","file":"src/bosses/caterpillar.s"}
+      ]
+    },
+    {
+      "basis": "After selecting one of two linked parts, this branch tests its Y coordinate before applying attack impact.",
+      "reason": "Antroid leap variants A and B select the FifteenthEntityType or TwentySixthEntityType pointer into a0 according to 6(a5), then at their respective CheckContact labels compare $14(a0) with $14E. Both skip impact while below the threshold and otherwise call Boss_AntroidApplyAttackImpact. The subsequent negative-result and next-preparation targets differ between variants, so the review covers only the common contact gate.",
+      "members": [
+        {"address":"0x037810","current_name":"Boss_AntroidLeapAttackACheckContact","file":"src/bosses/antroid_core.s"},
+        {"address":"0x0378DA","current_name":"Boss_AntroidLeapAttackBCheckContact","file":"src/bosses/antroid_core.s"}
+      ]
+    },
+    {
+      "basis": "All linked-record outcomes advance to the next $60-byte body record.",
+      "reason": "Both Shield Viper flip walkers start with d7=$18 and a0=a5. Each Advance label is reached after either the ordinary linked-record path, the zero-link branch, or the non-$370 branch; it executes lea $60(a0),a0 and DBF back to its own loop. One walker derives the horizontal-flip bit from the frame, while the other forces bit $2000, so only the common record stride and convergence are reviewed.",
+      "members": [
+        {"address":"0x04E5F8","current_name":"Gfx_ShieldViperAdvanceHorizontalFlipLoop","file":"src/bosses/shield_viper_attacks.s"},
+        {"address":"0x04E630","current_name":"Gfx_ShieldViperAdvanceForcedHorizontalFlipLoop","file":"src/bosses/shield_viper_attacks.s"}
+      ]
     }
   ]
 }

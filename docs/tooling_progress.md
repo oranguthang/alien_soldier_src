@@ -1675,3 +1675,11 @@ an exact-member review of their two consecutive 32-byte ranges. Four focused
 static tests pin these distinctions. The queue is 183 repeated groups across
 820 uses, with eighty-nine reviewed and 94 open. No gameplay visuals or ROM
 code changed.
+
+Three boss-pair bases now have exact-member reviews limited to the instructions
+actually shared: Caterpillar's health/defeat gate, Antroid's linked-part Y
+contact gate, and Shield Viper's $60-byte body-record stride. Their different
+initial health values, post-contact targets, and flip-bit sources remain
+explicitly distinct. Focused source tests pin each common prefix and its
+variant-specific branch. The queue is still 183 groups across 820 uses, with
+ninety-two reviewed and 91 open; no source ASM or gameplay visual claim changed.
