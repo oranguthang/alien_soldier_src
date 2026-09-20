@@ -72,7 +72,7 @@ time-bonus, 26 message-render, 26 message-script, 20 options-menu, 19
 weapon-selection, 33 weapon-setup loadout, 31 controller/background, 32 boss
 asset-set, 29 graphics-list, 35 asset-set palette-command, and 17 standalone
 or banked palette-command records have since been reviewed. The curated
-`NAME-002` detector now has zero matches across 82 known sentences. A wider
+`NAME-002` detector now has zero matches across 83 known sentences. A wider
 duplicate-basis review is still required before the 1.0 tag; zero matches do
 not prove every explanation or name correct.
 The read-only `make semantic-audit` now counts the wider duplicate queue, and
@@ -178,7 +178,10 @@ angles, and mapping-pointer selection; `SpriteFrames` was corrected to
 enabling flags and values from disabling flags only. Sirene's type-$490
 projectile steers toward `Entity57`, not the player coordinate, and the
 weapon-setup highlight palette has separate code and data evidence. The
-repeated-basis queue has 210 open groups.
+Periodic-shot enemy mappings and midgame lightning mappings now have
+exact-member reviews pinned to their animation stream orders. The lightning
+group no longer claims every mapping has multiple sprite pieces: mapping 06
+has one. The repeated-basis queue has 208 open groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

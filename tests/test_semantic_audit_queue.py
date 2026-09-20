@@ -16,6 +16,179 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_periodic_shot_mapping_review_pins_three_streams_and_nine_pieces(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item
+            for item in reviews
+            if item["basis"].startswith("Periodic-shot enemy animation streams")
+        )
+        addresses = [
+            0x0E9E94, 0x0E9ECA, 0x0E9F00, 0x0E9F36,
+            0x0E9F6C, 0x0E9FA2, 0x0E9FD8,
+        ]
+        names = [f"PeriodicShotEnemySpriteMapping{index:02d}" for index in range(7)]
+        self.assertEqual(
+            [(f"0x{address:06X}", name) for address, name in zip(addresses, names)],
+            [
+                (member["address"], member["current_name"])
+                for member in review["members"]
+            ],
+        )
+        self.assertEqual(
+            {"src/data/weapon_select_and_enemy_sprite_mappings.s"},
+            {member["file"] for member in review["members"]},
+        )
+        data = (ROOT / "src/data/weapon_select_and_enemy_sprite_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        expected_streams = {
+            "Wait": [3, 0, 1, 2, 4, 2, 1, 0, 3],
+            "Attack": [0, 5, 6, 5],
+            "Transition": [0, 5, 3],
+        }
+        for stream, expected in expected_streams.items():
+            block = re.search(
+                r"(?ms)^PeriodicShotEnemy" + stream
+                + r"SpriteAnimation:(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                data,
+            )
+            self.assertIsNotNone(block)
+            self.assertEqual(
+                expected,
+                [
+                    int(index)
+                    for index in re.findall(
+                        r"\bdc\.w\s+PeriodicShotEnemySpriteMapping([0-9]{2})-\*",
+                        block.group(1),
+                    )
+                ],
+            )
+        self.assertEqual(set(range(7)), set(sum(expected_streams.values(), [])))
+        for name in names:
+            with self.subTest(name=name):
+                block = re.search(
+                    r"(?ms)^" + re.escape(name) + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    data,
+                )
+                self.assertIsNotNone(block)
+                rows = re.findall(r"\bdc\.w\s+([^;\r\n]+)", block.group(1))
+                self.assertTrue(all(len(row.split(",")) == 3 for row in rows))
+                first_words = [
+                    int(word, 16)
+                    for word in re.findall(r"\bdc\.w\s+\$([0-9A-F]+)", block.group(1))
+                ]
+                self.assertEqual(9, len(first_words))
+                self.assertTrue(all(word < 0x8000 for word in first_words[:-1]))
+                self.assertNotEqual(0, first_words[-1] & 0x8000)
+        owner = (ROOT / "src/enemies/jetsripper_stage_actors.s").read_text(
+            encoding="utf-8"
+        )
+        pointer_table = owner.split("PeriodicShotEnemySpriteAnimationPointers:", 1)[1]
+        self.assertEqual(
+            ["Wait", "Transition", "Attack"],
+            re.findall(
+                r"\bdc\.l\s+PeriodicShotEnemy(Wait|Transition|Attack)SpriteAnimation",
+                pointer_table,
+            )[:3],
+        )
+
+    def test_midgame_lightning_mapping_review_excludes_one_piece_assumption(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item
+            for item in reviews
+            if item["basis"].startswith("At least one of Midgame_LightningSpriteAnimation00")
+        )
+        addresses = [
+            0x19C59E, 0x19C5B6, 0x19C5D4, 0x19C5EC,
+            0x19C5FE, 0x19C610, 0x19C61C,
+        ]
+        names = [f"Midgame_LightningSpriteMapping{index:02d}" for index in range(7)]
+        self.assertEqual(
+            [(f"0x{address:06X}", name) for address, name in zip(addresses, names)],
+            [
+                (member["address"], member["current_name"])
+                for member in review["members"]
+            ],
+        )
+        self.assertEqual(
+            {"src/data/indexed_object_and_stage_effect_mappings.s"},
+            {member["file"] for member in review["members"]},
+        )
+        data = (ROOT / "src/data/indexed_object_and_stage_effect_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        expected_streams = {
+            "00": [0, 1, 2, 3, 4, 5, 6],
+            "01": [0, 1, 0, 1, 2, 3, 2, 3, 4, 5, 4, 5, 6],
+            "03": [0, 4, 5, 4, 5, 6],
+        }
+        for stream, expected in expected_streams.items():
+            block = re.search(
+                r"(?ms)^Midgame_LightningSpriteAnimation" + stream
+                + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                data,
+            )
+            self.assertIsNotNone(block)
+            self.assertEqual(
+                expected,
+                [
+                    int(index)
+                    for index in re.findall(
+                        r"\bdc\.w\s+Midgame_LightningSpriteMapping([0-9]{2})-\*",
+                        block.group(1),
+                    )
+                ],
+            )
+        self.assertEqual(set(range(7)), set(sum(expected_streams.values(), [])))
+        other_stream = data.split("Midgame_LightningSpriteAnimation02:", 1)[1].split(
+            "Midgame_LightningSpriteAnimation03:", 1
+        )[0]
+        self.assertEqual(
+            list(range(7, 13)),
+            [
+                int(index)
+                for index in re.findall(
+                    r"\bdc\.w\s+Midgame_LightningSpriteMapping([0-9]{2})-\*",
+                    other_stream,
+                )
+            ],
+        )
+        for name, piece_count in zip(names, (4, 5, 4, 3, 3, 2, 1)):
+            with self.subTest(name=name):
+                block = re.search(
+                    r"(?ms)^" + re.escape(name) + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    data,
+                )
+                self.assertIsNotNone(block)
+                rows = re.findall(r"\bdc\.w\s+([^;\r\n]+)", block.group(1))
+                self.assertTrue(all(len(row.split(",")) == 3 for row in rows))
+                first_words = [
+                    int(word, 16)
+                    for word in re.findall(r"\bdc\.w\s+\$([0-9A-F]+)", block.group(1))
+                ]
+                self.assertEqual(piece_count, len(first_words))
+                self.assertTrue(all(word < 0x8000 for word in first_words[:-1]))
+                self.assertNotEqual(0, first_words[-1] & 0x8000)
+        owner = (ROOT / "src/stages/flying_neo_effects.s").read_text(encoding="utf-8")
+        self.assertIn("andi.w  #$C,d0", owner)
+        self.assertIn(
+            "move.l  Midgame_RandomLightningMappingPointers(pc,d0.w),8(a0)", owner
+        )
+        pointer_table = owner.split("Midgame_RandomLightningMappingPointers:", 1)[1]
+        self.assertEqual(
+            ["00", "01", "02", "03"],
+            re.findall(
+                r"\bdc\.l\s+Midgame_LightningSpriteAnimation([0-9]{2})",
+                pointer_table,
+            )[:4],
+        )
+
     def test_jampan_orbit_tables_have_distinct_consumers_and_sixteen_slots(self) -> None:
         records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
         by_address = {record["address"]: record for record in records}

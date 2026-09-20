@@ -1113,3 +1113,15 @@ to palette colors 49/50, and two eight-word tables; the generic sentence had
 incorrectly included the background palette. Two new regression tests pin
 these paths. The old sentences are the 81st and 82nd rejected bases. The
 queue falls to 233 groups across 971 uses: twenty-three reviewed, 210 open.
+
+Two sprite-mapping groups have now passed exact-member review. The three
+periodic-shot enemy streams cover seven mappings, each with nine six-byte
+sprite entries and a high-bit final entry. The four randomly chosen midgame
+lightning streams divide into a 00/01/03 family referencing mappings 00-06
+and a separate 02 family referencing 07-12. Mapping06 in the first family
+contains only one sprite entry, so its old shared sentence's `composite`
+claim was removed and registered as the 83rd rejected generic basis. The new
+shared basis states only the relative frame-reference relationship, with no
+visual pose or piece count inferred. Two tests pin all stream orders, table
+selectors, exact member addresses, mapping lengths, and terminator bits. The
+queue remains 233 groups across 971 uses: twenty-five reviewed, 208 open.

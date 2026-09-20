@@ -549,6 +549,32 @@
         {"address":"0x0C8000","current_name":"Sound_PCMBank7","file":"src/sound/pcm_samples.s"},
         {"address":"0x0D0000","current_name":"Sound_PCMBank8","file":"src/sound/pcm_samples.s"}
       ]
+    },
+    {
+      "basis": "Periodic-shot enemy animation streams reference this address-ordered composite sprite mapping.",
+      "reason": "PeriodicShotEnemySpriteAnimationPointers selects Wait, Transition, or Attack streams. Their relative frame references cover all seven mappings: Wait visits 03/00/01/02/04/02/01/00/03, Attack visits 00/05/06/05, and Transition visits 00/05/03. Each of the seven mapping records has nine six-byte sprite entries, with the high bit set on the final entry. The ROM-order suffix does not assert a visual pose or runtime visit to every stream.",
+      "members": [
+        {"address":"0x0E9E94","current_name":"PeriodicShotEnemySpriteMapping00","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"},
+        {"address":"0x0E9ECA","current_name":"PeriodicShotEnemySpriteMapping01","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"},
+        {"address":"0x0E9F00","current_name":"PeriodicShotEnemySpriteMapping02","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"},
+        {"address":"0x0E9F36","current_name":"PeriodicShotEnemySpriteMapping03","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"},
+        {"address":"0x0E9F6C","current_name":"PeriodicShotEnemySpriteMapping04","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"},
+        {"address":"0x0E9FA2","current_name":"PeriodicShotEnemySpriteMapping05","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"},
+        {"address":"0x0E9FD8","current_name":"PeriodicShotEnemySpriteMapping06","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"}
+      ]
+    },
+    {
+      "basis": "At least one of Midgame_LightningSpriteAnimation00/01/03 selects this ROM-ordered sprite-mapping record through a relative frame offset; neither a visual pose nor multiple sprite pieces is implied.",
+      "reason": "Midgame_UpdateRandomLightningEffect masks RandomNumberState with $C and selects one of four animation pointers. Streams 00, 01, and 03 select exactly this seven-record family through relative dc.w frame offsets; stream 02 instead uses records 07-12. Mapping00-06 contain 4/5/4/3/3/2/1 six-byte sprite entries respectively, so the old shared 'composite' claim was false for mapping06. Each record terminates through the high bit on its final sprite entry. The ROM-order suffix does not assert a visual pose.",
+      "members": [
+        {"address":"0x19C59E","current_name":"Midgame_LightningSpriteMapping00","file":"src/data/indexed_object_and_stage_effect_mappings.s"},
+        {"address":"0x19C5B6","current_name":"Midgame_LightningSpriteMapping01","file":"src/data/indexed_object_and_stage_effect_mappings.s"},
+        {"address":"0x19C5D4","current_name":"Midgame_LightningSpriteMapping02","file":"src/data/indexed_object_and_stage_effect_mappings.s"},
+        {"address":"0x19C5EC","current_name":"Midgame_LightningSpriteMapping03","file":"src/data/indexed_object_and_stage_effect_mappings.s"},
+        {"address":"0x19C5FE","current_name":"Midgame_LightningSpriteMapping04","file":"src/data/indexed_object_and_stage_effect_mappings.s"},
+        {"address":"0x19C610","current_name":"Midgame_LightningSpriteMapping05","file":"src/data/indexed_object_and_stage_effect_mappings.s"},
+        {"address":"0x19C61C","current_name":"Midgame_LightningSpriteMapping06","file":"src/data/indexed_object_and_stage_effect_mappings.s"}
+      ]
     }
   ]
 }
