@@ -221,7 +221,9 @@ its actual pattern and palette writes. Four Phase Pattern state-return labels
 now have an exact-member review: the shared timer branch is supported, while
 their expiry effects differ. Four tilemap transfer descriptors now have
 per-address tuple and consumer evidence; TitleAndZLeo, FrontendAlternate,
-Default, and Scroll are nonexclusive usage names. There are 178 open
+Default, and Scroll are nonexclusive usage names. The four shared projectile
+mappings now have an exact-member review of their 2/4/8-tick streams; an
+unsupported blanket Stage 18 caller claim was removed. There are 176 open
 repeated-basis groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 

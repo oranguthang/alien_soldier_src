@@ -2460,6 +2460,95 @@ class SemanticAuditQueueTests(unittest.TestCase):
             helper,
         )
 
+    def test_shared_projectile_mapping_review_pins_three_timing_streams(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item for item in reviews
+            if item["basis"].startswith("The three shared projectile streams")
+        )
+        expected = [f"SharedProjectileSpriteMapping{suffix}" for suffix in "ABCD"]
+        self.assertEqual(
+            [
+                (f"0x{address:06X}", name)
+                for address, name in zip(
+                    (0x1A0CA6, 0x1A0CAC, 0x1A0CB2, 0x1A0CB8), expected
+                )
+            ],
+            [
+                (item["address"], item["current_name"])
+                for item in review["members"]
+            ],
+        )
+        records = {
+            record["address"]: record
+            for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        for member in review["members"]:
+            self.assertEqual([review["basis"]], records[member["address"]]["basis"])
+        source = (
+            ROOT / "src/data/shared_stage_object_sprite_mappings.s"
+        ).read_text(encoding="utf-8")
+        for name in expected:
+            mapping = re.search(
+                rf"(?ms)^{name}:(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                source,
+            )
+            self.assertIsNotNone(mapping)
+            command = re.search(
+                r"\bdc\.w\s+\$([0-9A-F]+),\s*([^,]+),\s*([^\s;]+)",
+                mapping.group(1),
+            )
+            self.assertIsNotNone(command)
+            self.assertNotEqual(0, int(command.group(1), 16) & 0x8000)
+            self.assertEqual(1, len(re.findall(r"\bdc\.w\b", mapping.group(1))))
+        for duration in (2, 4, 8):
+            with self.subTest(duration=duration):
+                name = f"SharedProjectileDuration{duration}Animation"
+                stream = re.search(
+                    rf"(?ms)^{name}:(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    source,
+                )
+                self.assertIsNotNone(stream)
+                words = re.findall(
+                    r"\bdc\.w\s+([A-Za-z_]\w*-\*|\$[0-9A-F]+|\d+)",
+                    stream.group(1),
+                )
+                self.assertEqual(
+                    [
+                        word
+                        for mapping in expected[:3]
+                        for word in (mapping + "-*", str(duration))
+                    ]
+                    + [expected[3] + "-*", "$FF"],
+                    words,
+                )
+        snake = (ROOT / "src/bosses/snake.s").read_text(encoding="utf-8")
+        choices = snake.split("Boss_SnakeShotMappingChoices:", 1)[1].split(
+            "; Turns toward the target", 1
+        )[0]
+        self.assertEqual(
+            [4, 2, 4, 8],
+            [
+                int(number)
+                for number in re.findall(
+                    r"\bdc\.l\s+SharedProjectileDuration(\d+)Animation", choices
+                )
+            ],
+        )
+        for path in (
+            "src/enemies/stage_12_enemies.s",
+            "src/bosses/gusthead_tentacles.s",
+            "src/projectiles/shared_directional_volley_helpers.s",
+            "src/enemies/bouncing_object.s",
+        ):
+            with self.subTest(path=path):
+                self.assertIn(
+                    "#SharedProjectileDuration4Animation",
+                    (ROOT / path).read_text(encoding="utf-8"),
+                )
+
     def test_teddy_bear_mapping_review_pins_stream_targets_and_terminators(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

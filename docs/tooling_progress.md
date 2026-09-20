@@ -1319,3 +1319,13 @@ are explicitly nonexclusive. A source comment describes the shared descriptor
 role, and a regression test pins tuple values and several consumer paths.
 The old sentence is the 97th rejected generic basis. The queue falls to 220
 groups across 920 uses: forty-two reviewed, 178 open.
+
+The four shared projectile mappings at `$1A0CA6/$1A0CAC/$1A0CB2/$1A0CB8`
+are one high-bit-terminated sprite command each. Three streams select the
+same A-D order, with timing words 2, 4, or 8 for the first three frames and
+`$FF` after the last. A regression test pins all four records, stream orders,
+the Snake selector, and several direct duration-4 installations. The old
+shared sentence naming Stage 18 as a direct consumer had no matching source
+installation; it was removed from the records and became the 98th rejected
+generic basis. The valid structural sentence now has an exact-member review.
+The queue falls to 219 groups across 916 uses: forty-three reviewed, 176 open.

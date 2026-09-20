@@ -756,6 +756,16 @@
         {"address":"0x02D170","current_name":"Enemy_PhasePattern_StopHorizontalMotion_Return","file":"src/enemies/phase_and_debris_states.s"},
         {"address":"0x02D18A","current_name":"Enemy_PhasePattern_Restart_Return","file":"src/enemies/phase_and_debris_states.s"}
       ]
+    },
+    {
+      "basis": "The three shared projectile streams reference this high-bit-terminated sprite mapping and differ only in their per-frame durations.",
+      "reason": "SharedProjectileDuration2/4/8Animation each lists mappings A-D in the same order, with timing words 2/4/8 respectively for the first three frames and $FF after the fourth. Each mapping is one three-word sprite command whose first word has bit 15 set. Boss_SnakeShotMappingChoices references all three streams; duration 4 also has direct installs in Stage 12, Gusthead, shared directional volley, and bouncing-object code. The older blanket Stage 18 direct-consumer claim has no matching symbolic install in the current source and is not retained. Letters encode ROM order, not visible poses.",
+      "members": [
+        {"address":"0x1A0CA6","current_name":"SharedProjectileSpriteMappingA","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0CAC","current_name":"SharedProjectileSpriteMappingB","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0CB2","current_name":"SharedProjectileSpriteMappingC","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0CB8","current_name":"SharedProjectileSpriteMappingD","file":"src/data/shared_stage_object_sprite_mappings.s"}
+      ]
     }
   ]
 }
