@@ -1190,3 +1190,15 @@ offsets 0/4/8/C/10. The test pins all fifteen addresses, source-piece counts,
 pointer slots, terrain index words and the separate weapon sixth slot. No
 visual pose or ROM-order claim is inferred from an index suffix. The queue
 remains 231 groups across 963 uses: thirty-three reviewed, 198 open.
+
+Three Missiray indexed-transfer groups now have exact-member reviews: three
+column wrappers, four column descriptors, and five direct indexed-row
+wrappers. Column sets 00-02 each contain six words with header `$0102`, while
+set 03 contains five with `$0101`; its wait state directly passes the
+descriptor to `Tilemap_QueueIndexedColumns`, rather than invoking the named
+loader claimed by the old evidence sentence. The latter is the 86th rejected
+generic basis. Row set 01 uses a shared jump tail and set 06 is embedded in
+a rise-state branch, so neither belongs to the five direct-wrapper members.
+The test pins all exact addresses, wrapper/descriptor pairs, header lengths,
+shared-tail exception, and set-03 branch path. The queue remains 231 groups
+across 963 uses: thirty-six reviewed, 195 open.

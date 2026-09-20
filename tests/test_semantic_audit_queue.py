@@ -16,6 +16,98 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_missiray_indexed_transfer_reviews_pin_distinct_entry_paths(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        source_path = "src/bosses/missiray_core.s"
+        source = (ROOT / source_path).read_text(encoding="utf-8")
+        cases = (
+            (
+                "The routine loads its adjacent descriptor into a0",
+                [
+                    (0x053A3A, "Boss_MissirayLoadTileTransferSet00"),
+                    (0x053A52, "Boss_MissirayLoadTileTransferSet01"),
+                    (0x053A6A, "Boss_MissirayLoadTileTransferSet02"),
+                ],
+            ),
+            (
+                "The adjacent Missiray loader passes this word record",
+                [
+                    (0x053A46, "Boss_MissirayTileTransferSet00Descriptor"),
+                    (0x053A5E, "Boss_MissirayTileTransferSet01Descriptor"),
+                    (0x053A76, "Boss_MissirayTileTransferSet02Descriptor"),
+                    (0x053B50, "Boss_MissirayTileTransferSet03Descriptor"),
+                ],
+            ),
+            (
+                "The routine passes its adjacent indexed-row descriptor directly",
+                [
+                    (0x053A90, "Boss_MissirayQueueIndexedRowSet00"),
+                    (0x053AC4, "Boss_MissirayQueueIndexedRowSet02"),
+                    (0x053AEC, "Boss_MissirayQueueIndexedRowSet03"),
+                    (0x053B06, "Boss_MissirayQueueIndexedRowSet04"),
+                    (0x053B20, "Boss_MissirayQueueIndexedRowSet05"),
+                ],
+            ),
+        )
+        for basis_start, expected in cases:
+            review = next(item for item in reviews if item["basis"].startswith(basis_start))
+            self.assertEqual(
+                [(f"0x{address:06X}", name, source_path) for address, name in expected],
+                [
+                    (member["address"], member["current_name"], member["file"])
+                    for member in review["members"]
+                ],
+            )
+
+        for index in range(3):
+            loader = f"Boss_MissirayLoadTileTransferSet{index:02d}"
+            descriptor = f"Boss_MissirayTileTransferSet{index:02d}Descriptor"
+            body = source.split(loader + ":", 1)[1].split(descriptor + ":", 1)[0]
+            self.assertIn(f"lea     {descriptor}(pc),a0", body)
+            self.assertIn("jmp     Tilemap_QueueIndexedColumns", body)
+        for index, expected_words in enumerate((6, 6, 6, 5)):
+            descriptor = f"Boss_MissirayTileTransferSet{index:02d}Descriptor"
+            body = source.split(descriptor + ":", 1)[1].split("\n\n", 1)[0]
+            words = re.search(r"\bdc\.w\s+([^;\r\n]+)", body)
+            self.assertIsNotNone(words)
+            values = [word.strip() for word in words.group(1).split(",")]
+            self.assertEqual(expected_words, len(values))
+            self.assertEqual(["$6020", "$2000"], values[:2])
+            self.assertEqual("$102" if index < 3 else "$101", values[2])
+
+        for index in (0, 2, 3, 4, 5):
+            wrapper = f"Boss_MissirayQueueIndexedRowSet{index:02d}"
+            descriptor = f"Boss_MissirayIndexedRowSet{index:02d}Descriptor"
+            body = source.split(wrapper + ":", 1)[1].split(descriptor + ":", 1)[0]
+            self.assertIn(f"lea     {descriptor}(pc),a0", body)
+            self.assertIn("jmp     Tilemap_QueueIndexedRows", body)
+        set01 = source.split("Boss_MissirayQueueIndexedRowSet01:", 1)[1].split(
+            "Boss_MissirayJumpToIndexedRowQueue:", 1
+        )[0]
+        self.assertNotIn("jmp     Tilemap_QueueIndexedRows", set01)
+        self.assertIn("jmp     Tilemap_QueueIndexedRows", source.split(
+            "Boss_MissirayJumpToIndexedRowQueue:", 1
+        )[1].split("Boss_MissirayIndexedRowSet01Descriptor:", 1)[0])
+        set03 = source.split("Boss_MissirayWaitForTransferAndLoadTileSet03:", 1)[1].split(
+            "Boss_MissirayTileTransferSet03Descriptor:", 1
+        )[0]
+        for instruction in (
+            "tst.b   (DataLoaderControl).w",
+            "bmi.s   Boss_MissirayWaitForTileSet03Return",
+            "addq.w  #2,4(a5)",
+            "lea     Boss_MissirayTileTransferSet03Descriptor(pc),a0",
+            "jmp     Tilemap_QueueIndexedColumns",
+        ):
+            self.assertIn(instruction, set03)
+        record = next(
+            item for item in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+            if item["address"] == "0x053B3A"
+        )
+        self.assertIn("tail-jumps directly", record["basis"][0])
+        self.assertNotIn("named Missiray tile-set loader", record["basis"][0])
+
     def test_player_layout_reviews_distinguish_table_index_from_rom_order(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

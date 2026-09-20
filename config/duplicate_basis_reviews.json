@@ -665,6 +665,36 @@
         {"address":"0x0E8E32","current_name":"Player_AlternateLayoutSpriteMapping02","file":"src/data/player_state_animation_sprite_mappings.s"},
         {"address":"0x0E8E4A","current_name":"Player_AlternateLayoutSpriteMapping01","file":"src/data/player_state_animation_sprite_mappings.s"}
       ]
+    },
+    {
+      "basis": "The routine loads its adjacent descriptor into a0 and tail-calls Tilemap_QueueIndexedColumns.",
+      "reason": "The three $053A3A/$053A52/$053A6A wrappers each load the matching adjacent MissirayTileTransferSet00/01/02Descriptor into a0, execute nop, then tail-jump to Tilemap_QueueIndexedColumns. Set 03 instead belongs to a wait-state routine and is not a member. The suffixes identify matching descriptor slots, not a guessed visual tile effect.",
+      "members": [
+        {"address":"0x053A3A","current_name":"Boss_MissirayLoadTileTransferSet00","file":"src/bosses/missiray_core.s"},
+        {"address":"0x053A52","current_name":"Boss_MissirayLoadTileTransferSet01","file":"src/bosses/missiray_core.s"},
+        {"address":"0x053A6A","current_name":"Boss_MissirayLoadTileTransferSet02","file":"src/bosses/missiray_core.s"}
+      ]
+    },
+    {
+      "basis": "The adjacent Missiray loader passes this word record in a0 to Tilemap_QueueIndexedColumns.",
+      "reason": "Wrappers 00-02 and the set-03 wait state each load their matching descriptor address into a0 before tail-jumping to Tilemap_QueueIndexedColumns. Sets 00-02 have six words headed by $6020/$2000/$0102; set 03 has five words headed by $6020/$2000/$0101. Tilemap_QueueIndexedColumns reads bytes 4 and 5 as loop counts, so a uniform six-word claim would be false. Set 03 has no separate named loader.",
+      "members": [
+        {"address":"0x053A46","current_name":"Boss_MissirayTileTransferSet00Descriptor","file":"src/bosses/missiray_core.s"},
+        {"address":"0x053A5E","current_name":"Boss_MissirayTileTransferSet01Descriptor","file":"src/bosses/missiray_core.s"},
+        {"address":"0x053A76","current_name":"Boss_MissirayTileTransferSet02Descriptor","file":"src/bosses/missiray_core.s"},
+        {"address":"0x053B50","current_name":"Boss_MissirayTileTransferSet03Descriptor","file":"src/bosses/missiray_core.s"}
+      ]
+    },
+    {
+      "basis": "The routine passes its adjacent indexed-row descriptor directly to Tilemap_QueueIndexedRows.",
+      "reason": "Each reviewed wrapper loads its adjacent indexed-row descriptor into a0, executes nop, and tail-jumps to Tilemap_QueueIndexedRows: sets 00, 02, 03, 04 and 05. Set 01 instead falls through to a shared jump tail; set 06 is embedded in the rise-state threshold path. Their exclusion is deliberate. The five descriptor bodies are seven words each, but carry different destination/index words and are not assumed to show the same tiles.",
+      "members": [
+        {"address":"0x053A90","current_name":"Boss_MissirayQueueIndexedRowSet00","file":"src/bosses/missiray_core.s"},
+        {"address":"0x053AC4","current_name":"Boss_MissirayQueueIndexedRowSet02","file":"src/bosses/missiray_core.s"},
+        {"address":"0x053AEC","current_name":"Boss_MissirayQueueIndexedRowSet03","file":"src/bosses/missiray_core.s"},
+        {"address":"0x053B06","current_name":"Boss_MissirayQueueIndexedRowSet04","file":"src/bosses/missiray_core.s"},
+        {"address":"0x053B20","current_name":"Boss_MissirayQueueIndexedRowSet05","file":"src/bosses/missiray_core.s"}
+      ]
     }
   ]
 }
