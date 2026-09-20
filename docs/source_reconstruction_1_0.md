@@ -40,8 +40,8 @@ byte.
   options-menu, 19 weapon-selection, 33 weapon-setup loadout, 31
   controller/background, 32 boss asset-set, 29 graphics-list, 35 asset-set
   palette-command, and 17 standalone or banked palette-command records were
-  then reviewed. The curated `NAME-002` detector has zero matches. Forty-five
-  of 217 repeated-basis groups have exact-member reviews; 172 remain open. Seven
+  then reviewed. The curated `NAME-002` detector has zero matches. Forty-seven
+  of 217 repeated-basis groups have exact-member reviews; 170 remain open. Seven
   boss-identity records remain visual
   hypotheses (`NAME-003`); neither open issue is semantically resolved.
 - **Provenance is retained.** 16,053 `; was:` markers map current definitions to
@@ -73,7 +73,7 @@ that limits it. They are stated here rather than left implicit.
 | `PROFILE-001` | The European ROM. Only the Japanese cartridge is accepted. | unsupported |
 | `SND-001` | The Z80 sound driver program, which stays a verbatim payload and is never disassembled. | unsupported |
 | `NAME-001` | 513 `_End` aliases that follow their own `binclude` payload hold no separate record. | partial |
-| `NAME-002` | Zero records match the curated 98-sentence generic detector; forty-five repeated groups are accepted with exact members, and 172 remain open. | partial |
+| `NAME-002` | Zero records match the curated 98-sentence generic detector; forty-seven repeated groups are accepted with exact members, and 170 remain open. | partial |
 | `NAME-003` | Seven boss-identity names remain provisional until pinned visual evidence or behavior-only renaming. | partial |
 | `LAYOUT-001` | Module sizes: 232 of 398 modules sit inside the preferred 200–700 line band, 149 are shorter and 17 are longer. | partial |
 | `TOOL-001` | Four exploratory commands remain outside release evidence; their source operations address modules. The obsolete pointer debugger is retired, and `verify-relocation` checks pointers across the current layout. | unsupported |

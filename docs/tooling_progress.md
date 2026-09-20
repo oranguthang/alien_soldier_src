@@ -1353,3 +1353,16 @@ each address has distinct instruction-level evidence. A regression test pins
 the entry boundaries, palette-buffer addresses, and loop. The two repeated
 claims are removed: 217 groups across 910 uses, forty-five reviewed and 172
 open. The assembly instructions are unchanged.
+
+The stage-configuration audit confirms two structurally different groups.
+Stage 1, 2, and 8 records are 30 bytes each and are selected by initializer
+table slots 0, 1, and 7 before `Stage_ApplyConfigurationRecord` consumes
+their fields and palette pointer. Four adjacent Stage 20 variant records are
+also 30 bytes, with state offsets `$28/$30/$38/$40` and a shared palette
+list; their wrappers are absent from the 26-slot initializer table, whose
+Stage 20 slot uses the separate normal record at `$12A5A`. A source-wide
+non-comment symbol scan finds only each variant record's definition and its
+matching wrapper's `lea`, with no static caller of those wrappers. This does
+not rule out indirect runtime entry. Exact-member reviews and a regression
+test pin both groups. The queue stays at 217 groups across 910 uses:
+forty-seven reviewed, 170 open.

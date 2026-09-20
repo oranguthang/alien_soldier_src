@@ -786,6 +786,25 @@
         {"address":"0x051A9C","current_name":"Debug_ValkirieTertiaryViewerInitializePoseChannels","file":"src/debug/valkirie_tertiary_composite_viewer.s"},
         {"address":"0x056238","current_name":"Boss_ValkirieInitializePoseChannels","file":"src/bosses/valkirie_rendering.s"}
       ]
+    },
+    {
+      "basis": "A stage-specific initializer or graphics path selects this exact 30-byte record address before Stage_ApplyConfigurationRecord consumes its fixed fields and palette-list pointer.",
+      "reason": "Stage_InitializerOffsets selects Stage_ApplyStage1Configuration, Stage_ApplyStage2Configuration, and Stage_InitializeStage8 at StageTableIndex offsets $00, $02, and $0E. Each wrapper loads its corresponding record into A0 and reaches Stage_ApplyConfigurationRecord, which consumes 30 bytes in the declared field order and passes the final palette-list pointer to Gfx_LoadMultiplePalettes. These are three exact records, not evidence that every stage initializer has identical side effects: Stage 8 also initializes tilemap ranges.",
+      "members": [
+        {"address":"0x0127A8","current_name":"Stage1ConfigRecord","file":"src/stages/configuration_records.s"},
+        {"address":"0x0127C6","current_name":"Stage2ConfigRecord","file":"src/stages/configuration_records.s"},
+        {"address":"0x01287A","current_name":"Stage8ConfigRecord","file":"src/stages/configuration_records.s"}
+      ]
+    },
+    {
+      "basis": "Only the adjacent unreferenced Stage 20 variant wrapper selects this 30-byte record.",
+      "reason": "The four consecutive 30-byte records start with distinct StageStateOffset values $28/$30/$38/$40 and share the same palette offset list. Each is loaded by the adjacent matching variant wrapper, then passed to Stage_ApplyConfigurationRecord; the wrappers also fill four tilemap word ranges. None of these wrappers appears in Stage_InitializerOffsets, whose Stage 20 slot selects Stage_InitializeStage20 and its separate Stage20ConfigRecord. 'Unreferenced' is limited to the current source-level static call/dispatch graph, not a proof of runtime unreachability via indirect pointers.",
+      "members": [
+        {"address":"0x0129E2","current_name":"UnreferencedStage20Variant1ConfigRecord","file":"src/stages/configuration_records.s"},
+        {"address":"0x012A00","current_name":"UnreferencedStage20Variant2ConfigRecord","file":"src/stages/configuration_records.s"},
+        {"address":"0x012A1E","current_name":"UnreferencedStage20Variant3ConfigRecord","file":"src/stages/configuration_records.s"},
+        {"address":"0x012A3C","current_name":"UnreferencedStage20Variant4ConfigRecord","file":"src/stages/configuration_records.s"}
+      ]
     }
   ]
 }

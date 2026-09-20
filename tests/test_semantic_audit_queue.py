@@ -16,6 +16,117 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_stage_configuration_reviews_pin_record_layout_and_dispatch(self) -> None:
+        reviews = {
+            item["basis"]: item
+            for item in json.loads(
+                (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+            )["reviews"]
+        }
+        normal = reviews[
+            "A stage-specific initializer or graphics path selects this exact "
+            "30-byte record address before Stage_ApplyConfigurationRecord consumes "
+            "its fixed fields and palette-list pointer."
+        ]
+        variants = reviews[
+            "Only the adjacent unreferenced Stage 20 variant wrapper selects "
+            "this 30-byte record."
+        ]
+        normal_cases = (
+            ("0x0127A8", "Stage1ConfigRecord", "Stage_ApplyStage1Configuration", 0),
+            ("0x0127C6", "Stage2ConfigRecord", "Stage_ApplyStage2Configuration", 1),
+            ("0x01287A", "Stage8ConfigRecord", "Stage_InitializeStage8", 7),
+        )
+        variant_cases = tuple(
+            (
+                f"0x{address:06X}", f"UnreferencedStage20Variant{index}ConfigRecord",
+                f"UnreferencedApplyStage20Variant{index}Configuration", offset,
+            )
+            for index, (address, offset) in enumerate(
+                zip((0x129E2, 0x12A00, 0x12A1E, 0x12A3C),
+                    ("$28", "$30", "$38", "$40")),
+                start=1,
+            )
+        )
+        for review, cases in ((normal, normal_cases), (variants, variant_cases)):
+            self.assertEqual(
+                [(address, name, "src/stages/configuration_records.s")
+                 for address, name, _, _ in cases],
+                [(item["address"], item["current_name"], item["file"])
+                 for item in review["members"]],
+            )
+
+        source = (ROOT / "src/stages/configuration.s").read_text(encoding="utf-8")
+        records = (ROOT / "src/stages/configuration_records.s").read_text(
+            encoding="utf-8"
+        )
+        dispatch = source.split("Stage_InitializerOffsets:", 1)[1].split(
+            "; Clears the four per-slot", 1
+        )[0]
+        slots = re.findall(r"\bdc\.w\s+(\w+)-Weapon_ClearAmmoRegenTimers", dispatch)
+        self.assertEqual(26, len(slots))
+        self.assertEqual("Stage_InitializeStage20", slots[19])
+        self.assertIn("move.w  (StageTableIndex).w,d0", source)
+        self.assertIn("movea.w Stage_InitializerOffsets(pc,d0.w),a0", source)
+        self.assertIn("jmp     Gfx_LoadMultiplePalettes", records)
+        for _, name, wrapper, slot in normal_cases:
+            with self.subTest(name=name):
+                self.assertEqual(wrapper, slots[slot])
+                body = source.split(wrapper + ":", 1)[1].split(
+                    "; End of function " + wrapper, 1
+                )[0]
+                self.assertIn(f"lea     {name}(pc),a0", body)
+                self.assertRegex(body, r"(?:bsr|bra)\.w\s+Stage_ApplyConfigurationRecord")
+        for _, name, wrapper, offset in variant_cases:
+            with self.subTest(name=name):
+                self.assertNotIn(wrapper, slots)
+                body = source.split(wrapper + ":", 1)[1].split(
+                    "; End of function " + wrapper, 1
+                )[0]
+                self.assertIn(f"lea     {name}(pc),a0", body)
+                self.assertNotIn("Stage20ConfigRecord(pc)", body)
+                if wrapper.endswith("Variant2Configuration"):
+                    self.assertIn("bsr.w   Stage_ApplyConfigurationRecord", body)
+                    self.assertIn("move.w  d1,(a3)+", body)
+                else:
+                    self.assertRegex(
+                        body,
+                        r"bra\.[sw]\s+UnreferencedApplyStage20VariantAndFillWordRanges",
+                    )
+
+        source_code = "\n".join(
+            re.sub(r";[^\n]*", "", path.read_text(encoding="utf-8"))
+            for path in (ROOT / "src").rglob("*.s")
+        )
+        for _, name, wrapper, _ in variant_cases:
+            self.assertEqual(2, len(re.findall(rf"\b{re.escape(name)}\b", source_code)))
+            self.assertEqual(1, len(re.findall(rf"\b{re.escape(wrapper)}\b", source_code)))
+
+        for _, name, _, expected_offset in (*normal_cases, *variant_cases):
+            with self.subTest(record=name):
+                block = re.search(
+                    rf"(?ms)^{name}:(.*?)(?=^[A-Za-z_]\w*:|\Z)", records
+                )
+                self.assertIsNotNone(block)
+                declarations = re.findall(
+                    r"(?m)^\s*dc\.(b|w|l)\s+([^;\r\n]+)", block.group(1)
+                )
+                size = sum(
+                    {"b": 1, "w": 2, "l": 4}[kind] * len(operands.split(","))
+                    for kind, operands in declarations
+                )
+                self.assertEqual(30, size)
+                if isinstance(expected_offset, str):
+                    self.assertRegex(
+                        block.group(1),
+                        rf"^\s*dc\.w\s+{re.escape(expected_offset)}\b",
+                    )
+                    self.assertIn(
+                        "dc.l    UnreferencedStage20VariantPaletteOffsetList",
+                        block.group(1),
+                    )
+        self.assertIn("lea     Stage20ConfigRecord(pc),a0", source)
+
     def test_ui_palette_reset_entries_do_not_share_one_routine_claim(self) -> None:
         records = {
             record["address"]: record
