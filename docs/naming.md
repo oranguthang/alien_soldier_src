@@ -93,7 +93,9 @@ Stage 15 fragment mappings were excluded from that mapping group and renamed
 for their direct pointer-table consumer. A fourth accepted group covers the 40
 Seven Forces rotation frames selected by nine labelled table bases. Table1
 has an extra unlabelled eight-pointer run; its reachability is not inferred
-from the masked eight-slot renderer. The remaining queue has 244 groups.
+from the masked eight-slot renderer. A fifth accepted group covers the 33
+`Enemy_ProjectileSpriteMapping` records selected by ten named relative-offset
+animation streams. The remaining queue has 243 groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

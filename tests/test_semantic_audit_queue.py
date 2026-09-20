@@ -15,6 +15,40 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_enemy_projectile_mapping_review_matches_animation_targets(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item for item in reviews
+            if item["basis"].startswith("Named Enemy_Projectile animation streams")
+        )
+        source = (ROOT / "src/data/enemy_projectile_animation_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        targets = set(
+            re.findall(r"\bdc\.w\s+(Enemy_ProjectileSpriteMapping\d\d)-\*", source)
+        )
+        self.assertEqual(
+            {member["current_name"] for member in review["members"]}, targets
+        )
+        headers = set(re.findall(r"(?m)^(Enemy_ProjectileAnimation\d\d):", source))
+        controller = (ROOT / "src/enemies/jetsripper_stage_actors.s").read_text(
+            encoding="utf-8"
+        )
+        pointer_table = controller.split("Enemy_ProjectileAnimationPointers:", 1)[1].split(
+            "Physics_SetHorizontalVelocityByFlip:", 1
+        )[0]
+        pointers = re.findall(
+            r"\bdc\.l\s+(Enemy_ProjectileAnimation\d\d)\b", pointer_table
+        )
+        self.assertEqual(10, len(pointers))
+        self.assertEqual(headers, set(pointers))
+        self.assertRegex(
+            controller,
+            r"move\.l\s+Enemy_ProjectileAnimationPointers\(pc,d0\.w\),8\(a5\)",
+        )
+
     def test_seven_forces_rotation_review_matches_tables_and_eight_slot_mask(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

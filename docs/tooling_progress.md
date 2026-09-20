@@ -785,3 +785,12 @@ unknown. The source comment and unknowns register now state that limitation.
 The exact 40 members and the nine table spans (Table1 is 16 pointers; the
 others eight each) are pinned by a regression test. The wider queue is still
 248 groups, now four reviewed and 244 open.
+
+The 33 `Enemy_ProjectileSpriteMapping` records form another valid uniform
+mapping group. Each appears as a relative `dc.w Mapping-*` target in the ten
+`Enemy_ProjectileAnimation00..09` streams, and
+`Enemy_ProjectileAnimationPointers` enumerates those ten streams for
+`Anim_UpdateProjectileAnimation`. The frame suffixes remain ROM ordering, not
+visual-pose claims. The exact 33-to-10 relationship is pinned by a regression
+test; the separate eight-entry directional table is not mistaken for eight
+additional streams. The wider queue is now five reviewed, 243 open.
