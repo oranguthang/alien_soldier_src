@@ -575,6 +575,30 @@
         {"address":"0x19C610","current_name":"Midgame_LightningSpriteMapping05","file":"src/data/indexed_object_and_stage_effect_mappings.s"},
         {"address":"0x19C61C","current_name":"Midgame_LightningSpriteMapping06","file":"src/data/indexed_object_and_stage_effect_mappings.s"}
       ]
+    },
+    {
+      "basis": "Joker's descriptors reference this directional mapping-pointer table.",
+      "reason": "Boss_JokerMetaspriteDescriptors references all six 0x20-byte tables, directly or with attribute bits in the high address portion. Each contains eight longword sprite-mapping pointers. A/B are forward/reverse A0-A7, C/D are forward/reverse C0-C7, and E/F are forward/reverse E0-E7. This proves the static pointer-table structure and ordered rotation frames, not the visible direction of a particular index.",
+      "members": [
+        {"address":"0x034F8A","current_name":"Boss_JokerRotationFramesA","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"},
+        {"address":"0x034FAA","current_name":"Boss_JokerRotationFramesB","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"},
+        {"address":"0x034FCA","current_name":"Boss_JokerRotationFramesC","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"},
+        {"address":"0x034FEA","current_name":"Boss_JokerRotationFramesD","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"},
+        {"address":"0x03500A","current_name":"Boss_JokerRotationFramesE","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"},
+        {"address":"0x03502A","current_name":"Boss_JokerRotationFramesF","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"}
+      ]
+    },
+    {
+      "basis": "Shellshogun's descriptors reference this directional mapping-pointer table.",
+      "reason": "Boss_ShellshogunMetaspriteDescriptors references all six 0x20-byte tables with packed high-word attributes. Each contains eight longword sprite-mapping pointers: A/B/C descend 26-19, 10-03, and 18-11, while D/E/F ascend 19-26, 03-10, and 11-18. Boss_ShellshogunUpdateSpriteFlip also indexes F directly with an angle-derived offset masked to $1C. The shared basis asserts only descriptor ownership and pointer-table format; no visual orientation is assigned to a particular index.",
+      "members": [
+        {"address":"0x034AE0","current_name":"Boss_ShellshogunRotationFramesA","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"},
+        {"address":"0x034B00","current_name":"Boss_ShellshogunRotationFramesB","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"},
+        {"address":"0x034B20","current_name":"Boss_ShellshogunRotationFramesC","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"},
+        {"address":"0x034B40","current_name":"Boss_ShellshogunRotationFramesD","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"},
+        {"address":"0x034B60","current_name":"Boss_ShellshogunRotationFramesE","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"},
+        {"address":"0x034B80","current_name":"Boss_ShellshogunRotationFramesF","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"}
+      ]
     }
   ]
 }

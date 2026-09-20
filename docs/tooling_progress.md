@@ -1125,3 +1125,15 @@ shared basis states only the relative frame-reference relationship, with no
 visual pose or piece count inferred. Two tests pin all stream orders, table
 selectors, exact member addresses, mapping lengths, and terminator bits. The
 queue remains 233 groups across 971 uses: twenty-five reviewed, 208 open.
+
+Joker and Shellshogun each have six contiguous `$20`-byte rotation tables of
+eight longword sprite-mapping pointers. Their respective metasprite descriptor
+tables reference all six. Joker's A/B, C/D, and E/F pairs traverse three
+eight-frame mapping families in opposite orders; Shellshogun's A/B/C descend
+their three families and D/E/F ascend them. Shellshogun's F table is also
+indexed directly by `Boss_ShellshogunUpdateSpriteFlip` with an angle-derived
+offset masked to `$1C`; the review does not claim it is descriptor-only.
+Two exact-member reviews and one regression test pin all twelve addresses,
+pointer orders, descriptor references, and this direct reader, without
+assigning visual compass directions. The queue remains 233 groups across 971
+uses: twenty-seven reviewed, 206 open.

@@ -177,11 +177,14 @@ angles, and mapping-pointer selection; `SpriteFrames` was corrected to
 `MappingPointers`. Sharpssteel's blade/core collision entries distinguish
 enabling flags and values from disabling flags only. Sirene's type-$490
 projectile steers toward `Entity57`, not the player coordinate, and the
-weapon-setup highlight palette has separate code and data evidence. The
+weapon-setup highlight palette has separate code and data evidence.
 Periodic-shot enemy mappings and midgame lightning mappings now have
 exact-member reviews pinned to their animation stream orders. The lightning
 group no longer claims every mapping has multiple sprite pieces: mapping 06
-has one. The repeated-basis queue has 208 open groups.
+has one. Joker's and Shellshogun's six rotation tables each now have
+exact-member reviews for their eight mapping pointers, descriptor references,
+and ordering; Shellshogun table F also has a direct angle-indexed reader.
+The repeated-basis queue has 206 open groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

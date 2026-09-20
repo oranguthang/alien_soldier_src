@@ -16,6 +16,81 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_joker_and_shellshogun_rotation_review_pins_eight_pointer_slots(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        joker_frames = {
+            "A": [f"Boss_JokerRotationMappingA{index}" for index in range(8)],
+            "B": [f"Boss_JokerRotationMappingA{index}" for index in range(7, -1, -1)],
+            "C": [f"Boss_JokerRotationMappingC{index}" for index in range(8)],
+            "D": [f"Boss_JokerRotationMappingC{index}" for index in range(7, -1, -1)],
+            "E": [f"Boss_JokerRotationMappingE{index}" for index in range(8)],
+            "F": [f"Boss_JokerRotationMappingE{index}" for index in range(7, -1, -1)],
+        }
+        shellshogun_frames = {
+            "A": [f"Boss_ShellshogunSpriteMapping{index:02d}" for index in range(26, 18, -1)],
+            "B": [f"Boss_ShellshogunSpriteMapping{index:02d}" for index in range(10, 2, -1)],
+            "C": [f"Boss_ShellshogunSpriteMapping{index:02d}" for index in range(18, 10, -1)],
+            "D": [f"Boss_ShellshogunSpriteMapping{index:02d}" for index in range(19, 27)],
+            "E": [f"Boss_ShellshogunSpriteMapping{index:02d}" for index in range(3, 11)],
+            "F": [f"Boss_ShellshogunSpriteMapping{index:02d}" for index in range(11, 19)],
+        }
+        cases = (
+            (
+                "Joker's descriptors reference",
+                "src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s",
+                "Boss_JokerRotationFrames",
+                0x034F8A,
+                joker_frames,
+                "Boss_JokerMetaspriteDescriptors",
+            ),
+            (
+                "Shellshogun's descriptors reference",
+                "src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s",
+                "Boss_ShellshogunRotationFrames",
+                0x034AE0,
+                shellshogun_frames,
+                "Boss_ShellshogunMetaspriteDescriptors",
+            ),
+        )
+        for basis_start, path, prefix, first_address, expected_frames, descriptor in cases:
+            with self.subTest(owner=prefix):
+                review = next(
+                    item for item in reviews if item["basis"].startswith(basis_start)
+                )
+                names = [prefix + letter for letter in "ABCDEF"]
+                self.assertEqual(
+                    [(f"0x{first_address + index * 0x20:06X}", name)
+                     for index, name in enumerate(names)],
+                    [(item["address"], item["current_name"])
+                     for item in review["members"]],
+                )
+                self.assertEqual({path}, {item["file"] for item in review["members"]})
+                source = (ROOT / path).read_text(encoding="utf-8")
+                descriptors = source.split(descriptor + ":", 1)[1].split(
+                    "\n" + descriptor.replace("MetaspriteDescriptors", "PartRadii") + ":", 1
+                )[0]
+                for letter, name in zip("ABCDEF", names):
+                    table = re.search(
+                        r"(?ms)^" + re.escape(name)
+                        + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                        source,
+                    )
+                    self.assertIsNotNone(table)
+                    self.assertEqual(
+                        expected_frames[letter],
+                        re.findall(r"\bdc\.l\s+(Boss_\w+)", table.group(1)),
+                    )
+                    self.assertRegex(descriptors, r"\bdc\.l\s+" + re.escape(name) + r"\b")
+        shellshogun_rendering = (
+            ROOT / "src/bosses/shellshogun_rendering.s"
+        ).read_text(encoding="utf-8")
+        flip = shellshogun_rendering.split("Boss_ShellshogunUpdateSpriteFlip:", 1)[1]
+        self.assertIn("lea     (Boss_ShellshogunRotationFramesF).l,a0", flip)
+        self.assertIn("andi.w  #$1C,d0", flip)
+        self.assertIn("move.l  (a0,d0.w),$248(a5)", flip)
+
     def test_periodic_shot_mapping_review_pins_three_streams_and_nine_pieces(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
