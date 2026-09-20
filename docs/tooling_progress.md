@@ -847,3 +847,13 @@ names and distinct, table-slot evidence. A regression test checks the 24
 initialization records, both eight-slot angle tables, and the nine animation
 records. The old shared sentence is the 62nd rejected generic basis. The
 queue is now 246 groups across 1,120 uses: eight reviewed, 238 open.
+
+The 18 Stage 12 Teddy Bear mapping records share a defensible table-level
+claim. Each A-R mapping is the target of a `dc.w Mapping-*` entry in the
+adjacent timed streams, and each ends with a sprite command whose first word
+has bit 15 set. `Anim_ResolveTimedMappingFrame` adds those signed offsets to
+the stream cursor. An exact-member review and a regression test pin all 18
+targets and their terminators. Streams named `UnreferencedTeddyGroupAnimation*`
+have no proven source caller; neither the review nor the test claims runtime
+reachability or a particular visual pose. The 246 groups remain; nine are
+reviewed and 237 open.

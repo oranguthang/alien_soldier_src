@@ -106,7 +106,10 @@ now have code-level bases, while 20 actual encoded strings have an exact-member
 review. The Shield Viper mapping sentence also mixed body-angle, controller-
 angle, initialization-tail, and orbit-shot records; those 19 names now follow
 their actual pointer tables, including the mapping shared by an auxiliary
-record and the shot animation. The remaining queue has 238 groups.
+record and the shot animation. A ninth exact-member review accepts 18 Teddy Bear
+frames whose relative animation entries and high-bit terminators are checked;
+it does not infer that the streams without direct callers run in gameplay.
+The remaining queue has 237 groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

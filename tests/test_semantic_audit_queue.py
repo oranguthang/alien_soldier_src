@@ -15,6 +15,49 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_teddy_bear_mapping_review_pins_stream_targets_and_terminators(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item
+            for item in reviews
+            if item["basis"].startswith("A Stage 12 Teddy Bear animation stream")
+        )
+        expected = [
+            f"Stage12_TeddyBearSpriteMapping{chr(letter)}"
+            for letter in range(ord("A"), ord("R") + 1)
+        ]
+        self.assertEqual(expected, [member["current_name"] for member in review["members"]])
+        self.assertEqual(
+            {"src/data/shared_stage_object_sprite_mappings.s"},
+            {member["file"] for member in review["members"]},
+        )
+        data = (ROOT / "src/data/shared_stage_object_sprite_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        streams = data.split("; Animation streams", 1)[1]
+        targets = re.findall(
+            r"\bdc\.w\s+(Stage12_TeddyBearSpriteMapping[A-R])-\*", streams
+        )
+        self.assertEqual(set(expected), set(targets))
+        for name in expected:
+            with self.subTest(name=name):
+                mapping = re.search(
+                    r"(?ms)^" + re.escape(name) + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    data,
+                )
+                self.assertIsNotNone(mapping)
+                command_words = re.findall(
+                    r"\bdc\.w\s+\$([0-9A-F]+)", mapping.group(1)
+                )
+                self.assertTrue(command_words)
+                self.assertNotEqual(0, int(command_words[-1], 16) & 0x8000)
+        resolver = (ROOT / "src/rendering/sprite_object_pipeline.s").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("adda.w  (a4),a4", resolver)
+
     def test_weapon_setup_text_review_decodes_labels_and_has_render_refs(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

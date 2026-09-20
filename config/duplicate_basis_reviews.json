@@ -307,6 +307,30 @@
         {"address":"0x01FBBF","current_name":"WeaponSetup_CounterForceControlText","file":"src/ui/weapon_setup_background_and_text.s"},
         {"address":"0x01FBD7","current_name":"WeaponSetup_HoveringControlText","file":"src/ui/weapon_setup_background_and_text.s"}
       ]
+    },
+    {
+      "basis": "A Stage 12 Teddy Bear animation stream in the same mapping bank references this high-bit-terminated sprite mapping.",
+      "reason": "Each of the 18 A-R mapping labels is the target of at least one dc.w Mapping-* entry in the adjacent timed animation streams. Every mapping ends with a sprite command whose first word has bit 15 set. Anim_ResolveTimedMappingFrame adds the signed relative target to its cursor. Some UnreferencedTeddyGroupAnimation streams have no proven source caller; this review establishes table membership and record format, not runtime reachability or visual pose.",
+      "members": [
+        {"address":"0x1A0CEE","current_name":"Stage12_TeddyBearSpriteMappingA","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0CFA","current_name":"Stage12_TeddyBearSpriteMappingB","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0D06","current_name":"Stage12_TeddyBearSpriteMappingC","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0D12","current_name":"Stage12_TeddyBearSpriteMappingD","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0D1E","current_name":"Stage12_TeddyBearSpriteMappingE","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0D2A","current_name":"Stage12_TeddyBearSpriteMappingF","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0D36","current_name":"Stage12_TeddyBearSpriteMappingG","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0D42","current_name":"Stage12_TeddyBearSpriteMappingH","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0D4E","current_name":"Stage12_TeddyBearSpriteMappingI","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0D9C","current_name":"Stage12_TeddyBearSpriteMappingJ","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0DBA","current_name":"Stage12_TeddyBearSpriteMappingK","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0DD8","current_name":"Stage12_TeddyBearSpriteMappingL","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0DF6","current_name":"Stage12_TeddyBearSpriteMappingM","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0E14","current_name":"Stage12_TeddyBearSpriteMappingN","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0E32","current_name":"Stage12_TeddyBearSpriteMappingO","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0E3E","current_name":"Stage12_TeddyBearSpriteMappingP","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0E56","current_name":"Stage12_TeddyBearSpriteMappingQ","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0E6E","current_name":"Stage12_TeddyBearSpriteMappingR","file":"src/data/shared_stage_object_sprite_mappings.s"}
+      ]
     }
   ]
 }
