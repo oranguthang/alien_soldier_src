@@ -90,7 +90,10 @@ not assert what any frame looks like. Two more accepted groups cover 69 shared
 combat mapping records actually reached by relative-offset animation streams
 and 33 stream headers consumed by `Anim_ResolveTimedMappingFrame`. Three
 Stage 15 fragment mappings were excluded from that mapping group and renamed
-for their direct pointer-table consumer. The remaining queue has 245 groups.
+for their direct pointer-table consumer. A fourth accepted group covers the 40
+Seven Forces rotation frames selected by nine labelled table bases. Table1
+has an extra unlabelled eight-pointer run; its reachability is not inferred
+from the masked eight-slot renderer. The remaining queue has 244 groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

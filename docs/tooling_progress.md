@@ -774,3 +774,14 @@ while preserving them in `previous_name` provenance. Both old repeated
 sentences are now rejected by the
 curated detector as entries 59 and 60. The wider queue remains 248 groups,
 with three reviewed, 245 open, and 1,164 exact-address uses in total.
+
+The 40 Seven Forces rotation frame records have a uniform table-owner basis
+that the source supports: nine labelled table bases collectively point to all
+40 mappings, and the eight-frame renderer masks its byte offset with `$1C`.
+The table section also revealed eight extra pointers after Table1's first
+eight slots. A masked index from Table1 cannot reach that second run, and no
+separate symbolic base for it is established, so its wider reachability stays
+unknown. The source comment and unknowns register now state that limitation.
+The exact 40 members and the nine table spans (Table1 is 16 pointers; the
+others eight each) are pinned by a regression test. The wider queue is still
+248 groups, now four reviewed and 244 open.

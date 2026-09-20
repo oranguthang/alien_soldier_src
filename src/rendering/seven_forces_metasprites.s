@@ -8,7 +8,8 @@ Object_SelectAlternatingGraphicsFrameReturn:            ; CODE XREF: Object_Sele
                 rts
 ; End of function Object_SelectAlternatingGraphicsFrame
 ; ---------------------------------------------------------------------------
-; Shared eight-direction frame-pointer tables used by Seven Forces parts
+; Nine labelled eight-direction frame-table bases used by Seven Forces parts
+; Table1 has an extra unlabelled eight-pointer run after its first eight slots
 SevenForcesRotationFrameTable0: dc.l    SevenForcesRotationSpriteFrame00  ; DATA XREF: ROM:00059EB8   o  ; was: off_59D42
                                         ; ROM:00059EE4   o
                 dc.l    SevenForcesRotationSpriteFrame01
@@ -27,6 +28,7 @@ SevenForcesRotationFrameTable1: dc.l    SevenForcesRotationSpriteFrame07  ; DATA
                 dc.l    SevenForcesRotationSpriteFrame02
                 dc.l    SevenForcesRotationSpriteFrame01
                 dc.l    SevenForcesRotationSpriteFrame00
+; The masked eight-slot index from Table1 cannot select this following run
                 dc.l    SevenForcesRotationSpriteFrame08
                 dc.l    SevenForcesRotationSpriteFrame09
                 dc.l    SevenForcesRotationSpriteFrame10

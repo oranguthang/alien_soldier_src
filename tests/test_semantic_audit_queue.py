@@ -15,6 +15,47 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_seven_forces_rotation_review_matches_tables_and_eight_slot_mask(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item for item in reviews
+            if item["basis"].startswith("The eight-direction SevenForcesRotationFrameTable0")
+        )
+        source = (ROOT / "src/rendering/seven_forces_metasprites.s").read_text(
+            encoding="utf-8"
+        )
+        tables = source[
+            source.index("SevenForcesRotationFrameTable0:"):
+            source.index("SevenForcesInlinePartDescriptor0:")
+        ]
+        starts = list(
+            re.finditer(r"(?m)^SevenForcesRotationFrameTable[0-8]:", tables)
+        )
+        self.assertEqual(9, len(starts))
+        segments = [
+            tables[start.start():starts[index + 1].start()]
+            if index + 1 < len(starts) else tables[start.start():]
+            for index, start in enumerate(starts)
+        ]
+        pointers = [
+            re.findall(r"\bdc\.l\s+(SevenForcesRotationSpriteFrame\d\d)\b", segment)
+            for segment in segments
+        ]
+        self.assertEqual([8, 16, 8, 8, 8, 8, 8, 8, 8], list(map(len, pointers)))
+        self.assertEqual(
+            {member["current_name"] for member in review["members"]},
+            {target for segment in pointers for target in segment},
+        )
+        renderer = (ROOT / "src/rendering/boss_metasprites.s").read_text(
+            encoding="utf-8"
+        ).split("Sprite_ApplyMetaspriteEightFrameRotation:", 1)[1].split(
+            "; End of function Sprite_ApplyMetaspriteEightFrameRotation", 1
+        )[0]
+        self.assertRegex(renderer, r"andi\.w\s+#\$1C,d1")
+        self.assertRegex(renderer, r"move\.l\s+\(a0,d1\.w\),8\(a4\)")
+
     def test_shared_combat_reviews_match_relative_streams_and_renderer(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

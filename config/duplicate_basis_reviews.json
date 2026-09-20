@@ -128,6 +128,52 @@
         {"address":"0x0E9850","current_name":"SharedCombatSpriteAnimation32","file":"src/data/shared_combat_sprite_animations.s"},
         {"address":"0x0E9870","current_name":"SharedCombatSpriteAnimation33","file":"src/data/shared_combat_sprite_animations.s"}
       ]
+    },
+    {
+      "basis": "The eight-direction SevenForcesRotationFrameTable0 through SevenForcesRotationFrameTable8 pointer sets select this sprite mapping record. The suffix preserves ROM order without assigning a specific form or body part.",
+      "reason": "The nine labelled SevenForcesRotationFrameTable0..8 bases collectively contain pointers to all 40 listed mapping labels. Sprite_ApplyMetaspriteEightFrameRotation masks its table offset with $1C, selecting one of eight slots from a descriptor base. Table1 is followed by a second unlabelled eight-pointer run before Table2; the Table1 base cannot select that run with this mask, and no wider reachability is claimed.",
+      "members": [
+        {"address":"0x0ECC86","current_name":"SevenForcesRotationSpriteFrame00","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECC92","current_name":"SevenForcesRotationSpriteFrame01","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECC98","current_name":"SevenForcesRotationSpriteFrame02","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECCA4","current_name":"SevenForcesRotationSpriteFrame03","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECCAA","current_name":"SevenForcesRotationSpriteFrame04","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECCB6","current_name":"SevenForcesRotationSpriteFrame05","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECCBC","current_name":"SevenForcesRotationSpriteFrame06","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECCC8","current_name":"SevenForcesRotationSpriteFrame07","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECCDA","current_name":"SevenForcesRotationSpriteFrame08","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECCE0","current_name":"SevenForcesRotationSpriteFrame09","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECCE6","current_name":"SevenForcesRotationSpriteFrame10","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECCF2","current_name":"SevenForcesRotationSpriteFrame11","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECCF8","current_name":"SevenForcesRotationSpriteFrame12","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECCFE","current_name":"SevenForcesRotationSpriteFrame13","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD04","current_name":"SevenForcesRotationSpriteFrame14","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD10","current_name":"SevenForcesRotationSpriteFrame15","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD16","current_name":"SevenForcesRotationSpriteFrame16","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD1C","current_name":"SevenForcesRotationSpriteFrame17","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD22","current_name":"SevenForcesRotationSpriteFrame18","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD28","current_name":"SevenForcesRotationSpriteFrame19","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD2E","current_name":"SevenForcesRotationSpriteFrame20","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD34","current_name":"SevenForcesRotationSpriteFrame21","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD3A","current_name":"SevenForcesRotationSpriteFrame22","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD40","current_name":"SevenForcesRotationSpriteFrame23","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD46","current_name":"SevenForcesRotationSpriteFrame24","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD4C","current_name":"SevenForcesRotationSpriteFrame25","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD58","current_name":"SevenForcesRotationSpriteFrame26","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD64","current_name":"SevenForcesRotationSpriteFrame27","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD70","current_name":"SevenForcesRotationSpriteFrame28","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD76","current_name":"SevenForcesRotationSpriteFrame29","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD82","current_name":"SevenForcesRotationSpriteFrame30","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD8E","current_name":"SevenForcesRotationSpriteFrame31","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECD9A","current_name":"SevenForcesRotationSpriteFrame32","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECDA0","current_name":"SevenForcesRotationSpriteFrame33","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECDA6","current_name":"SevenForcesRotationSpriteFrame34","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECDAC","current_name":"SevenForcesRotationSpriteFrame35","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECDB2","current_name":"SevenForcesRotationSpriteFrame36","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECDB8","current_name":"SevenForcesRotationSpriteFrame37","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECDBE","current_name":"SevenForcesRotationSpriteFrame38","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"},
+        {"address":"0x0ECDC4","current_name":"SevenForcesRotationSpriteFrame39","file":"src/data/seven_forces_valkirie_and_stage24_mappings.s"}
+      ]
     }
   ]
 }

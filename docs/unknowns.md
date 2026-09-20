@@ -2637,6 +2637,11 @@ line-count target.
 All 118 imported definitions in the affected range now state their proven
 type and owner. The 40 Seven Forces rotation frames are selected by the nine
 forward/reversed eight-direction tables in `seven_forces_metasprites.s`;
+Table1 is followed by an extra unlabelled eight-pointer run before Table2.
+The rotation renderer masks the index to `$1C`, so a Table1 base reaches only
+its first eight slots. No separate symbolic base for the following run has
+been established; its wider reachability remains unknown.
+
 Bugmax, Destroyer Proto, and Shield Viper frames are tied to their constructor
 or descriptor consumers. Valkirie, Bugmax, and Missiray relative-offset
 animations have explicit role names. Numeric frame suffixes preserve ROM
