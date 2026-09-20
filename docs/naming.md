@@ -184,7 +184,9 @@ group no longer claims every mapping has multiple sprite pieces: mapping 06
 has one. Joker's and Shellshogun's six rotation tables each now have
 exact-member reviews for their eight mapping pointers, descriptor references,
 and ordering; Shellshogun table F also has a direct angle-indexed reader.
-The repeated-basis queue has 206 open groups.
+The Z-Leo/Valkirie Force descriptor now has an exact-member review for its five
+shared mapping targets, with the two initializer roles kept distinct. The
+repeated-basis queue has 205 open groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

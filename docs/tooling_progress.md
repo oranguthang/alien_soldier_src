@@ -1137,3 +1137,14 @@ Two exact-member reviews and one regression test pin all twelve addresses,
 pointer orders, descriptor references, and this direct reader, without
 assigning visual compass directions. The queue remains 233 groups across 971
 uses: twenty-seven reviewed, 206 open.
+
+The shared Z-Leo/Valkirie Force metasprite base at `$0355A4` has one exact-
+member review for five mapping targets in its 16-longword descriptor run.
+Z-Leo supplies this run as the mapping input `a0` alongside separate radius
+and link inputs. Valkirie Force supplies the same base as all three inputs,
+so its other two inputs reinterpret the bytes; static sharing does not prove
+that both bosses display every mapping in the same way. The new test pins the
+descriptor order, five mapping addresses and piece counts, high-bit endings,
+both callers, and the initializer's distinct `a0/a1/a2` reads. No visual pose
+identity or ROM-order meaning for the A-E suffixes is claimed. The queue
+remains 233 groups across 971 uses: twenty-eight reviewed, 205 open.

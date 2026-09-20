@@ -16,6 +16,79 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_zleo_valkirie_shared_mapping_review_pins_descriptor_roles(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item
+            for item in reviews
+            if item["basis"].startswith("Boss_ZLeoValkirieForceSharedMetaspriteData")
+        )
+        expected = [
+            ("0x0ED3AC", "Boss_ZLeoValkirieForceSharedMappingE", 2),
+            ("0x0ED3C4", "Boss_ZLeoValkirieForceSharedMappingA", 4),
+            ("0x0ED3DC", "Boss_ZLeoValkirieForceSharedMappingB", 2),
+            ("0x0ED3E8", "Boss_ZLeoValkirieForceSharedMappingD", 1),
+            ("0x0ED3EE", "Boss_ZLeoValkirieForceSharedMappingC", 1),
+        ]
+        self.assertEqual(
+            [(address, name) for address, name, _ in expected],
+            [(item["address"], item["current_name"]) for item in review["members"]],
+        )
+        self.assertEqual(
+            {"src/data/wolf_garopa_and_z_leo_mappings.s"},
+            {item["file"] for item in review["members"]},
+        )
+        mappings = (ROOT / "src/data/wolf_garopa_and_z_leo_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        for _, name, piece_count in expected:
+            with self.subTest(mapping=name):
+                block = re.search(
+                    r"(?ms)^" + re.escape(name) + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    mappings,
+                )
+                self.assertIsNotNone(block)
+                rows = re.findall(r"\bdc\.w\s+([^;\r\n]+)", block.group(1))
+                self.assertEqual(piece_count, len(rows))
+                self.assertTrue(all(len(row.split(",")) == 3 for row in rows))
+                first_words = [int(row.split(",", 1)[0].strip()[1:], 16) for row in rows]
+                self.assertTrue(all(word < 0x8000 for word in first_words[:-1]))
+                self.assertNotEqual(0, first_words[-1] & 0x8000)
+        descriptor_source = (
+            ROOT / "src/data/wolf_garopa_valkirie_z_leo_metasprites.s"
+        ).read_text(encoding="utf-8")
+        descriptor_run = descriptor_source.split(
+            "Boss_ZLeoValkirieForceSharedMetaspriteData:", 1
+        )[1].split("Boss_ZLeoPartRadii:", 1)[0]
+        entries = [
+            row.strip()
+            for row in re.findall(r"\bdc\.l\s+([^;\r\n]+)", descriptor_run)
+        ]
+        base = "Boss_ZLeoValkirieForceSharedMapping"
+        self.assertEqual(
+            ["0", "0", "0"]
+            + [base + letter + "+$400000" for letter in "ABA"]
+            + ["Boss_ZLeoBladeDirectionMapping2+$400000"]
+            + [base + letter + "+$400000" for letter in "ABCBCDCDE"],
+            entries,
+        )
+        zleo = (ROOT / "src/bosses/z_leo_core.s").read_text(encoding="utf-8")
+        valkirie = (ROOT / "src/bosses/valkirie_force.s").read_text(encoding="utf-8")
+        shared = "Boss_ZLeoValkirieForceSharedMetaspriteData"
+        self.assertIn(f"movea.l #{shared},a0", zleo)
+        self.assertIn("movea.l #Boss_ZLeoPartRadii,a1", zleo)
+        self.assertIn("movea.l #Boss_ZLeoPartLinks,a2", zleo)
+        for register in ("a0", "a1", "a2"):
+            self.assertIn(f"movea.l #{shared},{register}", valkirie)
+        initializer = (ROOT / "src/rendering/boss_metasprites.s").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("move.l  (a0,d1.w),d4", initializer)
+        self.assertIn("move.b  (a1,d3.w),d4", initializer)
+        self.assertIn("move.w  (a2,d2.w),d4", initializer)
+
     def test_joker_and_shellshogun_rotation_review_pins_eight_pointer_slots(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

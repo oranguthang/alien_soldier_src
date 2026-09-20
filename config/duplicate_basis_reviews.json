@@ -599,6 +599,17 @@
         {"address":"0x034B60","current_name":"Boss_ShellshogunRotationFramesE","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"},
         {"address":"0x034B80","current_name":"Boss_ShellshogunRotationFramesF","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"}
       ]
+    },
+    {
+      "basis": "Boss_ZLeoValkirieForceSharedMetaspriteData embeds this exact mapping pointer in its part descriptors; the table is statically shared by both initializers.",
+      "reason": "The 16-longword descriptor run at $0355A4 contains three zero entries, one Z-Leo blade mapping, and pointers to all five reviewed mappings: A/B/C three times each, D twice, E once. Boss_ZLeoIntroInit passes that run as a0 to Sprite_InitializeLinkedMetaspriteParts with separate radii and links at a1/a2. Boss_ValkirieForceInit passes the same base as a0/a1/a2, so its non-descriptor inputs reinterpret these bytes; static shared address does not prove identical runtime use of each mapping. The five records contain 4/2/1/1/2 six-byte sprite pieces in A/B/C/D/E order, each high-bit-terminated. The suffixes distinguish descriptor targets, not visual identity or ROM order.",
+      "members": [
+        {"address":"0x0ED3AC","current_name":"Boss_ZLeoValkirieForceSharedMappingE","file":"src/data/wolf_garopa_and_z_leo_mappings.s"},
+        {"address":"0x0ED3C4","current_name":"Boss_ZLeoValkirieForceSharedMappingA","file":"src/data/wolf_garopa_and_z_leo_mappings.s"},
+        {"address":"0x0ED3DC","current_name":"Boss_ZLeoValkirieForceSharedMappingB","file":"src/data/wolf_garopa_and_z_leo_mappings.s"},
+        {"address":"0x0ED3E8","current_name":"Boss_ZLeoValkirieForceSharedMappingD","file":"src/data/wolf_garopa_and_z_leo_mappings.s"},
+        {"address":"0x0ED3EE","current_name":"Boss_ZLeoValkirieForceSharedMappingC","file":"src/data/wolf_garopa_and_z_leo_mappings.s"}
+      ]
     }
   ]
 }
