@@ -112,6 +112,7 @@ GENERIC_NAME_BASES = (
     "A source-wide reference scan finds no external consumer for this self-looping stream; only its own loop pointer and adjacent Teddy Bear mapping records reference it.",
     "The role-neutral Unreferenced name records that limitation without inventing a visual state.",
     "The routines initialize Sirene display state, fill the alternating pattern buffer, queue its VDP command, and select phase-dependent palette words.",
+    "Static callers pass this four-longword RAM/VRAM tuple to Tilemap_TransferFullMapDirectToVRAM or the scrolling DMA state; the name states only the proven caller scope.",
 )
 
 

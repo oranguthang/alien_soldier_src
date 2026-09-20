@@ -16,6 +16,77 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_tilemap_transfer_descriptors_cover_direct_and_queued_consumers(self) -> None:
+        records = {
+            record["address"]: record
+            for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        descriptors = (ROOT / "src/rendering/boss_asset_sets.s").read_text(
+            encoding="utf-8"
+        )
+        entry = (ROOT / "src/stages/gameplay_entry_states.s").read_text(
+            encoding="utf-8"
+        )
+        cases = (
+            (
+                "0x011316", "Gfx_TitleAndZLeoVRAMTransferParameters",
+                ("$FFFF7000", "$FFFF6000", "$FFFF4000", "$14000"),
+                "src/ui/title_screen.s",
+            ),
+            (
+                "0x011326", "Gfx_DefaultVRAMTransferParameters",
+                ("$FFFF7000", "$FFFF6000", "$FFFF4000", "$4000"),
+                "src/cutscenes/ending_sequence_credits.s",
+            ),
+            (
+                "0x011336", "Gfx_FrontendAlternateVRAMTransferParameters",
+                ("$FFFF7000", "$FFFF6800", "$FFFF2000", "$6000"),
+                "src/ui/options_menu_controllers.s",
+            ),
+            (
+                "0x011346", "Gfx_ScrollVRAMTransferParameters",
+                ("$FFFF7000", "$FFFF6000", "$FFFF4000", "$6000"),
+                "src/credits/main.s",
+            ),
+        )
+        bases = []
+        for address, name, values, direct_path in cases:
+            with self.subTest(address=address):
+                record = records[address]
+                self.assertEqual(name, record["current_name"])
+                self.assertEqual("static", record["evidence"])
+                self.assertEqual(1, len(record["basis"]))
+                bases.extend(record["basis"])
+                declaration = re.search(
+                    rf"(?m)^{name}:\s+dc\.l\s+([^;\n]+)", descriptors
+                )
+                self.assertIsNotNone(declaration)
+                self.assertEqual(values, tuple(
+                    word.strip() for word in declaration.group(1).split(",")
+                ))
+                direct = (ROOT / direct_path).read_text(encoding="utf-8")
+                self.assertRegex(
+                    direct,
+                    rf"{name}[\s\S]{{0,500}}"
+                    r"jsr\s+\(Tilemap_TransferFullMapDirectToVRAM\)\.l",
+                )
+                self.assertIn(f"dc.l    {name}", entry)
+        self.assertEqual(4, len(set(bases)))
+        primary_column = (
+            ROOT / "src/rendering/tilemap_column_streaming.s"
+        ).read_text(encoding="utf-8")
+        secondary_row = (
+            ROOT / "src/rendering/tilemap_row_streaming.s"
+        ).read_text(encoding="utf-8")
+        scroll = (
+            ROOT / "src/rendering/camera_tracking_and_stage_scroll.s"
+        ).read_text(encoding="utf-8")
+        self.assertIn("lea     Gfx_TitleAndZLeoVRAMTransferParameters(pc),a0", primary_column)
+        self.assertIn("lea     Gfx_FrontendAlternateVRAMTransferParameters(pc),a0", secondary_row)
+        self.assertIn("lea     Gfx_ScrollVRAMTransferParameters(pc),a0", scroll)
+        self.assertIn("jmp     Tilemap_QueueRowFromDescriptor(pc)", scroll)
+        self.assertIn("jmp     Tilemap_QueueColumnFromDescriptor(pc)", scroll)
+
     def test_scroll_dma_pointer_fields_are_not_scroll_buffers(self) -> None:
         records = {
             record["address"]: record

@@ -219,7 +219,10 @@ initializer, pattern selector, shared buffer/VDP writer, and alternate-color
 branch now have separate instruction evidence; the last branch's label names
 its actual pattern and palette writes. Four Phase Pattern state-return labels
 now have an exact-member review: the shared timer branch is supported, while
-their expiry effects differ. There are 179 open repeated-basis groups.
+their expiry effects differ. Four tilemap transfer descriptors now have
+per-address tuple and consumer evidence; TitleAndZLeo, FrontendAlternate,
+Default, and Scroll are nonexclusive usage names. There are 178 open
+repeated-basis groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

@@ -1308,3 +1308,14 @@ animation, motion, or state update before falling through to that RTS. An
 exact-member review and test pin the four branch targets, countdowns, state
 table membership, and distinct expiry writes. The queue remains 221 groups
 across 924 uses: forty-two reviewed, 179 open.
+
+The four tilemap transfer descriptors at `$011316/$011326/$011336/$011346`
+were covered by a sentence mentioning only direct full-map transfers and the
+scrolling DMA state. Source callers also select them through queued row and
+column builders and the gameplay-entry pointer lists, so the broad sentence
+was incomplete. Their exact-address records now state each four-longword
+tuple and concrete direct, staged, or row/column consumers; usage-based names
+are explicitly nonexclusive. A source comment describes the shared descriptor
+role, and a regression test pins tuple values and several consumer paths.
+The old sentence is the 97th rejected generic basis. The queue falls to 220
+groups across 920 uses: forty-two reviewed, 178 open.

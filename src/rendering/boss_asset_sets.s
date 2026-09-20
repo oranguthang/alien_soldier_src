@@ -1,3 +1,4 @@
+; Tilemap transfer descriptors are shared by direct transfers and queued rows/columns
 Gfx_TitleAndZLeoVRAMTransferParameters: dc.l    $FFFF7000, $FFFF6000, $FFFF4000, $14000  ; was: dword_11316
                                         ; DATA XREF: TitleScreen_Initialize+7E   o
                                         ; Tilemap_QueuePrimaryPlaneColumn   o
