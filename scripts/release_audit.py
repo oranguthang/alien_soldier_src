@@ -90,6 +90,7 @@ GENERIC_NAME_BASES = (
     "Eight long pointers covering the death particle animation.",
     "Player_DeathParticleAnimationFrames selects this sprite mapping at the stated frame-counter index before rendering the death particles.",
     "Direct references from Sirene state handlers identify this data as state-selected pose scripts or the pose-frame source.",
+    "Pose-buffer accesses and direct calls to the interpolation helpers establish this stage of blade pose processing.",
 )
 
 

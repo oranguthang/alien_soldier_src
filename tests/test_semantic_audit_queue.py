@@ -590,6 +590,75 @@ class SemanticAuditQueueTests(unittest.TestCase):
             r"[\s\S]*?bsr\.w\s+Boss_SharpssteelRunBladePoseCommands",
         )
 
+    def test_sharpssteel_pose_control_points_have_distinct_local_evidence(self) -> None:
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        by_address = {record["address"]: record for record in records}
+        source = (ROOT / "src/bosses/sharpssteel_blades.s").read_text(
+            encoding="utf-8"
+        )
+        cases = {
+            "0x0489FA": (
+                "Boss_SharpssteelParseBladePoseCommandLoop",
+                ("cmpi.b  #$80,(a1,d0.w)", "move.b  1(a1,d0.w),$23E(a5)"),
+            ),
+            "0x048A16": (
+                "Boss_SharpssteelReadBladePoseCommand",
+                ("move.w  (a1,d0.w),d3", "cmpi.w  #$FFFE,d3"),
+            ),
+            "0x048A26": (
+                "Boss_SharpssteelHandleBladePoseLoopCommand",
+                ("cmpi.w  #$FFFF,d3", "clr.w   $29C(a5)"),
+            ),
+            "0x048A36": (
+                "Boss_SharpssteelBeginBladePoseInterpolation",
+                (
+                    "ext.l   d0",
+                    "bsr.w   Boss_SharpssteelInitializeBladePoseInterpolation",
+                ),
+            ),
+            "0x048A68": (
+                "Boss_SharpssteelApplyBladePoseInterpolationStep",
+                (
+                    "subq.w  #1,$C(a5)",
+                    "jsr     (Anim_AdvancePoseChannelInterpolation).l",
+                ),
+            ),
+            "0x048A78": (
+                "Boss_SharpssteelUpdateBladeAnglesFromPose",
+                (
+                    "move.b  (a0),d0",
+                    "move.w  d3,$6B6(a5)",
+                    "moveq   #0,d4",
+                    "asr.w   #2,d4",
+                ),
+            ),
+            "0x048B50": (
+                "Boss_SharpssteelApplyBladePoseOffsets",
+                ("move.w  $B2(a5),d3", "sub.w   d4,d3", "move.w  d3,$234(a5)"),
+            ),
+        }
+        bases = []
+        for address, (name, instructions) in cases.items():
+            with self.subTest(address=address):
+                record = by_address[address]
+                self.assertEqual(name, record["current_name"])
+                self.assertEqual("static", record["evidence"])
+                self.assertEqual(1, len(record["basis"]))
+                bases.extend(record["basis"])
+                block = re.search(
+                    r"(?ms)^" + re.escape(name) + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    source,
+                )
+                self.assertIsNotNone(block)
+                for instruction in instructions:
+                    self.assertIn(instruction, block.group(1))
+        self.assertEqual(len(cases), len(set(bases)))
+        self.assertNotIn(
+            "Pose-buffer accesses and direct calls to the interpolation helpers "
+            "establish this stage of blade pose processing.",
+            bases,
+        )
+
     def test_stage10_wasp_review_pins_streams_and_mapping_ends(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

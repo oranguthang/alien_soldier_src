@@ -1056,3 +1056,13 @@ name evidence is not folded into the full-bank group. An exact-member review
 and test pin addresses, lengths, binclude owners, and descriptor references
 without inventing individual sample identities. The queue remains 241
 groups across 1,017 uses: twenty-three reviewed, 218 open.
+
+Sharpssteel's seven pose-command labels had shared one sentence claiming
+pose-buffer access and direct interpolation-helper calls at every address.
+The instruction paths instead distinguish the `$80` event, `$FFFE` stop,
+`$FFFF` loop, target-offset setup, interpolation step, angle distribution,
+and final part-position writes. Their seven audit records now cite the local
+operations individually; a regression test pins each address and control
+path. No visual blade pose is inferred. The misleading shared sentence is
+the 75th rejected generic basis. The queue falls to 240 groups across 1,010
+uses: twenty-three reviewed, 217 open.
