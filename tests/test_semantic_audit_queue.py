@@ -15,6 +15,51 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_shellshogun_mapping_review_matches_all_pointer_owners(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item for item in reviews
+            if item["basis"].startswith("Boss_Shellshogun pointer tables")
+        )
+        data = (
+            ROOT / "src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"
+        ).read_text(encoding="utf-8")
+        renderer = (ROOT / "src/bosses/shellshogun_rendering.s").read_text(
+            encoding="utf-8"
+        )
+        core = (ROOT / "src/bosses/shellshogun_core.s").read_text(encoding="utf-8")
+        owners = set(
+            re.findall(
+                r"\b(?:dc\.l|move\.l)\s+#?(Boss_ShellshogunSpriteMapping\d\d)\b",
+                data + renderer + core,
+            )
+        )
+        self.assertEqual(
+            {member["current_name"] for member in review["members"]}, owners
+        )
+        tables = data[
+            data.index("Boss_ShellshogunRotationFramesA:"):
+            data.index("Boss_ShellshogunInlineSpriteDescriptorA:")
+        ]
+        starts = list(re.finditer(r"(?m)^Boss_ShellshogunRotationFrames[A-F]:", tables))
+        self.assertEqual(6, len(starts))
+        for index, start in enumerate(starts):
+            segment = (
+                tables[start.start():starts[index + 1].start()]
+                if index + 1 < len(starts) else tables[start.start():]
+            )
+            self.assertEqual(
+                8,
+                len(re.findall(r"\bdc\.l\s+Boss_ShellshogunSpriteMapping\d\d", segment)),
+            )
+        rotating = renderer.split("Boss_ShellshogunRotatingPartFrameTable:", 1)[1]
+        self.assertEqual(
+            ["29", "28", "27", "28"],
+            re.findall(r"\bdc\.l\s+Boss_ShellshogunSpriteMapping(\d\d)", rotating),
+        )
+
     def test_enemy_projectile_mapping_review_matches_animation_targets(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

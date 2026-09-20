@@ -95,7 +95,9 @@ Seven Forces rotation frames selected by nine labelled table bases. Table1
 has an extra unlabelled eight-pointer run; its reachability is not inferred
 from the masked eight-slot renderer. A fifth accepted group covers the 33
 `Enemy_ProjectileSpriteMapping` records selected by ten named relative-offset
-animation streams. The remaining queue has 243 groups.
+animation streams. A sixth covers 30 Shellshogun mappings selected by six
+rotation tables, direct metasprite/body assignments, or the rotating-part
+frame table. The remaining queue has 242 groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

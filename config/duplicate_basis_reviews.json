@@ -213,6 +213,42 @@
         {"address":"0x0EA564","current_name":"Enemy_ProjectileSpriteMapping31","file":"src/data/enemy_projectile_animation_mappings.s"},
         {"address":"0x0EA58E","current_name":"Enemy_ProjectileSpriteMapping32","file":"src/data/enemy_projectile_animation_mappings.s"}
       ]
+    },
+    {
+      "basis": "Boss_Shellshogun pointer tables or direct assignments select this sprite mapping; the numeric suffix preserves ROM order without guessing a visual pose.",
+      "reason": "Six eight-entry Boss_ShellshogunRotationFramesA..F tables select mappings 03..26. The metasprite descriptor directly names mappings 00 and 02, body-frame assignments name 00 and 01, and Boss_ShellshogunRotatingPartFrameTable names 27..29. These static sources account for every listed mapping; numeric suffixes preserve ROM order and do not assert a visual pose.",
+      "members": [
+        {"address":"0x0EB876","current_name":"Boss_ShellshogunSpriteMapping00","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB888","current_name":"Boss_ShellshogunSpriteMapping01","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB8A0","current_name":"Boss_ShellshogunSpriteMapping02","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB8AC","current_name":"Boss_ShellshogunSpriteMapping03","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB8B2","current_name":"Boss_ShellshogunSpriteMapping04","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB8BE","current_name":"Boss_ShellshogunSpriteMapping05","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB8C4","current_name":"Boss_ShellshogunSpriteMapping06","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB8D0","current_name":"Boss_ShellshogunSpriteMapping07","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB8DC","current_name":"Boss_ShellshogunSpriteMapping08","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB8E8","current_name":"Boss_ShellshogunSpriteMapping09","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB8EE","current_name":"Boss_ShellshogunSpriteMapping10","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB8FA","current_name":"Boss_ShellshogunSpriteMapping11","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB906","current_name":"Boss_ShellshogunSpriteMapping12","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB912","current_name":"Boss_ShellshogunSpriteMapping13","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB91E","current_name":"Boss_ShellshogunSpriteMapping14","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB92A","current_name":"Boss_ShellshogunSpriteMapping15","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB936","current_name":"Boss_ShellshogunSpriteMapping16","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB942","current_name":"Boss_ShellshogunSpriteMapping17","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB94E","current_name":"Boss_ShellshogunSpriteMapping18","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB95A","current_name":"Boss_ShellshogunSpriteMapping19","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB960","current_name":"Boss_ShellshogunSpriteMapping20","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB966","current_name":"Boss_ShellshogunSpriteMapping21","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB96C","current_name":"Boss_ShellshogunSpriteMapping22","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB972","current_name":"Boss_ShellshogunSpriteMapping23","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB978","current_name":"Boss_ShellshogunSpriteMapping24","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB97E","current_name":"Boss_ShellshogunSpriteMapping25","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB984","current_name":"Boss_ShellshogunSpriteMapping26","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB98A","current_name":"Boss_ShellshogunSpriteMapping27","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB9A2","current_name":"Boss_ShellshogunSpriteMapping28","file":"src/data/shellshogun_sprite_mappings.s"},
+        {"address":"0x0EB9BA","current_name":"Boss_ShellshogunSpriteMapping29","file":"src/data/shellshogun_sprite_mappings.s"}
+      ]
     }
   ]
 }

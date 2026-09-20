@@ -794,3 +794,11 @@ mapping group. Each appears as a relative `dc.w Mapping-*` target in the ten
 visual-pose claims. The exact 33-to-10 relationship is pinned by a regression
 test; the separate eight-entry directional table is not mistaken for eight
 additional streams. The wider queue is now five reviewed, 243 open.
+
+All 30 `Boss_ShellshogunSpriteMapping` records have one of three static owners:
+the six eight-entry `Boss_ShellshogunRotationFramesA..F` tables, direct body or
+metasprite assignments, or the four-slot rotating-part frame table. A source
+test checks all 30 names against those owner operands and pins the six table
+lengths and rotating-part order. The common basis claims only mapping
+selection and ROM order, not a visual pose. Six duplicate-basis groups are
+reviewed; 242 remain open.
