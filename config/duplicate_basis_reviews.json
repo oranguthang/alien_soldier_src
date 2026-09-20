@@ -991,6 +991,24 @@
         {"address":"0x035214","current_name":"Boss_SharpssteelInlineSpriteDescriptorA","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"},
         {"address":"0x03521A","current_name":"Boss_SharpssteelInlineSpriteDescriptorB","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"}
       ]
+    },
+    {
+      "basis": "Wolf Garopa's descriptors reference this directional mapping-pointer table.",
+      "reason": "Boss_WolfGaropaInitialize passes Boss_WolfGaropaMetaspriteDescriptors to Sprite_InitializeLinkedMetaspriteParts. That descriptor array references each exact 32-byte A/B/C table with $18000000 high-bit flags. Each table consists of eight mapping pointers consumed through the initializer's rotation-frame branch; A/B/C are ROM-order labels, not independently verified visual poses.",
+      "members": [
+        {"address":"0x0352A6","current_name":"Boss_WolfGaropaRotationFramesA","file":"src/data/wolf_garopa_valkirie_z_leo_metasprites.s"},
+        {"address":"0x0352C6","current_name":"Boss_WolfGaropaRotationFramesB","file":"src/data/wolf_garopa_valkirie_z_leo_metasprites.s"},
+        {"address":"0x0352E6","current_name":"Boss_WolfGaropaRotationFramesC","file":"src/data/wolf_garopa_valkirie_z_leo_metasprites.s"}
+      ]
+    },
+    {
+      "basis": "Valkirie's primary descriptor array references this directional mapping-pointer table.",
+      "reason": "Debug_ValkirieViewerInitialize passes Boss_ValkirieMetaspriteDescriptors to Sprite_InitializeLinkedMetaspriteParts. The array references exact 32-byte A/B/C eight-pointer tables: A and B with $18000000 high-bit flags, C without those flags. The initializer's bit-22 test still routes all three even-pointer forms through its rotation-frame branch; C reuses mapping pointers within its eight slots. The table letters denote ROM order, not independently verified visual poses.",
+      "members": [
+        {"address":"0x0353BC","current_name":"Boss_ValkirieRotationFramesA","file":"src/data/wolf_garopa_valkirie_z_leo_metasprites.s"},
+        {"address":"0x0353DC","current_name":"Boss_ValkirieRotationFramesB","file":"src/data/wolf_garopa_valkirie_z_leo_metasprites.s"},
+        {"address":"0x0353FC","current_name":"Boss_ValkirieRotationFramesC","file":"src/data/wolf_garopa_valkirie_z_leo_metasprites.s"}
+      ]
     }
   ]
 }

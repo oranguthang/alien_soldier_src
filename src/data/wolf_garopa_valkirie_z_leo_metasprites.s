@@ -1,5 +1,6 @@
 ; Metasprite definitions for Wolf Garopa, Valkirie, and Z-Leo
 ; Wolf Garopa directional frames and metasprite definition
+; Each rotation table contains eight mapping pointers selected by the descriptor array
 Boss_WolfGaropaRotationFramesA: dc.l    Boss_WolfGaropaRotationMappingA0  ; DATA XREF: ROM:00035320   o  ; was: off_352A6
                                         ; ROM:00035334   o
                 dc.l    Boss_WolfGaropaRotationMappingA1
@@ -69,6 +70,7 @@ Boss_WolfGaropaPartLinks:   dc.w    0, 0, 0             ; DATA XREF: Boss_WolfGa
                 dc.w    $189, $47E8, $7E9
                 dc.w    $48A8
 ; Valkirie directional frames and primary metasprite definition
+; Three eight-pointer rotation tables; C is selected without A/B's high-bit flags
 Boss_ValkirieRotationFramesA:   dc.l    Boss_ValkirieRotationAMapping0  ; DATA XREF: ROM:00035438   o  ; was: off_353BC
                                         ; ROM:0003544C   o
                 dc.l    Boss_ValkirieRotationAMapping1

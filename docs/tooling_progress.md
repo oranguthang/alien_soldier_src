@@ -1535,3 +1535,14 @@ second word was replaced by the observable field-copy contract. A source
 test pins all 17 reviewed records, their word triples, the tagged references,
 and the owner-to-initializer paths. The queue remains 201 repeated groups
 across 862 uses, with sixty-eight reviewed and 133 open.
+
+The Wolf Garopa and Valkirie rotation-pointer tables now have exact-member
+reviews covering all three 32-byte, eight-pointer tables in each family.
+Their descriptor arrays pass through `Sprite_InitializeLinkedMetaspriteParts`:
+Wolf Garopa selects A/B/C with `$18000000` high-bit flags, while Valkirie
+selects A/B with those flags and C without them. The even-pointer path reaches
+the initializer's rotation-frame branch in all six cases. Valkirie C reuses
+some mapping pointers within its eight slots; no A/B/C visual-pose claim is
+made. A source test pins table extents, pointer forms and owner setup paths.
+The queue is now 201 repeated groups across 862 uses, with seventy reviewed
+and 131 open.
