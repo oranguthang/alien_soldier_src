@@ -1046,3 +1046,13 @@ at `$057D0C`; no direct symbolic pointer to the tail at `$057D0E` is known.
 The ASM now shows this boundary explicitly and the unknowns register records
 the reachability limit. The old sentence is the 74th rejected generic basis.
 The queue has 241 groups across 1,017 uses: twenty-two reviewed, 219 open.
+
+The first eight `Sound_PCMBank` records form a real uniform bank group:
+`PCMPart1` through `PCMPart8` occupy consecutive `$8000`-byte ranges from
+`$098000` to `$0D8000`, and the PCM and voice DAC descriptor tables encode
+their bases as `Sound_PCMBankN >> $8` followed by sample parameters. The
+ninth asset begins at `$0D8000` but is only `$1A5E` bytes, so its separate
+name evidence is not folded into the full-bank group. An exact-member review
+and test pin addresses, lengths, binclude owners, and descriptor references
+without inventing individual sample identities. The queue remains 241
+groups across 1,017 uses: twenty-three reviewed, 218 open.

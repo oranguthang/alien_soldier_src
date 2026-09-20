@@ -165,7 +165,9 @@ particle OAM pass; eight mapping and six art names were changed from
 three direct pose streams and three state-14 table-selected streams now have
 separate exact-member reviews; the frame-data base has individual evidence.
 The trailing words after state-14 script 2's first stop are not claimed as
-reachable. The repeated-basis queue has 219 open groups.
+reachable. Eight full PCM banks also have an exact-member review grounded in
+their manifest ranges and DAC descriptors; the partial ninth bank remains
+separate. The repeated-basis queue has 218 open groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

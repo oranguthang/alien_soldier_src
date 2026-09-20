@@ -16,6 +16,55 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_pcm_bank_review_pins_eight_full_banks_and_partial_ninth(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item
+            for item in reviews
+            if item["basis"].startswith("The DAC descriptor tables encode this 0x8000-byte")
+        )
+        self.assertEqual(
+            {f"Sound_PCMBank{index}" for index in range(1, 9)},
+            {member["current_name"] for member in review["members"]},
+        )
+        self.assertEqual(
+            {"src/sound/pcm_samples.s"},
+            {member["file"] for member in review["members"]},
+        )
+        assets = json.loads((ROOT / "assets/manifest.json").read_text(encoding="utf-8"))[
+            "assets"
+        ]
+        by_path = {asset["path"]: asset for asset in assets}
+        source = (ROOT / "src/sound/pcm_samples.s").read_text(encoding="utf-8")
+        descriptors = (
+            (ROOT / "src/sound/driver_core.s").read_text(encoding="utf-8")
+            + (ROOT / "src/sound/command_dispatch_and_dac.s").read_text(
+                encoding="utf-8"
+            )
+        )
+        for index, member in enumerate(review["members"], start=1):
+            with self.subTest(bank=index):
+                start = 0x98000 + (index - 1) * 0x8000
+                asset = by_path[f"sound/PCMPart{index}.bin"]
+                self.assertEqual(start, int(member["address"], 16))
+                self.assertEqual(start, int(asset["address"], 16))
+                self.assertEqual(start + 0x8000, int(asset["end"], 16))
+                self.assertEqual(0x8000, asset["size"])
+                self.assertIn(
+                    f'Sound_PCMBank{index}: binclude "data/sound/PCMPart{index}.bin"',
+                    source,
+                )
+                self.assertRegex(
+                    descriptors,
+                    rf"\bdc\.w\s+\(Sound_PCMBank{index} >> \$8\)[^\n]*\n\s*dc\.w\s+",
+                )
+        ninth = by_path["sound/PCMPart9.bin"]
+        self.assertEqual(0xD8000, int(ninth["address"], 16))
+        self.assertEqual(0x1A5E, ninth["size"])
+        self.assertNotIn("Sound_PCMBank9", {member["current_name"] for member in review["members"]})
+
     def test_sirene_direct_and_indirect_pose_scripts_exclude_frame_data(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

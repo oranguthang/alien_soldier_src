@@ -535,6 +535,20 @@
         {"address":"0x057CEA","current_name":"Sirene_State14PoseScript1","file":"src/bosses/sirene.s"},
         {"address":"0x057CFC","current_name":"Sirene_State14PoseScript2","file":"src/bosses/sirene.s"}
       ]
+    },
+    {
+      "basis": "The DAC descriptor tables encode this 0x8000-byte ROM-aligned PCM bank through its high address byte plus per-sample offsets.",
+      "reason": "PCMPart1 through PCMPart8 occupy eight consecutive $8000-byte asset ranges from $098000 to $0D8000, and pcm_samples.s includes each under the matching Sound_PCMBank1..8 label. Sound_PCMSampleDescriptors and Sound_VoiceDACDescriptors encode these bank bases with (Sound_PCMBankN >> $8) followed by per-sample offset/length words. PCMPart9 begins at $0D8000 but has only $1A5E bytes before padding, so its unique evidence correctly excludes it from this uniform-size group. The bank names and format are structural evidence, not identification of individual voice samples.",
+      "members": [
+        {"address":"0x098000","current_name":"Sound_PCMBank1","file":"src/sound/pcm_samples.s"},
+        {"address":"0x0A0000","current_name":"Sound_PCMBank2","file":"src/sound/pcm_samples.s"},
+        {"address":"0x0A8000","current_name":"Sound_PCMBank3","file":"src/sound/pcm_samples.s"},
+        {"address":"0x0B0000","current_name":"Sound_PCMBank4","file":"src/sound/pcm_samples.s"},
+        {"address":"0x0B8000","current_name":"Sound_PCMBank5","file":"src/sound/pcm_samples.s"},
+        {"address":"0x0C0000","current_name":"Sound_PCMBank6","file":"src/sound/pcm_samples.s"},
+        {"address":"0x0C8000","current_name":"Sound_PCMBank7","file":"src/sound/pcm_samples.s"},
+        {"address":"0x0D0000","current_name":"Sound_PCMBank8","file":"src/sound/pcm_samples.s"}
+      ]
     }
   ]
 }
