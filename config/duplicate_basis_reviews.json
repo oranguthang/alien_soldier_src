@@ -1270,6 +1270,46 @@
         {"address":"0x04418C","current_name":"Boss_ViblackSpawnNearbyDefeatParticleReturn","file":"src/bosses/viblack_support.s"},
         {"address":"0x04427A","current_name":"Boss_ViblackSpawnTransitionDebrisReturn","file":"src/bosses/viblack_support.s"}
       ]
+    },
+    {
+      "basis": "Enemy_FormationWaveSpriteAnimation references this address-ordered formation-member mapping.",
+      "reason": "The animation's second and third relative frame words select Mapping01 and Mapping02, each for three ticks. Their first tile words differ ($680C and $6814), so the shared claim covers only the stream membership, not identical artwork or appearance.",
+      "members": [
+        {"address":"0x0EB3A4","current_name":"Enemy_FormationWaveSpriteMapping01","file":"src/data/stage_combat_object_sprite_mappings.s"},
+        {"address":"0x0EB3B6","current_name":"Enemy_FormationWaveSpriteMapping02","file":"src/data/stage_combat_object_sprite_mappings.s"}
+      ]
+    },
+    {
+      "basis": "IndexedObjectSpriteAnimation00 and 01 reference this address-ordered sprite-mapping record; the specific object identity is not proven.",
+      "reason": "Both streams reference Mapping00 in frame positions two and four and Mapping01 in position three. Their first tile words differ ($8800 and $8804), and the streams use six-tick and $13-tick durations respectively. The shared claim is limited to membership and ROM order; no specific object identity follows.",
+      "members": [
+        {"address":"0x19C4A8","current_name":"IndexedObjectSpriteMapping00","file":"src/data/indexed_object_and_stage_effect_mappings.s"},
+        {"address":"0x19C4AE","current_name":"IndexedObjectSpriteMapping01","file":"src/data/indexed_object_and_stage_effect_mappings.s"}
+      ]
+    },
+    {
+      "basis": "IndexedObjectSpriteAnimation02 references this address-ordered sprite-mapping variant; the specific object identity is not proven.",
+      "reason": "Animation02 places Mapping07 in frame positions three and seven and Mapping08 in positions five and nine, with five-tick durations. The mapping records differ in their last word ($F4F9 versus $F4F7). The shared claim covers the stream relationship only, not visual or object identity.",
+      "members": [
+        {"address":"0x19C4D2","current_name":"IndexedObjectSpriteMapping07","file":"src/data/indexed_object_and_stage_effect_mappings.s"},
+        {"address":"0x19C4D8","current_name":"IndexedObjectSpriteMapping08","file":"src/data/indexed_object_and_stage_effect_mappings.s"}
+      ]
+    },
+    {
+      "basis": "Projectile_MissirayFallingShotSpriteAnimation references this address-ordered vertical-shot mapping.",
+      "reason": "The falling-shot stream references Mapping01 in its second frame and Mapping02 in its third frame, with one-tick durations. The two records have different Y words ($E3F8/$FCF8 and $E1F8/$FEF8). Only their animation membership is shared; the visual pose is not inferred.",
+      "members": [
+        {"address":"0x0EB3E4","current_name":"Projectile_MissirayVerticalShotSpriteMapping01","file":"src/data/stage_combat_object_sprite_mappings.s"},
+        {"address":"0x0EB3F0","current_name":"Projectile_MissirayVerticalShotSpriteMapping02","file":"src/data/stage_combat_object_sprite_mappings.s"}
+      ]
+    },
+    {
+      "basis": "The full-screen fade engine adds the signed step to the progress word, uses the progress high byte as the RGB delta, and stops at zero or 0x1000.",
+      "reason": "PaletteFadeStep at $FFFFF75C is the signed increment and zero disables the fade. PaletteFadeProgress at $FFFFF75E is the accumulator: Palette_UpdateFullScreenFade adds the step to it, reads its high byte from the big-endian address for channel adjustment, and clamps it to zero or $1000 at the two endpoints. The shared sentence describes the relationship, not interchangeable RAM roles.",
+      "members": [
+        {"address":"0xFFF75C","current_name":"PaletteFadeStep","file":"src/ram_addrs.inc"},
+        {"address":"0xFFF75E","current_name":"PaletteFadeProgress","file":"src/ram_addrs.inc"}
+      ]
     }
   ]
 }

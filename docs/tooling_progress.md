@@ -1725,3 +1725,14 @@ options list ends only because the next table starts with signed-negative
 every destination word is a VRAM address. Static tests and `docs/source_layout.md`
 pin this boundary. The queue is 169 repeated groups across 792 uses, with
 102 reviewed and 67 open. No ROM code or visual claim changed.
+
+Five more shared bases now have exact-member reviews. Formation-wave frames
+two and three use different tile words; the indexed-object streams place their
+two mapping pairs at different frame positions and use different durations or
+coordinate words. Missiray falling-shot frames two and three likewise select
+different Y-coordinate records. The full-screen fade review distinguishes the
+signed step at `$FFFFF75C` from the accumulated progress at `$FFFFF75E`, whose
+high byte is read for color adjustment. Four focused tests pin those stream
+orders, record words, and fade instructions without claiming a visual object
+identity. The queue remains 169 repeated groups across 792 uses, with 107
+reviewed and 62 open. ROM instructions and runtime visual claims are unchanged.
