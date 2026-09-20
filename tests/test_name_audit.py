@@ -16,6 +16,146 @@ DEFINITION = re.compile(
 
 
 class NameAuditTests(unittest.TestCase):
+    def test_valkirie_part_command_entry_loop_and_exit_roles(self) -> None:
+        audit = {
+            record["address"]: record
+            for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        source = (ROOT / "src/bosses/valkirie_battle.s").read_text(
+            encoding="utf-8"
+        )
+        motion = source.split("Entity_ApplyValkiriePartMotionCommands:", 1)[1].split(
+            "; End of function Entity_ApplyValkiriePartMotionCommands", 1
+        )[0]
+        motion_entry, motion_loop = motion.split(
+            "Entity_ApplyValkiriePartMotionCommandLoop:", 1
+        )
+        motion_loop, motion_exit = motion_loop.split(
+            "Entity_ApplyValkiriePartMotionCommandsReturn:", 1
+        )
+        self.assertIn("move.w  (a0)+,d1", motion_entry)
+        self.assertIn("asr.l   #4,d2", motion_entry)
+        self.assertIn("neg.l   d2", motion_entry)
+        for instruction in (
+            "move.w  d1,$26(a1)",
+            "move.l  d2,$18(a1)",
+            "or.b    d3,$21(a1)",
+            "move.l  (a0)+,$2C(a1)",
+        ):
+            self.assertIn(instruction, motion_loop)
+        self.assertRegex(motion_exit, r"(?m)^\s+rts\s*$")
+
+        hide = source.split("Entity_ApplyValkiriePartHideCommands:", 1)[1].split(
+            "; End of function Entity_ApplyValkiriePartHideCommands", 1
+        )[0]
+        hide_entry, hide_loop = hide.split(
+            "Entity_ApplyValkiriePartHideCommandLoop:", 1
+        )
+        hide_loop, hide_exit = hide_loop.split(
+            "Entity_ApplyValkiriePartHideCommandsReturn:", 1
+        )
+        self.assertIn("move.b  (a0)+,d1", hide_entry)
+        self.assertIn("move.b  (a0)+,d2", hide_entry)
+        self.assertNotRegex(hide_loop, r"\bd2\b")
+        self.assertIn("and.b   d1,-$39BF(a1)", hide_loop)
+        self.assertIn("clr.l   -$39C8(a1)", hide_loop)
+        self.assertRegex(hide_exit, r"(?m)^\s+rts\s*$")
+        self.assertIn("dc.w    $BF00, $540, $600, $6C0, 0", source)
+        self.assertIn("dc.w    $BD00, $540, $600, $6C0, 0", source)
+
+        addresses = (
+            "0x055E8A",
+            "0x055EA0",
+            "0x055EB8",
+            "0x055EBA",
+            "0x055EBE",
+            "0x055ECE",
+        )
+        bases = [audit[address]["basis"][0] for address in addresses]
+        self.assertEqual(len(addresses), len(set(bases)))
+        self.assertIn("never reads D2", bases[3])
+        self.assertIn("only an RTS", bases[2])
+        self.assertIn("only an RTS", bases[5])
+
+    def test_valkirie_pose_controls_and_orphaned_director_longs(self) -> None:
+        audit = {
+            record["address"]: record
+            for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        reviews = {
+            review["basis"]: review
+            for review in json.loads(
+                (ROOT / "config/duplicate_basis_reviews.json").read_text(
+                    encoding="utf-8"
+                )
+            )["reviews"]
+        }
+        control_basis = "Control words $FFFE and $FFFF select termination or looping."
+        viewers = (
+            ("0x0513E0", "valkirie_composite_viewer.s", "Debug_ValkirieViewer", True),
+            (
+                "0x05167E",
+                "valkirie_secondary_composite_viewer.s",
+                "Debug_ValkirieSecondaryViewer",
+                False,
+            ),
+            (
+                "0x051912",
+                "valkirie_tertiary_composite_viewer.s",
+                "Debug_ValkirieTertiaryViewer",
+                False,
+            ),
+        )
+        self.assertEqual(
+            [address for address, _, _, _ in viewers],
+            [member["address"] for member in reviews[control_basis]["members"]],
+        )
+        for address, filename, prefix, has_stop_command in viewers:
+            with self.subTest(address=address):
+                source = (ROOT / "src/debug" / filename).read_text(encoding="utf-8")
+                handler = source.split(prefix + "CheckPoseControlCommand:", 1)[1].split(
+                    prefix + "BeginPoseCommandInterpolation:", 1
+                )[0]
+                self.assertIn("cmpi.w  #$FFFE,d3", handler)
+                self.assertIn("move.w  d3,$58(a5)", handler)
+                self.assertIn("cmpi.w  #$FFFF,d3", handler)
+                self.assertIn("clr.w   $58(a5)", handler)
+                self.assertIn("clr.w   $29C(a5)", handler)
+                script = source.split(prefix + "PoseScript:", 1)[1]
+                script = re.split(
+                    r"(?m)^[A-Za-z_][A-Za-z_0-9]*:", script, maxsplit=1
+                )[0]
+                self.assertEqual(has_stop_command, "$FF, $FE" in script)
+                self.assertIn("$FF, $FF", script)
+                self.assertIn(control_basis, audit[address]["basis"])
+
+        field_basis = (
+            "Orphaned_EnemySpawnClearDirectorData writes zero to this longword; "
+            "no other reconstructed source reads or writes it, so its purpose "
+            "beyond that store is unknown."
+        )
+        fields = (
+            ("0xFF811A", "EnemySpawnClearedLongA"),
+            ("0xFF811E", "EnemySpawnClearedLongB"),
+            ("0xFF8122", "EnemySpawnClearedLongC"),
+        )
+        self.assertEqual(
+            [address for address, _ in fields],
+            [member["address"] for member in reviews[field_basis]["members"]],
+        )
+        source = (ROOT / "src/enemies/spawn_and_movement.s").read_text(
+            encoding="utf-8"
+        )
+        routine = source.split("Orphaned_EnemySpawnClearDirectorData:", 1)[1].split(
+            "; End of function Orphaned_EnemySpawnClearDirectorData", 1
+        )[0]
+        self.assertIn("moveq   #0,d0", routine)
+        for address, name in fields:
+            with self.subTest(address=address):
+                self.assertIn(f"move.l  d0,({name}).w", routine)
+                self.assertEqual(1, len(re.findall(r"\(" + name + r"\)\.w", source)))
+                self.assertIn(field_basis, audit[address]["basis"])
+
     def test_raster_palette_and_shooting_mode_evidence(self) -> None:
         records = {
             record["address"]: record

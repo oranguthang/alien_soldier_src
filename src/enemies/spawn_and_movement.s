@@ -42,7 +42,7 @@ EnemySpawn_UpdateDirectorTimer:                         ; DATA XREF: ROM:0002C35
                 move.b  #$B,$5F(a0)
                 bra.w   EnemySpawn_InitializeObjectPosition
 ; End of function EnemySpawn_StartDirectorTimer
-; Unreachable: would clear the director's timer and three search longs
+; No known static caller: clears the director timer and three unknown longs
 Orphaned_EnemySpawnClearDirectorData:
                 moveq   #0,d0                           ; was: sub_2C3A8
                 move.l  d0,(EnemySpawnDelayTimer).w

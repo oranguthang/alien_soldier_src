@@ -648,7 +648,8 @@ Entity_ApplyValkiriePartMotionCommandLoop:              ; CODE XREF: Entity_Appl
 Entity_ApplyValkiriePartMotionCommandsReturn:           ; CODE XREF: Entity_ApplyValkiriePartMotionCommands+18   j  ; was: locret_55EB8
                 rts
 ; End of function Entity_ApplyValkiriePartMotionCommands
-; Mask flags and clear motion for each part in a packed hide command
+; Apply the first header byte as a flags mask and clear listed part motion
+; The second header byte is consumed into D2 but not used by this routine
 Entity_ApplyValkiriePartHideCommands:                   ; CODE XREF: Entity_UpdateValkirieBattleState10+46   p  ; was: sub_55EBA
                                         ; Entity_StartValkirieBattleState12+28   p
                 move.b  (a0)+,d1

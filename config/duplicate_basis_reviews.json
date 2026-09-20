@@ -851,6 +851,24 @@
         {"address":"0x012A1E","current_name":"UnreferencedStage20Variant3ConfigRecord","file":"src/stages/configuration_records.s"},
         {"address":"0x012A3C","current_name":"UnreferencedStage20Variant4ConfigRecord","file":"src/stages/configuration_records.s"}
       ]
+    },
+    {
+      "basis": "Control words $FFFE and $FFFF select termination or looping.",
+      "reason": "All three Valkirie debug-viewer interpreters load a word from their pose script, store $FFFE into offset $58 and return, or clear offsets $58 and $29C on $FFFF before reading from the script start. The primary script contains both words; the shorter secondary and tertiary scripts contain $FFFF. This reviews the shared interpreter behavior, not a claim that both commands occur in every script.",
+      "members": [
+        {"address":"0x0513E0","current_name":"Debug_ValkirieViewerCheckPoseControlCommand","file":"src/debug/valkirie_composite_viewer.s"},
+        {"address":"0x05167E","current_name":"Debug_ValkirieSecondaryViewerCheckPoseControlCommand","file":"src/debug/valkirie_secondary_composite_viewer.s"},
+        {"address":"0x051912","current_name":"Debug_ValkirieTertiaryViewerCheckPoseControlCommand","file":"src/debug/valkirie_tertiary_composite_viewer.s"}
+      ]
+    },
+    {
+      "basis": "Orphaned_EnemySpawnClearDirectorData writes zero to this longword; no other reconstructed source reads or writes it, so its purpose beyond that store is unknown.",
+      "reason": "The no-static-caller routine at $02C3A8 zeroes D0, then writes the delay timer and the three consecutive longwords at $FFFF811A, $FFFF811E, and $FFFF8122. The source contains no other uses of those three RAM names. The A/B/C suffixes indicate address order only; no downstream game behavior is inferred.",
+      "members": [
+        {"address":"0xFF811A","current_name":"EnemySpawnClearedLongA","file":"src/ram_addrs.inc"},
+        {"address":"0xFF811E","current_name":"EnemySpawnClearedLongB","file":"src/ram_addrs.inc"},
+        {"address":"0xFF8122","current_name":"EnemySpawnClearedLongC","file":"src/ram_addrs.inc"}
+      ]
     }
   ]
 }

@@ -626,9 +626,9 @@ by their verified byte order rather than receiving invented codec meanings.
 
 | Symbol | Address | Static evidence |
 |---|---:|---|
-| `EnemySpawnClearedLongA` | `$FFFF811A` | The director reset clears this longword; reconstructed source has no other access, so its downstream purpose remains unknown. |
-| `EnemySpawnClearedLongB` | `$FFFF811E` | The director reset clears this longword; reconstructed source has no other access, so its downstream purpose remains unknown. |
-| `EnemySpawnClearedLongC` | `$FFFF8122` | The director reset clears this longword; reconstructed source has no other access, so its downstream purpose remains unknown. |
+| `EnemySpawnClearedLongA` | `$FFFF811A` | The orphaned director-clear routine zeros this longword; no other reconstructed source access establishes its purpose. |
+| `EnemySpawnClearedLongB` | `$FFFF811E` | The orphaned director-clear routine zeros this longword; no other reconstructed source access establishes its purpose. |
+| `EnemySpawnClearedLongC` | `$FFFF8122` | The orphaned director-clear routine zeros this longword; no other reconstructed source access establishes its purpose. |
 | `ActivePickupCountMinus1` | `$FFFF8126` | Collision-list construction starts at minus one and increments for each primary object with field-`$23` bit five; pickup creation sets that bit and enforces its cap through this value. |
 | `ScriptedInputActive` | `$FFFF8138` | Script initializers set this word, completion and timeout paths clear it, and stage transitions wait for zero. |
 | `ScriptedInputTimeout` | `$FFFF813A` | Script initializers load `$100` or `$200`; the per-frame scripted-input update decrements it and clears the active word after expiry. |

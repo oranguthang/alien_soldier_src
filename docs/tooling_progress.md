@@ -1435,3 +1435,29 @@ VBlank selector is a byte offset into 23 longword handler pointers, so its
 constant values are multiples of four, not merely even. A lightweight source
 test checks these distinctions. The queue is now 209 groups across 886 uses:
 fifty-two reviewed and 157 open.
+
+The three Valkirie debug-viewer pose interpreters have an identical control
+branch: `$FFFE` stores a negative script cursor and returns, whereas `$FFFF`
+resets the cursor and a second pose field before reading from the beginning.
+Only the main viewer's current script contains `$FFFE`; the secondary and
+tertiary scripts contain `$FFFF` but not the stop command. Their shared basis
+now has an exact-member review and a source regression test. Three unknown
+enemy-spawn longwords also have an exact-member review: the orphaned
+director-clear routine is their sole reconstructed-source writer. A stale
+pre-rename procedure reference was corrected in their audit records. The
+routine has no known direct caller or ROM pointer, but indirect invocation is
+not disproven; source comments and its audit now say so. The queue remains
+209 repeated groups across 886 uses, with fifty-four reviewed and 155 open.
+
+The Valkirie part-command audit separated six address roles that had shared
+two whole-routine descriptions. The motion entry decodes its header, the loop
+writes fields `$26`, `$18`, `$21`, and `$2C` for each part, and the terminal
+label is only `rts`. The hide entry consumes two header bytes but its second
+byte, loaded into `D2`, is never read by that routine; the loop masks flags
+and clears motion, while its terminal label is likewise only `rts`. Both
+state-10 and state-12 hide-command streams use a zero second byte. A source
+test pins these distinctions. The queue is now 207 repeated groups across
+880 uses: fifty-four reviewed and 153 open. A line-count survey also confirms
+that none of the 398 source modules exceeds 1000 lines; all 17 above the
+preferred 700-line band are boss-specific (largest: 869 lines). No mechanical
+split is warranted from line length alone.
