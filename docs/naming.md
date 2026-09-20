@@ -127,7 +127,9 @@ than suggesting unspecified direct assignments. The remaining queue has
 232 groups. Terobuster's 16 former generic mappings are now split into
 primary and secondary rotation frames, with reverse and forward table order
 verified; the first secondary frame also has direct linked-record assignments.
-The remaining queue has 231 groups.
+An eleventh exact-member review pins 13 Stage 10 Wasp mappings to the four
+selector streams and high-bit terminators; selector `0C` is also assigned by
+the defeat-conversion path. The remaining queue has 230 groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

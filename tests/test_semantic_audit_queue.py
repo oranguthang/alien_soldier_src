@@ -15,6 +15,67 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_stage10_wasp_review_pins_streams_and_mapping_ends(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item
+            for item in reviews
+            if item["basis"].startswith("One or more of the four streams selected")
+        )
+        expected = [
+            f"Enemy_Stage10WaspSpriteMapping{chr(letter)}"
+            for letter in range(ord("A"), ord("M") + 1)
+        ]
+        self.assertEqual(
+            expected, [member["current_name"] for member in review["members"]]
+        )
+        self.assertEqual(
+            {"src/data/stage10_wasp_sprite_mappings.s"},
+            {member["file"] for member in review["members"]},
+        )
+        data = (ROOT / "src/data/stage10_wasp_sprite_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        stream_start = data.index("Enemy_Stage10WaspSelector04Animation:")
+        targets = re.findall(
+            r"\bdc\.w\s+(Enemy_Stage10WaspSpriteMapping[A-M])-\*",
+            data[stream_start:],
+        )
+        self.assertEqual(set(expected), set(targets))
+        for name in expected:
+            with self.subTest(name=name):
+                mapping = re.search(
+                    r"(?ms)^" + re.escape(name) + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    data,
+                )
+                self.assertIsNotNone(mapping)
+                command_words = re.findall(
+                    r"\bdc\.w\s+\$([0-9A-F]+)", mapping.group(1)
+                )
+                self.assertTrue(command_words)
+                self.assertNotEqual(0, int(command_words[-1], 16) & 0x8000)
+        wasp = (ROOT / "src/enemies/stage_10_wasp_and_falling_shot.s").read_text(
+            encoding="utf-8"
+        )
+        selector_table = wasp.split("Enemy_Stage10WaspAnimationMappings:", 1)[
+            1
+        ].split("\n\n", 1)[0]
+        self.assertEqual(
+            ["04", "08", "0C", "10"],
+            re.findall(
+                r"\bdc\.l\s+Enemy_Stage10WaspSelector([0-9A-F]{2})Animation",
+                selector_table,
+            ),
+        )
+        self.assertIn(
+            "move.l  Enemy_Stage10WaspAnimationMappings(pc,d0.w),8(a5)", wasp
+        )
+        self.assertIn(
+            "move.l  #Enemy_Stage10WaspSelector0CAnimation,8(a5)", wasp
+        )
+
     def test_phase_pattern_review_pins_seven_streams_and_mapping_ends(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

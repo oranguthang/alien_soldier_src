@@ -354,6 +354,25 @@
         {"address":"0x0EAD16","current_name":"Enemy_PhasePatternSpriteMappingP","file":"src/data/phase_pattern_sprite_mappings.s"},
         {"address":"0x0EAD70","current_name":"Enemy_PhasePatternSpriteMappingQ","file":"src/data/phase_pattern_sprite_mappings.s"}
       ]
+    },
+    {
+      "basis": "One or more of the four streams selected by Enemy_Stage10WaspAnimationMappings stores a self-relative pointer to this high-bit-terminated sprite mapping.",
+      "reason": "Enemy_UpdateStage10WaspAnimation indexes the four longwords of Enemy_Stage10WaspAnimationMappings. Across their four streams, each A-M mapping is targeted by at least one dc.w Mapping-* entry, and every mapping's final sprite command has bit 15 set in its first word. Selector0C is also assigned during defeat conversion. The shared claim establishes exact stream membership and record format, not one exclusive runtime state or a visual pose.",
+      "members": [
+        {"address":"0x0EAF1E","current_name":"Enemy_Stage10WaspSpriteMappingA","file":"src/data/stage10_wasp_sprite_mappings.s"},
+        {"address":"0x0EAF60","current_name":"Enemy_Stage10WaspSpriteMappingB","file":"src/data/stage10_wasp_sprite_mappings.s"},
+        {"address":"0x0EAFA2","current_name":"Enemy_Stage10WaspSpriteMappingC","file":"src/data/stage10_wasp_sprite_mappings.s"},
+        {"address":"0x0EAFE4","current_name":"Enemy_Stage10WaspSpriteMappingD","file":"src/data/stage10_wasp_sprite_mappings.s"},
+        {"address":"0x0EB026","current_name":"Enemy_Stage10WaspSpriteMappingE","file":"src/data/stage10_wasp_sprite_mappings.s"},
+        {"address":"0x0EB068","current_name":"Enemy_Stage10WaspSpriteMappingF","file":"src/data/stage10_wasp_sprite_mappings.s"},
+        {"address":"0x0EB0AA","current_name":"Enemy_Stage10WaspSpriteMappingG","file":"src/data/stage10_wasp_sprite_mappings.s"},
+        {"address":"0x0EB0EC","current_name":"Enemy_Stage10WaspSpriteMappingH","file":"src/data/stage10_wasp_sprite_mappings.s"},
+        {"address":"0x0EB12E","current_name":"Enemy_Stage10WaspSpriteMappingI","file":"src/data/stage10_wasp_sprite_mappings.s"},
+        {"address":"0x0EB170","current_name":"Enemy_Stage10WaspSpriteMappingJ","file":"src/data/stage10_wasp_sprite_mappings.s"},
+        {"address":"0x0EB1B2","current_name":"Enemy_Stage10WaspSpriteMappingK","file":"src/data/stage10_wasp_sprite_mappings.s"},
+        {"address":"0x0EB1F4","current_name":"Enemy_Stage10WaspSpriteMappingL","file":"src/data/stage10_wasp_sprite_mappings.s"},
+        {"address":"0x0EB236","current_name":"Enemy_Stage10WaspSpriteMappingM","file":"src/data/stage10_wasp_sprite_mappings.s"}
+      ]
     }
   ]
 }

@@ -916,3 +916,12 @@ carry primary/secondary names and individual table-slot bases, and a
 regression test checks both orders plus three direct writes. The old sentence
 is the 67th rejected generic basis. The queue is 241 groups across 1,034
 uses: ten reviewed, 231 open.
+
+The 13 Stage 10 Wasp mapping records A-M share valid stream-level evidence.
+Every one is targeted by a self-relative entry across four selector streams,
+and every mapping ends with a high-bit sprite command. The selector table is
+read by `Enemy_UpdateStage10WaspAnimation`; selector `0C` is also assigned
+directly in the defeat-conversion path. An exact-member review and regression
+test pin all targets, mapping endings, the four table slots, and this second
+assignment without claiming an exclusive runtime role or visual pose. The
+241 groups remain: eleven reviewed, 230 open.
