@@ -142,6 +142,17 @@ stored value no longer equals the symbol address. `Boss_SunsetStingBodyPartInitT
 holds several of those, with the top byte as flags and the low 24 bits as the
 address, and they remain written as literals.
 
+## Adjacent data as a loader stop word
+
+`Options_AssetLoadDescriptors` contains five records but has no explicit
+`$FFFF` terminator. `LoadObjData` reads the next word and returns when it is
+negative; that word is `$8332`, the first entry of the immediately following
+`Options_OnLabelTiles` table. The title asset list, in contrast, has eight
+records and its own `$FFFF`. Do not separate the options list from its
+following table or change that first word without adding an explicit negative
+stop word. The records have a type, source pointer, and destination word; tag
+6 is `LoadCompressedToRAM`, so not every destination is VRAM.
+
 ## Editing rules
 
 - Keep module includes in ascending ROM order.

@@ -1254,6 +1254,22 @@
         {"address":"0x038814","current_name":"Boss_TerobusterMissileAttackABindPart","file":"src/bosses/terobuster_core.s"},
         {"address":"0x0388DE","current_name":"Boss_TerobusterMissileAttackBBindPart","file":"src/bosses/terobuster_core.s"}
       ]
+    },
+    {
+      "basis": "Descriptor byte five is copied here and selection compares its upper priority bits with new requests.",
+      "reason": "Sound_WritePrimaryVoiceDACMailbox copies 5(a0) to Z80VoiceSlotAFlags, while Sound_WriteSecondaryVoiceDACMailbox copies it to Z80VoiceSlotBFlags. Sound_SelectVoiceDACPlaybackSlot reads both flags, masks their upper bits with $C0, and compares the selected slot priority with the incoming descriptor. The two mailbox addresses are $20 bytes apart and retain separate A/B ownership.",
+      "members": [
+        {"address":"0xA01F87","current_name":"Z80VoiceSlotAFlags","file":"src/ram_addrs.inc"},
+        {"address":"0xA01FA7","current_name":"Z80VoiceSlotBFlags","file":"src/ram_addrs.inc"}
+      ]
+    },
+    {
+      "basis": "Disabled-spawn and allocation-failure paths return here.",
+      "reason": "Both Viblack emitters test frame-counter bit zero and return from their own RTS when the paced frame is skipped; both also return on nonzero result from their free-slot finder. The nearby defeat-particle path uses Projectile_FindFreeSlotForward and initializes type $88, while the transition-debris path uses Projectile_FindFreeSlotReverse and may initialize debris or type $88. Only the two early-return conditions are common.",
+      "members": [
+        {"address":"0x04418C","current_name":"Boss_ViblackSpawnNearbyDefeatParticleReturn","file":"src/bosses/viblack_support.s"},
+        {"address":"0x04427A","current_name":"Boss_ViblackSpawnTransitionDebrisReturn","file":"src/bosses/viblack_support.s"}
+      ]
     }
   ]
 }

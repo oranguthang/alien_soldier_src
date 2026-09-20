@@ -1714,3 +1714,14 @@ returns were instead given four address-specific explanations. Five focused
 tests check the shared instructions and the differing conditions. The queue
 is 175 repeated groups across 804 uses, with one hundred reviewed and 75 open.
 No ROM instructions or gameplay visual claims changed.
+
+The Z80 voice-slot A/B flag bytes and two Viblack spawn return gates now have
+exact-member reviews. Sharpssteel's bit-clear and bit-set blade loops, the
+primary and secondary options cursor Y tables, and two RAM buffer origins
+received address-specific evidence. The title and options asset descriptor
+lists were separated by exact owners and stop conditions. In particular, the
+options list ends only because the next table starts with signed-negative
+`$8332`; `LoadObjData` also sends tag 6 to RAM, disproving the old claim that
+every destination word is a VRAM address. Static tests and `docs/source_layout.md`
+pin this boundary. The queue is 169 repeated groups across 792 uses, with
+102 reviewed and 67 open. No ROM code or visual claim changed.
