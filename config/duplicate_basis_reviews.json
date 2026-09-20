@@ -1158,6 +1158,14 @@
         {"address":"0x009CB4","current_name":"UI_CheckNextSFXTestInput","file":"src/ui/options_menu_controllers.s"},
         {"address":"0x009D52","current_name":"UI_CheckNextVoiceTestInput","file":"src/ui/options_menu_controllers.s"}
       ]
+    },
+    {
+      "basis": "Many mutually exclusive scene and boss users overlap this range, so the physical row name does not claim one subsystem owner.",
+      "reason": "Effect_ApplyTransitionMask names the two consecutive 32-byte rows separately, initializes a0 and a1 to their bases, and processes two post-increment longwords from each per DBF iteration for four iterations. Z-Leo and other encounter paths reuse the same physical workspace, so neither SharedPatternRow base claims exclusive ownership. The common sentence applies only to the two physical row bases, whose distinct exact ranges are stated in their other basis entries.",
+      "members": [
+        {"address":"0xFFFF9400","current_name":"SharedPatternRow0Long0","file":"src/ram_addrs.inc"},
+        {"address":"0xFFFF9420","current_name":"SharedPatternRow1Long0","file":"src/ram_addrs.inc"}
+      ]
     }
   ]
 }

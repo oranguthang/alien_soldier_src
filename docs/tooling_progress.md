@@ -1664,3 +1664,14 @@ Voice wraps at `$25` without that call. Focused tests pin both the common
 prefixes and these differences. The queue is 186 repeated groups across 826
 uses, with eighty-eight reviewed and 98 open. No source ASM or visual claim
 changed.
+
+The palette active/shadow pair, weapon-selector X/Y offsets, and VDP register
+1/7 shadows now have separate address-specific evidence. Palette DMA targets
+the active buffer while fades read the shadow; target-sight arithmetic adds
+the two offsets to different coordinate accumulators; VDP register 1 carries
+the display-enable bit while register 7 supplies the backdrop color. The two
+physical shared-pattern row bases retain a common overlap warning only after
+an exact-member review of their two consecutive 32-byte ranges. Four focused
+static tests pin these distinctions. The queue is 183 repeated groups across
+820 uses, with eighty-nine reviewed and 94 open. No gameplay visuals or ROM
+code changed.
