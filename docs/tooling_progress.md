@@ -1180,3 +1180,13 @@ relative loop. Tests pin addresses, piece counts, high-bit terminators,
 stream order, and the circling selector's pointer. The suffixes remain
 ordering labels, not visual identities. The queue stays at 231 groups across
 963 uses: thirty reviewed, 201 open.
+
+Three player-mapping groups now have exact-member reviews for the five weapon
+animation mappings and the five primary/alternate layout mappings each. The
+weapon table has a sixth, distinct dash mapping beyond the five reviewed
+records. Both layout tables list 00-04 by index but their mapping bodies occur
+in ROM order 04/03/00/02/01; the terrain index tables yield only longword
+offsets 0/4/8/C/10. The test pins all fifteen addresses, source-piece counts,
+pointer slots, terrain index words and the separate weapon sixth slot. No
+visual pose or ROM-order claim is inferred from an index suffix. The queue
+remains 231 groups across 963 uses: thirty-three reviewed, 198 open.

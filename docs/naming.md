@@ -193,7 +193,9 @@ selects only four frame pairs; two trailing words are separately recorded as
 unknown, not asserted to be a fifth frame. Five composite enemy behavior
 frames and five single-piece circling frames now have exact-member reviews
 that pin their stream orders without assigning visual poses. The repeated-basis
-queue has 201 open groups.
+review now also pins the player weapon, primary and alternate layout pointer
+tables: indices 00-04 are distinct from the latter two tables' ROM storage
+order 04/03/00/02/01. The repeated-basis queue has 198 open groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

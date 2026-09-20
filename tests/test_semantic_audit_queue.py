@@ -16,6 +16,90 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_player_layout_reviews_distinguish_table_index_from_rom_order(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        data_path = "src/data/player_state_animation_sprite_mappings.s"
+        data = (ROOT / data_path).read_text(encoding="utf-8")
+        rendering = (ROOT / "src/player/rendering_and_defeat.s").read_text(
+            encoding="utf-8"
+        )
+        cases = (
+            (
+                "Player_WeaponAnimationFrames selects",
+                "Player_WeaponAnimationFrames",
+                "Player_RenderCeilingArmedIdle",
+                "Player_WeaponAnimationSpriteMapping",
+                [0, 1, 2, 3, 4],
+                [0x0E8CC2, 0x0E8CDA, 0x0E8CEA, 0x0E8D12, 0x0E8D2A],
+                [3, 2, 5, 3, 5],
+                [f"Player_WeaponAnimationSpriteMapping{index:02d}" for index in range(5)]
+                + ["Player_DashSecondarySpriteMapping"],
+            ),
+            (
+                "Player_PrimaryAnimationLayoutTable contains",
+                "Player_PrimaryAnimationLayoutTable",
+                "Player_AlternateAnimationLayoutTable",
+                "Player_PrimaryLayoutSpriteMapping",
+                [4, 3, 0, 2, 1],
+                [0x0E8D52, 0x0E8D72, 0x0E8D92, 0x0E8DAA, 0x0E8DC2],
+                [4, 4, 3, 3, 3],
+                [f"Player_PrimaryLayoutSpriteMapping{index:02d}" for index in range(5)],
+            ),
+            (
+                "Player_AlternateAnimationLayoutTable contains",
+                "Player_AlternateAnimationLayoutTable",
+                "Player_UpdateCounterForceAnimation",
+                "Player_AlternateLayoutSpriteMapping",
+                [4, 3, 0, 2, 1],
+                [0x0E8DDA, 0x0E8DF2, 0x0E8E12, 0x0E8E32, 0x0E8E4A],
+                [3, 4, 4, 3, 4],
+                [f"Player_AlternateLayoutSpriteMapping{index:02d}" for index in range(5)],
+            ),
+        )
+        for basis_start, table, next_label, prefix, order, addresses, counts, slots in cases:
+            with self.subTest(table=table):
+                review = next(
+                    item for item in reviews if item["basis"].startswith(basis_start)
+                )
+                names = [f"{prefix}{index:02d}" for index in order]
+                self.assertEqual(
+                    [(f"0x{address:06X}", name, data_path) for address, name in zip(addresses, names)],
+                    [
+                        (member["address"], member["current_name"], member["file"])
+                        for member in review["members"]
+                    ],
+                )
+                table_body = rendering.split(table + ":", 1)[1].split(
+                    next_label + ":", 1
+                )[0]
+                self.assertEqual(slots, re.findall(r"\bdc\.l\s+([A-Za-z_]\w*)", table_body))
+                for name, count in zip(names, counts):
+                    block = re.search(
+                        r"(?ms)^" + re.escape(name) + r":(.*?)(?=^[A-Za-z_]\w*:|\Z)",
+                        data,
+                    )
+                    self.assertIsNotNone(block)
+                    self.assertEqual(count, len(re.findall(r"\bdc\.l\b", block.group(1))))
+
+        self.assertIn("movea.l Player_WeaponAnimationFrames(pc,d1.w),a2", rendering)
+        self.assertIn("cmpi.w  #$18,$48(a5)", rendering)
+        self.assertIn("lea     Player_PrimaryAnimationLayoutTable(pc),a0", rendering)
+        self.assertIn("lea     Player_AlternateAnimationLayoutTable(pc),a0", rendering)
+        self.assertIn("movea.l (a0,d0.w),a1", rendering)
+        terrain = (ROOT / "src/player/projectiles_and_effects.s").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(
+            "Player_LowerTerrainAnimationIndices:    dc.w    0, 8, 4, 8, 0, $C, $10, $C",
+            terrain,
+        )
+        self.assertIn(
+            "Player_UpperTerrainAnimationIndices:    dc.w    0, $C, $10, $C, 0, 8, 4, 8",
+            terrain,
+        )
+
     def test_enemy_behavior_and_circling_mapping_reviews_pin_stream_membership(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

@@ -632,6 +632,39 @@
         {"address":"0x0EB2F6","current_name":"Enemy_CirclingAnimationSpriteMappingD","file":"src/data/circling_enemy_sprite_mappings.s"},
         {"address":"0x0EB2FC","current_name":"Enemy_CirclingAnimationSpriteMappingE","file":"src/data/circling_enemy_sprite_mappings.s"}
       ]
+    },
+    {
+      "basis": "Player_WeaponAnimationFrames selects this sprite mapping at the stated weapon-animation index.",
+      "reason": "Player_SetWeaponAnimationData uses the frame offset in d1 to read Player_WeaponAnimationFrames. The six longword slots name mappings 00-04 in index order, followed by the distinct Player_DashSecondarySpriteMapping; the reviewed set covers only the five Player_WeaponAnimationSpriteMapping records. Player_UpdateWeaponAnim advances its offset by four and wraps at $18. The suffixes are table indices, not the order of every player pose in ROM or a visual weapon identity.",
+      "members": [
+        {"address":"0x0E8CC2","current_name":"Player_WeaponAnimationSpriteMapping00","file":"src/data/player_state_animation_sprite_mappings.s"},
+        {"address":"0x0E8CDA","current_name":"Player_WeaponAnimationSpriteMapping01","file":"src/data/player_state_animation_sprite_mappings.s"},
+        {"address":"0x0E8CEA","current_name":"Player_WeaponAnimationSpriteMapping02","file":"src/data/player_state_animation_sprite_mappings.s"},
+        {"address":"0x0E8D12","current_name":"Player_WeaponAnimationSpriteMapping03","file":"src/data/player_state_animation_sprite_mappings.s"},
+        {"address":"0x0E8D2A","current_name":"Player_WeaponAnimationSpriteMapping04","file":"src/data/player_state_animation_sprite_mappings.s"}
+      ]
+    },
+    {
+      "basis": "Player_PrimaryAnimationLayoutTable contains this sprite mapping at the stated index and Player_PrepareSpriteRendering selects it through the terrain animation-index tables.",
+      "reason": "Player_PrepareSpriteRendering installs Player_PrimaryAnimationLayoutTable and Player_PrepareSpriteRendering_WithTables selects a longword through either terrain animation-index table; their entries are multiples of four from 0 through $10. The table lists mappings 00-04 in index order, then separate offset bytes. The mapping records occur in ROM order 04/03/00/02/01, so suffixes state table index rather than physical order or visual pose.",
+      "members": [
+        {"address":"0x0E8D52","current_name":"Player_PrimaryLayoutSpriteMapping04","file":"src/data/player_state_animation_sprite_mappings.s"},
+        {"address":"0x0E8D72","current_name":"Player_PrimaryLayoutSpriteMapping03","file":"src/data/player_state_animation_sprite_mappings.s"},
+        {"address":"0x0E8D92","current_name":"Player_PrimaryLayoutSpriteMapping00","file":"src/data/player_state_animation_sprite_mappings.s"},
+        {"address":"0x0E8DAA","current_name":"Player_PrimaryLayoutSpriteMapping02","file":"src/data/player_state_animation_sprite_mappings.s"},
+        {"address":"0x0E8DC2","current_name":"Player_PrimaryLayoutSpriteMapping01","file":"src/data/player_state_animation_sprite_mappings.s"}
+      ]
+    },
+    {
+      "basis": "Player_AlternateAnimationLayoutTable contains this sprite mapping at the stated index and the alternate rendering path selects it through the terrain animation-index tables.",
+      "reason": "Alternate player rendering paths pass Player_AlternateAnimationLayoutTable in a0 to Player_PrepareSpriteRendering_WithTables, which uses the same lower/upper terrain index tables as the primary path. Its five longword slots list mappings 00-04 in index order, followed by separate offset bytes. The mapping records instead occur in ROM order 04/03/00/02/01; suffixes state table index, not physical order or a visible pose.",
+      "members": [
+        {"address":"0x0E8DDA","current_name":"Player_AlternateLayoutSpriteMapping04","file":"src/data/player_state_animation_sprite_mappings.s"},
+        {"address":"0x0E8DF2","current_name":"Player_AlternateLayoutSpriteMapping03","file":"src/data/player_state_animation_sprite_mappings.s"},
+        {"address":"0x0E8E12","current_name":"Player_AlternateLayoutSpriteMapping00","file":"src/data/player_state_animation_sprite_mappings.s"},
+        {"address":"0x0E8E32","current_name":"Player_AlternateLayoutSpriteMapping02","file":"src/data/player_state_animation_sprite_mappings.s"},
+        {"address":"0x0E8E4A","current_name":"Player_AlternateLayoutSpriteMapping01","file":"src/data/player_state_animation_sprite_mappings.s"}
+      ]
     }
   ]
 }
