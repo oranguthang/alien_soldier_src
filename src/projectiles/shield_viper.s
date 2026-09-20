@@ -406,7 +406,7 @@ Projectile_InitShieldViperOrbitShot:                    ; CODE XREF: Boss_Shield
                 move.w  #$CC80,2(a0)
                 move.b  #$40,$21(a0)                    ; '@'
                 move.l  #$FF01FF01,$2C(a0)
-                move.l  #Boss_ShieldViperSpriteFrame11,8(a0)
+                move.l  #Projectile_ShieldViperOrbitShotFrame00,8(a0)
                 move.w  #$8300,$E(a0)
                 move.w  #$28,$26(a0)                    ; '('
                 move.w  #$10,$48(a0)
@@ -459,30 +459,30 @@ Projectile_ShieldViperOrbitShotReturn:                  ; CODE XREF: Projectile_
 Projectile_ShieldViperOrbitShotAnimationRecords:    dc.w    2  ; field_0  ; was: stru_4F15E
                                         ; DATA XREF: Projectile_ShieldViperOrbitShotMain+1E   o
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame11   ; field_4
+                dc.l    Projectile_ShieldViperOrbitShotFrame00  ; field_4
                 dc.w    2                               ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame12   ; field_4
+                dc.l    Projectile_ShieldViperOrbitShotFrame01  ; field_4
                 dc.w    3                               ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame13   ; field_4
+                dc.l    Projectile_ShieldViperOrbitShotFrame02  ; field_4
                 dc.w    3                               ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame14   ; field_4
+                dc.l    Projectile_ShieldViperOrbitShotFrame03  ; field_4
                 dc.w    4                               ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame15   ; field_4
+                dc.l    Projectile_ShieldViperOrbitShotFrame04  ; field_4
                 dc.w    4                               ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame16   ; field_4
+                dc.l    Projectile_ShieldViperOrbitShotFrame05  ; field_4
                 dc.w    3                               ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame17   ; field_4
+                dc.l    Projectile_ShieldViperOrbitShotFrame06  ; field_4
                 dc.w    3                               ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame18   ; field_4
+                dc.l    Projectile_ShieldViperOrbitShotFrame07  ; field_4
                 dc.w    $FFFF                           ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame18   ; field_4
+                dc.l    Projectile_ShieldViperOrbitShotFrame07  ; field_4
 
 ; Defeat main handler

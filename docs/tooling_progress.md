@@ -834,3 +834,16 @@ visible word prefixes, and requires each to have a setup-screen `lea` or
 `dc.l` reference. Those exact 20 members are accepted; the two handlers have
 their own instruction-level test. The wider queue stays at 247 groups across
 1,139 uses: eight reviewed, 239 open.
+
+The former 19-way Shield Viper mapping basis mixed four different consumers.
+`Boss_ShieldViperBodyAngularMappingRecords` selects four body-angle frames;
+`Boss_ShieldViperControllerAngularMappingRecords` selects four controller
+frames; the final six body initialization records use three tail mappings;
+and `Projectile_ShieldViperOrbitShotAnimationRecords` selects eight orbit-shot
+frames. The second shot frame is also assigned to the first auxiliary record,
+so its audit basis records both uses without asserting a visual identity.
+All 19 definitions and exact-address audit records now have owner-specific
+names and distinct, table-slot evidence. A regression test checks the 24
+initialization records, both eight-slot angle tables, and the nine animation
+records. The old shared sentence is the 62nd rejected generic basis. The
+queue is now 246 groups across 1,120 uses: eight reviewed, 238 open.

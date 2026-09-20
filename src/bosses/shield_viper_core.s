@@ -248,7 +248,7 @@ Boss_ShieldViperInitialize:                             ; DATA XREF: ROM:Boss_Sh
                 move.w  #$180,$14(a5)
                 move.w  #$A300,$E(a5)
                 move.w  #$4C00,2(a5)
-                move.l  #Boss_ShieldViperSpriteFrame04,8(a5)
+                move.l  #Boss_ShieldViperControllerAngleFrame00,8(a5)
                 clr.w   $C(a5)
                 move.b  #$10,$20(a5)
                 move.b  #$50,$21(a5)                    ; 'P'
@@ -296,7 +296,7 @@ Boss_ShieldViperAdvanceBodyInitializationLoop:          ; CODE XREF: Boss_Shield
                 dbf     d7,Boss_ShieldViperInitializeBodyRecordLoop
                 move.w  #$4C00,2(a0)
                 move.w  #$10,(a0)
-                move.l  #Boss_ShieldViperSpriteFrame12,8(a0)
+                move.l  #Projectile_ShieldViperOrbitShotFrame01,8(a0)
                 move.w  #$8300,$E(a0)
                 move.w  #$60,$50(a0)                    ; '`'
 ; End of function Boss_ShieldViperInitialize
@@ -330,76 +330,76 @@ Boss_ShieldViperInitializationReturn:                   ; CODE XREF: Boss_Shield
 Boss_ShieldViperBodyInitializationRecords:  dc.w    $50  ; field_0  ; was: stru_4E1E0
                                         ; DATA XREF: Boss_ShieldViperInitialize+9A   o
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $50                             ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $50                             ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $50                             ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $50                             ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $50                             ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $50                             ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $50                             ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $50                             ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $50                             ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $50                             ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $50                             ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $50                             ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $50                             ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $50                             ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $50                             ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $50                             ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $50                             ; field_0
                 dc.w    0                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $50                             ; field_0
                 dc.w    1                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame08   ; field_4
+                dc.l    Boss_ShieldViperBodyInitTailFrame00  ; field_4
                 dc.w    $38                             ; field_0
                 dc.w    1                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame08   ; field_4
+                dc.l    Boss_ShieldViperBodyInitTailFrame00  ; field_4
                 dc.w    $30                             ; field_0
                 dc.w    1                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame09   ; field_4
+                dc.l    Boss_ShieldViperBodyInitTailFrame01  ; field_4
                 dc.w    $30                             ; field_0
                 dc.w    1                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame09   ; field_4
+                dc.l    Boss_ShieldViperBodyInitTailFrame01  ; field_4
                 dc.w    $28                             ; field_0
                 dc.w    1                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame10   ; field_4
+                dc.l    Boss_ShieldViperBodyInitTailFrame02  ; field_4
                 dc.w    $28                             ; field_0
                 dc.w    1                               ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame10   ; field_4
+                dc.l    Boss_ShieldViperBodyInitTailFrame02  ; field_4
 
 ; Place the controller and seed the 128-frame intro delay
 Boss_ShieldViperPlaceForIntroDelay:                     ; DATA XREF: ROM:0004DFE8   o  ; was: sub_4E2A0

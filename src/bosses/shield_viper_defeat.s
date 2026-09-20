@@ -349,54 +349,54 @@ Boss_ShieldViperControllerAngularMappingRecords:    dc.w    0  ; field_0  ; was:
                                         ; DATA XREF: Boss_ShieldViperBeginStaggeredDefeat+14   o
                                         ; Gfx_ShieldViperUpdateBodyMappings+8   o
                 dc.w    $FFFF                           ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame04   ; field_4
+                dc.l    Boss_ShieldViperControllerAngleFrame00  ; field_4
                 dc.w    $1000                           ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame05   ; field_4
+                dc.l    Boss_ShieldViperControllerAngleFrame01  ; field_4
                 dc.w    $1000                           ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame06   ; field_4
+                dc.l    Boss_ShieldViperControllerAngleFrame02  ; field_4
                 dc.w    $1000                           ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame07   ; field_4
+                dc.l    Boss_ShieldViperControllerAngleFrame03  ; field_4
                 dc.w    $800                            ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame04   ; field_4
+                dc.l    Boss_ShieldViperControllerAngleFrame00  ; field_4
                 dc.w    $800                            ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame05   ; field_4
+                dc.l    Boss_ShieldViperControllerAngleFrame01  ; field_4
                 dc.w    0                               ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame06   ; field_4
+                dc.l    Boss_ShieldViperControllerAngleFrame02  ; field_4
                 dc.w    $800                            ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame07   ; field_4
+                dc.l    Boss_ShieldViperControllerAngleFrame03  ; field_4
 ; Eight body mapping records indexed by quantized angle
 Boss_ShieldViperBodyAngularMappingRecords:  dc.w    0   ; field_0  ; was: stru_4F598
                                         ; DATA XREF: Boss_ShieldViperBeginStaggeredDefeat+84   o
                                         ; Boss_ShieldViperBeginLinkedPartEjection+48   o
                 dc.w    $FFFF                           ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $1000                           ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame01   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame01  ; field_4
                 dc.w    $1000                           ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame02   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame02  ; field_4
                 dc.w    $1000                           ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame03   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame03  ; field_4
                 dc.w    $800                            ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame00  ; field_4
                 dc.w    $800                            ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame01   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame01  ; field_4
                 dc.w    0                               ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame02   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame02  ; field_4
                 dc.w    $800                            ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    Boss_ShieldViperSpriteFrame03   ; field_4
+                dc.l    Boss_ShieldViperBodyAngleFrame03  ; field_4
 
 ; Debug routine that updates shield viper debugging features

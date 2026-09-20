@@ -16,6 +16,87 @@ DEFINITION = re.compile(
 
 
 class NameAuditTests(unittest.TestCase):
+    def test_shield_viper_mapping_names_follow_exact_consumers(self) -> None:
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        reviewed = [
+            record
+            for record in records
+            if re.fullmatch(
+                r"Boss_ShieldViperSpriteFrame\d\d", record["previous_name"] or ""
+            )
+        ]
+        self.assertEqual(19, len(reviewed))
+        self.assertEqual(19, len({record["basis"][0] for record in reviewed}))
+        names = {record["current_name"] for record in reviewed}
+        core = (ROOT / "src/bosses/shield_viper_core.s").read_text(encoding="utf-8")
+        defeat = (ROOT / "src/bosses/shield_viper_defeat.s").read_text(encoding="utf-8")
+        projectile = (ROOT / "src/projectiles/shield_viper.s").read_text(encoding="utf-8")
+        mappings = (ROOT / "src/data/shield_viper_and_missiray_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        source = core + defeat + projectile + mappings
+        self.assertNotRegex(source, r"\bBoss_ShieldViperSpriteFrame\d\d\b")
+        self.assertEqual(
+            names,
+            set(
+                re.findall(
+                    r"^((?:Boss|Projectile)_ShieldViper\w*Frame\d\d):",
+                    mappings,
+                    re.M,
+                )
+            ),
+        )
+
+        def pointers(text: str, table: str, end: str, family: str) -> list[str]:
+            section = text.split(table + ":", 1)[1].split(end, 1)[0]
+            return re.findall(r"\bdc\.l\s+" + re.escape(family) + r"(\d\d)\b", section)
+
+        self.assertEqual(
+            ["00"] * 18,
+            pointers(
+                core,
+                "Boss_ShieldViperBodyInitializationRecords",
+                "Boss_ShieldViperPlaceForIntroDelay:",
+                "Boss_ShieldViperBodyAngleFrame",
+            ),
+        )
+        self.assertEqual(
+            ["00", "00", "01", "01", "02", "02"],
+            pointers(
+                core,
+                "Boss_ShieldViperBodyInitializationRecords",
+                "Boss_ShieldViperPlaceForIntroDelay:",
+                "Boss_ShieldViperBodyInitTailFrame",
+            ),
+        )
+        for table, end, family in (
+            (
+                "Boss_ShieldViperControllerAngularMappingRecords",
+                "Boss_ShieldViperBodyAngularMappingRecords:",
+                "Boss_ShieldViperControllerAngleFrame",
+            ),
+            (
+                "Boss_ShieldViperBodyAngularMappingRecords",
+                "; Debug routine",
+                "Boss_ShieldViperBodyAngleFrame",
+            ),
+        ):
+            self.assertEqual(
+                ["00", "01", "02", "03"] * 2,
+                pointers(defeat, table, end, family),
+            )
+        self.assertEqual(
+            [f"{index:02}" for index in range(8)] + ["07"],
+            pointers(
+                projectile,
+                "Projectile_ShieldViperOrbitShotAnimationRecords",
+                "; Defeat main handler",
+                "Projectile_ShieldViperOrbitShotFrame",
+            ),
+        )
+        self.assertIn("move.l  #Projectile_ShieldViperOrbitShotFrame00,8(a0)", projectile)
+        self.assertIn("move.l  #Projectile_ShieldViperOrbitShotFrame01,8(a0)", core)
+
     def test_weapon_setup_text_handlers_are_audited_as_code(self) -> None:
         records = {
             record["address"]: record
