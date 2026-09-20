@@ -215,7 +215,7 @@ Boss_JampanInitializeOrbitingPartLoop:                  ; CODE XREF: Boss_Jampan
                 nop
                 move.w  (a1,d0.w),$4C(a0)
                 add.w   d0,d0
-                lea     Boss_JampanOrbitingPartSpriteFrames(pc),a1
+                lea     Boss_JampanOrbitingPartMappingPointers(pc),a1
                 nop
                 move.l  (a1,d0.w),8(a0)
                 addq.w  #1,d1
@@ -253,7 +253,7 @@ Boss_JampanOrbitingPartPrimaryAngles:   dc.w    $80, $A8, $58, $20, $40, $60, $8
                                         ; DATA XREF: Boss_JampanInitializeEncounterState+18C   o
 Boss_JampanOrbitingPartSecondaryAngles: dc.w    $FFE0, $FF80, $FF80, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40
                                         ; DATA XREF: Boss_JampanInitializeEncounterState+198   o
-Boss_JampanOrbitingPartSpriteFrames:    dc.l    Boss_JampanShieldAndOrbitingPartMapping  ; DATA XREF: Boss_JampanInitializeEncounterState+1A6   o
+Boss_JampanOrbitingPartMappingPointers: dc.l    Boss_JampanShieldAndOrbitingPartMapping  ; DATA XREF: Boss_JampanInitializeEncounterState+1A6   o
                 dc.l    Boss_JampanOrbitingPartMappingA
                 dc.l    Boss_JampanOrbitingPartMappingA
                 dc.l    Boss_JampanOrbitingPartMappingB

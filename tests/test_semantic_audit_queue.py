@@ -16,6 +16,89 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_jampan_orbit_tables_have_distinct_consumers_and_sixteen_slots(self) -> None:
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        by_address = {record["address"]: record for record in records}
+        source = (ROOT / "src/bosses/jampan_core.s").read_text(encoding="utf-8")
+        geometry = (ROOT / "src/bosses/jampan_geometry_and_input.s").read_text(
+            encoding="utf-8"
+        )
+        loop = source.split("Boss_JampanInitializeOrbitingPartLoop:", 1)[1].split(
+            "Boss_JampanInitializeShieldSlotLoop:", 1
+        )[0]
+        cases = {
+            "0x04945E": ("Boss_JampanOrbitingPartTypes", "move.w  (a1,d0.w),(a0)"),
+            "0x04947E": (
+                "Boss_JampanOrbitingPartSpriteAttributes",
+                "move.w  (a1,d0.w),d2",
+            ),
+            "0x04949E": ("Boss_JampanOrbitingPartRadii", "move.w  (a1,d0.w),$48(a0)"),
+            "0x0494BE": (
+                "Boss_JampanOrbitingPartPrimaryAngles",
+                "move.w  (a1,d0.w),$4A(a0)",
+            ),
+            "0x0494DE": (
+                "Boss_JampanOrbitingPartSecondaryAngles",
+                "move.w  (a1,d0.w),$4C(a0)",
+            ),
+            "0x0494FE": (
+                "Boss_JampanOrbitingPartMappingPointers",
+                "move.l  (a1,d0.w),8(a0)",
+            ),
+        }
+        bases = []
+        tables = {}
+        for address, (name, load) in cases.items():
+            with self.subTest(address=address):
+                record = by_address[address]
+                self.assertEqual(name, record["current_name"])
+                self.assertEqual("static", record["evidence"])
+                self.assertEqual(1, len(record["basis"]))
+                bases.extend(record["basis"])
+                self.assertRegex(
+                    loop,
+                    re.escape("lea     " + name + "(pc),a1")
+                    + r"\s+nop\s+"
+                    + re.escape(load),
+                )
+                table = re.search(
+                    r"(?ms)^" + re.escape(name) + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    source,
+                )
+                self.assertIsNotNone(table)
+                tables[name] = table.group(1)
+        self.assertEqual(6, len(set(bases)))
+        self.assertEqual(
+            "Boss_JampanOrbitingPartSpriteFrames",
+            by_address["0x0494FE"]["previous_name"],
+        )
+        self.assertEqual("off_494FE", by_address["0x0494FE"]["legacy_name"])
+        for name, table in tables.items():
+            directive = "dc.l" if name.endswith("MappingPointers") else "dc.w"
+            operands = [
+                operand.strip()
+                for row in re.findall(r"\b" + directive + r"\s+([^;\r\n]+)", table)
+                for operand in row.split(",")
+            ]
+            self.assertEqual(16, len(operands), name)
+        pointers = [
+            row.strip()
+            for row in re.findall(
+                r"\bdc\.l\s+([^;\r\n]+)",
+                tables["Boss_JampanOrbitingPartMappingPointers"],
+            )
+        ]
+        self.assertEqual(
+            ["Boss_JampanShieldAndOrbitingPartMapping"]
+            + ["Boss_JampanOrbitingPartMappingA"] * 2
+            + ["Boss_JampanOrbitingPartMappingB"] * 13,
+            pointers,
+        )
+        for field in ("$48(a0)", "$4A(a0)", "$4C(a0)"):
+            self.assertIn("move.w  " + field, geometry)
+        self.assertIn("add.w   d0,d0", loop)
+        self.assertIn("or.w    d2,$E(a0)", loop)
+
     def test_pcm_bank_review_pins_eight_full_banks_and_partial_ninth(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

@@ -1077,3 +1077,15 @@ camera comparison, difficulty/record-type branches, pickup jumps, and the
 `$0572B0-$0573E6` asset boundary. The old three sentences are the 76th-78th
 rejected generic bases. The queue falls to 237 groups across 994 uses:
 twenty-three reviewed, 214 open.
+
+The Jampan encounter initializer indexes six parallel 16-slot tables but
+consumes each differently: type into `(a0)`, radius into `$48(a0)`, sprite
+attribute bits ORed into `$E(a0)`, two angles into `$4A/$4C(a0)`, and a
+longword mapping pointer into `8(a0)`. The geometry updater later reads the
+radius and angles. The former `OrbitingPartSpriteFrames` label was corrected
+to `OrbitingPartMappingPointers`, with its prior semantic name and imported
+`off_494FE` provenance retained. The two selected mapping records now refer
+to the corrected table name. Six address-level explanations and a regression
+test pin the table consumers, widths, sixteen slots, and pointer order. The
+old shared sentence is the 79th rejected generic basis. The queue falls to
+236 groups across 988 uses: twenty-three reviewed, 213 open.

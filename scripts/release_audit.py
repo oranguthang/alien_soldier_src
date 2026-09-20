@@ -94,6 +94,7 @@ GENERIC_NAME_BASES = (
     "The independent entity synchronizes X to the source object, dispatches field 4, and alternates terrain-wait and gravity states using collision bit zero.",
     "The routine walks eight-byte records by scroll trigger, spawning the encoded object or pickup or applying a controller command until a segment marker.",
     "Direct state dispatch and record consumption establish this Medusa entity role.",
+    "The encounter initializer consumes this parallel-table entry while configuring the sixteen orbiting parts.",
 )
 
 
