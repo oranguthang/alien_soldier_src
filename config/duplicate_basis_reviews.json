@@ -1310,6 +1310,38 @@
         {"address":"0xFFF75C","current_name":"PaletteFadeStep","file":"src/ram_addrs.inc"},
         {"address":"0xFFF75E","current_name":"PaletteFadeProgress","file":"src/ram_addrs.inc"}
       ]
+    },
+    {
+      "basis": "Neither direction held leaves the facing unchanged.",
+      "reason": "Player_UpdateAimDirection tests ControllerHeldState bits 2 and 3, sets bit 4 in $E(a5), and reaches its return without altering facing bit 3 when neither is held. Player_UpdateHorizontalFacing instead tests $69(a5) bits 2 and 3 and likewise reaches its own RTS with bit 3 of $E(a5) unchanged. The shared claim is about facing bit 3 only, not every flag or the input source.",
+      "members": [
+        {"address":"0x016926","current_name":"Player_UpdateAimDirection_Return","file":"src/player/air_and_ground_states.s"},
+        {"address":"0x016C60","current_name":"Player_UpdateHorizontalFacing_Return","file":"src/player/input_and_status.s"}
+      ]
+    },
+    {
+      "basis": "Multiple Seven Forces form descriptors reference this eight-entry frame-pointer table for directional part rendering.",
+      "reason": "Table3 contains Frame16 through Frame23 in ascending order, while Table5 contains Frame24 through Frame31. Both are eight-longword runs referenced by the descriptor data below them, with Table3 also used by the auxiliary and Medusa descriptors. The claim is about pointer-table shape and consumers, not a visual pose.",
+      "members": [
+        {"address":"0x059DC2","current_name":"SevenForcesRotationFrameTable3","file":"src/rendering/seven_forces_metasprites.s"},
+        {"address":"0x059E02","current_name":"SevenForcesRotationFrameTable5","file":"src/rendering/seven_forces_metasprites.s"}
+      ]
+    },
+    {
+      "basis": "Multiple Seven Forces form descriptors reference this reverse-ordered frame-pointer table for directional part rendering.",
+      "reason": "Table4 runs Frame23 down through Frame16, whereas Table6 runs Frame31 down through Frame24. Each is eight longwords, and both labels occur in later Seven Forces part-descriptor data. The frame ranges remain distinct; no appearance is inferred.",
+      "members": [
+        {"address":"0x059DE2","current_name":"SevenForcesRotationFrameTable4","file":"src/rendering/seven_forces_metasprites.s"},
+        {"address":"0x059E22","current_name":"SevenForcesRotationFrameTable6","file":"src/rendering/seven_forces_metasprites.s"}
+      ]
+    },
+    {
+      "basis": "Seven Forces form descriptors reference this reverse-ordered frame-pointer table for directional part rendering.",
+      "reason": "Table2 runs Frame15 through Frame08 and is referenced by Valkirie and later form descriptors; Table8 runs Frame39 through Frame32 and is referenced by the primary Valkirie descriptor. Both are eight-entry reverse runs, but only Table2 has multiple descriptor occurrences, so the shared sentence is limited to descriptor membership and ordering.",
+      "members": [
+        {"address":"0x059DA2","current_name":"SevenForcesRotationFrameTable2","file":"src/rendering/seven_forces_metasprites.s"},
+        {"address":"0x059E62","current_name":"SevenForcesRotationFrameTable8","file":"src/rendering/seven_forces_metasprites.s"}
+      ]
     }
   ]
 }

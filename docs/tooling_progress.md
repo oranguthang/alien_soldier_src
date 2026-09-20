@@ -1736,3 +1736,16 @@ high byte is read for color adjustment. Four focused tests pin those stream
 orders, record words, and fade instructions without claiming a visual object
 identity. The queue remains 169 repeated groups across 792 uses, with 107
 reviewed and 62 open. ROM instructions and runtime visual claims are unchanged.
+
+Four further repeated bases have exact-member reviews: the two neutral-facing
+return gates, and three pairs of eight-longword Seven Forces rotation tables.
+The review distinguishes the aim routine's `ControllerHeldState` input and
+bit-four write from the horizontal-facing routine's `$69(a5)` input; both
+leave facing bit three unchanged when neither direction is held. The table
+tests pin ascending and descending frame ranges and descriptor references,
+without asserting visual poses. The queue remains 169 groups across 792 uses:
+111 reviewed, 58 open. A separate open weapon-selection basis is broader than
+its control flow: pressed bit six with the relevant direction held toggles
+shooting mode before the cooldown test, so nonnegative cooldown alone does not
+always reach the not-activated return. That wording has not been accepted as
+evidence. No ROM instructions or visual claims changed.
