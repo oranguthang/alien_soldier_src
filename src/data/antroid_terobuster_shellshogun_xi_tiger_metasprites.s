@@ -59,24 +59,24 @@ Boss_AntroidNeutralPose:    dc.w    $8080, $C080, $E090  ; was: word_34A36
                 dc.w    $80E0, $9080, $8080
                 dc.w    $8080, $8000
 ; Terobuster directional frames and metasprite definition
-Boss_TerobusterPrimaryRotationFrames:   dc.l    Boss_TerobusterSpriteMapping07  ; DATA XREF: ROM:00034A90   o  ; was: off_34A46
+Boss_TerobusterPrimaryRotationFrames:   dc.l    Boss_TerobusterPrimaryRotationFrame07  ; DATA XREF: ROM:00034A90   o  ; was: off_34A46
                                         ; ROM:00034A98   o
-                dc.l    Boss_TerobusterSpriteMapping06
-                dc.l    Boss_TerobusterSpriteMapping05
-                dc.l    Boss_TerobusterSpriteMapping04
-                dc.l    Boss_TerobusterSpriteMapping03
-                dc.l    Boss_TerobusterSpriteMapping02
-                dc.l    Boss_TerobusterSpriteMapping01
-                dc.l    Boss_TerobusterSpriteMapping00
-Boss_TerobusterSecondaryRotationFrames: dc.l    Boss_TerobusterSpriteMapping08  ; DATA XREF: ROM:00034AA0   o  ; was: off_34A66
+                dc.l    Boss_TerobusterPrimaryRotationFrame06
+                dc.l    Boss_TerobusterPrimaryRotationFrame05
+                dc.l    Boss_TerobusterPrimaryRotationFrame04
+                dc.l    Boss_TerobusterPrimaryRotationFrame03
+                dc.l    Boss_TerobusterPrimaryRotationFrame02
+                dc.l    Boss_TerobusterPrimaryRotationFrame01
+                dc.l    Boss_TerobusterPrimaryRotationFrame00
+Boss_TerobusterSecondaryRotationFrames: dc.l    Boss_TerobusterSecondaryRotationFrame00  ; DATA XREF: ROM:00034AA0   o  ; was: off_34A66
                                         ; ROM:00034AB4   o
-                dc.l    Boss_TerobusterSpriteMapping09
-                dc.l    Boss_TerobusterSpriteMapping10
-                dc.l    Boss_TerobusterSpriteMapping11
-                dc.l    Boss_TerobusterSpriteMapping12
-                dc.l    Boss_TerobusterSpriteMapping13
-                dc.l    Boss_TerobusterSpriteMapping14
-                dc.l    Boss_TerobusterSpriteMapping15
+                dc.l    Boss_TerobusterSecondaryRotationFrame01
+                dc.l    Boss_TerobusterSecondaryRotationFrame02
+                dc.l    Boss_TerobusterSecondaryRotationFrame03
+                dc.l    Boss_TerobusterSecondaryRotationFrame04
+                dc.l    Boss_TerobusterSecondaryRotationFrame05
+                dc.l    Boss_TerobusterSecondaryRotationFrame06
+                dc.l    Boss_TerobusterSecondaryRotationFrame07
 Boss_TerobusterInlineSpriteDescriptor:  dc.w    $E35E, $F00, $F0F0  ; DATA XREF: ROM:00034A94   o  ; was: word_34A86
                                         ; ROM:00034AA8   o
 Boss_TerobusterMetaspriteDescriptors:   dc.l    0       ; DATA XREF: Boss_TerobusterSetup+16   o  ; was: dword_34A8C

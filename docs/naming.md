@@ -72,7 +72,7 @@ time-bonus, 26 message-render, 26 message-script, 20 options-menu, 19
 weapon-selection, 33 weapon-setup loadout, 31 controller/background, 32 boss
 asset-set, 29 graphics-list, 35 asset-set palette-command, and 17 standalone
 or banked palette-command records have since been reviewed. The curated
-`NAME-002` detector now has zero matches across 66 known sentences. A wider
+`NAME-002` detector now has zero matches across 67 known sentences. A wider
 duplicate-basis review is still required before the 1.0 tag; zero matches do
 not prove every explanation or name correct.
 The read-only `make semantic-audit` now counts the wider duplicate queue, and
@@ -124,7 +124,10 @@ terminator. Madam Barbar's 16 mapping records form two distinct eight-frame
 sets; the four rotation tables select them in exact forward/permuted and
 reverse orders. Their names and bases now state those relationships rather
 than suggesting unspecified direct assignments. The remaining queue has
-232 groups.
+232 groups. Terobuster's 16 former generic mappings are now split into
+primary and secondary rotation frames, with reverse and forward table order
+verified; the first secondary frame also has direct linked-record assignments.
+The remaining queue has 231 groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

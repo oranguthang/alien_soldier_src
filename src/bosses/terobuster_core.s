@@ -373,7 +373,7 @@ Boss_TerobusterFallingRockFinale:                       ; CODE XREF: Boss_Terobu
 Boss_TerobusterRenderFallingRockAttack:                 ; CODE XREF: Boss_TerobusterDecisionState+27E   j  ; was: loc_38986
                 bsr.w   Boss_TerobusterUpdateMetaspriteAndProjectile
                 movea.w $48(a5),a0
-                move.l  #Boss_TerobusterSpriteMapping08,8(a0)
+                move.l  #Boss_TerobusterSecondaryRotationFrame00,8(a0)
                 movea.w $11E(a5),a0
                 move.w  #$14C,$14(a0)
                 rts
@@ -450,8 +450,8 @@ Boss_TerobusterSelectLandingPose:                       ; CODE XREF: Boss_Terobu
 Boss_TerobusterUpdateLandingPose:                       ; CODE XREF: Boss_TerobusterLandingCheckComplete   j  ; was: loc_38A5A
                 bsr.w   Boss_TerobusterInterpolateAnimation
                 bsr.w   Boss_TerobusterUpdateMetaspriteAndProjectile
-                move.l  #Boss_TerobusterSpriteMapping08,$1E8(a0)
-                move.l  #Boss_TerobusterSpriteMapping08,$3C8(a0)
+                move.l  #Boss_TerobusterSecondaryRotationFrame00,$1E8(a0)
+                move.l  #Boss_TerobusterSecondaryRotationFrame00,$3C8(a0)
                 rts
 ; ---------------------------------------------------------------------------
 Boss_TerobusterBeginStageGateDelay:                     ; CODE XREF: Boss_TerobusterLandingCheckComplete   j  ; was: loc_38A74

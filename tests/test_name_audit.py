@@ -16,6 +16,57 @@ DEFINITION = re.compile(
 
 
 class NameAuditTests(unittest.TestCase):
+    def test_terobuster_mapping_names_follow_rotation_tables(self) -> None:
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        reviewed = [
+            record
+            for record in records
+            if re.fullmatch(
+                r"Boss_TerobusterSpriteMapping\d\d", record["previous_name"] or ""
+            )
+        ]
+        self.assertEqual(16, len(reviewed))
+        self.assertEqual(16, len({record["basis"][0] for record in reviewed}))
+        mappings = (ROOT / "src/data/terobuster_sprite_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        descriptors = (
+            ROOT / "src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"
+        ).read_text(encoding="utf-8")
+        core = (ROOT / "src/bosses/terobuster_core.s").read_text(encoding="utf-8")
+        self.assertNotRegex(
+            mappings + descriptors + core, r"\bBoss_TerobusterSpriteMapping\d\d\b"
+        )
+        self.assertEqual(
+            {record["current_name"] for record in reviewed},
+            set(re.findall(r"(?m)^(Boss_Terobuster\w+Frame\d\d):", mappings)),
+        )
+        primary = descriptors.split("Boss_TerobusterPrimaryRotationFrames:", 1)[
+            1
+        ].split("Boss_TerobusterSecondaryRotationFrames:", 1)[0]
+        secondary = descriptors.split("Boss_TerobusterSecondaryRotationFrames:", 1)[
+            1
+        ].split("Boss_TerobusterInlineSpriteDescriptor:", 1)[0]
+        self.assertEqual(
+            [f"{index:02}" for index in reversed(range(8))],
+            re.findall(
+                r"\bdc\.l\s+Boss_TerobusterPrimaryRotationFrame(\d\d)\b",
+                primary,
+            ),
+        )
+        self.assertEqual(
+            [f"{index:02}" for index in range(8)],
+            re.findall(
+                r"\bdc\.l\s+Boss_TerobusterSecondaryRotationFrame(\d\d)\b",
+                secondary,
+            ),
+        )
+        for offset in ("8", "$1E8", "$3C8"):
+            self.assertIn(
+                f"move.l  #Boss_TerobusterSecondaryRotationFrame00,{offset}(a0)",
+                core,
+            )
+
     def test_madam_barbar_mapping_names_follow_four_rotation_tables(self) -> None:
         records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
         reviewed = [

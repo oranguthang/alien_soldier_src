@@ -907,3 +907,12 @@ The source and exact-address audit now name the two sets and record each
 table slot. A regression test pins all four pointer sequences. The old
 sentence is the 66th rejected generic basis; the queue is 242 groups across
 1,050 uses: ten reviewed, 232 open.
+
+The former 16-way Terobuster mapping sentence also mixed two owner tables.
+The primary eight-frame table selects mappings in reverse ROM order; the
+secondary table selects its eight frames forward. Its first frame is also
+assigned directly during falling-rock and landing paths. All 16 records now
+carry primary/secondary names and individual table-slot bases, and a
+regression test checks both orders plus three direct writes. The old sentence
+is the 67th rejected generic basis. The queue is 241 groups across 1,034
+uses: ten reviewed, 231 open.
