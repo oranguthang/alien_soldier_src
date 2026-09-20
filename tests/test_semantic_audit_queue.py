@@ -9,12 +9,89 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+AUDIT = ROOT / "config/name_audit.json"
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_valkirie_pose_script_review_excludes_indirect_airborne_variants(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item
+            for item in reviews
+            if item["basis"].startswith("The named battle-state path loads this word stream")
+        )
+        self.assertEqual(9, len(review["members"]))
+        self.assertEqual(
+            {"src/bosses/valkirie_rendering.s"},
+            {member["file"] for member in review["members"]},
+        )
+        expected = {member["current_name"] for member in review["members"]}
+        battle = (ROOT / "src/bosses/valkirie_battle.s").read_text(encoding="utf-8")
+        rendering = (ROOT / "src/bosses/valkirie_rendering.s").read_text(
+            encoding="utf-8"
+        )
+        self.assertEqual(
+            expected,
+            set(re.findall(r"\blea\s+(Valkirie_\w+PoseScript)\(pc\),a1", battle)),
+        )
+        self.assertIn("bsr.w   Anim_UpdateValkiriePoseScript", battle)
+        self.assertIn("move.b  1(a1,d0.w),$23E(a5)", rendering)
+        self.assertIn("cmpi.w  #$FFFE,d3", rendering)
+        for name in expected:
+            with self.subTest(name=name):
+                match = re.search(
+                    r"(?ms)^" + re.escape(name) + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    rendering,
+                )
+                self.assertIsNotNone(match)
+                words = [
+                    int(token.strip()[1:], 16)
+                    if token.strip().startswith("$")
+                    else int(token.strip())
+                    for row in re.findall(r"\bdc\.w\s+([^;\r\n]+)", match.group(1))
+                    for token in row.split(",")
+                ]
+                self.assertIn(words[-1], (0xFFFE, 0xFFFF))
+
+    def test_valkirie_airborne_variants_are_neutral_and_indirect(self) -> None:
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        by_address = {record["address"]: record for record in records}
+        battle = (ROOT / "src/bosses/valkirie_battle.s").read_text(encoding="utf-8")
+        rendering = (ROOT / "src/bosses/valkirie_rendering.s").read_text(
+            encoding="utf-8"
+        )
+        for index, branch_address, script_address, old_role in (
+            (0, "0x055B62", "0x056330", "High"),
+            (1, "0x055B82", "0x056350", "Mid"),
+            (2, "0x055B96", "0x056370", "Low"),
+        ):
+            with self.subTest(index=index):
+                branch = f"Entity_ValkirieBattleStateEUsePattern{index:02}"
+                script = f"Valkirie_AirbornePattern{index:02}PoseScript"
+                self.assertEqual(branch, by_address[branch_address]["current_name"])
+                self.assertEqual(script, by_address[script_address]["current_name"])
+                self.assertEqual(
+                    f"Entity_ValkirieBattleStateEUse{old_role}Pattern",
+                    by_address[branch_address]["previous_name"],
+                )
+                self.assertEqual(
+                    f"Valkirie_Airborne{old_role}PoseScript",
+                    by_address[script_address]["previous_name"],
+                )
+                self.assertIn(f"{branch}:", battle)
+                self.assertIn(f"move.l  #{script},$41C(a5)", battle)
+                self.assertIn(f"{script}:", rendering)
+                self.assertNotIn(f"Valkirie_Airborne{old_role}PoseScript:", rendering)
+        fallback_basis = by_address["0x055B8C"]["basis"][0]
+        self.assertIn("Valkirie_AirbornePattern00PoseScript", fallback_basis)
+        self.assertIn("Valkirie_AirbornePattern02PoseScript", fallback_basis)
+        self.assertGreaterEqual(battle.count("movea.l $41C(a5),a1"), 2)
+
     def test_palette_offset_list_review_excludes_two_list_continue_record(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

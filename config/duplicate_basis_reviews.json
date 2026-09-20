@@ -409,6 +409,21 @@
         {"address":"0x00B9AC","current_name":"Stage17PaletteOffsetList","file":"src/rendering/palettes.s"},
         {"address":"0x00B9C0","current_name":"SevenForcesCutscenePaletteOffsetList","file":"src/rendering/palettes.s"}
       ]
+    },
+    {
+      "basis": "The named battle-state path loads this word stream into the Valkirie pose interpreter; $80xx words publish events and $FFFE/$FFFF terminate or loop.",
+      "reason": "Each of these nine named state scripts has a direct lea Script(pc),a1 in valkirie_battle.s followed by a branch or call to Entity_RenderValkirieBattleAnimation, which calls Anim_UpdateValkiriePoseScript. The streams are dc.w words and each ends in $FFFE or $FFFF; the state-4-to-8 stream also has an internal $FFFF. The three airborne variants are excluded: their addresses are first stored in field $41C(a5) and later loaded indirectly, and their former High/Mid/Low names asserted unproved visual height.",
+      "members": [
+        {"address":"0x056244","current_name":"Valkirie_State2PoseScript","file":"src/bosses/valkirie_rendering.s"},
+        {"address":"0x056262","current_name":"Valkirie_State4To8PoseScript","file":"src/bosses/valkirie_rendering.s"},
+        {"address":"0x05628E","current_name":"Valkirie_StateAAndCPoseScript","file":"src/bosses/valkirie_rendering.s"},
+        {"address":"0x0562A4","current_name":"Valkirie_State22PoseScript","file":"src/bosses/valkirie_rendering.s"},
+        {"address":"0x0562CA","current_name":"Valkirie_State14PoseScript","file":"src/bosses/valkirie_rendering.s"},
+        {"address":"0x0562F0","current_name":"Valkirie_State24PoseScript","file":"src/bosses/valkirie_rendering.s"},
+        {"address":"0x0562FA","current_name":"Valkirie_State18To1EPoseScript","file":"src/bosses/valkirie_rendering.s"},
+        {"address":"0x056322","current_name":"Valkirie_State20PoseScript","file":"src/bosses/valkirie_rendering.s"},
+        {"address":"0x056390","current_name":"Valkirie_State12PoseScript","file":"src/bosses/valkirie_rendering.s"}
+      ]
     }
   ]
 }

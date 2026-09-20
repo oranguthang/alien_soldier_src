@@ -11539,3 +11539,10 @@ four-offset lists, separately terminated at `$00B962` and `$00B96C`.
 the second list starts at `$00B964` and has no direct symbolic source pointer.
 That is static evidence about the current source, not proof that raw-address
 or external paths cannot reach the second list.
+
+Valkirie's three airborne pose scripts at `$056330`, `$056350`, and `$056370`
+are selected by state E and stored in `$41C(a5)` for later indirect use.
+The old High/Mid/Low suffixes were not reliable visual identities: the first
+script is also selected by a random fallback when player Y is below `$E0`,
+and the third by a nonzero random result. Pattern00/01/02 records selection
+order only; the visible poses and their semantic names remain unconfirmed.

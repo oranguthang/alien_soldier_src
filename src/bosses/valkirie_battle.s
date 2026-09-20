@@ -340,29 +340,29 @@ Entity_StartValkirieBattleStateE:                       ; CODE XREF: Entity_Upda
                 cmpi.w  #$120,(PlayerYPosition).w
                 bmi.s   Entity_ValkirieBattleStateECheckMidPattern
                 tst.w   (PlayerYVelocity).w
-                bmi.s   Entity_ValkirieBattleStateEUseMidPattern
-Entity_ValkirieBattleStateEUseHighPattern:              ; CODE XREF: Entity_StartValkirieBattleStateE+6E   j  ; was: loc_55B62
-                move.l  #Valkirie_AirborneHighPoseScript,$41C(a5)
+                bmi.s   Entity_ValkirieBattleStateEUsePattern01
+Entity_ValkirieBattleStateEUsePattern00:                ; CODE XREF: Entity_StartValkirieBattleStateE+6E   j  ; was: loc_55B62
+                move.l  #Valkirie_AirbornePattern00PoseScript,$41C(a5)
                 bra.s   Entity_UpdateValkirieAirborneStateEOr16
 ; ---------------------------------------------------------------------------
 Entity_ValkirieBattleStateECheckMidPattern:             ; CODE XREF: Entity_StartValkirieBattleStateE+34   j  ; was: loc_55B6C
                 cmpi.w  #$E0,(PlayerYPosition).w
                 bmi.s   Entity_ValkirieBattleStateEChooseRandomPattern
                 btst    #1,(FrameCounter+1).w
-                bne.s   Entity_ValkirieBattleStateEUseMidPattern
+                bne.s   Entity_ValkirieBattleStateEUsePattern01
                 tst.w   (PlayerYVelocity).w
-                bmi.s   Entity_ValkirieBattleStateEUseLowPattern
-Entity_ValkirieBattleStateEUseMidPattern:               ; CODE XREF: Entity_StartValkirieBattleStateE+3A   j  ; was: loc_55B82
+                bmi.s   Entity_ValkirieBattleStateEUsePattern02
+Entity_ValkirieBattleStateEUsePattern01:                ; CODE XREF: Entity_StartValkirieBattleStateE+3A   j  ; was: loc_55B82
                                         ; Entity_StartValkirieBattleStateE+54   j
-                move.l  #Valkirie_AirborneMidPoseScript,$41C(a5)
+                move.l  #Valkirie_AirbornePattern01PoseScript,$41C(a5)
                 bra.s   Entity_UpdateValkirieAirborneStateEOr16
 ; ---------------------------------------------------------------------------
 Entity_ValkirieBattleStateEChooseRandomPattern:         ; CODE XREF: Entity_StartValkirieBattleStateE+4C   j  ; was: loc_55B8C
                 move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
-                beq.s   Entity_ValkirieBattleStateEUseHighPattern
-Entity_ValkirieBattleStateEUseLowPattern:               ; CODE XREF: Entity_StartValkirieBattleStateE+5A   j  ; was: loc_55B96
-                move.l  #Valkirie_AirborneLowPoseScript,$41C(a5)
+                beq.s   Entity_ValkirieBattleStateEUsePattern00
+Entity_ValkirieBattleStateEUsePattern02:                ; CODE XREF: Entity_StartValkirieBattleStateE+5A   j  ; was: loc_55B96
+                move.l  #Valkirie_AirbornePattern02PoseScript,$41C(a5)
 ; Apply gravity in the shared state-$E/state-$16 airborne updater
 Entity_UpdateValkirieAirborneStateEOr16:                ; CODE XREF: Entity_StartValkirieBattleStateE+44   j  ; was: loc_55B9E
                                         ; Entity_StartValkirieBattleStateE+64   j

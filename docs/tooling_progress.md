@@ -946,3 +946,16 @@ cutscene, or stage-configuration source pointer, and are consumed by
 An exact-member review and test pin their terminations, offset expressions,
 static owners, and the loader arithmetic. The queue remains 241 groups over
 1,033 uses: thirteen reviewed, 228 open.
+
+The 12 Valkirie battle-state pose scripts had one shared sentence, but only
+nine are loaded directly by `lea Script(pc),a1` before
+`Entity_RenderValkirieBattleAnimation` calls `Anim_UpdateValkiriePoseScript`.
+Those nine form a reviewed exact-member group with checked `$FFFE`/`$FFFF`
+stream endings. State E selects the other three by storing a pointer in
+`$41C(a5)`; the shared airborne updater loads it indirectly. The former
+High/Mid/Low names inferred visual height from branches that also contain
+random fallbacks, so source labels and six exact-address audit records now
+use neutral Pattern00/01/02 names with individual selection evidence. Two
+regression tests pin both the direct and indirect paths. The queue is 241
+groups across 1,030 uses: fourteen reviewed, 227 open; seven separate visual
+boss identities remain hypotheses.

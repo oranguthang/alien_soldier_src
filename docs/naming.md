@@ -136,6 +136,13 @@ Eleven palette-offset lists also have a common loader-format claim and exact
 static owners. The two-list Continue record was excluded from that group:
 only its first list has a direct source pointer, and the second list's
 reachability is unresolved. The remaining queue has 228 groups.
+Nine Valkirie battle-state pose scripts share direct `lea ... (pc),a1` paths
+into `Anim_UpdateValkiriePoseScript`; an exact-member review pins those paths
+and their stream endings. Three airborne scripts were excluded because the
+state-E selector first stores their addresses in `$41C(a5)` for indirect use.
+Their former High/Mid/Low labels implied visual height that the selector does
+not prove, so they now have neutral Pattern00/01/02 names and individual
+selection-path evidence. The repeated-basis queue has 227 open groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

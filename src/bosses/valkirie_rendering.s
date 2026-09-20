@@ -202,12 +202,12 @@ Valkirie_State18To1EPoseScript: dc.w    $1020, $F0, $712, $244, $A0A, $244, $800
                 dc.w    $8001, $3232, $26C, $FFFE
 Valkirie_State20PoseScript: dc.w    $A10, $280, $1313, $280, $815, $26C, $FFFE  ; was: word_56322
                                         ; DATA XREF: Entity_UpdateValkirieBattleState20+8   o
-Valkirie_AirborneHighPoseScript:    dc.w    $1010, $3C, $210, $50, $8003, $204, $50, $505, $50, $8004, $1418, $3C, $8008, $1818, $17C, $FFFE  ; was: word_56330
-                                        ; DATA XREF: Entity_StartValkirieBattleStateE:Entity_ValkirieBattleStateEUseHighPattern   o
-Valkirie_AirborneMidPoseScript: dc.w    $1010, $3C, $210, $64, $8003, $204, $64, $404, $64, $8004, $1418, $3C, $8008, $1818, $17C, $FFFE  ; was: word_56350
-                                        ; DATA XREF: Entity_StartValkirieBattleStateE:Entity_ValkirieBattleStateEUseMidPattern   o
-Valkirie_AirborneLowPoseScript: dc.w    $1A1A, $78, $420, $8C, $8003, $508, $8C, $808, $8C, $8004, $101A, $78, $8008, $1212, $17C, $FFFE  ; was: word_56370
-                                        ; DATA XREF: Entity_StartValkirieBattleStateE:Entity_ValkirieBattleStateEUseLowPattern   o
+Valkirie_AirbornePattern00PoseScript:   dc.w    $1010, $3C, $210, $50, $8003, $204, $50, $505, $50, $8004, $1418, $3C, $8008, $1818, $17C, $FFFE  ; was: word_56330
+                                        ; DATA XREF: Entity_StartValkirieBattleStateE:Entity_ValkirieBattleStateEUsePattern00   o
+Valkirie_AirbornePattern01PoseScript:   dc.w    $1010, $3C, $210, $64, $8003, $204, $64, $404, $64, $8004, $1418, $3C, $8008, $1818, $17C, $FFFE  ; was: word_56350
+                                        ; DATA XREF: Entity_StartValkirieBattleStateE:Entity_ValkirieBattleStateEUsePattern01   o
+Valkirie_AirbornePattern02PoseScript:   dc.w    $1A1A, $78, $420, $8C, $8003, $508, $8C, $808, $8C, $8004, $101A, $78, $8008, $1212, $17C, $FFFE  ; was: word_56370
+                                        ; DATA XREF: Entity_StartValkirieBattleStateE:Entity_ValkirieBattleStateEUsePattern02   o
 Valkirie_State12PoseScript: dc.w    $408, $F0, $204, $F0, $303, $F0, $106, $12C, $8001, $204, $12C, $303, $12C, $8002, $306, $F0  ; was: word_56390
                                         ; DATA XREF: Entity_StartValkirieBattleState12+46   o
                                         ; Entity_UpdateValkirieBattleState12+54   o
