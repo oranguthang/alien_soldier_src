@@ -79,6 +79,7 @@ GENERIC_NAME_BASES = (
     "Bugmax constructors, linked-part descriptors, or the two local relative-offset animations select this ROM-ordered sprite frame. The suffix avoids inventing a body-part identity where consumers overlap.",
     "Shield Viper initialization, body descriptors, or defeat records select this ROM-ordered sprite mapping record; the suffix does not guess a visual pose.",
     "Boss_Antroid pointer tables or direct assignments select this sprite mapping; the numeric suffix preserves ROM order without guessing a visual pose.",
+    "Boss_Jetsripper pointer tables or direct assignments select this sprite mapping; the numeric suffix preserves ROM order without guessing a visual pose.",
 )
 
 

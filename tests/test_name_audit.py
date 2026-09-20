@@ -16,6 +16,75 @@ DEFINITION = re.compile(
 
 
 class NameAuditTests(unittest.TestCase):
+    def test_jetsripper_mapping_names_follow_segment_tables(self) -> None:
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        reviewed = [
+            record
+            for record in records
+            if re.fullmatch(
+                r"Boss_JetsripperSpriteMapping\d\d", record["previous_name"] or ""
+            )
+        ]
+        self.assertEqual(18, len(reviewed))
+        self.assertEqual(18, len({record["basis"][0] for record in reviewed}))
+        mappings = (ROOT / "src/data/jetsripper_sprite_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        segments = (ROOT / "src/bosses/jetsripper_segments.s").read_text(
+            encoding="utf-8"
+        )
+        core = (ROOT / "src/bosses/jetsripper_core.s").read_text(encoding="utf-8")
+        self.assertNotRegex(
+            mappings + segments + core, r"\bBoss_JetsripperSpriteMapping\d\d\b"
+        )
+        self.assertEqual(
+            {record["current_name"] for record in reviewed},
+            set(re.findall(r"(?m)^(Boss_Jetsripper\w+):", mappings)),
+        )
+
+        def pointers(source: str, start: str, end: str) -> list[str]:
+            section = source.split(start + ":", 1)[1].split(end, 1)[0]
+            return re.findall(r"\bdc\.l\s+(Boss_Jetsripper\w+)\b", section)
+
+        self.assertEqual(
+            [
+                "Boss_JetsripperSharedSegmentBaseFrame",
+                "Boss_JetsripperHeadFrame01",
+                "Boss_JetsripperHeadFrame02",
+                "Boss_JetsripperHeadFrame01",
+            ],
+            pointers(
+                segments,
+                "Boss_JetsripperHeadFrames",
+                "Boss_JetsripperBodyDirectionFrames:",
+            ),
+        )
+        body_suffixes = [
+            "00", "05", "06", "07", "08", "07", "06", "05",
+            "00", "03", "01", "04", "02", "04", "01", "03",
+        ]
+        self.assertEqual(
+            [f"Boss_JetsripperBodyDirectionFrame{suffix}" for suffix in body_suffixes],
+            pointers(
+                segments,
+                "Boss_JetsripperBodyDirectionFrames",
+                "Boss_JetsripperTailFrames:",
+            ),
+        )
+        self.assertEqual(
+            [
+                f"Boss_JetsripperTailFrame{suffix}"
+                for suffix in ("00", "01", "02", "01")
+            ],
+            pointers(segments, "Boss_JetsripperTailFrames", "; Fills angle buffer"),
+        )
+        self.assertEqual(
+            ["Boss_JetsripperMovementFrame00", "Boss_JetsripperMovementFrame01"],
+            pointers(core, "Boss_JetsripperBodyFrames", "Boss_JetsripperDivePrep:"),
+        )
+        self.assertIn("move.l  #Boss_JetsripperSharedSegmentBaseFrame,8(a0)", core)
+        self.assertIn("move.l  #Boss_JetsripperDiveWindupFrame,8(a5)", core)
+
     def test_antroid_mapping_names_follow_blink_and_rotation_tables(self) -> None:
         records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
         reviewed = [

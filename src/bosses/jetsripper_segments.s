@@ -127,33 +127,33 @@ Boss_JetsripperUpdateBodySegmentFrame:                  ; CODE XREF: Boss_Jetsri
                 rts
 ; End of function Boss_JetsripperUpdateBodySegmentSprites
 ; ---------------------------------------------------------------------------
-Boss_JetsripperHeadFrames:  dc.l    Boss_JetsripperSpriteMapping00  ; DATA XREF: Boss_JetsripperDeathInit+3E   o  ; was: off_35F6A
+Boss_JetsripperHeadFrames:  dc.l    Boss_JetsripperSharedSegmentBaseFrame  ; DATA XREF: Boss_JetsripperDeathInit+3E   o  ; was: off_35F6A
                                         ; Boss_JetsripperUpdateAllSegmentSprites+2   o
-                dc.l    Boss_JetsripperSpriteMapping01
-                dc.l    Boss_JetsripperSpriteMapping02
-                dc.l    Boss_JetsripperSpriteMapping01
-Boss_JetsripperBodyDirectionFrames: dc.l    Boss_JetsripperSpriteMapping03  ; DATA XREF: Boss_JetsripperDeathInit+66   o  ; was: off_35F7A
+                dc.l    Boss_JetsripperHeadFrame01
+                dc.l    Boss_JetsripperHeadFrame02
+                dc.l    Boss_JetsripperHeadFrame01
+Boss_JetsripperBodyDirectionFrames: dc.l    Boss_JetsripperBodyDirectionFrame00  ; DATA XREF: Boss_JetsripperDeathInit+66   o  ; was: off_35F7A
                                         ; Boss_JetsripperUpdateAllSegmentSprites+C   o
-                dc.l    Boss_JetsripperSpriteMapping12
-                dc.l    Boss_JetsripperSpriteMapping13
-                dc.l    Boss_JetsripperSpriteMapping14
-                dc.l    Boss_JetsripperSpriteMapping15
-                dc.l    Boss_JetsripperSpriteMapping14
-                dc.l    Boss_JetsripperSpriteMapping13
-                dc.l    Boss_JetsripperSpriteMapping12
-                dc.l    Boss_JetsripperSpriteMapping03
-                dc.l    Boss_JetsripperSpriteMapping10
-                dc.l    Boss_JetsripperSpriteMapping04
-                dc.l    Boss_JetsripperSpriteMapping11
-                dc.l    Boss_JetsripperSpriteMapping05
-                dc.l    Boss_JetsripperSpriteMapping11
-                dc.l    Boss_JetsripperSpriteMapping04
-                dc.l    Boss_JetsripperSpriteMapping10
-Boss_JetsripperTailFrames:  dc.l    Boss_JetsripperSpriteMapping07  ; DATA XREF: Boss_JetsripperDeathInit+7E   o  ; was: off_35FBA
+                dc.l    Boss_JetsripperBodyDirectionFrame05
+                dc.l    Boss_JetsripperBodyDirectionFrame06
+                dc.l    Boss_JetsripperBodyDirectionFrame07
+                dc.l    Boss_JetsripperBodyDirectionFrame08
+                dc.l    Boss_JetsripperBodyDirectionFrame07
+                dc.l    Boss_JetsripperBodyDirectionFrame06
+                dc.l    Boss_JetsripperBodyDirectionFrame05
+                dc.l    Boss_JetsripperBodyDirectionFrame00
+                dc.l    Boss_JetsripperBodyDirectionFrame03
+                dc.l    Boss_JetsripperBodyDirectionFrame01
+                dc.l    Boss_JetsripperBodyDirectionFrame04
+                dc.l    Boss_JetsripperBodyDirectionFrame02
+                dc.l    Boss_JetsripperBodyDirectionFrame04
+                dc.l    Boss_JetsripperBodyDirectionFrame01
+                dc.l    Boss_JetsripperBodyDirectionFrame03
+Boss_JetsripperTailFrames:  dc.l    Boss_JetsripperTailFrame00  ; DATA XREF: Boss_JetsripperDeathInit+7E   o  ; was: off_35FBA
                                         ; Boss_JetsripperUpdateAllSegmentSprites+16   o
-                dc.l    Boss_JetsripperSpriteMapping08
-                dc.l    Boss_JetsripperSpriteMapping09
-                dc.l    Boss_JetsripperSpriteMapping08
+                dc.l    Boss_JetsripperTailFrame01
+                dc.l    Boss_JetsripperTailFrame02
+                dc.l    Boss_JetsripperTailFrame01
 
 ; Fills angle buffer with constant value for segments
 Boss_JetsripperFillAngleHistory:                        ; CODE XREF: Boss_JetsripperInitBody+B6   j  ; was: sub_35FCA

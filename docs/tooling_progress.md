@@ -868,3 +868,14 @@ level bases. A regression test pins both pointer orders, the blink selector,
 and the direct secondary-frame assignment. The old common sentence is the
 63rd rejected generic basis. The queue drops to 245 groups across 1,102
 uses: nine reviewed, 236 open.
+
+The old 18-way Jetsripper mapping basis concealed six selection paths.
+The first mapping is shared by initialization and the head table, so it is
+not labeled head-only. Two more mappings occur in the four-slot head table;
+nine belong to the quantized body-direction table; three serve the tail;
+one is assigned directly during dive windup; and two form a FrameCounter-
+selected movement cycle. All 18 definitions now have owner-specific names
+and exact-address bases. A regression test pins the four, sixteen, four,
+and two pointer orders plus both direct assignments. The old sentence is
+the 64th rejected generic basis. The queue drops to 244 groups across
+1,084 uses: nine reviewed, 235 open.
