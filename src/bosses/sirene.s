@@ -433,14 +433,14 @@ Gfx_WriteSireneBattlePattern:                           ; CODE XREF: Gfx_UpdateS
                 move.l  #$94009310,d4
                 jsr     (VDP_QueueCommand_Build).l
                 btst    #0,(FrameCounter+1).w
-                bne.s   Gfx_UseSireneAlternateBattlePattern
+                bne.s   Gfx_SetSireneAlternatePatternAndPalette
                 move.w  #$F000,(SirenePatternNormalA).w
                 move.w  #$E000,(SirenePatternNormalB).w
                 move.w  #$820,(PaletteActiveColor30).w
                 move.w  #$E20,(PaletteActiveColor31).w
                 rts
 ; ---------------------------------------------------------------------------
-Gfx_UseSireneAlternateBattlePattern:                    ; CODE XREF: Gfx_UpdateSireneBattleEffectPattern+48   j  ; was: loc_57A58
+Gfx_SetSireneAlternatePatternAndPalette:                ; CODE XREF: Gfx_UpdateSireneBattleEffectPattern+48   j  ; was: loc_57A58
                 move.w  #$E0,(SirenePatternAltA).w
                 move.w  #$F0,(SirenePatternAltB).w
                 move.w  #$E00,(PaletteActiveColor30).w

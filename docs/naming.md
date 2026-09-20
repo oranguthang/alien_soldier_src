@@ -214,8 +214,11 @@ without asserting a visual pose. Four Stage 12 Teddy Bear streams now use
 variant names: their direct callers are unidentified, but indirect runtime
 reachability has not been ruled out. Antroid's secondary inline descriptors
 and the Back Stringer/Madam Barbar rotation tables now have exact-member
-reviews tied to their linked-part initialization arrays. There are 181 open
-repeated-basis groups.
+reviews tied to their linked-part initialization arrays. Sirene's effect
+initializer, pattern selector, shared buffer/VDP writer, and alternate-color
+branch now have separate instruction evidence; the last branch's label names
+its actual pattern and palette writes. There are 180 open repeated-basis
+groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

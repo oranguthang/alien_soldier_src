@@ -1288,3 +1288,15 @@ D reverses C; the suffixes do not claim a particular on-screen compass
 direction. One regression test pins all twelve members, array references,
 table lengths, reversal relationships, and initializer calls. The queue
 remains 222 groups across 928 uses: forty-one reviewed, 181 open.
+
+Four Sirene battle-effect entries at `$0579B2/$0579F4/$057A0E/$057A58`
+previously shared a whole-pipeline sentence that was false for individual
+labels. The initializer writes entity type `$48C`, scroll-mode shadows, and
+two palette colors; the next entry selects the alternating longword order;
+the shared writer fills eight longwords, queues the VDP transfer, and selects
+normal versus alternate colors. The last branch writes only the alternate
+pattern and palette words, so it is now named
+`Gfx_SetSireneAlternatePatternAndPalette`. Each address has its own static
+evidence and a regression test pins the instructions and branch boundary.
+The old sentence is the 96th rejected generic basis. The queue falls to 221
+groups across 924 uses: forty-one reviewed, 180 open.

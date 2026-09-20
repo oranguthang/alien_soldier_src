@@ -1987,6 +1987,68 @@ class SemanticAuditQueueTests(unittest.TestCase):
         self.assertNotIn("PlayerXPosition", steering)
         self.assertNotIn("PlayerYPosition", steering)
 
+    def test_sirene_effect_entries_have_separate_instruction_evidence(self) -> None:
+        records = {
+            record["address"]: record
+            for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        source = (ROOT / "src/bosses/sirene.s").read_text(encoding="utf-8")
+        cases = {
+            "0x0579B2": (
+                "Gfx_InitSireneBattleEffect",
+                ("move.w  #$48C,(a0)", "move.b  #6,(VDPReg11Shadow+1).w",
+                 "move.w  #$400,(PaletteActiveColor29).w"),
+            ),
+            "0x0579F4": (
+                "Gfx_UpdateSireneBattleEffectPattern",
+                ("movea.w #(SirenePatternBuffer-M68K_RAM),a0",
+                 "move.l  #$D0D0D0D0,d0", "move.l  #$DDDDDDDD,d1",
+                 "exg     d0,d1"),
+            ),
+            "0x057A0E": (
+                "Gfx_WriteSireneBattlePattern",
+                ("move.l  d0,(a0)+", "move.l  d1,(a0)+",
+                 "move.l  #$94009310,d4", "jsr     (VDP_QueueCommand_Build).l",
+                 "move.w  #$820,(PaletteActiveColor30).w"),
+            ),
+            "0x057A58": (
+                "Gfx_SetSireneAlternatePatternAndPalette",
+                ("move.w  #$E0,(SirenePatternAltA).w",
+                 "move.w  #$F0,(SirenePatternAltB).w",
+                 "move.w  #$E00,(PaletteActiveColor30).w",
+                 "move.w  #$A00,(PaletteActiveColor31).w"),
+            ),
+        }
+        bases = []
+        blocks = {}
+        for address, (name, instructions) in cases.items():
+            with self.subTest(address=address):
+                record = records[address]
+                self.assertEqual(name, record["current_name"])
+                self.assertEqual("static", record["evidence"])
+                self.assertEqual(1, len(record["basis"]))
+                bases.extend(record["basis"])
+                block = re.search(
+                    rf"(?ms)^{name}:(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    source,
+                )
+                self.assertIsNotNone(block)
+                blocks[name] = block.group(1)
+                for instruction in instructions:
+                    self.assertIn(instruction, block.group(1))
+        self.assertEqual(4, len(set(bases)))
+        self.assertNotIn("SirenePatternBuffer", blocks["Gfx_InitSireneBattleEffect"])
+        self.assertNotIn(
+            "VDP_QueueCommand_Build",
+            blocks["Gfx_SetSireneAlternatePatternAndPalette"],
+        )
+        self.assertIn(
+            "bne.s   Gfx_SetSireneAlternatePatternAndPalette",
+            blocks["Gfx_WriteSireneBattlePattern"],
+        )
+        self.assertEqual("loc_57A58", records["0x057A58"]["legacy_name"])
+        self.assertNotIn("Gfx_UseSireneAlternateBattlePattern", source)
+
     def test_weapon_setup_highlight_palette_roles_are_not_background(self) -> None:
         records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
         by_address = {record["address"]: record for record in records}
