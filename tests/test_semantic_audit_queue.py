@@ -16,6 +16,60 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_hblank_copy_lengths_are_windows_not_handler_extents(self) -> None:
+        records = {
+            record["address"]: record
+            for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        cases = (
+            ("vblank_effects.s", 0x001422, "WriteVScroll0", 0x001424,
+             "VBlank_InitStage2DemoVScrollEffect", 0x001436, 14),
+            ("vblank_effects.s", 0x001532, "WriteVScroll2", 0x001534,
+             "VBlank_InitSplitVScrollEffect", 0x001546, 14),
+            ("vblank_effects.s", 0x00159E, "WriteSplitVScroll2AndStop", 0x0015A0,
+             "VBlank_InitTransitionVScroll2Effect", 0x0015BC, 4),
+            ("vblank_effects.s", 0x001948, "WriteCRAMColor5", 0x00194A,
+             "VBlank_Epsilon1ScrollEffect", 0x00195C, 14),
+            ("hblank_effects.s", 0x001AD2, "WriteVDPControl", 0x001AD4,
+             "VBlank_InitDestroyerProtoVScrollEffect", 0x001ADC, 24),
+        )
+        for filename, length_addr, suffix, handler_addr, next_name, next_addr, spill in cases:
+            with self.subTest(handler=suffix):
+                source = (ROOT / "src/rendering" / filename).read_text(
+                    encoding="utf-8"
+                )
+                prefix = "HBlank_" + suffix
+                length_name = prefix + "_CopyLength"
+                install_name = prefix + "_InstallList"
+                self.assertEqual(length_name, records[f"0x{length_addr:06X}"]["current_name"])
+                self.assertEqual(prefix, records[f"0x{handler_addr:06X}"]["current_name"])
+                self.assertEqual(next_name, records[f"0x{next_addr:06X}"]["current_name"])
+                self.assertIn(f"dc.l    {length_name}", source)
+                self.assertRegex(source, re.escape(length_name) + r":\s+dc\.w\s+\$20")
+                handler = source.split(prefix + ":", 1)[1].split(next_name + ":", 1)[0]
+                self.assertIn("rte", handler)
+                self.assertEqual(spill, 0x20 - (next_addr - handler_addr))
+                self.assertIn("following ROM bytes are included", records[
+                    f"0x{length_addr:06X}"
+                ]["basis"][0])
+                self.assertLess(
+                    source.index(install_name + ":"),
+                    source.index(length_name + ":"),
+                )
+        loader = (ROOT / "src/gameplay/object_data.s").read_text(encoding="utf-8")
+        function = loader.split("LoadFuncToRAM:", 1)[1].split(
+            "; End of function LoadFuncToRAM", 1
+        )[0]
+        for instruction in (
+            "movea.l (a0)+,a1",
+            "move.w  (a1)+,d1",
+            "lsr.w   #2,d1",
+            "subq.w  #1,d1",
+            "move.l  (a1)+,(a2)+",
+            "dbf     d1,Data_CopyFunctionLoop",
+        ):
+            self.assertIn(instruction, function)
+
     def test_missiray_indexed_transfer_reviews_pin_distinct_entry_paths(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

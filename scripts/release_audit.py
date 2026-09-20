@@ -102,6 +102,7 @@ GENERIC_NAME_BASES = (
     "Wolf Garopa callers allocate type $424 with a $40-frame timer; its update handler expires or blinks it from timer bit two.",
     "The Wolf Garopa orb updater indexes these four tile/mapping pairs from the global animation phase.",
     "This state waits while the transfer-status word is negative, then advances and invokes the named Missiray tile-set loader.",
+    "This descriptor field supplies the 0x20-byte copy length for the following HBlank code block.",
 )
 
 

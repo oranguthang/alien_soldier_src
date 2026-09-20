@@ -1202,3 +1202,14 @@ a rise-state branch, so neither belongs to the five direct-wrapper members.
 The test pins all exact addresses, wrapper/descriptor pairs, header lengths,
 shared-tail exception, and set-03 branch path. The queue remains 231 groups
 across 963 uses: thirty-six reviewed, 195 open.
+
+The five HBlank `$20` length fields at `$001422`, `$001532`, `$00159E`,
+`$001948`, and `$001AD2` previously shared a sentence calling `$20` the size
+of the following handler. `LoadFuncToRAM` actually copies eight longwords
+from the address immediately after each length word. The handlers reach
+`rte` before that 32-byte window ends, so the copies also include 14, 14,
+4, 14, and 24 bytes respectively from the following ROM routine. Their five
+records now state the individual start/end addresses and spill lengths; a
+test pins the install-list pointers, `$20` fields, handler boundaries, and
+loader loop. The old statement is the 87th rejected generic basis. The
+queue falls to 230 groups across 958 uses: thirty-six reviewed, 194 open.
