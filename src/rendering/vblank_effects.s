@@ -1,4 +1,4 @@
-; Dispatches the selected per-frame raster-effect setup/update handler
+; RasterEffectIndex is a byte offset into the 23 longword handler addresses below
 VBlank_DispatchRasterEffect:                            ; CODE XREF: VBLANK:Int_VBlank_RunEffects   p  ; was: sub_1356
                 move.w  (RasterEffectIndex).w,d0
                 movea.l VBlankRasterEffectHandlerTable(pc,d0.w),a0

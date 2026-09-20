@@ -16,6 +16,54 @@ DEFINITION = re.compile(
 
 
 class NameAuditTests(unittest.TestCase):
+    def test_raster_palette_and_shooting_mode_evidence(self) -> None:
+        records = {
+            record["address"]: record
+            for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        raster = (ROOT / "src/rendering/vblank_effects.s").read_text(
+            encoding="utf-8"
+        )
+        dispatcher, table = raster.split("VBlankRasterEffectHandlerTable:", 1)
+        table = table.split("; End of function VBlank_DispatchRasterEffect", 1)[0]
+        self.assertIn("move.w  (RasterEffectIndex).w,d0", dispatcher)
+        self.assertIn("movea.l VBlankRasterEffectHandlerTable(pc,d0.w),a0", dispatcher)
+        self.assertEqual(23, len(re.findall(r"\bdc\.l\s+VBlank_", table)))
+        self.assertIn("byte offset", records["0xFFF74A"]["basis"][0])
+
+        memory = (ROOT / "src/system/memory_initialization.s").read_text(
+            encoding="utf-8"
+        )
+        palette = memory.split("Palette_ClearBuffers:", 1)[1].split(
+            "; End of function Palette_ClearBuffers", 1
+        )[0]
+        self.assertIn("move.w  #$F,d1", palette)
+        self.assertEqual(4, len(re.findall(r"\bmove\.l\s+d0,\(a0\)\+", palette)))
+        self.assertIn("dbf     d1,Palette_ClearBuffers_Loop", palette)
+        ram = (ROOT / "src/ram_addrs.inc").read_text(encoding="utf-8")
+        self.assertRegex(ram, r"PaletteActiveBuffer\s+equ\s+\$FFFFE300")
+        self.assertRegex(ram, r"PaletteShadowBuffer\s+equ\s+\$FFFFE380")
+        self.assertIn("two-instruction wrapper", records["0x002DCA"]["basis"][0])
+
+        cases = (
+            ("0x01676E", "air_and_ground_states.s", "Player_ToggleShootingMode", False),
+            ("0x019EF6", "seven_forces_battle.s", "Player_ToggleSevenForcesShootingMode", True),
+            ("0x015632", "core_states.s", "Player_ToggleShootingModeWithInputMask", True),
+        )
+        for address, filename, label, masks_input in cases:
+            with self.subTest(address=address):
+                source = (ROOT / "src/player" / filename).read_text(encoding="utf-8")
+                routine = source.split(label + ":", 1)[1].split(
+                    "; End of function " + label, 1
+                )[0]
+                self.assertEqual(
+                    masks_input,
+                    "move.b  #$7F,(PlayerInputMask).w" in routine,
+                )
+                self.assertIn("eori.w  #2,(ShootingMode).w", routine)
+                self.assertIn("move.b  #$A3,d0", routine)
+                self.assertEqual(address, records[address]["address"])
+
     def test_muzzle_offset_tables_and_bit_three_mirroring(self) -> None:
         records = {
             record["address"]: record

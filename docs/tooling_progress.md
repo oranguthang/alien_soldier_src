@@ -1423,3 +1423,15 @@ skips `neg.w d1` when the bit is clear. X is negated only when bit 3 is set;
 Y is untouched. A source comment and regression test pin the correction.
 The queue remains 213 groups across 898 uses, with fifty-two reviewed and
 161 open.
+
+The next exact-address pass split four over-shared claims across nine records.
+The three shooting-mode entries all XOR the mode word and queue SFX `$A3`, but
+only the ground/recovery and Seven Forces entries set `PlayerInputMask` to
+`$7F`; the ceiling entry does not. Their A-plus-direction callers are up for
+ceiling and down for ground/recovery and Seven Forces. Palette clearing has
+separate wrapper, setup, and loop roles; sixteen loop passes write 256 bytes
+from `PaletteActiveBuffer` through the adjacent `PaletteShadowBuffer`. The
+VBlank selector is a byte offset into 23 longword handler pointers, so its
+constant values are multiples of four, not merely even. A lightweight source
+test checks these distinctions. The queue is now 209 groups across 886 uses:
+fifty-two reviewed and 157 open.

@@ -293,7 +293,7 @@ Sprite_ClearOAMBuffer_Loop:                             ; CODE XREF: Sprite_Clea
                 dbf     d1,Sprite_ClearOAMBuffer_Loop
                 rts
 ; End of function Sprite_ClearOAMBuffer
-; Clears palette buffer to black
+; Clears both 128-byte palette buffers, active then shadow, to black
 Palette_ClearBuffers:                                   ; CODE XREF: Sys_ClearPaletteBuffers   p  ; was: sub_30D4
                 lea     (PaletteActiveBuffer).w,a0
                 moveq   #0,d0
