@@ -1638,3 +1638,29 @@ different write/call evidence in place of the shared negative sentence about
 palette memory. Focused static tests pin all five distinctions. The queue is
 186 repeated groups across 826 uses: seventy-six reviewed, 110 open. No
 visual boss ownership was inferred.
+
+The paired unreferenced Valkirie debug viewers exposed two off-by-one claims
+in the imported evidence. Both tick paths set `d7=$12`; the shared `DBF`
+interpolator therefore advances nineteen channels, not eighteen. Both
+render-entry paths set `d7=$19` as count-minus-one; the common traversal
+helper returns count 26, not 25. Six truly common paired statements now have
+exact-member reviews, while ten related records were corrected individually.
+The two pose-target blocks each span 36 bytes as two identical 18-byte
+records, despite old eighteen-word/twenty-byte descriptions. A focused test
+checks both encodings, the script offsets, the 19-byte reader, and the shared
+traversal arithmetic. Source comments were corrected without changing code.
+The repeated-basis queue remains 186 groups across 826 uses, with eighty-two
+reviewed and 104 open. No viewer reachability or visual output is asserted.
+
+The remaining four shared secondary/tertiary debug-viewer statements were
+checked against their exact local labels: readiness return, `$FFFF` loop
+reset, timed target command, and angle/script preparation. Each pair has an
+exact-member review; the timed-command review explicitly preserves the
+different interpolation source bases found in the previous pass. Two options
+screen input-gate pairs were also accepted: SFX and Voice checks for pressed
+bits two and three share the flash-timer gate, but their following selection
+bodies do not. The SFX body queues navigation sound and wraps at `$98`, while
+Voice wraps at `$25` without that call. Focused tests pin both the common
+prefixes and these differences. The queue is 186 repeated groups across 826
+uses, with eighty-eight reviewed and 98 open. No source ASM or visual claim
+changed.

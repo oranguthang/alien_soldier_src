@@ -11606,3 +11606,15 @@ at `$040CEE`, `$0418FC`, `$042A10`, and `$04309E`. A future visual check
 needs a screenshot paired with same-frame object-type/PC or named RAM-state
 evidence to bind a pictured boss to the code entry. Pinned emulator and
 longplay hashes were rechecked, but no replay was launched in this pass.
+
+The secondary and tertiary Valkirie debug viewers have a separate static
+boundary issue. Their fixed scripts select offsets 0 and `$12` into 36-byte
+pose-target blocks: two identical 18-byte records in each block. Both
+`BeginPoseInterpolation` wrappers set `d7=$12`, so the inclusive shared
+`Anim_CalculatePoseChannelDeltas` loop reads nineteen target bytes. For the
+first record, that last read enters the second record; for the second, it
+enters the following ROM code. Both viewer update entries are unreferenced by
+reconstructed static control flow. This is a proven source-level read span,
+not proof that either viewer runs or that the extra byte affects visible
+output. Runtime reachability and any effect of this cross-boundary read remain
+unknown; do not infer a visual pose or add padding to the preservation ROM.

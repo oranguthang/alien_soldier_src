@@ -1062,6 +1062,102 @@
         {"address":"0x001DA2","current_name":"Gfx_QueueHeaderedByteStreamDMA_FinishStream","file":"src/rendering/dma_queue.s"},
         {"address":"0x001E1C","current_name":"Gfx_QueueByteStreamDMA_FinishStream","file":"src/rendering/dma_queue.s"}
       ]
+    },
+    {
+      "basis": "State two only publishes byte FFA958 when global wait FF80C2 clears.",
+      "reason": "Both type-$3F0 and type-$3F4 state tables select their own UpdateWaitFlag label for state two. Each label tests MessageSequenceState and writes one to SceneSequenceFlags only when that word is zero; their separate return labels preserve the two exact addresses.",
+      "members": [
+        {"address":"0x051616","current_name":"Debug_ValkirieType3F0UpdateWaitFlag","file":"src/debug/valkirie_secondary_composite_viewer.s"},
+        {"address":"0x0518AA","current_name":"Debug_ValkirieType3F4UpdateWaitFlag","file":"src/debug/valkirie_tertiary_composite_viewer.s"}
+      ]
+    },
+    {
+      "basis": "This unreferenced entry reads controller up/down, adjusts angle, advances a fixed pose, and renders composite parts.",
+      "reason": "Both viewer Update entries test ControllerHeldState bits two and three, adjust $56(a5) by two, mask the angle with $1FE, select their own fixed PoseScript, call their own pose interpreter, and tail-jump to Sprite_BeginMetaspritePartTraversal. No reconstructed static caller reaches either entry; this review does not assert runtime reachability.",
+      "members": [
+        {"address":"0x051624","current_name":"Debug_ValkirieSecondaryViewerUpdate","file":"src/debug/valkirie_secondary_composite_viewer.s"},
+        {"address":"0x0518B8","current_name":"Debug_ValkirieTertiaryViewerUpdate","file":"src/debug/valkirie_tertiary_composite_viewer.s"}
+      ]
+    },
+    {
+      "basis": "The interpreter reads event, control, or timed target commands.",
+      "reason": "Each ReadNextPoseCommand path reads script offset $58(a5), handles event prefix $80, passes word $FFFE to a stop path, passes $FFFF to a loop-reset path, and otherwise selects a timed target command. The two local scripts and target bases remain separate.",
+      "members": [
+        {"address":"0x051662","current_name":"Debug_ValkirieSecondaryViewerReadNextPoseCommand","file":"src/debug/valkirie_secondary_composite_viewer.s"},
+        {"address":"0x0518F6","current_name":"Debug_ValkirieTertiaryViewerReadNextPoseCommand","file":"src/debug/valkirie_tertiary_composite_viewer.s"}
+      ]
+    },
+    {
+      "basis": "The active path decrements timer $C(a5), sets d7=$12, and calls Anim_AdvancePoseChannelInterpolation; its inclusive DBF loop advances nineteen channels.",
+      "reason": "Both exact tick labels execute subq.w #1,$C(a5), select SharedPatternRow0Long0, set d7=$12, and call Anim_AdvancePoseChannelInterpolation. That callee's DBF iterates nineteen times, correcting the former eighteen-value statement.",
+      "members": [
+        {"address":"0x0516D0","current_name":"Debug_ValkirieSecondaryViewerTickPoseInterpolation","file":"src/debug/valkirie_secondary_composite_viewer.s"},
+        {"address":"0x051964","current_name":"Debug_ValkirieTertiaryViewerTickPoseInterpolation","file":"src/debug/valkirie_tertiary_composite_viewer.s"}
+      ]
+    },
+    {
+      "basis": "The path calls its pose interpreter, sets d7=$19 as count-minus-one, and tail-jumps to Sprite_BeginMetaspritePartTraversal; the shared helper converts that to a count of 26.",
+      "reason": "Both AdvancePoseAndRender paths call their corresponding pose interpreter, load d7=$19, and jump to Sprite_BeginMetaspritePartTraversal. Sprite_SetMetaspriteTraversalPointers stores d7 as MetaspritePartCountM1 and Sprite_LoadMetaspritePartCount adds one, so the resulting count is 26, not the old claimed 25. This states the requested traversal count, not how many live parts exist.",
+      "members": [
+        {"address":"0x05164C","current_name":"Debug_ValkirieSecondaryViewerAdvancePoseAndRender","file":"src/debug/valkirie_secondary_composite_viewer.s"},
+        {"address":"0x0518E0","current_name":"Debug_ValkirieTertiaryViewerAdvancePoseAndRender","file":"src/debug/valkirie_tertiary_composite_viewer.s"}
+      ]
+    },
+    {
+      "basis": "The unreferenced viewer entry passes this fixed command stream to its pose interpreter.",
+      "reason": "The secondary and tertiary ViewerUpdate paths each load their own ten-byte PoseScript via LEA before branching to the local interpreter; both streams contain the same two four-byte target commands followed by $FFFF. Static source contains no call to either ViewerUpdate entry, so no visual or executed-behavior claim follows.",
+      "members": [
+        {"address":"0x051814","current_name":"Debug_ValkirieSecondaryViewerPoseScript","file":"src/debug/valkirie_secondary_composite_viewer.s"},
+        {"address":"0x051AA8","current_name":"Debug_ValkirieTertiaryViewerPoseScript","file":"src/debug/valkirie_tertiary_composite_viewer.s"}
+      ]
+    },
+    {
+      "basis": "Both readiness-wait outcomes return here.",
+      "reason": "Each type-$3F0/$3F4 wait state branches to its own WaitReturn RTS while MessageSequenceState is nonzero and falls through to that same RTS after writing SceneSequenceFlags when the wait clears. The two labels are distinct ROM addresses with the same local convergence role.",
+      "members": [
+        {"address":"0x051622","current_name":"Debug_ValkirieType3F0WaitReturn","file":"src/debug/valkirie_secondary_composite_viewer.s"},
+        {"address":"0x0518B6","current_name":"Debug_ValkirieType3F4WaitReturn","file":"src/debug/valkirie_tertiary_composite_viewer.s"}
+      ]
+    },
+    {
+      "basis": "Command $FFFF resets script offset and command count.",
+      "reason": "Both local HandlePoseLoopCommand labels compare d3 with $FFFF, clear $58(a5) and $29C(a5) on equality, and branch back to their own ReadNextPoseCommand labels. The non-$FFFF branch goes to the distinct timed-command path.",
+      "members": [
+        {"address":"0x05168E","current_name":"Debug_ValkirieSecondaryViewerHandlePoseLoopCommand","file":"src/debug/valkirie_secondary_composite_viewer.s"},
+        {"address":"0x051922","current_name":"Debug_ValkirieTertiaryViewerHandlePoseLoopCommand","file":"src/debug/valkirie_tertiary_composite_viewer.s"}
+      ]
+    },
+    {
+      "basis": "Normal commands resolve a target record and initialize timed interpolation.",
+      "reason": "Each BeginPoseCommandInterpolation label saves PoseCommandWord, masks its low byte, sign-extends the script target offset, adds its own PoseTargets base, calls its own interpolation wrapper, loads PoseDurationByte into $C(a5), and advances script offset/count. The wrappers differ in the source base loaded into a1, which is not hidden by the shared claim.",
+      "members": [
+        {"address":"0x05169E","current_name":"Debug_ValkirieSecondaryViewerBeginPoseCommandInterpolation","file":"src/debug/valkirie_secondary_composite_viewer.s"},
+        {"address":"0x051932","current_name":"Debug_ValkirieTertiaryViewerBeginPoseCommandInterpolation","file":"src/debug/valkirie_tertiary_composite_viewer.s"}
+      ]
+    },
+    {
+      "basis": "The adjusted angle is wrapped and the fixed pose script is selected.",
+      "reason": "Both PreparePoseUpdate labels mask angle field $56(a5) with $1FE, load their own fixed PoseScript into a1, and branch to the local AdvancePoseAndRender path. They do not imply identical pose-target source tables or runtime reachability.",
+      "members": [
+        {"address":"0x05163C","current_name":"Debug_ValkirieSecondaryViewerPreparePoseUpdate","file":"src/debug/valkirie_secondary_composite_viewer.s"},
+        {"address":"0x0518D0","current_name":"Debug_ValkirieTertiaryViewerPreparePoseUpdate","file":"src/debug/valkirie_tertiary_composite_viewer.s"}
+      ]
+    },
+    {
+      "basis": "Pressed bit two in OptionsPressedCopy selects the previous index and sets OptionsCursorFlashTimer to six; otherwise control branches to the next-input check.",
+      "reason": "The SFX and Voice CheckPrimaryInput labels have the same three-instruction gate: BTST bit two of OptionsPressedCopy, BEQ to their own CheckNext label, and store six in OptionsCursorFlashTimer before the prior-index branch. Their later selection bodies differ: SFX queues navigation sound and wraps at $98, while Voice wraps at $25 without that sound call.",
+      "members": [
+        {"address":"0x009C86","current_name":"UI_CheckSFXTestPrimaryInput","file":"src/ui/options_menu_controllers.s"},
+        {"address":"0x009D36","current_name":"UI_CheckVoiceTestPrimaryInput","file":"src/ui/options_menu_controllers.s"}
+      ]
+    },
+    {
+      "basis": "Pressed bit three in OptionsPressedCopy enters next-index selection and sets OptionsCursorFlashTimer to six; otherwise the current index is stored and rendered.",
+      "reason": "The SFX and Voice CheckNextInput labels each BTST bit three of OptionsPressedCopy, branch to their own StoreAndRender label when clear, and store six in OptionsCursorFlashTimer when pressed. Only this input gate is shared: SFX queues navigation sound and wraps at $98; Voice wraps at $25 without that sound call.",
+      "members": [
+        {"address":"0x009CB4","current_name":"UI_CheckNextSFXTestInput","file":"src/ui/options_menu_controllers.s"},
+        {"address":"0x009D52","current_name":"UI_CheckNextVoiceTestInput","file":"src/ui/options_menu_controllers.s"}
+      ]
     }
   ]
 }

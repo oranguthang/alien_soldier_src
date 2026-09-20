@@ -61,7 +61,7 @@ Debug_ValkirieTertiaryViewerAdvancePoseAndRender:       ; CODE XREF: Debug_Valki
                 moveq   #$19,d7
                 jmp     Sprite_BeginMetaspritePartTraversal
 ; End of function Debug_ValkirieTertiaryViewerUpdate
-; Interpret pose commands and update the tertiary viewer's eighteen components
+; Interpret pose commands and advance nineteen channels for linked-part angles
 Debug_ValkirieTertiaryViewerAdvancePoseScript:          ; CODE XREF: Debug_ValkirieTertiaryViewerUpdate:Debug_ValkirieTertiaryViewerAdvancePoseAndRender   p  ; was: sub_518EC
                 clr.b   $23E(a5)
                 tst.w   $C(a5)
