@@ -72,7 +72,7 @@ time-bonus, 26 message-render, 26 message-script, 20 options-menu, 19
 weapon-selection, 33 weapon-setup loadout, 31 controller/background, 32 boss
 asset-set, 29 graphics-list, 35 asset-set palette-command, and 17 standalone
 or banked palette-command records have since been reviewed. The curated
-`NAME-002` detector now has zero matches across 67 known sentences. A wider
+`NAME-002` detector now has zero matches across 68 known sentences. A wider
 duplicate-basis review is still required before the 1.0 tag; zero matches do
 not prove every explanation or name correct.
 The read-only `make semantic-audit` now counts the wider duplicate queue, and
@@ -145,7 +145,10 @@ not prove, so they now have neutral Pattern00/01/02 names and individual
 selection-path evidence. The 12 middle longwords of the two shared pattern
 RAM rows also have one reviewed structural basis: the four-iteration mask loop
 consumes eight longwords from each row, while other scene users overlay those
-addresses. The repeated-basis queue has 226 open groups.
+addresses. Destroyer Proto's former 11-frame sentence mixed five animated-part
+mappings, five projectile mappings, and one intro-only part mapping; these now
+have separate owner names and exact table-slot evidence. The repeated-basis
+queue has 225 open groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

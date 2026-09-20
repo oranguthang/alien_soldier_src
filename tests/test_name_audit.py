@@ -16,6 +16,71 @@ DEFINITION = re.compile(
 
 
 class NameAuditTests(unittest.TestCase):
+    def test_destroyer_proto_mappings_follow_part_projectile_and_intro_owners(self) -> None:
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        reviewed = [
+            record
+            for record in records
+            if re.fullmatch(
+                r"Boss_DestroyerProtoSpriteFrame(?:0\d|10)",
+                record["previous_name"] or "",
+            )
+        ]
+        self.assertEqual(11, len(reviewed))
+        self.assertEqual(11, len({record["basis"][0] for record in reviewed}))
+        expected = {
+            *(f"Boss_DestroyerProtoPartFrame{index:02}" for index in range(5)),
+            *(f"Projectile_DestroyerProtoFrame{index:02}" for index in range(5)),
+            "Boss_DestroyerProtoIntroPartFrame",
+        }
+        self.assertEqual(expected, {record["current_name"] for record in reviewed})
+        mappings = (ROOT / "src/data/destroyer_proto_sprite_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        core = (ROOT / "src/bosses/destroyer_proto_core.s").read_text(
+            encoding="utf-8"
+        )
+        projectiles = (
+            ROOT / "src/projectiles/destroyer_proto_and_victor_projectiles.s"
+        ).read_text(encoding="utf-8")
+        self.assertNotRegex(
+            mappings + core + projectiles,
+            r"\bBoss_DestroyerProtoSpriteFrame(?:0\d|10)\b",
+        )
+        self.assertEqual(
+            expected,
+            set(
+                re.findall(
+                    r"(?m)^((?:Boss|Projectile)_DestroyerProto\w*Frame\d\d|"
+                    r"Boss_DestroyerProtoIntroPartFrame):",
+                    mappings,
+                )
+            ),
+        )
+        intro_table = core.split("Boss_DestroyerProtoPartMappingTable:", 1)[1].split(
+            "Boss_DestroyerProtoGraphicsLoadDescriptor:", 1
+        )[0]
+        part_table = projectiles.split(
+            "Boss_DestroyerProtoPartMappingFrameTable:", 1
+        )[1].split("Boss_DestroyerProtoLaunchTwinProjectiles:", 1)[0]
+        projectile_table = projectiles.split(
+            "Projectile_DestroyerProtoMappingFrameTable:", 1
+        )[1].split("Projectile_DestroyerProtoCheckHorizontalReflection:", 1)[0]
+        self.assertEqual(
+            ["Boss_DestroyerProtoIntroPartFrame", "Boss_DestroyerProtoPartFrame01"],
+            re.findall(r"\bdc\.l\s+(Boss_DestroyerProto\w+Frame\w*)", intro_table),
+        )
+        self.assertEqual(
+            ["01", "02", "03", "04", "00", "04", "03", "02"] * 2,
+            re.findall(r"\bdc\.l\s+Boss_DestroyerProtoPartFrame(\d\d)", part_table),
+        )
+        self.assertEqual(
+            ["00", "01", "02", "03", "04", "03", "02", "01"] * 2,
+            re.findall(r"\bdc\.l\s+Projectile_DestroyerProtoFrame(\d\d)", projectile_table),
+        )
+        self.assertIn("Boss_DestroyerProtoPartMappingTable(pc,d0.w),8(a4)", core)
+        self.assertIn("lea     Projectile_DestroyerProtoMappingFrameTable(pc),a0", projectiles)
+
     def test_terobuster_mapping_names_follow_rotation_tables(self) -> None:
         records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
         reviewed = [

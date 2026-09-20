@@ -56,22 +56,22 @@ Projectile_DestroyerProtoSpriteAttributeTable:  dc.w    $6B00, $6B00, $6B00, $6B
                 dc.w    $6300, $6300, $6300, $6300
                 dc.w    $7300, $7300, $7300, $7300
                 dc.w    $7B00, $7B00, $7B00, $7B00
-Boss_DestroyerProtoPartMappingFrameTable:   dc.l    Boss_DestroyerProtoSpriteFrame01  ; DATA XREF: Boss_DestroyerProtoAnimatedPartMain+1A   o  ; was: off_32118
-                dc.l    Boss_DestroyerProtoSpriteFrame02
-                dc.l    Boss_DestroyerProtoSpriteFrame03
-                dc.l    Boss_DestroyerProtoSpriteFrame04
-                dc.l    Boss_DestroyerProtoSpriteFrame00
-                dc.l    Boss_DestroyerProtoSpriteFrame04
-                dc.l    Boss_DestroyerProtoSpriteFrame03
-                dc.l    Boss_DestroyerProtoSpriteFrame02
-                dc.l    Boss_DestroyerProtoSpriteFrame01
-                dc.l    Boss_DestroyerProtoSpriteFrame02
-                dc.l    Boss_DestroyerProtoSpriteFrame03
-                dc.l    Boss_DestroyerProtoSpriteFrame04
-                dc.l    Boss_DestroyerProtoSpriteFrame00
-                dc.l    Boss_DestroyerProtoSpriteFrame04
-                dc.l    Boss_DestroyerProtoSpriteFrame03
-                dc.l    Boss_DestroyerProtoSpriteFrame02
+Boss_DestroyerProtoPartMappingFrameTable:   dc.l    Boss_DestroyerProtoPartFrame01  ; DATA XREF: Boss_DestroyerProtoAnimatedPartMain+1A   o  ; was: off_32118
+                dc.l    Boss_DestroyerProtoPartFrame02
+                dc.l    Boss_DestroyerProtoPartFrame03
+                dc.l    Boss_DestroyerProtoPartFrame04
+                dc.l    Boss_DestroyerProtoPartFrame00
+                dc.l    Boss_DestroyerProtoPartFrame04
+                dc.l    Boss_DestroyerProtoPartFrame03
+                dc.l    Boss_DestroyerProtoPartFrame02
+                dc.l    Boss_DestroyerProtoPartFrame01
+                dc.l    Boss_DestroyerProtoPartFrame02
+                dc.l    Boss_DestroyerProtoPartFrame03
+                dc.l    Boss_DestroyerProtoPartFrame04
+                dc.l    Boss_DestroyerProtoPartFrame00
+                dc.l    Boss_DestroyerProtoPartFrame04
+                dc.l    Boss_DestroyerProtoPartFrame03
+                dc.l    Boss_DestroyerProtoPartFrame02
 
 ; Initializes two fixed-slot Destroyer Proto projectiles from the inner parts
 Boss_DestroyerProtoLaunchTwinProjectiles:               ; CODE XREF: Boss_DestroyerProtoLaunchTwinShots+1A   p  ; was: sub_32158
@@ -175,23 +175,23 @@ Projectile_DestroyerProtoSpawnNextSpreadCopy:           ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_DestroyerProtoSpawnSpreadCopies
 ; ---------------------------------------------------------------------------
-Projectile_DestroyerProtoMappingFrameTable: dc.l    Boss_DestroyerProtoSpriteFrame05  ; DATA XREF: Projectile_DestroyerProtoActivateStreamShot+14   o  ; was: off_322C8
+Projectile_DestroyerProtoMappingFrameTable: dc.l    Projectile_DestroyerProtoFrame00  ; DATA XREF: Projectile_DestroyerProtoActivateStreamShot+14   o  ; was: off_322C8
                                         ; Projectile_DestroyerProtoSpawnSpreadCopies+18   o
-                dc.l    Boss_DestroyerProtoSpriteFrame06
-                dc.l    Boss_DestroyerProtoSpriteFrame07
-                dc.l    Boss_DestroyerProtoSpriteFrame08
-                dc.l    Boss_DestroyerProtoSpriteFrame09
-                dc.l    Boss_DestroyerProtoSpriteFrame08
-                dc.l    Boss_DestroyerProtoSpriteFrame07
-                dc.l    Boss_DestroyerProtoSpriteFrame06
-                dc.l    Boss_DestroyerProtoSpriteFrame05
-                dc.l    Boss_DestroyerProtoSpriteFrame06
-                dc.l    Boss_DestroyerProtoSpriteFrame07
-                dc.l    Boss_DestroyerProtoSpriteFrame08
-                dc.l    Boss_DestroyerProtoSpriteFrame09
-                dc.l    Boss_DestroyerProtoSpriteFrame08
-                dc.l    Boss_DestroyerProtoSpriteFrame07
-                dc.l    Boss_DestroyerProtoSpriteFrame06
+                dc.l    Projectile_DestroyerProtoFrame01
+                dc.l    Projectile_DestroyerProtoFrame02
+                dc.l    Projectile_DestroyerProtoFrame03
+                dc.l    Projectile_DestroyerProtoFrame04
+                dc.l    Projectile_DestroyerProtoFrame03
+                dc.l    Projectile_DestroyerProtoFrame02
+                dc.l    Projectile_DestroyerProtoFrame01
+                dc.l    Projectile_DestroyerProtoFrame00
+                dc.l    Projectile_DestroyerProtoFrame01
+                dc.l    Projectile_DestroyerProtoFrame02
+                dc.l    Projectile_DestroyerProtoFrame03
+                dc.l    Projectile_DestroyerProtoFrame04
+                dc.l    Projectile_DestroyerProtoFrame03
+                dc.l    Projectile_DestroyerProtoFrame02
+                dc.l    Projectile_DestroyerProtoFrame01
 
 ; Reflects horizontal velocity when collision flag 4 is set
 Projectile_DestroyerProtoCheckHorizontalReflection:     ; DATA XREF: ROM:00032220   o  ; was: sub_32308

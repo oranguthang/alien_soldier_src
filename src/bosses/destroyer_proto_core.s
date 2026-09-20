@@ -137,8 +137,8 @@ Boss_DestroyerProtoPartRadiusTable: dc.w    $A0, $40, $E0, $A0, $40, $E0  ; was:
 Boss_DestroyerProtoPartParentSlotTable: dc.w    $C800, $C7A0, $C620, $C6E0, $C680, $C620  ; was: word_3168E
                                         ; DATA XREF: Boss_DestroyerProtoInitializeIntro+C4   r
 Boss_DestroyerProtoPartSubtypeTable:    dc.w    4, 2, 2, 4, 2, 2  ; DATA XREF: Boss_DestroyerProtoInitializeIntro+CA   r  ; was: word_3169A
-Boss_DestroyerProtoPartMappingTable:    dc.l    Boss_DestroyerProtoSpriteFrame10  ; DATA XREF: Boss_DestroyerProtoInitializeIntro+D6   r  ; was: off_316A6
-                dc.l    Boss_DestroyerProtoSpriteFrame01
+Boss_DestroyerProtoPartMappingTable:    dc.l    Boss_DestroyerProtoIntroPartFrame  ; DATA XREF: Boss_DestroyerProtoInitializeIntro+D6   r  ; was: off_316A6
+                dc.l    Boss_DestroyerProtoPartFrame01
 Boss_DestroyerProtoGraphicsLoadDescriptor:  dc.w    $4000, $2000, $303, $5051, $5253, $5455, $5657, $5859, $5A5B, $5C5D, $5E5F  ; was: word_316AE
                                         ; DATA XREF: Boss_DestroyerProtoInitializeIntro+50   o
 

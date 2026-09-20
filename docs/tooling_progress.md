@@ -968,3 +968,13 @@ covers elements 0-7; elements 0 and 7 have separate boundary evidence. A
 new exact-member review and regression test pin all 12 addresses, row aliases,
 and loop shape. The queue remains 241 groups across 1,030 uses: fifteen
 reviewed, 226 open.
+
+The 11 Destroyer Proto mappings previously shared one part-or-projectile
+sentence. The 16-entry animated-part table selects frames 00-04, the
+16-entry projectile table selects a distinct five-frame family, and the
+two-entry intro part table additionally selects one standalone mapping plus
+animated-part frame 01. Their source names and exact-address bases now
+follow those three owners and each table position; a regression test pins all
+three pointer sequences. The old sentence becomes the 68th rejected generic
+basis. The queue falls to 240 groups across 1,019 uses: fifteen reviewed,
+225 open.
