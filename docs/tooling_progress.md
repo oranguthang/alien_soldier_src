@@ -1693,3 +1693,13 @@ spawners, and timer/terrain/allocation exits for two-speed shots. Tests check
 the source instructions and distinct table or object roles. The queue is
 182 repeated groups across 818 uses, with ninety-five reviewed and 87 open.
 No ROM code or visual assertion changed.
+
+Five repeated asset-source bases were replaced with ten exact-slot records.
+Ship debris frames 2 and 4 occupy different longword indices in the scripted
+type-$310 table. The four Treasure credits descriptors point to distinct
+sources and VRAM destinations; the last mapping source is inline `dc.b`, not
+a `binclude`. Wolf Garopa and Z-Leo tile-art entries likewise have distinct
+VRAM destinations, and their second loaded archives do not claim the separate
+unreferenced archives that follow. Focused tests pin table order, source form,
+and archive boundaries without inferring appearance. The queue is now 177
+repeated groups across 808 uses, with ninety-five reviewed and 82 open.
