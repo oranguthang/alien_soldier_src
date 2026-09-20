@@ -37,7 +37,7 @@ StageStartPaletteOffsetList:    dc.w    (CreditsAndEarlyStagePaletteCommandBank+
                 dc.w    (CreditsAndEarlyStagePaletteCommandBank+$128)-Gfx_LoadPalettePreservingSharedColor
                 dc.w    0
 WeaponSetupControlTestPaletteOffsetList:    dc.w    (CreditsAndEarlyStagePaletteCommandBank+$148)-Gfx_LoadPalettePreservingSharedColor
-                                        ; DATA XREF: WeaponSetup_LoadControlTestText+32   o  ; was: word_B954
+                                        ; DATA XREF: WeaponSetup_RenderControlTestRowsAndLoadPalette+32   o  ; was: word_B954
                 dc.w    (CreditsAndEarlyStagePaletteCommandBank+$14E)-Gfx_LoadPalettePreservingSharedColor
                 dc.w    0
 ContinueScreenPaletteOffsetLists:   dc.w    (StageReadyPaletteCommand+$6)-Gfx_LoadPalettePreservingSharedColor  ; was: word_B95A

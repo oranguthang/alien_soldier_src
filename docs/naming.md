@@ -101,7 +101,9 @@ frame table. A seventh covers the 26 encoded TYPE strings, with table order
 and decimal bytes checked against their names. The old 23-way Bugmax sentence
 was not valid for hit fragments, central-part selection, linked-part tables,
 and two projectile animations; those names and bases are now role-specific.
-The remaining queue has 240 groups.
+The shared weapon-setup text sentence also hid two executable handlers; they
+now have code-level bases, while 20 actual encoded strings have an exact-member
+review. The remaining queue has 239 groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

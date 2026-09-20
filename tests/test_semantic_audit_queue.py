@@ -15,6 +15,72 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_weapon_setup_text_review_decodes_labels_and_has_render_refs(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item for item in reviews
+            if item["basis"].startswith("The encoded glyph bytes decode")
+        )
+        expected = {
+            "WeaponSetup_HeadingText": "SETUP YOUR WEAPONS",
+            "WeaponSetup_BusterForceText": "BUSTER FORCE",
+            "WeaponSetup_RangerForceText": "RANGER FORCE",
+            "WeaponSetup_FlameForceText": "FLAME FORCE",
+            "WeaponSetup_HomingForceText": "HOMING FORCE",
+            "WeaponSetup_SwordForceText": "SWORD FORCE",
+            "WeaponSetup_LancerForceText": "LANCER FORCE",
+            "WeaponSetup_ShootingModeText": "SHOOTING MODE",
+            "WeaponSetup_MovingModeText": "MOVING",
+            "WeaponSetup_FixedModeText": "FIX",
+            "WeaponSetup_StatusWindowText": "STATUS WINDOW",
+            "WeaponSetup_ExitText": "EXIT",
+            "WeaponSetup_ControlTestText": "CONTROL TEST",
+            "WeaponSetup_WeaponSelectControlText": "WEAPON SELECT",
+            "WeaponSetup_ShotControlText": "SHOT",
+            "WeaponSetup_JumpControlText": "JUMP",
+            "WeaponSetup_ShootingModeChangeControlText": "SHOOT MODE CHANGE",
+            "WeaponSetup_ZeroTeleportControlText": "ZERO TELEPORT",
+            "WeaponSetup_CounterForceControlText": "COUNTER FORCE",
+            "WeaponSetup_HoveringControlText": "HOVERING",
+        }
+        self.assertEqual(
+            set(expected), {member["current_name"] for member in review["members"]}
+        )
+        data = (ROOT / "src/ui/weapon_setup_background_and_text.s").read_text(
+            encoding="utf-8"
+        )
+        screen = (ROOT / "src/ui/weapon_setup_screen.s").read_text(encoding="utf-8")
+        for name, decoded in expected.items():
+            with self.subTest(name=name):
+                definition = re.search(r"(?m)^" + re.escape(name) + r":\s+dc\.b\b", data)
+                self.assertIsNotNone(definition)
+                tail = data[definition.start():]
+                next_line = tail.index("\n") + 1
+                next_label = re.search(
+                    r"(?m)^[A-Za-z_][A-Za-z0-9_]*:", tail[next_line:]
+                )
+                body = tail[:next_line + next_label.start()] if next_label else tail
+                operands = re.findall(r"\bdc\.b\s+([^;\r\n]+)", body)
+                values = [
+                    int(token.strip()[1:], 16) if token.strip().startswith("$")
+                    else int(token.strip())
+                    for row in operands for token in row.split(",")
+                ]
+                letters = []
+                for value in values:
+                    if value == 0:
+                        letters.append(" ")
+                    elif 0xB <= value <= 0x24:
+                        letters.append(chr(ord("A") + value - 0xB))
+                    else:
+                        break
+                self.assertEqual(decoded, "".join(letters).strip())
+                self.assertRegex(
+                    screen, r"\b(?:lea|dc\.l)\s+" + re.escape(name) + r"\b"
+                )
+
     def test_control_type_text_review_matches_table_slots_and_decimal_bytes(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

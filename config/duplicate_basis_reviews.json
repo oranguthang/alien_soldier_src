@@ -281,6 +281,32 @@
         {"address":"0x01FB42","current_name":"WeaponSetup_ControlType25Text","file":"src/ui/weapon_setup_background_and_text.s"},
         {"address":"0x01FB4A","current_name":"WeaponSetup_ControlType26Text","file":"src/ui/weapon_setup_background_and_text.s"}
       ]
+    },
+    {
+      "basis": "The encoded glyph bytes decode to the exact weapon-setup or control-test label stated by the symbol and are consumed by the setup text renderer.",
+      "reason": "These 20 definitions are dc.b text data, not executable entries. Their alphabetic glyph bytes $B..$24 encode A..Z with zero spaces, yielding the named heading, force, mode, status, exit, or control-test label; $2E precedes button glyphs where present. Every record is reached by a lea or dc.l reference in weapon_setup_screen.s, whose text paths call Text_QueueDoubleHeightStringWrapped. The two executable entries formerly sharing this sentence are excluded.",
+      "members": [
+        {"address":"0x01F9FA","current_name":"WeaponSetup_HeadingText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FA0F","current_name":"WeaponSetup_BusterForceText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FA1C","current_name":"WeaponSetup_RangerForceText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FA29","current_name":"WeaponSetup_FlameForceText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FA35","current_name":"WeaponSetup_HomingForceText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FA42","current_name":"WeaponSetup_SwordForceText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FA4E","current_name":"WeaponSetup_LancerForceText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FA5B","current_name":"WeaponSetup_ShootingModeText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FA69","current_name":"WeaponSetup_MovingModeText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FA70","current_name":"WeaponSetup_FixedModeText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FA74","current_name":"WeaponSetup_StatusWindowText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FB52","current_name":"WeaponSetup_ExitText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FB57","current_name":"WeaponSetup_ControlTestText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FB64","current_name":"WeaponSetup_WeaponSelectControlText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FB77","current_name":"WeaponSetup_ShotControlText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FB81","current_name":"WeaponSetup_JumpControlText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FB8B","current_name":"WeaponSetup_ShootingModeChangeControlText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FBA7","current_name":"WeaponSetup_ZeroTeleportControlText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FBBF","current_name":"WeaponSetup_CounterForceControlText","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FBD7","current_name":"WeaponSetup_HoveringControlText","file":"src/ui/weapon_setup_background_and_text.s"}
+      ]
     }
   ]
 }

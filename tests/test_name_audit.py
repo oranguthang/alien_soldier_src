@@ -16,6 +16,35 @@ DEFINITION = re.compile(
 
 
 class NameAuditTests(unittest.TestCase):
+    def test_weapon_setup_text_handlers_are_audited_as_code(self) -> None:
+        records = {
+            record["address"]: record
+            for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        self.assertEqual(
+            "WeaponSetup_RenderControlTestRowsAndLoadPalette",
+            records["0x01F3E6"]["current_name"],
+        )
+        self.assertEqual(
+            "WeaponSetup_RenderExitText", records["0x01F70C"]["current_name"]
+        )
+        for address in ("0x01F3E6", "0x01F70C"):
+            self.assertNotIn("encoded glyph bytes", " ".join(records[address]["basis"]))
+        source = (ROOT / "src/ui/weapon_setup_screen.s").read_text(encoding="utf-8")
+        control = source.split("WeaponSetup_RenderControlTestRowsAndLoadPalette:", 1)[1].split(
+            "; End of function WeaponSetup_RenderControlTestRowsAndLoadPalette", 1
+        )[0]
+        self.assertRegex(control, r"cmpi\.w\s+#\$40,\(WeaponSetupCursorOffset\)\.w")
+        self.assertRegex(control, r"jsr\s+\(Text_QueueDoubleHeightStringWrapped\)\.l")
+        self.assertRegex(control, r"jmp\s+Gfx_LoadMultiplePalettes")
+        exit_text = source.split("WeaponSetup_RenderExitText:", 1)[1].split(
+            "; End of function WeaponSetup_RenderExitText", 1
+        )[0]
+        self.assertRegex(exit_text, r"lea\s+WeaponSetup_ExitText\(pc\),a0")
+        self.assertRegex(
+            exit_text, r"jmp\s+\(Text_QueueDoubleHeightStringWrapped\)\.l"
+        )
+
     def test_bugmax_frame_names_match_their_static_consumers(self) -> None:
         records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
         reviewed = [

@@ -822,3 +822,15 @@ the old sentence is the 61st rejected generic basis. A regression test checks
 the role-specific source references, linked-part pointer orders, two animation
 streams, and the absence of the retired 23 names. The wider queue shrinks to
 247 groups across 1,141 uses: seven reviewed and 240 still open.
+
+The 22-way weapon-setup text sentence concealed two executable routines.
+`WeaponSetup_LoadControlTestText` was renamed to
+`WeaponSetup_RenderControlTestRowsAndLoadPalette`: its loop queues eight
+layout rows and then enters the palette loader. `WeaponSetup_RenderExitText`
+is also code; its separate basis now cites the EXIT pointer, position, and
+tail call to the text renderer. The remaining 20 records are `dc.b` strings.
+A regression test decodes their A–Z glyph bytes, checks the names against the
+visible word prefixes, and requires each to have a setup-screen `lea` or
+`dc.l` reference. Those exact 20 members are accepted; the two handlers have
+their own instruction-level test. The wider queue stays at 247 groups across
+1,139 uses: eight reviewed, 239 open.

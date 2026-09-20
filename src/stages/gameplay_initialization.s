@@ -269,7 +269,7 @@ WeaponSetup_StateHandlerOffsets:    dc.w    WeaponSetup_HandleLoadoutState-Weapo
                 dc.w    WeaponSetup_HandleControlTypeInput-WeaponSetup_HandleLoadoutState
                 dc.w    WeaponSetup_HandleExitInput-WeaponSetup_HandleLoadoutState
                 dc.w    WeaponSetup_UpdateExitTilemapFill-WeaponSetup_HandleLoadoutState
-                dc.w    WeaponSetup_LoadControlTestText-WeaponSetup_HandleLoadoutState
+                dc.w    WeaponSetup_RenderControlTestRowsAndLoadPalette-WeaponSetup_HandleLoadoutState
                 dc.w    WeaponSetup_WaitForConfirmInput-WeaponSetup_HandleLoadoutState
                 dc.w    WeaponSetup_IdleState-WeaponSetup_HandleLoadoutState
 

@@ -174,11 +174,11 @@ WeaponSetup_UpdateExitTilemapFill:                      ; DATA XREF: ROM:0001F14
                 rts
 ; End of function WeaponSetup_UpdateExitTilemapFill
 ; Renders the control-test instructions and loads their palette
-WeaponSetup_LoadControlTestText:                        ; DATA XREF: ROM:0001F148   o  ; was: sub_1F3E6
+WeaponSetup_RenderControlTestRowsAndLoadPalette:        ; DATA XREF: ROM:0001F148   o  ; was: sub_1F3E6
                 addq.w  #2,(SetupTransitionIndex).w
                 clr.w   (WeaponSetupCursorOffset).w
 ; Renders the eight control-test instruction rows
-WeaponSetup_RenderControlTestTextLoop:                  ; CODE XREF: WeaponSetup_LoadControlTestText+30   j  ; was: loc_1F3EE
+WeaponSetup_RenderControlTestTextLoop:                  ; CODE XREF: WeaponSetup_RenderControlTestRowsAndLoadPalette+30   j  ; was: loc_1F3EE
                 lea     WeaponSetup_ControlTestTextLayout(pc),a1
                 nop
                 move.w  (WeaponSetupCursorOffset).w,d1
@@ -191,10 +191,10 @@ WeaponSetup_RenderControlTestTextLoop:                  ; CODE XREF: WeaponSetup
                 bne.s   WeaponSetup_RenderControlTestTextLoop
                 lea     (WeaponSetupControlTestPaletteOffsetList).l,a4
                 jmp     Gfx_LoadMultiplePalettes
-; End of function WeaponSetup_LoadControlTestText
+; End of function WeaponSetup_RenderControlTestRowsAndLoadPalette
 ; ---------------------------------------------------------------------------
 WeaponSetup_ControlTestTextLayout:  dc.w    $8100       ; field_0  ; was: stru_1F424
-                                        ; DATA XREF: WeaponSetup_LoadControlTestText:WeaponSetup_RenderControlTestTextLoop   o
+                                        ; DATA XREF: WeaponSetup_RenderControlTestRowsAndLoadPalette:WeaponSetup_RenderControlTestTextLoop   o
                 dc.w    $629C                           ; field_2
                 dc.l    WeaponSetup_ControlTestText     ; field_4
                 dc.w    $A100                           ; field_0
