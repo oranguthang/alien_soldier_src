@@ -1169,3 +1169,14 @@ in `docs/unknowns.md`. The wrapper entry, frame reader, and table have
 separate evidence and a test pins the mask, two writes, four selected pairs,
 tail words, and caller. This is the 85th rejected generic basis; the queue
 falls to 231 groups across 963 uses: twenty-eight reviewed, 203 open.
+
+Two sprite-mapping groups now have exact-member reviews. The five
+`Enemy_BehaviorSpriteMapping00..04` records contain 5/4/4/6/6 six-byte
+pieces; both wait and grounded streams reference all five, and the attack-
+cooldown stream additionally references frame 00. The five
+`Enemy_CirclingAnimationSpriteMappingA..E` records are single-piece mappings
+selected in order by the loop stream, each for two ticks before a self-
+relative loop. Tests pin addresses, piece counts, high-bit terminators,
+stream order, and the circling selector's pointer. The suffixes remain
+ordering labels, not visual identities. The queue stays at 231 groups across
+963 uses: thirty reviewed, 201 open.

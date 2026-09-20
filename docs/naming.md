@@ -190,8 +190,10 @@ Wolf Garopa type-$424 records now have separate evidence for allocation,
 failed-slot return, timer expiry, blink-bit selection, and update return; their
 old single sentence conflated those paths. The adjacent orb animation reader
 selects only four frame pairs; two trailing words are separately recorded as
-unknown, not asserted to be a fifth frame. The repeated-basis queue has 203
-open groups.
+unknown, not asserted to be a fifth frame. Five composite enemy behavior
+frames and five single-piece circling frames now have exact-member reviews
+that pin their stream orders without assigning visual poses. The repeated-basis
+queue has 201 open groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

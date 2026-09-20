@@ -610,6 +610,28 @@
         {"address":"0x0ED3E8","current_name":"Boss_ZLeoValkirieForceSharedMappingD","file":"src/data/wolf_garopa_and_z_leo_mappings.s"},
         {"address":"0x0ED3EE","current_name":"Boss_ZLeoValkirieForceSharedMappingC","file":"src/data/wolf_garopa_and_z_leo_mappings.s"}
       ]
+    },
+    {
+      "basis": "Enemy behavior animation streams reference this address-ordered composite sprite mapping.",
+      "reason": "Both Enemy_BehaviorWaitSpriteAnimation and Enemy_BehaviorGroundedSpriteAnimation reference mappings 00-04 in order; the wait stream then reverses through 03-01, and the grounded stream repeats 04 before reversing to 00. The attack-cooldown stream also references mapping 00. The five records contain 5/4/4/6/6 six-byte sprite pieces in ROM order; only the final piece in each carries the terminator bit. These references establish stream membership and composite format, not a visual pose identity.",
+      "members": [
+        {"address":"0x0E9C2E","current_name":"Enemy_BehaviorSpriteMapping00","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"},
+        {"address":"0x0E9C4C","current_name":"Enemy_BehaviorSpriteMapping01","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"},
+        {"address":"0x0E9C64","current_name":"Enemy_BehaviorSpriteMapping02","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"},
+        {"address":"0x0E9C7C","current_name":"Enemy_BehaviorSpriteMapping03","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"},
+        {"address":"0x0E9CA0","current_name":"Enemy_BehaviorSpriteMapping04","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"}
+      ]
+    },
+    {
+      "basis": "Enemy_CirclingLoopAnimation stores a self-relative pointer to this high-bit-terminated sprite mapping.",
+      "reason": "Enemy_CirclingAnimationMappings points to Enemy_CirclingLoopAnimation. That stream names mappings A-E in order with duration 2 after each and ends with a self-relative loop pointer and zero control word. All five mapping records consist of one six-byte piece with its terminator bit set. The adjacent rotation mappings belong to another selector, and A-E asserts sequence membership rather than visible facing.",
+      "members": [
+        {"address":"0x0EB2E4","current_name":"Enemy_CirclingAnimationSpriteMappingA","file":"src/data/circling_enemy_sprite_mappings.s"},
+        {"address":"0x0EB2EA","current_name":"Enemy_CirclingAnimationSpriteMappingB","file":"src/data/circling_enemy_sprite_mappings.s"},
+        {"address":"0x0EB2F0","current_name":"Enemy_CirclingAnimationSpriteMappingC","file":"src/data/circling_enemy_sprite_mappings.s"},
+        {"address":"0x0EB2F6","current_name":"Enemy_CirclingAnimationSpriteMappingD","file":"src/data/circling_enemy_sprite_mappings.s"},
+        {"address":"0x0EB2FC","current_name":"Enemy_CirclingAnimationSpriteMappingE","file":"src/data/circling_enemy_sprite_mappings.s"}
+      ]
     }
   ]
 }

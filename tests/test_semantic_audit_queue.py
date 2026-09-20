@@ -16,6 +16,92 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_enemy_behavior_and_circling_mapping_reviews_pin_stream_membership(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        cases = (
+            (
+                "Enemy behavior animation streams reference",
+                "src/data/weapon_select_and_enemy_sprite_mappings.s",
+                "Enemy_BehaviorSpriteMapping",
+                ["00", "01", "02", "03", "04"],
+                [0x0E9C2E, 0x0E9C4C, 0x0E9C64, 0x0E9C7C, 0x0E9CA0],
+                [5, 4, 4, 6, 6],
+            ),
+            (
+                "Enemy_CirclingLoopAnimation stores",
+                "src/data/circling_enemy_sprite_mappings.s",
+                "Enemy_CirclingAnimationSpriteMapping",
+                list("ABCDE"),
+                [0x0EB2E4, 0x0EB2EA, 0x0EB2F0, 0x0EB2F6, 0x0EB2FC],
+                [1, 1, 1, 1, 1],
+            ),
+        )
+        for basis_start, path, prefix, suffixes, addresses, piece_counts in cases:
+            with self.subTest(group=basis_start):
+                review = next(
+                    item for item in reviews if item["basis"].startswith(basis_start)
+                )
+                names = [prefix + suffix for suffix in suffixes]
+                self.assertEqual(
+                    [(f"0x{address:06X}", name, path) for address, name in zip(addresses, names)],
+                    [
+                        (item["address"], item["current_name"], item["file"])
+                        for item in review["members"]
+                    ],
+                )
+                source = (ROOT / path).read_text(encoding="utf-8")
+                for name, count in zip(names, piece_counts):
+                    block = re.search(
+                        r"(?ms)^" + re.escape(name) + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                        source,
+                    )
+                    self.assertIsNotNone(block)
+                    words = re.findall(r"\bdc\.w\s+([^;\r\n]+)", block.group(1))
+                    self.assertEqual(count, len(words), name)
+                    self.assertTrue(all(len(word.split(",")) == 3 for word in words))
+                    first = [int(word.split(",", 1)[0].strip()[1:], 16) for word in words]
+                    self.assertTrue(all(value < 0x8000 for value in first[:-1]))
+                    self.assertNotEqual(0, first[-1] & 0x8000)
+
+        behavior = (ROOT / "src/data/weapon_select_and_enemy_sprite_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        for stream, end, expected in (
+            (
+                "Enemy_BehaviorWaitSpriteAnimation",
+                "Enemy_BehaviorGroundedSpriteAnimation",
+                [0, 1, 2, 3, 4, 3, 2, 1],
+            ),
+            (
+                "Enemy_BehaviorGroundedSpriteAnimation",
+                "Enemy_BehaviorAttackCooldownSpriteAnimation",
+                [0, 1, 2, 3, 4, 4, 3, 2, 1, 0],
+            ),
+        ):
+            block = behavior.split(stream + ":", 1)[1].split(end + ":", 1)[0]
+            self.assertEqual(
+                expected,
+                [
+                    int(index)
+                    for index in re.findall(r"Enemy_BehaviorSpriteMapping(\d\d)-\*", block)
+                ],
+            )
+        circling = (ROOT / "src/data/circling_enemy_sprite_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        loop = circling.split("Enemy_CirclingLoopAnimation:", 1)[1]
+        self.assertEqual(
+            list("ABCDE"),
+            re.findall(r"Enemy_CirclingAnimationSpriteMapping([A-E])-\*", loop),
+        )
+        self.assertEqual(5, len(re.findall(r"\bdc\.w\s+2\s*(?:;|$)", loop, re.M)))
+        self.assertIn("dc.w    Enemy_CirclingLoopAnimation-*", loop)
+        self.assertIn("dc.l    Enemy_CirclingLoopAnimation", (
+            ROOT / "src/enemies/circling_enemies.s"
+        ).read_text(encoding="utf-8"))
+
     def test_wolf_garopa_orb_frame_index_excludes_trailing_words(self) -> None:
         records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
         selected = {
