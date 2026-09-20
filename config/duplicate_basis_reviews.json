@@ -869,6 +869,33 @@
         {"address":"0xFF811E","current_name":"EnemySpawnClearedLongB","file":"src/ram_addrs.inc"},
         {"address":"0xFF8122","current_name":"EnemySpawnClearedLongC","file":"src/ram_addrs.inc"}
       ]
+    },
+    {
+      "basis": "Enemy_BehaviorMovementSpriteAnimation references this address-ordered composite sprite mapping.",
+      "reason": "Enemy_UpdateBehaviorAnimation indexes the behavior pointer table from state word $5C(a5); its movement entry selects Enemy_BehaviorMovementSpriteAnimation. That stream references mapping 05, then exact mappings 06, 07, and 08 in order, each for four ticks, before a zero-duration relative jump to its start. The 06–08 suffixes record ROM order, not independently observed appearance.",
+      "members": [
+        {"address":"0x0E9CE8","current_name":"Enemy_BehaviorSpriteMapping06","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"},
+        {"address":"0x0E9D06","current_name":"Enemy_BehaviorSpriteMapping07","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"},
+        {"address":"0x0E9D24","current_name":"Enemy_BehaviorSpriteMapping08","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"}
+      ]
+    },
+    {
+      "basis": "Enemy_BehaviorAttackCooldownSpriteAnimation references this address-ordered composite sprite mapping.",
+      "reason": "Enemy_MainStateMachine_BeginAttackCooldown writes $10 to state word $5C(a5), selecting the fourth behavior pointer-table entry. Its stream uses mappings 00/09/10/11/10/09 with timer words 3/6/8/$10/8/$FF. The final $FF is a hold marker: Anim_ResolveTimedMappingFrame tests its low byte as negative and skips sequence advancement until another state selects a stream. No visual pose is inferred from the three reviewed mapping addresses.",
+      "members": [
+        {"address":"0x0E9D42","current_name":"Enemy_BehaviorSpriteMapping09","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"},
+        {"address":"0x0E9D60","current_name":"Enemy_BehaviorSpriteMapping10","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"},
+        {"address":"0x0E9D7E","current_name":"Enemy_BehaviorSpriteMapping11","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"}
+      ]
+    },
+    {
+      "basis": "Enemy_BehaviorDefeatSpriteAnimation references this address-ordered composite sprite mapping.",
+      "reason": "Enemy_ConvertToDefeatProjectile directly installs this stream in object field 8. It references mappings 12/14/13/14 with durations 3/2/3/2, then a zero-duration relative jump back to the stream start. The repeated 14 reference is deliberate; the neutral mapping suffixes record ROM order without a visual-identity claim.",
+      "members": [
+        {"address":"0x0E9DA8","current_name":"Enemy_BehaviorSpriteMapping12","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"},
+        {"address":"0x0E9DCC","current_name":"Enemy_BehaviorSpriteMapping13","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"},
+        {"address":"0x0E9DF0","current_name":"Enemy_BehaviorSpriteMapping14","file":"src/data/weapon_select_and_enemy_sprite_mappings.s"}
+      ]
     }
   ]
 }

@@ -1485,3 +1485,15 @@ velocity, and a negative-horizontal branch; its `$2000` horizontal step has
 no clamp at zero. Source comments, audit records, and three lightweight tests
 now preserve those distinctions. The queue is 202 repeated groups across
 865 uses: fifty-four reviewed and 148 open.
+
+Three repeated mapping claims for the shared enemy's movement, attack-cooldown,
+and defeat streams now have exact-member reviews. The movement stream visits
+05/06/07/08 for four ticks each and loops. Attack cooldown visits
+00/09/10/11/10/09 with timer words 3/6/8/`$10`/8/`$FF`; `$FF` holds the last
+mapping because `Anim_ResolveTimedMappingFrame` treats a negative low timer
+byte as a no-advance condition, not as an ordinary 255-tick delay. The defeat
+stream visits 12/14/13/14 for 3/2/3/2 ticks and loops through a zero-timer
+relative jump. These descriptions deliberately keep mapping names in ROM
+order without guessing visual poses. Source comments and a focused test pin
+the stream shapes and resolver behavior. The queue is unchanged at 202
+repeated groups across 865 uses, with fifty-seven reviewed and 145 open.

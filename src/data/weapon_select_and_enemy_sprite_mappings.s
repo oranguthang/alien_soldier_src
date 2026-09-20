@@ -105,6 +105,7 @@ Enemy_BehaviorSpriteMapping14:  dc.w    $6863, $500, $CEF  ; DATA XREF: ROM:000E
                 dc.w    $6829, $F00, $F4F1
                 dc.w    $6808, $D00, $E4F2
                 dc.w    $E871, $500, $CFD
+; Four 4-tick mappings, then a zero-timer relative jump back to this stream
 Enemy_BehaviorMovementSpriteAnimation:  dc.w    Enemy_BehaviorSpriteMapping05-*  ; DATA XREF: ROM:0002C554   o  ; was: off_E9E08
                                         ; ROM:000E9E18   o
                 dc.w    4
@@ -155,6 +156,7 @@ Enemy_BehaviorGroundedSpriteAnimation:  dc.w    Enemy_BehaviorSpriteMapping00-* 
                 dc.w    1
                 dc.w    Enemy_BehaviorSpriteMapping00-*
                 dc.w    $FF
+; Attack-cooldown frames end in a $FF timer that holds the final mapping
 Enemy_BehaviorAttackCooldownSpriteAnimation:    dc.w    Enemy_BehaviorSpriteMapping00-*  ; DATA XREF: ROM:0002C55C   o  ; was: off_E9E68
                 dc.w    3
                 dc.w    Enemy_BehaviorSpriteMapping09-*
@@ -167,6 +169,7 @@ Enemy_BehaviorAttackCooldownSpriteAnimation:    dc.w    Enemy_BehaviorSpriteMapp
                 dc.w    8
                 dc.w    Enemy_BehaviorSpriteMapping09-*
                 dc.w    $FF
+; Defeat frames return to the first mapping through a zero-timer jump
 Enemy_BehaviorDefeatSpriteAnimation:    dc.w    Enemy_BehaviorSpriteMapping12-*  ; DATA XREF: ROM:0002C560   o  ; was: off_E9E80
                                         ; Enemy_ConvertToDefeatProjectile+10   o
                 dc.w    3
