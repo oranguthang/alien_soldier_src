@@ -99,6 +99,8 @@ GENERIC_NAME_BASES = (
     "The type-$490 update checks screen bounds, follows a status-driven conversion and pickup path, or steers toward the player with the arctangent and sine tables.",
     "The weapon-setup renderer indexes or writes these values directly while updating its highlight/background palette animation.",
     "Randomly selected midgame lightning animation streams reference this address-ordered composite sprite mapping.",
+    "Wolf Garopa callers allocate type $424 with a $40-frame timer; its update handler expires or blinks it from timer bit two.",
+    "The Wolf Garopa orb updater indexes these four tile/mapping pairs from the global animation phase.",
 )
 
 

@@ -11566,3 +11566,11 @@ The two state-14 pointer tables reference the script's start at `$057CFC`;
 no direct symbolic source pointer to `$057D0E` is known. This does not prove
 the tail unreachable by raw-address or external paths, and it does not prove
 which visible pose those words represent.
+
+`WolfGaropa_OrbAnimationFrames` starts at `$02A140` and contains four word
+pairs selected by `(FrameCounter << 2) & $C`. The final two words at
+`$02A150` are `$30BC,$005C`, outside every offset this reader can produce.
+They also decode as a 68000 instruction, but no symbolic source caller or
+table entry reaches that address. Their status as data, dormant code or an
+indirect entry remains unknown; the source preserves the exact words without
+assigning them a fifth visible frame or a speculative function name.

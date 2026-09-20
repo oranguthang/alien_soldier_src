@@ -16,6 +16,103 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_wolf_garopa_orb_frame_index_excludes_trailing_words(self) -> None:
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        selected = {
+            record["address"]: record
+            for record in records
+            if record["address"] in {"0x02A126", "0x02A128", "0x02A140"}
+        }
+        self.assertEqual(
+            {
+                "0x02A126": "Gfx_AnimateWolfGaropaOrb",
+                "0x02A128": "Gfx_AnimateWolfGaropaOrbAtA0",
+                "0x02A140": "WolfGaropa_OrbAnimationFrames",
+            },
+            {address: record["current_name"] for address, record in selected.items()},
+        )
+        self.assertEqual(3, len({tuple(record["basis"]) for record in selected.values()}))
+        self.assertIn("role remains unresolved", selected["0x02A140"]["basis"][0])
+        source = (ROOT / "src/projectiles/shared_boss_projectiles.s").read_text(
+            encoding="utf-8"
+        )
+        entry = source.split("Gfx_AnimateWolfGaropaOrb:", 1)[1].split(
+            "WolfGaropa_OrbAnimationFrames:", 1
+        )[0]
+        for instruction in (
+            "movea.w a5,a0",
+            "move.w  (FrameCounter).w,d0",
+            "asl.w   #2,d0",
+            "andi.w  #$C,d0",
+            "WolfGaropa_OrbAnimationFrames(pc,d0.w),$E(a0)",
+            "WolfGaropa_OrbAnimationFrames+2(pc,d0.w),$A(a0)",
+        ):
+            self.assertIn(instruction, entry)
+        data = source.split("WolfGaropa_OrbAnimationFrames:", 1)[1].split(
+            "Projectile_InitDirectionalSpawner:", 1
+        )[0]
+        rows = re.findall(r"\bdc\.w\s+([^;\r\n]+)", data)
+        self.assertEqual(2, len(rows))
+        self.assertEqual(8, len(rows[0].split(",")))
+        self.assertEqual(["$30BC", "$5C"], [word.strip() for word in rows[1].split(",")])
+        caller = (ROOT / "src/projectiles/wolf_garopa.s").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("movea.w #(ThirtyFirstEntityType-M68K_RAM),a0", caller)
+        self.assertIn("jsr     (Gfx_AnimateWolfGaropaOrbAtA0).l", caller)
+
+    def test_wolf_garopa_type424_evidence_separates_spawn_and_update(self) -> None:
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        addresses = {
+            "0x02A0D6": "Projectile_SpawnWolfGaropaType424",
+            "0x02A100": "Projectile_SpawnWolfGaropaType424Return",
+            "0x02A102": "Projectile_UpdateType424Visibility",
+            "0x02A110": "Projectile_UpdateType424Blink",
+            "0x02A124": "Projectile_UpdateType424VisibilityReturn",
+        }
+        selected = {
+            record["address"]: record
+            for record in records
+            if record["address"] in addresses
+        }
+        self.assertEqual(addresses, {key: value["current_name"] for key, value in selected.items()})
+        self.assertEqual(5, len({tuple(record["basis"]) for record in selected.values()}))
+        source = (ROOT / "src/projectiles/shared_boss_projectiles.s").read_text(
+            encoding="utf-8"
+        )
+        spawn = source.split("Projectile_SpawnWolfGaropaType424:", 1)[1].split(
+            "; End of function Projectile_SpawnWolfGaropaType424", 1
+        )[0]
+        update = source.split("Projectile_UpdateType424Visibility:", 1)[1].split(
+            "; End of function Projectile_UpdateType424Visibility", 1
+        )[0]
+        for instruction in (
+            "jsr     (Projectile_FindFreeSlotReverse).l",
+            "bne.s   Projectile_SpawnWolfGaropaType424Return",
+            "move.w  #$424,(a0)",
+            "move.w  #$40,$48(a0)",
+            "moveq   #0,d0",
+        ):
+            self.assertIn(instruction, spawn)
+        for instruction in (
+            "subq.w  #1,$48(a5)",
+            "bpl.s   Projectile_UpdateType424Blink",
+            "bset    #4,2(a5)",
+            "bset    #7,2(a5)",
+            "btst    #2,$49(a5)",
+            "beq.s   Projectile_UpdateType424VisibilityReturn",
+            "bclr    #7,2(a5)",
+        ):
+            self.assertIn(instruction, update)
+        dispatch = (ROOT / "src/gameplay/object_dispatch_table.s").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("dc.l    Projectile_UpdateType424Visibility", dispatch)
+        wolf = (ROOT / "src/bosses/wolf_garopa_core.s").read_text(
+            encoding="utf-8"
+        )
+        self.assertEqual(2, wolf.count("jsr     (Projectile_SpawnWolfGaropaType424).l"))
+
     def test_zleo_valkirie_shared_mapping_review_pins_descriptor_roles(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

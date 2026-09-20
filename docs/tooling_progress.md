@@ -1148,3 +1148,24 @@ descriptor order, five mapping addresses and piece counts, high-bit endings,
 both callers, and the initializer's distinct `a0/a1/a2` reads. No visual pose
 identity or ROM-order meaning for the A-E suffixes is claimed. The queue
 remains 233 groups across 971 uses: twenty-eight reviewed, 205 open.
+
+The five Wolf Garopa type-$424 labels at `$02A0D6`–`$02A124` no longer share
+one sentence claiming both allocation and timer-driven visibility. The two
+boss-state callers invoke the allocator, which fills a free slot with type
+`$424`, fixed sprite fields and timer `$40`; its separate return also handles
+allocation failure. The update-table entry selects a different routine that
+decrements the timer, expires on underflow and otherwise sets display bit 7
+before testing timer-low-byte bit 2 to clear it. A regression test pins the
+two callers, dispatch entry and branch instructions. The old sentence is the
+84th rejected generic basis. The queue drops to 232 groups across 966 uses:
+twenty-eight reviewed, 204 open.
+
+The adjacent orb-animation labels at `$02A126/$02A128/$02A140` also carried
+one sentence that wrongly treated all ten words as four selected pairs. The
+reader masks its word offset with `$C`, selecting four pairs in the first
+eight words. The two trailing words at `$02A150` are preserved verbatim but
+not reached by that reader; their data/code role is now explicitly unknown
+in `docs/unknowns.md`. The wrapper entry, frame reader, and table have
+separate evidence and a test pins the mask, two writes, four selected pairs,
+tail words, and caller. This is the 85th rejected generic basis; the queue
+falls to 231 groups across 963 uses: twenty-eight reviewed, 203 open.

@@ -72,7 +72,7 @@ time-bonus, 26 message-render, 26 message-script, 20 options-menu, 19
 weapon-selection, 33 weapon-setup loadout, 31 controller/background, 32 boss
 asset-set, 29 graphics-list, 35 asset-set palette-command, and 17 standalone
 or banked palette-command records have since been reviewed. The curated
-`NAME-002` detector now has zero matches across 83 known sentences. A wider
+`NAME-002` detector now has zero matches across 85 known sentences. A wider
 duplicate-basis review is still required before the 1.0 tag; zero matches do
 not prove every explanation or name correct.
 The read-only `make semantic-audit` now counts the wider duplicate queue, and
@@ -186,7 +186,12 @@ exact-member reviews for their eight mapping pointers, descriptor references,
 and ordering; Shellshogun table F also has a direct angle-indexed reader.
 The Z-Leo/Valkirie Force descriptor now has an exact-member review for its five
 shared mapping targets, with the two initializer roles kept distinct. The
-repeated-basis queue has 205 open groups.
+Wolf Garopa type-$424 records now have separate evidence for allocation,
+failed-slot return, timer expiry, blink-bit selection, and update return; their
+old single sentence conflated those paths. The adjacent orb animation reader
+selects only four frame pairs; two trailing words are separately recorded as
+unknown, not asserted to be a fifth frame. The repeated-basis queue has 203
+open groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

@@ -93,9 +93,10 @@ Gfx_AnimateWolfGaropaOrbAtA0:                           ; CODE XREF: Boss_WolfGa
                 rts
 ; End of function Gfx_AnimateWolfGaropaOrb
 ; ---------------------------------------------------------------------------
-WolfGaropa_OrbAnimationFrames:  dc.w    $C6FC, $F0F0, $CEFC, $F0, $D6FC, $F000, $DEFC, 0, $30BC, $5C  ; was: word_2A140
+WolfGaropa_OrbAnimationFrames:  dc.w    $C6FC, $F0F0, $CEFC, $F0, $D6FC, $F000, $DEFC, 0  ; was: word_2A140
                                         ; DATA XREF: Gfx_AnimateWolfGaropaOrb+C   r
                                         ; Gfx_AnimateWolfGaropaOrb+12   r
+                dc.w    $30BC, $5C                      ; trailing words not reached by the four-frame index
 
 ; Initialize the two-phase directional particle spawner
 Projectile_InitDirectionalSpawner:                      ; was: sub_2A154
