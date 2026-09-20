@@ -11595,3 +11595,14 @@ from that pointer only until the first terminator. Two more terminated tile
 strings occupy `$00A25C–$00A283`; no reconstructed symbolic source pointer
 selects either start. Their text and reachability by indirect or raw-address
 paths are not asserted, and they remain in the same ROM-ordered data run.
+
+The seven `NAME-003` visual-ownership records remain a manual review queue,
+not a reason to replay the whole game during the static naming pass:
+`Boss_GustheadLinkedChainControllerMain` at `$0310E6`;
+`Boss_SnakeMain` and `Boss_SnakeSegmentMain` at `$04079E` and `$040AF6`;
+and `Boss_SunsetStingInitDispatcher`, `Boss_SunsetStingMainDispatcher`,
+`Boss_SunsetStingMain`, and `Boss_SunsetStingRefillCounterAndOscillateState`
+at `$040CEE`, `$0418FC`, `$042A10`, and `$04309E`. A future visual check
+needs a screenshot paired with same-frame object-type/PC or named RAM-state
+evidence to bind a pictured boss to the code entry. Pinned emulator and
+longplay hashes were rechecked, but no replay was launched in this pass.

@@ -230,6 +230,7 @@ Stage12_TeddyBearAnimationVariantC: dc.w    Stage12_TeddyBearSpriteMappingO-*  ;
                 dc.w    9
                 dc.w    Stage12_TeddyBearAnimationVariantC-*
                 dc.w    0
+; Both streams below select A/B/C/B; rescue uses 5/4 ticks, the shared loop 2/1
 Stage12_TeddyBearRescueAnimation:   dc.w    SharedTeddyHazardSpriteMappingA-*  ; DATA XREF: Stage12_TeddyBearInit+68   o  ; was: off_1A0F62
                                         ; ROM:001A0F72   o
                 dc.w    5

@@ -1573,3 +1573,13 @@ earlier Sonnet names as `previous_name` and the IDA names as `legacy_name`.
 The expanded test pins decoded lengths and hashes, descriptor order, reader
 instructions and exact name records. This is static evidence, not a claim
 about the visual appearance of the cutscene.
+
+Four low-risk repeated-basis reviews were completed without emulator replay:
+the three shared plane rows 26-28 are each filled for 64 words by stage and
+weapon-setup loops; Lightning animation 02 selects exact mappings 08-10 with
+three-tick durations; the Teddy rescue and shared hazard streams both select
+A/B/C/B mappings, but use 5/4/5/4 versus 2/1/2/1 ticks; and the shared loop
+is installed by the Teddy initializer and both Stage 15 hazard-wave paths.
+Exact-member tests pin addresses, buffers, streams and installers. The queue
+is now 200 repeated groups across 859 uses, with seventy-four reviewed and
+126 open. No visual boss-identity claim was advanced by these static checks.
