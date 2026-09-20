@@ -43,8 +43,8 @@ class NameAuditBasisCorrectionTests(unittest.TestCase):
             record["address"]: record
             for record in json.loads((ROOT / "config/name_audit.json").read_text(encoding="utf-8"))["records"]
         }
-        self.assertEqual(8, len(changes))
-        self.assertEqual(8, len({change["address"] for change in changes}))
+        self.assertEqual(16, len(changes))
+        self.assertEqual(16, len({change["address"] for change in changes}))
         for change in changes:
             with self.subTest(address=change["address"]):
                 record = audit[change["address"]]
@@ -82,6 +82,59 @@ class NameAuditBasisCorrectionTests(unittest.TestCase):
             self.assertIn(instruction, valkirie)
         self.assertIn("beq.s   Entity_SetValkirieAuxiliaryFastNegativeVelocity", valkirie)
         self.assertIn("beq.s   Entity_SetValkirieAuxiliarySlowNegativeVelocity", valkirie)
+
+        velocity = (ROOT / "src/player/terrain_wrappers.s").read_text(encoding="utf-8")
+        self.assertIn("cmpi.l  #$FFFD6000,d0", velocity)
+        self.assertIn("bmi.s   Physics_AccelerateHorizontalNegative_Store", velocity)
+        self.assertIn("subi.l  #$A800,d0", velocity)
+        self.assertIn("cmpi.l  #$2A000,d0", velocity)
+        self.assertIn("bpl.s   Physics_AccelerateHorizontalPositive_Store", velocity)
+        self.assertIn("addi.l  #$A800,d0", velocity)
+
+        terrain = (ROOT / "src/player/terrain_collision.s").read_text(encoding="utf-8")
+        for level, base, flag in (
+            ("Lower", "Physics_HandleLowerLeftOuterTerrain", 0),
+            ("Upper", "Physics_HandleUpperLeftOuterTerrain", 1),
+        ):
+            right = f"Physics_Handle{level}RightInnerTerrain"
+            self.assertIn(f"movea.w Physics_{level}RightInnerResponseTable(pc,d2.w),a4", terrain)
+            self.assertIn(f"adda.l  #{base},a4", terrain)
+            self.assertIn(f"bset    #{flag},6(a5)", terrain)
+            self.assertIn(right + "_Dispatch:", terrain)
+        self.assertIn("bset    #2,6(a5)", terrain)
+
+        bullet = (ROOT / "src/projectiles/shared_boss_projectiles.s").read_text(
+            encoding="utf-8"
+        )
+        entry = bullet.split("Projectile_InitValkirieBulletFromSource:", 1)[1].split(
+            "; End of function Projectile_InitValkirieBulletFromSource", 1
+        )[0]
+        packed = entry.split("Projectile_CopyValkiriePackedSizeFields:", 1)[1]
+        self.assertIn("move.w  #$480,(a0)", entry)
+        self.assertIn("move.w  d3,$48(a0)", entry)
+        self.assertIn("move.w  d4,$4A(a0)", entry)
+        self.assertIn("btst    #6,2(a0)", entry)
+        self.assertIn("bne.s   Projectile_CopyValkiriePackedSizeFields", entry)
+        self.assertIn("move.l  8(a1),8(a0)", packed)
+        self.assertNotIn("#$480", packed)
+
+        responses = (ROOT / "src/player/terrain_responses.s").read_text(
+            encoding="utf-8"
+        )
+        for helper, seed, branch, caller in (
+            ("Physics_PrepareVerticalOffset6", 6,
+             "Physics_AlignFloorQuarterSubtractOffset", "Physics_ApplyOffset6Sub10"),
+            ("Physics_PrepareQuarterAddOffset3", 3,
+             "Physics_AlignFloorQuarterAddOffset", "Physics_ApplyOffset3Sub6"),
+        ):
+            with self.subTest(helper=helper):
+                body = responses.split(helper + ":", 1)[1].split(
+                    "; End of function " + helper, 1
+                )[0]
+                self.assertIn(f"moveq   #{seed},d3", body)
+                self.assertIn(f"bra.s   {branch}", body)
+                self.assertIn(f"bsr.s   {helper}", responses)
+                self.assertIn(caller + ":", responses)
 
 
 if __name__ == "__main__":

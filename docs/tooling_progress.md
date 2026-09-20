@@ -1801,3 +1801,51 @@ right row paths each run sixteen iterations while advancing the source by
 and loop strides without claiming identical appearance. The queue is 165
 repeated groups across 784 uses, 126 reviewed and 39 open. ASM and runtime
 visual assertions are unchanged.
+
+Five `Unreferenced` shared bases now have bounded static reviews, not claims
+of runtime unreachability. A focused test scans every reconstructed ASM
+module for direct references to eight entrypoint names and their literal ROM
+addresses, while ignoring definitions and comments. It also checks that the
+two NOP alternate scroll entries follow JMP-terminated routines; the ordinary
+scroll entries remain separately called. The Stage 2 phase 2 and Stage 3
+phase 5 asset loaders each pass their adjacent five-record, `$FFFF`-terminated
+list to the shared loader, but no direct source reference reaches the loader
+entrypoints. Their stage ownership comes from labels/provenance and remains
+unproved as a reachable runtime path. The repeated-basis queue is 165 groups
+across 784 uses, 131 reviewed and 34 open. No ASM or visual claim changed.
+
+The horizontal acceleration audit no longer calls its two stores "clamped":
+the negative helper preserves a value already below -$2A000, while the
+positive helper preserves one at or above +$2A000. Otherwise they subtract
+or add $A800 respectively, with no explicit threshold assignment. Two
+exact-address basis corrections retain their old text in the guarded ledger.
+Three return-basis reviews distinguish Epsilon 1 from Wolf Garopa debris
+cadence and payload, periodic shots from Stage 11 fish volleys, and hide-on-end
+from loop-on-end animation scripts. Focused tests pin the gates and exact
+review members. The queue is 164 repeated groups across 782 uses, 134
+reviewed and 30 open. No ASM instruction or visual identity changed.
+
+The lower- and upper-right inner terrain dispatches no longer share a vague
+"mirror" explanation: their normalized angle indexes different response
+tables, adds different ROM bases, and follows different collision-flag gates.
+The Valkirie packed-field branch at `$02A08A` now has its own evidence for
+`move.l 8(a1),8(a0)` instead of inheriting its entrypoint's type-$480 setup;
+the entrypoint basis also distinguishes copied source fields from D3/D4
+parameters. Four exact-address audit corrections preserve the old wording in
+the ledger. Two exact-member reviews cover the decimal/hex digit emitters and
+the bullet/beam eight-slot scans while keeping their radix and setup
+differences explicit. Two focused tests pin the review evidence. The queue is
+162 repeated groups across 778 uses, 136 reviewed and 26 open. ASM and
+runtime visual claims are unchanged.
+
+The two "second seed" terrain-response bases have been replaced with their
+actual D3 values (6 versus 3), distinct quarter-floor alignment targets, and
+named callers. Three shared bases now have exact-member reviews: Stage 12
+Teddy Bear's initial/collision-disabled and pilot-release one-frame streams
+are installed at different state points; Terobuster missile A/B use different
+cursor windows when exchanging the same two part slots; and Jampan's radial
+and animation objects share the angle-dependent priority-bit return tail
+after different position updates. Focused tests pin streams, stores, branch
+thresholds and return gates without claiming unobserved poses. The queue is
+161 repeated groups across 776 uses, 139 reviewed and 22 open. ROM code is
+unchanged.

@@ -1462,6 +1462,110 @@
         {"address":"0x004DBC","current_name":"StoryTitle_CharacterLeftAdvanceRow","file":"src/cutscenes/story_screen_and_title_transition.s"},
         {"address":"0x004E16","current_name":"StoryTitle_CharacterRightAdvanceRow","file":"src/cutscenes/story_screen_and_title_transition.s"}
       ]
+    },
+    {
+      "basis": "No reconstructed call or table refers to this entrypoint.",
+      "reason": "The initializer writes nine consecutive $60-byte sprite records from $360(a5), and the position updater writes those records from two anchor regions. A source-wide scan finds neither exact entrypoint name nor its ROM address in an executable call or pointer table. This is negative static evidence only; indirect runtime reachability is not asserted impossible.",
+      "members": [
+        {"address":"0x0548EE","current_name":"UnreferencedInitializeNineAuxiliarySprites","file":"src/actors/unreferenced_nine_auxiliary_sprites.s"},
+        {"address":"0x05491C","current_name":"UnreferencedUpdateNineAuxiliarySpritePositions","file":"src/actors/unreferenced_nine_auxiliary_sprites.s"}
+      ]
+    },
+    {
+      "basis": "No reconstructed code or data reference reaches this routine.",
+      "reason": "The timing helper conditionally XORs FrameTimingDebugFlag bit seven after controller tests; the other entry appends a fixed OAM record list. Neither exact routine name nor its ROM address occurs in executable source outside its definition. The OAM data's imported DATA XREF back to its owner is not a call, and no runtime reachability claim follows.",
+      "members": [
+        {"address":"0x01CB32","current_name":"UnreferencedToggleFrameTimingMarkers","file":"src/debug/frame_timing_toggle.s"},
+        {"address":"0x01CC98","current_name":"UnreferencedAppendFixedOAMEntries","file":"src/debug/controller_helpers.s"}
+      ]
+    },
+    {
+      "basis": "No reconstructed source call or table reference reaches this helper.",
+      "reason": "The first helper adjusts colors and mirrors them to a range $80 bytes away; the second wraps RGB channel additions and stores one paired color. Their exact entrypoint names and ROM addresses have no executable source reference outside the definitions. Both call or use other named palette helpers, which is outgoing use and does not establish a caller for these entries.",
+      "members": [
+        {"address":"0x003A9C","current_name":"UnreferencedAdjustAndMirrorPaletteRange","file":"src/rendering/palette_transitions.s"},
+        {"address":"0x003B72","current_name":"UnreferencedAddWrappingColorAdjustmentToPairedEntry","file":"src/rendering/palette_transitions.s"}
+      ]
+    },
+    {
+      "basis": "No reconstructed static caller reaches the alternate entry.",
+      "reason": "Each alternate entry is one NOP that falls into a separately named and called scroll routine. The preceding routine ends in a JMP, so it does not fall through into that NOP. No executable source instruction or pointer table names either alternate label or its ROM address; indirect entry remains unproven rather than ruled out.",
+      "members": [
+        {"address":"0x0102AC","current_name":"UnreferencedAdvanceTrainScrollWithNop","file":"src/rendering/camera_tracking_and_stage_scroll.s"},
+        {"address":"0x0102DE","current_name":"UnreferencedUpdateQuarterScrollWithNop","file":"src/rendering/camera_tracking_and_stage_scroll.s"}
+      ]
+    },
+    {
+      "basis": "The adjacent unreferenced loader passes this five-record terminated graphics and mappings list to Stage_DispatchAssetListLoaderByGameMode; no reachable owner is proven.",
+      "reason": "Stage 2 phase 2 and Stage 3 phase 5 each have an adjacent loader that places the list address in a0 and jumps to Stage_DispatchAssetListLoaderByGameMode. Each list contains five type/source/destination records and $FFFF, with distinct stage-specific sources and one shared final tile-art source. No static source call or pointer names either loader; the stage number is a label/provenance claim, not runtime proof of reachability.",
+      "members": [
+        {"address":"0x011B72","current_name":"UnreferencedStage2Phase2AssetLoadList","file":"src/stages/phase_loading.s"},
+        {"address":"0x011D0A","current_name":"UnreferencedStage3Phase5AssetLoadList","file":"src/stages/phase_loading.s"}
+      ]
+    },
+    {
+      "basis": "Skipped and emitted defeat-debris paths return here.",
+      "reason": "The Epsilon 1 ring-object state returns here when FrameCounter modulo four is nonzero, when no free projectile slot exists, or after initializing type-$88 debris with the ring object's position. Wolf Garopa returns here on odd frames, when allocation fails, or after initializing type-$88 debris with randomized position and speed. The shared sentence describes the return role only; the two cadence and payload paths differ.",
+      "members": [
+        {"address":"0x047752","current_name":"Boss_Epsilon1UpdateRingObjectDefeatFallReturn","file":"src/projectiles/epsilon_1_projectiles.s"},
+        {"address":"0x050F3C","current_name":"Boss_WolfGaropaDefeatTransitionReturn","file":"src/bosses/wolf_garopa_attack_effects_and_transition.s"}
+      ]
+    },
+    {
+      "basis": "The frames between shots return here.",
+      "reason": "The periodic enemy shot path masks its timer with $1F and returns on nonzero phase, then also returns after an aimed-arc spawn. The Stage 11 fish state decrements $48(a5), returns while that countdown is nonzero, and after a completed volley changes state before returning; an intermediate shot instead returns directly from its burst-advance path. The shared wording refers to the wait return, not an identical shot schedule.",
+      "members": [
+        {"address":"0x02CA3E","current_name":"Enemy_TryPeriodicShot_Return","file":"src/enemies/jetsripper_stage_actors.s"},
+        {"address":"0x02ED20","current_name":"Enemy_Stage11FishFireVolleyState_Return","file":"src/enemies/stage_11_fish.s"}
+      ]
+    },
+    {
+      "basis": "The frames inside one step return here.",
+      "reason": "Both animation helpers decrement $4C(a5) and return while the duration remains nonzero; after loading a frame they also reach the same RTS. Their negative-duration marker paths differ: UpdateScriptAndHide clears display bit 15 and returns, while UpdateLoopingScript loads a restart pointer and loops back to ReadFrame.",
+      "members": [
+        {"address":"0x02A764","current_name":"Anim_UpdateScriptAndHide_Return","file":"src/actors/shared_object_helpers.s"},
+        {"address":"0x02A794","current_name":"Anim_UpdateLoopingScript_Return","file":"src/actors/shared_object_helpers.s"}
+      ]
+    },
+    {
+      "basis": "The quotient is translated to the contiguous digit-tile range beginning at 0xB5 and appended to the staging buffer.",
+      "reason": "Both emit labels add signed byte -$4B to the quotient byte, copy the result through d0 into (a2)+, then advance the divisor index and repeat. The decimal caller divides by 1/10/100/1000/10000, while the hex caller divides by 1/$10/$100/$1000; the shared emission code does not imply equal digit radices or widths.",
+      "members": [
+        {"address":"0x001E98","current_name":"Gfx_QueueDecimalDigitsDMA_EmitDigit","file":"src/rendering/dma_queue.s"},
+        {"address":"0x001F3A","current_name":"Gfx_QueueHexDigitsDMA_EmitDigit","file":"src/rendering/dma_queue.s"}
+      ]
+    },
+    {
+      "basis": "The same eight-slot forward scan.",
+      "reason": "Both weapon handlers point a0 to SharedEffectObjectPool, set d7 to seven, test each slot's first word, advance a0 by $60 on occupied slots, and DBF back to the corresponding FindSlot label. The bullet and beam handlers have different cooldown and ammo setup before the scan; the common basis covers only allocation traversal.",
+      "members": [
+        {"address":"0x018352","current_name":"Weapon_FireBulletHandler_FindSlot","file":"src/weapons/firing.s"},
+        {"address":"0x018436","current_name":"Weapon_FireBeamWeapon_FindSlot","file":"src/weapons/firing.s"}
+      ]
+    },
+    {
+      "basis": "The named Stage 12 Teddy Bear state or initializer assigns this mapping/duration stream directly to the object mapping field.",
+      "reason": "The collision-disabled path within Stage12_TeddyBearInit stores Stage12_TeddyBearInitialPoseAnimation in 8(a5), while Stage12_TeddyBearPilotRelease stores Stage12_TeddyBearPilotReleasePoseAnimation in the same field. Each stream has one distinct mapping-offset word followed by $FF. This proves pointer installation and stream bytes, not the rendered pose's visual identity.",
+      "members": [
+        {"address":"0x1A0FD2","current_name":"Stage12_TeddyBearInitialPoseAnimation","file":"src/data/shared_stage_object_sprite_mappings.s"},
+        {"address":"0x1A0FD6","current_name":"Stage12_TeddyBearPilotReleasePoseAnimation","file":"src/data/shared_stage_object_sprite_mappings.s"}
+      ]
+    },
+    {
+      "basis": "The pose cursor range and side field determine whether the two fixed part slots are exchanged.",
+      "reason": "Both missile attack variants initialize a0/a1 from SixthEntityType and EleventhEntityType and swap them when side field $A(a5) is nonzero before the named SelectPart label. Attack A swaps again only for cursor $58 in [5,$18), while attack B does so only for [$10,$20). Both store the resulting a0 to fields $48/$4A; the different windows are not interchangeable.",
+      "members": [
+        {"address":"0x038802","current_name":"Boss_TerobusterMissileAttackASelectPart","file":"src/bosses/terobuster_core.s"},
+        {"address":"0x0388CC","current_name":"Boss_TerobusterMissileAttackBSelectPart","file":"src/bosses/terobuster_core.s"}
+      ]
+    },
+    {
+      "basis": "The set- and clear-priority paths converge on this return.",
+      "reason": "Each Jampan linked-object updater compares its angle byte at $20(a5) with PrimaryEntityAngle. The unsigned-higher branch clears bit 15 of $E(a5); the other path sets that bit and branches over the clear to the same RTS. The radial updater first computes orbit X/Y, whereas the animation updater copies linked-owner X/Y; only the priority tail is shared.",
+      "members": [
+        {"address":"0x04A3B6","current_name":"Boss_JampanRadialLinkedObjectMainReturn","file":"src/bosses/jampan_support.s"},
+        {"address":"0x04A462","current_name":"Boss_JampanLinkedAnimationObjectMainReturn","file":"src/bosses/jampan_support.s"}
+      ]
     }
   ]
 }

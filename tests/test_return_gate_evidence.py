@@ -101,6 +101,67 @@ class ReturnGateEvidenceTests(unittest.TestCase):
                 self.assertIn(f"bne.s   {ret}", source)
                 self.assertIn(ret + ":", source)
 
+    def test_defeat_debris_returns_have_different_cadences(self) -> None:
+        self.assert_review(
+            "Skipped and emitted defeat-debris paths return here.",
+            ["0x047752", "0x050F3C"],
+        )
+        epsilon = (ROOT / "src/projectiles/epsilon_1_projectiles.s").read_text(
+            encoding="utf-8"
+        )
+        wolf = (
+            ROOT / "src/bosses/wolf_garopa_attack_effects_and_transition.s"
+        ).read_text(encoding="utf-8")
+        for source, owner, cadence in (
+            (epsilon, "Boss_Epsilon1UpdateRingObjectDefeatFall", "andi.w  #3,d0"),
+            (wolf, "Boss_WolfGaropaDefeatTransition", "btst    #0,(FrameCounter+1).w"),
+        ):
+            with self.subTest(owner=owner):
+                ret = owner + "Return"
+                self.assertIn(cadence, source)
+                self.assertEqual(2, source.count(f"bne.s   {ret}"))
+                self.assertIn("(Projectile_FindFreeSlotForward).l", source)
+                self.assertIn("(Projectile_InitType88).l", source)
+                self.assertIn(ret + ":", source)
+
+    def test_between_shots_returns_have_distinct_periods(self) -> None:
+        self.assert_review(
+            "The frames between shots return here.",
+            ["0x02CA3E", "0x02ED20"],
+        )
+        periodic = (ROOT / "src/enemies/jetsripper_stage_actors.s").read_text(
+            encoding="utf-8"
+        )
+        fish = (ROOT / "src/enemies/stage_11_fish.s").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("andi.w  #$1F,d0", periodic)
+        self.assertIn("bne.s   Enemy_TryPeriodicShot_Return", periodic)
+        self.assertIn("(Projectile_SpawnAimedArcFromEnemy).l", periodic)
+        self.assertIn("subq.w  #1,$48(a5)", fish)
+        self.assertIn("bne.s   Enemy_Stage11FishFireVolleyState_Return", fish)
+        self.assertIn("move.w  #8,$48(a5)", fish)
+        self.assertIn("move.w  #$40,$48(a5)", fish)
+
+    def test_animation_step_returns_share_timer_but_not_end_marker(self) -> None:
+        self.assert_review(
+            "The frames inside one step return here.",
+            ["0x02A764", "0x02A794"],
+        )
+        source = (ROOT / "src/actors/shared_object_helpers.s").read_text(
+            encoding="utf-8"
+        )
+        for routine in ("Anim_UpdateScriptAndHide", "Anim_UpdateLoopingScript"):
+            with self.subTest(routine=routine):
+                block = source.split(routine + ":", 1)[1].split(
+                    "; End of function " + routine, 1
+                )[0]
+                self.assertIn("subq.w  #1,$4C(a5)", block)
+                self.assertIn(f"bne.s   {routine}_Return", block)
+                self.assertIn(f"{routine}_Return:", block)
+        self.assertIn("andi.w  #$7FFF,2(a5)", source)
+        self.assertIn("bra.s   Anim_UpdateLoopingScript_ReadFrame", source)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -77,6 +77,59 @@ class BossPairEvidenceTests(unittest.TestCase):
         self.assertIn("or.w    d0,$E(a0)", source)
         self.assertIn("ori.w   #$2000,$E(a0)", source)
 
+    def test_terobuster_part_windows_differ_between_missile_attacks(self) -> None:
+        basis = (
+            "The pose cursor range and side field determine whether the two "
+            "fixed part slots are exchanged."
+        )
+        self.assertEqual(
+            ["0x038802", "0x0388CC"],
+            [member["address"] for member in self.reviews[basis]["members"]],
+        )
+        source = (ROOT / "src/bosses/terobuster_core.s").read_text(
+            encoding="utf-8"
+        )
+        for variant, low, high in (("A", "5", "$18"), ("B", "$10", "$20")):
+            with self.subTest(variant=variant):
+                entry = f"Boss_TerobusterMissileAttack{variant}Update"
+                bind = f"Boss_TerobusterMissileAttack{variant}BindPart"
+                block = source.split(entry + ":", 1)[1].split(
+                    bind + ":", 1
+                )[0]
+                slots = block.split("movea.w #(SixthEntityType-M68K_RAM),a0", 1)[1]
+                self.assertIn("#(SixthEntityType-M68K_RAM),a0", block)
+                self.assertIn("#(EleventhEntityType-M68K_RAM),a1", block)
+                self.assertIn("tst.w   $A(a5)", slots)
+                self.assertEqual(2, slots.count("exg     a0,a1"))
+                self.assertIn(f"cmpi.w  #{low},$58(a5)", slots)
+                self.assertIn(f"cmpi.w  #{high},$58(a5)", slots)
+
+    def test_jampan_priority_returns_share_comparison_tail(self) -> None:
+        basis = "The set- and clear-priority paths converge on this return."
+        self.assertEqual(
+            ["0x04A3B6", "0x04A462"],
+            [member["address"] for member in self.reviews[basis]["members"]],
+        )
+        source = (ROOT / "src/bosses/jampan_support.s").read_text(
+            encoding="utf-8"
+        )
+        for owner, clear, ret in (
+            ("Boss_JampanRadialLinkedObjectMain", "Boss_JampanClearRadialObjectPriorityFlag",
+             "Boss_JampanRadialLinkedObjectMainReturn"),
+            ("Boss_JampanLinkedAnimationObjectMain", "Boss_JampanClearAnimationObjectPriorityFlag",
+             "Boss_JampanLinkedAnimationObjectMainReturn"),
+        ):
+            with self.subTest(owner=owner):
+                block = source.split(owner + ":", 1)[1].split(
+                    "; End of function " + owner, 1
+                )[0]
+                self.assertIn("cmp.b   (PrimaryEntityAngle).w,d0", block)
+                self.assertIn(f"bhi.s   {clear}", block)
+                self.assertIn("ori.w   #$8000,$E(a5)", block)
+                self.assertIn(f"bra.s   {ret}", block)
+                self.assertIn("andi.w  #$7FFF,$E(a5)", block)
+                self.assertIn(ret + ":", block)
+
 
 if __name__ == "__main__":
     unittest.main()

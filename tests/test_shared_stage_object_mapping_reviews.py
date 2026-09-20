@@ -119,6 +119,29 @@ class SharedStageObjectMappingReviewTests(unittest.TestCase):
         self.assertNotIn("enemy, projectile, and boss paths", evidence[0])
         self.assertNotIn("enemy, projectile, and boss paths", evidence[2])
 
+    def test_teddy_pose_streams_have_distinct_static_consumers(self) -> None:
+        basis = (
+            "The named Stage 12 Teddy Bear state or initializer assigns this "
+            "mapping/duration stream directly to the object mapping field."
+        )
+        self.assertEqual(
+            ["0x1A0FD2", "0x1A0FD6"],
+            [member["address"] for member in self.reviews[basis]["members"]],
+        )
+        stage = (ROOT / "src/stages/stage_12_yacht.s").read_text(encoding="utf-8")
+        for address, stream, mapping, owner in (
+            ("0x1A0FD2", "Stage12_TeddyBearInitialPoseAnimation",
+             "Stage12_TeddyBearSpriteMappingP", "Stage12_TeddyBearDisableCollision"),
+            ("0x1A0FD6", "Stage12_TeddyBearPilotReleasePoseAnimation",
+             "Stage12_TeddyBearSpriteMappingI", "Stage12_TeddyBearPilotRelease"),
+        ):
+            with self.subTest(stream=stream):
+                self.assertIn(basis, self.records[address]["basis"])
+                self.assertEqual([f"{mapping}-*", "$FF"],
+                                 stream_words(self.source, stream))
+                block = stage.split(owner + ":", 1)[1].split("rts", 1)[0]
+                self.assertIn(f"move.l  #{stream},8(a5)", block)
+
 
 if __name__ == "__main__":
     unittest.main()

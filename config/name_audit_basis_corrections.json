@@ -48,6 +48,54 @@
       "current_name": "Entity_SetValkirieAuxiliarySlowNegativeVelocity",
       "old_basis": "The helper clears part flag six, arms timer four, and selects +$12000 or -$12000 horizontal velocity in field $1F8.",
       "new_basis": "The zero-$23E branch from the slow auxiliary entry stores signed -$12000 in $1F8(a5) and returns; the flag clear and timer write belong to the preceding entry."
+    },
+    {
+      "address": "0x016E84",
+      "current_name": "Physics_AccelerateHorizontalNegative_Store",
+      "old_basis": "The clamped and accelerated cases share this store.",
+      "new_basis": "This store writes unchanged D0 when the incoming horizontal velocity is strictly below -$2A000; otherwise the preceding path subtracts $A800. It does not clamp D0 to the threshold."
+    },
+    {
+      "address": "0x016E9E",
+      "current_name": "Physics_AccelerateHorizontalPositive_Store",
+      "old_basis": "The clamped and accelerated cases share this store.",
+      "new_basis": "This store writes unchanged D0 when the incoming horizontal velocity is at least +$2A000; otherwise the preceding path adds $A800. It does not clamp D0 to the threshold."
+    },
+    {
+      "address": "0x0149B2",
+      "current_name": "Physics_HandleLowerRightInnerTerrain_Dispatch",
+      "old_basis": "The mirror of the left inner dispatch.",
+      "new_basis": "The lower-right inner path indexes Physics_LowerRightInnerResponseTable with normalized D2, adds the Physics_HandleLowerLeftOuterTerrain base to the selected offset, then jumps through A4. Its preceding gates can set bits zero and two in 6(a5)."
+    },
+    {
+      "address": "0x014B80",
+      "current_name": "Physics_HandleUpperRightInnerTerrain_Dispatch",
+      "old_basis": "The mirror of the left inner dispatch.",
+      "new_basis": "The upper-right inner path indexes Physics_UpperRightInnerResponseTable with normalized D2, adds the Physics_HandleUpperLeftOuterTerrain base to the selected offset, then jumps through A4. Its preceding gate can set bit one in 6(a5)."
+    },
+    {
+      "address": "0x02A03C",
+      "current_name": "Projectile_InitValkirieBulletFromSource",
+      "old_basis": "The routine initializes type $480 and copies display, position, mapping, phase, lifetime, and packed size fields from the source object.",
+      "new_basis": "This entry writes type $480 to (a0), copies selected display and sprite fields plus X/Y from a1, writes parameters D3/D4 to $48/$4A, and chooses separate word or packed longword copies of source fields 8..$B according to destination flag bit six."
+    },
+    {
+      "address": "0x02A08A",
+      "current_name": "Projectile_CopyValkiriePackedSizeFields",
+      "old_basis": "The routine initializes type $480 and copies display, position, mapping, phase, lifetime, and packed size fields from the source object.",
+      "new_basis": "The destination-flag-bit-six branch copies one longword from 8(a1) to 8(a0) and returns. Type $480 and the other destination fields are written before this branch label."
+    },
+    {
+      "address": "0x014DFC",
+      "current_name": "Physics_PrepareVerticalOffset6",
+      "old_basis": "The second seed.",
+      "new_basis": "This helper loads 6 into D3 and branches to Physics_AlignFloorQuarterSubtractOffset; Physics_ApplyOffset6Sub10 calls it before subtracting ten from Y."
+    },
+    {
+      "address": "0x014EAE",
+      "current_name": "Physics_PrepareQuarterAddOffset3",
+      "old_basis": "The second seed.",
+      "new_basis": "This helper loads 3 into D3 and branches to Physics_AlignFloorQuarterAddOffset; Physics_ApplyOffset3Sub6 calls it before subtracting six from Y."
     }
   ]
 }
