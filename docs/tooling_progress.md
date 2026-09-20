@@ -1021,3 +1021,16 @@ separate evidence for eight initial fixed-point values. The seven scripts
 now have one exact-member review and test; the frame base has a unique
 exact-address basis. The old sentence is the 70th rejected generic basis.
 The queue remains 240 groups across 1,018 uses: nineteen reviewed, 221 open.
+
+The eight former `Player_DeathParticleSpriteMapping` records did not map the
+particles emitted by the fixed OAM loop. `Player_RenderDeathParticles` calls
+`Player_WriteDeathParticleSprite` repeatedly and appends that scratch OAM
+buffer first; only then does it shift `FrameCounter`, mask with `$1C`, and
+index an eight-longword table to write a mapping pointer to player field
+`8(a5)`. The table, eight mappings, and six referenced art-segment names are
+now `DeathSequence`-scoped, while the true OAM particle writer retains its
+name. Their audit records preserve the prior semantic names and original
+IDA provenance; an exact-member review and test pin the operation order,
+pointer table, and art references. Three obsolete sentences (particle-loop,
+table, and mapping) join the rejected generic detector, now 73 entries. The
+queue remains 240 groups across 1,018 uses: twenty reviewed, 220 open.

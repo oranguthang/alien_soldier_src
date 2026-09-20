@@ -292,21 +292,22 @@ Player_DeathParticleLoop:                               ; CODE XREF: Player_Rend
                 bpl.s   Player_DeathParticleLoop
                 move.w  #$FFFF,(a1)+
                 jsr     (Sprite_AppendOAMEntries).l
+; Particle OAM is emitted; select the player's death-sequence mapping for later drawing
                 move.w  (FrameCounter).w,d0
                 asl.w   #2,d0
                 andi.w  #$1C,d0
-                move.l  Player_DeathParticleAnimationFrames(pc,d0.w),8(a5)
+                move.l  Player_DeathSequenceAnimationFrames(pc,d0.w),8(a5)
                 rts
 ; End of function Player_RenderDeathParticles
 ; ---------------------------------------------------------------------------
-Player_DeathParticleAnimationFrames:    dc.l    Player_DeathParticleSpriteMapping00  ; DATA XREF: Player_RenderDeathParticles+2E   r  ; was: off_17242
-                dc.l    Player_DeathParticleSpriteMapping01
-                dc.l    Player_DeathParticleSpriteMapping02
-                dc.l    Player_DeathParticleSpriteMapping03
-                dc.l    Player_DeathParticleSpriteMapping04
-                dc.l    Player_DeathParticleSpriteMapping05
-                dc.l    Player_DeathParticleSpriteMapping06
-                dc.l    Player_DeathParticleSpriteMapping07
+Player_DeathSequenceAnimationFrames:    dc.l    Player_DeathSequenceSpriteMapping00  ; DATA XREF: Player_RenderDeathParticles+2E   r  ; was: off_17242
+                dc.l    Player_DeathSequenceSpriteMapping01
+                dc.l    Player_DeathSequenceSpriteMapping02
+                dc.l    Player_DeathSequenceSpriteMapping03
+                dc.l    Player_DeathSequenceSpriteMapping04
+                dc.l    Player_DeathSequenceSpriteMapping05
+                dc.l    Player_DeathSequenceSpriteMapping06
+                dc.l    Player_DeathSequenceSpriteMapping07
 
 ; Creates single death particle sprite with tile and position data
 Player_WriteDeathParticleSprite:                        ; CODE XREF: Player_RenderDeathParticles:Player_DeathParticleLoop   p  ; was: sub_17262

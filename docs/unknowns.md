@@ -11553,3 +11553,9 @@ base in `$35C(a5)`, and the interpreter adds each script's signed offset to
 it. The separate `$057172` table initializes eight pose-channel values, not
 interpolation delays. These are static data-flow facts; the visible pose
 represented by each stream has not been independently identified.
+
+The player death routine emits fixed particle sprites into scratch OAM, then
+sets the player object's mapping pointer from an eight-entry frame table.
+The associated sprite art is reached through those death-sequence mappings,
+not through the particle writer. The static ownership is established, but
+the exact visual content of the eight player frames has not been confirmed.

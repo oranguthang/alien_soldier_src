@@ -16,6 +16,75 @@ DEFINITION = re.compile(
 
 
 class NameAuditTests(unittest.TestCase):
+    def test_death_sequence_mappings_are_separate_from_particle_oam(self) -> None:
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        by_address = {record["address"]: record for record in records}
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item
+            for item in reviews
+            if item["basis"].startswith("After appending particle OAM")
+        )
+        expected = [f"Player_DeathSequenceSpriteMapping{index:02}" for index in range(8)]
+        self.assertEqual(expected, [member["current_name"] for member in review["members"]])
+        for index, member in enumerate(review["members"]):
+            record = by_address[member["address"]]
+            self.assertEqual(expected[index], record["current_name"])
+            self.assertEqual(
+                f"Player_DeathParticleSpriteMapping{index:02}",
+                record["previous_name"],
+            )
+            self.assertEqual(review["basis"], record["basis"][0])
+        table_record = by_address["0x017242"]
+        self.assertEqual("Player_DeathSequenceAnimationFrames", table_record["current_name"])
+        self.assertEqual("Player_DeathParticleAnimationFrames", table_record["previous_name"])
+        self.assertIn("first appends particle OAM", " ".join(table_record["basis"]))
+        self.assertIn("only after particle OAM", by_address["0x01721E"]["basis"][0])
+        player = (ROOT / "src/player/rendering_and_defeat.s").read_text(
+            encoding="utf-8"
+        )
+        mappings = (ROOT / "src/data/player_special_and_death_sprite_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        art = (ROOT / "src/data/player_sprite_art.s").read_text(encoding="utf-8")
+        self.assertNotRegex(
+            player + mappings + art,
+            r"\bPlayer_DeathParticle(?:AnimationFrames|SpriteMapping|SpriteArt)",
+        )
+        routine = player.split("Player_RenderDeathParticles:", 1)[1].split(
+            "Player_DeathSequenceAnimationFrames:", 1
+        )[0]
+        self.assertLess(
+            routine.index("bsr.w   Player_WriteDeathParticleSprite"),
+            routine.index("Sprite_AppendOAMEntries"),
+        )
+        self.assertLess(
+            routine.index("Sprite_AppendOAMEntries"),
+            routine.index("Player_DeathSequenceAnimationFrames(pc,d0.w),8(a5)"),
+        )
+        self.assertIn("andi.w  #$1C,d0", routine)
+        table = player.split("Player_DeathSequenceAnimationFrames:", 1)[1].split(
+            "Player_WriteDeathParticleSprite:", 1
+        )[0]
+        self.assertEqual(
+            expected,
+            re.findall(r"\bdc\.l\s+(Player_DeathSequenceSpriteMapping\d\d)", table),
+        )
+        art_records = [
+            record
+            for record in records
+            if (record["previous_name"] or "").startswith("Player_DeathParticleSpriteArt")
+        ]
+        self.assertEqual(6, len(art_records))
+        for record in art_records:
+            with self.subTest(name=record["current_name"]):
+                self.assertTrue(record["current_name"].startswith("Player_DeathSequenceSpriteArt"))
+                self.assertIn(record["current_name"] + ":", art)
+                self.assertIn(record["current_name"], mappings)
+                self.assertIn("Player_DeathSequenceSpriteMapping", record["basis"][0])
+
     def test_destroyer_proto_mappings_follow_part_projectile_and_intro_owners(self) -> None:
         records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
         reviewed = [

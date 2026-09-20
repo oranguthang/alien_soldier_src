@@ -86,6 +86,9 @@ GENERIC_NAME_BASES = (
     "Destroyer Proto part and projectile frame tables select this ROM-ordered sprite mapping record; the suffix does not guess a visual pose.",
     "Boss_Shiper pointer tables or direct assignments select this sprite mapping; the numeric suffix preserves ROM order without guessing a visual pose.",
     "Direct references from the Medusa state handlers identify this table as a state-selected pose script, pose-frame source, or initial interpolation-delay block.",
+    "Each particle takes its own frame from the table below and is written straight into the sprite buffer.",
+    "Eight long pointers covering the death particle animation.",
+    "Player_DeathParticleAnimationFrames selects this sprite mapping at the stated frame-counter index before rendering the death particles.",
 )
 
 

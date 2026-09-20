@@ -503,6 +503,20 @@
         {"address":"0x05711A","current_name":"Medusa_State10PoseScript","file":"src/bosses/medusa.s"},
         {"address":"0x057120","current_name":"Medusa_State8And12PoseScript","file":"src/bosses/medusa.s"}
       ]
+    },
+    {
+      "basis": "After appending particle OAM, Player_RenderDeathParticles masks FrameCounter to $1C and selects this ROM-ordered death-sequence mapping through Player_DeathSequenceAnimationFrames for player field 8(a5).",
+      "reason": "Player_RenderDeathParticles first fills a scratch OAM buffer by repeatedly calling Player_WriteDeathParticleSprite and calls Sprite_AppendOAMEntries. Only afterward does it shift FrameCounter by two, mask it with $1C, and use the resulting longword offset to write one of these eight mapping pointers into player field 8(a5). The eight dc.l entries in Player_DeathSequenceAnimationFrames point to these records in ROM order. Their art sources are referenced by the mapping records, not by the particle OAM writer; the former DeathParticle mapping/art names conflated the two paths. This review establishes static ownership and selection order, not a visually confirmed death pose.",
+      "members": [
+        {"address":"0x0E8F9A","current_name":"Player_DeathSequenceSpriteMapping00","file":"src/data/player_special_and_death_sprite_mappings.s"},
+        {"address":"0x0E8FC2","current_name":"Player_DeathSequenceSpriteMapping01","file":"src/data/player_special_and_death_sprite_mappings.s"},
+        {"address":"0x0E8FEA","current_name":"Player_DeathSequenceSpriteMapping02","file":"src/data/player_special_and_death_sprite_mappings.s"},
+        {"address":"0x0E9012","current_name":"Player_DeathSequenceSpriteMapping03","file":"src/data/player_special_and_death_sprite_mappings.s"},
+        {"address":"0x0E903A","current_name":"Player_DeathSequenceSpriteMapping04","file":"src/data/player_special_and_death_sprite_mappings.s"},
+        {"address":"0x0E904A","current_name":"Player_DeathSequenceSpriteMapping05","file":"src/data/player_special_and_death_sprite_mappings.s"},
+        {"address":"0x0E905A","current_name":"Player_DeathSequenceSpriteMapping06","file":"src/data/player_special_and_death_sprite_mappings.s"},
+        {"address":"0x0E906A","current_name":"Player_DeathSequenceSpriteMapping07","file":"src/data/player_special_and_death_sprite_mappings.s"}
+      ]
     }
   ]
 }

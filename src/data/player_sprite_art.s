@@ -504,18 +504,18 @@ Player_SpecialAttackSecondarySpriteArtAPiece01: binclude "data/artunc/sprite_FCE
 Player_SpecialAttackSecondarySpriteArtAPiece01_End:     ; was: sprite_FCEBE_End
 Player_SpecialAttackSecondarySpriteArtAPiece00: binclude "data/artunc/sprite_FCF40.bin"  ; was: sprite_FCF40
 Player_SpecialAttackSecondarySpriteArtAPiece00_End:     ; was: sprite_FCF40_End
-Player_DeathParticleSpriteArt00Piece01:         binclude "data/artunc/sprite_FCFC2.bin"  ; was: sprite_FCFC2
-Player_DeathParticleSpriteArt00Piece01_End:             ; was: sprite_FCFC2_End
-Player_DeathParticleSpriteArt00Piece00:         binclude "data/artunc/sprite_FD0C4.bin"  ; was: sprite_FD0C4
-Player_DeathParticleSpriteArt00Piece00_End:             ; was: sprite_FD0C4_End
-Player_DeathParticleSpriteArt03Piece01:         binclude "data/artunc/sprite_FD186.bin"  ; was: sprite_FD186
-Player_DeathParticleSpriteArt03Piece01_End:             ; was: sprite_FD186_End
-Player_DeathParticleSpriteArt00Piece04:         binclude "data/artunc/sprite_FD1E8.bin"  ; was: sprite_FD1E8
-Player_DeathParticleSpriteArt00Piece04_End:             ; was: sprite_FD1E8_End
-Player_DeathParticleSpriteArt00Piece03:         binclude "data/artunc/sprite_FD26A.bin"  ; was: sprite_FD26A
-Player_DeathParticleSpriteArt00Piece03_End:             ; was: sprite_FD26A_End
-Player_DeathParticleSpriteArt00Piece02:         binclude "data/artunc/sprite_FD2EC.bin"  ; was: sprite_FD2EC
-Player_DeathParticleSpriteArt00Piece02_End:             ; was: sprite_FD2EC_End
+Player_DeathSequenceSpriteArt00Piece01:         binclude "data/artunc/sprite_FCFC2.bin"  ; was: sprite_FCFC2
+Player_DeathSequenceSpriteArt00Piece01_End:             ; was: sprite_FCFC2_End
+Player_DeathSequenceSpriteArt00Piece00:         binclude "data/artunc/sprite_FD0C4.bin"  ; was: sprite_FD0C4
+Player_DeathSequenceSpriteArt00Piece00_End:             ; was: sprite_FD0C4_End
+Player_DeathSequenceSpriteArt03Piece01:         binclude "data/artunc/sprite_FD186.bin"  ; was: sprite_FD186
+Player_DeathSequenceSpriteArt03Piece01_End:             ; was: sprite_FD186_End
+Player_DeathSequenceSpriteArt00Piece04:         binclude "data/artunc/sprite_FD1E8.bin"  ; was: sprite_FD1E8
+Player_DeathSequenceSpriteArt00Piece04_End:             ; was: sprite_FD1E8_End
+Player_DeathSequenceSpriteArt00Piece03:         binclude "data/artunc/sprite_FD26A.bin"  ; was: sprite_FD26A
+Player_DeathSequenceSpriteArt00Piece03_End:             ; was: sprite_FD26A_End
+Player_DeathSequenceSpriteArt00Piece02:         binclude "data/artunc/sprite_FD2EC.bin"  ; was: sprite_FD2EC
+Player_DeathSequenceSpriteArt00Piece02_End:             ; was: sprite_FD2EC_End
 WeaponStateIconSpriteArtA:                      binclude "data/artunc/sprite_FD30E.bin"  ; was: sprite_FD30E
 WeaponStateIconSpriteArtA_End:                          ; was: sprite_FD30E_End
 WeaponStateIconSpriteArtB:                      binclude "data/artunc/sprite_FD62E.bin"  ; was: sprite_FD62E
