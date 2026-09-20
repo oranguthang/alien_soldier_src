@@ -441,7 +441,7 @@ Valkirie_State10PartMotionCommands: dc.w    $4D, $7840, $CB60, $F808, $F808, $CB
 Valkirie_State10PartHideCommands:   dc.w    $BF00, $540, $600, $6C0, 0  ; was: word_55C82
                                         ; DATA XREF: Entity_UpdateValkirieBattleState10+40   o
 
-; Allocate one Valkirie bullet when the global projectile gate permits it
+; Attempt a Valkirie bullet only on frames with FrameCounter bit zero clear
 Projectile_SpawnValkirieBullet:                         ; CODE XREF: Entity_StartValkirieBattleStateE+88   p  ; was: sub_55C8C
                                         ; Entity_UpdateValkirieBattleState10:Entity_RenderValkirieBattleState10   p
                 movea.w #(NineteenthEntityType-M68K_RAM),a1

@@ -188,7 +188,7 @@ Projectile_UpdateDirectionalSpawnerReturn:              ; CODE XREF: Projectile_
                                         ; Projectile_UpdateDirectionalSpawner+A2   j
                 rts
 ; End of function Projectile_UpdateDirectionalSpawner
-; Applies downward acceleration and horizontal deceleration to projectile
+; Apply gravity and fixed-step horizontal drag without clamping at zero
 Projectile_UpdateGravityAndHorizontalDrag:              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A272
                 subq.w  #1,$48(a5)
                 bpl.s   Projectile_UpdateGravityAndHorizontalDragActive

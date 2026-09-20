@@ -1474,3 +1474,14 @@ delay, stepping Y toward `$F0`, and enabling the alternate oscillation state.
 Two lightweight regression tests pin these control-flow and instruction facts.
 The queue is 205 repeated groups across 874 uses: fifty-four reviewed and
 151 open.
+
+Three projectile-control claims were then split into nine exact-address
+entries. The Valkirie bullet spawner gates on `FrameCounter+1` bit zero and a
+free-slot search, not on a global projectile flag; its return and successful
+tail-init are separate labels. The type-`$480` update has a lifetime-underflow
+removal path, a frame-phase blink path, and a shared return. The gravity/drag
+handler likewise has a timer path, an active branch adding `$4000` to vertical
+velocity, and a negative-horizontal branch; its `$2000` horizontal step has
+no clamp at zero. Source comments, audit records, and three lightweight tests
+now preserve those distinctions. The queue is 202 repeated groups across
+865 uses: fifty-four reviewed and 148 open.
