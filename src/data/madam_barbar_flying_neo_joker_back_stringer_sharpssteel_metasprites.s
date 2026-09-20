@@ -1,42 +1,42 @@
 ; Metasprite definitions for Madam Barbar, Flying Neo, Joker,
 ; Back Stringer, and Sharpssteel
 ; Madam Barbar directional frames and metasprite definition
-Boss_MadamBarbarRotationFramesA:    dc.l    Boss_MadamBarbarSpriteMapping07  ; DATA XREF: ROM:00034E60   o  ; was: off_34DB6
+Boss_MadamBarbarRotationFramesA:    dc.l    Boss_MadamBarbarRotationSetAFrame07  ; DATA XREF: ROM:00034E60   o  ; was: off_34DB6
                                         ; ROM:00034E78   o
-                dc.l    Boss_MadamBarbarSpriteMapping06
-                dc.l    Boss_MadamBarbarSpriteMapping04
-                dc.l    Boss_MadamBarbarSpriteMapping01
-                dc.l    Boss_MadamBarbarSpriteMapping02
-                dc.l    Boss_MadamBarbarSpriteMapping00
-                dc.l    Boss_MadamBarbarSpriteMapping03
-                dc.l    Boss_MadamBarbarSpriteMapping05
-Boss_MadamBarbarRotationFramesB:    dc.l    Boss_MadamBarbarSpriteMapping05  ; DATA XREF: ROM:00034E5C   o  ; was: off_34DD6
+                dc.l    Boss_MadamBarbarRotationSetAFrame06
+                dc.l    Boss_MadamBarbarRotationSetAFrame04
+                dc.l    Boss_MadamBarbarRotationSetAFrame01
+                dc.l    Boss_MadamBarbarRotationSetAFrame02
+                dc.l    Boss_MadamBarbarRotationSetAFrame00
+                dc.l    Boss_MadamBarbarRotationSetAFrame03
+                dc.l    Boss_MadamBarbarRotationSetAFrame05
+Boss_MadamBarbarRotationFramesB:    dc.l    Boss_MadamBarbarRotationSetAFrame05  ; DATA XREF: ROM:00034E5C   o  ; was: off_34DD6
                                         ; ROM:00034E74   o
-                dc.l    Boss_MadamBarbarSpriteMapping03
-                dc.l    Boss_MadamBarbarSpriteMapping00
-                dc.l    Boss_MadamBarbarSpriteMapping02
-                dc.l    Boss_MadamBarbarSpriteMapping01
-                dc.l    Boss_MadamBarbarSpriteMapping04
-                dc.l    Boss_MadamBarbarSpriteMapping06
-                dc.l    Boss_MadamBarbarSpriteMapping07
-Boss_MadamBarbarRotationFramesC:    dc.l    Boss_MadamBarbarSpriteMapping08  ; DATA XREF: ROM:00034E94   o  ; was: off_34DF6
+                dc.l    Boss_MadamBarbarRotationSetAFrame03
+                dc.l    Boss_MadamBarbarRotationSetAFrame00
+                dc.l    Boss_MadamBarbarRotationSetAFrame02
+                dc.l    Boss_MadamBarbarRotationSetAFrame01
+                dc.l    Boss_MadamBarbarRotationSetAFrame04
+                dc.l    Boss_MadamBarbarRotationSetAFrame06
+                dc.l    Boss_MadamBarbarRotationSetAFrame07
+Boss_MadamBarbarRotationFramesC:    dc.l    Boss_MadamBarbarRotationSetBFrame00  ; DATA XREF: ROM:00034E94   o  ; was: off_34DF6
                                         ; ROM:00034E9C   o
-                dc.l    Boss_MadamBarbarSpriteMapping09
-                dc.l    Boss_MadamBarbarSpriteMapping10
-                dc.l    Boss_MadamBarbarSpriteMapping11
-                dc.l    Boss_MadamBarbarSpriteMapping12
-                dc.l    Boss_MadamBarbarSpriteMapping13
-                dc.l    Boss_MadamBarbarSpriteMapping14
-                dc.l    Boss_MadamBarbarSpriteMapping15
-Boss_MadamBarbarRotationFramesD:    dc.l    Boss_MadamBarbarSpriteMapping15  ; DATA XREF: ROM:00034E7C   o  ; was: off_34E16
+                dc.l    Boss_MadamBarbarRotationSetBFrame01
+                dc.l    Boss_MadamBarbarRotationSetBFrame02
+                dc.l    Boss_MadamBarbarRotationSetBFrame03
+                dc.l    Boss_MadamBarbarRotationSetBFrame04
+                dc.l    Boss_MadamBarbarRotationSetBFrame05
+                dc.l    Boss_MadamBarbarRotationSetBFrame06
+                dc.l    Boss_MadamBarbarRotationSetBFrame07
+Boss_MadamBarbarRotationFramesD:    dc.l    Boss_MadamBarbarRotationSetBFrame07  ; DATA XREF: ROM:00034E7C   o  ; was: off_34E16
                                         ; ROM:00034E84   o
-                dc.l    Boss_MadamBarbarSpriteMapping14
-                dc.l    Boss_MadamBarbarSpriteMapping13
-                dc.l    Boss_MadamBarbarSpriteMapping12
-                dc.l    Boss_MadamBarbarSpriteMapping11
-                dc.l    Boss_MadamBarbarSpriteMapping10
-                dc.l    Boss_MadamBarbarSpriteMapping09
-                dc.l    Boss_MadamBarbarSpriteMapping08
+                dc.l    Boss_MadamBarbarRotationSetBFrame06
+                dc.l    Boss_MadamBarbarRotationSetBFrame05
+                dc.l    Boss_MadamBarbarRotationSetBFrame04
+                dc.l    Boss_MadamBarbarRotationSetBFrame03
+                dc.l    Boss_MadamBarbarRotationSetBFrame02
+                dc.l    Boss_MadamBarbarRotationSetBFrame01
+                dc.l    Boss_MadamBarbarRotationSetBFrame00
 Boss_MadamBarbarInlineSpriteDescriptorA:    dc.w    $6390, $F00, $F0F0  ; DATA XREF: ROM:00034E58   o  ; was: word_34E36
                                         ; ROM:00034E70   o
 Boss_MadamBarbarInlineSpriteDescriptorB:    dc.w    $63A0, $A00, $F4F4  ; DATA XREF: ROM:00034E4C   o  ; was: word_34E3C

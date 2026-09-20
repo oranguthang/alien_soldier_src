@@ -16,6 +16,52 @@ DEFINITION = re.compile(
 
 
 class NameAuditTests(unittest.TestCase):
+    def test_madam_barbar_mapping_names_follow_four_rotation_tables(self) -> None:
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        reviewed = [
+            record
+            for record in records
+            if re.fullmatch(
+                r"Boss_MadamBarbarSpriteMapping\d\d", record["previous_name"] or ""
+            )
+        ]
+        self.assertEqual(16, len(reviewed))
+        self.assertEqual(16, len({record["basis"][0] for record in reviewed}))
+        mappings = (ROOT / "src/data/madam_barbar_sprite_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        descriptors = (
+            ROOT / "src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"
+        ).read_text(encoding="utf-8")
+        self.assertNotRegex(
+            mappings + descriptors, r"\bBoss_MadamBarbarSpriteMapping\d\d\b"
+        )
+        self.assertEqual(
+            {record["current_name"] for record in reviewed},
+            set(
+                re.findall(
+                    r"(?m)^(Boss_MadamBarbarRotationSet[AB]Frame\d\d):", mappings
+                )
+            ),
+        )
+        expected = {
+            "A": ("A", ["07", "06", "04", "01", "02", "00", "03", "05"]),
+            "B": ("A", ["05", "03", "00", "02", "01", "04", "06", "07"]),
+            "C": ("B", [f"{index:02}" for index in range(8)]),
+            "D": ("B", [f"{index:02}" for index in reversed(range(8))]),
+        }
+        for table, (family, suffixes) in expected.items():
+            section = descriptors.split(f"Boss_MadamBarbarRotationFrames{table}:", 1)[1].split(
+                "\nBoss_", 1
+            )[0]
+            self.assertEqual(
+                suffixes,
+                re.findall(
+                    rf"\bdc\.l\s+Boss_MadamBarbarRotationSet{family}Frame(\d\d)\b",
+                    section,
+                ),
+            )
+
     def test_xi_tiger_mapping_names_follow_forward_reverse_tables(self) -> None:
         records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
         reviewed = [

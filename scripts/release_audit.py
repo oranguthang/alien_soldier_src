@@ -81,6 +81,7 @@ GENERIC_NAME_BASES = (
     "Boss_Antroid pointer tables or direct assignments select this sprite mapping; the numeric suffix preserves ROM order without guessing a visual pose.",
     "Boss_Jetsripper pointer tables or direct assignments select this sprite mapping; the numeric suffix preserves ROM order without guessing a visual pose.",
     "Boss_XiTiger pointer tables or direct assignments select this sprite mapping; the numeric suffix preserves ROM order without guessing a visual pose.",
+    "Boss_MadamBarbar pointer tables or direct assignments select this sprite mapping; the numeric suffix preserves ROM order without guessing a visual pose.",
 )
 
 

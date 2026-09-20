@@ -898,3 +898,12 @@ backed by a regression test of all 17 targets, mapping terminators, and the
 seven-entry selector table in `shared_enemy_helpers.s`. It does not assert
 that every selector is reached in every runtime state or assign visual poses.
 The 243 groups remain; ten are reviewed and 233 open.
+
+The former 16-way Madam Barbar mapping sentence claimed pointer tables or
+direct assignments, but all 16 records belong to two eight-frame rotation
+sets. Table A selects the first set in a non-ROM permutation and B reverses
+that exact order; C selects the second set in ROM order and D reverses it.
+The source and exact-address audit now name the two sets and record each
+table slot. A regression test pins all four pointer sequences. The old
+sentence is the 66th rejected generic basis; the queue is 242 groups across
+1,050 uses: ten reviewed, 232 open.
