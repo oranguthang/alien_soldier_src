@@ -1625,3 +1625,16 @@ headerless byte-stream DMA parsers really do have identical four-instruction
 recorded in the accepted review. Four focused tests pin these source facts.
 The queue is now 191 repeated groups across 836 uses, seventy-six reviewed
 and 115 open. No emulator or visual identity claim was involved.
+
+Five generic shared claims were split by exact address and role. The weapon
+setup CONTROL TEST loop is executable code that reads and renders the separate
+eight-record layout; it is not itself a layout record. Stage 4 and Stage 5
+visual-asset loaders are distinct dispatch-table slots and submit different
+tile-command streams despite their former A/B names. Valkirie damage-flash
+entry logic and its shared RTS, and Sirene's periodic-projectile initializer
+and its early/fallthrough RTS, now have role-specific evidence. Finally,
+Z-Leo ending particles and Shield Viper pattern phase B have positive,
+different write/call evidence in place of the shared negative sentence about
+palette memory. Focused static tests pin all five distinctions. The queue is
+186 repeated groups across 826 uses: seventy-six reviewed, 110 open. No
+visual boss ownership was inferred.
