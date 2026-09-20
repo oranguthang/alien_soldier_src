@@ -1683,3 +1683,13 @@ initial health values, post-contact targets, and flip-bit sources remain
 explicitly distinct. Focused source tests pin each common prefix and its
 variant-specific branch. The queue is still 183 groups across 820 uses, with
 ninety-two reviewed and 91 open; no source ASM or gameplay visual claim changed.
+
+The two Jampan entries formerly justified by the same generic claim now name
+their exact branches: unsigned screen-threshold movement updates the X word
+and shared row, whereas nonzero difficulty selects a $10 timer instead of
+$40. Three genuinely shared return gates have exact-member reviews: zero
+animation requests in enemy/projectile tables, paced/full-pool exits for two
+spawners, and timer/terrain/allocation exits for two-speed shots. Tests check
+the source instructions and distinct table or object roles. The queue is
+182 repeated groups across 818 uses, with ninety-five reviewed and 87 open.
+No ROM code or visual assertion changed.

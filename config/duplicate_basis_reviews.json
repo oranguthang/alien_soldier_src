@@ -1190,6 +1190,30 @@
         {"address":"0x04E5F8","current_name":"Gfx_ShieldViperAdvanceHorizontalFlipLoop","file":"src/bosses/shield_viper_attacks.s"},
         {"address":"0x04E630","current_name":"Gfx_ShieldViperAdvanceForcedHorizontalFlipLoop","file":"src/bosses/shield_viper_attacks.s"}
       ]
+    },
+    {
+      "basis": "A zero request leaves the current animation in place.",
+      "reason": "Both animation updaters load request word $5C(a5) into d0 and branch to their own RTS when zero, before either writes the animation pointer at 8(a5) or clears cursor $C(a5). Nonzero requests subtract four and index different tables: PeriodicShotEnemySpriteAnimationPointers for the enemy and Enemy_ProjectileAnimationPointers for the projectile. Only the zero-request gate is common.",
+      "members": [
+        {"address":"0x02C982","current_name":"Anim_UpdateEnemyAnimation_Return","file":"src/enemies/jetsripper_stage_actors.s"},
+        {"address":"0x02CA8E","current_name":"Anim_UpdateProjectileAnimation_Return","file":"src/enemies/jetsripper_stage_actors.s"}
+      ]
+    },
+    {
+      "basis": "Both the paced frames and a full pool return here.",
+      "reason": "Effect_SpawnParticleLoop and Projectile_FallingSpawner each decrement timer $48(a5) and branch to their own RTS while it remains nonnegative. After reloading that timer with two, both call Projectile_FindFreeSlotForward and branch to the same local RTS on nonzero allocation result. Their spawned object types and setup paths differ; this sentence states only the two return conditions.",
+      "members": [
+        {"address":"0x02A554","current_name":"Effect_SpawnParticleLoop_Return","file":"src/actors/shared_object_helpers.s"},
+        {"address":"0x02A5B4","current_name":"Projectile_FallingSpawner_Return","file":"src/actors/shared_object_helpers.s"}
+      ]
+    },
+    {
+      "basis": "An active initial timer, clear terrain test, or failed impact allocation returns through this RTS.",
+      "reason": "Both type-$148 and type-$254 two-speed collision handlers decrement $48(a5) during phase zero and branch to their own RTS while it is nonnegative. Their terrain path calls Collision_CheckProjectileTile and branches there on zero; their impact path calls Projectile_FindFreeSlotReverse and branches there on nonzero. The record names and source comments retain the distinct object-table types; this review covers only the three common return gates.",
+      "members": [
+        {"address":"0x02B2EE","current_name":"Projectile_TwoSpeedShotReturn","file":"src/projectiles/directional_and_gravity_shots.s"},
+        {"address":"0x02B43A","current_name":"Projectile_Type254TwoSpeedShotReturn","file":"src/projectiles/directional_and_gravity_shots.s"}
+      ]
     }
   ]
 }
