@@ -455,7 +455,7 @@
     {
       "id": "generic_name_evidence_bases",
       "status": "partial",
-      "reason": "The curated 98-sentence detector has zero matches after reviewing palette-command, weapon-setup, message-dispatch, weapon-state, directional-spawner, Valkirie-pose, Sirene-position, Medusa-pose, Sirene-pose, shared-facing, defeat-blink, Missiray-loop, Medusa-velocity, shared-sprite, Bugmax-frame, Shield Viper mapping, Antroid mapping, Jetsripper mapping, Xi-Tiger mapping, Madam Barbar mapping, Terobuster mapping, Destroyer Proto mapping, Sniper Honeyviper tentacle mapping, Medusa pose-data, player death-sequence, Sharpssteel pose-command/collision/blade-graphics, Medusa falling-part/spawn-sequence, Jampan orbit-table, Sirene type-$490/battle-effect, weapon-setup highlight-palette, midgame lightning-mapping, Wolf Garopa type-$424/orb, Missiray indexed-transfer, HBlank copy-window, Valkirie auxiliary-velocity, Seven Forces palette, scroll-DMA RAM, Stage 12 Teddy Bear streams, tilemap transfer descriptors, and shared projectile animations. Of 159 repeated-basis groups, one hundred forty-two have exact-member reviews and 17 still require decisions; the Xi-Tiger cutscene load sources now have separate RAM/VRAM route evidence; shared-explosion entry roles and 2/4/8-tick projectile consumers have distinct evidence, while shared floater, Stage 10 beetle, and primary/alternate muzzle-layout groups have exact-member reviews. The muzzle X-mirroring bit condition was corrected against the branch instructions. Two executable weapon-setup text handlers, one two-list Continue palette record, three indirectly selected airborne Valkirie scripts, the Medusa and Sirene frame-data bases, three distinct palette-reset entry points, and the separate Medusa and Sirene root/dispatcher/table roles were removed from otherwise shared claims. Zero detector matches do not prove all 15,843 name records semantically correct.",
+      "reason": "The curated 98-sentence detector has zero matches after reviewing palette-command, weapon-setup, message-dispatch, weapon-state, directional-spawner, Valkirie-pose, Sirene-position, Medusa-pose, Sirene-pose, shared-facing, defeat-blink, Missiray-loop, Medusa-velocity, shared-sprite, Bugmax-frame, Shield Viper mapping, Antroid mapping, Jetsripper mapping, Xi-Tiger mapping, Madam Barbar mapping, Terobuster mapping, Destroyer Proto mapping, Sniper Honeyviper tentacle mapping, Medusa pose-data, player death-sequence, Sharpssteel pose-command/collision/blade-graphics, Medusa falling-part/spawn-sequence, Jampan orbit-table, Sirene type-$490/battle-effect, weapon-setup highlight-palette, midgame lightning-mapping, Wolf Garopa type-$424/orb, Missiray indexed-transfer, HBlank copy-window, Valkirie auxiliary-velocity, Seven Forces palette, scroll-DMA RAM, Stage 12 Teddy Bear streams, tilemap transfer descriptors, and shared projectile animations. Of 158 repeated-basis groups, one hundred forty-five have exact-member reviews and 13 still require decisions; the Xi-Tiger cutscene load sources now have separate RAM/VRAM route evidence; shared-explosion entry roles and 2/4/8-tick projectile consumers have distinct evidence, while shared floater, Stage 10 beetle, and primary/alternate muzzle-layout groups have exact-member reviews. The muzzle X-mirroring bit condition was corrected against the branch instructions. Two executable weapon-setup text handlers, one two-list Continue palette record, three indirectly selected airborne Valkirie scripts, the Medusa and Sirene frame-data bases, three distinct palette-reset entry points, and the separate Medusa and Sirene root/dispatcher/table roles were removed from otherwise shared claims. Zero detector matches do not prove all 15,843 name records semantically correct.",
       "registry": "NAME-002",
       "control": "make release-audit recounts the curated set of 98 known generic basis sentences, validates the exact members in config/duplicate_basis_reviews.json, and refuses tag-ready status until both generic_evidence_bases and unreviewed_duplicate_basis_groups are zero."
     },
@@ -725,12 +725,12 @@
     "modules": 398,
     "name_audit_records": 15843,
     "provenance_mappings": 16053,
-    "reviewed_duplicate_basis_groups": 142,
+    "reviewed_duplicate_basis_groups": 145,
     "ram_fields": 1293,
     "resolved_branch_targets": 16102,
     "runtime_expectations": 78,
     "runtime_scenarios": 12,
     "tracked_text_files": 546,
-    "unreviewed_duplicate_basis_groups": 17
+    "unreviewed_duplicate_basis_groups": 13
   }
 }

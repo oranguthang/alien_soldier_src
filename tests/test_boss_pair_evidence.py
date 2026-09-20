@@ -157,6 +157,53 @@ class BossPairEvidenceTests(unittest.TestCase):
                     self.assertIn(instruction, body)
                 self.assertIn(f"blt.s   Object_DestroyerMK2BouncingPart{variant}FallReturn", body)
 
+    def test_terobuster_exit_orders_use_different_cursor_pairs_and_tests(self) -> None:
+        basis = "This block chooses the two terminal cursor values according to side field $0A."
+        self.assertEqual(
+            ["0x0387CC", "0x038886"],
+            [member["address"] for member in self.reviews[basis]["members"]],
+        )
+        source = (ROOT / "src/bosses/terobuster_core.s").read_text(
+            encoding="utf-8"
+        )
+        for variant, first, second, branch in (
+            ("A", "8", "$18", "beq.w"),
+            ("B", "$10", "$20", "bne.w"),
+        ):
+            with self.subTest(variant=variant):
+                owner = f"Boss_TerobusterMissileAttack{variant}ChooseExitOrder"
+                block = source.split(owner + ":", 1)[1].split(
+                    "; ---------------------------------------------------------------------------", 1
+                )[0]
+                self.assertIn(f"moveq   #{first},d0", block)
+                self.assertIn(f"moveq   #{second},d1", block)
+                self.assertIn("tst.w   $A(a5)", block)
+                self.assertIn("exg     d0,d1", block)
+                self.assertIn("cmp.w   $58(a5),d0", block)
+                self.assertIn(f"{branch}   Boss_TerobusterSelectPartOrderA", block)
+
+    def test_medusa_no_play_returns_have_distinct_frame_masks(self) -> None:
+        basis = (
+            "This branch is the explicit no-play return of the adjacent "
+            "frame-masked Medusa sound helper."
+        )
+        self.assertEqual(
+            ["0x057030", "0x057042"],
+            [member["address"] for member in self.reviews[basis]["members"]],
+        )
+        source = (ROOT / "src/bosses/medusa.s").read_text(encoding="utf-8")
+        for period, mask in ((4, 3), (8, 7)):
+            with self.subTest(period=period):
+                owner = f"Boss_MedusaPlaySFXEvery{period}Frames"
+                ret = f"Boss_PlayMedusaSFXEvery{period}FramesReturn"
+                block = source.split(owner + ":", 1)[1].split(
+                    "; End of function " + owner, 1
+                )[0]
+                self.assertIn(f"andi.w  #{mask},d1", block)
+                self.assertIn(f"bne.s   {ret}", block)
+                self.assertIn("jmp     (Sound_QueueSFXRequest).l", block)
+                self.assertIn(ret + ":", block)
+
 
 if __name__ == "__main__":
     unittest.main()

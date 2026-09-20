@@ -1863,3 +1863,15 @@ pin Destroyer MK2 bouncing-part motion, decimal/hex digit DMA queue tails,
 and headered/headerless zero-stream staging without conflating their owners.
 The queue is 159 repeated groups across 772 uses, 142 reviewed and 17 open.
 No ASM instructions or runtime visual claims changed.
+
+Two Jampan clear-priority labels no longer cite an invented size-byte test:
+both compare object field `$20` against `PrimaryEntityAngle` and clear bit 15
+of sprite attribute `$E` on the unsigned-higher branch. The radial object
+uses its own field, while the linked animation object first copies the
+owner's field; exact-address corrections and a source test preserve that
+distinction. Three exact-member reviews pin Terobuster's different A/B exit
+cursor values and equality predicates, Medusa's four- versus eight-frame
+no-SFX returns, and the two `$40` HBlank copy-length descriptors. The latter
+prove fixed ROM copy spans, not executable handler body lengths. The queue is
+158 repeated groups across 770 uses, 145 reviewed and 13 open. ASM and
+runtime visual claims are unchanged.

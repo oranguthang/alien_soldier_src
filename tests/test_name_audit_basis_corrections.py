@@ -64,8 +64,8 @@ class NameAuditBasisCorrectionTests(unittest.TestCase):
             record["address"]: record
             for record in json.loads((ROOT / "config/name_audit.json").read_text(encoding="utf-8"))["records"]
         }
-        self.assertEqual(20, len(changes))
-        self.assertEqual(20, len({change["address"] for change in changes}))
+        self.assertEqual(22, len(changes))
+        self.assertEqual(22, len({change["address"] for change in changes}))
         for change in changes:
             with self.subTest(address=change["address"]):
                 record = audit[change["address"]]
@@ -194,6 +194,25 @@ class NameAuditBasisCorrectionTests(unittest.TestCase):
         self.assertIn("btst    d0,(a1)", wait)
         self.assertIn("bne.s   Reset_WaitForZ80Bus", wait)
         self.assertNotIn("move.w", wait)
+
+        jampan = (ROOT / "src/bosses/jampan_support.s").read_text(
+            encoding="utf-8"
+        )
+        radial = jampan.split("Boss_JampanRadialLinkedObjectMain:", 1)[1].split(
+            "; End of function Boss_JampanRadialLinkedObjectMain", 1
+        )[0]
+        animation = jampan.split("Boss_JampanLinkedAnimationObjectMain:", 1)[1].split(
+            "; End of function Boss_JampanLinkedAnimationObjectMain", 1
+        )[0]
+        self.assertIn("move.b  $20(a5),d0", radial)
+        self.assertIn("move.b  $20(a1),$20(a5)", animation)
+        for block, clear in (
+            (radial, "Boss_JampanClearRadialObjectPriorityFlag"),
+            (animation, "Boss_JampanClearAnimationObjectPriorityFlag"),
+        ):
+            self.assertIn("cmp.b   (PrimaryEntityAngle).w,d0", block)
+            self.assertIn(f"bhi.s   {clear}", block)
+            self.assertIn("andi.w  #$7FFF,$E(a5)", block)
 
 
 if __name__ == "__main__":

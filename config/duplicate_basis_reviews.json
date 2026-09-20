@@ -1590,6 +1590,30 @@
         {"address":"0x001D8E","current_name":"Gfx_QueueHeaderedByteStreamDMA_StageZero","file":"src/rendering/dma_queue.s"},
         {"address":"0x001E08","current_name":"Gfx_QueueByteStreamDMA_StageZero","file":"src/rendering/dma_queue.s"}
       ]
+    },
+    {
+      "basis": "This block chooses the two terminal cursor values according to side field $0A.",
+      "reason": "Missile attack A initializes d0/d1 to 8/$18 and swaps them when $A(a5) is nonzero; its subsequent equality with cursor $58 selects part order A. Missile attack B initializes $10/$20 and applies the same side-based swap, but its subsequent inequality selects part order A. The shared sentence covers terminal cursor setup, not identical exit predicates.",
+      "members": [
+        {"address":"0x0387CC","current_name":"Boss_TerobusterMissileAttackAChooseExitOrder","file":"src/bosses/terobuster_core.s"},
+        {"address":"0x038886","current_name":"Boss_TerobusterMissileAttackBChooseExitOrder","file":"src/bosses/terobuster_core.s"}
+      ]
+    },
+    {
+      "basis": "This branch is the explicit no-play return of the adjacent frame-masked Medusa sound helper.",
+      "reason": "Both Medusa sound helpers mask FrameCounter into d1 and branch to their own RTS when the masked result is nonzero, otherwise jumping to Sound_QueueSFXRequest. The first mask is three, giving a four-frame cadence; the second is seven, giving an eight-frame cadence. The return's shared role does not imply the same cadence or caller state.",
+      "members": [
+        {"address":"0x057030","current_name":"Boss_PlayMedusaSFXEvery4FramesReturn","file":"src/bosses/medusa.s"},
+        {"address":"0x057042","current_name":"Boss_PlayMedusaSFXEvery8FramesReturn","file":"src/bosses/medusa.s"}
+      ]
+    },
+    {
+      "basis": "This descriptor field supplies the 0x40-byte copy length for the following HBlank code block.",
+      "reason": "StoryDisplay and VScrollPair install lists each point to their immediately following $40 copy-length word and target RAM $EE00 through LoadObjData. The first HBlank handler writes story-screen plane/scroll values; the second writes a buffered VSRAM pair. The $40 is a fixed ROM span copied from after the length word, not a proof that each handler's executable body itself spans exactly $40 bytes.",
+      "members": [
+        {"address":"0x0016F0","current_name":"HBlank_UpdateStoryDisplay_CopyLength","file":"src/rendering/vblank_effects.s"},
+        {"address":"0x00176E","current_name":"HBlank_WriteVScrollPair_CopyLength","file":"src/rendering/vblank_effects.s"}
+      ]
     }
   ]
 }

@@ -124,6 +124,18 @@
       "current_name": "Reset_WaitForZ80Bus",
       "old_basis": "The spin loop retries the Z80 bus request until the bus is granted.",
       "new_basis": "Reset already wrote the bus-request value through A1 before this label. This loop tests bit zero at (A1) and repeats while it remains set; it does not issue another request."
+    },
+    {
+      "address": "0x04A3B0",
+      "current_name": "Boss_JampanClearRadialObjectPriorityFlag",
+      "old_basis": "When the copied size byte exceeds the controller threshold, this path clears bit 15 of the display-attribute word.",
+      "new_basis": "The radial object's own $20(a5) byte is compared unsigned with PrimaryEntityAngle. When it is higher, this branch clears bit 15 of sprite attribute $E(a5); no size-byte comparison occurs here."
+    },
+    {
+      "address": "0x04A45C",
+      "current_name": "Boss_JampanClearAnimationObjectPriorityFlag",
+      "old_basis": "When the copied size byte exceeds the controller threshold, this path clears bit 15 of the display-attribute word.",
+      "new_basis": "The linked animation object first copies $20(a1) to $20(a5), compares that byte unsigned with PrimaryEntityAngle, and reaches this bit-15 clear of $E(a5) when the copied angle is higher."
     }
   ]
 }
