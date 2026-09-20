@@ -106,6 +106,8 @@ GENERIC_NAME_BASES = (
     "Direct control flow and field accesses establish this rendering or auxiliary-group role.",
     "All Seven Force battle handlers call this palette path, which either restores three base colors or copies a frame-indexed three-color flash set.",
     "The label describes the encoded tiles, request IDs, or menu data without assigning unobserved semantics.",
+    "Initialization assigns the DMA source pointers to 0xFFE400 and 0xFFEC00 respectively.",
+    "The consumers send the former to the VRAM horizontal-scroll table and the latter to VSRAM, with lengths selected by VDP register 11 scroll modes.",
 )
 
 

@@ -1238,3 +1238,14 @@ pointer, so their role/reachability is recorded in `docs/unknowns.md` rather
 than attributed to the difficulty toggle. The test pins all four addresses,
 consumer pointers, terminators and trailing boundaries. The queue is now 227
 groups across 948 uses: thirty-seven reviewed, 190 open.
+
+Four scroll-DMA RAM records now distinguish the storage buffers at
+`$FFFFE400/$FFFFEC00` from the longword source-pointer fields at
+`$FFFFF710/$FFFFF714`. Reset writes the buffer addresses into the pointer
+fields; the clear and scroll-plane routines address the buffers themselves;
+the horizontal/vertical DMA builders read the pointer fields and select
+two versus 448/40 words using VDP-register-11 bits 1/2. Eight per-record
+evidence sentences replace the two broad shared sentences, now the 91st and
+92nd rejected generic bases. A test pins all four RAM addresses, reset
+assignments, direct buffer writers, DMA destinations and mode lengths. The
+queue falls to 225 groups across 940 uses: thirty-seven reviewed, 188 open.

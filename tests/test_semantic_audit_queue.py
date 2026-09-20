@@ -16,6 +16,53 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_scroll_dma_pointer_fields_are_not_scroll_buffers(self) -> None:
+        records = {
+            record["address"]: record
+            for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        ram = (ROOT / "src/ram_addrs.inc").read_text(encoding="utf-8")
+        reset = (ROOT / "src/system/game_initialization.s").read_text(
+            encoding="utf-8"
+        )
+        clear = (ROOT / "src/system/memory_initialization.s").read_text(
+            encoding="utf-8"
+        )
+        writers = (ROOT / "src/rendering/scroll_plane_buffers.s").read_text(
+            encoding="utf-8"
+        )
+        dma = (ROOT / "src/rendering/palette_fades.s").read_text(encoding="utf-8")
+        cases = (
+            ("HScrollBuffer", 0xFFE400, "HScrollDMASource", 0xFFF710,
+             "Gfx_QueueHorizontalScrollDMA", "#$70000083", 1, "#$940193C0"),
+            ("VScrollBuffer", 0xFFEC00, "VScrollDMASource", 0xFFF714,
+             "Gfx_QueueVerticalScrollDMA", "#$40000090", 2, "#$94009328"),
+        )
+        bases = []
+        for buffer, buffer_addr, pointer, pointer_addr, routine, destination, bit, long_length in cases:
+            with self.subTest(buffer=buffer):
+                for address, name in ((buffer_addr, buffer), (pointer_addr, pointer)):
+                    record = records[f"0x{address:06X}"]
+                    self.assertEqual(name, record["current_name"])
+                    self.assertEqual(2, len(record["basis"]))
+                    bases.extend(record["basis"])
+                    self.assertRegex(
+                        ram,
+                        rf"(?m)^{name}\s+equ\s+\$FFFF{address & 0xFFFF:04X}\b",
+                    )
+                self.assertIn(f"move.l  #{buffer},({pointer}).w", reset)
+                self.assertIn(f"lea     ({buffer}).w,a0", clear)
+                self.assertIn(f"movea.w #({buffer}-M68K_RAM),a0", writers)
+                body = dma.split(routine + ":", 1)[1].split(
+                    "; End of function " + routine, 1
+                )[0]
+                self.assertIn(f"move.l  ({pointer}).w,d0", body)
+                self.assertIn(f"move.l  {destination},-(a0)", body)
+                self.assertIn(f"btst    #{bit},(VDPReg11Shadow+1).w", body)
+                self.assertIn("move.l  #$94009302,-(a0)", body)
+                self.assertIn(f"move.l  {long_length},-(a0)", body)
+        self.assertEqual(8, len(set(bases)))
+
     def test_options_choice_labels_stop_at_the_first_terminator(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
