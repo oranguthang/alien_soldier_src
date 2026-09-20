@@ -517,6 +517,24 @@
         {"address":"0x0E905A","current_name":"Player_DeathSequenceSpriteMapping06","file":"src/data/player_special_and_death_sprite_mappings.s"},
         {"address":"0x0E906A","current_name":"Player_DeathSequenceSpriteMapping07","file":"src/data/player_special_and_death_sprite_mappings.s"}
       ]
+    },
+    {
+      "basis": "A named Sirene state loads this word command stream with lea Script(pc),a1 and enters Boss_RenderSirenePose, which calls Boss_UpdateSirenePoseScript.",
+      "reason": "Sirene_State2PoseScript, Sirene_ActivePoseScript, and Sirene_State4And6PoseScript each have direct lea Script(pc),a1 call sites in Sirene state handlers before the shared pose renderer invokes Boss_UpdateSirenePoseScript. They are dc.w command streams ending in $FFFF, $FFFF, and $FFFE respectively. This establishes the direct interpreter path, not a visual pose identity. The three state-14 scripts are excluded because the state stores their pointers through two lookup tables, and the frame-data base at $057D18 is not a command stream.",
+      "members": [
+        {"address":"0x057C9A","current_name":"Sirene_State2PoseScript","file":"src/bosses/sirene.s"},
+        {"address":"0x057CAC","current_name":"Sirene_ActivePoseScript","file":"src/bosses/sirene.s"},
+        {"address":"0x057CBE","current_name":"Sirene_State4And6PoseScript","file":"src/bosses/sirene.s"}
+      ]
+    },
+    {
+      "basis": "Boss_EnterSireneState14 selects this word command record through one of two four-pointer tables and stores it in $71C(a5); Boss_RenderSireneState14 later loads the pointer into a1 for the pose interpreter.",
+      "reason": "Sirene_State14PoseScriptSet0 has entries 0/0/2/2 and Set1 has 0/0/1/1. Boss_EnterSireneState14 selects a set from field $54, masks RandomNumberState by $C for longword offsets 0, 4, 8, or 12, and writes the selected pointer to $71C(a5). Boss_RenderSireneState14 later loads it into a1 before Boss_RenderSirenePose. Each script has a first $FFFE stop marker. Script2 contains four additional command words and a second $FFFE after its first stop; no direct symbolic pointer to that tail is known, so reachability of those words is not claimed.",
+      "members": [
+        {"address":"0x057CD8","current_name":"Sirene_State14PoseScript0","file":"src/bosses/sirene.s"},
+        {"address":"0x057CEA","current_name":"Sirene_State14PoseScript1","file":"src/bosses/sirene.s"},
+        {"address":"0x057CFC","current_name":"Sirene_State14PoseScript2","file":"src/bosses/sirene.s"}
+      ]
     }
   ]
 }

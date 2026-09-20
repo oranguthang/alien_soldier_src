@@ -661,6 +661,7 @@ Boss_SireneInitializePoseChannels:                      ; CODE XREF: Boss_EnterS
                 jmp     Anim_InitializePoseChannelsFromBytes
 ; End of function Boss_SireneInitializePoseChannels
 ; ---------------------------------------------------------------------------
+; Direct state-selected command streams for Boss_UpdateSirenePoseScript
 Sirene_State2PoseScript:    dc.w    $810, 0, $1010, 0, $810, $A, $1010, $A  ; was: word_57C9A
                                         ; DATA XREF: Boss_UpdateSireneState2+1E   o
                 dc.w    $FFFF
@@ -674,6 +675,7 @@ Sirene_State4And6PoseScript:    dc.w    $2050, $5A, $2020, $5A, $418, $64, $4040
                                         ; DATA XREF: Boss_UpdateSireneState4+1C   o
                                         ; Boss_UpdateSireneState6   o
                 dc.w    $2050, $5A, $2020, $5A, $FFFE
+; State-$14 streams selected indirectly by the two four-pointer tables
 Sirene_State14PoseScript0:  dc.w    $820, $14, $C0C, $14, $418, $1E, $4040, $1E  ; was: word_57CD8
                                         ; DATA XREF: ROM:Sirene_State14PoseScriptSet0   o
                                         ; ROM:00057820   o
@@ -685,7 +687,10 @@ Sirene_State14PoseScript1:  dc.w    $820, $28, $C0C, $28, $418, $32, $4040, $32 
 Sirene_State14PoseScript2:  dc.w    $820, $3C, $C0C, $3C, $418, $46, $4040, $46  ; was: word_57CFC
                                         ; DATA XREF: ROM:00057824   o
                                         ; ROM:00057828   o
-                dc.w    $FFFE, $820, $50, $1414, $50, $FFFE
+                dc.w    $FFFE
+; Additional words follow the stop marker; no direct symbolic pointer is known
+                dc.w    $820, $50, $1414, $50, $FFFE
+; Frame-data base saved at $35C(a5), then indexed by signed script offsets
 Sirene_PoseFrameData:   dc.w    $88D2, $40F8, $2E4E, $3024, $B201, $9C00, $A0E0, $E0  ; was: word_57D18
                                         ; DATA XREF: Boss_InitSireneMetasprite+30   o
                                         ; Boss_EnterSireneState4   o

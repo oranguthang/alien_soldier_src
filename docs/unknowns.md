@@ -11559,3 +11559,10 @@ sets the player object's mapping pointer from an eight-entry frame table.
 The associated sprite art is reached through those death-sequence mappings,
 not through the particle writer. The static ownership is established, but
 the exact visual content of the eight player frames has not been confirmed.
+
+Sirene's state-14 pose script 2 has a `$FFFE` stop word at `$057D0C`, followed
+by five more words beginning at `$057D0E` and ending with another `$FFFE`.
+The two state-14 pointer tables reference the script's start at `$057CFC`;
+no direct symbolic source pointer to `$057D0E` is known. This does not prove
+the tail unreachable by raw-address or external paths, and it does not prove
+which visible pose those words represent.

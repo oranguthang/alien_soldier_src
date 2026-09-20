@@ -1034,3 +1034,15 @@ IDA provenance; an exact-member review and test pin the operation order,
 pointer table, and art references. Three obsolete sentences (particle-loop,
 table, and mapping) join the rejected generic detector, now 73 entries. The
 queue remains 240 groups across 1,018 uses: twenty reviewed, 220 open.
+
+Sirene's seven-way pose-data sentence mixed three directly loaded pose
+scripts, three scripts chosen indirectly through two four-pointer state-14
+tables, and a frame-data base stored in `$35C(a5)`. The direct and indirect
+families now have separate exact-member reviews and a regression test for
+their references, terminators, table orders, pointer field, and interpreter
+path; the frame base has individual offset-arithmetic evidence. In
+`Sirene_State14PoseScript2`, five more words follow the first `$FFFE` stop
+at `$057D0C`; no direct symbolic pointer to the tail at `$057D0E` is known.
+The ASM now shows this boundary explicitly and the unknowns register records
+the reachability limit. The old sentence is the 74th rejected generic basis.
+The queue has 241 groups across 1,017 uses: twenty-two reviewed, 219 open.

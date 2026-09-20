@@ -16,6 +16,81 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_sirene_direct_and_indirect_pose_scripts_exclude_frame_data(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        direct = next(
+            item
+            for item in reviews
+            if item["basis"].startswith("A named Sirene state loads this word")
+        )
+        indirect = next(
+            item
+            for item in reviews
+            if item["basis"].startswith("Boss_EnterSireneState14 selects this word")
+        )
+        self.assertEqual(
+            {"Sirene_State2PoseScript", "Sirene_ActivePoseScript", "Sirene_State4And6PoseScript"},
+            {member["current_name"] for member in direct["members"]},
+        )
+        self.assertEqual(
+            {f"Sirene_State14PoseScript{index}" for index in range(3)},
+            {member["current_name"] for member in indirect["members"]},
+        )
+        self.assertEqual(
+            {"src/bosses/sirene.s"},
+            {member["file"] for item in (direct, indirect) for member in item["members"]},
+        )
+        source = (ROOT / "src/bosses/sirene.s").read_text(encoding="utf-8")
+        self.assertEqual(
+            {member["current_name"] for member in direct["members"]},
+            set(re.findall(r"\blea\s+(Sirene_\w+PoseScript)\(pc\),a1", source)),
+        )
+        self.assertIn("bsr.w   Boss_UpdateSirenePoseScript", source)
+        for name, end in (
+            ("Sirene_State2PoseScript", "$FFFF"),
+            ("Sirene_ActivePoseScript", "$FFFF"),
+            ("Sirene_State4And6PoseScript", "$FFFE"),
+        ):
+            with self.subTest(script=name):
+                body = re.search(
+                    r"(?ms)^" + name + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    source,
+                )
+                self.assertIsNotNone(body)
+                rows = re.findall(r"\bdc\.w\s+([^;\r\n]+)", body.group(1))
+                self.assertEqual(end, rows[-1].split(",")[-1].strip())
+        set0 = source.split("Sirene_State14PoseScriptSet0:", 1)[1].split(
+            "Sirene_State14PoseScriptSet1:", 1
+        )[0]
+        set1 = source.split("Sirene_State14PoseScriptSet1:", 1)[1].split(
+            "Boss_UpdateSireneBattlePositionsAndDistortion:", 1
+        )[0]
+        for block, expected in ((set0, ["0", "0", "2", "2"]), (set1, ["0", "0", "1", "1"])):
+            self.assertEqual(
+                expected,
+                re.findall(r"\bdc\.l\s+Sirene_State14PoseScript([012])\b", block),
+            )
+        self.assertIn("andi.w  #$C,d0", source)
+        self.assertIn("move.l  (a0,d0.w),$71C(a5)", source)
+        self.assertIn("movea.l $71C(a5),a1", source)
+        script2 = source.split("Sirene_State14PoseScript2:", 1)[1].split(
+            "Sirene_PoseFrameData:", 1
+        )[0]
+        words = [
+            int(token.strip()[1:], 16)
+            for row in re.findall(r"\bdc\.w\s+([^;\r\n]+)", script2)
+            for token in row.split(",")
+        ]
+        self.assertEqual([0xFFFE, 0x820, 0x50, 0x1414, 0x50, 0xFFFE], words[-6:])
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        frame = next(record for record in records if record["address"] == "0x057D18")
+        self.assertEqual("Sirene_PoseFrameData", frame["current_name"])
+        self.assertNotIn(frame["basis"][0], (direct["basis"], indirect["basis"]))
+        self.assertIn("move.l  #Sirene_PoseFrameData,$35C(a5)", source)
+        self.assertIn("add.l   $35C(a5),d0", source)
+
     def test_medusa_pose_scripts_exclude_frame_data_and_initial_values(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
