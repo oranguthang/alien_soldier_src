@@ -978,3 +978,13 @@ follow those three owners and each table position; a regression test pins all
 three pointer sequences. The old sentence becomes the 68th rejected generic
 basis. The queue falls to 240 groups across 1,019 uses: fifteen reviewed,
 225 open.
+
+The eleven Missiray bullet sprite mappings do share an exact stream-level
+claim. The initial stream points to frame 00; the loop stream selects
+01/02/04/03 and loops to itself; the transform stream selects
+00/10/05/06/07/08/09 and ends with `$FF`. The projectile initializer and
+state handlers install these three stream pointers in the sprite-animation
+field. An exact-member review and regression test pin the eleven targets,
+three orders, loop/end commands, and pointer assignments. No visual
+transformation stage is asserted. The queue remains 240 groups across 1,019
+uses: sixteen reviewed, 224 open.

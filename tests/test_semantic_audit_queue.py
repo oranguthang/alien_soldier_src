@@ -16,6 +16,62 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_missiray_bullet_mapping_review_pins_three_animation_streams(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item
+            for item in reviews
+            if item["basis"].startswith("Missiray bullet animation streams select")
+        )
+        expected = {
+            f"Projectile_MissirayBulletSpriteFrame{index:02}" for index in range(11)
+        }
+        self.assertEqual(expected, {member["current_name"] for member in review["members"]})
+        self.assertEqual(
+            {"src/data/shield_viper_and_missiray_mappings.s"},
+            {member["file"] for member in review["members"]},
+        )
+        data = (ROOT / "src/data/shield_viper_and_missiray_mappings.s").read_text(
+            encoding="utf-8"
+        )
+        loop = data.split("Projectile_MissirayBulletLoopSpriteAnimation:", 1)[1].split(
+            "Projectile_MissirayBulletInitialSpriteAnimation:", 1
+        )[0]
+        initial = data.split("Projectile_MissirayBulletInitialSpriteAnimation:", 1)[
+            1
+        ].split("Projectile_MissirayBulletTransformSpriteAnimation:", 1)[0]
+        transform = data.split("Projectile_MissirayBulletTransformSpriteAnimation:", 1)[
+            1
+        ]
+        def targets(block: str) -> list[str]:
+            return re.findall(
+                r"\bdc\.w\s+Projectile_MissirayBulletSpriteFrame(\d\d)-\*", block
+            )
+        self.assertEqual(["01", "02", "04", "03"], targets(loop))
+        self.assertEqual(["00"], targets(initial))
+        self.assertEqual(["00", "10", "05", "06", "07", "08", "09"], targets(transform))
+        self.assertEqual(
+            expected,
+            {
+                f"Projectile_MissirayBulletSpriteFrame{index}"
+                for index in targets(loop) + targets(initial) + targets(transform)
+            },
+        )
+        self.assertIn("dc.w    Projectile_MissirayBulletLoopSpriteAnimation-*", loop)
+        self.assertRegex(loop, r"(?m)^\s*dc\.w\s+0\s*$")
+        for block in (initial, transform):
+            self.assertRegex(block, r"(?m)^\s*dc\.w\s+\$FF\s*$")
+        projectile = (ROOT / "src/projectiles/missiray_and_rising_shots.s").read_text(
+            encoding="utf-8"
+        )
+        for stream in ("Initial", "Transform", "Loop"):
+            self.assertIn(
+                f"#Projectile_MissirayBullet{stream}SpriteAnimation,8(a",
+                projectile,
+            )
+
     def test_shared_pattern_middle_longwords_have_two_eight_element_rows(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

@@ -147,8 +147,10 @@ RAM rows also have one reviewed structural basis: the four-iteration mask loop
 consumes eight longwords from each row, while other scene users overlay those
 addresses. Destroyer Proto's former 11-frame sentence mixed five animated-part
 mappings, five projectile mappings, and one intro-only part mapping; these now
-have separate owner names and exact table-slot evidence. The repeated-basis
-queue has 225 open groups.
+have separate owner names and exact table-slot evidence. Eleven Missiray
+bullet mappings do share a valid stream-membership claim: three distinct
+animation streams reference every frame, with frame 00 shared by two streams.
+The repeated-basis queue has 224 open groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

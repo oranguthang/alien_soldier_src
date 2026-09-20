@@ -442,6 +442,23 @@
         {"address":"0xFFFF9434","current_name":"SharedPatternRow1Long5","file":"src/ram_addrs.inc"},
         {"address":"0xFFFF9438","current_name":"SharedPatternRow1Long6","file":"src/ram_addrs.inc"}
       ]
+    },
+    {
+      "basis": "Missiray bullet animation streams select this ROM-ordered sprite mapping record; the suffix does not guess a visual transformation stage.",
+      "reason": "All eleven mapping definitions are relative dc.w Frame-* targets in the three Missiray bullet sprite-animation streams in shield_viper_and_missiray_mappings.s. Frame00 occurs in both the initial and transform streams; frames 01-04 occur in the looping stream, while frames 05-10 occur in the transform stream. Projectile_InitMissirayBullet installs the initial pointer, Projectile_MissirayBulletTransform installs the transform pointer, and Projectile_MissirayBulletWaitForTransformFrame installs the loop pointer. The shared sentence states membership and ROM-order naming only, not visual transformation stages or actual runtime reach of every frame.",
+      "members": [
+        {"address":"0x0ED024","current_name":"Projectile_MissirayBulletSpriteFrame00","file":"src/data/shield_viper_and_missiray_mappings.s"},
+        {"address":"0x0ED030","current_name":"Projectile_MissirayBulletSpriteFrame01","file":"src/data/shield_viper_and_missiray_mappings.s"},
+        {"address":"0x0ED04E","current_name":"Projectile_MissirayBulletSpriteFrame02","file":"src/data/shield_viper_and_missiray_mappings.s"},
+        {"address":"0x0ED06C","current_name":"Projectile_MissirayBulletSpriteFrame03","file":"src/data/shield_viper_and_missiray_mappings.s"},
+        {"address":"0x0ED08A","current_name":"Projectile_MissirayBulletSpriteFrame04","file":"src/data/shield_viper_and_missiray_mappings.s"},
+        {"address":"0x0ED0A8","current_name":"Projectile_MissirayBulletSpriteFrame05","file":"src/data/shield_viper_and_missiray_mappings.s"},
+        {"address":"0x0ED0BA","current_name":"Projectile_MissirayBulletSpriteFrame06","file":"src/data/shield_viper_and_missiray_mappings.s"},
+        {"address":"0x0ED0D2","current_name":"Projectile_MissirayBulletSpriteFrame07","file":"src/data/shield_viper_and_missiray_mappings.s"},
+        {"address":"0x0ED0EA","current_name":"Projectile_MissirayBulletSpriteFrame08","file":"src/data/shield_viper_and_missiray_mappings.s"},
+        {"address":"0x0ED108","current_name":"Projectile_MissirayBulletSpriteFrame09","file":"src/data/shield_viper_and_missiray_mappings.s"},
+        {"address":"0x0ED126","current_name":"Projectile_MissirayBulletSpriteFrame10","file":"src/data/shield_viper_and_missiray_mappings.s"}
+      ]
     }
   ]
 }
