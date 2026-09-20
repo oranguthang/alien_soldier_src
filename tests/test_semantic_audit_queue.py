@@ -16,6 +16,51 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_medusa_pose_scripts_exclude_frame_data_and_initial_values(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item
+            for item in reviews
+            if item["basis"].startswith("The named Medusa state loads this word stream")
+        )
+        expected = {member["current_name"] for member in review["members"]}
+        self.assertEqual(7, len(expected))
+        self.assertEqual(
+            {"src/bosses/medusa.s"},
+            {member["file"] for member in review["members"]},
+        )
+        source = (ROOT / "src/bosses/medusa.s").read_text(encoding="utf-8")
+        self.assertEqual(
+            expected,
+            set(re.findall(r"\blea\s+(Medusa_\w+PoseScript)\(pc\),a1", source)),
+        )
+        self.assertIn("bsr.w   Boss_UpdateMedusaPoseScript", source)
+        self.assertIn("cmpi.w  #$FFFE,d3", source)
+        self.assertIn("cmpi.w  #$FFFF,d3", source)
+        for name in expected:
+            with self.subTest(name=name):
+                match = re.search(
+                    r"(?ms)^" + re.escape(name) + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    source,
+                )
+                self.assertIsNotNone(match)
+                rows = re.findall(r"\bdc\.w\s+([^;\r\n]+)", match.group(1))
+                self.assertIn(rows[-1].split(",")[-1].strip(), ("$FFFE", "$FFFF"))
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        by_address = {record["address"]: record for record in records}
+        frame = by_address["0x057132"]
+        self.assertEqual("Medusa_PoseFrameData", frame["current_name"])
+        self.assertNotEqual(review["basis"], frame["basis"][0])
+        self.assertIn("$35C(a5)", frame["basis"][0])
+        self.assertIn("move.l  #Medusa_PoseFrameData,$35C(a5)", source)
+        self.assertIn("add.l   $35C(a5),d0", source)
+        self.assertIn("bsr.w   Boss_CalculateMedusaPoseDeltas", source)
+        initial = by_address["0x057172"]
+        self.assertEqual("Medusa_InitialPoseChannelValues", initial["current_name"])
+        self.assertIn("initial fixed-point pose values", " ".join(initial["basis"]))
+
     def test_shiper_tentacle_mappings_follow_one_indexed_direction_table(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

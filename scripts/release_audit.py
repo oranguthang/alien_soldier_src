@@ -85,6 +85,7 @@ GENERIC_NAME_BASES = (
     "Boss_Terobuster pointer tables or direct assignments select this sprite mapping; the numeric suffix preserves ROM order without guessing a visual pose.",
     "Destroyer Proto part and projectile frame tables select this ROM-ordered sprite mapping record; the suffix does not guess a visual pose.",
     "Boss_Shiper pointer tables or direct assignments select this sprite mapping; the numeric suffix preserves ROM order without guessing a visual pose.",
+    "Direct references from the Medusa state handlers identify this table as a state-selected pose script, pose-frame source, or initial interpolation-delay block.",
 )
 
 

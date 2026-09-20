@@ -65,7 +65,7 @@
     {
       "id": "semantic_naming",
       "kind": "source",
-      "summary": "Every live address-derived identifier was replaced and 15,833 exact-address name records now exist. The curated 69-sentence generic evidence detector has zero matches after message, weapon-setup, weapon-state, directional-spawner, Valkirie-pose, Sirene-position, Medusa-pose, shared-facing, defeat-blink, Missiray-loop, Medusa-velocity, shared-sprite, Bugmax-frame, Shield Viper mapping, Antroid mapping, Jetsripper mapping, Xi-Tiger mapping, Madam Barbar mapping, Terobuster mapping, Destroyer Proto mapping, and Shiper tentacle mapping audits; a wider duplicate-basis review and seven boss-identity visual hypotheses remain open.",
+      "summary": "Every live address-derived identifier was replaced and 15,833 exact-address name records now exist. The curated 70-sentence generic evidence detector has zero matches after message, weapon-setup, weapon-state, directional-spawner, Valkirie-pose, Sirene-position, Medusa-pose, shared-facing, defeat-blink, Missiray-loop, Medusa-velocity, shared-sprite, Bugmax-frame, Shield Viper mapping, Antroid mapping, Jetsripper mapping, Xi-Tiger mapping, Madam Barbar mapping, Terobuster mapping, Destroyer Proto mapping, and Shiper tentacle mapping audits; a wider duplicate-basis review and seven boss-identity visual hypotheses remain open.",
       "evidence": [
         "provenance_and_unknowns",
         "files:config/name_audit.json"
@@ -455,9 +455,9 @@
     {
       "id": "generic_name_evidence_bases",
       "status": "partial",
-      "reason": "The curated 69-sentence detector has zero matches after reviewing palette-command, weapon-setup, message-dispatch, weapon-state, directional-spawner, Valkirie-pose, Sirene-position, Medusa-pose, shared-facing, defeat-blink, Missiray-loop, Medusa-velocity, shared-sprite, Bugmax-frame, Shield Viper mapping, Antroid mapping, Jetsripper mapping, Xi-Tiger mapping, Madam Barbar mapping, Terobuster mapping, Destroyer Proto mapping, and Shiper tentacle mapping records. Of 240 repeated-basis groups, eighteen uniform mapping, animation, rotation-table, encoded-text, pose-command, palette-offset-list, or RAM-row groups have exact-member reviews and 222 still require decisions. Two executable weapon-setup text handlers, one two-list Continue palette record, and three indirectly selected airborne Valkirie scripts were removed from otherwise valid shared groups. Zero detector matches do not prove all 15,833 name records semantically correct.",
+      "reason": "The curated 70-sentence detector has zero matches after reviewing palette-command, weapon-setup, message-dispatch, weapon-state, directional-spawner, Valkirie-pose, Sirene-position, Medusa-pose, shared-facing, defeat-blink, Missiray-loop, Medusa-velocity, shared-sprite, Bugmax-frame, Shield Viper mapping, Antroid mapping, Jetsripper mapping, Xi-Tiger mapping, Madam Barbar mapping, Terobuster mapping, Destroyer Proto mapping, Shiper tentacle mapping, and Medusa pose-data records. Of 240 repeated-basis groups, nineteen uniform mapping, animation, rotation-table, encoded-text, pose-command, palette-offset-list, or RAM-row groups have exact-member reviews and 221 still require decisions. Two executable weapon-setup text handlers, one two-list Continue palette record, three indirectly selected airborne Valkirie scripts, and one Medusa frame-data base were removed from otherwise valid shared groups. Zero detector matches do not prove all 15,833 name records semantically correct.",
       "registry": "NAME-002",
-      "control": "make release-audit recounts the curated set of 69 known generic basis sentences, validates the exact members in config/duplicate_basis_reviews.json, and refuses tag-ready status until both generic_evidence_bases and unreviewed_duplicate_basis_groups are zero."
+      "control": "make release-audit recounts the curated set of 70 known generic basis sentences, validates the exact members in config/duplicate_basis_reviews.json, and refuses tag-ready status until both generic_evidence_bases and unreviewed_duplicate_basis_groups are zero."
     },
     {
       "id": "provisional_boss_visual_identities",
@@ -724,12 +724,12 @@
     "modules": 398,
     "name_audit_records": 15833,
     "provenance_mappings": 16053,
-    "reviewed_duplicate_basis_groups": 18,
+    "reviewed_duplicate_basis_groups": 19,
     "ram_fields": 1293,
     "resolved_branch_targets": 16102,
     "runtime_expectations": 78,
     "runtime_scenarios": 12,
     "tracked_text_files": 512,
-    "unreviewed_duplicate_basis_groups": 222
+    "unreviewed_duplicate_basis_groups": 221
   }
 }

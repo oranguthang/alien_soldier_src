@@ -1009,3 +1009,15 @@ visual direction names; an exact-member review and test pin slot order
 04/03/02/01/00/07/06/05 and one-sprite terminators. The old sentence is the
 69th rejected generic basis. The queue remains 240 groups across 1,019 uses:
 eighteen reviewed, 222 open.
+
+The eight-way Medusa sentence mixed seven state-selected pose scripts with
+one pose-frame-data base and repeated the already-disproved possibility that
+these are initial interpolation delays. Every script has a direct
+`lea Script(pc),a1` path into `Boss_RenderMedusaPose`, which invokes the pose
+interpreter; each stream ends with `$FFFE` or `$FFFF`. The frame-data base is
+instead stored in `$35C(a5)`, and the interpreter adds a script offset to it
+before calculating deltas. `Medusa_InitialPoseChannelValues` already has
+separate evidence for eight initial fixed-point values. The seven scripts
+now have one exact-member review and test; the frame base has a unique
+exact-address basis. The old sentence is the 70th rejected generic basis.
+The queue remains 240 groups across 1,018 uses: nineteen reviewed, 221 open.

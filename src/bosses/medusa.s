@@ -636,6 +636,7 @@ Boss_MedusaInitializePoseChannels:                      ; CODE XREF: Boss_EnterM
                 jmp     Anim_InitializePoseChannelsFromBytes
 ; End of function Boss_MedusaInitializePoseChannels
 ; ---------------------------------------------------------------------------
+; State-selected word streams consumed by Boss_UpdateMedusaPoseScript
 Medusa_State2PoseScript:    dc.w    $2020, 0, $FFFF     ; DATA XREF: Boss_UpdateMedusaState2:Boss_RenderMedusaState2   o  ; was: word_570F8
 Medusa_State4PoseScript:    dc.w    $3060, 0, $2020, 0, $FFFE  ; was: word_570FE
                                         ; DATA XREF: Boss_UpdateMedusaState4+6   o
@@ -650,12 +651,14 @@ Medusa_State8And12PoseScript:   dc.w    $308, $30, $E0E, $30, $408, $28, $1010  
                                         ; DATA XREF: Boss_RenderMedusaState8   o
                                         ; Boss_RenderMedusaState12IdlePose   o
                 dc.w    $28, $FFFF
+; Frame-data base saved in $35C(a5); script offsets select poses from here
 Medusa_PoseFrameData:   dc.w    $401C, $1402, $14, 0, $C01C, $1402, $10  ; was: word_57132
                                         ; DATA XREF: Boss_InitMedusaState0+3C   o
                 dc.w    0, $C0E4, $E4FE, $D0, 0, $401C, $1402
                 dc.w    $28, $1000, 0, 0, $FC00, 0, $401C
                 dc.w    $1402, 0, 0, $5018, $8F0, $1E0, 0
                 dc.w    $4018, $20F0, $238, $1800
+; Initial eight pose-channel bytes, not interpolation delays
 Medusa_InitialPoseChannelValues:    dc.w    0, 0, $7090, 0  ; DATA XREF: Boss_EnterMedusaState4+28   o  ; was: word_57172
 
 ; Synchronize the falling part X coordinate and dispatch its three states

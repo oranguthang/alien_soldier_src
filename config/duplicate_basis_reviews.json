@@ -490,6 +490,19 @@
         {"address":"0x0EBA0E","current_name":"Boss_ShiperTentacleSpriteMapping06","file":"src/data/shiper_tentacle_sprite_mappings.s"},
         {"address":"0x0EBA14","current_name":"Boss_ShiperTentacleSpriteMapping07","file":"src/data/shiper_tentacle_sprite_mappings.s"}
       ]
+    },
+    {
+      "basis": "The named Medusa state loads this word stream through lea Script(pc),a1 before Boss_RenderMedusaPose invokes Boss_UpdateMedusaPoseScript; $FFFE stops the script and $FFFF loops it.",
+      "reason": "These seven dc.w command streams each have a direct lea Script(pc),a1 in a Medusa state handler, followed by a call or branch to Boss_RenderMedusaPose, which invokes Boss_UpdateMedusaPoseScript. Each stream ends in $FFFE or $FFFF. The state-A/C and state-10 scripts also have pointer stores for linked objects; the common claim does not assert exclusive direct use. Medusa_PoseFrameData is excluded: initialization stores its base in $35C(a5), and the interpreter adds script offsets to that base. Medusa_InitialPoseChannelValues already has separate evidence showing initial fixed-point values, not delays.",
+      "members": [
+        {"address":"0x0570F8","current_name":"Medusa_State2PoseScript","file":"src/bosses/medusa.s"},
+        {"address":"0x0570FE","current_name":"Medusa_State4PoseScript","file":"src/bosses/medusa.s"},
+        {"address":"0x057108","current_name":"Medusa_StateACPoseScript","file":"src/bosses/medusa.s"},
+        {"address":"0x05710E","current_name":"Medusa_State14PoseScript","file":"src/bosses/medusa.s"},
+        {"address":"0x057114","current_name":"Medusa_State6And12PoseScript","file":"src/bosses/medusa.s"},
+        {"address":"0x05711A","current_name":"Medusa_State10PoseScript","file":"src/bosses/medusa.s"},
+        {"address":"0x057120","current_name":"Medusa_State8And12PoseScript","file":"src/bosses/medusa.s"}
+      ]
     }
   ]
 }

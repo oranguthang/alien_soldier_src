@@ -11546,3 +11546,10 @@ The old High/Mid/Low suffixes were not reliable visual identities: the first
 script is also selected by a random fallback when player Y is below `$E0`,
 and the third by a nonzero random result. Pattern00/01/02 records selection
 order only; the visible poses and their semantic names remain unconfirmed.
+
+Medusa's seven state-selected pose-command streams at `$0570F8-$057131` are
+distinct from the frame-data base at `$057132`: initialization stores that
+base in `$35C(a5)`, and the interpreter adds each script's signed offset to
+it. The separate `$057172` table initializes eight pose-channel values, not
+interpolation delays. These are static data-flow facts; the visible pose
+represented by each stream has not been independently identified.
