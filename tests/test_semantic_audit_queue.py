@@ -742,6 +742,87 @@ class SemanticAuditQueueTests(unittest.TestCase):
             bases,
         )
 
+    def test_sharpssteel_collision_paths_distinguish_flags_from_values(self) -> None:
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        by_address = {record["address"]: record for record in records}
+        source = (ROOT / "src/bosses/sharpssteel_blades.s").read_text(
+            encoding="utf-8"
+        )
+        cases = {
+            "0x048734": (
+                "Boss_SharpssteelEnableOuterBladeHitboxes",
+                (
+                    "bset    #6,$5C1(a5)",
+                    "move.w  d1,$686(a5)",
+                    "movea.w #(EleventhEntityType-M68K_RAM),a0",
+                ),
+            ),
+            "0x04874E": (
+                "Boss_SharpssteelEnableInnerBladeHitboxes",
+                (
+                    "bset    #6,$561(a5)",
+                    "move.w  d1,$626(a5)",
+                    "movea.w #(SeventhEntityType-M68K_RAM),a0",
+                ),
+            ),
+            "0x048766": (
+                "Boss_SharpssteelEnableLinkedBladeHitboxes",
+                ("bset    d0,$21(a0)", "move.w  d1,$146(a0)"),
+            ),
+            "0x04878A": (
+                "Boss_SharpssteelDisableOuterBladeHitboxes",
+                (
+                    "bclr    #6,$5C1(a5)",
+                    "bra.s   Boss_SharpssteelDisableLinkedBladeHitboxes",
+                ),
+            ),
+            "0x0487AC": (
+                "Boss_SharpssteelDisableLinkedBladeHitboxes",
+                ("bclr    d0,$21(a0)", "bclr    d0,$141(a0)"),
+            ),
+            "0x0487E4": (
+                "Boss_SharpssteelEnableCoreSegmentCollision",
+                ("move.w  #$50,d0", "or.b    d0,$201(a5)"),
+            ),
+        }
+        bases = []
+        blocks = {}
+        for address, (name, instructions) in cases.items():
+            with self.subTest(address=address):
+                record = by_address[address]
+                self.assertEqual(name, record["current_name"])
+                self.assertEqual("static", record["evidence"])
+                self.assertEqual(1, len(record["basis"]))
+                bases.extend(record["basis"])
+                block = re.search(
+                    r"(?ms)^" + re.escape(name) + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    source,
+                )
+                self.assertIsNotNone(block)
+                blocks[name] = block.group(1)
+                for instruction in instructions:
+                    self.assertIn(instruction, block.group(1))
+        self.assertEqual(len(cases), len(set(bases)))
+        for name in (
+            "Boss_SharpssteelDisableOuterBladeHitboxes",
+            "Boss_SharpssteelDisableLinkedBladeHitboxes",
+            "Boss_SharpssteelEnableCoreSegmentCollision",
+        ):
+            self.assertNotRegex(
+                blocks[name],
+                r"(?m)^\s*move\.w\s+[^,;\r\n]+,\$[0-9A-F]*6\(a[05]\)",
+                name,
+            )
+        self.assertEqual(
+            6,
+            len(
+                re.findall(
+                    r"(?m)^\s*or\.b\s+d0,\$[0-9A-F]+\(a5\)",
+                    blocks["Boss_SharpssteelEnableCoreSegmentCollision"],
+                )
+            ),
+        )
+
     def test_medusa_falling_part_and_spawn_paths_have_local_evidence(self) -> None:
         records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
         by_address = {record["address"]: record for record in records}

@@ -95,6 +95,7 @@ GENERIC_NAME_BASES = (
     "The routine walks eight-byte records by scroll trigger, spawning the encoded object or pickup or applying a controller command until a segment marker.",
     "Direct state dispatch and record consumption establish this Medusa entity role.",
     "The encounter initializer consumes this parallel-table entry while configuring the sixteen orbiting parts.",
+    "Direct operations on entity collision field $21 and collision-value field $26 establish this collision role.",
 )
 
 

@@ -1089,3 +1089,14 @@ to the corrected table name. Six address-level explanations and a regression
 test pin the table consumers, widths, sixteen slots, and pointer order. The
 old shared sentence is the 79th rejected generic basis. The queue falls to
 236 groups across 988 uses: twenty-three reviewed, 213 open.
+
+Sharpssteel's collision helpers shared an explanation claiming that every
+entry touches both collision flags and collision-value fields. The two enable
+entry points do write their direct pair's values before reaching the shared
+four-part enable tail, but the disable paths clear bit six without changing
+any value word. The six-core-segment helper instead ORs `$50` (bits four and
+six) into flag bytes and does not write values. Six exact-address bases now
+state those distinct effects, with a test pinning the direct groups, linked
+tails, and absence of value writes in the disable/core paths. The old sentence
+is the 80th rejected generic basis. The queue falls to 235 groups across 982
+uses: twenty-three reviewed, 212 open.
