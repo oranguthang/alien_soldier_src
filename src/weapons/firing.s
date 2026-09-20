@@ -6,6 +6,7 @@ Weapon_UpdatePlayerFiring:                              ; CODE XREF: Player_Prep
                 move.b  8(a4,d6.w),d2
                 ext.w   d1
                 ext.w   d2
+; Only a set bit 3 mirrors the horizontal offset; Y stays unchanged
                 btst    #3,$E(a5)
                 beq.s   Weapon_UpdatePlayerFiring_ApplyMuzzleOffset
                 neg.w   d1

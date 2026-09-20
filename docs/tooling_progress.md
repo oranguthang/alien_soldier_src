@@ -1413,3 +1413,13 @@ but their previously shared direct-consumer sentence overstated the 2- and
 symbolic consumers, while the 4-tick stream also has enemy, projectile, and
 boss installs. Splitting that sentence removes one more repeated group. The
 queue is now 213 groups across 898 uses, fifty reviewed and 163 open.
+
+The muzzle-offset audit confirmed eight 16-byte tables selected by player
+render paths. `Weapon_UpdatePlayerFiring` reads signed X at `a4+d6` and Y at
+`a4+d6+8`; the four primary variants and three repeatedly described alternate
+variants now have exact-member reviews. More importantly, the old audit claim
+for `$017EF4` reversed the facing-bit condition: `btst #3` followed by `beq`
+skips `neg.w d1` when the bit is clear. X is negated only when bit 3 is set;
+Y is untouched. A source comment and regression test pin the correction.
+The queue remains 213 groups across 898 uses, with fifty-two reviewed and
+161 open.

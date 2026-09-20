@@ -711,7 +711,7 @@
         "It does not construct sprite pieces or write the sprite output buffer."
       ]
     },
-    { "address": "0x017EF4", "previous_name": "loc_17EF4", "current_name": "Weapon_UpdatePlayerFiring_ApplyMuzzleOffset", "legacy_name": "loc_17EF4", "evidence": "static", "basis": ["The horizontal muzzle offset is negated when bit 3 of $E is clear, so the table holds right-facing offsets and the left-facing ones are derived. The vertical offset is taken eight bytes further into the same table and is never mirrored."] },
+    { "address": "0x017EF4", "previous_name": "loc_17EF4", "current_name": "Weapon_UpdatePlayerFiring_ApplyMuzzleOffset", "legacy_name": "loc_17EF4", "evidence": "static", "basis": ["Weapon_UpdatePlayerFiring reads the signed X byte at (a4,d6.w) and the signed Y byte eight bytes later. Its btst #3,$E(a5) followed by beq skips neg.w d1 when the bit is clear, so X is negated only when bit 3 is set; Y is never negated in this routine."] },
     {
       "address": "0x017F14",
       "previous_name": "Sprite_CheckWeaponFireEffect",

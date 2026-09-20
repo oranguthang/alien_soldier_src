@@ -16,6 +16,69 @@ DEFINITION = re.compile(
 
 
 class NameAuditTests(unittest.TestCase):
+    def test_muzzle_offset_tables_and_bit_three_mirroring(self) -> None:
+        records = {
+            record["address"]: record
+            for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        reviews = {
+            review["basis"]: review
+            for review in json.loads(
+                (ROOT / "config/duplicate_basis_reviews.json").read_text(
+                    encoding="utf-8"
+                )
+            )["reviews"]
+        }
+        cases = (
+            (
+                "primary",
+                "Weapon_UpdatePlayerFiring consumes this primary-layout table as eight signed X offsets followed by eight signed Y offsets.",
+                ((0x0198D2, 0), (0x0198E2, 1), (0x019912, 2), (0x019922, 3)),
+            ),
+            (
+                "alternate",
+                "Weapon_UpdatePlayerFiring consumes this alternate-layout table as eight signed X offsets followed by eight signed Y offsets.",
+                ((0x0198C2, 1), (0x0198F2, 2), (0x019902, 3)),
+            ),
+        )
+        data = (ROOT / "src/weapons/targeting_and_projectile_runtime.s").read_text(
+            encoding="utf-8"
+        )
+        consumers = "\n".join(
+            path.read_text(encoding="utf-8")
+            for path in (ROOT / "src/player").glob("*.s")
+        )
+        for layout, basis, members in cases:
+            with self.subTest(layout=layout):
+                expected = [
+                    (f"0x{address:06X}", f"Player_{layout.title()}LayoutMuzzleOffsets{index}")
+                    for address, index in members
+                ]
+                self.assertEqual(
+                    expected,
+                    [
+                        (member["address"], member["current_name"])
+                        for member in reviews[basis]["members"]
+                    ],
+                )
+                for address, name in expected:
+                    self.assertIn(basis, records[address]["basis"])
+                    match = re.search(
+                        rf"(?m)^{name}:\s+dc\.w\s+([^;\r\n]+)", data
+                    )
+                    self.assertIsNotNone(match)
+                    self.assertEqual(8, len(match.group(1).split(",")))
+                    self.assertIn(f"lea     ({name}).l,a4", consumers)
+
+        firing = (ROOT / "src/weapons/firing.s").read_text(encoding="utf-8")
+        self.assertIn("move.b  (a4,d6.w),d1", firing)
+        self.assertIn("move.b  8(a4,d6.w),d2", firing)
+        self.assertRegex(
+            firing,
+            r"btst\s+#3,\$E\(a5\)\s+beq\.s\s+Weapon_UpdatePlayerFiring_ApplyMuzzleOffset\s+neg\.w\s+d1",
+        )
+        self.assertIn("only when bit 3 is set", records["0x017EF4"]["basis"][0])
+
     def test_shared_explosion_entries_have_distinct_evidence(self) -> None:
         records = {
             record["address"]: record

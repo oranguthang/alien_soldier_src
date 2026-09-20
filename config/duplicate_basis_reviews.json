@@ -519,6 +519,25 @@
       ]
     },
     {
+      "basis": "Weapon_UpdatePlayerFiring consumes this primary-layout table as eight signed X offsets followed by eight signed Y offsets.",
+      "reason": "Each named primary variant occupies exactly eight dc.w values (16 bytes). Weapon_UpdatePlayerFiring uses the direction index in d6 to read a signed byte at (a4,d6.w) and a signed byte at 8(a4,d6.w); player render paths load each variant's address into a4. Bit 3 of $E(a5) mirrors X only. The shared sentence states this byte layout, not a pose identity.",
+      "members": [
+        {"address":"0x0198D2","current_name":"Player_PrimaryLayoutMuzzleOffsets0","file":"src/weapons/targeting_and_projectile_runtime.s"},
+        {"address":"0x0198E2","current_name":"Player_PrimaryLayoutMuzzleOffsets1","file":"src/weapons/targeting_and_projectile_runtime.s"},
+        {"address":"0x019912","current_name":"Player_PrimaryLayoutMuzzleOffsets2","file":"src/weapons/targeting_and_projectile_runtime.s"},
+        {"address":"0x019922","current_name":"Player_PrimaryLayoutMuzzleOffsets3","file":"src/weapons/targeting_and_projectile_runtime.s"}
+      ]
+    },
+    {
+      "basis": "Weapon_UpdatePlayerFiring consumes this alternate-layout table as eight signed X offsets followed by eight signed Y offsets.",
+      "reason": "The three repeated alternate variants are each exactly 16 bytes and are loaded into a4 by distinct armed-player render paths. The same signed-byte reads at offsets 0 and 8 apply. Variant 0 has a separately worded evidence record and is not a member of this repeated sentence; the suffixes assert table variants, not visual poses.",
+      "members": [
+        {"address":"0x0198C2","current_name":"Player_AlternateLayoutMuzzleOffsets1","file":"src/weapons/targeting_and_projectile_runtime.s"},
+        {"address":"0x0198F2","current_name":"Player_AlternateLayoutMuzzleOffsets2","file":"src/weapons/targeting_and_projectile_runtime.s"},
+        {"address":"0x019902","current_name":"Player_AlternateLayoutMuzzleOffsets3","file":"src/weapons/targeting_and_projectile_runtime.s"}
+      ]
+    },
+    {
       "basis": "The named Medusa state loads this word stream through lea Script(pc),a1 before Boss_RenderMedusaPose invokes Boss_UpdateMedusaPoseScript; $FFFE stops the script and $FFFF loops it.",
       "reason": "These seven dc.w command streams each have a direct lea Script(pc),a1 in a Medusa state handler, followed by a call or branch to Boss_RenderMedusaPose, which invokes Boss_UpdateMedusaPoseScript. Each stream ends in $FFFE or $FFFF. The state-A/C and state-10 scripts also have pointer stores for linked objects; the common claim does not assert exclusive direct use. Medusa_PoseFrameData is excluded: initialization stores its base in $35C(a5), and the interpreter adds script offsets to that base. Medusa_InitialPoseChannelValues already has separate evidence showing initial fixed-point values, not delays.",
       "members": [
