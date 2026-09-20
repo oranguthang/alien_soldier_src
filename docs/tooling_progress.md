@@ -1849,3 +1849,17 @@ after different position updates. Focused tests pin streams, stores, branch
 thresholds and return gates without claiming unobserved poses. The queue is
 161 repeated groups across 776 uses, 139 reviewed and 22 open. ROM code is
 unchanged.
+
+The shared VBlank split-scroll basis was too broad for its inner Update
+label. The entrypoint now cites the one-time `RasterEffectInitState` gate,
+HBlank install list and interrupt enable; Update cites only its VSRAM value
+write and VDP register-10 shadow update. The exact-address correction tool
+now requires a full `prior_bases` list when changing one sentence in a
+multi-basis audit record, retaining the other sentence verbatim and proving
+idempotence in a focused test. The DMA Z80 loop reissues BSET while its old
+bit is set, whereas Reset's loop only polls the already-requested bus; those
+two formerly shared claims are now distinct. Three more exact-member reviews
+pin Destroyer MK2 bouncing-part motion, decimal/hex digit DMA queue tails,
+and headered/headerless zero-stream staging without conflating their owners.
+The queue is 159 repeated groups across 772 uses, 142 reviewed and 17 open.
+No ASM instructions or runtime visual claims changed.

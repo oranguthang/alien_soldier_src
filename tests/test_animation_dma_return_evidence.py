@@ -167,5 +167,58 @@ class AnimationDMAReturnEvidenceTests(unittest.TestCase):
         self.assertEqual(3, len(set(bases)))
 
 
+    def test_digit_queue_tails_share_cursor_publishing(self) -> None:
+        basis = (
+            "The tail prepends the VDP auto-increment and DMA-length words, "
+            "then publishes both updated queue cursors."
+        )
+        self.assertEqual(
+            ["0x001EA8", "0x001F4A"],
+            [member["address"] for member in self.reviews[basis]["members"]],
+        )
+        source = (ROOT / "src/rendering/dma_queue.s").read_text(encoding="utf-8")
+        for radix in ("Decimal", "Hex"):
+            with self.subTest(radix=radix):
+                owner = f"Gfx_Queue{radix}DigitsDMA"
+                tail = block(
+                    source, owner + "_FinalizeQueue:",
+                    "; End of function " + owner,
+                )
+                for instruction in (
+                    "move.w  #$8F02,-(a1)", "move.l  #$94009300,d2",
+                    "add.b   d3,d2", "move.l  d2,-(a1)",
+                    "move.w  a1,(VDPCommandQueueHead).w",
+                    "move.w  a2,(VDPStagingDataCursor).w",
+                ):
+                    self.assertIn(instruction, tail)
+
+    def test_zero_stream_variants_check_markers_before_staging_zero(self) -> None:
+        basis = (
+            "The zero-fill entry reaches this path for every non-marker byte "
+            "and appends a zero word while incrementing the DMA word count."
+        )
+        self.assertEqual(
+            ["0x001D8E", "0x001E08"],
+            [member["address"] for member in self.reviews[basis]["members"]],
+        )
+        source = (ROOT / "src/rendering/dma_queue.s").read_text(encoding="utf-8")
+        for prefix, zero_entry in (
+            ("Gfx_QueueHeaderedByteStreamDMA", "Gfx_QueueHeaderedZeroStreamDMA"),
+            ("Gfx_QueueByteStreamDMA", "Gfx_QueueZeroStreamDMA"),
+        ):
+            with self.subTest(prefix=prefix):
+                wrapper = block(source, zero_entry + ":", "; End of function " + zero_entry)
+                read = block(source, prefix + "_ReadByte:", prefix + "_StageZero:")
+                stage = block(source, prefix + "_StageZero:", prefix + "_FinishRecord:")
+                self.assertIn("clr.b   d3", wrapper)
+                self.assertIn("cmpi.b  #$FE,d0", read)
+                self.assertIn("cmpi.b  #$FF,d0", read)
+                self.assertIn("tst.b   d3", read)
+                self.assertIn(f"beq.s   {prefix}_StageZero", read)
+                self.assertIn("clr.w   (a2)+", stage)
+                self.assertIn("addq.b  #1,d1", stage)
+                self.assertIn(f"bra.s   {prefix}_ReadByte", stage)
+
+
 if __name__ == "__main__":
     unittest.main()

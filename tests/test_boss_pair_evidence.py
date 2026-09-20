@@ -130,6 +130,33 @@ class BossPairEvidenceTests(unittest.TestCase):
                 self.assertIn("andi.w  #$7FFF,$E(a5)", block)
                 self.assertIn(ret + ":", block)
 
+    def test_destroyer_bouncing_parts_share_downward_core(self) -> None:
+        basis = (
+            "The state rotates, adds $4000 to vertical velocity, "
+            "and disables drawing at Y $180."
+        )
+        self.assertEqual(
+            ["0x04B8DA", "0x04B9D2"],
+            [member["address"] for member in self.reviews[basis]["members"]],
+        )
+        source = (
+            ROOT / "src/bosses/destroyer_mk2_linked_parts_and_debris.s"
+        ).read_text(encoding="utf-8")
+        for variant in ("A", "B"):
+            with self.subTest(variant=variant):
+                owner = f"Object_DestroyerMK2AccelerateBouncingPart{variant}Downward"
+                body = source.split(owner + ":", 1)[1].split(
+                    "; End of function " + owner, 1
+                )[0]
+                for instruction in (
+                    "addi.w  #$10,$4C(a5)", "andi.w  #$1FE,d2",
+                    "bsr.w   Boss_DestroyerMK2SelectCurrentObjectForFrame",
+                    "addi.l  #$4000,$1C(a5)", "cmpi.w  #$180,$14(a5)",
+                    "move.w  #$1000,2(a5)",
+                ):
+                    self.assertIn(instruction, body)
+                self.assertIn(f"blt.s   Object_DestroyerMK2BouncingPart{variant}FallReturn", body)
+
 
 if __name__ == "__main__":
     unittest.main()

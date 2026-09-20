@@ -17,7 +17,9 @@ DEFAULT_CHANGES = ROOT / "config/name_audit_basis_corrections.json"
 ADDRESS_RE = re.compile(r'"address"\s*:\s*"(0x[0-9A-Fa-f]+)"')
 
 
-def patch_bytes(audit: bytes, changes: list[dict[str, str]]) -> tuple[bytes, int]:
+def patch_bytes(
+    audit: bytes, changes: list[dict[str, str | list[str]]]
+) -> tuple[bytes, int]:
     """Return a validated byte-preserving rewrite of one-line audit records."""
     lines = audit.splitlines(keepends=True)
     locations: dict[str, int] = {}
@@ -33,8 +35,13 @@ def patch_bytes(audit: bytes, changes: list[dict[str, str]]) -> tuple[bytes, int
     pending = 0
     for change in changes:
         required = {"address", "current_name", "old_basis", "new_basis"}
-        if set(change) != required:
-            raise ValueError(f"basis correction fields must be {sorted(required)}")
+        if set(change) not in (required, required | {"prior_bases"}):
+            raise ValueError(
+                f"basis correction fields must be {sorted(required)} "
+                "with optional prior_bases"
+            )
+        if not all(isinstance(change[key], str) for key in required):
+            raise ValueError("basis correction required fields must be strings")
         address = change["address"].upper().replace("0X", "0x")
         if address in seen:
             raise ValueError(f"duplicate correction address {address}")
@@ -52,9 +59,22 @@ def patch_bytes(audit: bytes, changes: list[dict[str, str]]) -> tuple[bytes, int
             raise ValueError(f"{address}: record must occupy one line") from error
         if record["current_name"] != change["current_name"]:
             raise ValueError(f"{address}: current name changed")
-        if record["basis"] == [change["new_basis"]]:
+        prior_bases = change.get("prior_bases", [change["old_basis"]])
+        if (
+            not isinstance(prior_bases, list)
+            or not prior_bases
+            or not all(isinstance(basis, str) for basis in prior_bases)
+            or prior_bases.count(change["old_basis"]) != 1
+            or change["new_basis"] in prior_bases
+        ):
+            raise ValueError(f"{address}: invalid prior basis list")
+        next_bases = [
+            change["new_basis"] if basis == change["old_basis"] else basis
+            for basis in prior_bases
+        ]
+        if record["basis"] == next_bases:
             continue
-        if record["basis"] != [change["old_basis"]]:
+        if record["basis"] != prior_bases:
             raise ValueError(f"{address}: expected old basis differs from audit")
 
         old = json.dumps(change["old_basis"], ensure_ascii=False).encode("utf-8")

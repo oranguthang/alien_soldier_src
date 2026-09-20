@@ -96,6 +96,34 @@
       "current_name": "Physics_PrepareQuarterAddOffset3",
       "old_basis": "The second seed.",
       "new_basis": "This helper loads 3 into D3 and branches to Physics_AlignFloorQuarterAddOffset; Physics_ApplyOffset3Sub6 calls it before subtracting six from Y."
+    },
+    {
+      "address": "0x001546",
+      "current_name": "VBlank_InitSplitVScrollEffect",
+      "old_basis": "The setup writes the initial VSRAM address-two value, derives register 10 from RAM, and installs a handler that writes the split value before setting register 10 to 0xFF.",
+      "new_basis": "When RasterEffectInitState is zero, this entry advances it by four, installs HBlank_WriteSplitVScroll2AndStop_InstallList through LoadObjData, and enables the H-interrupt bit before falling into Update. Later calls branch directly to Update.",
+      "prior_bases": [
+        "The old sprite-data claim was false: the routine installs and updates a scanline-triggered VSRAM address-two split.",
+        "The setup writes the initial VSRAM address-two value, derives register 10 from RAM, and installs a handler that writes the split value before setting register 10 to 0xFF."
+      ]
+    },
+    {
+      "address": "0x001572",
+      "current_name": "VBlank_InitSplitVScrollEffect_Update",
+      "old_basis": "The setup writes the initial VSRAM address-two value, derives register 10 from RAM, and installs a handler that writes the split value before setting register 10 to 0xFF.",
+      "new_basis": "This common VBlank path writes VScrollPlaneAColumn1 to VSRAM address two, copies PrimaryEntityWork4B into VDPReg10Shadow's low byte, writes register 10, then returns. The HBlank handler installation occurs before this label."
+    },
+    {
+      "address": "0x01B7E6",
+      "current_name": "Gfx_DmaTransferWithZ80Halt_RequestBus",
+      "old_basis": "The spin loop retries the Z80 bus request until the bus is granted.",
+      "new_basis": "The DMA helper sets bit zero of IO_Z80BUS and repeats while BSET reports that the bit was already set; after the loop it programs the VDP transfer."
+    },
+    {
+      "address": "0x00024A",
+      "current_name": "Reset_WaitForZ80Bus",
+      "old_basis": "The spin loop retries the Z80 bus request until the bus is granted.",
+      "new_basis": "Reset already wrote the bus-request value through A1 before this label. This loop tests bit zero at (A1) and repeats while it remains set; it does not issue another request."
     }
   ]
 }

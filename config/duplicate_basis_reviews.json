@@ -1566,6 +1566,30 @@
         {"address":"0x04A3B6","current_name":"Boss_JampanRadialLinkedObjectMainReturn","file":"src/bosses/jampan_support.s"},
         {"address":"0x04A462","current_name":"Boss_JampanLinkedAnimationObjectMainReturn","file":"src/bosses/jampan_support.s"}
       ]
+    },
+    {
+      "basis": "The state rotates, adds $4000 to vertical velocity, and disables drawing at Y $180.",
+      "reason": "The two Destroyer MK2 bouncing-part handlers have the same instruction sequence: advance angle $4C by $10, mask it with $1FE for the frame selector, add $4000 to vertical velocity $1C, and store $1000 in display field 2 when Y $14 is at least $180. Separate A/B state table entries and return labels identify different object paths; no visual part identity beyond those paths is inferred.",
+      "members": [
+        {"address":"0x04B8DA","current_name":"Object_DestroyerMK2AccelerateBouncingPartADownward","file":"src/bosses/destroyer_mk2_linked_parts_and_debris.s"},
+        {"address":"0x04B9D2","current_name":"Object_DestroyerMK2AccelerateBouncingPartBDownward","file":"src/bosses/destroyer_mk2_linked_parts_and_debris.s"}
+      ]
+    },
+    {
+      "basis": "The tail prepends the VDP auto-increment and DMA-length words, then publishes both updated queue cursors.",
+      "reason": "Both decimal and hex digit queue finalizers write $8F02 before $94009300 modified by d3, then publish a1 to VDPCommandQueueHead and a2 to VDPStagingDataCursor. Their preceding radix-specific conversion and divisor tables differ; the shared basis covers only the queue tail.",
+      "members": [
+        {"address":"0x001EA8","current_name":"Gfx_QueueDecimalDigitsDMA_FinalizeQueue","file":"src/rendering/dma_queue.s"},
+        {"address":"0x001F4A","current_name":"Gfx_QueueHexDigitsDMA_FinalizeQueue","file":"src/rendering/dma_queue.s"}
+      ]
+    },
+    {
+      "basis": "The zero-fill entry reaches this path for every non-marker byte and appends a zero word while incrementing the DMA word count.",
+      "reason": "HeaderedZeroStreamDMA and QueueZeroStreamDMA each clear d3 before entering their own byte-stream parser. Both parsers check $FE and $FF markers before testing d3, then their StageZero path clears one staging word, increments d1, and returns to ReadByte. The headered path consumes an initial word before each record; the headerless path does not.",
+      "members": [
+        {"address":"0x001D8E","current_name":"Gfx_QueueHeaderedByteStreamDMA_StageZero","file":"src/rendering/dma_queue.s"},
+        {"address":"0x001E08","current_name":"Gfx_QueueByteStreamDMA_StageZero","file":"src/rendering/dma_queue.s"}
+      ]
     }
   ]
 }

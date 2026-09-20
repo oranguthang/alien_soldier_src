@@ -35,6 +35,27 @@ class NameAuditBasisCorrectionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "current name changed"):
             patch_bytes(original, [{**change, "current_name": "Other"}])
 
+    def test_multi_basis_patch_requires_the_full_prior_list(self) -> None:
+        original = (
+            b'{"records":[\n'
+            b'  {"address":"0x000100","current_name":"Example",'
+            b'"basis":["kept","old"]}\n'
+            b']}\n'
+        )
+        change = {
+            "address": "0x000100", "current_name": "Example",
+            "old_basis": "old", "new_basis": "new",
+            "prior_bases": ["kept", "old"],
+        }
+        updated, count = patch_bytes(original, [change])
+        self.assertEqual(1, count)
+        self.assertEqual(original.replace(b'"old"', b'"new"'), updated)
+        self.assertEqual((updated, 0), patch_bytes(updated, [change]))
+        with self.assertRaisesRegex(ValueError, "expected old basis"):
+            patch_bytes(original, [{**change, "prior_bases": ["different", "old"]}])
+        with self.assertRaisesRegex(ValueError, "invalid prior basis list"):
+            patch_bytes(original, [{**change, "prior_bases": ["old", "old"]}])
+
     def test_correction_ledger_matches_audit_and_exact_source_gates(self) -> None:
         changes = json.loads(
             (ROOT / "config/name_audit_basis_corrections.json").read_text(encoding="utf-8")
@@ -43,13 +64,18 @@ class NameAuditBasisCorrectionTests(unittest.TestCase):
             record["address"]: record
             for record in json.loads((ROOT / "config/name_audit.json").read_text(encoding="utf-8"))["records"]
         }
-        self.assertEqual(16, len(changes))
-        self.assertEqual(16, len({change["address"] for change in changes}))
+        self.assertEqual(20, len(changes))
+        self.assertEqual(20, len({change["address"] for change in changes}))
         for change in changes:
             with self.subTest(address=change["address"]):
                 record = audit[change["address"]]
                 self.assertEqual(change["current_name"], record["current_name"])
-                self.assertEqual([change["new_basis"]], record["basis"])
+                prior = change.get("prior_bases", [change["old_basis"]])
+                self.assertEqual(
+                    [change["new_basis"] if basis == change["old_basis"] else basis
+                     for basis in prior],
+                    record["basis"],
+                )
                 self.assertNotEqual(change["old_basis"], change["new_basis"])
 
         seven = (ROOT / "src/player/seven_forces_battle.s").read_text(encoding="utf-8")
@@ -135,6 +161,39 @@ class NameAuditBasisCorrectionTests(unittest.TestCase):
                 self.assertIn(f"bra.s   {branch}", body)
                 self.assertIn(f"bsr.s   {helper}", responses)
                 self.assertIn(caller + ":", responses)
+
+        vblank = (ROOT / "src/rendering/vblank_effects.s").read_text(
+            encoding="utf-8"
+        )
+        setup = vblank.split("VBlank_InitSplitVScrollEffect:", 1)[1].split(
+            "VBlank_InitSplitVScrollEffect_Update:", 1
+        )[0]
+        update = vblank.split("VBlank_InitSplitVScrollEffect_Update:", 1)[1].split(
+            "; End of function VBlank_InitSplitVScrollEffect", 1
+        )[0]
+        self.assertIn("bne.s   VBlank_InitSplitVScrollEffect_Update", setup)
+        self.assertIn("HBlank_WriteSplitVScroll2AndStop_InstallList(pc),a0", setup)
+        self.assertIn("jsr     (LoadObjData).l", setup)
+        self.assertIn("ori.b   #$10,(VDPReg0Shadow+1).w", setup)
+        self.assertNotIn("LoadObjData", update)
+        self.assertIn("move.w  (VScrollPlaneAColumn1).w,(VDP_DATA).l", update)
+        self.assertIn("move.b  (PrimaryEntityWork4B).w,(VDPReg10Shadow+1).w", update)
+        self.assertIn("move.w  (VDPReg10Shadow).w,(VDP_CTRL).l", update)
+
+        dma = (ROOT / "src/gameplay/math_and_buffer_helpers.s").read_text(
+            encoding="utf-8"
+        )
+        reset = (ROOT / "src/system/boot.s").read_text(encoding="utf-8")
+        self.assertIn("bset    #0,(IO_Z80BUS).l", dma)
+        self.assertIn("bne.s   Gfx_DmaTransferWithZ80Halt_RequestBus", dma)
+        self.assertIn("dc.l    IO_Z80BUS", reset)
+        self.assertIn("move.w  d7,(a1)", reset)
+        wait = reset.split("Reset_WaitForZ80Bus:", 1)[1].split(
+            "Reset_CopyZ80BootstrapLoop:", 1
+        )[0]
+        self.assertIn("btst    d0,(a1)", wait)
+        self.assertIn("bne.s   Reset_WaitForZ80Bus", wait)
+        self.assertNotIn("move.w", wait)
 
 
 if __name__ == "__main__":
