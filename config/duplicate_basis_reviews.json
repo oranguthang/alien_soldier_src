@@ -249,6 +249,38 @@
         {"address":"0x0EB9A2","current_name":"Boss_ShellshogunSpriteMapping28","file":"src/data/shellshogun_sprite_mappings.s"},
         {"address":"0x0EB9BA","current_name":"Boss_ShellshogunSpriteMapping29","file":"src/data/shellshogun_sprite_mappings.s"}
       ]
+    },
+    {
+      "basis": "WeaponSetup_ControlTypeTextPointers selects this encoded string at the matching TYPE 1--26 display index.",
+      "reason": "WeaponSetup_ControlTypeTextPointers contains exactly 26 longwords in label order 01..26. WeaponSetup_RenderSelectedControlType scales WeaponSetupControlIndex by four and reads that table entry. The eight-byte strings share the TYPE prefix and encode the matching decimal index with digit bytes 1=0 through A=9, followed by $FF; single-digit values use a zero spacer. This is a table and byte-format claim, not an inferred visual pose.",
+      "members": [
+        {"address":"0x01FA82","current_name":"WeaponSetup_ControlType01Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FA8A","current_name":"WeaponSetup_ControlType02Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FA92","current_name":"WeaponSetup_ControlType03Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FA9A","current_name":"WeaponSetup_ControlType04Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FAA2","current_name":"WeaponSetup_ControlType05Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FAAA","current_name":"WeaponSetup_ControlType06Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FAB2","current_name":"WeaponSetup_ControlType07Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FABA","current_name":"WeaponSetup_ControlType08Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FAC2","current_name":"WeaponSetup_ControlType09Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FACA","current_name":"WeaponSetup_ControlType10Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FAD2","current_name":"WeaponSetup_ControlType11Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FADA","current_name":"WeaponSetup_ControlType12Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FAE2","current_name":"WeaponSetup_ControlType13Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FAEA","current_name":"WeaponSetup_ControlType14Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FAF2","current_name":"WeaponSetup_ControlType15Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FAFA","current_name":"WeaponSetup_ControlType16Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FB02","current_name":"WeaponSetup_ControlType17Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FB0A","current_name":"WeaponSetup_ControlType18Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FB12","current_name":"WeaponSetup_ControlType19Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FB1A","current_name":"WeaponSetup_ControlType20Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FB22","current_name":"WeaponSetup_ControlType21Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FB2A","current_name":"WeaponSetup_ControlType22Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FB32","current_name":"WeaponSetup_ControlType23Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FB3A","current_name":"WeaponSetup_ControlType24Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FB42","current_name":"WeaponSetup_ControlType25Text","file":"src/ui/weapon_setup_background_and_text.s"},
+        {"address":"0x01FB4A","current_name":"WeaponSetup_ControlType26Text","file":"src/ui/weapon_setup_background_and_text.s"}
+      ]
     }
   ]
 }

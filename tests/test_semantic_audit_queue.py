@@ -15,6 +15,56 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_control_type_text_review_matches_table_slots_and_decimal_bytes(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item for item in reviews
+            if item["basis"].startswith("WeaponSetup_ControlTypeTextPointers selects")
+        )
+        data = (ROOT / "src/ui/weapon_setup_background_and_text.s").read_text(
+            encoding="utf-8"
+        )
+        encoded = re.findall(
+            r"(?m)^WeaponSetup_ControlType(\d\d)Text:\s+dc\.b\s+([^;\r\n]+)",
+            data,
+        )
+        self.assertEqual(26, len(encoded))
+        self.assertEqual(
+            [member["current_name"] for member in review["members"]],
+            [f"WeaponSetup_ControlType{suffix}Text" for suffix, _ in encoded],
+        )
+        for index, (suffix, operands) in enumerate(encoded, 1):
+            with self.subTest(control_type=index):
+                self.assertEqual(f"{index:02}", suffix)
+                values = [
+                    int(token.strip()[1:], 16) if token.strip().startswith("$")
+                    else int(token.strip())
+                    for token in operands.split(",")
+                ]
+                digits = (
+                    [index + 1, 0] if index < 10
+                    else [index // 10 + 1, index % 10 + 1]
+                )
+                self.assertEqual([0x1E, 0x23, 0x1A, 0x0F, 0x2E, *digits, 0xFF], values)
+        source = (ROOT / "src/ui/weapon_setup_screen.s").read_text(
+            encoding="utf-8"
+        )
+        table = source.split("WeaponSetup_ControlTypeTextPointers:", 1)[1].split(
+            "WeaponSetup_ControlTypeValues:", 1
+        )[0]
+        pointers = re.findall(r"\bdc\.l\s+(WeaponSetup_ControlType\d\dText)\b", table)
+        self.assertEqual(
+            [member["current_name"] for member in review["members"]], pointers
+        )
+        renderer = source.split("WeaponSetup_RenderSelectedControlType:", 1)[1].split(
+            "; End of function WeaponSetup_RenderSelectedControlType", 1
+        )[0]
+        self.assertRegex(renderer, r"move\.w\s+\(WeaponSetupControlIndex\)\.w,d1")
+        self.assertRegex(renderer, r"asl\.w\s+#2,d1")
+        self.assertRegex(renderer, r"movea\.l\s+\(a0,d1\.w\),a0")
+
     def test_shellshogun_mapping_review_matches_all_pointer_owners(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

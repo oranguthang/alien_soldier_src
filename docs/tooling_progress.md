@@ -802,3 +802,12 @@ test checks all 30 names against those owner operands and pins the six table
 lengths and rotating-part order. The common basis claims only mapping
 selection and ROM order, not a visual pose. Six duplicate-basis groups are
 reviewed; 242 remain open.
+
+The 26 `WeaponSetup_ControlTypeXXText` records also share justified evidence.
+`WeaponSetup_ControlTypeTextPointers` lists them exactly in index order, and
+`WeaponSetup_RenderSelectedControlType` uses `WeaponSetupControlIndex * 4` to
+select a longword. A regression test checks all 26 eight-byte strings: the
+common TYPE prefix, the matching decimal digit codes (`1` for zero through
+`$A` for nine), single-digit spacer, and `$FF` terminator. That makes the
+`TYPE 1` through `TYPE 26` claim checkable rather than inferred from labels.
+Seven duplicate-basis groups are reviewed; 241 remain open.

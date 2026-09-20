@@ -97,7 +97,9 @@ from the masked eight-slot renderer. A fifth accepted group covers the 33
 `Enemy_ProjectileSpriteMapping` records selected by ten named relative-offset
 animation streams. A sixth covers 30 Shellshogun mappings selected by six
 rotation tables, direct metasprite/body assignments, or the rotating-part
-frame table. The remaining queue has 242 groups.
+frame table. A seventh covers the 26 encoded TYPE strings, with table order
+and decimal bytes checked against their names. The remaining queue has 241
+groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style
