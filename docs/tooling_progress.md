@@ -1066,3 +1066,14 @@ operations individually; a regression test pins each address and control
 path. No visual blade pose is inferred. The misleading shared sentence is
 the 75th rejected generic basis. The queue falls to 240 groups across 1,010
 uses: twenty-three reviewed, 217 open.
+
+Medusa's lower block had three more shared explanations that conflated distinct
+control points: seven falling-part states and transitions, seven spawn-sequence
+entry/branch/data labels, and two pickup-spawn branches. Sixteen exact-address
+records now describe their own instructions or, for the binary-backed schedule,
+its ROM range and pointer installation. A regression test pins the three-state
+relative dispatch, the terrain-bit transitions, eight-byte cursor advance,
+camera comparison, difficulty/record-type branches, pickup jumps, and the
+`$0572B0-$0573E6` asset boundary. The old three sentences are the 76th-78th
+rejected generic bases. The queue falls to 237 groups across 994 uses:
+twenty-three reviewed, 214 open.

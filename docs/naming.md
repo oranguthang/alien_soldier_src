@@ -72,7 +72,7 @@ time-bonus, 26 message-render, 26 message-script, 20 options-menu, 19
 weapon-selection, 33 weapon-setup loadout, 31 controller/background, 32 boss
 asset-set, 29 graphics-list, 35 asset-set palette-command, and 17 standalone
 or banked palette-command records have since been reviewed. The curated
-`NAME-002` detector now has zero matches across 75 known sentences. A wider
+`NAME-002` detector now has zero matches across 78 known sentences. A wider
 duplicate-basis review is still required before the 1.0 tag; zero matches do
 not prove every explanation or name correct.
 The read-only `make semantic-audit` now counts the wider duplicate queue, and
@@ -170,7 +170,9 @@ their manifest ranges and DAC descriptors; the partial ninth bank remains
 separate. Sharpssteel's seven pose-command control points now have separate
 instruction-level evidence: event parsing, end/loop markers, target selection,
 interpolation, angle distribution and positional offsets are different roles.
-The repeated-basis queue has 217 open groups.
+Medusa's falling-part states, spawn-sequence branches, and encoded source
+block now have separate evidence for their distinct operations. The
+repeated-basis queue has 214 open groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

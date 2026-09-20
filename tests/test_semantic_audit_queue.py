@@ -659,6 +659,119 @@ class SemanticAuditQueueTests(unittest.TestCase):
             bases,
         )
 
+    def test_medusa_falling_part_and_spawn_paths_have_local_evidence(self) -> None:
+        records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        by_address = {record["address"]: record for record in records}
+        source = (ROOT / "src/bosses/medusa.s").read_text(encoding="utf-8")
+        cases = {
+            "0x05717A": (
+                "Entity_UpdateMedusaFallingPart",
+                ("move.w  (PrimaryEntityXPos).w,$10(a5)", "jmp     (a0)"),
+            ),
+            "0x05719A": (
+                "Entity_InitMedusaFallingPartState0",
+                ("addq.w  #2,4(a5)", "move.w  #$128,$14(a5)"),
+            ),
+            "0x0571BC": (
+                "Entity_ResetMedusaFallingPartState2",
+                ("move.w  #2,4(a5)", "clr.l   $1C(a5)"),
+            ),
+            "0x0571CE": (
+                "Entity_UpdateMedusaFallingPartState2",
+                ("jsr     (Physics_CheckLowerTerrain).l", "btst    #0,6(a5)"),
+            ),
+            "0x0571DE": (
+                "Entity_AdvanceMedusaFallingPartState4",
+                ("move.w  #4,4(a5)", "clr.b   $56(a5)"),
+            ),
+            "0x0571EA": (
+                "Entity_UpdateMedusaFallingPartState4",
+                ("cmpi.w  #7,$1C(a5)", "addi.l  #$4000,$1C(a5)"),
+            ),
+            "0x0571FA": (
+                "Entity_CheckMedusaFallingPartTerrain",
+                (
+                    "jsr     (Physics_CheckLowerTerrainWhenDescending).l",
+                    "bne.w   Entity_ResetMedusaFallingPartState2",
+                ),
+            ),
+            "0x05720C": (
+                "Entity_UpdateMedusaScriptedSpawnSequence",
+                (
+                    "tst.w   (MedusaSpawnSequenceFlag).w",
+                    "move.l  #Medusa_ScriptedSpawnSequenceData,$59C(a5)",
+                ),
+            ),
+            "0x05723C": (
+                "Entity_AdvanceMedusaSpawnSequenceSegment",
+                ("addq.w  #2,d1", "move.l  a4,$59C(a5)"),
+            ),
+            "0x057244": (
+                "Entity_CheckMedusaSpawnSequenceTrigger",
+                ("cmp.w   d2,d4", "bpl.s   Entity_UpdateMedusaSpawnSequenceReturn"),
+            ),
+            "0x05724E": (
+                "Entity_ProcessMedusaSpawnSequenceEntry",
+                (
+                    "addq.w  #8,(MedusaSequenceOffset).w",
+                    "beq.w   Entity_ApplyMedusaSpawnSequenceCommand",
+                ),
+            ),
+            "0x057264": (
+                "Entity_SpawnMedusaSequenceObject",
+                ("jsr     (Projectile_FindFreeSlotReverse).l", "jmp     Pickup_SpawnSmall"),
+            ),
+            "0x05729A": (
+                "Entity_SpawnMedusaSequenceLargePickup",
+                ("jmp     Pickup_SpawnLarge",),
+            ),
+            "0x0572A0": (
+                "Entity_UpdateMedusaSpawnSequenceReturn",
+                ("rts",),
+            ),
+            "0x0572A2": (
+                "Entity_ApplyMedusaSpawnSequenceCommand",
+                ("move.w  6(a4,d1.w),$47E(a5)", "move.w  4(a4,d1.w),$5E(a5)"),
+            ),
+            "0x0572B0": (
+                "Medusa_ScriptedSpawnSequenceData",
+                ('binclude "data/other/word_572B0.bin"',),
+            ),
+        }
+        bases = []
+        for address, (name, instructions) in cases.items():
+            with self.subTest(address=address):
+                record = by_address[address]
+                self.assertEqual(name, record["current_name"])
+                self.assertEqual("static", record["evidence"])
+                self.assertEqual(1, len(record["basis"]))
+                bases.extend(record["basis"])
+                block = re.search(
+                    r"(?ms)^" + re.escape(name) + r":(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    source,
+                )
+                self.assertIsNotNone(block)
+                for instruction in instructions:
+                    self.assertIn(instruction, block.group(1))
+        self.assertEqual(len(cases), len(set(bases)))
+
+        table = source.split("Entity_MedusaFallingPartStateOffsets:", 1)[1].split(
+            "Entity_InitMedusaFallingPartState0:", 1
+        )[0]
+        self.assertEqual(3, len(re.findall(r"\bdc\.w\s+", table)))
+        for state_name in (
+            "Entity_InitMedusaFallingPartState0",
+            "Entity_UpdateMedusaFallingPartState2",
+            "Entity_UpdateMedusaFallingPartState4",
+        ):
+            self.assertIn(state_name + "-Entity_InitMedusaFallingPartState0", table)
+        assets = json.loads((ROOT / "assets/manifest.json").read_text(encoding="utf-8"))[
+            "assets"
+        ]
+        asset = next(item for item in assets if item["path"] == "other/word_572B0.bin")
+        self.assertEqual("0x572B0", asset["address"])
+        self.assertEqual("0x573E6", asset["end"])
+
     def test_stage10_wasp_review_pins_streams_and_mapping_ends(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

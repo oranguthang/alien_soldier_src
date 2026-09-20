@@ -91,6 +91,9 @@ GENERIC_NAME_BASES = (
     "Player_DeathParticleAnimationFrames selects this sprite mapping at the stated frame-counter index before rendering the death particles.",
     "Direct references from Sirene state handlers identify this data as state-selected pose scripts or the pose-frame source.",
     "Pose-buffer accesses and direct calls to the interpolation helpers establish this stage of blade pose processing.",
+    "The independent entity synchronizes X to the source object, dispatches field 4, and alternates terrain-wait and gravity states using collision bit zero.",
+    "The routine walks eight-byte records by scroll trigger, spawning the encoded object or pickup or applying a controller command until a segment marker.",
+    "Direct state dispatch and record consumption establish this Medusa entity role.",
 )
 
 
