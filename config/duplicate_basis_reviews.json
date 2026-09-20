@@ -1045,6 +1045,15 @@
         {"address":"0x1A0D6C","current_name":"SharedTeddyHazardSpriteMappingB","file":"src/data/shared_stage_object_sprite_mappings.s"},
         {"address":"0x1A0D84","current_name":"SharedTeddyHazardSpriteMappingC","file":"src/data/shared_stage_object_sprite_mappings.s"}
       ]
+    },
+    {
+      "basis": "This terminated LoadObjData descriptor loads the shared transition asset at VRAM $E000.",
+      "reason": "Each of the three state-two graphics loaders passes its adjacent descriptor to LoadObjData. Each exact descriptor is type 7, points to CreditsAndTransitionTileArtE000, supplies destination $E000, and ends with $FFFF. The shared source and destination are proven; the three enclosing transition state machines remain distinct.",
+      "members": [
+        {"address":"0x026976","current_name":"AlternateTransition_GraphicsLoadDescriptor","file":"src/effects/defeat_transition_control.s"},
+        {"address":"0x026A4E","current_name":"TransitionEffect_GraphicsLoadDescriptor","file":"src/effects/defeat_transition_control.s"},
+        {"address":"0x027982","current_name":"TunnelTransition_GraphicsLoadDescriptor","file":"src/effects/tunnel_transition.s"}
+      ]
     }
   ]
 }

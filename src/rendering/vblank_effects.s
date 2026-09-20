@@ -320,7 +320,7 @@ HBlank_WriteVScrollPair:                                ; was: sub_1770
 VBlank_InitStage10Effect:                               ; DATA XREF: VBlank_DispatchRasterEffect+3A   o  ; was: sub_1782
                                         ; VBlank_DispatchRasterEffect+42   o
                 move.w  (RasterEffectInitState).w,d0
-                bne.w   VBlank_InitStage10Effect_UpdateRegisters
+                bne.w   VBlank_InitStage10Effect_RefreshScrollAndBuffer
                 addq.w  #4,(RasterEffectInitState).w
                 move.b  #$C8,(VDPReg10Shadow+1).w
                 move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
@@ -329,7 +329,8 @@ VBlank_InitStage10Effect:                               ; DATA XREF: VBlank_Disp
                 jsr     (LoadObjData).l
                 ori.b   #$10,(VDPReg0Shadow+1).w
                 move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
-VBlank_InitStage10Effect_UpdateRegisters:               ; CODE XREF: VBlank_InitStage10Effect+4   j  ; was: loc_17B6
+; Recurring VBlank path updates display state and seeds the HBlank scroll buffer
+VBlank_InitStage10Effect_RefreshScrollAndBuffer:        ; CODE XREF: VBlank_InitStage10Effect+4   j  ; was: loc_17B6
                 move.w  (VDPReg2Shadow).w,(VDP_CTRL).l
                 move.w  (VDPReg4Shadow).w,(VDP_CTRL).l
                 move.w  (VDPReg7Shadow).w,(VDP_CTRL).l

@@ -1583,3 +1583,31 @@ is installed by the Teddy initializer and both Stage 15 hazard-wave paths.
 Exact-member tests pin addresses, buffers, streams and installers. The queue
 is now 200 repeated groups across 859 uses, with seventy-four reviewed and
 126 open. No visual boss-identity claim was advanced by these static checks.
+
+Four more shared audit sentences were split by the actual entrypoint scope.
+`Sprite_ClearOAMBuildState` sets up a 28-pass, 448-byte clear; its inner loop
+writes 16 bytes per pass. `Entity_InitValkirieAuxiliaryGroup` clears six object
+records and then initializes their linked metasprite, while its DBF loop only
+clears one record per pass. The Stage 10 VBlank path refreshes display
+registers and prepares the HBlank scroll buffer; `HBlank_UpdateStage10Display`
+consumes that buffer. The CRAM-write VBlank path installs/selects the HBlank
+handler and its color buffer; `HBlank_WriteCRAMColor5` performs the CRAM write.
+The Stage 10 VBlank label was renamed to reflect both jobs, with its previous
+and legacy names preserved in the audit. Focused static tests pin these
+distinctions. This removes four overbroad shared sentences: the queue is now
+196 repeated groups across 851 uses, with seventy-four reviewed and 122 open.
+No visual claim changed.
+
+The next static pass corrected two more shared audit claims and accepted one
+exact-member review. The three Results summary labels have distinct 22-byte
+records selected immediately before their corresponding time, clear-time, and
+visit totals; their evidence no longer asserts an unverified custom-font
+decoding. The Sunset Sting A/B/C tile-load commands are selected through a
+four-pointer table in A/B/C/B order, with respective final words `$6700`,
+`$6800`, and `$6B00`; the old claim that each record was passed directly was
+wrong. Three transition state machines each pass a separate type-7,
+`CreditsAndTransitionTileArtE000`/`$E000`, `$FFFF`-terminated descriptor to
+`LoadObjData`, so that genuinely shared statement now has an exact-member
+review. Focused tests pin all three relationships. The repeated-basis queue
+is 194 groups across 845 uses: seventy-five reviewed, 119 open. No visual
+owner was inferred.
