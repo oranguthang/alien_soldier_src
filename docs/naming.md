@@ -118,7 +118,9 @@ two-frame movement cycle; those owners now have separate names and evidence.
 Xi-Tiger's 18-way sentence likewise hid two direct metasprite entries and two
 eight-frame rotation sets, each consumed once forward and once backward. The
 names and exact-address bases now follow those four tables and descriptor
-slots. The remaining queue has 234 groups.
+slots. A tenth exact-member review accepts 17 phase-pattern mappings: every
+one is a relative target of the seven selector streams and has a high-bit
+terminator. The remaining queue has 233 groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

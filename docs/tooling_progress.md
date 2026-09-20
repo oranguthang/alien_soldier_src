@@ -889,3 +889,12 @@ exact-address audit now use role-specific names and per-slot evidence. A
 regression test pins all four eight-pointer orders and three direct descriptor
 references. The old sentence is the 65th rejected generic basis. The queue
 drops to 243 groups across 1,066 uses: nine reviewed, 234 open.
+
+The 17 `Enemy_PhasePatternSpriteMappingA` through `Q` records share an exact
+stream-level basis. All are referenced by `dc.w Mapping-*` entries across the
+seven streams selected by `Enemy_PhasePatternAnimationBySelector`, and each
+mapping ends with a high-bit sprite command. The new exact-member review is
+backed by a regression test of all 17 targets, mapping terminators, and the
+seven-entry selector table in `shared_enemy_helpers.s`. It does not assert
+that every selector is reached in every runtime state or assign visual poses.
+The 243 groups remain; ten are reviewed and 233 open.

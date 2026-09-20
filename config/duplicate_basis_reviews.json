@@ -331,6 +331,29 @@
         {"address":"0x1A0E56","current_name":"Stage12_TeddyBearSpriteMappingQ","file":"src/data/shared_stage_object_sprite_mappings.s"},
         {"address":"0x1A0E6E","current_name":"Stage12_TeddyBearSpriteMappingR","file":"src/data/shared_stage_object_sprite_mappings.s"}
       ]
+    },
+    {
+      "basis": "One or more entries in the seven-stream Enemy_PhasePatternAnimationBySelector set stores a self-relative pointer to this high-bit-terminated sprite mapping.",
+      "reason": "Enemy_ApplyPhasePatternAnimationSelector indexes the seven entries of Enemy_PhasePatternAnimationBySelector. Across those seven streams, every A-Q mapping is the target of at least one dc.w Mapping-* relative entry; each mapping's final sprite command has bit 15 set in its first word. The common sentence claims table membership and record format, not a visual pose or execution of every selector in every game state.",
+      "members": [
+        {"address":"0x0EA86C","current_name":"Enemy_PhasePatternSpriteMappingA","file":"src/data/phase_pattern_sprite_mappings.s"},
+        {"address":"0x0EA8B4","current_name":"Enemy_PhasePatternSpriteMappingB","file":"src/data/phase_pattern_sprite_mappings.s"},
+        {"address":"0x0EA8FC","current_name":"Enemy_PhasePatternSpriteMappingC","file":"src/data/phase_pattern_sprite_mappings.s"},
+        {"address":"0x0EA944","current_name":"Enemy_PhasePatternSpriteMappingD","file":"src/data/phase_pattern_sprite_mappings.s"},
+        {"address":"0x0EA992","current_name":"Enemy_PhasePatternSpriteMappingE","file":"src/data/phase_pattern_sprite_mappings.s"},
+        {"address":"0x0EA9E0","current_name":"Enemy_PhasePatternSpriteMappingF","file":"src/data/phase_pattern_sprite_mappings.s"},
+        {"address":"0x0EAA2E","current_name":"Enemy_PhasePatternSpriteMappingG","file":"src/data/phase_pattern_sprite_mappings.s"},
+        {"address":"0x0EAA7C","current_name":"Enemy_PhasePatternSpriteMappingH","file":"src/data/phase_pattern_sprite_mappings.s"},
+        {"address":"0x0EAACA","current_name":"Enemy_PhasePatternSpriteMappingI","file":"src/data/phase_pattern_sprite_mappings.s"},
+        {"address":"0x0EAB18","current_name":"Enemy_PhasePatternSpriteMappingJ","file":"src/data/phase_pattern_sprite_mappings.s"},
+        {"address":"0x0EAB66","current_name":"Enemy_PhasePatternSpriteMappingK","file":"src/data/phase_pattern_sprite_mappings.s"},
+        {"address":"0x0EABBA","current_name":"Enemy_PhasePatternSpriteMappingL","file":"src/data/phase_pattern_sprite_mappings.s"},
+        {"address":"0x0EAC0E","current_name":"Enemy_PhasePatternSpriteMappingM","file":"src/data/phase_pattern_sprite_mappings.s"},
+        {"address":"0x0EAC62","current_name":"Enemy_PhasePatternSpriteMappingN","file":"src/data/phase_pattern_sprite_mappings.s"},
+        {"address":"0x0EACBC","current_name":"Enemy_PhasePatternSpriteMappingO","file":"src/data/phase_pattern_sprite_mappings.s"},
+        {"address":"0x0EAD16","current_name":"Enemy_PhasePatternSpriteMappingP","file":"src/data/phase_pattern_sprite_mappings.s"},
+        {"address":"0x0EAD70","current_name":"Enemy_PhasePatternSpriteMappingQ","file":"src/data/phase_pattern_sprite_mappings.s"}
+      ]
     }
   ]
 }
