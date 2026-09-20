@@ -16,6 +16,71 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_options_choice_labels_stop_at_the_first_terminator(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item for item in reviews
+            if item["basis"].startswith("Direct references from the options/frontend renderer")
+        )
+        path = "src/ui/options_shared_helpers_and_assets.s"
+        expected = (
+            (0x00A220, "Options_OnLabelTiles", 4),
+            (0x00A22A, "Options_OffLabelTiles", 3),
+            (0x00A232, "Options_SuperEasyLabelTiles", 10),
+            (0x00A248, "Options_SuperHardLabelTiles", 9),
+        )
+        self.assertEqual(
+            [(f"0x{address:06X}", name, path) for address, name, _ in expected],
+            [
+                (member["address"], member["current_name"], member["file"])
+                for member in review["members"]
+            ],
+        )
+        source = (ROOT / path).read_text(encoding="utf-8")
+        records = {
+            record["address"]: record
+            for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        for address, name, glyph_count in expected:
+            with self.subTest(label=name):
+                line = next(line for line in source.splitlines() if line.startswith(name + ":"))
+                words = [
+                    word.strip()
+                    for word in re.search(r"\bdc\.w\s+([^;]+)", line).group(1).split(",")
+                ]
+                self.assertEqual(["$FFFF"], words[glyph_count:])
+                self.assertEqual(name, records[f"0x{address:06X}"]["current_name"])
+                self.assertEqual(2, len(records[f"0x{address:06X}"]["basis"]))
+        hard_run = source.split("Options_SuperHardLabelTiles:", 1)[1].split(
+            "Options_VoiceTestRequestIDs:", 1
+        )[0]
+        rows = re.findall(r"\bdc\.w\s+([^;\r\n]+)", hard_run)
+        words = [word.strip() for row in rows for word in row.split(",")]
+        self.assertEqual(30, len(words))
+        self.assertEqual([9, 17, 29], [i for i, word in enumerate(words) if word == "$FFFF"])
+        ui = (ROOT / "src/ui/options_menu_controllers.s").read_text(
+            encoding="utf-8"
+        )
+        for handler in ("UI_UpdateMessageOption", "UI_UpdateBGMOption", "UI_UpdateSFXOption"):
+            body = ui.split(handler + ":", 1)[1].split("; End of function " + handler, 1)[0]
+            self.assertIn("lea     Options_OnLabelTiles(pc),a1", body)
+            self.assertIn("lea     Options_OffLabelTiles(pc),a2", body)
+        difficulty = ui.split("UI_UpdateDifficultyOption:", 1)[1].split(
+            "; End of function UI_UpdateDifficultyOption", 1
+        )[0]
+        self.assertIn("lea     Options_SuperEasyLabelTiles(pc),a1", difficulty)
+        self.assertIn("lea     Options_SuperHardLabelTiles(pc),a2", difficulty)
+        toggle = source.split("Options_ApplyToggleAndQueueLabels:", 1)[1].split(
+            "; End of function Options_UpdateBit2Toggle", 1
+        )[0]
+        for instruction in (
+            "move.w  (a1)+,d0", "beq.s   Options_CopySecondToggleLabel",
+            "move.w  (a2)+,d0", "beq.s   Options_BeginToggleBottomRow",
+        ):
+            self.assertIn(instruction, toggle)
+
     def test_valkirie_velocity_and_seven_forces_palette_evidence_is_local(self) -> None:
         records = {
             record["address"]: record

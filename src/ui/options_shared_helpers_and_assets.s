@@ -285,6 +285,7 @@ Options_SuperEasyLabelTiles:    dc.w    $833A, $833E, $8334, $831E, $8338, $831E
                                         ; DATA XREF: UI_UpdateDifficultyOption   o
 Options_SuperHardLabelTiles:    dc.w    $833A, $833E, $8334, $831E, $8338, $8324, $8316, $8338, $831C, $FFFF  ; was: word_A248
                                         ; DATA XREF: UI_UpdateDifficultyOption+6   o
+; Two further terminated tile strings follow; the direct toggle reader stops above
                 dc.w    $8330, $8332, $8338, $832E, $8316, $832C, $8300, $FFFF, $831C, $8326
                 dc.w    $8338, $831E, $831A, $833C, $831E, $8338, $831A, $833E, $833C, $FFFF
 ; Normal voice-test navigation selects all 38 table bytes at indices 0..$25

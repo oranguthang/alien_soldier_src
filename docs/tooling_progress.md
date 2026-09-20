@@ -1225,3 +1225,16 @@ no longer calls the triplet frame-selected. A regression test pins the three
 velocity paths, seven callers, table size and three palette writes. The old
 sentences become the 88th and 89th rejected generic bases. The queue falls
 to 228 groups across 952 uses: thirty-six reviewed, 192 open.
+
+The four Options choice strings at `$00A220/$00A22A/$00A232/$00A248` have
+an exact-member review grounded in the message/BGM/SFX and difficulty
+handlers. The toggle renderer consumes a1 and a2 only through their first
+`$FFFF` terminators, after 4/3/10/9 tile words respectively. The broad
+sentence treating these specific tile strings as possible request IDs or
+unclassified menu data was replaced by per-record evidence and added as the
+90th rejected generic basis. Two more terminated strings follow the
+SuperHard record at `$00A25C–$00A283`; they have no direct symbolic source
+pointer, so their role/reachability is recorded in `docs/unknowns.md` rather
+than attributed to the difficulty toggle. The test pins all four addresses,
+consumer pointers, terminators and trailing boundaries. The queue is now 227
+groups across 948 uses: thirty-seven reviewed, 190 open.

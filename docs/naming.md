@@ -72,7 +72,7 @@ time-bonus, 26 message-render, 26 message-script, 20 options-menu, 19
 weapon-selection, 33 weapon-setup loadout, 31 controller/background, 32 boss
 asset-set, 29 graphics-list, 35 asset-set palette-command, and 17 standalone
 or banked palette-command records have since been reviewed. The curated
-`NAME-002` detector now has zero matches across 89 known sentences. A wider
+`NAME-002` detector now has zero matches across 90 known sentences. A wider
 duplicate-basis review is still required before the 1.0 tag; zero matches do
 not prove every explanation or name correct.
 The read-only `make semantic-audit` now counts the wider duplicate queue, and
@@ -202,7 +202,10 @@ five HBlank `$20` length fields now describe copy windows, not handler extents:
 each window continues past its handler's `rte` into adjacent ROM bytes. The
 Valkirie auxiliary velocity branches now have instruction-specific evidence,
 and the Seven Forces palette table is indexed by caller-supplied boss offsets,
-not by frame number. The repeated-basis queue has 192 open groups.
+not by frame number. Options choice strings now have an exact-member review
+limited to their first `$FFFF` terminator; two trailing strings after
+`Options_SuperHardLabelTiles` remain of unknown reachability. The
+repeated-basis queue has 190 open groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

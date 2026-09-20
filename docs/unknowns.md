@@ -11574,3 +11574,10 @@ They also decode as a 68000 instruction, but no symbolic source caller or
 table entry reaches that address. Their status as data, dormant code or an
 indirect entry remains unknown; the source preserves the exact words without
 assigning them a fifth visible frame or a speculative function name.
+
+`Options_SuperHardLabelTiles` begins at `$00A248` with nine encoded tile
+words and a `$FFFF` terminator. `Options_ApplyToggleAndQueueLabels` reads
+from that pointer only until the first terminator. Two more terminated tile
+strings occupy `$00A25C–$00A283`; no reconstructed symbolic source pointer
+selects either start. Their text and reachability by indirect or raw-address
+paths are not asserted, and they remain in the same ROM-ordered data run.

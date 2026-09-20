@@ -695,6 +695,16 @@
         {"address":"0x053B06","current_name":"Boss_MissirayQueueIndexedRowSet04","file":"src/bosses/missiray_core.s"},
         {"address":"0x053B20","current_name":"Boss_MissirayQueueIndexedRowSet05","file":"src/bosses/missiray_core.s"}
       ]
+    },
+    {
+      "basis": "Direct references from the options/frontend renderer establish the table's consumer and displayed role.",
+      "reason": "UI_UpdateMessageOption, UI_UpdateBGMOption and UI_UpdateSFXOption pass On as a1 and Off as a2; UI_UpdateDifficultyOption passes SuperEasy as a1 and SuperHard as a2. Options_ApplyToggleAndQueueLabels copies each choice only until its first $FFFF word. The exact first-string lengths are 4/3/10/9 tile words in On/Off/SuperEasy/SuperHard order. Two additional terminated strings follow SuperHard in ROM but are outside this direct reader's first string; no visual or reachability claim is made for them.",
+      "members": [
+        {"address":"0x00A220","current_name":"Options_OnLabelTiles","file":"src/ui/options_shared_helpers_and_assets.s"},
+        {"address":"0x00A22A","current_name":"Options_OffLabelTiles","file":"src/ui/options_shared_helpers_and_assets.s"},
+        {"address":"0x00A232","current_name":"Options_SuperEasyLabelTiles","file":"src/ui/options_shared_helpers_and_assets.s"},
+        {"address":"0x00A248","current_name":"Options_SuperHardLabelTiles","file":"src/ui/options_shared_helpers_and_assets.s"}
+      ]
     }
   ]
 }
