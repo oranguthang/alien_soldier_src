@@ -2,14 +2,15 @@
 
 The machine-readable thresholds live in `config/source_policy.json`.
 
-The shifted-payload build in the parallel repacker worktree has a rendering
-regression: a platform before Sniper Honeyviper in Stage 4 disappears. A
-16-byte shift of all payloads failed before the eight-archive split, and an
-8 KiB shift failed; the split's effect on the 16-byte case was not retested.
-The source list for Stage 4 uses two shared-table indices, not any of the three
-formerly interior archive pointers fixed in `src/stages/visual_asset_loading.s`.
-The precise tile source, stale pointer, and influence of ROM growth are not yet
-known. The two archive-adjacent tails at `$1BE722` and `$19C492` are also
+The parallel repacker worktree reported a disappearing Stage 4 platform before
+Sniper Honeyviper. A controlled retest on this branch did not reproduce it:
+both 16-byte and 8-KiB relocation-only builds matched every sampled TAS and
+longplay screenshot through the boss entrance (70/70 and 118/118 per build).
+The saved older full-shift image equals the debug/godmode variant and diverges
+from canonical TAS gameplay by frame 600, so it is not a clean control. A
+transient unsampled glitch or another exact failing build is still possible;
+the missing ROM/frame is the remaining evidence gap, not a known stale Stage 4
+pointer. The two archive-adjacent tails at `$1BE722` and `$19C492` are also
 unassigned beyond their observable command-like byte structure. See
 `docs/payload_archives.md`.
 

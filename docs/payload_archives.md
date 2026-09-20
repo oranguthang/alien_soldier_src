@@ -47,14 +47,39 @@ visual owner remain unverified. Both retain role-neutral names pending a
 reader trace. All 128 `artcomp` assets now end exactly at the first archive's
 header-defined boundary. The extracted asset count is 589.
 
-## Stage 4 rendering regression still open
+## Stage 4 rendering report: not reproduced in controlled shifts
 
-Claude's parallel repacker worktree reported that a platform before Sniper
-Honeyviper disappears after moving compressed payloads. A 16-byte shift of
-all payloads failed before this split; an 8 KiB shift also failed; a repack
-after the split did not. A 16-byte shift after the split was not retested, and
-shift size was not isolated from growing the image beyond 2 MiB. Stage 4's
-compact asset list selects indices 0 and 8 in `Stage_SharedTileSourceTable`;
-neither directly names the three corrected interior pointers. The current
-evidence therefore does not identify the defective pointer or the missing
-platform's artwork. `docs/unknowns.md` tracks this as an open investigation.
+The parallel repacker worktree reported a missing platform before Sniper
+Honeyviper after moving payloads. Its saved `build/tmp_fullshift.bin` is
+byte-for-byte the same image as `alien_soldier_shifted_godmode.bin`; its code
+already differs from the canonical ROM at `$05E7`, and the pinned TAS shows a
+different game state by frame 600. It cannot serve as a relocation-only
+control for a Stage 4 regression. This does not disprove the original visual
+observation; the exact failing screenshot, frame and build are not preserved
+here.
+
+On the current preservation branch, `shift_payloads.py` was run without a
+debug define. It moved 190 original compressed payloads, unchanged, first by
+16 bytes within a 2 MiB image and then by 8 KiB within a 4 MiB image. The
+large-shift build also inserted 19,786 alignment bytes to keep DMA payloads
+inside their `$20000`-byte blocks and updated the ROM header and checksum.
+Both experimental ROMs assembled successfully.
+
+The pinned emulator replayed each ROM and the canonical Japanese ROM with
+the same movies. At 100-frame intervals through TAS frame 7000, all 70 PNGs
+from each shifted ROM were byte-identical to the canonical captures. At
+200-frame intervals through longplay frame 23600, all 118 PNGs from each
+shifted ROM also matched; this includes all 14 sampled frames from 21000 to
+23600 around Stage 4 and the boss entrance. These were sequential runs with
+peak emulator memory below 48 MiB, not a full-game runtime proof. A brief
+between-sample glitch or a different repacker variant remains untested.
+
+Stage 4's compact asset list selects indices 0 and 8 in
+`Stage_SharedTileSourceTable`. The two table pointers and the Sniper
+Honeyviper tile-art bytes relocate in the saved shifted images; none of those
+sources is simply omitted. The three corrected interior pointers above do
+not belong to Stage 4. If the platform is still missing in another build, the
+next input needed is that exact ROM plus its movie/frame or screenshot; then
+the first divergent VRAM or tilemap transfer can be traced against this
+controlled baseline. We do not attribute the non-reproduction specifically
+to the archive split without that before/after control.

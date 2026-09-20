@@ -1385,5 +1385,10 @@ to the second archive. Independent header checks found two more non-archive
 tails (64 and 18 bytes), which were separated and neutrally named. The 589
 extracted ranges remain byte-identical to the Japanese ROM. A lightweight
 regression test covers archive boundaries and all three former interior
-pointers; `docs/payload_archives.md` records the evidence and the still-open
-Stage 4 rendering regression before Sniper Honeyviper.
+pointers; `docs/payload_archives.md` records the evidence. A subsequent
+low-memory relocation-only experiment moved the 190 selected payloads by
+16 bytes and 8 KiB. For each variant, the pinned emulator matched the
+canonical ROM at all 70 sampled TAS frames through frame 7000 and all 118
+sampled longplay frames through frame 23600, including Stage 4. The earlier
+saved full-shift image proved to be the godmode variant and cannot establish
+a preservation-build regression.
