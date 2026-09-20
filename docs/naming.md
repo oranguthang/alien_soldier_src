@@ -206,7 +206,9 @@ not by frame number. Options choice strings now have an exact-member review
 limited to their first `$FFFF` terminator; two trailing strings after
 `Options_SuperHardLabelTiles` remain of unknown reachability. The
 scroll DMA buffers and the longword fields that point to them now have
-separate per-address evidence. The repeated-basis queue has 188 open groups.
+separate per-address evidence. Sharpssteel's two blade-graphics table selectors
+are now distinguished from the shared writer entry and six-part loop by
+per-address instruction evidence. The repeated-basis queue has 187 open groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

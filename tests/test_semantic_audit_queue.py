@@ -1748,6 +1748,68 @@ class SemanticAuditQueueTests(unittest.TestCase):
             ),
         )
 
+    def test_sharpssteel_blade_graphics_selectors_are_not_the_writer(self) -> None:
+        records = {
+            record["address"]: record
+            for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        source = (ROOT / "src/bosses/sharpssteel_blades.s").read_text(
+            encoding="utf-8"
+        )
+        cases = {
+            "0x048898": (
+                "Boss_SharpssteelSelectBladeGraphicsTableA",
+                ("lea     Boss_SharpssteelBladeGraphicsMappingsA(pc),a0",
+                 "bra.s   Boss_SharpssteelApplyBladeGraphicsSet"),
+            ),
+            "0x0488EA": (
+                "Boss_SharpssteelSelectBladeGraphicsTableB",
+                ("lea     Boss_SharpssteelBladeGraphicsMappingsB(pc),a0",),
+            ),
+            "0x0488F0": (
+                "Boss_SharpssteelApplyBladeGraphicsSet",
+                ("movea.w a5,a1", "moveq   #5,d7"),
+            ),
+            "0x0488F4": (
+                "Boss_SharpssteelApplyBladeGraphicsSetLoop",
+                ("and.w   d2,$E(a1)", "or.w    d1,$E(a1)",
+                 "move.l  (a0)+,8(a1)", "lea     $60(a1),a1",
+                 "dbf     d7,Boss_SharpssteelApplyBladeGraphicsSetLoop"),
+            ),
+        }
+        bases = []
+        for address, (name, instructions) in cases.items():
+            with self.subTest(address=address):
+                record = records[address]
+                self.assertEqual(name, record["current_name"])
+                self.assertEqual("static", record["evidence"])
+                self.assertEqual(1, len(record["basis"]))
+                bases.extend(record["basis"])
+                block = source.split(name + ":", 1)[1].split("\n;", 1)[0]
+                for instruction in instructions:
+                    self.assertIn(instruction, block)
+        self.assertEqual(4, len(set(bases)))
+        self.assertIn(
+            "bpl.s   Boss_SharpssteelSelectBladeGraphicsTableA", source
+        )
+        self.assertIn(
+            "bmi.s   Boss_SharpssteelSelectBladeGraphicsTableB", source
+        )
+        self.assertIn(
+            "bpl.s   Boss_SharpssteelSelectBladeGraphicsTableB", source
+        )
+        for suffix in ("A", "B"):
+            table = source.split(
+                "Boss_SharpssteelBladeGraphicsMappings" + suffix + ":", 1
+            )[1].split("\n\n", 1)[0]
+            self.assertEqual(
+                6,
+                len(re.findall(
+                    rf"\bdc\.l\s+Boss_SharpssteelBladeGraphics{suffix}Mapping\d+",
+                    table,
+                )),
+            )
+
     def test_medusa_falling_part_and_spawn_paths_have_local_evidence(self) -> None:
         records = json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
         by_address = {record["address"]: record for record in records}

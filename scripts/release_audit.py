@@ -108,6 +108,7 @@ GENERIC_NAME_BASES = (
     "The label describes the encoded tiles, request IDs, or menu data without assigning unobserved semantics.",
     "Initialization assigns the DMA source pointers to 0xFFE400 and 0xFFEC00 respectively.",
     "The consumers send the former to the VRAM horizontal-scroll table and the latter to VSRAM, with lengths selected by VDP register 11 scroll modes.",
+    "Mapping-pointer and tile-attribute writes across the embedded blade parts establish this graphics-configuration role.",
 )
 
 

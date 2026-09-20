@@ -1249,3 +1249,12 @@ evidence sentences replace the two broad shared sentences, now the 91st and
 92nd rejected generic bases. A test pins all four RAM addresses, reset
 assignments, direct buffer writers, DMA destinations and mode lengths. The
 queue falls to 225 groups across 940 uses: thirty-seven reviewed, 188 open.
+
+The four Sharpssteel blade-graphics labels at `$048898/$0488EA/$0488F0/$0488F4`
+did not all perform the same writes. The first two load the A/B mapping tables;
+the third enters the shared writer with six iterations; the fourth is the loop
+that masks and ORs tile attributes and stores each mapping pointer. Their
+records now carry separate instruction evidence. A regression test pins both
+table selectors, the six-entry mapping lists, and the writer loop. The broad
+shared sentence is the 93rd rejected generic basis. The queue falls to 224
+groups across 936 uses: thirty-seven reviewed, 187 open.
