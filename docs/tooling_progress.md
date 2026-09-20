@@ -853,7 +853,7 @@ claim. Each A-R mapping is the target of a `dc.w Mapping-*` entry in the
 adjacent timed streams, and each ends with a sprite command whose first word
 has bit 15 set. `Anim_ResolveTimedMappingFrame` adds those signed offsets to
 the stream cursor. An exact-member review and a regression test pin all 18
-targets and their terminators. Streams named `UnreferencedTeddyGroupAnimation*`
+targets and their terminators. Streams now named `Stage12_TeddyBearAnimationVariant*`
 have no proven source caller; neither the review nor the test claims runtime
 reachability or a particular visual pose. The 246 groups remain; nine are
 reviewed and 237 open.
@@ -1267,3 +1267,13 @@ exact-member review and regression test pin the type assignment, dispatch-table
 slot, animation pointer, stream order, and relative-offset renderer. No visual
 frame identity is inferred. The queue remains 224 groups across 936 uses: thirty-eight
 reviewed, 186 open.
+
+Four Stage 12 Teddy Bear streams at `$1A0EEA/$1A0EFE/$1A0F56/$1A0FBE`
+were named `Unreferenced*` based on absence of direct symbolic callers.
+That scan cannot rule out indirect ROM-pointer selection, so the live names
+are now neutral `Stage12_TeddyBearAnimationVariantA-D`. Each exact-address
+record pins its own mapping sequence, timing words, and self-loop terminator.
+The uncertainty about runtime reachability remains explicit in the unknowns
+registry. Their two old shared sentences are the 94th and 95th rejected
+generic bases. The queue falls to 222 groups across 928 uses: thirty-eight
+reviewed, 184 open.

@@ -3762,10 +3762,12 @@ Stage 10 beetle animation; and the Stage 12 Teddy Bear mapping group.
 The reconstructed `data/shared_stage_object_sprite_mappings.s` keeps those
 interleaved mapping records together in their natural 299-line ROM bank. Names
 encode proven consumers, exact per-frame durations, or stable record letters;
-they do not invent visual poses. Four self-looping streams have no external
-source reference and are therefore recorded as
-`UnreferencedTeddyGroupAnimationA-D` instead of being assigned speculative
-states. The three mappings used both by the Teddy Bear and Stage 15 hazard-wave
+they do not invent visual poses. Four self-looping streams have no identified
+direct external source reference and are recorded as
+`Stage12_TeddyBearAnimationVariantA-D` instead of being assigned speculative
+states. This does not prove that they are unreachable through indirect ROM
+pointers; their runtime reachability remains unknown. The three mappings used
+both by the Teddy Bear and Stage 15 hazard-wave
 initializers are explicitly marked shared rather than owned by either caller.
 The consumer audit also rejects an apparent `PilotLoop` interpretation: the
 pilot-start routine writes that stream and then overwrites the mapping field in

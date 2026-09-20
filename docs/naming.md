@@ -210,7 +210,10 @@ separate per-address evidence. Sharpssteel's two blade-graphics table selectors
 are now distinguished from the shared writer entry and six-part loop by
 per-address instruction evidence. Five Stage 24 scene-object animation frames
 now have an exact-member review that pins their relative-offset stream order
-without asserting a visual pose. The repeated-basis queue has 186 open groups.
+without asserting a visual pose. Four Stage 12 Teddy Bear streams now use
+variant names: their direct callers are unidentified, but indirect runtime
+reachability has not been ruled out. The repeated-basis queue has 184 open
+groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

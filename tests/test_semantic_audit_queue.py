@@ -2202,6 +2202,44 @@ class SemanticAuditQueueTests(unittest.TestCase):
         )
         self.assertIn("adda.w  (a4),a4", resolver)
 
+    def test_teddy_bear_variant_streams_name_content_not_reachability(self) -> None:
+        records = {
+            record["address"]: record
+            for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
+        }
+        source = (
+            ROOT / "src/data/shared_stage_object_sprite_mappings.s"
+        ).read_text(encoding="utf-8")
+        variants = {
+            "A": ("0x1A0EEA", "E G H G", "4 1 3 1"),
+            "B": ("0x1A0EFE", "G H E F E H", "4 2 2 4 2 2"),
+            "C": ("0x1A0F56", "O A", "9 9"),
+            "D": ("0x1A0FBE", "P Q R Q", "7 6 7 6"),
+        }
+        bases = []
+        for suffix, (address, frames, durations) in variants.items():
+            with self.subTest(suffix=suffix):
+                name = f"Stage12_TeddyBearAnimationVariant{suffix}"
+                record = records[address]
+                self.assertEqual(name, record["current_name"])
+                self.assertEqual("static", record["evidence"])
+                self.assertEqual(1, len(record["basis"]))
+                self.assertIn("indirect reachability is untested", record["basis"][0])
+                bases.extend(record["basis"])
+                block = re.search(
+                    rf"(?ms)^{name}:(.*?)(?=^[A-Za-z_][A-Za-z0-9_]*:|\Z)",
+                    source,
+                )
+                self.assertIsNotNone(block)
+                words = re.findall(r"\bdc\.w\s+([A-Za-z_]\w*-\*|\d+)", block.group(1))
+                expected = []
+                for frame, duration in zip(frames.split(), durations.split()):
+                    expected.extend((f"Stage12_TeddyBearSpriteMapping{frame}-*", duration))
+                expected.extend((f"{name}-*", "0"))
+                self.assertEqual(expected, words)
+        self.assertEqual(4, len(set(bases)))
+        self.assertNotIn("UnreferencedTeddyGroupAnimation", source)
+
     def test_weapon_setup_text_review_decodes_labels_and_has_render_refs(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")

@@ -38,7 +38,7 @@ Stage12_TeddyBearSpriteMappingC:    dc.w    $4982, $500, $EDF4  ; DATA XREF: ROM
 Stage12_TeddyBearSpriteMappingD:    dc.w    $4982, $500, $EFF2  ; DATA XREF: ROM:001A0EC2   o  ; was: word_1A0D12
                                         ; ROM:001A0EE2   o
                 dc.w    $C986, $A00, $F7F3
-Stage12_TeddyBearSpriteMappingE:    dc.w    $4182, $500, $EBFF  ; DATA XREF: ROM:UnreferencedTeddyGroupAnimationA   o  ; was: word_1A0D1E
+Stage12_TeddyBearSpriteMappingE:    dc.w    $4182, $500, $EBFF  ; DATA XREF: ROM:Stage12_TeddyBearAnimationVariantA   o  ; was: word_1A0D1E
                                         ; ROM:001A0F06   o
                 dc.w    $C986, $A00, $F7F3
 Stage12_TeddyBearSpriteMappingF:    dc.w    $4182, $500, $EC00  ; DATA XREF: ROM:001A0F0A   o  ; was: word_1A0D2A
@@ -95,9 +95,9 @@ Stage12_TeddyBearSpriteMappingN:    dc.w    $497C, $900, $EAF2  ; DATA XREF: ROM
                 dc.w    $49AA, $100, $F808
                 dc.w    $41A6, $300, $F0F8
                 dc.w    $C9A6, $300, $F000
-Stage12_TeddyBearSpriteMappingO:    dc.w    $4199, $900, $ECF7  ; DATA XREF: ROM:UnreferencedTeddyGroupAnimationC   o  ; was: word_1A0E32
+Stage12_TeddyBearSpriteMappingO:    dc.w    $4199, $900, $ECF7  ; DATA XREF: ROM:Stage12_TeddyBearAnimationVariantC   o  ; was: word_1A0E32
                 dc.w    $C986, $A00, $F7F3
-Stage12_TeddyBearSpriteMappingP:    dc.w    $4982, $500, $F6EF  ; DATA XREF: ROM:UnreferencedTeddyGroupAnimationD   o  ; was: word_1A0E3E
+Stage12_TeddyBearSpriteMappingP:    dc.w    $4982, $500, $F6EF  ; DATA XREF: ROM:Stage12_TeddyBearAnimationVariantD   o  ; was: word_1A0E3E
                                         ; ROM:Stage12_TeddyBearInitialPoseAnimation   o
                 dc.w    $499F, $900, $F4
                 dc.w    $49A5, 0, $80C
@@ -167,7 +167,7 @@ Stage12_TeddyBearBoardingPilotLoopAnimation:    dc.w    Stage12_TeddyBearSpriteM
                 dc.w    3
                 dc.w    Stage12_TeddyBearBoardingPilotLoopAnimation-*
                 dc.w    0
-UnreferencedTeddyGroupAnimationA:   dc.w    Stage12_TeddyBearSpriteMappingE-*  ; DATA XREF: ROM:001A0EFA   o  ; was: off_1A0EEA
+Stage12_TeddyBearAnimationVariantA: dc.w    Stage12_TeddyBearSpriteMappingE-*  ; DATA XREF: ROM:001A0EFA   o  ; was: off_1A0EEA
                 dc.w    4
                 dc.w    Stage12_TeddyBearSpriteMappingG-*
                 dc.w    1
@@ -175,9 +175,9 @@ UnreferencedTeddyGroupAnimationA:   dc.w    Stage12_TeddyBearSpriteMappingE-*  ;
                 dc.w    3
                 dc.w    Stage12_TeddyBearSpriteMappingG-*
                 dc.w    1
-                dc.w    UnreferencedTeddyGroupAnimationA-*
+                dc.w    Stage12_TeddyBearAnimationVariantA-*
                 dc.w    0
-UnreferencedTeddyGroupAnimationB:   dc.w    Stage12_TeddyBearSpriteMappingG-*  ; DATA XREF: ROM:001A0F16   o  ; was: off_1A0EFE
+Stage12_TeddyBearAnimationVariantB: dc.w    Stage12_TeddyBearSpriteMappingG-*  ; DATA XREF: ROM:001A0F16   o  ; was: off_1A0EFE
                 dc.w    4
                 dc.w    Stage12_TeddyBearSpriteMappingH-*
                 dc.w    2
@@ -189,7 +189,7 @@ UnreferencedTeddyGroupAnimationB:   dc.w    Stage12_TeddyBearSpriteMappingG-*  ;
                 dc.w    2
                 dc.w    Stage12_TeddyBearSpriteMappingH-*
                 dc.w    2
-                dc.w    UnreferencedTeddyGroupAnimationB-*
+                dc.w    Stage12_TeddyBearAnimationVariantB-*
                 dc.w    0
 SharedFloaterDebrisProjectileAlternating5And4Animation: dc.w    SharedFloaterDebrisProjectileSpriteMappingA-*  ; DATA XREF: ROM:Enemy_Stage12FloatingAnimationMappings   o  ; was: off_1A0F1A
                                         ; ROM:Boss_GustheadRandomDebrisMappings   o
@@ -224,11 +224,11 @@ Enemy_Stage10BeetleLoopAnimation:   dc.w    Enemy_Stage10BeetleSpriteMappingA-* 
                 dc.w    3
                 dc.w    Enemy_Stage10BeetleLoopAnimation-*
                 dc.w    0
-UnreferencedTeddyGroupAnimationC:   dc.w    Stage12_TeddyBearSpriteMappingO-*  ; DATA XREF: ROM:001A0F5E   o  ; was: off_1A0F56
+Stage12_TeddyBearAnimationVariantC: dc.w    Stage12_TeddyBearSpriteMappingO-*  ; DATA XREF: ROM:001A0F5E   o  ; was: off_1A0F56
                 dc.w    9
                 dc.w    Stage12_TeddyBearSpriteMappingA-*
                 dc.w    9
-                dc.w    UnreferencedTeddyGroupAnimationC-*
+                dc.w    Stage12_TeddyBearAnimationVariantC-*
                 dc.w    0
 Stage12_TeddyBearRescueAnimation:   dc.w    SharedTeddyHazardSpriteMappingA-*  ; DATA XREF: Stage12_TeddyBearInit+68   o  ; was: off_1A0F62
                                         ; ROM:001A0F72   o
@@ -282,7 +282,7 @@ Stage12_TeddyBearBoardingDelayAnimation:    dc.w    Stage12_TeddyBearSpriteMappi
                 dc.w    $10
                 dc.w    Stage12_TeddyBearBoardingDelayAnimation-*
                 dc.w    0
-UnreferencedTeddyGroupAnimationD:   dc.w    Stage12_TeddyBearSpriteMappingP-*  ; DATA XREF: ROM:001A0FCE   o  ; was: off_1A0FBE
+Stage12_TeddyBearAnimationVariantD: dc.w    Stage12_TeddyBearSpriteMappingP-*  ; DATA XREF: ROM:001A0FCE   o  ; was: off_1A0FBE
                 dc.w    7
                 dc.w    Stage12_TeddyBearSpriteMappingQ-*
                 dc.w    6
@@ -290,7 +290,7 @@ UnreferencedTeddyGroupAnimationD:   dc.w    Stage12_TeddyBearSpriteMappingP-*  ;
                 dc.w    7
                 dc.w    Stage12_TeddyBearSpriteMappingQ-*
                 dc.w    6
-                dc.w    UnreferencedTeddyGroupAnimationD-*
+                dc.w    Stage12_TeddyBearAnimationVariantD-*
                 dc.w    0
 Stage12_TeddyBearInitialPoseAnimation:  dc.w    Stage12_TeddyBearSpriteMappingP-*  ; DATA XREF: Stage12_TeddyBearInit+8E   o  ; was: off_1A0FD2
                 dc.w    $FF

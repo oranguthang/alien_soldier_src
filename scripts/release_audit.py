@@ -109,6 +109,8 @@ GENERIC_NAME_BASES = (
     "Initialization assigns the DMA source pointers to 0xFFE400 and 0xFFEC00 respectively.",
     "The consumers send the former to the VRAM horizontal-scroll table and the latter to VSRAM, with lengths selected by VDP register 11 scroll modes.",
     "Mapping-pointer and tile-attribute writes across the embedded blade parts establish this graphics-configuration role.",
+    "A source-wide reference scan finds no external consumer for this self-looping stream; only its own loop pointer and adjacent Teddy Bear mapping records reference it.",
+    "The role-neutral Unreferenced name records that limitation without inventing a visual state.",
 )
 
 
