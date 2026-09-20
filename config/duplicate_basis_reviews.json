@@ -424,6 +424,24 @@
         {"address":"0x056322","current_name":"Valkirie_State20PoseScript","file":"src/bosses/valkirie_rendering.s"},
         {"address":"0x056390","current_name":"Valkirie_State12PoseScript","file":"src/bosses/valkirie_rendering.s"}
       ]
+    },
+    {
+      "basis": "The structural name records exact width and row position without inventing semantics for the overlapping users.",
+      "reason": "The twelve members are longwords 1 through 6 at offsets +4 through +$18 in each of two consecutive 32-byte RAM rows. Effect_ApplyTransitionMask starts at TransitionPatternRow0 and TransitionPatternRow1, then performs two post-increment longword reads/writes per row over four DBF iterations, covering elements 0 through 7. Element 0 in each row and element 7 at each boundary have separately specific evidence; the twelve middle records share only the proven physical width and position, not one scene-specific meaning. Results and boss/cutscene code overlay the same addresses.",
+      "members": [
+        {"address":"0xFFFF9404","current_name":"SharedPatternRow0Long1","file":"src/ram_addrs.inc"},
+        {"address":"0xFFFF9408","current_name":"SharedPatternRow0Long2","file":"src/ram_addrs.inc"},
+        {"address":"0xFFFF940C","current_name":"SharedPatternRow0Long3","file":"src/ram_addrs.inc"},
+        {"address":"0xFFFF9410","current_name":"SharedPatternRow0Long4","file":"src/ram_addrs.inc"},
+        {"address":"0xFFFF9414","current_name":"SharedPatternRow0Long5","file":"src/ram_addrs.inc"},
+        {"address":"0xFFFF9418","current_name":"SharedPatternRow0Long6","file":"src/ram_addrs.inc"},
+        {"address":"0xFFFF9424","current_name":"SharedPatternRow1Long1","file":"src/ram_addrs.inc"},
+        {"address":"0xFFFF9428","current_name":"SharedPatternRow1Long2","file":"src/ram_addrs.inc"},
+        {"address":"0xFFFF942C","current_name":"SharedPatternRow1Long3","file":"src/ram_addrs.inc"},
+        {"address":"0xFFFF9430","current_name":"SharedPatternRow1Long4","file":"src/ram_addrs.inc"},
+        {"address":"0xFFFF9434","current_name":"SharedPatternRow1Long5","file":"src/ram_addrs.inc"},
+        {"address":"0xFFFF9438","current_name":"SharedPatternRow1Long6","file":"src/ram_addrs.inc"}
+      ]
     }
   ]
 }

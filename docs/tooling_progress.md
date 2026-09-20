@@ -959,3 +959,12 @@ use neutral Pattern00/01/02 names with individual selection evidence. Two
 regression tests pin both the direct and indirect paths. The queue is 241
 groups across 1,030 uses: fourteen reviewed, 227 open; seven separate visual
 boss identities remain hypotheses.
+
+The 12 SharedPatternRow0/1Long1-6 records have the same structural, not
+scene-specific, claim. Their equates run at four-byte intervals in two
+32-byte RAM rows. `Effect_ApplyTransitionMask` begins at the two row bases,
+reads and writes two longwords per row in each of four iterations, and thus
+covers elements 0-7; elements 0 and 7 have separate boundary evidence. A
+new exact-member review and regression test pin all 12 addresses, row aliases,
+and loop shape. The queue remains 241 groups across 1,030 uses: fifteen
+reviewed, 226 open.

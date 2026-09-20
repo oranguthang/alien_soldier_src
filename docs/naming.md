@@ -142,7 +142,10 @@ and their stream endings. Three airborne scripts were excluded because the
 state-E selector first stores their addresses in `$41C(a5)` for indirect use.
 Their former High/Mid/Low labels implied visual height that the selector does
 not prove, so they now have neutral Pattern00/01/02 names and individual
-selection-path evidence. The repeated-basis queue has 227 open groups.
+selection-path evidence. The 12 middle longwords of the two shared pattern
+RAM rows also have one reviewed structural basis: the four-iteration mask loop
+consumes eight longwords from each row, while other scene users overlay those
+addresses. The repeated-basis queue has 226 open groups.
 Seven visual boss identities remain hypotheses (`NAME-003`).
 
 ## Mechanical style

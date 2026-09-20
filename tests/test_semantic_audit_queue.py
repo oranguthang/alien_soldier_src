@@ -16,6 +16,57 @@ import semantic_audit_queue  # noqa: E402
 
 
 class SemanticAuditQueueTests(unittest.TestCase):
+    def test_shared_pattern_middle_longwords_have_two_eight_element_rows(self) -> None:
+        reviews = json.loads(
+            (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
+        )["reviews"]
+        review = next(
+            item
+            for item in reviews
+            if item["basis"].startswith("The structural name records exact width")
+        )
+        expected = {
+            (0xFFFF9400 + 0x20 * row + 4 * index, f"SharedPatternRow{row}Long{index}")
+            for row in range(2)
+            for index in range(1, 7)
+        }
+        self.assertEqual(
+            expected,
+            {
+                (int(member["address"], 16), member["current_name"])
+                for member in review["members"]
+            },
+        )
+        self.assertEqual(
+            {"src/ram_addrs.inc"},
+            {member["file"] for member in review["members"]},
+        )
+        ram = (ROOT / "src/ram_addrs.inc").read_text(encoding="utf-8")
+        for address, name in expected:
+            with self.subTest(name=name):
+                self.assertRegex(
+                    ram,
+                    rf"(?m)^{name}\s+equ\s+\${address:08X}\b",
+                )
+        for row in range(2):
+            self.assertIn(
+                f"TransitionPatternRow{row}       equ     SharedPatternRow{row}Long0",
+                ram,
+            )
+            self.assertIn(f"SharedPatternRow{row}Long7", ram)
+        source = (ROOT / "src/effects/transition_scroll.s").read_text(
+            encoding="utf-8"
+        )
+        loop = source.split("Effect_ApplyTransitionMask:", 1)[1].split(
+            "Effect_TransitionMaskPatternsA:", 1
+        )[0]
+        self.assertIn("moveq   #3,d7", loop)
+        self.assertIn("dbf     d7,Effect_ApplyTransitionMask_Loop", loop)
+        for row, register in enumerate(("a0", "a1")):
+            with self.subTest(register=register):
+                self.assertIn(f"#(TransitionPatternRow{row}-M68K_RAM)", loop)
+                self.assertEqual(2, loop.count(f"({register})+"))
+
     def test_valkirie_pose_script_review_excludes_indirect_airborne_variants(self) -> None:
         reviews = json.loads(
             (ROOT / "config/duplicate_basis_reviews.json").read_text(encoding="utf-8")
