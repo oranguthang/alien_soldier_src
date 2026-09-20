@@ -18,6 +18,7 @@ Boss_AntroidSecondaryRotationFrames:    dc.l    Boss_AntroidSecondaryRotationFra
                 dc.l    Boss_AntroidSecondaryRotationFrame05
                 dc.l    Boss_AntroidSecondaryRotationFrame06
                 dc.l    Boss_AntroidSecondaryRotationFrame07
+; Tagged inline child records: three words copied to fields $E, $8, and $A
 Boss_AntroidInlineSpriteDescriptorA:        dc.w    $305, $F00, $F0F0  ; DATA XREF: ROM:000349BA   o  ; was: word_3498C
 Boss_AntroidInlineSpriteDescriptorB:        dc.w    $325, $A00, $F4F4  ; DATA XREF: ROM:Boss_AntroidPrimaryMetaspriteDescriptors   o  ; was: word_34992
 Boss_AntroidInlineSpriteDescriptorC:        dc.w    $315, $F00, $F0F0  ; DATA XREF: ROM:000349C2   o  ; was: word_34998
@@ -150,6 +151,7 @@ Boss_ShellshogunRotationFramesF:    dc.l    Boss_ShellshogunSpriteMapping11  ; D
                 dc.l    Boss_ShellshogunSpriteMapping16
                 dc.l    Boss_ShellshogunSpriteMapping17
                 dc.l    Boss_ShellshogunSpriteMapping18
+; Tagged inline child records: three words copied to fields $E, $8, and $A
 Boss_ShellshogunInlineSpriteDescriptorA:    dc.w    $6457, $A00, $F4F4  ; DATA XREF: ROM:00034BD0   o  ; was: word_34BA0
                                         ; ROM:00034BFC   o
 Boss_ShellshogunInlineSpriteDescriptorB:    dc.w    $6460, $500, $F8F8  ; DATA XREF: ROM:00034BBC   o  ; was: word_34BA6
@@ -228,6 +230,7 @@ Boss_XiTigerRotationFramesD:    dc.l    Boss_XiTigerRotationSetBFrame07  ; DATA 
                 dc.l    Boss_XiTigerRotationSetBFrame02
                 dc.l    Boss_XiTigerRotationSetBFrame01
                 dc.l    Boss_XiTigerRotationSetBFrame00
+; Tagged inline child records: three words copied to fields $E, $8, and $A
 Boss_XiTigerInlineSpriteDescriptorA:    dc.w    $62D4, $500, $F8F8  ; DATA XREF: ROM:00034D3A   o  ; was: word_34CE4
                                         ; ROM:00034D52   o
 Boss_XiTigerInlineSpriteDescriptorB:    dc.w    $62D8, $A00, $F4F4  ; DATA XREF: ROM:00034D06   o  ; was: word_34CEA

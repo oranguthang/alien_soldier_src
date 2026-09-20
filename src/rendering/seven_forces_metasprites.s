@@ -98,7 +98,7 @@ SevenForcesRotationFrameTable8: dc.l    SevenForcesRotationSpriteFrame39  ; DATA
                 dc.l    SevenForcesRotationSpriteFrame34
                 dc.l    SevenForcesRotationSpriteFrame33
                 dc.l    SevenForcesRotationSpriteFrame32
-; Inline descriptors: graphics word, mapping offset, and packed position
+; Low-bit-tagged inline descriptors: words copied to child $E, $8, and $A
 SevenForcesInlinePartDescriptor0:   dc.w    $42D, $F00, $F0F0  ; DATA XREF: ROM:00059E98   o  ; was: word_59E82
                                         ; ROM:0005A038   o
 SevenForcesInlinePartDescriptor1:   dc.w    $43D, $A00, $F4F4  ; DATA XREF: ROM:00059E9C   o  ; was: word_59E88

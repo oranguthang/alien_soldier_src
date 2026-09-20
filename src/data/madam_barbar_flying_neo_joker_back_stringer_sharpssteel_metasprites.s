@@ -37,6 +37,7 @@ Boss_MadamBarbarRotationFramesD:    dc.l    Boss_MadamBarbarRotationSetBFrame07 
                 dc.l    Boss_MadamBarbarRotationSetBFrame02
                 dc.l    Boss_MadamBarbarRotationSetBFrame01
                 dc.l    Boss_MadamBarbarRotationSetBFrame00
+; Low-bit-tagged inline descriptors: words copied to child $E, $8, and $A
 Boss_MadamBarbarInlineSpriteDescriptorA:    dc.w    $6390, $F00, $F0F0  ; DATA XREF: ROM:00034E58   o  ; was: word_34E36
                                         ; ROM:00034E70   o
 Boss_MadamBarbarInlineSpriteDescriptorB:    dc.w    $63A0, $A00, $F4F4  ; DATA XREF: ROM:00034E4C   o  ; was: word_34E3C
@@ -170,6 +171,7 @@ Boss_JokerRotationFramesF:  dc.l    Boss_JokerRotationMappingE7  ; DATA XREF: RO
                 dc.l    Boss_JokerRotationMappingE2
                 dc.l    Boss_JokerRotationMappingE1
                 dc.l    Boss_JokerRotationMappingE0
+; Tagged inline child records: three words copied to fields $E, $8, and $A
 Boss_JokerInlineSpriteDescriptorA:  dc.w    $636E, $500, $F8F8  ; DATA XREF: ROM:0003506E   o  ; was: word_3504A
                                         ; ROM:00035092   o
 Boss_JokerInlineSpriteDescriptorB:  dc.w    $6366, $500, $F8F8  ; DATA XREF: ROM:00035066   o  ; was: word_35050
@@ -281,6 +283,7 @@ Boss_BackStringerNeutralPose:   dc.w    $40C0, $80, $8080  ; DATA XREF: Anim_Bac
                 dc.w    $8080, $80, $8080
                 dc.w    $8080
 ; Sharpssteel metasprite definition and neutral pose
+; Tagged inline child records: three words copied to fields $E, $8, and $A
 Boss_SharpssteelInlineSpriteDescriptorA:    dc.w    $63F9, $A00, $F4F4  ; DATA XREF: ROM:00035238   o  ; was: word_35214
                                         ; ROM:0003523C   o
 Boss_SharpssteelInlineSpriteDescriptorB:    dc.w    $6402, $500, $F8F8  ; DATA XREF: ROM:00035240   o  ; was: word_3521A

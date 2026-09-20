@@ -1523,3 +1523,15 @@ at `$001C6C`. Source comments now name operation, source, destination, and
 terminator instead of inherited `field_0/2/6` labels. An exact-member review
 and lightweight test pin the three copy-length records. The queue remains
 201 repeated groups across 862 uses, with sixty-one reviewed and 140 open.
+
+The low-bit-tagged metasprite pass reviewed seven shared-basis families:
+Seven Forces, Madam Barbar, Antroid, Shellshogun, Xi-Tiger, Joker, and
+Sharpssteel. Their exact six-byte records are referenced as label+1 from
+owner tables; `Sprite_InitializeLinkedMetaspriteParts` clears pointer bit
+zero and copies the three words to child fields `$E`, `$8`, and `$A`. Some
+Xi-Tiger and Joker entries also carry high-bit flags, which do not change that
+inline selection. The old comment assigning an unverified meaning to the
+second word was replaced by the observable field-copy contract. A source
+test pins all 17 reviewed records, their word triples, the tagged references,
+and the owner-to-initializer paths. The queue remains 201 repeated groups
+across 862 uses, with sixty-eight reviewed and 133 open.

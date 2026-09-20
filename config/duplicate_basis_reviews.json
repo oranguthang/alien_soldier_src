@@ -932,6 +932,65 @@
         {"address":"0x001B78","current_name":"HBlank_ApplyZLeoRasterCommands_CopyLength","file":"src/rendering/hblank_effects.s"},
         {"address":"0x001C76","current_name":"HBlank_SetWindowPositionAfterDelay_CopyLength","file":"src/rendering/hblank_effects.s"}
       ]
+    },
+    {
+      "basis": "Low-bit-tagged metasprite entries point here; Sprite_InitializeLinkedMetaspriteParts reads its three words into child fields $E, $8, and $A.",
+      "reason": "The shared Seven Forces descriptor tables reference each of the three exact six-byte records as label+1. Sprite_InitializeLinkedMetaspriteParts clears pointer bit zero before the inline path, then reads three words into child $E, $8, and $A. The records contain distinct word triples $042D/$0F00/$F0F0, $043D/$0A00/$F4F4, and $0446/$0500/$F8F8; no visual pose or unsupported meaning for child $8/$A is inferred.",
+      "members": [
+        {"address":"0x059E82","current_name":"SevenForcesInlinePartDescriptor0","file":"src/rendering/seven_forces_metasprites.s"},
+        {"address":"0x059E88","current_name":"SevenForcesInlinePartDescriptor1","file":"src/rendering/seven_forces_metasprites.s"},
+        {"address":"0x059E8E","current_name":"SevenForcesInlinePartDescriptor2","file":"src/rendering/seven_forces_metasprites.s"}
+      ]
+    },
+    {
+      "basis": "Boss_MadamBarbarMetaspriteDescriptors references this three-word record with a low-bit tag; Sprite_InitializeLinkedMetaspriteParts copies its words into child fields $E, $8, and $A.",
+      "reason": "Boss_MadamBarbarSetupState passes Boss_MadamBarbarMetaspriteDescriptors to Sprite_InitializeLinkedMetaspriteParts. Its table contains label+1 pointers to each of the three exact six-byte records; the shared inline path removes that low bit and copies the words to child $E/$8/$A. A/B/C contain $6390/$0F00/$F0F0, $63A0/$0A00/$F4F4, and $43C4/$0000/$FCFC respectively. The letters are neutral ROM-order identifiers.",
+      "members": [
+        {"address":"0x034E36","current_name":"Boss_MadamBarbarInlineSpriteDescriptorA","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"},
+        {"address":"0x034E3C","current_name":"Boss_MadamBarbarInlineSpriteDescriptorB","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"},
+        {"address":"0x034E42","current_name":"Boss_MadamBarbarInlineSpriteDescriptorC","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"}
+      ]
+    },
+    {
+      "basis": "Antroid's primary descriptor array references this three-word inline sprite descriptor.",
+      "reason": "Boss_AntroidInitializeBattleState passes Boss_AntroidPrimaryMetaspriteDescriptors to the linked-part initializer. The primary array contains low-bit-tagged pointers to both reviewed six-byte records B and C, as well as A. B has words $0325/$0A00/$F4F4; C has $0315/$0F00/$F0F0. The shared inline path copies these words into child $E/$8/$A; the suffixes do not claim visual identity.",
+      "members": [
+        {"address":"0x034992","current_name":"Boss_AntroidInlineSpriteDescriptorB","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"},
+        {"address":"0x034998","current_name":"Boss_AntroidInlineSpriteDescriptorC","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"}
+      ]
+    },
+    {
+      "basis": "Shellshogun's descriptor array references this three-word inline sprite descriptor.",
+      "reason": "Boss_ShellshogunSetupPhase passes Boss_ShellshogunMetaspriteDescriptors to the linked-part initializer. Its low-bit-tagged entries reference six-byte A ($6457/$0A00/$F4F4) and B ($6460/$0500/$F8F8), both more than once. Their words are copied into child $E/$8/$A, not decoded here as named visual poses.",
+      "members": [
+        {"address":"0x034BA0","current_name":"Boss_ShellshogunInlineSpriteDescriptorA","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"},
+        {"address":"0x034BA6","current_name":"Boss_ShellshogunInlineSpriteDescriptorB","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"}
+      ]
+    },
+    {
+      "basis": "Xi-Tiger's descriptor array references this three-word inline sprite descriptor.",
+      "reason": "Boss_XiTigerSetup passes Boss_XiTigerMetaspriteDescriptors to the linked-part initializer. Tagged entries reference exact records A ($62D4/$0500/$F8F8), B ($62D8/$0A00/$F4F4), and C ($62E1/$0A00/$F4F4); some entries also carry high-bit flags while retaining pointer bit zero. The shared inline path strips bit zero and copies three words to child $E/$8/$A.",
+      "members": [
+        {"address":"0x034CE4","current_name":"Boss_XiTigerInlineSpriteDescriptorA","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"},
+        {"address":"0x034CEA","current_name":"Boss_XiTigerInlineSpriteDescriptorB","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"},
+        {"address":"0x034CF0","current_name":"Boss_XiTigerInlineSpriteDescriptorC","file":"src/data/antroid_terobuster_shellshogun_xi_tiger_metasprites.s"}
+      ]
+    },
+    {
+      "basis": "Joker's descriptor array references this three-word inline sprite descriptor.",
+      "reason": "Boss_JokerSetup supplies Boss_JokerMetaspriteDescriptors to the linked-part initializer. Low-bit-tagged entries select A ($636E/$0500/$F8F8) and B ($6366/$0500/$F8F8), including entries with additional high-bit flags. The shared inline path copies the exact three words to child $E/$8/$A; letters denote address order.",
+      "members": [
+        {"address":"0x03504A","current_name":"Boss_JokerInlineSpriteDescriptorA","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"},
+        {"address":"0x035050","current_name":"Boss_JokerInlineSpriteDescriptorB","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"}
+      ]
+    },
+    {
+      "basis": "Sharpssteel's descriptor array references this three-word inline sprite descriptor.",
+      "reason": "Boss_SharpssteelInitializeState supplies Boss_SharpssteelMetaspriteDescriptors to the linked-part initializer. Its tagged entries select A ($63F9/$0A00/$F4F4) and B ($6402/$0500/$F8F8), each at exact six-byte record boundaries. The shared inline path copies these three words into child $E/$8/$A without proving an additional visual label.",
+      "members": [
+        {"address":"0x035214","current_name":"Boss_SharpssteelInlineSpriteDescriptorA","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"},
+        {"address":"0x03521A","current_name":"Boss_SharpssteelInlineSpriteDescriptorB","file":"src/data/madam_barbar_flying_neo_joker_back_stringer_sharpssteel_metasprites.s"}
+      ]
     }
   ]
 }
