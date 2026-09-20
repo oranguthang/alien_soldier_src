@@ -199,7 +199,7 @@ Boss_UpdateMedusaStateA:                                ; DATA XREF: ROM:000569F
 ; ---------------------------------------------------------------------------
 Boss_UpdateMedusaStateAApproach:                        ; CODE XREF: Boss_UpdateMedusaStateA   j  ; was: loc_56C36
                 move.w  #$180,d0
-                bsr.w   Boss_AccelerateMedusaTowardHorizontalTarget
+                bsr.w   Boss_SteerMedusaHorizontalVelocityByXTarget
                 lea     Medusa_StateACPoseScript(pc),a1
                 nop
                 bra.w   Boss_SyncMedusaVerticalPosition
@@ -246,7 +246,7 @@ Boss_DispatchMedusaStateCCommand:                       ; CODE XREF: Boss_Update
                 cmpi.w  #8,$47E(a5)
                 beq.w   Boss_EnterMedusaState14
 Boss_UpdateMedusaStateCTarget:                          ; CODE XREF: Boss_UpdateMedusaStateC   j  ; was: loc_56CCE
-                bsr.w   Boss_LoadMedusaHorizontalTarget
+                bsr.w   Boss_SteerMedusaHorizontalVelocityFromStoredTarget
                 move.b  #$D8,d0
                 bsr.w   Boss_MedusaPlaySFXEvery8Frames
                 lea     Medusa_StateACPoseScript(pc),a1
@@ -379,33 +379,32 @@ Boss_RenderMedusaState14:                               ; CODE XREF: Boss_Accele
                 nop
                 bra.w   Boss_SyncMedusaVerticalPosition
 ; End of Medusa state controller
-; Load the current scripted horizontal target
-Boss_LoadMedusaHorizontalTarget:                        ; CODE XREF: Boss_UpdateMedusaStateCTarget   p  ; was: sub_56E6E
+; Alternate entry: load the scripted X target from $11E, then fall through
+Boss_SteerMedusaHorizontalVelocityFromStoredTarget:     ; CODE XREF: Boss_UpdateMedusaStateCTarget   p  ; was: sub_56E6E
                 move.w  $11E(a5),d0
-; End of function Boss_LoadMedusaHorizontalTarget
-; Accelerate horizontal velocity toward the target in d0
-Boss_AccelerateMedusaTowardHorizontalTarget:            ; CODE XREF: Boss_UpdateMedusaStateAApproach   p  ; was: sub_56E72
+; Shared entry: steer X velocity by comparing target d0 with current X
+Boss_SteerMedusaHorizontalVelocityByXTarget:            ; CODE XREF: Boss_UpdateMedusaStateAApproach   p  ; was: sub_56E72
                 cmp.w   $10(a5),d0
-                bpl.s   Boss_AccelerateMedusaTowardRightTarget
+                bpl.s   Boss_CheckMedusaRightwardAcceleration
                 tst.l   $18(a5)
-                bpl.s   Boss_ApplyMedusaLeftAcceleration
+                bpl.s   Boss_DecreaseMedusaXVelocityBy2000
                 cmpi.l  #$FFFDC000,$18(a5)
-                bmi.s   Boss_AccelerateMedusaTowardTargetReturn
-Boss_ApplyMedusaLeftAcceleration:                       ; CODE XREF: Boss_AccelerateMedusaTowardHorizontalTarget+A   j  ; was: loc_56E88
+                bmi.s   Boss_SteerMedusaHorizontalVelocityReturn
+Boss_DecreaseMedusaXVelocityBy2000:                     ; CODE XREF: Boss_SteerMedusaHorizontalVelocityByXTarget+A   j  ; was: loc_56E88
                 subi.l  #$2000,$18(a5)
-Boss_AccelerateMedusaTowardTargetReturn:                ; CODE XREF: Boss_AccelerateMedusaTowardHorizontalTarget+14   j  ; was: locret_56E90
-                                        ; Boss_AccelerateMedusaTowardHorizontalTarget+2E   j
+Boss_SteerMedusaHorizontalVelocityReturn:               ; CODE XREF: Boss_SteerMedusaHorizontalVelocityByXTarget+14   j  ; was: locret_56E90
+                                        ; Boss_SteerMedusaHorizontalVelocityByXTarget+2E   j
                 rts
 ; ---------------------------------------------------------------------------
-Boss_AccelerateMedusaTowardRightTarget:                 ; CODE XREF: Boss_AccelerateMedusaTowardHorizontalTarget+4   j  ; was: loc_56E92
+Boss_CheckMedusaRightwardAcceleration:                  ; CODE XREF: Boss_SteerMedusaHorizontalVelocityByXTarget+4   j  ; was: loc_56E92
                 tst.l   $18(a5)
-                bmi.s   Boss_ApplyMedusaRightAcceleration
+                bmi.s   Boss_IncreaseMedusaXVelocityBy2000
                 cmpi.l  #$12000,$18(a5)
-                bpl.s   Boss_AccelerateMedusaTowardTargetReturn
-Boss_ApplyMedusaRightAcceleration:                      ; CODE XREF: Boss_AccelerateMedusaTowardHorizontalTarget+24   j  ; was: loc_56EA2
+                bpl.s   Boss_SteerMedusaHorizontalVelocityReturn
+Boss_IncreaseMedusaXVelocityBy2000:                     ; CODE XREF: Boss_SteerMedusaHorizontalVelocityByXTarget+24   j  ; was: loc_56EA2
                 addi.l  #$2000,$18(a5)
                 rts
-; End of function Boss_AccelerateMedusaTowardHorizontalTarget
+; End of Medusa horizontal-velocity steering helper
 ; Synchronize Medusa with the shared vertical coordinate
 Boss_SyncMedusaVerticalPosition:                        ; CODE XREF: Boss_UpdateMedusaStateAApproach   j  ; was: sub_56EAC
                                         ; Boss_RenderMedusaState12MovingPose   j

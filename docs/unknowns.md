@@ -11512,3 +11512,11 @@ bit zero of `$49`, then either preserve or clear bit 7 before reaching the
 same RTS. The expired-timer paths instead explode, possibly queue SFX, and
 pass a random-size mask of `7` or `$F` to the pickup helper when applicable;
 those mask values are not pickup type identities.
+
+Medusa horizontal steering has two entries: `$056E6E` loads a stored X target
+from `$11E(a5)` and falls through to `$056E72`, while the approach state calls
+`$056E72` with an immediate target already in `d0`. A target equal to current
+X takes the positive-step branch. The negative and positive velocity tests
+skip a step when already beyond their respective thresholds; they do not
+clamp the new value after a permitted `$2000` step. The old separate-function
+comment and hard-limit evidence were therefore unsupported.

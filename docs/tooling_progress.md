@@ -731,5 +731,16 @@ four- or eight-segment ranges, `$60`-byte record stride, V-scroll bounds,
 ready-flag scan, offset clear, activation fields, and defeat-timer table.
 All seven are real loop entries, so their names remain; the shared sentence
 was inadequate evidence because it attached the same operation to different
-loops. It is now the 57th rejected generic basis. The wider queue contains
-249 groups across 1,173 uses, with zero unmapped uses.
+loops. It is now the 57th rejected generic basis. After this pass the wider
+queue contained 249 groups across 1,173 uses, with zero unmapped uses.
+
+Six Medusa horizontal-steering records at `$056E6E..$056EA2` exposed a
+false function boundary and a false clamp claim. The `$056E6E` entry loads
+the scripted X target from `$11E(a5)` and falls through into the shared
+comparison at `$056E72`; it does not return after loading. The comparison
+selects `-$2000` steps for targets left of current X and `+$2000` steps for
+equal-or-right targets. Its signed thresholds only skip later steps; an
+allowed step can cross the threshold, so they are not hard saturation limits.
+The source names, comments, and seven affected audit bases now reflect the
+two-entry flow. The old six-way sentence is the 58th rejected generic basis;
+the wider queue now contains 248 groups across 1,167 uses, none unmapped.

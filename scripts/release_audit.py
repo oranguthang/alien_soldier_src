@@ -72,6 +72,7 @@ GENERIC_NAME_BASES = (
     "The helper and its branches derive or apply Valkirie facing-relative direction from the player delta and field $54.",
     "The visible half of the blink returns here.",
     "The backward loop edge repeats the owning routine's named operation over its fixed linked-object or output range.",
+    "The helper compares Medusa X against a requested target and changes signed horizontal velocity by fixed acceleration steps within hard limits.",
 )
 
 
