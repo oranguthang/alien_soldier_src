@@ -55,7 +55,7 @@ byte.
   through a raw `$FFFFxxxx` immediate. `make lint` rejects one in any
   address-forming instruction with a ceiling of zero, so `movea.l`, `cmpa.l`,
   `lea`, `pea`, `adda.l` and `suba.l` must name what they point at.
-- **A memory map.** 1,293 work RAM fields, the hardware ports and the shared
+- **A memory map.** 1,299 work RAM fields and owner-specific overlays, the hardware ports and the shared
   equates are named in include files and documented in `docs/ram_map.md`.
 - **Behaviour observed, not assumed.** Twelve scenarios replay three pinned
   movies under the pinned emulator and check 78 named work RAM expectations,

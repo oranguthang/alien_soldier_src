@@ -1086,6 +1086,12 @@ structural `PrimaryEntity` names rather than a boss name.
 | `PrimaryEntityWork5C` | `$FFFFC67C` | `$5C` | Owner-dependent work word populated and consumed as the type-$1C0 family's linked-body-part count. |
 | `PrimaryEntityWork5E` | `$FFFFC67E` | `$5E` | Owner-dependent work word cleared and advanced as the type-$1C0 family's graphics-animation progress. |
 
+The type-`$1C0/$1C8` handlers use owner-specific overlays for these four
+fields: `EntityType1C0ChainRootOffset`,
+`EntityType1C0PartYReference`, `EntityType1C0BodyPartCount`, and
+`EntityType1C0AnimationProgress`. The structural aliases remain available to
+other owners; the overlay names are not claims about the entire entity pool.
+
 ## Reviewed secondary entity record
 
 | Symbol | Address | Offset | Static evidence |
@@ -1104,6 +1110,12 @@ structural `PrimaryEntity` names rather than a boss name.
 | `SecondaryEntityWork52` | `$FFFFC6D2` | `$52` | Owner-specific linked-object control word used by Jampan. |
 | `SecondaryEntityWork58` | `$FFFFC6D8` | `$58` | Union work longword used for Epsilon 1 motion and the type-$1C0 family's oscillation phase. |
 | `SecondaryEntityWork5C` | `$FFFFC6DC` | `$5C` | Union work longword used as motion or byte-granular control state by different owners. |
+
+`EntityType1C0OscillationPhase` overlays the low word of
+`SecondaryEntityWork58`; Epsilon 1 separately uses the full longword as
+motion. The type-$1C0 family also accesses the two bytes of
+`SecondaryEntityWork5C` for distinct aim/phase control, so that union retains
+its structural name.
 
 ## Reviewed tertiary entity record
 
@@ -1149,6 +1161,9 @@ structural `PrimaryEntity` names rather than a boss name.
 | `FifthEntityWork5C` | `$FFFFC7FC` | `$5C` | Union word/byte storage used for type-$1C0 turning and Madam Barbar rotation bounds. |
 | `EntityType1C0PoseRadius` | `$FFFFC7FD` | `$5D` | Low-byte pose radius derived from randomness and player distance. |
 | `FifthEntityWork5E` | `$FFFFC7FE` | `$5E` | Union work word used for Epsilon 1 ring commands and Madam Barbar rotation bounds. |
+
+`EntityType1C0TurnControl` overlays the high byte of `FifthEntityWork5C` in
+the dormant family; Madam Barbar uses the structural word separately.
 
 ## Reviewed sixth entity record
 
@@ -1270,7 +1285,7 @@ structural `PrimaryEntity` names rather than a boss name.
 | `ThirtySecondEntityXPos` | `$FFFFD1D0` | 32 | Integer X coordinate measured by Valkirie's tracking state. |
 | `ThirtySecondEntityYPos` | `$FFFFD1D4` | 32 | Integer Y coordinate measured by Valkirie's tracking state. |
 | `ThirtyThirdEntityType` | `$FFFFD220` | 33 | Z-Leo uses this fixed linked-part record. |
-| `ThirtyFourthEntityType` | `$FFFFD280` | 34 | Caterpillar and Sunset Sting begin bounded projectile searches here. |
+| `ThirtyFourthEntityType` | `$FFFFD280` | 34 | Caterpillar and the type-$1C0 family begin bounded projectile searches here. |
 | `ThirtyEighthEntityType` | `$FFFFD400` | 38 | Joker begins a bounded descending-shot allocation range here. |
 | `FortySixthEntityType` | `$FFFFD700` | 46 | Several boss and stage paths begin bounded projectile allocation here. |
 | `EndingPlanetDebrisType` | `$FFFFD820` | 49 | Fixed ending-planet debris object type and record base. |

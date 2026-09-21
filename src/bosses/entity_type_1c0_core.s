@@ -44,7 +44,7 @@ EntityType1C0_SetupArena:                               ; DATA XREF: ROM:EntityT
                 jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 addq.w  #2,4(a5)
                 move.b  #$80,$4B(a5)
-                clr.w   (PrimaryEntityWork5E).w
+                clr.w   (EntityType1C0AnimationProgress).w
                 rts
 ; End of function EntityType1C0_SetupArena
 ; Loads boss sprites, palette, tiles and initializes position/velocity
@@ -524,14 +524,14 @@ EntityType1C0_UpdateBodyGraphics:                       ; CODE XREF: EntityType1
                 nop
                 bsr.w   EntityType1C0_UpdateCameraOffset
                 lea     EntityType1C0_PrimaryTileAnimationOffsets(pc),a0
-                move.w  (PrimaryEntityWork5E).w,d0
+                move.w  (EntityType1C0AnimationProgress).w,d0
                 lsr.w   #3,d0
                 bsr.w   EntityType1C0_LoadTileTableEntry
                 lea     EntityType1C0_EarlyFormTileLoadCommands+$24(pc),a0
-                move.w  (PrimaryEntityWork5E).w,d0
+                move.w  (EntityType1C0AnimationProgress).w,d0
                 lsr.w   #2,d0
                 bsr.w   EntityType1C0_LoadTileTableEntry
-                addq.w  #1,(PrimaryEntityWork5E).w
+                addq.w  #1,(EntityType1C0AnimationProgress).w
                 rts
 ; End of function EntityType1C0_UpdateGraphics
 ; Loads compressed tile data from indexed table entry
@@ -563,7 +563,7 @@ EntityType1C0_ScatterBodyPartsState:                    ; DATA XREF: ROM:00040D2
                 bne.w   EntityType1C0_UpdateGraphics
                 addq.w  #2,4(a5)
                 clr.b   $21(a5)
-                move.w  (PrimaryEntityWork5C).w,d4
+                move.w  (EntityType1C0BodyPartCount).w,d4
                 subq.w  #2,d4
                 lea     $60(a5),a4
                 lea     (Math_SineTable).l,a2
@@ -604,7 +604,7 @@ EntityType1C0_BeginStaggeredDebrisCleanup:              ; CODE XREF: EntityType1
                 move.b  #$40,$4B(a5)                    ; '@'
                 addq.w  #2,4(a5)
                 move.w  #1,d5
-                move.w  (PrimaryEntityWork5C).w,d4
+                move.w  (EntityType1C0BodyPartCount).w,d4
                 subq.w  #2,d4
                 lea     $60(a5),a4
 EntityType1C0_SeedDebrisCleanupDelay:                   ; CODE XREF: EntityType1C0_ScatterBodyPartsState+B4   j  ; was: loc_4142E
@@ -854,7 +854,7 @@ EntityType1C0_ConfigureBodyPart:                        ; CODE XREF: EntityType1
                 bra.s   EntityType1C0_ReadBodyPartDescriptor
 ; ---------------------------------------------------------------------------
 EntityType1C0_FinishBodyPartInitialization:             ; CODE XREF: EntityType1C0_InitBodyParts+1C   j  ; was: loc_41852
-                move.w  d7,(PrimaryEntityWork5C).w
+                move.w  d7,(EntityType1C0BodyPartCount).w
                 lea     (a3),a5
                 clr.w   $4E(a5)
                 rts
@@ -862,7 +862,7 @@ EntityType1C0_FinishBodyPartInitialization:             ; CODE XREF: EntityType1
 ; Updates positions of all boss body parts using sine/cosine
 EntityType1C0_UpdateBodyPartPositions:                  ; CODE XREF: EntityType1C0_UpdateGraphics+20   p  ; was: sub_4185E
                                         ; EntityType1C0_SecondFormUpdate+78   p
-                move.w  (PrimaryEntityWork5C).w,d7
+                move.w  (EntityType1C0BodyPartCount).w,d7
                 subq.w  #1,d7
                 lea     $60(a5),a4
                 movea.l #Math_SineTable,a2

@@ -68,8 +68,8 @@ EntityType1C0_SecondFormInitializeState:                ; DATA XREF: ROM:EntityT
                 jsr     (Object_ClearEntityRecordsExceptTwoTypes).l
                 addq.w  #2,4(a5)
                 move.b  #$80,$4B(a5)
-                clr.w   (PrimaryEntityWork5E).w
-                clr.w   (PrimaryEntityWork58).w
+                clr.w   (EntityType1C0AnimationProgress).w
+                clr.w   (EntityType1C0ChainRootOffset).w
                 move.l  #$1C00000,$10(a5)
                 move.l  #$2000000,$14(a5)
                 rts
@@ -97,7 +97,7 @@ EntityType1C0_SecondFormLoadGraphicsState:              ; DATA XREF: ROM:0004194
                 ori.w   #$100,$B42(a5)
                 move.w  #$D00,2(a5)
                 lea     (a5),a1
-                move.w  (PrimaryEntityWork5C).w,d3
+                move.w  (EntityType1C0BodyPartCount).w,d3
                 subq.w  #1,d3
 EntityType1C0_InitializeSecondFormPartPositions:        ; CODE XREF: EntityType1C0_SecondFormLoadGraphicsState+76   j  ; was: loc_41A1A
                 move.l  #$1C00000,$10(a1)
@@ -107,7 +107,7 @@ EntityType1C0_InitializeSecondFormPartPositions:        ; CODE XREF: EntityType1
                 move.l  #$FFFF0000,$18(a5)
                 move.b  #$18,(EntityType1C0ChainPeriod).w
                 move.b  (EntityType1C0ChainPeriod).w,(EntityType1C0ChainCycle+1).w
-                move.b  #$FF,(FifthEntityWork5C).w
+                move.b  #$FF,(EntityType1C0TurnControl).w
                 move.w  #$180,$56(a5)
                 movea.l #EntityType1C0_SecondFormTileLoadCommands,a0
                 jsr     (Tilemap_QueueIndexedRows).l
@@ -166,7 +166,7 @@ EntityType1C0_UpdateMovement:                           ; DATA XREF: ROM:0004195
                 move.w  #$10,d2
                 move.w  #$F0,d0
                 sub.w   $14(a5),d0
-                move.b  (FifthEntityWork5C).w,d1
+                move.b  (EntityType1C0TurnControl).w,d1
                 asl.w   #8,d1
                 eor.w   d0,d1
                 bpl.s   EntityType1C0_MovementNormalizeVerticalDelta
@@ -191,7 +191,7 @@ EntityType1C0_MovementApplyBodyAngleStep:               ; CODE XREF: EntityType1
                 add.w   d0,$56(a5)
 EntityType1C0_MovementUpdatePartFacing:                 ; CODE XREF: EntityType1C0_WaitForSecondFormIntroMessageState:EntityType1C0_SecondFormIntroUpdate   j  ; was: loc_41B42
                                         ; EntityType1C0_UpdateMovement+22   j
-                tst.b   (FifthEntityWork5C).w
+                tst.b   (EntityType1C0TurnControl).w
                 bpl.s   EntityType1C0_MovementFacePositive
                 ori.w   #$800,$4EE(a5)
                 ori.w   #$800,$72E(a5)
@@ -225,8 +225,8 @@ EntityType1C0_MovementUpdatePosePatterns:               ; CODE XREF: EntityType1
                 bhi.s   EntityType1C0_MovementTrySpawnProjectile
                 tst.b   $4B(a5)
                 bne.w   EntityType1C0_MovementDecrementShotDelay
-                move.w  (PrimaryEntityWork58).w,d0
-                move.b  (FifthEntityWork5C).w,d1
+                move.w  (EntityType1C0ChainRootOffset).w,d0
+                move.b  (EntityType1C0TurnControl).w,d1
                 andi.w  #4,d1
                 eori.w  #4,d0
                 eor.b   d0,d1
@@ -242,20 +242,20 @@ EntityType1C0_MovementTrySpawnProjectile:               ; CODE XREF: EntityType1
 EntityType1C0_MovementUpdateActiveChain:                ; CODE XREF: EntityType1C0_UpdateMovement+A4   j  ; was: loc_41BF6
                 tst.w   d6
                 bmi.s   EntityType1C0_MovementUpdateSelectedChain
-                cmp.w   (PrimaryEntityWork58).w,d6
+                cmp.w   (EntityType1C0ChainRootOffset).w,d6
                 beq.s   EntityType1C0_MovementUpdateSelectedChain
                 lea     EntityType1C0_ChainRootOffsets(pc),a2
                 movea.w (a2,d6.w),a4
                 adda.w  a5,a4
                 move.l  #SharedVictorSunsetStingSegmentMappingB,$1E8(a4)
-                move.w  (PrimaryEntityWork58).w,d0
-                move.w  d6,(PrimaryEntityWork58).w
+                move.w  (EntityType1C0ChainRootOffset).w,d0
+                move.w  d6,(EntityType1C0ChainRootOffset).w
                 movea.w (a2,d0.w),a4
                 adda.w  a5,a4
                 move.l  #SharedVictorSunsetStingSegmentMappingA,$1E8(a4)
 EntityType1C0_MovementUpdateSelectedChain:              ; CODE XREF: EntityType1C0_SetIdleState+20   j  ; was: loc_41C28
                                         ; EntityType1C0_UpdateMovement+F6   j
-                move.w  (PrimaryEntityWork58).w,d6
+                move.w  (EntityType1C0ChainRootOffset).w,d6
                 lea     EntityType1C0_ChainRootOffsets(pc),a4
                 movea.w (a4,d6.w),a4
                 adda.l  a5,a4
@@ -298,7 +298,7 @@ EntityType1C0_CalculateTargetDirection:                 ; CODE XREF: EntityType1
 EntityType1C0_TargetDirectionStoreDelta:                ; CODE XREF: EntityType1C0_CalculateTargetDirection+26   j  ; was: loc_41D10
                 add.b   d0,(EntityType1C0PoseRadius).w
                 swap    d0
-                move.b  d0,(FifthEntityWork5C).w
+                move.b  d0,(EntityType1C0TurnControl).w
                 swap    d0
                 rts
 ; ---------------------------------------------------------------------------
@@ -307,7 +307,7 @@ EntityType1C0_TargetDirectionUseBodyAngle:              ; CODE XREF: EntityType1
                 lsr.w   #1,d0
                 ext.w   d0
                 lsr.w   #8,d0
-                move.b  d0,(FifthEntityWork5C).w
+                move.b  d0,(EntityType1C0TurnControl).w
                 move.w  #$1FF,d0
                 move.b  d0,(EntityType1C0PoseRadius).w
                 rts
@@ -315,7 +315,7 @@ EntityType1C0_TargetDirectionUseBodyAngle:              ; CODE XREF: EntityType1
 ; Gets pointer to specific body part based on angle
 EntityType1C0_GetBodyPartPointer:                       ; CODE XREF: EntityType1C0_UpdatePartRotation:EntityType1C0_UpdatePartRotationForTarget   p  ; was: sub_41D36
                                         ; EntityType1C0_FlipAndAnimate+1E   p
-                tst.b   (FifthEntityWork5C).w
+                tst.b   (EntityType1C0TurnControl).w
                 bmi.s   EntityType1C0_ResolveBodyPartIndex
                 eori.b  #$10,d0
 EntityType1C0_ResolveBodyPartIndex:                     ; CODE XREF: EntityType1C0_GetBodyPartPointer+4   j  ; was: loc_41D40
@@ -439,7 +439,7 @@ EntityType1C0_MoveAndShoot:                             ; DATA XREF: ROM:00041E3
 ; Calculate direction and rotate while attacking
 EntityType1C0_MoveAndShoot_AttackLoop:                  ; DATA XREF: ROM:0004195E   o  ; was: loc_41E52
                 bsr.w   EntityType1C0_CalculateTargetDirection
-                move.b  (FifthEntityWork5C).w,d0
+                move.b  (EntityType1C0TurnControl).w,d0
                 ext.w   d0
                 add.w   d0,d0
                 addq.w  #1,d0
@@ -454,7 +454,7 @@ EntityType1C0_FlipDirection:                            ; DATA XREF: ROM:00041E3
                 move.w  #$12,4(a5)
                 andi.b  #8,(EntityType1C0ChainCycle).w
                 move.b  #$20,(EntityType1C0ChainCycle+1).w  ; ' '
-                not.b   (FifthEntityWork5C).w
+                not.b   (EntityType1C0TurnControl).w
                 bra.w   EntityType1C0_MovementUpdateSelectedChain
 ; End of function EntityType1C0_FlipDirection
 ; Applies pose pattern A with a randomized target radius
@@ -469,7 +469,7 @@ EntityType1C0_FlipAndAnimate:                           ; DATA XREF: ROM:00041E4
                 move.w  #$C,4(a5)
                 andi.b  #8,(EntityType1C0ChainCycle).w
                 move.b  #$20,(EntityType1C0ChainCycle+1).w  ; ' '
-                not.b   (FifthEntityWork5C).w
+                not.b   (EntityType1C0TurnControl).w
                 move.b  (EntityType1C0ChainCycle).w,d0
                 eori.b  #$14,d0
                 bsr.w   EntityType1C0_GetBodyPartPointer

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import unittest
 from pathlib import Path
 
@@ -16,6 +17,53 @@ class DistinctRamFieldEvidenceTests(unittest.TestCase):
             record["address"]: record
             for record in json.loads(AUDIT.read_text(encoding="utf-8"))["records"]
         }
+
+    def test_dormant_type_1c0_ram_ownership_stays_distinct(self) -> None:
+        overlays = {
+            "PrimaryEntityWork58": "EntityType1C0ChainRootOffset",
+            "PrimaryEntityWork5A": "EntityType1C0PartYReference",
+            "PrimaryEntityWork5C": "EntityType1C0BodyPartCount",
+            "PrimaryEntityWork5E": "EntityType1C0AnimationProgress",
+            "SecondaryEntityWork58": "EntityType1C0OscillationPhase",
+            "FifthEntityWork5C": "EntityType1C0TurnControl",
+        }
+        ram = (ROOT / "src/ram_addrs.inc").read_text(encoding="utf-8")
+        source = "\n".join(
+            (ROOT / f"src/bosses/entity_type_1c0_{module}.s").read_text(
+                encoding="utf-8"
+            )
+            for module in ("core", "attacks", "transition_and_defeat")
+        )
+        for structural, overlay in overlays.items():
+            with self.subTest(overlay=overlay):
+                self.assertRegex(
+                    ram,
+                    rf"(?m)^{re.escape(overlay)}[ \t]+equ[ \t]+{re.escape(structural)}$",
+                )
+                self.assertIn(overlay, source)
+                self.assertNotRegex(source, rf"\b{re.escape(structural)}\b")
+        for address in (
+            "0xFFC678",
+            "0xFFC67A",
+            "0xFFC67C",
+            "0xFFC67E",
+            "0xFFC6D8",
+            "0xFFC6DC",
+            "0xFFC738",
+            "0xFFC73C",
+            "0xFFC73E",
+            "0xFFC79C",
+            "0xFFC7F8",
+            "0xFFC7FC",
+            "0xFFC7FD",
+        ):
+            with self.subTest(address=address):
+                self.assertFalse(
+                    any(
+                        "Sunset Sting" in basis
+                        for basis in self.records[address]["basis"]
+                    )
+                )
 
     def test_active_and_shadow_palette_roles_are_distinct(self) -> None:
         active = self.records["0xFFE300"]["basis"]
@@ -106,8 +154,12 @@ class DistinctRamFieldEvidenceTests(unittest.TestCase):
                     list(addresses),
                     [member["address"] for member in reviews[basis]["members"]],
                 )
-                self.assertIn(f"{alias}          equ     {first}", ram)
-                self.assertIn(f"{first}         equ     {location}", ram)
+                self.assertRegex(
+                    ram, rf"(?m)^{re.escape(alias)}[ \t]+equ[ \t]+{re.escape(first)}$"
+                )
+                self.assertRegex(
+                    ram, rf"(?m)^{re.escape(first)}[ \t]+equ[ \t]+{re.escape(location)}(?:[ \t]|$)"
+                )
                 for offset in ("", "+4", "+8"):
                     self.assertIn(f"clr.l   ({alias}{offset}).w", core)
                 for address in addresses:

@@ -2,7 +2,7 @@
 EntityType1C0_BeginChainOscillationState:               ; CODE XREF: EntityType1C0_CheckPhaseTransition+4   j  ; was: sub_4200A
                 move.w  #$1A,4(a5)
                 move.b  #0,$4B(a5)
-                move.w  #4,(SecondaryEntityWork58).w
+                move.w  #4,(EntityType1C0OscillationPhase).w
                 bra.w   EntityType1C0_SecondFormUpdate
 ; End of function EntityType1C0_BeginChainOscillationState
 ; Moves five link radii one unit toward the requested radius
@@ -42,17 +42,17 @@ EntityType1C0_OscillateChainsState:                     ; DATA XREF: ROM:0004196
                 bne.s   EntityType1C0_AdvanceChainOscillationPhase
                 neg.w   d1
 EntityType1C0_AdvanceChainOscillationPhase:             ; CODE XREF: EntityType1C0_OscillateChainsState+A   j  ; was: loc_4206C
-                add.w   d1,(SecondaryEntityWork58).w
+                add.w   d1,(EntityType1C0OscillationPhase).w
                 move.w  #$70,d1                         ; 'p'
                 move.w  d1,d2
-                move.w  (SecondaryEntityWork58).w,d0
+                move.w  (EntityType1C0OscillationPhase).w,d0
                 bpl.s   EntityType1C0_ClampChainOscillationPhase
                 neg.w   d0
                 neg.w   d1
 EntityType1C0_ClampChainOscillationPhase:               ; CODE XREF: EntityType1C0_OscillateChainsState+1C   j  ; was: loc_42080
                 cmp.w   d2,d0
                 bcs.s   EntityType1C0_UpdateOscillationVelocity
-                move.w  d1,(SecondaryEntityWork58).w
+                move.w  d1,(EntityType1C0OscillationPhase).w
 EntityType1C0_UpdateOscillationVelocity:                ; CODE XREF: EntityType1C0_OscillateChainsState+24   j  ; was: loc_42088
                 movea.l #Math_SineTable,a2
                 move.b  (SecondaryEntityWork5C+1).w,d1
@@ -83,16 +83,16 @@ EntityType1C0_SetUpwardVelocity:                        ; CODE XREF: EntityType1
 ; ---------------------------------------------------------------------------
 EntityType1C0_UpdateOscillatingChains:                  ; CODE XREF: EntityType1C0_OscillateChainsState+60   j  ; was: loc_420DE
                                         ; EntityType1C0_OscillateChainsState+6A   j
-                move.w  (SecondaryEntityWork58).w,d0
+                move.w  (EntityType1C0OscillationPhase).w,d0
                 bsr.w   EntityType1C0_UpdateChainRootAngles
-                move.w  (SecondaryEntityWork58).w,d2
+                move.w  (EntityType1C0OscillationPhase).w,d2
                 bpl.s   EntityType1C0_UseOscillationMagnitude
                 neg.w   d2
 EntityType1C0_UseOscillationMagnitude:                  ; CODE XREF: EntityType1C0_OscillateChainsState+8C   j  ; was: loc_420EE
                 lsr.w   #2,d2
                 addi.w  #$20,d2                         ; ' '
                 bsr.w   EntityType1C0_UpdateAllChainRadii
-                move.w  (SecondaryEntityWork58).w,d1
+                move.w  (EntityType1C0OscillationPhase).w,d1
                 asr.w   #3,d1
                 add.w   d1,$56(a5)
                 bra.w   EntityType1C0_SecondFormUpdate
@@ -115,7 +115,7 @@ EntityType1C0_InterpolateChainRootAngles:               ; CODE XREF: EntityType1
 EntityType1C0_InterpolateChainRootAnglesLoop:           ; CODE XREF: EntityType1C0_InterpolateChainRootAngles+1C   j  ; was: loc_42120
                 movea.w (a2)+,a4
                 adda.w  a5,a4
-                move.w  (PrimaryEntityWork5A).w,d2
+                move.w  (EntityType1C0PartYReference).w,d2
                 add.w   (a3)+,d2
                 sub.w   $58(a4),d2
                 asr.w   #3,d2
@@ -277,10 +277,10 @@ EntityType1C0_SecondFormRender:                         ; CODE XREF: EntityType1
                 jsr     (EntityType1C0_UpdateBodyPartPositions).l
                 bsr.w   EntityType1C0_UpdateScreenBounds
                 lea     EntityType1C0_SecondFormTileAnimationOffsets(pc),a0
-                move.w  (PrimaryEntityWork5E).w,d0
+                move.w  (EntityType1C0AnimationProgress).w,d0
                 lsr.w   #2,d0
                 bsr.w   Gfx_LoadIndexedAnimationTiles
-                addq.w  #1,(PrimaryEntityWork5E).w
+                addq.w  #1,(EntityType1C0AnimationProgress).w
                 ori.w   #$1800,$48E(a5)
                 andi.w  #$E7FF,$6CE(a5)
                 andi.w  #$E7FF,$90E(a5)
@@ -356,7 +356,7 @@ EntityType1C0_ScatterSecondFormBodyPartsState:
                 bne.w   EntityType1C0_SecondFormUpdate
                 addq.w  #2,4(a5)
                 clr.b   $21(a5)
-                move.w  (PrimaryEntityWork5C).w,d4
+                move.w  (EntityType1C0BodyPartCount).w,d4
                 subq.w  #2,d4
                 lea     $60(a5),a4
                 lea     (Math_SineTable).l,a2
@@ -394,7 +394,7 @@ EntityType1C0_BeginStaggeredBodyPartRemoval:            ; CODE XREF: EntityType1
                 move.b  #$40,$4B(a5)                    ; '@'
                 addq.w  #2,4(a5)
                 move.w  #1,d5
-                move.w  (PrimaryEntityWork5C).w,d4
+                move.w  (EntityType1C0BodyPartCount).w,d4
                 subq.w  #2,d4
                 lea     $60(a5),a4
 EntityType1C0_AssignBodyPartRemovalDelayLoop:           ; CODE XREF: EntityType1C0_ScatterSecondFormBodyPartsState+B0   j  ; was: loc_424B0

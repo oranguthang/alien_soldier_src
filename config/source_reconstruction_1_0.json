@@ -83,7 +83,7 @@
     {
       "id": "memory_map",
       "kind": "source",
-      "summary": "1,293 work RAM fields, the hardware ports and the shared equates were named in include files and documented, the symbol export checks them against the build, and no work RAM address is reached through a raw literal.",
+      "summary": "1,299 work RAM fields and owner-specific overlays, the hardware ports and the shared equates were named in include files and documented, the symbol export checks them against the build, and no work RAM address is reached through a raw literal.",
       "evidence": [
         "memory_map",
         "files:src/ram_addrs.inc"
@@ -718,7 +718,7 @@
   "counters": {
     "assets": 589,
     "declared_subsystems": 194,
-    "definitions": 16938,
+    "definitions": 16944,
     "dma_transferred_payloads": 289,
     "generic_evidence_bases": 0,
     "hypothesis_name_records": 0,
@@ -726,7 +726,7 @@
     "name_audit_records": 15843,
     "provenance_mappings": 16053,
     "reviewed_duplicate_basis_groups": 156,
-    "ram_fields": 1293,
+    "ram_fields": 1299,
     "resolved_branch_targets": 16102,
     "runtime_expectations": 78,
     "runtime_scenarios": 12,

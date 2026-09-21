@@ -2033,3 +2033,16 @@ re-extracted 589 segments; `make build` and `make verify` reproduced the
 canonical ROM, and `make verify-relocation` checked 2,236 references across
 its probes. `make format` changed no further files, `make lint` passed, and
 all 296 unit tests passed. No full emulator movie was rerun.
+
+The follow-up RAM ownership check found thirteen name-audit bases that still
+credited family A's fields to Sunset Sting. They now state only the type-$1C0
+family's proven operations. Six owner-specific RAM overlays replace structural
+pool-slot names inside the three family-A modules while retaining those
+structural names for Epsilon 1, Shield Viper, Madam Barbar, and other owners.
+The stage-search RAM map also now attributes the thirty-fourth slot to the
+type-$1C0 family, not Sunset Sting. A focused test checks the six overlays and
+all thirteen corrected bases. `make verify` still reproduces the canonical
+ROM, and `make release-audit` recounts 16,944 definitions and 1,299 RAM
+fields/overlays. No runtime appearance has been inferred from these changes.
+The full unit suite now has 297 passing tests; `make format`, `make lint`,
+`make verify`, and `make verify-symbols` also pass after the RAM overlay edit.

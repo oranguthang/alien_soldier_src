@@ -873,6 +873,10 @@ PrimaryEntityWork58             equ     $FFFFC678       ; was: word_FFC678
 PrimaryEntityWork5A             equ     $FFFFC67A       ; was: word_FFC67A
 PrimaryEntityWork5C             equ     $FFFFC67C       ; was: word_FFC67C
 PrimaryEntityWork5E             equ     $FFFFC67E       ; was: word_FFC67E
+EntityType1C0ChainRootOffset    equ     PrimaryEntityWork58
+EntityType1C0PartYReference     equ     PrimaryEntityWork5A
+EntityType1C0BodyPartCount      equ     PrimaryEntityWork5C
+EntityType1C0AnimationProgress  equ     PrimaryEntityWork5E
 SecondaryEntityType             equ     $FFFFC680       ; was: word_FFC680
 SecondaryEntityFlags            equ     $FFFFC682       ; was: word_FFC682
 SecondaryEntityState            equ     $FFFFC684       ; was: word_FFC684
@@ -887,6 +891,7 @@ SecondaryEntityWork4C           equ     $FFFFC6CC       ; was: word_FFC6CC
 SecondaryEntityWork52           equ     $FFFFC6D2       ; was: word_FFC6D2
 SecondaryEntityWork58           equ     $FFFFC6D8       ; was: dword_FFC6D8
 SecondaryEntityWork5C           equ     $FFFFC6DC       ; was: dword_FFC6DC
+EntityType1C0OscillationPhase   equ     SecondaryEntityWork58
 TertiaryEntityType              equ     $FFFFC6E0       ; was: word_FFC6E0
 TertiaryEntityFlags             equ     $FFFFC6E2       ; was: word_FFC6E2
 TertiaryEntityAttr              equ     $FFFFC6EE       ; was: word_FFC6EE
@@ -916,6 +921,7 @@ FifthEntityWork52               equ     $FFFFC7F2       ; was: word_FFC7F2
 EntityType1C0ChainCycle         equ     $FFFFC7F8       ; was: word_FFC7F8
 FifthEntityWork5C               equ     $FFFFC7FC       ; was: byte_FFC7FC
 EntityType1C0PoseRadius         equ     $FFFFC7FD       ; was: byte_FFC7FD
+EntityType1C0TurnControl        equ     FifthEntityWork5C
 FifthEntityWork5E               equ     $FFFFC7FE       ; was: word_FFC7FE
 SixthEntityType                 equ     $FFFFC800       ; was: word_FFC800
 SixthEntityFlags                equ     $FFFFC802       ; was: word_FFC802
