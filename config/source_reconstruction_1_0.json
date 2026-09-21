@@ -65,7 +65,7 @@
     {
       "id": "semantic_naming",
       "kind": "source",
-      "summary": "Every live address-derived identifier was replaced and 15,843 exact-address name records now exist. The curated 98-sentence generic evidence detector has zero matches after message, weapon-setup, weapon-state, directional-spawner, Valkirie-pose, Sirene-position, Medusa-pose, Sirene-pose, shared-facing, defeat-blink, Missiray-loop, Medusa-velocity, shared-sprite, Bugmax-frame, Shield Viper mapping, Antroid mapping, Jetsripper mapping, Xi-Tiger mapping, Madam Barbar mapping, Terobuster mapping, Destroyer Proto mapping, Sniper Honeyviper tentacle mapping, player death-sequence mapping, Sharpssteel pose-command/collision/blade-graphics, Medusa falling-part/spawn-sequence, Jampan orbit-table, Sirene type-$490/battle-effect, weapon-setup highlight-palette, midgame lightning-mapping, Wolf Garopa type-$424/orb, Missiray indexed-transfer, HBlank copy-window, Valkirie auxiliary-velocity, Seven Forces palette, scroll-DMA RAM, Stage 12 Teddy Bear streams, tilemap transfer descriptors, and shared projectile animations; all 156 repeated-basis groups have exact-member reviews, while seven boss-identity visual hypotheses remain open.",
+      "summary": "Every live address-derived identifier was replaced and 15,843 exact-address name records now exist. The curated 98-sentence generic evidence detector has zero matches after message, weapon-setup, weapon-state, directional-spawner, Valkirie-pose, Sirene-position, Medusa-pose, Sirene-pose, shared-facing, defeat-blink, Missiray-loop, Medusa-velocity, shared-sprite, Bugmax-frame, Shield Viper mapping, Antroid mapping, Jetsripper mapping, Xi-Tiger mapping, Madam Barbar mapping, Terobuster mapping, Destroyer Proto mapping, Sniper Honeyviper tentacle mapping, player death-sequence mapping, Sharpssteel pose-command/collision/blade-graphics, Medusa falling-part/spawn-sequence, Jampan orbit-table, Sirene type-$490/battle-effect, weapon-setup highlight-palette, midgame lightning-mapping, Wolf Garopa type-$424/orb, Missiray indexed-transfer, HBlank copy-window, Valkirie auxiliary-velocity, Seven Forces palette, scroll-DMA RAM, Stage 12 Teddy Bear streams, tilemap transfer descriptors, and shared projectile animations; all 156 repeated-basis groups have exact-member reviews. Seven historical visual records are resolved for source naming by pinned evidence or identity-neutral names; six separate exact-address records remain unknown.",
       "evidence": [
         "provenance_and_unknowns",
         "files:config/name_audit.json"
@@ -193,7 +193,7 @@
     },
     "provenance_and_unknowns": {
       "status": "partial",
-      "statement": "No live definition is address-derived and every replaced name keeps a traceable marker. The curated generic-basis queue and the exact-member repeated-basis queue are empty; seven boss-identity visual hypotheses remain open.",
+      "statement": "No live definition is address-derived and every replaced name keeps a traceable marker. The curated generic-basis and exact-member repeated-basis queues are empty; no name-audit record retains hypothesis evidence. Six exact-address records retain unknown evidence and are documented without invented roles.",
       "evidence": {
         "targets": [
           "lint",

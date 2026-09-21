@@ -2055,3 +2055,19 @@ known type-$1C0 body-part table is now typed `dc.l` and did not reappear.
 The scan only follows nearby loads and direct calls, so this result is not a
 claim that every hidden pointer in the ROM has been found. The exploratory
 script remains ignored under `reference/`, outside the release interface.
+
+The release-manifest wording was reconciled with its recounted audit: zero
+records have `hypothesis` evidence, while six still have `unknown` evidence.
+`make find-unanalyzed` consequently emits an empty hypothesis-level procedure
+queue (verified on this branch); the six unknowns remain explicit in the
+registry and local review HTML. `make lint` and `make release-audit` passed
+after the manifest and tooling-status corrections.
+
+The complete pinned runtime capture then passed on the current canonical
+build: twelve scenarios across three movies replayed 124,660 frames, and the
+validator accepted all 78 named RAM assertions. The runner launches one Gens
+process at a time and saves only each requested PNG/genstate pair. Its observed
+working set during the long demo and credits scenarios was about 47 MiB;
+there was no all-frames capture or concurrent emulator process in this run.
+This validates the current worktree's runtime behavior, but it is not yet a
+`make release-check` on a committed `tag-ready` candidate.

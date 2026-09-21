@@ -5,8 +5,10 @@ are module-aware and are covered by the release gate.
 
 The exploratory commands `analyze`, `find-unanalyzed`, `prepare-batch`, and
 `rename` remain outside the release interface. The
-`find-unanalyzed` queue now selects hypothesis-level code procedures from the
-name audit in ROM order. `analyze` resolves those names to owning modules and
+`find-unanalyzed` selects hypothesis-level code procedures from the name audit
+in ROM order; its queue is currently empty because no record retains that
+evidence level. The six `unknown` records stay in `docs/unknowns.md`, not in
+that automatic queue. `analyze` resolves selected names to owning modules and
 perturbs a private worker copy, one worker by default; its emulator workflow
 has not been rerun against the pinned host and movie, so its output is not
 release evidence.
