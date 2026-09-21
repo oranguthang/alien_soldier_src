@@ -83,6 +83,31 @@ class DigitAndWeaponScanReviewTests(unittest.TestCase):
                 self.assertIn("lea     $60(a0),a0", loop)
                 self.assertIn(f"dbf     d7,{owner}_FindSlot", loop)
 
+    def test_weapon_state_index_selects_distinct_handler_and_display_tables(self) -> None:
+        self.assert_review(
+            "WeaponStateIndex directly indexes this ROM table; the entries select the state handler or its display index.",
+            (("0x017984", "Weapon_StateHandlerOffsets"),
+             ("0x0179AC", "Weapon_StateDisplayIndexTable")),
+        )
+        source = (ROOT / "src/ui/weapon_state_and_selection.s").read_text(
+            encoding="utf-8"
+        )
+        dispatch = source.split("Weapon_DispatchCurrentState:", 1)[1].split(
+            "Weapon_StateHandlerOffsets:", 1
+        )[0]
+        display = source.split("Weapon_GetStateDisplayIndex:", 1)[1].split(
+            "Weapon_StateDisplayIndexTable:", 1
+        )[0]
+        self.assertIn("move.w  (WeaponStateIndex).w,d0", dispatch)
+        self.assertIn("movea.w Weapon_StateHandlerOffsets(pc,d0.w),a0", dispatch)
+        self.assertIn("adda.l  #Weapon_GetStateDisplayIndex,a0", dispatch)
+        self.assertIn("jmp     (a0)", dispatch)
+        self.assertIn("move.w  (WeaponStateIndex).w,d0", display)
+        self.assertIn("move.w  Weapon_StateDisplayIndexTable(pc,d0.w),d0", display)
+        self.assertIn("rts", display)
+        self.assertIn("dc.w    Weapon_ConfigureState2Lifetime-Weapon_GetStateDisplayIndex", source)
+        self.assertIn("dc.w    0, 2, 4, 6, 8, $A, $C, $E, $10, 0, 0", source)
+
 
 if __name__ == "__main__":
     unittest.main()

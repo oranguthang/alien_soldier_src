@@ -64,8 +64,8 @@ class NameAuditBasisCorrectionTests(unittest.TestCase):
             record["address"]: record
             for record in json.loads((ROOT / "config/name_audit.json").read_text(encoding="utf-8"))["records"]
         }
-        self.assertEqual(24, len(changes))
-        self.assertEqual(24, len({change["address"] for change in changes}))
+        self.assertEqual(26, len(changes))
+        self.assertEqual(26, len({change["address"] for change in changes}))
         for change in changes:
             with self.subTest(address=change["address"]):
                 record = audit[change["address"]]
@@ -239,6 +239,15 @@ class NameAuditBasisCorrectionTests(unittest.TestCase):
                 self.assertIn("move.l  d0,$10(a5)", position)
                 self.assertIn("move.l  d1,$14(a5)", position)
                 self.assertIn(f"lea     {mapping}(pc),a0", position)
+
+        ship = (ROOT / "src/cutscenes/ship_piece_and_debris.s").read_text(
+            encoding="utf-8"
+        )
+        table = ship.split("ShipDebris_SpriteFrameTable:", 1)[1].split(
+            "ShipDebris_InitialXVelocities:", 1
+        )[0]
+        self.assertEqual(2, table.count("dc.l    ShipDebris_SpriteFrame1"))
+        self.assertEqual(2, table.count("dc.l    ShipDebris_SpriteFrame3"))
 
 
 if __name__ == "__main__":

@@ -1654,6 +1654,54 @@
         {"address":"0x03D33E","current_name":"Boss_CaterpillarPositionFourPhaseSegment","file":"src/bosses/caterpillar.s"},
         {"address":"0x03D3D0","current_name":"Boss_CaterpillarPositionTwoPhaseSegment","file":"src/bosses/caterpillar.s"}
       ]
+    },
+    {
+      "basis": "This path clears the old bit and counts down to selecting another segment.",
+      "reason": "Both Sunset Sting rotation paths clear 2(a4), decrement byte $49(a5), and return while the countdown remains nonzero. The positive path enters after FrameCounter & $3F and can increment 4(a4) toward eight; the negative path enters after FrameCounter & $F and can decrement it toward $FFF8. Their later random masks and selected bit ranges also differ, so the shared sentence covers only the select gate.",
+      "members": [
+        {"address":"0x042F36","current_name":"Boss_SunsetStingRotateSegmentsPositiveSelect","file":"src/bosses/sunset_sting_main.s"},
+        {"address":"0x043016","current_name":"Boss_SunsetStingRotateSegmentsNegativeSelect","file":"src/bosses/sunset_sting_main.s"}
+      ]
+    },
+    {
+      "basis": "This path sets D1 to one, uses OptionsRepeatTimer and VBlankFrameCounter bit zero to gate held-input repetition, then tests held bits two and three before the pressed-input path.",
+      "reason": "The SFX and voice selection paths each initialize d1=1, skip held-input repetition while OptionsRepeatTimer is nonzero or the VBlank frame parity is odd, and test OptionsHeldCopy bits two/three before their OptionsPressedCopy paths. They update distinct OptionsSFXIndex and OptionsVoiceIndex fields and use different sound request tables when activated.",
+      "members": [
+        {"address":"0x009C64","current_name":"UI_UpdateSFXTestSelection","file":"src/ui/options_menu_controllers.s"},
+        {"address":"0x009D14","current_name":"UI_UpdateVoiceTestSelection","file":"src/ui/options_menu_controllers.s"}
+      ]
+    },
+    {
+      "basis": "This unreferenced single-return slot performs no update.",
+      "reason": "Both Bugmax slot bodies are exactly one RTS and have no direct executable source reference by label or literal ROM address outside their definitions. Their imported names were nullsub_111/nullsub_112. This is bounded negative static evidence only; indirect runtime entry cannot be ruled out by a source scan.",
+      "members": [
+        {"address":"0x04D85C","current_name":"Projectile_BugmaxSineInactiveState","file":"src/projectiles/bugmax.s"},
+        {"address":"0x04D8F8","current_name":"Boss_BugmaxOpeningHitFragmentUnusedStub","file":"src/projectiles/bugmax.s"}
+      ]
+    },
+    {
+      "basis": "Velocity at or below signed $FFFE0000 is clamped to that negative limit.",
+      "reason": "The horizontal path compares $18(a5) with signed -$20000 and writes that limit unless BGT exits; the vertical path does the same for $1C(a5). Equality is included because BGT is strict. The two paths operate on distinct velocity components and return labels; the positive bound is handled before these entries.",
+      "members": [
+        {"address":"0x04DCC8","current_name":"Boss_BugmaxClampNegativeHorizontalVelocity","file":"src/bosses/bugmax_movement.s"},
+        {"address":"0x04DD36","current_name":"Boss_BugmaxClampNegativeVerticalVelocity","file":"src/bosses/bugmax_movement.s"}
+      ]
+    },
+    {
+      "basis": "WeaponStateIndex directly indexes this ROM table; the entries select the state handler or its display index.",
+      "reason": "Weapon_DispatchCurrentState reads WeaponStateIndex into d0 and looks up a relative handler offset from Weapon_StateHandlerOffsets before jumping; Weapon_GetStateDisplayIndex independently reads the same index and looks up a word in Weapon_StateDisplayIndexTable before returning. The common index does not make the offset table a display-index table or vice versa.",
+      "members": [
+        {"address":"0x017984","current_name":"Weapon_StateHandlerOffsets","file":"src/ui/weapon_state_and_selection.s"},
+        {"address":"0x0179AC","current_name":"Weapon_StateDisplayIndexTable","file":"src/ui/weapon_state_and_selection.s"}
+      ]
+    },
+    {
+      "basis": "When no interpolation delay remains, this loop reads the pose cursor; $80xx copies its low byte to event field $23E and advances.",
+      "reason": "Both pose readers are entered after a negative $C(a5) delay test, read cursor $58, and on an $80 byte prefix copy the following A1 byte to $23E(a5), advance the cursor by two, and loop. Their separate projection routines and owners remain distinct; the shared parser does not establish a visual form identity.",
+      "members": [
+        {"address":"0x059308","current_name":"Boss_ValkirieAlternateReadPoseCommand","file":"src/bosses/valkirie_alternate.s"},
+        {"address":"0x058F16","current_name":"Boss_UnidentifiedSevenForceReadPoseCommand","file":"src/bosses/unidentified_seven_force.s"}
+      ]
     }
   ]
 }

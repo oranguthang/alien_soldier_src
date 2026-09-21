@@ -1890,3 +1890,17 @@ shows `Math_GetScaledSinCos`, an `Entity_ObjectPool` position through A3,
 and distinct mapping tables/radius limits. Two exact-address corrections
 record that narrower evidence. The queue is 157 repeated groups across 768
 uses, 150 reviewed and seven open. ASM and runtime visual claims are unchanged.
+
+The final repeated-basis review separated a false ShipDebris claim from six
+genuinely shared source paths. The single `ShipDebris_SpriteFrameTable` repeats
+the Frame1 and Frame3 pointers in slots 1/2 and 4/5; there are no two table
+variants. Two guarded exact-address corrections replace that claim. Tests now
+pin the Sunset Sting countdown gate against its differing period and random
+masks; SFX/voice repeat-input gates against their distinct indices and request
+tables; two Bugmax RTS slots against the absence of direct executable source
+references (not runtime unreachability); horizontal/vertical Bugmax signed
+clamps; the two different weapon state tables; and the shared pose event-prefix
+parser without inferring a visual form identity. The queue is now 156 repeated
+groups across 766 uses, all 156 reviewed and zero open. Seven `NAME-003`
+visual-identity hypotheses and final clean release verification remain. No ROM
+instructions or runtime visual claims changed in this packet.

@@ -125,6 +125,28 @@ class UnreferencedStaticEvidenceTests(unittest.TestCase):
              ("0x011D0A", "UnreferencedStage3Phase5AssetLoadList")),
         )
 
+    def test_bugmax_single_return_slots_have_no_direct_source_refs(self) -> None:
+        members = (
+            ("0x04D85C", "Projectile_BugmaxSineInactiveState"),
+            ("0x04D8F8", "Boss_BugmaxOpeningHitFragmentUnusedStub"),
+        )
+        self.assert_review(
+            "This unreferenced single-return slot performs no update.", members
+        )
+        source = self.source["src/projectiles/bugmax.s"]
+        for address, name in members:
+            with self.subTest(address=address):
+                self.assert_no_direct_reference(name, address)
+                body = source.split(name + ":", 1)[1].split(
+                    "; End of function " + name, 1
+                )[0]
+                instructions = [
+                    line.partition(";")[0].strip()
+                    for line in body.splitlines()
+                    if line.partition(";")[0].strip()
+                ]
+                self.assertEqual(["rts"], instructions)
+
 
 if __name__ == "__main__":
     unittest.main()

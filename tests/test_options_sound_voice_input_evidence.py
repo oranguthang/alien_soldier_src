@@ -54,6 +54,34 @@ class OptionsSoundVoiceInputEvidenceTests(unittest.TestCase):
                     [member["file"] for member in review["members"]],
                 )
 
+    def test_sfx_and_voice_repeat_gates_share_only_input_logic(self) -> None:
+        basis = (
+            "This path sets D1 to one, uses OptionsRepeatTimer and VBlankFrameCounter "
+            "bit zero to gate held-input repetition, then tests held bits two and "
+            "three before the pressed-input path."
+        )
+        self.assertEqual(
+            ["0x009C64", "0x009D14"],
+            [member["address"] for member in self.reviews[basis]["members"]],
+        )
+        for family, index, table in (
+            ("SFX", "OptionsSFXIndex", "Options_SFXTestLowRequestIDs"),
+            ("Voice", "OptionsVoiceIndex", "Options_VoiceTestRequestIDs"),
+        ):
+            with self.subTest(family=family):
+                body = between(
+                    self.source,
+                    f"UI_Update{family}TestSelection",
+                    f"UI_Check{family}TestPrimaryInput",
+                )
+                self.assertIn("moveq   #1,d1", body)
+                self.assertIn("tst.w   (OptionsRepeatTimer).w", body)
+                self.assertIn("btst    #0,(VBlankFrameCounter+1).w", body)
+                self.assertIn("btst    #2,(OptionsHeldCopy).w", body)
+                self.assertIn("btst    #3,(OptionsHeldCopy).w", body)
+                self.assertIn(f"move.b  ({index}).w,d0", self.source)
+                self.assertIn(f"lea     {table}(pc),a0", self.source)
+
     def test_previous_and_next_gates_match_but_selection_bodies_do_not(self) -> None:
         for family in ("SFX", "Voice"):
             with self.subTest(family=family):

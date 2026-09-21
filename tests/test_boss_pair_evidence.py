@@ -254,6 +254,75 @@ class BossPairEvidenceTests(unittest.TestCase):
                 self.assertIn("addq.w  #2,$58(a5)", reader)
                 self.assertIn("move.w  (a1,d0.w),d3", source)
 
+    def test_sunset_sting_rotation_selects_share_only_countdown_gate(self) -> None:
+        basis = "This path clears the old bit and counts down to selecting another segment."
+        self.assertEqual(
+            ["0x042F36", "0x043016"],
+            [member["address"] for member in self.reviews[basis]["members"]],
+        )
+        source = (ROOT / "src/bosses/sunset_sting_main.s").read_text(encoding="utf-8")
+        for direction, period, limit, step, random_mask in (
+            ("Positive", "$3F", "8", "addq.w", "$3F"),
+            ("Negative", "$F", "$FFF8", "subq.w", "$7F"),
+        ):
+            with self.subTest(direction=direction):
+                name = f"Boss_SunsetStingRotateSegments{direction}Select"
+                before, after = source.split(name + ":", 1)
+                self.assertIn(f"andi.w  #{period},d0", before[-650:])
+                self.assertIn(f"cmpi.w  #{limit},4(a4)", before[-650:])
+                self.assertIn(f"{step}  #1,4(a4)", before[-650:])
+                self.assertIn("clr.w   2(a4)", after[:300])
+                self.assertIn("subq.b  #1,$49(a5)", after[:300])
+                self.assertIn("bne.w   Boss_SunsetStingReturn", after[:300])
+                self.assertIn(f"andi.b  #{random_mask},d0", after[:500])
+
+    def test_bugmax_negative_velocity_clamps_use_distinct_components(self) -> None:
+        basis = "Velocity at or below signed $FFFE0000 is clamped to that negative limit."
+        self.assertEqual(
+            ["0x04DCC8", "0x04DD36"],
+            [member["address"] for member in self.reviews[basis]["members"]],
+        )
+        source = (ROOT / "src/bosses/bugmax_movement.s").read_text(encoding="utf-8")
+        for direction, field, ret in (
+            ("Horizontal", "$18", "Boss_BugmaxHorizontalSteeringReturn"),
+            ("Vertical", "$1C", "Boss_BugmaxVerticalBandSteeringReturn"),
+        ):
+            with self.subTest(direction=direction):
+                name = f"Boss_BugmaxClampNegative{direction}Velocity"
+                block = source.split(name + ":", 1)[1].split(ret + ":", 1)[0]
+                self.assertIn(f"cmpi.l  #$FFFE0000,{field}(a5)", block)
+                self.assertIn(f"bgt.s   {ret}", block)
+                self.assertIn(f"move.l  #$FFFE0000,{field}(a5)", block)
+
+    def test_valkirie_and_unidentified_form_share_pose_event_prefix(self) -> None:
+        basis = (
+            "When no interpolation delay remains, this loop reads the pose cursor; "
+            "$80xx copies its low byte to event field $23E and advances."
+        )
+        self.assertEqual(
+            ["0x059308", "0x058F16"],
+            [member["address"] for member in self.reviews[basis]["members"]],
+        )
+        for path, owner in (
+            ("src/bosses/valkirie_alternate.s", "Boss_ValkirieAlternate"),
+            ("src/bosses/unidentified_seven_force.s", "Boss_UnidentifiedSevenForce"),
+        ):
+            with self.subTest(owner=owner):
+                source = (ROOT / path).read_text(encoding="utf-8")
+                prelude = source.split(owner + "UpdatePose:", 1)[1].split(
+                    owner + "ReadPoseCommand:", 1
+                )[0]
+                reader = source.split(owner + "ReadPoseCommand:", 1)[1].split(
+                    owner + "HandlePoseControlWord:", 1
+                )[0]
+                self.assertIn("clr.b   $23E(a5)", prelude)
+                self.assertIn("tst.w   $C(a5)", prelude)
+                self.assertIn("move.w  $58(a5),d0", reader)
+                self.assertIn("cmpi.b  #$80,(a1,d0.w)", reader)
+                self.assertIn("move.b  1(a1,d0.w),$23E(a5)", reader)
+                self.assertIn("addq.w  #2,$58(a5)", reader)
+                self.assertIn(f"bra.s   {owner}ReadPoseCommand", reader)
+
 
 if __name__ == "__main__":
     unittest.main()

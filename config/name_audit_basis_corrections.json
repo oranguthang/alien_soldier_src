@@ -148,6 +148,18 @@
       "current_name": "Boss_SunsetStingSecondarySegmentOrbitUpdatePosition",
       "old_basis": "This common path converts angle and radius to position around the visible core.",
       "new_basis": "The secondary segment orbit path calls Math_GetScaledSinCos, adds the Entity_ObjectPool position through A3, stores X/Y in $10/$14(a5), and selects Boss_SunsetStingDestroyedSegmentMappings. Its preceding radius gate stops at $98, unlike the primary path's $80."
+    },
+    {
+      "address": "0x1A9BE6",
+      "current_name": "ShipDebris_SpriteFrame1",
+      "old_basis": "Two ShipDebris_SpriteFrameTable variants share this mapping record.",
+      "new_basis": "The single ShipDebris_SpriteFrameTable names ShipDebris_SpriteFrame1 twice in adjacent slots one and two; both entries reuse this one mapping record, not separate table variants."
+    },
+    {
+      "address": "0x1A9C2E",
+      "current_name": "ShipDebris_SpriteFrame3",
+      "old_basis": "Two ShipDebris_SpriteFrameTable variants share this mapping record.",
+      "new_basis": "The single ShipDebris_SpriteFrameTable names ShipDebris_SpriteFrame3 twice in adjacent slots four and five; both entries reuse this one mapping record, not separate table variants."
     }
   ]
 }

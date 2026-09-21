@@ -79,7 +79,26 @@ class ReleaseAuditTests(unittest.TestCase):
         errors = release_audit.audit_counters(ROOT, manifest, policy, layout, {})
         self.assertTrue(any("provenance exact_address_records" in error for error in errors))
         self.assertTrue(any("hypothesis-level name records" in error for error in errors))
-        self.assertTrue(any("unreviewed duplicate name-evidence bases" in error for error in errors))
+        self.assertFalse(any("unreviewed duplicate name-evidence bases" in error for error in errors))
+
+    def test_unreviewed_duplicate_basis_still_blocks_tag_ready_status(self) -> None:
+        manifest = self._manifest()
+        manifest["status"] = "tag-ready"
+        policy = json.loads(
+            (ROOT / "config/source_policy.json").read_text(encoding="utf-8")
+        )
+        layout = json.loads(
+            (ROOT / "config/rom_layout.json").read_text(encoding="utf-8")
+        )
+        with mock.patch.object(
+            release_audit.semantic_audit_queue,
+            "unreviewed_duplicate_bases",
+            return_value=([object()], []),
+        ):
+            errors = release_audit.audit_counters(ROOT, manifest, policy, layout, {})
+        self.assertTrue(
+            any("unreviewed duplicate name-evidence bases" in error for error in errors)
+        )
 
     def test_template_name_evidence_blocks_tag_ready_status(self) -> None:
         manifest = self._manifest()

@@ -41,9 +41,9 @@ byte.
   controller/background, 32 boss asset-set, 29 graphics-list, 35 asset-set
   palette-command, and 17 standalone or banked palette-command records were
   then reviewed. The curated `NAME-002` detector has zero matches. One hundred
-  fifty of 157 repeated-basis groups have exact-member reviews; seven remain
-  open. Seven boss-identity records remain visual hypotheses (`NAME-003`);
-  neither open issue is semantically resolved.
+  fifty-six of 156 repeated-basis groups have exact-member reviews; none remain
+  open in that queue. Seven boss-identity records remain visual hypotheses
+  (`NAME-003`); closing the repeated-basis queue does not resolve them.
 - **Provenance is retained.** 16,053 `; was:` markers map current definitions to
   the imported labels they replaced.
 - **Cross-reference comments stay navigable.** Imported `CODE XREF`, `DATA XREF`
@@ -73,7 +73,7 @@ that limits it. They are stated here rather than left implicit.
 | `PROFILE-001` | The European ROM. Only the Japanese cartridge is accepted. | unsupported |
 | `SND-001` | The Z80 sound driver program, which stays a verbatim payload and is never disassembled. | unsupported |
 | `NAME-001` | 513 `_End` aliases mark the end of contiguous `binclude` spans and hold no separate record; some spans now contain multiple assets. | partial |
-| `NAME-002` | Zero records match the curated 98-sentence generic detector; one hundred thirty-one repeated groups are accepted with exact members, and 34 remain open. | partial |
+| `NAME-002` | Zero records match the curated 98-sentence generic detector; all 156 repeated groups have exact-member reviews and none remain open. This does not prove all name semantics correct. | partial |
 | `NAME-003` | Seven boss-identity names remain provisional until pinned visual evidence or behavior-only renaming. | partial |
 | `LAYOUT-001` | Module sizes: 232 of 398 modules sit inside the preferred 200–700 line band, 149 are shorter and 17 are longer. All 17 longer modules are boss-specific and remain below 1000 lines. | partial |
 | `TOOL-001` | Four exploratory commands remain outside release evidence; their source operations address modules. The obsolete pointer debugger is retired, and `verify-relocation` checks pointers across the current layout. | unsupported |
