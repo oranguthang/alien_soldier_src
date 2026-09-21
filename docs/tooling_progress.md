@@ -1970,3 +1970,24 @@ imported names and ROM order remain unchanged. These entries cover the audit's
 `unknown` evidence category, not every open question in the historical log.
 `make format`, `make test` (295 tests), and `make verify` passed after the
 renames. No fresh runtime or relocation gate was run in this packet.
+
+`make reference MOVIE=tas` now captures every frame rather than inheriting the
+20-frame analysis interval. It first runs the canonical byte-identity check,
+then one pinned Gens process saves PNG and `.genstate` pairs through frame
+89,999 under the ignored `reference/tas/` tree. The completed run produced
+89,999 nonempty PNGs and 89,999 nonempty states, with no missing pair or extra
+file: 19,611,485,688 bytes total. The final frame shows the results screen,
+so the 90,000-frame bound includes the post-input credits and results.
+No second emulator process or large in-memory image batch was used.
+
+The ignored `reference/boss_visual_review.html` is a local, dependency-free reviewer for the
+seven provisional boss labels. It shows captured frames, same-frame object
+type/slot/state observations, and downloads a JSON answer file. Frame 22,000
+contains the type-`$390` controller and its seven `$394` plus one `$398`
+children; frame 28,000 contains type `$298` with 23 `$29C` children. Across
+every TAS state from 31,960 through 33,480, type `$1EC` appears on frames
+32,025–33,320, but types `$1C0/$1C8` and the `$1EC` state with low byte `$10`
+do not appear. The page marks those three questions as unobserved rather than
+turning the visible later form into unsupported evidence for them. The page
+does not promote the seven audit records by itself; a review or role-neutral
+renaming is still required.

@@ -237,6 +237,9 @@ ANALYSIS_WORKERS ?= 1
 ANALYSIS_GRID_COLS = 6
 ANALYSIS_FRAMESKIP = 8
 ANALYSIS_INTERVAL = 20
+# Reference captures are the full frame-by-frame baseline; analysis/debug may
+# sample this superset at ANALYSIS_INTERVAL without regenerating it.
+REFERENCE_INTERVAL ?= 1
 ANALYSIS_MAX_FRAMES = 90000
 ANALYSIS_MAX_DIFFS = 10
 ANALYSIS_DIFF_COLOR = pink
@@ -280,10 +283,10 @@ endif
 endif
 endif
 
-# Generate reference screenshots + memory dumps
+# Generate a screenshot and full emulator state for every movie frame by default.
 # Usage: make reference MOVIE=tas|longplay|menus
 .PHONY: reference
-reference:
+reference: verify
 ifndef MOVIE
 	@echo "ERROR: MOVIE parameter required!"
 	@echo ""
@@ -300,7 +303,7 @@ else
 	"$(GENS_EXE)" \
 		-rom $(ROM) \
 		-play $(MOVIE_FILE_$(MOVIE)) \
-		-screenshot-interval $(ANALYSIS_INTERVAL) \
+		-screenshot-interval $(REFERENCE_INTERVAL) \
 		-screenshot-dir reference/$(MOVIE) \
 		$(if $(MAX_FRAMES_$(MOVIE)),-max-frames $(MAX_FRAMES_$(MOVIE)),) \
 		-save-state-dumps \

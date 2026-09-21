@@ -111,6 +111,23 @@ make play MOVIE=longplay TURBO=1 MUTE=1 FRAMES=20000
 nothing on its own. It is here because the two limits below mean some kinds of
 damage reach a person's eyes and nothing else.
 
+## Frame-by-frame reference archive
+
+`make reference MOVIE=tas` first verifies the canonical Japanese ROM, then
+replays the pinned TAS once. By default, `REFERENCE_INTERVAL=1` saves a PNG
+and a full `.genstate` under `reference/tas/` at every captured frame. Both
+files use the same six-digit frame number, so a screenshot can be paired with
+the precise work RAM, VRAM and CPU state behind it. The 90,000-frame limit is
+intentional: playback continues after the TAS input ends so the credits and
+results are included, and the target stops before capturing frame 90,000.
+The archive is ignored by Git and is not part of the Source 1.0 release gate.
+
+The state dumps are about 211 KB each in existing captures. A full 90,000-frame
+TAS archive therefore needs roughly 20 GB including PNGs and creates up to
+180,000 files. The target uses one emulator process with no sound and no frame
+skipping. For a smaller diagnostic sample, pass `REFERENCE_INTERVAL=20`; the
+ordinary analysis/debug interval remains 20 independently.
+
 ## What the replay cannot see
 
 Two limits are worth stating, because a green `make runtime` does not cover
