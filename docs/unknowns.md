@@ -2,6 +2,136 @@
 
 The machine-readable thresholds live in `config/source_policy.json`.
 
+## Active visual-identity unknowns
+
+These stable IDs track the three encounter-level experiments behind the seven
+`NAME-003` hypothesis records. Source comments cite each ID. The `CODE` and
+`DATA` entries below cover the seven exact-address name-audit records whose
+evidence level is `unknown`; the remaining text is a historical investigation
+log, not a claim that every other unknown has been converted to this index.
+Keep an entry and its evidence history when it is resolved.
+
+### VIS-001 Gusthead linked-chain controller identity
+
+- **Status:** open
+- **Confidence:** low
+- **Location:** `src/bosses/gusthead_linked_chain.s`, `$0310E6`
+- **Evidence:** The type-`$390` controller owns an eight-object chain of types
+  `$394` and `$398`. A provisional unpinned trace placed it at TAS frame
+  21,989 before the documented Gusthead encounter; that does not bind its
+  rendered appearance to this handler.
+- **Experiment:** Under the pinned emulator, capture the encounter frame and
+  save both the screenshot and same-frame object type or PC state proving that
+  the pictured object reaches `$0310E6`. If it does not, use a role-only name.
+
+### VIS-002 Stage 13 chained boss identity
+
+- **Status:** open
+- **Confidence:** low
+- **Location:** `src/bosses/snake.s`, `$04079E` and `$040AF6`
+- **Evidence:** Type `$298` creates a 23-child chain of type `$29C`. An
+  unpinned replay placed both types in the Stage 13 Snake encounter at TAS
+  frames 27,720–28,480; the object relationship is static, but the visual
+  identity is not pinned to those handlers.
+- **Experiment:** Capture a frame of the head and segments under the pinned
+  emulator with the same-frame object types or PCs for both handlers. If the
+  image does not establish Snake ownership, use role-only names.
+
+### VIS-003 Sunset Sting form and state identities
+
+- **Status:** open
+- **Confidence:** low
+- **Location:** `src/bosses/sunset_sting_core.s` at `$040CEE`,
+  `src/bosses/sunset_sting_attacks.s` at `$0418FC`, and
+  `src/bosses/sunset_sting_main.s` at `$042A10` and `$04309E`
+- **Evidence:** The object-dispatch table binds types `$1C0`, `$1C8`, and
+  `$1EC` to the first three handlers. State `$10` at `$04309E` belongs to
+  the type-`$1EC` machine and refills the boss counter while oscillating.
+  A provisional replay showed Sunset Sting, but did not pin a frame to each
+  form or settle the visual meaning of that state.
+- **Experiment:** Locate the encounter in the pinned TAS replay; save
+  screenshots and same-frame object types or PCs for all three forms, plus
+  state `$10` when visible. If an identity cannot be established, keep the
+  static behaviour and replace only the visual claim.
+
+## Active unknown-evidence records
+
+The code entries below are *statically unreferenced*, not proven impossible to
+execute. An indirect dispatch or an unobserved input could still reach them.
+
+### CODE-001 Snake trailing return
+
+- **Status:** open
+- **Confidence:** low
+- **Location:** `src/bosses/snake.s`, `$040CEC`
+- **Evidence:** This isolated `rts` follows the Snake animation-frame table.
+  No direct source call, branch, or table pointer selects it.
+- **Experiment:** Trace PCs and indirect targets during the pinned Snake
+  encounter. Record a concrete reaching path before assigning a stronger role;
+  lack of hits in one replay is not proof that the entry is dead.
+
+### DATA-001 Sunset Sting early-form table tail
+
+- **Status:** open
+- **Confidence:** low
+- **Location:** `src/bosses/sunset_sting_core.s`, `$040D2E`
+- **Evidence:** Six preserved bytes follow the early-form state table before
+  the next routine. No symbolic source reference selects this tail.
+- **Experiment:** Inspect the table bounds and trace reads across this address
+  during the pinned early-form encounter. Retain the opaque bytes unless a
+  consumer and record format can be demonstrated.
+
+### CODE-002 Artemis pose-script return
+
+- **Status:** open
+- **Confidence:** low
+- **Location:** `src/bosses/artemis_rendering.s`, `$0586F2`
+- **Evidence:** An isolated `rts` separates the pose-script updater from its
+  frame loader; no direct source reference selects the return.
+- **Experiment:** Trace PC and indirect dispatch through Artemis pose-script
+  transitions. Document a reaching path before claiming its function.
+
+### CODE-003 Artemis emitter return
+
+- **Status:** open
+- **Confidence:** low
+- **Location:** `src/projectiles/artemis.s`, `$058BA0`
+- **Evidence:** An isolated `rts` lies between the radial-emitter updater and
+  sprite-attribute table; no direct source reference selects it.
+- **Experiment:** Trace PC and indirect targets during Artemis projectile
+  patterns. Preserve the entry without asserting runtime reachability.
+
+### CODE-004 Sylpheed pose-script return
+
+- **Status:** open
+- **Confidence:** low
+- **Location:** `src/bosses/sylpheed_pose.s`, `$059BAA`
+- **Evidence:** An isolated `rts` lies between the pose-script updater and
+  frame loader; no direct source reference selects it.
+- **Experiment:** Trace PC and indirect dispatch through Sylpheed pose-script
+  transitions. Document a reaching path before assigning a stronger role.
+
+### CODE-005 Pitch-envelope stack-skip return
+
+- **Status:** open
+- **Confidence:** low
+- **Location:** `src/sound/driver_core.s`, `$08277C`
+- **Evidence:** This helper adds four to `sp` and returns, but no static call,
+  branch, table pointer, or envelope-command dispatch selects it.
+- **Experiment:** Trace the sound-driver PC and pitch-envelope command stream
+  under the pinned runtime to find a real entry path, if one exists.
+
+### DATA-002 Unselected VRAM transfer tuple
+
+- **Status:** open
+- **Confidence:** low
+- **Location:** `src/rendering/boss_asset_sets.s`, `$011356`
+- **Evidence:** Four longwords have the neighboring RAM/VRAM transfer tuple
+  shape, but no symbolic source reference selects this one. The former
+  `ScrollWide` interpretation was inferred from adjacency alone.
+- **Experiment:** Find a concrete pointer or runtime read selecting the tuple,
+  then establish its owner and use. Keep the neutral name in the meantime.
+
 The parallel repacker worktree reported a disappearing Stage 4 platform before
 Sniper Honeyviper. A controlled retest on this branch did not reproduce it:
 both 16-byte and 8-KiB relocation-only builds matched every sampled TAS and

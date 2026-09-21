@@ -12,6 +12,7 @@ Gfx_ScrollVRAMTransferParameters:   dc.l    $FFFF7000, $FFFF6000, $FFFF4000, $60
                                         ; DATA XREF: StoryScreen_FadeInAndStartScroll+1E   o
                                         ; ShipSequence_InitializePatternReveal+8C   o
 ; Four-longword transfer tuple; no source selector establishes its intended use
+; UNKNOWN DATA-002: unselected transfer tuple; see docs/unknowns.md
 Gfx_UnidentifiedVRAMTransferParameters: dc.l    $FFFF7400, $FFFF6800, $FFFF4000, $14000
 
 ; Each asset-set record stores an entity type, an optional LoadObjData list,

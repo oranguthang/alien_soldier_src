@@ -205,9 +205,10 @@ Boss_ProcessArtemisPoseScriptEntry:                     ; CODE XREF: Boss_Update
                 move.w  d3,$58(a5)
                 bra.w   Boss_PrepareArtemisPoseRender
 ; End of function Boss_UpdateArtemisPoseScript
-Boss_ArtemisPoseScriptUnusedReturn:                     ; was: nullsub_131
+; UNKNOWN CODE-002: no static entry path; see docs/unknowns.md
+Boss_ArtemisPoseScriptUnreferencedReturn:               ; was: nullsub_131
                 rts
-; End of function Boss_ArtemisPoseScriptUnusedReturn
+; End of function Boss_ArtemisPoseScriptUnreferencedReturn
 
 ; Load a pose frame or restart the script at the $FFFF command
 Boss_LoadArtemisPoseFrame:                              ; CODE XREF: Boss_UpdateArtemisPoseScript+2E   j  ; was: sub_586F4

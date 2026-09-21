@@ -1,4 +1,5 @@
 ; Main boss control routine with state machine dispatch
+; UNKNOWN VIS-003: visual form awaits pinned same-frame evidence; see docs/unknowns.md
 Boss_SunsetStingMainDispatcher:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_418FC
                 move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0

@@ -1,6 +1,7 @@
 ; Gusthead's linked eight-segment attack object
 ; Type $390 owns the chain, type $394 updates ordinary segments, and type $398
 ; updates the damageable terminal segment and scatters the chain when it is hit
+; UNKNOWN VIS-001: visual owner awaits pinned same-frame evidence; see docs/unknowns.md
 Boss_GustheadLinkedChainControllerMain:                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_310E6
                 bsr.w   Boss_GustheadLinkedChainCullAtLeftEdge
                 move.w  4(a5),d0

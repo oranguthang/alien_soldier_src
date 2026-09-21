@@ -443,10 +443,11 @@ Sound_ApplyPitchEffectsReturn:                          ; CODE XREF: Sound_Apply
                 rts
 ; End of function Sound_ApplyPitchEffects
 ; Statically unreferenced stack-skip helper between pitch-envelope commands
-Sound_PitchEnvelopeUnusedSkipReturn:                    ; was: sub_8277C
+; UNKNOWN CODE-005: no static entry path; see docs/unknowns.md
+Sound_PitchEnvelopeUnreferencedSkipReturn:              ; was: sub_8277C
                 addq.w  #4,sp
                 rts
-; End of function Sound_PitchEnvelopeUnusedSkipReturn
+; End of function Sound_PitchEnvelopeUnreferencedSkipReturn
 ; Restart the pitch-envelope cursor after command $80
 Sound_RestartPitchEnvelope:                             ; CODE XREF: Sound_ApplyPitchEffects+2C   j  ; was: sub_82780
                 clr.b   $26(a5)

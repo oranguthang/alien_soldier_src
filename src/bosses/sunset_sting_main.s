@@ -1,4 +1,5 @@
 ; Main Sunset Sting boss handler
+; UNKNOWN VIS-003: visual form awaits pinned same-frame evidence; see docs/unknowns.md
 Boss_SunsetStingMain:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_42A10
                 lea     (SunsetStingSharedState).w,a4
                 lea     (SecondaryEntityType).w,a3
@@ -535,6 +536,7 @@ Boss_SunsetStingBrakeSegmentRotationUpdate:             ; CODE XREF: Boss_Sunset
                 rts
 ; End of function Boss_SunsetStingBrakeSegmentRotationState
 ; Oscillates the controller while refilling the boss counter to its HUD maximum
+; UNKNOWN VIS-003: state appearance awaits pinned capture; see docs/unknowns.md
 Boss_SunsetStingRefillCounterAndOscillateState:         ; DATA XREF: ROM:00042AAC   o  ; was: sub_4309E
                 bset    #7,4(a5)
                 bne.s   Boss_SunsetStingCounterRefillOscillationUpdate

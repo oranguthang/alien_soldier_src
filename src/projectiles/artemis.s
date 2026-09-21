@@ -132,9 +132,10 @@ Projectile_ReflectArtemisEmitter:                       ; CODE XREF: Projectile_
                 add.l   d0,$1C(a5)
                 bra.w   Projectile_SpawnArtemisReflectedShot
 ; End of function Projectile_UpdateArtemisRadialEmitter
-Projectile_ArtemisEmitterUnusedReturn:                  ; was: nullsub_132
+; UNKNOWN CODE-003: no static entry path; see docs/unknowns.md
+Projectile_ArtemisEmitterUnreferencedReturn:            ; was: nullsub_132
                 rts
-; End of function Projectile_ArtemisEmitterUnusedReturn
+; End of function Projectile_ArtemisEmitterUnreferencedReturn
 ; ---------------------------------------------------------------------------
 Projectile_ArtemisEmitterSpriteAttributes:  dc.w    $4489, $4492, $449B, $4492  ; was: word_58BA2
                                         ; DATA XREF: Projectile_UpdateArtemisRadialEmitter+128   r

@@ -1945,3 +1945,28 @@ name-audit records matched the listing. The next relocation gate creates and
 assembles three perturbed ROMs and parses their listings; it remains unrun in
 this low-memory pass, as does the fresh emulator runtime gate. The verified
 symbol result does not stand in for either of those checks.
+
+The seven provisional boss-identity name records now point from source comments
+to three stable `VIS-001`–`VIS-003` entries at the top of `docs/unknowns.md`.
+Each entry states its open status, low confidence, exact handlers, current
+evidence, and the same-frame emulator observation needed to confirm or reject
+the visual claim. A focused test guards both directions of the seven source
+links and verifies that the linked exact-address audit records remain marked
+`hypothesis`. This makes the unresolved claims discoverable but does not
+resolve any of them or convert the historical unknowns log into a complete
+structured registry. It changes source comments only, not ASM instructions.
+After adding the focused test, `make format`, `make test` (294 tests),
+`make verify`, `make lint`, and `make release-audit` all passed. No fresh
+emulator replay or relocation stress gate was run in this low-memory packet.
+
+The seven exact-address name-audit records with evidence level `unknown` now
+have stable `CODE-001`–`CODE-005` and `DATA-001`–`DATA-002` entries in the
+unknowns register. Each records its exact location, known static evidence and
+an experiment that could clarify it; source comments link back to the entry,
+and the bidirectional test checks that no `unknown` audit record is omitted.
+Six inherited `Unused` suffixes were narrowed to `Unreferenced`, since absence
+of a found source reference is not proof of runtime impossibility. Original
+imported names and ROM order remain unchanged. These entries cover the audit's
+`unknown` evidence category, not every open question in the historical log.
+`make format`, `make test` (295 tests), and `make verify` passed after the
+renames. No fresh runtime or relocation gate was run in this packet.

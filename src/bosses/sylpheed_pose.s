@@ -168,9 +168,10 @@ Boss_ProcessSylpheedPoseScriptEntry:                    ; CODE XREF: Boss_Update
                 move.w  d3,$58(a5)
                 bra.w   Boss_PrepareSylpheedPoseRender
 ; End of function Boss_UpdateSylpheedPoseScript
-Boss_SylpheedPoseScriptUnusedReturn:                    ; was: nullsub_135
+; UNKNOWN CODE-004: no static entry path; see docs/unknowns.md
+Boss_SylpheedPoseScriptUnreferencedReturn:              ; was: nullsub_135
                 rts
-; End of function Boss_SylpheedPoseScriptUnusedReturn
+; End of function Boss_SylpheedPoseScriptUnreferencedReturn
 
 ; Handle a pose loop command or begin a pose-frame interpolation
 Boss_LoadSylpheedPoseFrame:                             ; CODE XREF: Boss_UpdateSylpheedPoseScript+2E   j  ; was: sub_59BAC

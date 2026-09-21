@@ -1,3 +1,4 @@
+; UNKNOWN VIS-002: visual owner awaits pinned same-frame evidence; see docs/unknowns.md
 Boss_SnakeMain:                                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4079E
                 tst.w   4(a5)
                 beq.w   Boss_SnakeStateDispatch
@@ -255,6 +256,7 @@ Boss_SnakeInactiveState:                                ; DATA XREF: ROM:0004085
 ; End of function Boss_SnakeInactiveState
 
 ; Main handler for Snake segment
+; UNKNOWN VIS-002: segment belongs to the provisional root identity; see docs/unknowns.md
 Boss_SnakeSegmentMain:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_40AF6
                 bsr.w   Boss_SnakeAdvanceAnimation
                 tst.b   $21(a5)
@@ -417,6 +419,7 @@ Boss_SnakeAnimationFrameSequence:   dc.w    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, $A, $B
                                         ; DATA XREF: Boss_SnakeAdvanceAnimation+20   r
                 dc.w    $F, $E, $D, $C, $B, $A, 9, 8, 7, 6, 5, 4, 3, 2, 1
 
-Boss_SnakeUnusedReturn:                                 ; was: nullsub_85
+; UNKNOWN CODE-001: no static entry path; see docs/unknowns.md
+Boss_SnakeUnreferencedReturn:                           ; was: nullsub_85
                 rts
-; End of function Boss_SnakeUnusedReturn
+; End of function Boss_SnakeUnreferencedReturn

@@ -1,4 +1,5 @@
 ; Initializes the shared boss table pointer and dispatches the setup state
+; UNKNOWN VIS-003: visual form awaits pinned same-frame evidence; see docs/unknowns.md
 Boss_SunsetStingInitDispatcher:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_40CEE
                 moveq   #4,d7
                 jsr     (Gfx_ProcessDefaultColorFade).l
@@ -31,7 +32,8 @@ Boss_SunsetStingEarlyFormStates:
                 dc.w    Boss_SunsetStingScatterBodyPartsState-*
                 dc.w    Boss_SunsetStingRiseAndSpawnProjectilesState-*
                 dc.w    Boss_SunsetStingDefeatCleanupState-*
-Boss_SunsetStingEarlyFormUnusedTableTail:
+; UNKNOWN DATA-001: no selected consumer or record format; see docs/unknowns.md
+Boss_SunsetStingEarlyFormUnreferencedTableTail:
                 binclude "data/other/sunset_sting_early_form_unused_table_tail.bin"  ; was: unused_8
 
 ; Sets up battle arena parameters and clears sprite slots
