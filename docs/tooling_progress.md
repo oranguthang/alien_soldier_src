@@ -1875,3 +1875,18 @@ no-SFX returns, and the two `$40` HBlank copy-length descriptors. The latter
 prove fixed ROM copy spans, not executable handler body lengths. The queue is
 158 repeated groups across 770 uses, 145 reviewed and 13 open. ASM and
 runtime visual claims are unchanged.
+
+Two Epsilon 1 shared-RAM bases now have exact-member reviews: longwords
+`$FFFF9452/$FFFF9456` are successive spans of the indexed ring-phase table,
+and `$FFFF946A/$FFFF946E` are the latter four words of the six-word row-offset
+table. Results and Shield Viper overlay the same physical memory in their
+own modes; the review does not treat these as separate allocations. Madam
+Barbar/Joker pose readers and headered/headerless DMA byte parsers likewise
+have shared-prefix reviews with their owner fields and record layouts kept
+distinct. Caterpillar four- and two-phase segments share the wave-position
+and `$70` horizontal gate but select different mapping cycles. The Sunset
+Sting orbit bases no longer claim a visually identified core: the source
+shows `Math_GetScaledSinCos`, an `Entity_ObjectPool` position through A3,
+and distinct mapping tables/radius limits. Two exact-address corrections
+record that narrower evidence. The queue is 157 repeated groups across 768
+uses, 150 reviewed and seven open. ASM and runtime visual claims are unchanged.

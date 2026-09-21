@@ -41,7 +41,7 @@ byte.
   controller/background, 32 boss asset-set, 29 graphics-list, 35 asset-set
   palette-command, and 17 standalone or banked palette-command records were
   then reviewed. The curated `NAME-002` detector has zero matches. One hundred
-  forty-five of 158 repeated-basis groups have exact-member reviews; 13 remain
+  fifty of 157 repeated-basis groups have exact-member reviews; seven remain
   open. Seven boss-identity records remain visual hypotheses (`NAME-003`);
   neither open issue is semantically resolved.
 - **Provenance is retained.** 16,053 `; was:` markers map current definitions to

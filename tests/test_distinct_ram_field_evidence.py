@@ -77,6 +77,56 @@ class DistinctRamFieldEvidenceTests(unittest.TestCase):
         self.assertIn("movea.w #(TransitionPatternRow1-M68K_RAM),a1", source)
         self.assertIn("dbf     d7,Effect_ApplyTransitionMask_Loop", source)
 
+    def test_epsilon_tables_are_physical_overlays_not_independent_allocations(self) -> None:
+        reviews = {
+            item["basis"]: item
+            for item in json.loads(
+                (ROOT / "config/duplicate_basis_reviews.json").read_text(
+                    encoding="utf-8"
+                )
+            )["reviews"]
+        }
+        cases = (
+            (
+                "The table is accessed from its base by indexed or sequential word operations; Results independently overlaps the same storage.",
+                ("0xFFFF946A", "0xFFFF946E"), "Epsilon1RowOffsetTable",
+                "SharedPatternStateLong3", "$FFFF9466",
+            ),
+            (
+                "This longword supplies the next four bytes of Epsilon1RingPhaseTable and is cleared with that table's first half.",
+                ("0xFFFF9452", "0xFFFF9456"), "Epsilon1RingPhaseTable",
+                "SharedPatternStateLong0", "$FFFF944E",
+            ),
+        )
+        ram = (ROOT / "src/ram_addrs.inc").read_text(encoding="utf-8")
+        core = (ROOT / "src/bosses/epsilon_1_core.s").read_text(encoding="utf-8")
+        for basis, addresses, alias, first, location in cases:
+            with self.subTest(alias=alias):
+                self.assertEqual(
+                    list(addresses),
+                    [member["address"] for member in reviews[basis]["members"]],
+                )
+                self.assertIn(f"{alias}          equ     {first}", ram)
+                self.assertIn(f"{first}         equ     {location}", ram)
+                for offset in ("", "+4", "+8"):
+                    self.assertIn(f"clr.l   ({alias}{offset}).w", core)
+                for address in addresses:
+                    self.assertIn(basis, self.records[address]["basis"])
+        scroll = (ROOT / "src/bosses/epsilon_1_shared_support.s").read_text(
+            encoding="utf-8"
+        )
+        projectiles = (ROOT / "src/projectiles/epsilon_1_projectiles.s").read_text(
+            encoding="utf-8"
+        )
+        results = (ROOT / "src/ui/results_scrolling.s").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("lea     (Epsilon1RowOffsetTable).w,a4", scroll)
+        self.assertIn("add.w   (a4)+,d3", scroll)
+        self.assertIn("lea     (Epsilon1RowOffsetTable).w,a1", projectiles)
+        self.assertIn("lea     (Epsilon1RingPhaseTable).w,a1", projectiles)
+        self.assertIn("lea     (ResultsStageRowBuffer).w,a0", results)
+
 
 if __name__ == "__main__":
     unittest.main()

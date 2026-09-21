@@ -1614,6 +1614,46 @@
         {"address":"0x0016F0","current_name":"HBlank_UpdateStoryDisplay_CopyLength","file":"src/rendering/vblank_effects.s"},
         {"address":"0x00176E","current_name":"HBlank_WriteVScrollPair_CopyLength","file":"src/rendering/vblank_effects.s"}
       ]
+    },
+    {
+      "basis": "The table is accessed from its base by indexed or sequential word operations; Results independently overlaps the same storage.",
+      "reason": "SharedPatternStateLong4 at $FFFF946A and Long5 at $FFFF946E are the second and third four-byte spans of the six-word Epsilon1RowOffsetTable based at $FFFF9466. Battle init clears the table in three longword stores; scroll-profile construction walks its words through (a4)+, and ring-object defeat code indexes the same base by a word offset. ResultsStageRowBuffer begins at $FFFF9450 and uses that broader workspace independently. The group is a physical overlap, not two separate allocated tables.",
+      "members": [
+        {"address":"0xFFFF946A","current_name":"SharedPatternStateLong4","file":"src/ram_addrs.inc"},
+        {"address":"0xFFFF946E","current_name":"SharedPatternStateLong5","file":"src/ram_addrs.inc"}
+      ]
+    },
+    {
+      "basis": "This longword supplies the next four bytes of Epsilon1RingPhaseTable and is cleared with that table's first half.",
+      "reason": "Epsilon1RingPhaseTable begins at $FFFF944E; Long1 at +4 and Long2 at +8 supply its second and third four-byte spans. Battle init clears base, +4 and +8, while Epsilon 1 ring and tile paths access the table from its base by indexed words. ShieldViperEffectStepB/C alias addresses +2 within these longwords, and ResultsStageRowBuffer starts at table base +2. The aliases belong to different modes and do not establish simultaneous ownership.",
+      "members": [
+        {"address":"0xFFFF9452","current_name":"SharedPatternStateLong1","file":"src/ram_addrs.inc"},
+        {"address":"0xFFFF9456","current_name":"SharedPatternStateLong2","file":"src/ram_addrs.inc"}
+      ]
+    },
+    {
+      "basis": "This block indexes the A1 command stream by cursor $58, handles an optional $80 SFX prefix, and advances to the pose control word.",
+      "reason": "Both boss pose readers load cursor $58, leave on a negative cursor, test the A1 byte at that cursor for $80, queue its following SFX byte when present, advance $58 by two, and read the control word. Madam Barbar clears $29C(a5) before this parser; Joker clears $3BC(a5), and each publishes to its own part records later. Only the command-prefix parser is shared.",
+      "members": [
+        {"address":"0x03ABEE","current_name":"Boss_MadamBarbarReadNextPoseCommand","file":"src/bosses/madam_barbar_core.s"},
+        {"address":"0x03BCBE","current_name":"Boss_JokerReadNextPoseCommand","file":"src/bosses/joker_rendering.s"}
+      ]
+    },
+    {
+      "basis": "This loop reads one source byte, dispatches 0xFE and 0xFF markers, and otherwise stages either the byte or a zero word according to the entry mode.",
+      "reason": "Both byte-stream parsers read (a0)+ into d0, route $FE to FinishRecord and $FF to FinishStream, then test d3 to choose a copied word or the StageZero branch. Headered records consume a leading word before their DMA command; headerless records do not. The shared sentence covers marker and staging dispatch, not identical record layout.",
+      "members": [
+        {"address":"0x001D76","current_name":"Gfx_QueueHeaderedByteStreamDMA_ReadByte","file":"src/rendering/dma_queue.s"},
+        {"address":"0x001DF0","current_name":"Gfx_QueueByteStreamDMA_ReadByte","file":"src/rendering/dma_queue.s"}
+      ]
+    },
+    {
+      "basis": "This block positions the segment on the shared wave and checks its screen-relative horizontal threshold before animation.",
+      "reason": "Both Caterpillar segment variants call Boss_CaterpillarPositionSegmentOnWave, add PrimaryCameraXPosition to $10(a5), compare the result with $70, and set display bit four when below that threshold. The four-phase continuation selects mappings with FrameCounter & $C, while the two-phase continuation shifts FrameCounter and masks with four; their motion gate is shared, not their animation sequence.",
+      "members": [
+        {"address":"0x03D33E","current_name":"Boss_CaterpillarPositionFourPhaseSegment","file":"src/bosses/caterpillar.s"},
+        {"address":"0x03D3D0","current_name":"Boss_CaterpillarPositionTwoPhaseSegment","file":"src/bosses/caterpillar.s"}
+      ]
     }
   ]
 }

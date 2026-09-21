@@ -219,6 +219,39 @@ class AnimationDMAReturnEvidenceTests(unittest.TestCase):
                 self.assertIn("addq.b  #1,d1", stage)
                 self.assertIn(f"bra.s   {prefix}_ReadByte", stage)
 
+    def test_headered_and_headerless_byte_streams_share_marker_dispatch(self) -> None:
+        basis = (
+            "This loop reads one source byte, dispatches 0xFE and 0xFF markers, "
+            "and otherwise stages either the byte or a zero word according to "
+            "the entry mode."
+        )
+        self.assertEqual(
+            ["0x001D76", "0x001DF0"],
+            [member["address"] for member in self.reviews[basis]["members"]],
+        )
+        source = (ROOT / "src/rendering/dma_queue.s").read_text(encoding="utf-8")
+        for prefix in ("Gfx_QueueHeaderedByteStreamDMA", "Gfx_QueueByteStreamDMA"):
+            with self.subTest(prefix=prefix):
+                reader = block(source, prefix + "_ReadByte:", prefix + "_StageZero:")
+                self.assertIn("move.b  (a0)+,d0", reader)
+                self.assertIn("cmpi.b  #$FE,d0", reader)
+                self.assertIn(f"beq.s   {prefix}_FinishRecord", reader)
+                self.assertIn("cmpi.b  #$FF,d0", reader)
+                self.assertIn(f"beq.s   {prefix}_FinishStream", reader)
+                self.assertIn("tst.b   d3", reader)
+                self.assertIn(f"beq.s   {prefix}_StageZero", reader)
+                self.assertIn("move.w  d0,(a2)+", reader)
+        headered = block(
+            source, "Gfx_QueueHeaderedByteStreamDMA_BeginRecord:",
+            "Gfx_QueueHeaderedByteStreamDMA_ReadByte:",
+        )
+        headerless = block(
+            source, "Gfx_QueueByteStreamDMA_BeginRecord:",
+            "Gfx_QueueByteStreamDMA_ReadByte:",
+        )
+        self.assertIn("move.w  (a0)+,d0", headered)
+        self.assertNotIn("move.w  (a0)+,d0", headerless)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -37,6 +37,30 @@ class BossPairEvidenceTests(unittest.TestCase):
         self.assertIn("move.w  #$58,$24(a5)", source)
         self.assertIn("move.w  #$6E,$24(a5)", source)
 
+    def test_caterpillar_position_gate_is_shared_not_mapping_cycle(self) -> None:
+        basis = (
+            "This block positions the segment on the shared wave and checks "
+            "its screen-relative horizontal threshold before animation."
+        )
+        self.assertEqual(
+            ["0x03D33E", "0x03D3D0"],
+            [member["address"] for member in self.reviews[basis]["members"]],
+        )
+        source = (ROOT / "src/bosses/caterpillar.s").read_text(encoding="utf-8")
+        for variant in ("FourPhase", "TwoPhase"):
+            with self.subTest(variant=variant):
+                start = f"Boss_CaterpillarPosition{variant}Segment:"
+                end = f"Boss_CaterpillarUpdate{variant}Mapping:"
+                gate = source.split(start, 1)[1].split(end, 1)[0]
+                self.assertIn("bsr.w   Boss_CaterpillarPositionSegmentOnWave", gate)
+                self.assertIn("move.w  (PrimaryCameraXPosition).w,d0", gate)
+                self.assertIn("add.w   $10(a5),d0", gate)
+                self.assertIn("cmpi.w  #$70,d0", gate)
+                self.assertIn("bset    #4,2(a5)", gate)
+        self.assertIn("andi.w  #$C,d0", source)
+        self.assertIn("asr.w   #1,d0", source)
+        self.assertIn("andi.w  #4,d0", source)
+
     def test_antroid_contact_gate_is_shared_but_followups_differ(self) -> None:
         basis = (
             "After selecting one of two linked parts, this branch tests its Y "
@@ -203,6 +227,32 @@ class BossPairEvidenceTests(unittest.TestCase):
                 self.assertIn(f"bne.s   {ret}", block)
                 self.assertIn("jmp     (Sound_QueueSFXRequest).l", block)
                 self.assertIn(ret + ":", block)
+
+    def test_madam_barbar_and_joker_share_pose_prefix_parser(self) -> None:
+        basis = (
+            "This block indexes the A1 command stream by cursor $58, handles "
+            "an optional $80 SFX prefix, and advances to the pose control word."
+        )
+        self.assertEqual(
+            ["0x03ABEE", "0x03BCBE"],
+            [member["address"] for member in self.reviews[basis]["members"]],
+        )
+        for path, owner, scratch in (
+            ("src/bosses/madam_barbar_core.s", "Boss_MadamBarbar", "$29C"),
+            ("src/bosses/joker_rendering.s", "Boss_Joker", "$3BC"),
+        ):
+            with self.subTest(owner=owner):
+                source = (ROOT / path).read_text(encoding="utf-8")
+                reader = source.split(owner + "ReadNextPoseCommand:", 1)[1].split(
+                    owner + "ReadPoseControlWord:", 1
+                )[0]
+                self.assertIn(f"clr.w   {scratch}(a5)", source)
+                self.assertIn("move.w  $58(a5),d0", reader)
+                self.assertIn("cmpi.b  #$80,(a1,d0.w)", reader)
+                self.assertIn("move.b  1(a1,d0.w),d0", reader)
+                self.assertIn("jsr     (Sound_QueueSFXRequest).l", reader)
+                self.assertIn("addq.w  #2,$58(a5)", reader)
+                self.assertIn("move.w  (a1,d0.w),d3", source)
 
 
 if __name__ == "__main__":

@@ -64,8 +64,8 @@ class NameAuditBasisCorrectionTests(unittest.TestCase):
             record["address"]: record
             for record in json.loads((ROOT / "config/name_audit.json").read_text(encoding="utf-8"))["records"]
         }
-        self.assertEqual(22, len(changes))
-        self.assertEqual(22, len({change["address"] for change in changes}))
+        self.assertEqual(24, len(changes))
+        self.assertEqual(24, len({change["address"] for change in changes}))
         for change in changes:
             with self.subTest(address=change["address"]):
                 record = audit[change["address"]]
@@ -213,6 +213,32 @@ class NameAuditBasisCorrectionTests(unittest.TestCase):
             self.assertIn("cmp.b   (PrimaryEntityAngle).w,d0", block)
             self.assertIn(f"bhi.s   {clear}", block)
             self.assertIn("andi.w  #$7FFF,$E(a5)", block)
+
+        sunset = (ROOT / "src/bosses/sunset_sting_segments.s").read_text(
+            encoding="utf-8"
+        )
+        self.assertGreaterEqual(
+            sunset.count("lea     (Entity_ObjectPool).w,a3"), 2
+        )
+        for owner, limit, mapping in (
+            ("Boss_SunsetStingSegment", "$80", "Boss_SunsetStingSegmentMappings"),
+            ("Boss_SunsetStingSecondarySegment", "$98",
+             "Boss_SunsetStingDestroyedSegmentMappings"),
+        ):
+            with self.subTest(owner=owner):
+                orbit = sunset.split(owner + "OrbitState:", 1)[1].split(
+                    owner + "OrbitUpdatePosition:", 1
+                )[0]
+                position = sunset.split(owner + "OrbitUpdatePosition:", 1)[1].split(
+                    owner + "LaunchFromRing:", 1
+                )[0]
+                self.assertIn(f"cmpi.w  #{limit},d2", orbit)
+                self.assertIn("bsr.w   Math_GetScaledSinCos", position)
+                self.assertIn("add.l   $10(a3),d0", position)
+                self.assertIn("add.l   $14(a3),d1", position)
+                self.assertIn("move.l  d0,$10(a5)", position)
+                self.assertIn("move.l  d1,$14(a5)", position)
+                self.assertIn(f"lea     {mapping}(pc),a0", position)
 
 
 if __name__ == "__main__":
