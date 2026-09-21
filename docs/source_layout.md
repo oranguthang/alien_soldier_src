@@ -143,6 +143,16 @@ encoded as `dc.w` pairs. They are now `dc.l` expressions with symbolic bases,
 without changing ROM bytes. The reader consumes longwords, so the table's
 source width must match it; see `docs/dormant_entity_1c0.md`.
 
+A reader-first triage also checked direct `lea`/`movea` table loads followed
+locally by longword reads, plus direct calls that pass the table register to a
+longword-reading callee. Eight local and 24 cross-call sites started with
+`dc.w`/`dc.b`; the reviewed examples are mixed-width records or word tilemaps
+copied four bytes at a time. In particular, `Object_InitGroupFromTable`
+starts each descriptor with a word and two bytes, then copies two long fields;
+an initial `dc.w` is expected. This bounded scan is not an exhaustive pointer
+proof: each long field must still be classified by its consumer before being
+rewritten as a relocatable address.
+
 ## Adjacent data as a loader stop word
 
 `Options_AssetLoadDescriptors` contains five records but has no explicit

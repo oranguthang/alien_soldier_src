@@ -2046,3 +2046,12 @@ ROM, and `make release-audit` recounts 16,944 definitions and 1,299 RAM
 fields/overlays. No runtime appearance has been inferred from these changes.
 The full unit suite now has 297 passing tests; `make format`, `make lint`,
 `make verify`, and `make verify-symbols` also pass after the RAM overlay edit.
+
+A local, read-only reader-width triage found eight same-function and 24
+direct-call sites where a longword read followed a table beginning with
+`dc.w` or `dc.b`. The inspected cases were mixed descriptors, boot setup
+data, word tilemaps copied in longs, and packed motion/palette values; the
+known type-$1C0 body-part table is now typed `dc.l` and did not reappear.
+The scan only follows nearby loads and direct calls, so this result is not a
+claim that every hidden pointer in the ROM has been found. The exploratory
+script remains ignored under `reference/`, outside the release interface.
