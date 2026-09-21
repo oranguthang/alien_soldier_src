@@ -2080,3 +2080,13 @@ Game Over perspective lookup was retained: a tunnel-transition module lies
 between it and its Game Over consumer in ROM, so merging by theme would break
 ROM order or give the data to the wrong subsystem. The layout now has 398
 modules; the preferred-size count is 233, with 149 shorter and 16 longer.
+
+The cleanup policy was tightened before another full release run. `build/`
+contains maintainer research alongside `main.p`, `main.lst` and
+`source_inventory.json`; removing the whole directory would destroy unrelated
+work. `make clean` now removes only those three build files, the canonical root
+outputs and the exact PNG/genstate pairs declared by runtime scenarios. It
+leaves unrelated files in both `build/` and `runtime/captures/` untouched and
+rejects link/junction paths that would escape the checkout. Temporary-dir
+tests prove the preservation behavior; the full release gate still needs to
+be rerun after this policy change.

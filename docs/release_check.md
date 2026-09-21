@@ -20,9 +20,13 @@
    quotes from the artefact that owns it, and searches the whole reachable git
    history for ROM-derived payloads.
 
-The gate intentionally performs a clean build. `make clean` preserves the
-user-supplied ROM, all 589 extracted segments, movies, traces, workflow files,
-source backups, emulator configuration, and other maintainer evidence.
+The gate intentionally performs a clean build. `make clean` removes only the
+canonical assembler outputs, source inventory and the exact PNG/genstate pairs
+declared by the current runtime scenarios. It preserves unrelated research in
+`build/` and `runtime/captures/`, as well as the user-supplied ROM, all 589
+extracted segments, movies, traces, workflow files, source backups and emulator
+configuration. Each runtime scenario is replayed and its declared pair is
+captured anew.
 
 The declarative inputs are in `config/release_0_5.json` for the gate itself and
 `config/source_reconstruction_1_0.json` for the release manifest. Release 0.5 remains a
@@ -31,10 +35,11 @@ rename the release or silently add the European ROM profile.
 
 ## Counters are recounted, not trusted
 
-The manifest carries a `counters` block of twelve figures: the module count, the
+The manifest carries a `counters` block of sixteen figures: the module count, the
 asset count, the number of definitions, provenance mappings, resolved branch
-targets, exact-address records, work RAM fields, declared subsystems, DMA-
-transferred payloads, tracked text files, runtime scenarios and runtime
+targets, name-audit records, generic evidence bases, hypothesis-name records,
+reviewed and unreviewed duplicate-basis groups, work RAM fields, declared
+subsystems, DMA-transferred payloads, tracked text files, runtime scenarios and runtime
 expectations. The audit recounts each one from the artefact that owns it — the
 layout, asset manifest, source scan, name registry, `src/ram_addrs.inc`, source
 policy, tracked file list or scenario config — and fails on any drift.
