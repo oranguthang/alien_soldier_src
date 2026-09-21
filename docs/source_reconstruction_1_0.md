@@ -62,8 +62,9 @@ byte.
   each resolved through `src/ram_addrs.inc`. Every observed mode value names a
   handler in `Sys_GameStateHandlers`, so a checkpoint states which routine owns
   the frame rather than merely recording a number.
-- **One gate.** `make release-check` runs the whole thing in a fixed order on a
-  clean tree.
+- **One gate.** `make release-check` runs the whole thing in a fixed order after
+  removing its owned outputs. The final `tag-ready` audit separately requires a
+  clean Git working tree.
 
 ## What the release does not claim
 

@@ -295,7 +295,7 @@
     },
     "generated_outputs": {
       "status": "satisfied",
-      "statement": "build/, the extracted data tree and the runtime captures are reproducible and removable, and make clean preserves user-supplied evidence.",
+      "statement": "Canonical assembler outputs, the source inventory and declared runtime capture pairs are reproducible and removable. Extracted segments are reproducible with make split but preserved by make clean; unrelated research under build/ and runtime/captures/ is preserved.",
       "evidence": {
         "targets": [
           "clean"

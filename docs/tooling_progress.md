@@ -2108,3 +2108,14 @@ update: `make split` extracted all 589 segments; `make build` and `make verify`
 reproduced the canonical Japanese ROM; `make test` passed 299 tests;
 `make format` changed zero assembly files; and `make lint` passed source, project and
 text checks. `make release-audit` also passed with the revised manifest note.
+
+A contract wording audit found one stale generated-output claim: the manifest
+still described all of `build/` and `runtime/captures/` as removable, although
+the cleanup test now deliberately preserves unrelated research there. The
+manifest now names only the canonical assembler files, source inventory and
+declared capture pairs as cleanable; extracted segments remain reproducible
+with `make split` but are preserved by `make clean`. The release description
+also distinguishes a fresh-output gate from the clean Git tree required at
+`tag-ready`. A separate `make semantic-audit` run reports 16,053 provenance
+mappings, 513 binary-backed `_End` aliases with no actionable missing records,
+and all 156 repeated-basis groups reviewed with none open.
