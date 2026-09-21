@@ -11607,6 +11607,21 @@ needs a screenshot paired with same-frame object-type/PC or named RAM-state
 evidence to bind a pictured boss to the code entry. Pinned emulator and
 longplay hashes were rechecked, but no replay was launched in this pass.
 
+For a minimal manual review, use the pinned `tas` movie from
+`config/runtime_scenarios.json` and capture three encounter moments, pairing
+each image with its frame number and a same-frame object-type/PC or named RAM
+dump. Candidate Gusthead frame 21,989 should be checked against type `$390`
+and controller `$0310E6`; the Stage 13 Snake window is frames 27,720–28,480,
+with type `$298` root `$04079E` and type `$29C` child `$040AF6`. The Sunset
+Sting frame is not pinned in the current evidence: locate its three forms by
+object types `$1C0`, `$1C8`, and `$1EC`, assigned by the handler table to the
+early initializer `$040CEE`, later dispatcher `$0418FC`, and main handler
+`$042A10` respectively. Bind state-`$10` handler `$04309E` to the later form
+through same-frame state or PC evidence. An image without that binding cannot
+promote the four Sunset Sting records. These are three encounter checks for seven
+records, not seven separate playthroughs. Do not raise evidence levels until
+the screenshots and machine state are preserved together.
+
 The secondary and tertiary Valkirie debug viewers have a separate static
 boundary issue. Their fixed scripts select offsets 0 and `$12` into 36-byte
 pose-target blocks: two identical 18-byte records in each block. Both

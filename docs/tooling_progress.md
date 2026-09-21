@@ -1904,3 +1904,15 @@ parser without inferring a visual form identity. The queue is now 156 repeated
 groups across 766 uses, all 156 reviewed and zero open. Seven `NAME-003`
 visual-identity hypotheses and final clean release verification remain. No ROM
 instructions or runtime visual claims changed in this packet.
+
+The next clean-tree preservation preflight ran `make split` against the
+2,097,152-byte canonical Japanese dump. It regenerated 589 segments with no
+stale `.bin` files removed; `make check-assets` confirmed all 589 hashes and
+the Git tree remained clean. Separate `make build` and `make verify` invocations
+then assembled the ROM in two passes with zero errors and warnings. Both
+reported byte identity with SHA-1
+`8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`; `make verify` additionally
+checked 398 module ranges, eight landmarks, 321,932 padding bytes, and 289 DMA
+payloads. These commands run one assembler/converter at a time and no emulator.
+They establish preservation for the current source, not the seven visual boss
+identities or the final runtime release gate.
