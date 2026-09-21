@@ -1916,3 +1916,21 @@ checked 398 module ranges, eight landmarks, 321,932 padding bytes, and 289 DMA
 payloads. These commands run one assembler/converter at a time and no emulator.
 They establish preservation for the current source, not the seven visual boss
 identities or the final runtime release gate.
+
+An offline `make runtime-validate` pass over the existing captures passed all
+12 scenarios and 78 named RAM expectations from three movies. This is a
+saved-capture consistency check, not a fresh emulator replay: the validator
+checks the embedded ROM checksum and RAM fields but does not establish when
+the captures were made. The final `runtime-capture` and `release-check` gates
+remain unrun under the current memory constraint. A fresh source-size recount
+found 17 modules above the preferred 700-line band, from 703 through 869
+lines; every one is a concrete `src/bosses/` module and none breaches the
+1000-line ceiling. No source or runtime claim was changed by these checks.
+
+The runtime capture runner now has an emulator-free regression test for the
+fresh-capture contract. With a fake process, it proves that each scenario's
+old PNG/state files are removed before replay, the pinned movie and built ROM
+are passed to Gens, the requested frame and stop frame agree, and both fresh
+outputs must exist. A deliberately wrong movie hash aborts before any replay
+or cleanup, preserving existing captures. The runner itself and game source
+are unchanged; this test does not substitute for a real runtime replay.
