@@ -513,15 +513,9 @@
       "end": "0x00A393"
     },
     {
-      "file": "src/ui/password_cursor_mappings.s",
-      "subsystem": "ui",
-      "start": "0x00A394",
-      "end": "0x00A39F"
-    },
-    {
       "file": "src/ui/password_screen.s",
       "subsystem": "ui",
-      "start": "0x00A3A0",
+      "start": "0x00A394",
       "end": "0x00A96F"
     },
     {

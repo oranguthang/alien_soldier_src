@@ -2071,3 +2071,12 @@ working set during the long demo and credits scenarios was about 47 MiB;
 there was no all-frames capture or concurrent emulator process in this run.
 This validates the current worktree's runtime behavior, but it is not yet a
 `make release-check` on a committed `tag-ready` candidate.
+
+The source-shape comparison then removed one avoidable two-line module:
+password cursor sprite mappings at `$00A394-$00A39F` now begin the adjacent
+`ui/password_screen.s`. The options/password ownership boundary remains at
+the same ROM address, and no data or code changed order. The separate two-line
+Game Over perspective lookup was retained: a tunnel-transition module lies
+between it and its Game Over consumer in ROM, so merging by theme would break
+ROM order or give the data to the wrong subsystem. The layout now has 398
+modules; the preferred-size count is 233, with 149 shorter and 16 longer.

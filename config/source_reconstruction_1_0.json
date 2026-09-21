@@ -47,7 +47,7 @@
     {
       "id": "address_ordered_modules",
       "kind": "source",
-      "summary": "The single imported translation unit became src/main.s, an index of 399 address-ordered modules under a 1000-line ceiling, with config/rom_layout.json owning every module range, the landmarks and the padding.",
+      "summary": "The single imported translation unit became src/main.s, an index of 398 address-ordered modules under a 1000-line ceiling, with config/rom_layout.json owning every module range, the landmarks and the padding.",
       "evidence": [
         "source_boundary",
         "files:config/rom_layout.json"
@@ -155,7 +155,7 @@
     },
     "source_boundary": {
       "status": "partial",
-      "statement": "All executable 68000 code is assembly source in 399 address-ordered modules. The Z80 sound driver program remains a verbatim payload.",
+      "statement": "All executable 68000 code is assembly source in 398 address-ordered modules. The Z80 sound driver program remains a verbatim payload.",
       "evidence": {
         "targets": [
           "lint",
@@ -469,7 +469,7 @@
     {
       "id": "module_line_targets",
       "status": "partial",
-      "reason": "The preferred module size is 200 to 700 lines. 233 of 399 modules are inside it, 150 are shorter and 16 are longer; all 16 longer modules are boss-specific and the largest is 922 lines. The module rule forbids splitting a procedure from its private tables merely to reach a line count.",
+      "reason": "The preferred module size is 200 to 700 lines. 233 of 398 modules are inside it, 149 are shorter and 16 are longer; all 16 longer modules are boss-specific and the largest is 922 lines. The module rule forbids splitting a procedure from its private tables merely to reach a line count.",
       "registry": "LAYOUT-001",
       "control": "The 1000-line ceiling is a hard limit that make lint enforces and no module reaches it, and config/rom_layout.json declares every module range."
     },
@@ -589,7 +589,7 @@
       "rule_id": "config/linker/",
       "actual_path": "config/rom_layout.json",
       "reason": "There is no linker: AS emits one object and p2bin flattens it, so there is no linker script to own the layout.",
-      "equivalent_control": "config/rom_layout.json declares the memory regions, the ROM landmarks, the padding gap and all 399 module ranges, and make verify-layout checks every one against the build."
+      "equivalent_control": "config/rom_layout.json declares the memory regions, the ROM landmarks, the padding gap and all 398 module ranges, and make verify-layout checks every one against the build."
     },
     {
       "rule_id": "scenarios/",
@@ -722,7 +722,7 @@
     "dma_transferred_payloads": 289,
     "generic_evidence_bases": 0,
     "hypothesis_name_records": 0,
-    "modules": 399,
+    "modules": 398,
     "name_audit_records": 15843,
     "provenance_mappings": 16053,
     "reviewed_duplicate_basis_groups": 156,
@@ -730,7 +730,7 @@
     "resolved_branch_targets": 16102,
     "runtime_expectations": 78,
     "runtime_scenarios": 12,
-    "tracked_text_files": 551,
+    "tracked_text_files": 550,
     "unreviewed_duplicate_basis_groups": 0
   }
 }

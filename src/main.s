@@ -46,7 +46,6 @@
                 include "src/ui/title_screen.s"
                 include "src/ui/options_menu_controllers.s"
                 include "src/ui/options_shared_helpers_and_assets.s"
-                include "src/ui/password_cursor_mappings.s"
                 include "src/ui/password_screen.s"
                 include "src/ui/message_sequence_engine.s"
                 include "src/ui/stage_message_sequences.s"

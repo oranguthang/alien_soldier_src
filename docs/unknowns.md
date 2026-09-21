@@ -2949,12 +2949,12 @@ existing semantic names, replaces 76 address-derived option definitions, and
 promotes `DifficultyMode`, `MessageMode`, and `SoundDisableFlags` in the RAM
 map.
 
-Two password cursor mappings at `0x00A394-0x00A39F` were not options data. They
-now form the exact ROM-ordered `ui/password_cursor_mappings.s` boundary between
-the 890-line options module and the password code. The intentionally short
-three-line data module preserves a real consumer/ownership boundary; merging
-it back only to meet an average line target would misstate that ownership.
-This takes the layout from 348 to 349 modules.
+Two password cursor mappings at `0x00A394-0x00A39F` were not options data. At
+this point in the history they formed a separate ROM-ordered cursor module
+between options and password code, taking the layout from 348 to 349 modules.
+The current layout keeps the same ownership boundary at `$00A394` but places
+those private mappings at the start of `ui/password_screen.s`; this removes
+an unnecessary two-line file without moving bytes or mixing options data.
 
 One secondary-options behavior remains unresolved. Its handler-index words are
 `6, 8, $A, $C, $E`, while the local navigation clamp reaches only the first
@@ -3615,11 +3615,9 @@ The package gate re-extracts all 579 assets, reproduces canonical SHA-1
 `8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`, passes all 37 tests, and leaves
 both formatter and lint clean.
 
-The password-menu package audits all 51 ROM definitions across the exact
-`ui/password_cursor_mappings.s` and `ui/password_screen.s` ranges. The
-two-record cursor file remains intentionally short: it is the complete
-password-owned mapping range between the options module and password code,
-not a mechanically split fragment. The 430-line screen module remains one
+The password-menu package audited all 51 ROM definitions across the then
+separate cursor-mapping and screen ranges. The current
+`ui/password_screen.s` starts with both private mappings and remains one
 cohesive editor, validation, cursor-motion, and text-data unit.
 
 Static flow proves that `Password_StageCodeTable` contains 25 records with two
