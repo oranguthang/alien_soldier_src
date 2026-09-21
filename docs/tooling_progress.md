@@ -2090,3 +2090,21 @@ leaves unrelated files in both `build/` and `runtime/captures/` untouched and
 rejects link/junction paths that would escape the checkout. Temporary-dir
 tests prove the preservation behavior; the full release gate still needs to
 be rerun after this policy change.
+
+The committed cleanup change (`d00b6ddf`) then passed the full
+`make release-check` in one sequential run. Asset policy matched all 589
+segments; lint and 299 tests passed; the fresh Japanese ROM reproduced the
+user dump; layout, symbols and provenance passed; the three relocation probes
+followed 2,236 pointer references; and Gens recaptured all twelve scenarios
+from three pinned movies, replaying 124,660 frames. All 78 named RAM
+expectations passed. The final release audit resolved 17 requirements and
+recounted 16 figures. This is a successful development-state gate, not an
+annotated 1.0 tag or a claim that the six unknown-evidence records have been
+semantically resolved. The local, Git-ignored review HTML now includes those
+six records and the other visual, archive and external-content questions.
+
+The six requested commands were then run separately after the documentation
+update: `make split` extracted all 589 segments; `make build` and `make verify`
+reproduced the canonical Japanese ROM; `make test` passed 299 tests;
+`make format` changed zero assembly files; and `make lint` passed source, project and
+text checks. `make release-audit` also passed with the revised manifest note.

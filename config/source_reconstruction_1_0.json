@@ -512,7 +512,7 @@
     {
       "id": "final_release_tag",
       "status": "planned",
-      "reason": "The earlier local tag was removed while separating the preservation branch from later authoring work. The isolated 1.0 branch has not yet passed its final aggregate gate.",
+      "reason": "The earlier local tag was removed while separating the preservation branch from later authoring work. The development-state aggregate gate passed on d00b6ddf; final tag-ready verification and the annotated 1.0 tag await user review.",
       "registry": "RELEASE-001",
       "control": "The manifest remains in development; tag-ready requires a clean tree and an unused tag name before the final release-check and annotated tag."
     },
