@@ -1927,10 +1927,13 @@ found 17 modules above the preferred 700-line band, from 703 through 869
 lines; every one is a concrete `src/bosses/` module and none breaches the
 1000-line ceiling. No source or runtime claim was changed by these checks.
 
-The runtime capture runner now has an emulator-free regression test for the
-fresh-capture contract. With a fake process, it proves that each scenario's
-old PNG/state files are removed before replay, the pinned movie and built ROM
-are passed to Gens, the requested frame and stop frame agree, and both fresh
-outputs must exist. A deliberately wrong movie hash aborts before any replay
-or cleanup, preserving existing captures. The runner itself and game source
-are unchanged; this test does not substitute for a real runtime replay.
+The runtime capture runner now has emulator-free regression tests for the
+fresh-capture contract. With a fake process, they prove that only the requested
+frame's old PNG/state files are replaced before replay; adjacent manual
+captures remain intact. The pinned movie and built ROM are passed to Gens,
+the requested frame and stop frame agree, and both fresh outputs must exist.
+A deliberately wrong movie hash aborts before any cleanup. The runner now
+rejects path-escaping scenario IDs, refuses a linked scenario directory,
+and refuses to remove a directory or symlink occupying an output slot. These
+changes narrow filesystem side effects; they do not alter game source or
+substitute for a real replay.

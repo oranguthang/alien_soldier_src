@@ -63,11 +63,13 @@ class RuntimeCaptureRunnerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             self.make_inputs(root)
-            for scenario in ("first", "second"):
+            for scenario, frame in (("first", 100), ("second", 200)):
                 capture = root / "captures" / scenario
                 capture.mkdir(parents=True)
-                (capture / "stale.genstate").write_bytes(b"old state")
-                (capture / "stale.png").write_bytes(b"old image")
+                (capture / f"{frame:06d}.genstate").write_bytes(b"old state")
+                (capture / f"{frame:06d}.png").write_bytes(b"old image")
+                (capture / "manual.genstate").write_bytes(b"manual state")
+                (capture / "manual.png").write_bytes(b"manual image")
 
             calls: list[tuple[list[str], int]] = []
 
@@ -78,8 +80,10 @@ class RuntimeCaptureRunnerTests(unittest.TestCase):
                 self.assertEqual(root, cwd)
                 capture = Path(command[command.index("-screenshot-dir") + 1])
                 frame = int(command[command.index("-screenshot-interval") + 1])
-                self.assertFalse((capture / "stale.genstate").exists())
-                self.assertFalse((capture / "stale.png").exists())
+                self.assertFalse((capture / f"{frame:06d}.genstate").exists())
+                self.assertFalse((capture / f"{frame:06d}.png").exists())
+                self.assertEqual(b"manual state", (capture / "manual.genstate").read_bytes())
+                self.assertEqual(b"manual image", (capture / "manual.png").read_bytes())
                 (capture / f"{frame:06d}.genstate").write_bytes(b"new state")
                 (capture / f"{frame:06d}.png").write_bytes(b"new image")
                 return subprocess.CompletedProcess(command, 0)
@@ -100,6 +104,12 @@ class RuntimeCaptureRunnerTests(unittest.TestCase):
                     self.assertEqual(str(frame + 1), command[command.index("-max-frames") + 1])
                     self.assertIn("-save-state-dumps", command)
                     self.assertEqual(frame * 20 // 1000, timeout)
+            for scenario, frame in (("first", 100), ("second", 200)):
+                capture = root / "captures" / scenario
+                self.assertEqual(b"new state", (capture / f"{frame:06d}.genstate").read_bytes())
+                self.assertEqual(b"new image", (capture / f"{frame:06d}.png").read_bytes())
+                self.assertEqual(b"manual state", (capture / "manual.genstate").read_bytes())
+                self.assertEqual(b"manual image", (capture / "manual.png").read_bytes())
 
     def test_bad_movie_hash_stops_before_capture_or_cleanup(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -107,7 +117,7 @@ class RuntimeCaptureRunnerTests(unittest.TestCase):
             self.make_inputs(root, movie_hash="0" * 64)
             capture = root / "captures" / "first"
             capture.mkdir(parents=True)
-            old = capture / "stale.genstate"
+            old = capture / "000100.genstate"
             old.write_bytes(b"old state")
             fake_run = mock.Mock()
 
@@ -115,6 +125,61 @@ class RuntimeCaptureRunnerTests(unittest.TestCase):
             self.assertIn("movie tas SHA-256", self.capture_stderr)
             fake_run.assert_not_called()
             self.assertEqual(b"old state", old.read_bytes())
+
+    def test_unsafe_scenario_id_cannot_escape_capture_root(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.make_inputs(root)
+            config_path = root / "scenarios.json"
+            config = json.loads(config_path.read_text(encoding="utf-8"))
+            config["scenarios"][0]["id"] = "../user"
+            config_path.write_text(json.dumps(config), encoding="utf-8")
+            outside = root / "user"
+            outside.mkdir()
+            old = outside / "000100.genstate"
+            old.write_bytes(b"user state")
+            fake_run = mock.Mock()
+
+            self.assertEqual(1, self.run_capture(root, fake_run))
+            self.assertIn("unsafe runtime scenario id", self.capture_stderr)
+            fake_run.assert_not_called()
+            self.assertEqual(b"user state", old.read_bytes())
+
+    def test_nonfile_target_is_not_removed(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.make_inputs(root)
+            capture = root / "captures" / "first"
+            capture.mkdir(parents=True)
+            blocked = capture / "000100.png"
+            blocked.mkdir()
+            fake_run = mock.Mock()
+
+            self.assertEqual(1, self.run_capture(root, fake_run))
+            self.assertIn("unsafe capture output path", self.capture_stderr)
+            fake_run.assert_not_called()
+            self.assertTrue(blocked.is_dir())
+
+    def test_linked_scenario_directory_is_not_followed(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.make_inputs(root)
+            capture = root / "captures" / "first"
+            capture.mkdir(parents=True)
+            old = capture / "000100.genstate"
+            old.write_bytes(b"user state")
+            fake_run = mock.Mock()
+
+            with mock.patch.object(
+                run_runtime_scenarios.Path,
+                "is_symlink",
+                autospec=True,
+                side_effect=lambda path: path == capture,
+            ):
+                self.assertEqual(1, self.run_capture(root, fake_run))
+            self.assertIn("unsafe runtime capture directory", self.capture_stderr)
+            fake_run.assert_not_called()
+            self.assertEqual(b"user state", old.read_bytes())
 
     def test_missing_screenshot_fails_without_advancing_to_next_scenario(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

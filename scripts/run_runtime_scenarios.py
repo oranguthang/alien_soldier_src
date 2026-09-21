@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -67,17 +68,36 @@ def main() -> int:
         return 1
 
     output_root = root / args.output_dir
+    resolved_output_root = output_root.resolve()
     total_frames = 0
     for scenario in config["scenarios"]:
+        scenario_id = scenario["id"]
+        if not isinstance(scenario_id, str) or not re.fullmatch(r"[a-z][a-z0-9_]*", scenario_id):
+            print(f"[ERROR] unsafe runtime scenario id: {scenario_id!r}", file=sys.stderr)
+            return 1
         movie = movies.get(scenario["movie"])
         if movie is None:
             print(f"[ERROR] {scenario['id']}: undeclared movie {scenario['movie']}", file=sys.stderr)
             return 1
-        scenario_dir = output_root / scenario["id"]
+        scenario_dir = output_root / scenario_id
+        if scenario_dir.is_symlink() or (
+            scenario_dir.exists()
+            and not scenario_dir.resolve().is_relative_to(resolved_output_root)
+        ):
+            print(f"[ERROR] unsafe runtime capture directory: {scenario_dir}", file=sys.stderr)
+            return 1
         scenario_dir.mkdir(parents=True, exist_ok=True)
-        for old_output in list(scenario_dir.glob("*.genstate")) + list(scenario_dir.glob("*.png")):
-            old_output.unlink()
         frame = int(scenario["frame"])
+        state = scenario_dir / f"{frame:06d}.genstate"
+        screenshot = scenario_dir / f"{frame:06d}.png"
+        # Only replace this scenario's requested frame; adjacent research
+        # captures in the same directory are not owned by this run.
+        for old_output in (state, screenshot):
+            if old_output.is_symlink() or (old_output.exists() and not old_output.is_file()):
+                print(f"[ERROR] unsafe capture output path: {old_output}", file=sys.stderr)
+                return 1
+            if old_output.is_file():
+                old_output.unlink()
         # The emulator replays from frame zero every time, so the wall-clock cost
         # of a scenario is proportional to the frame it stops at.
         timeout = max(args.minimum_timeout, frame * args.seconds_per_1000_frames // 1000)
@@ -89,8 +109,6 @@ def main() -> int:
         ]
         print(f"[RUN] {scenario['id']}: {scenario['movie']} frame {frame}", flush=True)
         result = run_hidden(command, root, timeout)
-        state = scenario_dir / f"{frame:06d}.genstate"
-        screenshot = scenario_dir / f"{frame:06d}.png"
         if result.returncode != 0 or not state.is_file() or not screenshot.is_file():
             print(f"[ERROR] {scenario['id']}: capture failed (exit {result.returncode})", file=sys.stderr)
             return 1

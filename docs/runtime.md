@@ -80,6 +80,8 @@ the player state machine.
 
 Run `make runtime`. Captures are reproducible outputs under `runtime/captures/`
 and are ignored by Git.
+For each scenario the runner replaces only that scenario's requested frame
+PNG and state dump; other files in the directory are left untouched.
 
 Each scenario is a separate emulator invocation that replays from frame zero, so
 its wall-clock cost is proportional to its frame number and the full set replays
