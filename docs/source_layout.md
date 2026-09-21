@@ -126,7 +126,7 @@ return is followed by a label, a table slot by another instruction.
 A value that equals the address of a symbol which moved, and that did not move
 with it, is reported. Both defects found this way were the same shape: a 32-bit
 address encoded as two `dc.w` constants, in the stage tile asset command lists
-and in `Boss_SunsetStingBodyPartInitTable`.
+and in `EntityType1C0_BodyPartInitTable`.
 
 Precision is the hard part, because with fifteen thousand symbols a four-byte
 window matches one by accident often. Four rules cut that down, each stated
@@ -137,10 +137,11 @@ cannot be stale; and bytes inside a `binclude` payload are opaque, so nothing
 about the source follows from them. What survives is listed in
 `accepted_coincidences` with the reason it is a number rather than an address.
 
-The probe cannot see a pointer that carries flags in its high bits, because the
-stored value no longer equals the symbol address. `Boss_SunsetStingBodyPartInitTable`
-holds several of those, with the top byte as flags and the low 24 bits as the
-address, and they remain written as literals.
+The probe cannot detect a pointer that carries flags in its high bits by a
+plain equality search. `EntityType1C0_BodyPartInitTable` had 24 such entries
+encoded as `dc.w` pairs. They are now `dc.l` expressions with symbolic bases,
+without changing ROM bytes. The reader consumes longwords, so the table's
+source width must match it; see `docs/dormant_entity_1c0.md`.
 
 ## Adjacent data as a loader stop word
 

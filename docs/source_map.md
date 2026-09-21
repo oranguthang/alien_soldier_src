@@ -31,7 +31,7 @@ cover each layout module exactly once and that the file counts stay current.
 | `0x02D27C-0x02DF7D` | circling and Stage 9 flies, Viblack shots, and bird enemies | 3 | static/hypothesis |
 | `0x02DF7E-0x02F1A1` | stage 10/12 enemies, Stage 11 fish, and Xi-Tiger entrance sequences | 5 | static/hypothesis |
 | `0x02F1A2-0x030D8F` | orphaned radial-particle test, stage environment, yacht, stage 18, and stage 15 fragment hazards | 6 | static/runtime |
-| `0x030D90-0x0323E1` | stage 11 rising hazards, Gusthead linked chain, Destroyer Proto, and shared hit-reactive projectiles | 6 | static/runtime |
+| `0x030D90-0x0323E1` | stage 11 rising hazards, type-$390 linked chain, Destroyer Proto, and shared hit-reactive projectiles | 6 | static/runtime |
 | `0x0323E2-0x033F2F` | Victor, Wolf Garopa rewards, formation waves, Stage 21 asteroids, rising-shot effects, and Missiray projectiles | 8 | static/hypothesis |
 | `0x033F30-0x035613` | Stage 3 orbiting formation, shared metasprite code, and multi-boss metasprite definitions | 5 | static/hypothesis |
 | `0x035614-0x0374C5` | Jetsripper and Sniper Honeyviper state, movement, and projectiles | 8 | hypothesis |
@@ -39,7 +39,7 @@ cover each layout module exactly once and that the file counts stay current.
 | `0x0394D8-0x03B29D` | Shellshogun and Madam Barbar systems | 6 | hypothesis |
 | `0x03B29E-0x03D0AD` | Joker and Flying Neo systems | 5 | hypothesis |
 | `0x03D0AE-0x040CED` | Caterpillar, Xi-Tiger, Deep Strider, Gusthead, and Snake | 12 | hypothesis |
-| `0x040CEE-0x045ACF` | Sunset Sting, Viblack, and Back Stringer systems | 12 | hypothesis |
+| `0x040CEE-0x045ACF` | dormant type-$1C0 family, Sunset Sting, Viblack, and Back Stringer systems | 13 | static/runtime |
 | `0x045AD0-0x04912D` | Epsilon 1 and Sharpssteel systems | 9 | hypothesis |
 | `0x04912E-0x04BEBB` | Jampan and Destroyer MK2 systems | 7 | hypothesis |
 | `0x04BEBC-0x04DDD1` | Bugmax systems | 5 | hypothesis |

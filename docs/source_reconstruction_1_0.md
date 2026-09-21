@@ -15,7 +15,7 @@ byte.
   toolchain and compares the result with the user-supplied Japanese cartridge
   dump byte by byte, not by hash alone, reproducing SHA-1
   `8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`.
-- **Source, not blobs.** All executable 68000 code is assembly source across 398
+- **Source, not blobs.** All executable 68000 code is assembly source across 399
   address-ordered modules indexed by `src/main.s`. Include order is ROM order;
   there is no linker, so `config/rom_layout.json` owns the memory map, the
   landmarks, the padding gap and every module range, and `make verify-layout`
@@ -26,7 +26,7 @@ byte.
 - **No address is an identity.** No live definition is address-derived, which
   `make lint` enforces with a ceiling of zero.
 - **Names are checkable, not merely documented.** Every definition is owned by
-  one of 192 declared subsystems, derives from a symbol that exists, or is a
+  one of 194 declared subsystems, derives from a symbol that exists, or is a
   declared hardware exception. The vocabulary is a closed list in
   `config/source_policy.json`; a new owner token fails lint.
 - **Name evidence is traceable, with a declared review debt.**
@@ -42,9 +42,10 @@ byte.
   palette-command, and 17 standalone or banked palette-command records were
   then reviewed. The curated `NAME-002` detector has zero matches. One hundred
   fifty-six of 156 repeated-basis groups have exact-member reviews; none remain
-  open in that queue. Four boss-identity records remain visual hypotheses
-  (`NAME-003`); pinned TAS states and human review resolved the two Snake
-  records and the type-`$1EC` Sunset Sting controller.
+  open in that queue. No boss-identity record retains hypothesis-level naming
+  evidence (`NAME-003`): pinned TAS states and human review established the
+  two Snake records and type-`$1EC` Sunset Sting controller, while the separate
+  type-`$1C0/$1C8` family and type-`$390` chain now use identity-neutral names.
 - **Provenance is retained.** 16,053 `; was:` markers map current definitions to
   the imported labels they replaced.
 - **Cross-reference comments stay navigable.** Imported `CODE XREF`, `DATA XREF`
@@ -75,8 +76,8 @@ that limits it. They are stated here rather than left implicit.
 | `SND-001` | The Z80 sound driver program, which stays a verbatim payload and is never disassembled. | unsupported |
 | `NAME-001` | 513 `_End` aliases mark the end of contiguous `binclude` spans and hold no separate record; some spans now contain multiple assets. | partial |
 | `NAME-002` | Zero records match the curated 98-sentence generic detector; all 156 repeated groups have exact-member reviews and none remain open. This does not prove all name semantics correct. | partial |
-| `NAME-003` | Seven boss-identity names remain provisional until pinned visual evidence or behavior-only renaming. | partial |
-| `LAYOUT-001` | Module sizes: 232 of 398 modules sit inside the preferred 200–700 line band, 149 are shorter and 17 are longer. All 17 longer modules are boss-specific and remain below 1000 lines. | partial |
+| `NAME-003` | Seven historical boss-identity records are either backed by pinned evidence or use identity-neutral, statically justified names; visual appearances not observed remain open in the unknowns registry. | partial |
+| `LAYOUT-001` | Module sizes: 233 of 399 modules sit inside the preferred 200–700 line band, 150 are shorter and 16 are longer. All 16 longer modules are boss-specific and remain below 1000 lines. | partial |
 | `TOOL-001` | Four exploratory commands remain outside release evidence; their source operations address modules. The obsolete pointer debugger is retired, and `verify-relocation` checks pointers across the current layout. | unsupported |
 | `TOOL-002` | The monolithic asset splitter is retired; `make split` extracts canonical data under the asset manifest. | unsupported |
 | `RELEASE-001` | The isolated 1.0 branch has not yet passed its final gate or received its final tag. | planned |

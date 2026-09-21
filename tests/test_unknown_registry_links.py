@@ -13,8 +13,8 @@ VISUAL_UNKNOWN_IDS = {
     "VIS-001": (
         (
             "0x0310E6",
-            "Boss_GustheadLinkedChainControllerMain",
-            "src/bosses/gusthead_linked_chain.s",
+            "EntityType390_ControllerMain",
+            "src/enemies/entity_type_390_linked_chain.s",
         ),
     ),
     "VIS-002": (
@@ -22,8 +22,8 @@ VISUAL_UNKNOWN_IDS = {
         ("0x040AF6", "Boss_SnakeSegmentMain", "src/bosses/snake.s"),
     ),
     "VIS-003": (
-        ("0x040CEE", "Boss_SunsetStingInitDispatcher", "src/bosses/sunset_sting_core.s"),
-        ("0x0418FC", "Boss_SunsetStingMainDispatcher", "src/bosses/sunset_sting_attacks.s"),
+        ("0x040CEE", "EntityType1C0_InitDispatcher", "src/bosses/entity_type_1c0_core.s"),
+        ("0x0418FC", "EntityType1C0_MainDispatcher", "src/bosses/entity_type_1c0_attacks.s"),
         ("0x042A10", "Boss_SunsetStingMain", "src/bosses/sunset_sting_main.s"),
         (
             "0x04309E",
@@ -40,8 +40,8 @@ UNKNOWN_EVIDENCE_IDS = {
         "0x040CEC", "Boss_SnakeUnreferencedReturn", "src/bosses/snake.s"
     ),
     "DATA-001": (
-        "0x040D2E", "Boss_SunsetStingEarlyFormUnreferencedTableTail",
-        "src/bosses/sunset_sting_core.s",
+        "0x040D2E", "EntityType1C0_EarlyFormPartMapping",
+        "src/bosses/entity_type_1c0_core.s",
     ),
     "CODE-002": (
         "0x0586F2", "Boss_ArtemisPoseScriptUnreferencedReturn",
@@ -110,17 +110,17 @@ class UnknownRegistryLinkTests(unittest.TestCase):
                     self.assertEqual(name, audit[address]["current_name"])
                     reviewed = address in REVIEWED_VISUAL_ADDRESSES
                     self.assertEqual(
-                        "runtime" if reviewed else "hypothesis",
+                        "runtime" if reviewed else "static",
                         audit[address]["evidence"],
                     )
                     self.assertIn(f"`{relative}`", section)
                     source = (ROOT / relative).read_text(encoding="utf-8")
                     self.assertRegex(
                         source,
-                        rf"(?m)^; {'REVIEWED' if reviewed else 'UNKNOWN'} {unknown_id}:[^\n]*\n^{re.escape(name)}:",
+                        rf"(?m)^; REVIEWED {unknown_id}:[^\n]*\n^{re.escape(name)}:",
                     )
         self.assertEqual(
-            expected_addresses - REVIEWED_VISUAL_ADDRESSES,
+            set(),
             {
                 address for address, record in audit.items()
                 if record.get("evidence") == "hypothesis"
@@ -137,7 +137,7 @@ class UnknownRegistryLinkTests(unittest.TestCase):
         for path in (ROOT / "src").rglob("*.s"):
             source = path.read_text(encoding="utf-8")
             referenced_tags.extend(
-                re.findall(r"(?m)^; UNKNOWN ((?:CODE|DATA)-\d{3}):", source)
+                re.findall(r"(?m)^; (?:UNKNOWN|REVIEWED) ((?:CODE|DATA)-\d{3}):", source)
             )
         self.assertEqual(set(UNKNOWN_EVIDENCE_IDS), set(referenced_tags))
         self.assertEqual(7, len(referenced_tags))
@@ -151,19 +151,20 @@ class UnknownRegistryLinkTests(unittest.TestCase):
         for unknown_id, (address, name, relative) in UNKNOWN_EVIDENCE_IDS.items():
             with self.subTest(id=unknown_id, address=address):
                 section = registry_section(registry, unknown_id)
-                self.assertIn("- **Status:** open", section)
-                self.assertIn("- **Confidence:** low", section)
+                reviewed = unknown_id == "DATA-001"
+                self.assertIn(f"- **Status:** {'resolved' if reviewed else 'open'}", section)
+                self.assertIn(f"- **Confidence:** {'high' if reviewed else 'low'}", section)
                 self.assertIn("- **Experiment:**", section)
                 self.assertIn(f"`{relative}`", section)
                 self.assertEqual(name, audit[address]["current_name"])
-                self.assertEqual("unknown", audit[address]["evidence"])
+                self.assertEqual("static" if reviewed else "unknown", audit[address]["evidence"])
                 source = (ROOT / relative).read_text(encoding="utf-8")
                 self.assertRegex(
                     source,
-                    rf"(?m)^; UNKNOWN {unknown_id}:[^\n]*\n^{re.escape(name)}:",
+                    rf"(?m)^; {'REVIEWED' if reviewed else 'UNKNOWN'} {unknown_id}:[^\n]*\n^{re.escape(name)}:",
                 )
         self.assertEqual(
-            {address for address, _, _ in UNKNOWN_EVIDENCE_IDS.values()},
+            {address for key, (address, _, _) in UNKNOWN_EVIDENCE_IDS.items() if key != "DATA-001"},
             {
                 address for address, record in audit.items()
                 if record.get("evidence") == "unknown"

@@ -4,20 +4,21 @@ The machine-readable thresholds live in `config/source_policy.json`.
 
 ## Active visual-identity unknowns
 
-These stable IDs track the three encounter-level experiments originally behind
-seven `NAME-003` hypothesis records. Three identities now have pinned
-same-frame and human visual evidence; four remain hypotheses. Source comments
-cite each ID. The `CODE` and
-`DATA` entries below cover the seven exact-address name-audit records whose
-evidence level is `unknown`; the remaining text is a historical investigation
-log, not a claim that every other unknown has been converted to this index.
+These stable IDs track three encounter-level investigations originally behind
+seven `NAME-003` hypothesis records. Three definitions have pinned same-frame
+and human visual evidence; four use static, identity-neutral names. None of
+the seven retains hypothesis-level naming evidence. Source comments cite each
+ID. The `CODE` and `DATA` entries below retain seven historical IDs, of which
+six exact-address name-audit records still have `unknown` evidence. The rest
+of this document is an investigation log; earlier interpretations there are
+superseded by the active entries and `docs/dormant_entity_1c0.md`.
 Keep an entry and its evidence history when it is resolved.
 
-### VIS-001 Linked-chain controller identity before Gusthead
+### VIS-001 Type-$390 linked-chain controller identity
 
-- **Status:** open
-- **Confidence:** low
-- **Location:** `src/bosses/gusthead_linked_chain.s`, `$0310E6`
+- **Status:** resolved for source naming; visual identity open
+- **Confidence:** high for chain ownership; low for visual identity
+- **Location:** `src/enemies/entity_type_390_linked_chain.s`, `$0310E6`
 - **Evidence:** The type-`$390` controller owns an eight-object chain of types
   `$394` and `$398`. At pinned TAS frames 21,989 and 22,000 it is in slot 2;
   the visible fat bird dropping shots is instead the separate type-`$90`
@@ -25,9 +26,11 @@ Keep an entry and its evidence history when it is resolved.
   has no sprite mapping in those states, and its children at frame 22,000
   are at Y `$170`, below the captured 224-pixel image. The bird screenshot
   therefore cannot establish Gusthead ownership or the chain's appearance.
+  The source now uses role-only type-$390 names.
 - **Experiment:** Capture a frame where type-`$394/$398` parts are actually
   visible, paired with their same-frame state and the `$390` controller.
-  If a Gusthead-specific relationship remains unproved, use role-only names.
+  A boss-specific name requires that additional evidence; role-only names do
+  not depend on it.
 
 ### VIS-002 Stage 13 chained boss identity
 
@@ -41,26 +44,27 @@ Keep an entry and its evidence history when it is resolved.
 - **Experiment:** Completed with `reference/tas/028000.png` and
   `reference/tas/028000.genstate`; the archive is local and ignored by Git.
 
-### VIS-003 Sunset Sting form and state identities
+### VIS-003 Dormant type-$1C0 family versus stage-15 Sunset Sting
 
-- **Status:** partially resolved
-- **Confidence:** mixed
-- **Location:** `src/bosses/sunset_sting_core.s` at `$040CEE`,
-  `src/bosses/sunset_sting_attacks.s` at `$0418FC`, and
+- **Status:** resolved for source ownership; visual identity of dormant family open
+- **Confidence:** high for code ownership; low for external graphic attribution
+- **Location:** `src/bosses/entity_type_1c0_core.s` at `$040CEE`,
+  `src/bosses/entity_type_1c0_attacks.s` at `$0418FC`, and
   `src/bosses/sunset_sting_main.s` at `$042A10` and `$04309E`
-- **Evidence:** The object-dispatch table binds types `$1C0`, `$1C8`, and
-  `$1EC` to the first three handlers. The human reviewer identified the
-  vertically stretched Sunset Sting at pinned frame 32,124 and the flower-like
-  pre-fight appearance at frame 32,200. Both are type `$1EC`, slot 0; frame
-  32,124 is state `$8002`. Thus the stretched appearance is **not** evidence
-  for the type-`$1C0` handler. In every TAS state from 31,960 through 33,480,
-  `$1C0` and `$1C8` are absent, as is type-`$1EC` state with low byte `$10`.
-  This does not prove that the other handlers or state are unreachable in the
-  game. The `$04309E` handler adds to `BossCombatCounter`; its source does not
-  by itself establish visible health restoration.
-- **Experiment:** Keep `$1C0`, `$1C8`, and `$04309E` visually unconfirmed.
-  Look for a different route or movie before assigning appearances; preserve
-  the statically established counter/oscillation behaviour meanwhile.
+- **Evidence:** Stage 15 loads the `$1EC` asset set. The human reviewer
+  identified its vertically stretched appearance at TAS frame 32,124 and its
+  pre-fight flower at frame 32,200; both are type `$1EC`, slot 0. The separate
+  `$1C0/$1C4/$1C8` family builds a hierarchy of body parts with radii and
+  angles, and its second form preserves `$1C8` during pool cleanup. The
+  stage-15 controller builds sixteen segments and preserves `$1EC`. An
+  unselected asset record at `$011538` carries type `$1C0` and pointers to
+  graphics `$011542` and palette `$00C404`; outside material calls the art
+  Love Penguin, but that name is not established by the ROM. The `$04309E`
+  state increases `BossCombatCounter` and oscillates position; its appearance
+  was not observed. See `docs/dormant_entity_1c0.md`.
+- **Experiment:** The source naming is now neutral for `$1C0/$1C8` and
+  behavior-specific for `$04309E`. Further pictures or traces can identify
+  appearances but are not needed to justify the current names.
 
 ## Active unknown-evidence records
 
@@ -78,16 +82,17 @@ execute. An indirect dispatch or an unobserved input could still reach them.
   encounter. Record a concrete reaching path before assigning a stronger role;
   lack of hits in one replay is not proof that the entry is dead.
 
-### DATA-001 Sunset Sting early-form table tail
+### DATA-001 Type-$1C0 early-form part mapping
 
-- **Status:** open
-- **Confidence:** low
-- **Location:** `src/bosses/sunset_sting_core.s`, `$040D2E`
-- **Evidence:** Six preserved bytes follow the early-form state table before
-  the next routine. No symbolic source reference selects this tail.
-- **Experiment:** Inspect the table bounds and trace reads across this address
-  during the pinned early-form encounter. Retain the opaque bytes unless a
-  consumer and record format can be demonstrated.
+- **Status:** resolved
+- **Confidence:** high
+- **Location:** `src/bosses/entity_type_1c0_core.s`, `$040D2E`
+- **Evidence:** Five flagged pointers in the 61-long body-part table at
+  `$041568` select these six bytes as a sprite mapping. The reader consumes
+  each entry with `move.l (a1)+`. Their earlier `dc.w` spelling hid the
+  pointers from relocation checks; the table is now symbolically typed.
+- **Experiment:** Completed by comparing the table encoding to the reader;
+  a shifted build remains a useful regression probe.
 
 ### CODE-002 Artemis pose-script return
 
@@ -538,7 +543,7 @@ is now pinned at commit `f62b2cf`, including its Z80 sound-register tracing
 support. The visual ownership remains `hypothesis` in the name audit because
 the capture proves timing and object presence, not the exact player-facing
 identity. The coherent 352-line implementation now lives in
-`src/bosses/gusthead_linked_chain.s`; the unrelated type-`$3B8` subtype
+`src/enemies/entity_type_390_linked_chain.s`; the unrelated type-`$3B8` subtype
 dispatcher was moved to the adjacent Destroyer Proto module. Forty new audit
 records and two corrected earlier records cover the pass.
 
@@ -1011,9 +1016,9 @@ names rely on static instruction-level evidence recorded in the name audit.
 The Sunset Sting controller, segment, early-form, attack, transition, defeat,
 and wave passes, followed by the Viblack core/support/chain pass, reduced the
 count to 7,684 and left
-`bosses/sunset_sting_core.s`,
-`bosses/sunset_sting_attacks.s`,
-`bosses/sunset_sting_transition_and_defeat.s`,
+`bosses/entity_type_1c0_core.s`,
+`bosses/entity_type_1c0_attacks.s`,
+`bosses/entity_type_1c0_transition_and_defeat.s`,
 `bosses/sunset_sting_main.s`, and `bosses/sunset_sting_segments.s` with no live
 address-derived definitions. The controller audit
 corrected two labels falsely attributed to Viblack: states `$06` and `$08`
@@ -3951,9 +3956,9 @@ Static consumers establish six natural ROM-ordered modules:
 `data/flying_neo_sprite_mappings.s` (`0x0EBBB8-0x0EBC23`),
 `data/joker_sprite_mappings.s` (`0x0EBC24-0x0EBCD7`),
 `data/xi_tiger_entrance_sprite_mappings.s` (`0x0EBCD8-0x0EBD9D`),
-`data/sunset_sting_part_sprite_mappings.s` (`0x0EBD9E-0x0EBDCD`),
+`data/entity_type_1c0_part_sprite_mappings.s` (`0x0EBD9E-0x0EBDCD`),
 `data/deep_strider_sprite_mappings.s` (`0x0EBDCE-0x0EBE87`), and
-`data/sunset_sting_second_form_sprite_mapping.s`
+`data/entity_type_1c0_second_form_sprite_mapping.s`
 (`0x0EBE88-0x0EBE93`). The small modules are complete private mapping sets;
 combining unrelated bosses merely to approach the preferred line band would
 make ownership less accurate.
@@ -6370,8 +6375,8 @@ The tertiary-entity work-field pass replaces seven raw equates. Offsets `$40`,
 owner: static callers show Destroyer Proto angle, Bugmax joint-angle/radius,
 and Jampan linked-control uses without proving one global meaning. The final
 three fields have a single coherent Sunset Sting consumer chain and therefore
-receive semantic names: `SunsetStingTrailSpan`,
-`SunsetStingTrailStep`, and `SunsetStingAimAngle`.
+receive semantic names: `EntityType1C0TrailSpan`,
+`EntityType1C0TrailStep`, and `EntityType1C0AimAngle`.
 
 All seven fields receive exact-address audit records and RAM-map entries.
 Provenance rises from 15,444 to 15,451 mappings and the audit registry from
@@ -6382,7 +6387,7 @@ falls from 607 to 600, all still confined to RAM equates.
 The fourth-record and fifth-record header pass replaces seven raw equates.
 Three owner-dependent fourth-record fields remain structural; a fourth is
 proved to reload Sunset Sting's active-chain countdown and becomes
-`SunsetStingChainPeriod`. The next `$60`-byte record receives type, flags, and
+`EntityType1C0ChainPeriod`. The next `$60`-byte record receives type, flags, and
 state names. Its state field is independently exercised as Epsilon 1's ring
 controller and as one member of Destroyer MK2's linked-state wait set.
 
@@ -10995,10 +11000,10 @@ correct relocation looks like.
 
 The relocation probe is the generalisation of what the 4 MB experiment did by
 hand, and it found a second instance of the same defect on its first run.
-`Boss_SunsetStingBodyPartInitTable` opens with `dc.w $E, $BDB0`, which
-`Boss_SunsetStingInitBodyParts` reads as one longword with `move.l (a1)+,d4` and
+`EntityType1C0_BodyPartInitTable` opens with `dc.w $E, $BDB0`, which
+`EntityType1C0_InitBodyParts` reads as one longword with `move.l (a1)+,d4` and
 stores into offset 8 of the part record — the sprite mapping pointer. The value
-is `Boss_SunsetStingPartAnimationMapping6`, written as two constants. It is now
+is `EntityType1C0_PartAnimationMapping6`, written as two constants. It is now
 a `dc.l`, and the image is unchanged.
 
 Getting the probe to say that took four filtering rules, and each is stated
@@ -11736,9 +11741,9 @@ paths are not asserted, and they remain in the same ROM-ordered data run.
 
 The seven `NAME-003` visual-ownership records remain a manual review queue,
 not a reason to replay the whole game during the static naming pass:
-`Boss_GustheadLinkedChainControllerMain` at `$0310E6`;
+`EntityType390_ControllerMain` at `$0310E6`;
 `Boss_SnakeMain` and `Boss_SnakeSegmentMain` at `$04079E` and `$040AF6`;
-and `Boss_SunsetStingInitDispatcher`, `Boss_SunsetStingMainDispatcher`,
+and `EntityType1C0_InitDispatcher`, `EntityType1C0_MainDispatcher`,
 `Boss_SunsetStingMain`, and `Boss_SunsetStingRefillCounterAndOscillateState`
 at `$040CEE`, `$0418FC`, `$042A10`, and `$04309E`. A future visual check
 needs a screenshot paired with same-frame object-type/PC or named RAM-state

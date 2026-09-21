@@ -536,7 +536,7 @@ Boss_SunsetStingBrakeSegmentRotationUpdate:             ; CODE XREF: Boss_Sunset
                 rts
 ; End of function Boss_SunsetStingBrakeSegmentRotationState
 ; Oscillates the controller while refilling the boss counter to its HUD maximum
-; UNKNOWN VIS-003: state $10 is not observed in the pinned TAS window; see docs/unknowns.md
+; REVIEWED VIS-003: state $10 behaviour is static; its appearance was not captured
 Boss_SunsetStingRefillCounterAndOscillateState:         ; DATA XREF: ROM:00042AAC   o  ; was: sub_4309E
                 bset    #7,4(a5)
                 bne.s   Boss_SunsetStingCounterRefillOscillationUpdate

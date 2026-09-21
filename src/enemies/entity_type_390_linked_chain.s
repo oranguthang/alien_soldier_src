@@ -1,35 +1,35 @@
-; Gusthead's linked eight-segment attack object
+; Type-$390 linked eight-segment attack object; visual owner is unproved
 ; Type $390 owns the chain, type $394 updates ordinary segments, and type $398
 ; updates the damageable terminal segment and scatters the chain when it is hit
-; UNKNOWN VIS-001: the visible bird is separate type $90; chain owner remains unproved; see docs/unknowns.md
-Boss_GustheadLinkedChainControllerMain:                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_310E6
-                bsr.w   Boss_GustheadLinkedChainCullAtLeftEdge
+; REVIEWED VIS-001: role-only name; visible bird is separate type $90; see docs/unknowns.md
+EntityType390_ControllerMain:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_310E6
+                bsr.w   EntityType390_CullAtLeftEdge
                 move.w  4(a5),d0
-                lea     Boss_GustheadLinkedChainControllerStates(pc,d0.w),a0
+                lea     EntityType390_ControllerStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Boss_GustheadLinkedChainControllerMain
+; End of function EntityType390_ControllerMain
 ; ---------------------------------------------------------------------------
-Boss_GustheadLinkedChainControllerStates:   dc.w    Boss_GustheadLinkedChainControllerInit-*  ; DATA XREF: Boss_GustheadLinkedChainControllerMain+8   o  ; was: off_310F6
-                dc.w    Boss_GustheadLinkedChainSpawnSegments-*
-                dc.w    Boss_GustheadLinkedChainControllerIdle-*
+EntityType390_ControllerStates: dc.w    EntityType390_ControllerInit-*  ; DATA XREF: EntityType390_ControllerMain+8   o  ; was: off_310F6
+                dc.w    EntityType390_SpawnSegments-*
+                dc.w    EntityType390_ControllerIdle-*
 
 ; Initializes the invisible chain controller
-Boss_GustheadLinkedChainControllerInit:                 ; DATA XREF: ROM:Boss_GustheadLinkedChainControllerStates   o  ; was: sub_310FC
+EntityType390_ControllerInit:                           ; DATA XREF: ROM:EntityType390_ControllerStates   o  ; was: sub_310FC
                 move.w  #$D00,2(a5)
                 move.b  #$50,$20(a5)                    ; 'P'
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_GustheadLinkedChainControllerInit
+; End of function EntityType390_ControllerInit
 ; Allocates and links eight segments, promoting the last one to type $398
-Boss_GustheadLinkedChainSpawnSegments:                  ; DATA XREF: ROM:000310F8   o  ; was: sub_3110E
+EntityType390_SpawnSegments:                            ; DATA XREF: ROM:000310F8   o  ; was: sub_3110E
                 cmpi.w  #$180,$10(a5)
                 bcc.w   Entity_UpdateReturn
                 move.w  #7,d7
                 move.w  a5,$44(a5)
-Boss_GustheadLinkedChainSpawnNextSegment:               ; CODE XREF: Boss_GustheadLinkedChainSpawnSegments+44   j  ; was: loc_31120
+EntityType390_SpawnNextSegment:                         ; CODE XREF: EntityType390_SpawnSegments+44   j  ; was: loc_31120
                 jsr     (Projectile_FindFreeOrClearReusableSlot).l
-                bne.s   Boss_GustheadLinkedChainHandleAllocationFailure
+                bne.s   EntityType390_HandleAllocationFailure
                 movea.w $44(a5),a1
                 move.w  $10(a1),$10(a0)
                 move.w  $14(a1),$14(a0)
@@ -41,70 +41,70 @@ Boss_GustheadLinkedChainSpawnNextSegment:               ; CODE XREF: Boss_Gusthe
                 clr.w   4(a0)
                 move.w  a1,$44(a0)
                 move.w  a0,$44(a5)
-                dbf     d7,Boss_GustheadLinkedChainSpawnNextSegment
+                dbf     d7,EntityType390_SpawnNextSegment
                 move.w  #$398,(a0)
                 move.w  a5,$48(a0)
                 addq.w  #2,4(a5)
                 rts
 ; ---------------------------------------------------------------------------
-Boss_GustheadLinkedChainHandleAllocationFailure:        ; CODE XREF: Boss_GustheadLinkedChainSpawnSegments+18   j  ; was: loc_31164
+EntityType390_HandleAllocationFailure:                  ; CODE XREF: EntityType390_SpawnSegments+18   j  ; was: loc_31164
                 move.w  #$1000,2(a5)
                 rts
-; End of function Boss_GustheadLinkedChainSpawnSegments
-Boss_GustheadLinkedChainControllerIdle:                 ; DATA XREF: ROM:000310FA   o  ; was: nullsub_74
+; End of function EntityType390_SpawnSegments
+EntityType390_ControllerIdle:                           ; DATA XREF: ROM:000310FA   o  ; was: nullsub_74
                 rts
-; End of function Boss_GustheadLinkedChainControllerIdle
+; End of function EntityType390_ControllerIdle
 
 ; Marks every linked segment for removal after the controller crosses the left edge
-Boss_GustheadLinkedChainCullAtLeftEdge:                 ; CODE XREF: Boss_GustheadLinkedChainControllerMain   p  ; was: sub_3116E
+EntityType390_CullAtLeftEdge:                           ; CODE XREF: EntityType390_ControllerMain   p  ; was: sub_3116E
                 cmpi.w  #$60,$10(a5)                    ; '`'
                 bcc.w   Entity_UpdateReturn
                 movea.w a5,a4
                 move.w  #7,d7
-Boss_GustheadLinkedChainCullNextSegment:                ; CODE XREF: Boss_GustheadLinkedChainCullAtLeftEdge:Boss_GustheadLinkedChainContinueCull   j  ; was: loc_3117E
+EntityType390_CullNextSegment:                          ; CODE XREF: EntityType390_CullAtLeftEdge:EntityType390_ContinueCull   j  ; was: loc_3117E
                 tst.w   $44(a4)
-                beq.s   Boss_GustheadLinkedChainContinueCull
+                beq.s   EntityType390_ContinueCull
                 movea.w $44(a4),a4
                 move.w  #$1000,2(a4)
-Boss_GustheadLinkedChainContinueCull:                   ; CODE XREF: Boss_GustheadLinkedChainCullAtLeftEdge+14   j  ; was: loc_3118E
-                dbf     d7,Boss_GustheadLinkedChainCullNextSegment
+EntityType390_ContinueCull:                             ; CODE XREF: EntityType390_CullAtLeftEdge+14   j  ; was: loc_3118E
+                dbf     d7,EntityType390_CullNextSegment
                 rts
-; End of function Boss_GustheadLinkedChainCullAtLeftEdge
+; End of function EntityType390_CullAtLeftEdge
 ; Dispatches an ordinary type-$394 chain segment
-Boss_GustheadLinkedChainSegmentMain:                    ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_31194
+EntityType390_SegmentMain:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_31194
                 move.w  4(a5),d0
-                lea     Boss_GustheadLinkedChainSegmentStates(pc,d0.w),a0
+                lea     EntityType390_SegmentStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Boss_GustheadLinkedChainSegmentMain
+; End of function EntityType390_SegmentMain
 ; ---------------------------------------------------------------------------
-Boss_GustheadLinkedChainSegmentStates:  dc.w    Boss_GustheadLinkedChainSegmentInit-*  ; DATA XREF: Boss_GustheadLinkedChainSegmentMain+4   o  ; was: off_311A0
-                dc.w    Boss_GustheadLinkedChainBeginAttackCycle-*
-                dc.w    Boss_GustheadLinkedChainExpandRadiusAndFire-*
-                dc.w    Boss_GustheadLinkedChainSweepAngleBackward-*
-                dc.w    Boss_GustheadLinkedChainSweepAngleForward-*
-                dc.w    Boss_GustheadLinkedChainRetractRadius-*
-                dc.w    Boss_GustheadLinkedChainSegmentFallAndFire-*
+EntityType390_SegmentStates:    dc.w    EntityType390_SegmentInit-*  ; DATA XREF: EntityType390_SegmentMain+4   o  ; was: off_311A0
+                dc.w    EntityType390_BeginAttackCycle-*
+                dc.w    EntityType390_ExpandRadiusAndFire-*
+                dc.w    EntityType390_SweepAngleBackward-*
+                dc.w    EntityType390_SweepAngleForward-*
+                dc.w    EntityType390_RetractRadius-*
+                dc.w    EntityType390_SegmentFallAndFire-*
 
 ; Initializes an ordinary chain segment
-Boss_GustheadLinkedChainSegmentInit:                    ; DATA XREF: ROM:Boss_GustheadLinkedChainSegmentStates   o  ; was: sub_311AE
+EntityType390_SegmentInit:                              ; DATA XREF: ROM:EntityType390_SegmentStates   o  ; was: sub_311AE
                 move.w  #$CD00,2(a5)
                 move.w  #$1B9,$E(a5)
-                move.l  #Boss_GustheadLinkedChainSegmentMapping,8(a5)
+                move.l  #EntityType390_SegmentMapping,8(a5)
                 move.b  #$60,$20(a5)                    ; '`'
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_GustheadLinkedChainSegmentInit
+; End of function EntityType390_SegmentInit
 ; Counts down the segment delay, then begins its polar attack cycle
-Boss_GustheadLinkedChainBeginAttackCycle:               ; DATA XREF: ROM:000311A2   o  ; was: sub_311CE
+EntityType390_BeginAttackCycle:                         ; DATA XREF: ROM:000311A2   o  ; was: sub_311CE
                 bsr.w   Entity_UpdatePolarPositionFromParent
                 subq.w  #1,$46(a5)
                 bne.w   Entity_UpdateReturn
                 move.w  #$180,$40(a5)
                 clr.w   $42(a5)
                 move.w  #4,4(a5)
-Boss_GustheadLinkedChainFireRandomShot:                 ; CODE XREF: Boss_GustheadLinkedChainTerminalBeginAttackCycle+26   j  ; was: loc_311EA
-                                        ; Boss_GustheadLinkedChainTryRandomShot+8   j
+EntityType390_FireRandomShot:                           ; CODE XREF: EntityType390_TerminalBeginAttackCycle+26   j  ; was: loc_311EA
+                                        ; EntityType390_TryRandomShot+8   j
                 jsr     (RandomNumber).l
                 andi.w  #$FE,d0
                 addi.w  #$100,d0
@@ -112,9 +112,9 @@ Boss_GustheadLinkedChainFireRandomShot:                 ; CODE XREF: Boss_Gusthe
                 move.w  $10(a5),d5
                 move.w  #$148,d6
                 jmp     Projectile_SpawnType1A8AtAngle
-; End of function Boss_GustheadLinkedChainBeginAttackCycle
+; End of function EntityType390_BeginAttackCycle
 ; Starts the terminal segment's attack cycle and plays its cue
-Boss_GustheadLinkedChainTerminalBeginAttackCycle:       ; DATA XREF: ROM:000313B6   o  ; was: sub_31208
+EntityType390_TerminalBeginAttackCycle:                 ; DATA XREF: ROM:000313B6   o  ; was: sub_31208
                 bsr.w   Entity_UpdatePolarPositionFromParent
                 subq.w  #1,$46(a5)
                 bne.w   Entity_UpdateReturn
@@ -123,22 +123,22 @@ Boss_GustheadLinkedChainTerminalBeginAttackCycle:       ; DATA XREF: ROM:000313B
                 move.b  #$4D,d0                         ; 'M'
                 jsr     (Sound_QueueSFXRequest).l
                 move.w  #4,4(a5)
-                bra.w   Boss_GustheadLinkedChainFireRandomShot
-; End of function Boss_GustheadLinkedChainTerminalBeginAttackCycle
+                bra.w   EntityType390_FireRandomShot
+; End of function EntityType390_TerminalBeginAttackCycle
 ; Expands the polar radius while periodically firing a random-angle shot
-Boss_GustheadLinkedChainExpandRadiusAndFire:            ; DATA XREF: ROM:000311A4   o  ; was: sub_31232
+EntityType390_ExpandRadiusAndFire:                      ; DATA XREF: ROM:000311A4   o  ; was: sub_31232
                                         ; ROM:000313B8   o
                 bsr.w   Entity_UpdatePolarPositionFromParent
-                bsr.w   Boss_GustheadLinkedChainTryRandomShot
+                bsr.w   EntityType390_TryRandomShot
                 addq.w  #8,$42(a5)
                 cmpi.w  #$40,$42(a5)                    ; '@'
                 bne.w   Entity_UpdateReturn
                 move.w  #3,$46(a5)
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_GustheadLinkedChainExpandRadiusAndFire
+; End of function EntityType390_ExpandRadiusAndFire
 ; Sweeps the polar angle backward from $180 to just below $140
-Boss_GustheadLinkedChainSweepAngleBackward:             ; DATA XREF: ROM:000311A6   o  ; was: sub_31254
+EntityType390_SweepAngleBackward:                       ; DATA XREF: ROM:000311A6   o  ; was: sub_31254
                                         ; ROM:000313BA   o
                 bsr.w   Entity_UpdatePolarPositionFromParent
                 subq.w  #2,$40(a5)
@@ -146,9 +146,9 @@ Boss_GustheadLinkedChainSweepAngleBackward:             ; DATA XREF: ROM:000311A
                 bcc.w   Entity_UpdateReturn
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_GustheadLinkedChainSweepAngleBackward
+; End of function EntityType390_SweepAngleBackward
 ; Emits a fragment cluster when the polar angle reaches $19E
-Boss_GustheadLinkedChainEmitFragmentClusterAtAngle:     ; was: sub_3126C
+EntityType390_EmitFragmentClusterAtAngle:               ; was: sub_3126C
                 cmpi.w  #$19E,$40(a5)
                 bne.w   Entity_UpdateReturn
                 move.w  $10(a5),d5
@@ -156,35 +156,35 @@ Boss_GustheadLinkedChainEmitFragmentClusterAtAngle:     ; was: sub_3126C
                 move.w  #2,d3
                 move.w  (PlayerXPosition).w,d0
                 cmp.w   $10(a5),d0
-                bcs.s   Boss_GustheadLinkedChainAimFragmentClusterLeft
+                bcs.s   EntityType390_AimFragmentClusterLeft
                 clr.w   d4
                 bra.w   Projectile_SpawnFragmentCluster
 ; ---------------------------------------------------------------------------
-Boss_GustheadLinkedChainAimFragmentClusterLeft:         ; was: loc_31292
+EntityType390_AimFragmentClusterLeft:                   ; was: loc_31292
                 move.w  #$10,d4
                 bra.w   Projectile_SpawnFragmentCluster
-; End of function Boss_GustheadLinkedChainEmitFragmentClusterAtAngle
+; End of function EntityType390_EmitFragmentClusterAtAngle
 ; Runs the terminal segment's angle-gated fragment attack, then falls through
-Boss_GustheadLinkedChainTerminalFragmentAttack:         ; DATA XREF: ROM:000313BC   o  ; was: sub_3129A
-                bsr.w   Boss_GustheadLinkedChainEmitFragmentClusterAtAngle
-; End of function Boss_GustheadLinkedChainTerminalFragmentAttack
+EntityType390_TerminalFragmentAttack:                   ; DATA XREF: ROM:000313BC   o  ; was: sub_3129A
+                bsr.w   EntityType390_EmitFragmentClusterAtAngle
+; End of function EntityType390_TerminalFragmentAttack
 ; Sweeps the polar angle forward to $1A0, repeating the attack three times
-Boss_GustheadLinkedChainSweepAngleForward:              ; DATA XREF: ROM:000311A8   o  ; was: sub_3129E
+EntityType390_SweepAngleForward:                        ; DATA XREF: ROM:000311A8   o  ; was: sub_3129E
                 bsr.w   Entity_UpdatePolarPositionFromParent
                 addq.w  #2,$40(a5)
                 cmpi.w  #$1A0,$40(a5)
                 bcs.w   Entity_UpdateReturn
                 subq.w  #1,$46(a5)
-                beq.s   Boss_GustheadLinkedChainAdvanceAfterOrbit
+                beq.s   EntityType390_AdvanceAfterOrbit
                 subq.w  #2,4(a5)
                 rts
 ; ---------------------------------------------------------------------------
-Boss_GustheadLinkedChainAdvanceAfterOrbit:              ; CODE XREF: Boss_GustheadLinkedChainSweepAngleForward+16   j  ; was: loc_312BC
+EntityType390_AdvanceAfterOrbit:                        ; CODE XREF: EntityType390_SweepAngleForward+16   j  ; was: loc_312BC
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_GustheadLinkedChainSweepAngleForward
+; End of function EntityType390_SweepAngleForward
 ; Retracts an ordinary segment's polar radius through its parent position
-Boss_GustheadLinkedChainRetractRadius:                  ; DATA XREF: ROM:000311AA   o  ; was: sub_312C2
+EntityType390_RetractRadius:                            ; DATA XREF: ROM:000311AA   o  ; was: sub_312C2
                 bsr.w   Entity_UpdatePolarPositionFromParent
                 subq.w  #8,$42(a5)
                 cmpi.w  #$FFF8,$42(a5)
@@ -192,11 +192,11 @@ Boss_GustheadLinkedChainRetractRadius:                  ; DATA XREF: ROM:000311A
                 move.w  #$C0,$46(a5)
                 move.w  #2,4(a5)
                 rts
-; End of function Boss_GustheadLinkedChainRetractRadius
+; End of function EntityType390_RetractRadius
 ; Retracts the terminal segment while firing, then plays its cue
-Boss_GustheadLinkedChainTerminalRetractAndFire:         ; DATA XREF: ROM:000313BE   o  ; was: sub_312E2
+EntityType390_TerminalRetractAndFire:                   ; DATA XREF: ROM:000313BE   o  ; was: sub_312E2
                 bsr.w   Entity_UpdatePolarPositionFromParent
-                bsr.w   Boss_GustheadLinkedChainTryRandomShot
+                bsr.w   EntityType390_TryRandomShot
                 subq.w  #8,$42(a5)
                 cmpi.w  #$FFF8,$42(a5)
                 bne.w   Entity_UpdateReturn
@@ -205,25 +205,25 @@ Boss_GustheadLinkedChainTerminalRetractAndFire:         ; DATA XREF: ROM:000313B
                 move.w  #$C0,$46(a5)
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_GustheadLinkedChainTerminalRetractAndFire
+; End of function EntityType390_TerminalRetractAndFire
 ; Fires the shared random-angle shot on one frame out of four
-Boss_GustheadLinkedChainTryRandomShot:                  ; CODE XREF: Boss_GustheadLinkedChainExpandRadiusAndFire+4   p  ; was: sub_3130E
-                                        ; Boss_GustheadLinkedChainTerminalRetractAndFire+4   p
+EntityType390_TryRandomShot:                            ; CODE XREF: EntityType390_ExpandRadiusAndFire+4   p  ; was: sub_3130E
+                                        ; EntityType390_TerminalRetractAndFire+4   p
                 move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
-                beq.w   Boss_GustheadLinkedChainFireRandomShot
+                beq.w   EntityType390_FireRandomShot
                 rts
-; End of function Boss_GustheadLinkedChainTryRandomShot
+; End of function EntityType390_TryRandomShot
 ; Holds the terminal segment in place and fires until its timer reaches $A0
-Boss_GustheadLinkedChainTerminalWaitAndFire:            ; DATA XREF: ROM:000313C0   o  ; was: sub_3131C
+EntityType390_TerminalWaitAndFire:                      ; DATA XREF: ROM:000313C0   o  ; was: sub_3131C
                 bsr.w   Entity_UpdatePolarPositionFromParent
-                bsr.w   Boss_GustheadLinkedChainTryRandomShot
+                bsr.w   EntityType390_TryRandomShot
                 subq.w  #1,$46(a5)
                 cmpi.w  #$A0,$46(a5)
                 bne.w   Entity_UpdateReturn
                 move.w  #2,4(a5)
                 rts
-; End of function Boss_GustheadLinkedChainTerminalWaitAndFire
+; End of function EntityType390_TerminalWaitAndFire
 ; Duplicate of Math_LookupSineCosinePair used by later enemy code
 ; In: d0.w = even angle-table offset. Out: d0.w = cosine, d1.w = sine
 Math_LookupSineCosinePairDuplicate:                     ; CODE XREF: Stage18_SegmentedWormEmitParticle+42   p  ; was: sub_3133A
@@ -236,14 +236,14 @@ Math_LookupSineCosinePairDuplicate:                     ; CODE XREF: Stage18_Seg
                 rts
 ; End of function Math_LookupSineCosinePairDuplicate
 ; Updates the damageable terminal segment and scatters the chain when hit
-Boss_GustheadLinkedChainTerminalMain:                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_31352
+EntityType390_TerminalMain:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_31352
                 cmpi.w  #$E,4(a5)
-                bcc.w   Boss_GustheadLinkedChainDispatchTerminalState
+                bcc.w   EntityType390_DispatchTerminalState
                 tst.w   $24(a5)
-                bpl.w   Boss_GustheadLinkedChainDispatchTerminalState
+                bpl.w   EntityType390_DispatchTerminalState
                 movea.w $48(a5),a4
                 move.w  #7,d7
-Boss_GustheadLinkedChainScatterNextSegment:             ; CODE XREF: Boss_GustheadLinkedChainTerminalMain+4A   j  ; was: loc_3136C
+EntityType390_ScatterNextSegment:                       ; CODE XREF: EntityType390_TerminalMain+4A   j  ; was: loc_3136C
                 movea.w $44(a4),a4
                 move.w  #$C,4(a4)
                 jsr     (RandomNumber).l
@@ -257,32 +257,32 @@ Boss_GustheadLinkedChainScatterNextSegment:             ; CODE XREF: Boss_Gusthe
                 asl.l   #3,d1
                 move.l  d1,$1C(a4)
                 clr.b   $21(a4)
-                dbf     d7,Boss_GustheadLinkedChainScatterNextSegment
+                dbf     d7,EntityType390_ScatterNextSegment
                 move.w  #$E,4(a5)
                 rts
 ; ---------------------------------------------------------------------------
-Boss_GustheadLinkedChainDispatchTerminalState:          ; CODE XREF: Boss_GustheadLinkedChainTerminalMain+6   j  ; was: loc_313A8
-                                        ; Boss_GustheadLinkedChainTerminalMain+E   j
+EntityType390_DispatchTerminalState:                    ; CODE XREF: EntityType390_TerminalMain+6   j  ; was: loc_313A8
+                                        ; EntityType390_TerminalMain+E   j
                 move.w  4(a5),d0
-                lea     Boss_GustheadLinkedChainTerminalStates(pc,d0.w),a0
+                lea     EntityType390_TerminalStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Boss_GustheadLinkedChainTerminalMain
+; End of function EntityType390_TerminalMain
 ; ---------------------------------------------------------------------------
-Boss_GustheadLinkedChainTerminalStates: dc.w    Boss_GustheadLinkedChainTerminalInit-*  ; DATA XREF: Boss_GustheadLinkedChainTerminalMain+5A   o  ; was: off_313B4
-                dc.w    Boss_GustheadLinkedChainTerminalBeginAttackCycle-*
-                dc.w    Boss_GustheadLinkedChainExpandRadiusAndFire-*
-                dc.w    Boss_GustheadLinkedChainSweepAngleBackward-*
-                dc.w    Boss_GustheadLinkedChainTerminalFragmentAttack-*
-                dc.w    Boss_GustheadLinkedChainTerminalRetractAndFire-*
-                dc.w    Boss_GustheadLinkedChainTerminalWaitAndFire-*
-                dc.w    Boss_GustheadLinkedChainTerminalFallAndFire-*
+EntityType390_TerminalStates:   dc.w    EntityType390_TerminalInit-*  ; DATA XREF: EntityType390_TerminalMain+5A   o  ; was: off_313B4
+                dc.w    EntityType390_TerminalBeginAttackCycle-*
+                dc.w    EntityType390_ExpandRadiusAndFire-*
+                dc.w    EntityType390_SweepAngleBackward-*
+                dc.w    EntityType390_TerminalFragmentAttack-*
+                dc.w    EntityType390_TerminalRetractAndFire-*
+                dc.w    EntityType390_TerminalWaitAndFire-*
+                dc.w    EntityType390_TerminalFallAndFire-*
 
 ; Initializes the damageable terminal segment
-Boss_GustheadLinkedChainTerminalInit:                   ; DATA XREF: ROM:Boss_GustheadLinkedChainTerminalStates   o  ; was: sub_313C4
+EntityType390_TerminalInit:                             ; DATA XREF: ROM:EntityType390_TerminalStates   o  ; was: sub_313C4
                 move.w  #$CD00,2(a5)
                 move.w  #$1B9,$E(a5)
-                move.l  #Boss_GustheadLinkedChainTerminalMapping,8(a5)
+                move.l  #EntityType390_TerminalMapping,8(a5)
                 move.b  #$5C,$20(a5)                    ; '\'
                 move.w  #$64,$24(a5)                    ; 'd'
                 move.b  #$C0,$21(a5)
@@ -293,12 +293,12 @@ Boss_GustheadLinkedChainTerminalInit:                   ; DATA XREF: ROM:Boss_Gu
                 move.w  #$28,$26(a5)                    ; '('
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_GustheadLinkedChainTerminalInit
+; End of function EntityType390_TerminalInit
 ; Accelerates downward and spawns doubled-velocity projectiles every 4 frames until Y >= 1A0h
-Boss_GustheadLinkedChainTerminalFallAndFire:            ; DATA XREF: ROM:000313C2   o  ; was: sub_31410
+EntityType390_TerminalFallAndFire:                      ; DATA XREF: ROM:000313C2   o  ; was: sub_31410
                 addi.l  #$1800,$1C(a5)
                 cmpi.w  #$1A0,$14(a5)
-                bcc.w   Boss_GustheadLinkedChainRemoveSegment
+                bcc.w   EntityType390_RemoveSegment
                 move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Entity_UpdateReturn
@@ -308,21 +308,21 @@ Boss_GustheadLinkedChainTerminalFallAndFire:            ; DATA XREF: ROM:000313C
                 asl     $18(a4)
                 asl     $1C(a4)
                 rts
-; End of function Boss_GustheadLinkedChainTerminalFallAndFire
+; End of function EntityType390_TerminalFallAndFire
 ; Accelerates downward slowly and spawns projectiles every 8 frames until Y >= 180h
-Boss_GustheadLinkedChainSegmentFallAndFire:             ; DATA XREF: ROM:000311AC   o  ; was: sub_31446
+EntityType390_SegmentFallAndFire:                       ; DATA XREF: ROM:000311AC   o  ; was: sub_31446
                 addi.l  #$1000,$1C(a5)
                 cmpi.w  #$180,$14(a5)
-                bcc.s   Boss_GustheadLinkedChainRemoveSegment
+                bcc.s   EntityType390_RemoveSegment
                 move.w  (VBlankFrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   Entity_UpdateReturn
                 jsr     (Projectile_FindFreeSlotReverse).l
                 bne.w   Entity_UpdateReturn
-; End of function Boss_GustheadLinkedChainSegmentFallAndFire
+; End of function EntityType390_SegmentFallAndFire
 ; Spawns projectile with sound BBh at calculated angle toward player with offset positioning
 Projectile_SpawnRandomAngleShot:                        ; was: sub_3146C
-                                        ; Boss_GustheadLinkedChainTerminalFallAndFire+28   p
+                                        ; EntityType390_TerminalFallAndFire+28   p
                 move.b  #$BB,d0
                 jsr     (Sound_QueueSFXRequest).l
                 move.l  #SharedCombatSpriteAnimation05,8(a0)
@@ -346,8 +346,8 @@ Projectile_SpawnRandomAngleShot:                        ; was: sub_3146C
                 rts
 ; End of function Projectile_SpawnRandomAngleShot
 ; Marks a falling segment for removal
-Boss_GustheadLinkedChainRemoveSegment:                  ; CODE XREF: Boss_GustheadLinkedChainTerminalFallAndFire+E   j  ; was: sub_314BA
-                                        ; Boss_GustheadLinkedChainSegmentFallAndFire+E   j
+EntityType390_RemoveSegment:                            ; CODE XREF: EntityType390_TerminalFallAndFire+E   j  ; was: sub_314BA
+                                        ; EntityType390_SegmentFallAndFire+E   j
                 move.w  #$1000,2(a5)
                 rts
-; End of function Boss_GustheadLinkedChainRemoveSegment
+; End of function EntityType390_RemoveSegment

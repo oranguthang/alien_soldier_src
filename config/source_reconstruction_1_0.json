@@ -47,7 +47,7 @@
     {
       "id": "address_ordered_modules",
       "kind": "source",
-      "summary": "The single imported translation unit became src/main.s, an index of 398 address-ordered modules under a 1000-line ceiling, with config/rom_layout.json owning every module range, the landmarks and the padding.",
+      "summary": "The single imported translation unit became src/main.s, an index of 399 address-ordered modules under a 1000-line ceiling, with config/rom_layout.json owning every module range, the landmarks and the padding.",
       "evidence": [
         "source_boundary",
         "files:config/rom_layout.json"
@@ -74,7 +74,7 @@
     {
       "id": "naming_vocabulary",
       "kind": "tooling",
-      "summary": "The naming convention became enforceable: 192 declared subsystems, a derivation rule and two hardware exception sets, checked by make lint. Turning it on found sixteen definitions never brought over from the disassembly.",
+      "summary": "The naming convention became enforceable: 194 declared subsystems, a derivation rule and two hardware exception sets, checked by make lint. Turning it on found sixteen definitions never brought over from the disassembly.",
       "evidence": [
         "naming_vocabulary",
         "files:config/source_policy.json"
@@ -155,7 +155,7 @@
     },
     "source_boundary": {
       "status": "partial",
-      "statement": "All executable 68000 code is assembly source in 398 address-ordered modules. The Z80 sound driver program remains a verbatim payload.",
+      "statement": "All executable 68000 code is assembly source in 399 address-ordered modules. The Z80 sound driver program remains a verbatim payload.",
       "evidence": {
         "targets": [
           "lint",
@@ -175,7 +175,7 @@
     },
     "naming_vocabulary": {
       "status": "satisfied",
-      "statement": "Every definition is owned by one of 192 declared subsystems, derives from a symbol that exists, or is a declared hardware exception, and make lint rejects anything else.",
+      "statement": "Every definition is owned by one of 194 declared subsystems, derives from a symbol that exists, or is a declared hardware exception, and make lint rejects anything else.",
       "evidence": {
         "targets": [
           "lint",
@@ -462,14 +462,14 @@
     {
       "id": "provisional_boss_visual_identities",
       "status": "partial",
-      "reason": "Four exact-address boss-name records retain hypothesis-level visual identities. Pinned same-frame evidence plus human review resolved two Snake records and the type-$1EC Sunset Sting controller; static dispatch alone still does not establish the remaining pictured forms or chain owner.",
+      "reason": "No exact-address boss-name record retains hypothesis-level visual identity. Pinned same-frame evidence and human review identify the two Snake records and the type-$1EC Sunset Sting controller; the type-$390 chain and separate type-$1C0/$1C8 family now use static, identity-neutral names. Their unobserved appearances remain documented without being promoted into symbols.",
       "registry": "NAME-003",
       "control": "make release-audit recounts hypothesis_name_records and refuses tag-ready status until the count is zero. Pinned runtime evidence must confirm each identity, or its name must become behavior-only."
     },
     {
       "id": "module_line_targets",
       "status": "partial",
-      "reason": "The preferred module size is 200 to 700 lines. 232 of 398 modules are inside it, 149 are shorter and 17 are longer; all 17 longer modules are boss-specific and the largest is 869 lines. The module rule forbids splitting a procedure from its private tables merely to reach a line count.",
+      "reason": "The preferred module size is 200 to 700 lines. 233 of 399 modules are inside it, 150 are shorter and 16 are longer; all 16 longer modules are boss-specific and the largest is 922 lines. The module rule forbids splitting a procedure from its private tables merely to reach a line count.",
       "registry": "LAYOUT-001",
       "control": "The 1000-line ceiling is a hard limit that make lint enforces and no module reaches it, and config/rom_layout.json declares every module range."
     },
@@ -589,7 +589,7 @@
       "rule_id": "config/linker/",
       "actual_path": "config/rom_layout.json",
       "reason": "There is no linker: AS emits one object and p2bin flattens it, so there is no linker script to own the layout.",
-      "equivalent_control": "config/rom_layout.json declares the memory regions, the ROM landmarks, the padding gap and all 398 module ranges, and make verify-layout checks every one against the build."
+      "equivalent_control": "config/rom_layout.json declares the memory regions, the ROM landmarks, the padding gap and all 399 module ranges, and make verify-layout checks every one against the build."
     },
     {
       "rule_id": "scenarios/",
@@ -717,12 +717,12 @@
   ],
   "counters": {
     "assets": 589,
-    "declared_subsystems": 192,
+    "declared_subsystems": 194,
     "definitions": 16938,
     "dma_transferred_payloads": 289,
     "generic_evidence_bases": 0,
-    "hypothesis_name_records": 4,
-    "modules": 398,
+    "hypothesis_name_records": 0,
+    "modules": 399,
     "name_audit_records": 15843,
     "provenance_mappings": 16053,
     "reviewed_duplicate_basis_groups": 156,
@@ -730,7 +730,7 @@
     "resolved_branch_targets": 16102,
     "runtime_expectations": 78,
     "runtime_scenarios": 12,
-    "tracked_text_files": 548,
+    "tracked_text_files": 551,
     "unreviewed_duplicate_basis_groups": 0
   }
 }

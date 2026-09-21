@@ -33,7 +33,7 @@ Projectile_FourDirectionalShotVelocities:   dc.l    $FFFDC000, $FFFF4000  ; was:
 
 ; Spawn one type-$1A8 projectile with velocity selected from the sine table
 Projectile_SpawnType1A8AtAngle:                         ; CODE XREF: Stage11_RisingHazardReactToHit+26   p  ; was: sub_E2F6
-                                        ; Boss_GustheadLinkedChainBeginAttackCycle+34   j
+                                        ; EntityType390_BeginAttackCycle+34   j
                 jsr     (Projectile_FindFreeSlotReverse).l
                 bne.s   Projectile_SpawnType1A8AtAngle_Return
                 jsr     (Projectile_InitType1A8).l

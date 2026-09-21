@@ -1341,8 +1341,8 @@
       "end": "0x0310E5"
     },
     {
-      "file": "src/bosses/gusthead_linked_chain.s",
-      "subsystem": "bosses",
+      "file": "src/enemies/entity_type_390_linked_chain.s",
+      "subsystem": "enemies",
       "start": "0x0310E6",
       "end": "0x0314C1"
     },
@@ -1701,21 +1701,27 @@
       "end": "0x040CED"
     },
     {
-      "file": "src/bosses/sunset_sting_core.s",
+      "file": "src/bosses/entity_type_1c0_core.s",
       "subsystem": "bosses",
       "start": "0x040CEE",
       "end": "0x0418FB"
     },
     {
-      "file": "src/bosses/sunset_sting_attacks.s",
+      "file": "src/bosses/entity_type_1c0_attacks.s",
       "subsystem": "bosses",
       "start": "0x0418FC",
       "end": "0x042009"
     },
     {
-      "file": "src/bosses/sunset_sting_transition_and_defeat.s",
+      "file": "src/bosses/entity_type_1c0_transition_and_defeat.s",
       "subsystem": "bosses",
       "start": "0x04200A",
+      "end": "0x0427AF"
+    },
+    {
+      "file": "src/math/shared_boss_angle_helpers.s",
+      "subsystem": "math",
+      "start": "0x0427B0",
       "end": "0x0428B3"
     },
     {
@@ -2361,7 +2367,7 @@
       "end": "0x0EBD9D"
     },
     {
-      "file": "src/data/sunset_sting_part_sprite_mappings.s",
+      "file": "src/data/entity_type_1c0_part_sprite_mappings.s",
       "subsystem": "data",
       "start": "0x0EBD9E",
       "end": "0x0EBDCD"
@@ -2373,7 +2379,7 @@
       "end": "0x0EBE87"
     },
     {
-      "file": "src/data/sunset_sting_second_form_sprite_mapping.s",
+      "file": "src/data/entity_type_1c0_second_form_sprite_mapping.s",
       "subsystem": "data",
       "start": "0x0EBE88",
       "end": "0x0EBE93"

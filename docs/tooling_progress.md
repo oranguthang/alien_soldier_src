@@ -2006,3 +2006,30 @@ Four visual hypotheses remain: the chain's claimed Gusthead ownership,
 the `$1C0` and `$1C8` Sunset handlers, and type-`$1EC` state `$10`'s
 appearance. The reviewer has not seen the latter two appearances; no claim
 that they are absent from all game routes follows from this TAS window.
+
+## 2026-09-21: separating the dormant type-$1C0 family
+
+The parallel repacker investigation exposed a false ownership merge. The
+stage-15 Sunset Sting asset set selects type `$1EC`; the neighboring
+`$1C0/$1C4/$1C8` code has its own linked-body hierarchy and preserves `$1C8`
+in its cleanup, whereas Sunset Sting builds sixteen segments and preserves
+`$1EC`. The source now uses neutral `EntityType1C0*` names for the former and
+`EntityType390*` for the unrelated linked-chain controller. The mixed
+transition module was split before the shared angle helpers at `$0427B0`.
+There are 399 ROM-ordered modules, 194 declared naming subsystems and zero
+hypothesis-level name-audit records. The seven historical visual review IDs
+remain in `docs/unknowns.md` so an unobserved appearance is not silently
+converted into a claim of absence.
+
+The same report found that the 61-long body-part table at `$041568` had 24
+flagged pointers encoded as word-pair literals: five to the six-byte mapping
+at `$040D2E` and 19 to the animation mappings at `$041548`. All 61 entries
+are now `dc.l` and the 24 pointers are symbolic. This preserves the canonical
+ROM bytes while making those addresses relocatable. `DATA-001` is resolved;
+`docs/dormant_entity_1c0.md` records the evidence and the reader-width rule.
+An explicit unit test protects the table shape. The two extracted A-family
+assets were renamed without changing their ranges or bytes. `make split`
+re-extracted 589 segments; `make build` and `make verify` reproduced the
+canonical ROM, and `make verify-relocation` checked 2,236 references across
+its probes. `make format` changed no further files, `make lint` passed, and
+all 296 unit tests passed. No full emulator movie was rerun.

@@ -156,8 +156,8 @@ Boss_DestroyerProtoPartMain:                            ; DATA XREF: ROM:000314D
                 bne.w   Entity_RemoveOutsideArena
 ; End of function Boss_DestroyerProtoPartMain
 ; Recomputes an entity's position from its parent, polar angle, and radius
-Entity_UpdatePolarPositionFromParent:                   ; CODE XREF: Boss_GustheadLinkedChainBeginAttackCycle   p  ; was: sub_31F8E
-                                        ; Boss_GustheadLinkedChainTerminalBeginAttackCycle   p
+Entity_UpdatePolarPositionFromParent:                   ; CODE XREF: EntityType390_BeginAttackCycle   p  ; was: sub_31F8E
+                                        ; EntityType390_TerminalBeginAttackCycle   p
                 movea.w $44(a5),a4
                 move.w  $40(a5),d0
                 bsr.w   Math_LookupSineCosinePairDuplicate

@@ -163,8 +163,8 @@ Boss_SharpssteelObjectInitTable:    dc.w    $C620, $1014, $F010, $F010, $F010, $
                 dc.w    $CC20, 0, $F010, $F010, $F20E, $F20E, 0
                 dc.w    $CC80, 0, $F010, $F010, $F20E, $F20E, 0
                 dc.w    $FFFE
-Boss_SunsetStingObjectInitTable:    dc.w    $C620, $502C, $E41C, $E41C, $E41C, $E41C, $3280  ; was: word_1BD78
-                                        ; DATA XREF: Boss_SunsetStingLoadGraphics+C   o
+EntityType1C0_ObjectInitTable:  dc.w    $C620, $502C, $E41C, $E41C, $E41C, $E41C, $3280  ; was: word_1BD78
+                                        ; DATA XREF: EntityType1C0_LoadGraphics+C   o
                 dc.w    $C860, $1004, $F010, $F010, $F808, $F808, $3200
                 dc.w    $CA40, $1004, $F010, $F010, $F808, $F808, $3200
                 dc.w    $CC20, $1004, $F010, $F010, $F808, $F808, $3200

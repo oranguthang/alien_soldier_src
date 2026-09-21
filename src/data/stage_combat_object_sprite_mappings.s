@@ -1,9 +1,9 @@
 ; Damageable terminal and ordinary-segment mappings for Gusthead's linked chain
-Boss_GustheadLinkedChainTerminalMapping:    dc.w    $6010, $F00, $E0  ; DATA XREF: Boss_GustheadLinkedChainTerminalInit+C   o  ; was: word_EB338
+EntityType390_TerminalMapping:  dc.w    $6010, $F00, $E0  ; DATA XREF: EntityType390_TerminalInit+C   o  ; was: word_EB338
                 dc.w    $6000, $F00, $E0E0
                 dc.w    $6810, $F00, 0
                 dc.w    $E800, $F00, $E000
-Boss_GustheadLinkedChainSegmentMapping:     dc.w    $E820, $A00, $F4F4  ; DATA XREF: Boss_GustheadLinkedChainSegmentInit+C   o  ; was: word_EB350
+EntityType390_SegmentMapping:               dc.w    $E820, $A00, $F4F4  ; DATA XREF: EntityType390_SegmentInit+C   o  ; was: word_EB350
 Stage11_RisingHazardLauncherSpriteMapping:  dc.w    $6816, $700, $F4EA  ; DATA XREF: Stage11_RisingHazardLauncherInit+C   o  ; was: word_EB356
                 dc.w    $6806, $F00, $F4FA
                 dc.w    $6802, $C00, $ECF4

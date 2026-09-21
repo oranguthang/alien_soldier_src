@@ -1081,10 +1081,10 @@ structural `PrimaryEntity` names rather than a boss name.
 | `PrimaryEntityWork4A` | `$FFFFC66A` | `$4A` | Owner-dependent work byte; Gusthead tests bit seven to distinguish attached and detached segment handling. |
 | `PrimaryEntityWork4B` | `$FFFFC66B` | `$4B` | Owner-dependent work byte copied by one VBlank effect into the register-10 shadow; no stable entity-wide role is proven. |
 | `PrimaryEntityWork4C` | `$FFFFC66C` | `$4C` | Owner-dependent work word used as Epsilon 1 mode bits and independently as a Stage 3 orbit-angle offset. |
-| `PrimaryEntityWork58` | `$FFFFC678` | `$58` | Owner-dependent work word used as a Shield Viper defeat flag and a Sunset Sting selected-chain offset. |
-| `PrimaryEntityWork5A` | `$FFFFC67A` | `$5A` | Owner-dependent work word used by the Sunset Sting transition as a vertical reference for linked parts. |
-| `PrimaryEntityWork5C` | `$FFFFC67C` | `$5C` | Owner-dependent work word populated and consumed as Sunset Sting's linked-body-part count. |
-| `PrimaryEntityWork5E` | `$FFFFC67E` | `$5E` | Owner-dependent work word cleared and advanced as Sunset Sting graphics-animation progress. |
+| `PrimaryEntityWork58` | `$FFFFC678` | `$58` | Owner-dependent work word used as a Shield Viper defeat flag and the type-$1C0 family's selected-chain offset. |
+| `PrimaryEntityWork5A` | `$FFFFC67A` | `$5A` | Owner-dependent work word used by the type-$1C0 transition as a vertical reference for linked parts. |
+| `PrimaryEntityWork5C` | `$FFFFC67C` | `$5C` | Owner-dependent work word populated and consumed as the type-$1C0 family's linked-body-part count. |
+| `PrimaryEntityWork5E` | `$FFFFC67E` | `$5E` | Owner-dependent work word cleared and advanced as the type-$1C0 family's graphics-animation progress. |
 
 ## Reviewed secondary entity record
 
@@ -1102,7 +1102,7 @@ structural `PrimaryEntity` names rather than a boss name.
 | `SecondaryEntityWork46` | `$FFFFC6C6` | `$46` | Owner-specific work word written by the Viblack transition setup. |
 | `SecondaryEntityWork4C` | `$FFFFC6CC` | `$4C` | Union work word used as an angle by Bugmax/Stage 3 and as a body offset by Epsilon 1. |
 | `SecondaryEntityWork52` | `$FFFFC6D2` | `$52` | Owner-specific linked-object control word used by Jampan. |
-| `SecondaryEntityWork58` | `$FFFFC6D8` | `$58` | Union work longword used for Epsilon 1 motion and Sunset Sting oscillation phase. |
+| `SecondaryEntityWork58` | `$FFFFC6D8` | `$58` | Union work longword used for Epsilon 1 motion and the type-$1C0 family's oscillation phase. |
 | `SecondaryEntityWork5C` | `$FFFFC6DC` | `$5C` | Union work longword used as motion or byte-granular control state by different owners. |
 
 ## Reviewed tertiary entity record
@@ -1119,9 +1119,9 @@ structural `PrimaryEntity` names rather than a boss name.
 | `TertiaryEntityWork4C` | `$FFFFC72C` | `$4C` | Owner-specific work word used as Bugmax's second joint angle. |
 | `TertiaryEntityWork50` | `$FFFFC730` | `$50` | Owner-specific work word used as a Bugmax linked-part projection radius. |
 | `TertiaryEntityWork52` | `$FFFFC732` | `$52` | Owner-specific linked-object control word used by Jampan. |
-| `SunsetStingTrailSpan` | `$FFFFC738` | `$58` | Vertical span used to distribute Sunset Sting's eight trail objects. |
-| `SunsetStingTrailStep` | `$FFFFC73C` | `$5C` | Accumulating contraction step subtracted from the trail span. |
-| `SunsetStingAimAngle` | `$FFFFC73E` | `$5E` | Cached angle-to-player sample used by the second-form body layout. |
+| `EntityType1C0TrailSpan` | `$FFFFC738` | `$58` | Vertical span used to distribute the type-$1C0 family's eight trail objects. |
+| `EntityType1C0TrailStep` | `$FFFFC73C` | `$5C` | Accumulating contraction step subtracted from the trail span. |
+| `EntityType1C0AimAngle` | `$FFFFC73E` | `$5E` | Cached angle-to-player sample used by the second-form body layout. |
 
 ## Reviewed quaternary entity record
 
@@ -1134,7 +1134,7 @@ structural `PrimaryEntity` names rather than a boss name.
 | `QuaternaryEntityWork40` | `$FFFFC780` | `$40` | Owner-specific work word used as a linked-part angle by Destroyer Proto. |
 | `QuaternaryEntityWork46` | `$FFFFC786` | `$46` | Owner-specific second angle word used by Destroyer Proto. |
 | `QuaternaryEntityWork52` | `$FFFFC792` | `$52` | Owner-specific linked-part control word used by Jampan. |
-| `SunsetStingChainPeriod` | `$FFFFC79C` | `$5C` | Reload period for the second-form active-chain countdown. |
+| `EntityType1C0ChainPeriod` | `$FFFFC79C` | `$5C` | Reload period for the second-form active-chain countdown. |
 
 ## Reviewed fifth entity record
 
@@ -1145,9 +1145,9 @@ structural `PrimaryEntity` names rather than a boss name.
 | `FifthEntityState` | `$FFFFC7A4` | `$04` | Epsilon 1 ring-controller state and common linked-record state field checked by Destroyer MK2. |
 | `FifthEntityWork40` | `$FFFFC7E0` | `$40` | Owner-specific work word used as a linked-part angle by Destroyer Proto. |
 | `FifthEntityWork52` | `$FFFFC7F2` | `$52` | Owner-specific linked-part control word used by Jampan. |
-| `SunsetStingChainCycle` | `$FFFFC7F8` | `$58` | Packed chain selector and per-chain countdown used by Sunset Sting's second form. |
-| `FifthEntityWork5C` | `$FFFFC7FC` | `$5C` | Union word/byte storage used for Sunset Sting turning and Madam Barbar rotation bounds. |
-| `SunsetStingPoseRadius` | `$FFFFC7FD` | `$5D` | Low-byte pose radius derived from randomness and player distance. |
+| `EntityType1C0ChainCycle` | `$FFFFC7F8` | `$58` | Packed chain selector and per-chain countdown used by the type-$1C0 family's second form. |
+| `FifthEntityWork5C` | `$FFFFC7FC` | `$5C` | Union word/byte storage used for type-$1C0 turning and Madam Barbar rotation bounds. |
+| `EntityType1C0PoseRadius` | `$FFFFC7FD` | `$5D` | Low-byte pose radius derived from randomness and player distance. |
 | `FifthEntityWork5E` | `$FFFFC7FE` | `$5E` | Union work word used for Epsilon 1 ring commands and Madam Barbar rotation bounds. |
 
 ## Reviewed sixth entity record

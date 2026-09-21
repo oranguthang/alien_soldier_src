@@ -111,9 +111,9 @@ Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Proj
                 dc.l    OrphanedFloatingOscillator
                 dc.l    Stage12_YachtControllerMain
                 dc.l    Boss_GustheadSegmentMain
-                dc.l    Boss_SunsetStingInitDispatcher
-                dc.l    Boss_SunsetStingDebrisPartMain
-                dc.l    Boss_SunsetStingMainDispatcher
+                dc.l    EntityType1C0_InitDispatcher
+                dc.l    EntityType1C0_DebrisPartMain
+                dc.l    EntityType1C0_MainDispatcher
                 dc.l    Object_UpdateRemovalTimer
                 dc.l    Projectile_UpdateTrailingArcHazardType1D0
                 dc.l    Enemy_UpdateDefeatProjectile
@@ -227,9 +227,9 @@ Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Proj
                 dc.l    Stage15_FallingRockMain
                 dc.l    Stage11_RisingHazardLauncherMain
                 dc.l    Stage11_RisingHazardMain
-                dc.l    Boss_GustheadLinkedChainControllerMain
-                dc.l    Boss_GustheadLinkedChainSegmentMain
-                dc.l    Boss_GustheadLinkedChainTerminalMain
+                dc.l    EntityType390_ControllerMain
+                dc.l    EntityType390_SegmentMain
+                dc.l    EntityType390_TerminalMain
                 dc.l    Stage15_FragmentEmitterWaveMain
                 dc.l    Stage15_FragmentEmitterMain
                 dc.l    Projectile_FragmentClusterMain
