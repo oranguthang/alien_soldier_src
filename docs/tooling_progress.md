@@ -1937,3 +1937,11 @@ rejects path-escaping scenario IDs, refuses a linked scenario directory,
 and refuses to remove a directory or symlink occupying an output slot. These
 changes narrow filesystem side effects; they do not alter game source or
 substitute for a real replay.
+
+On the clean `715ee928` tree, standalone `make verify-symbols` extracted
+16,077 canonical addresses from the assembler listing: 15,036 ROM and 1,041
+RAM/hardware, including 35 release-contract symbols. All 15,843 exact-address
+name-audit records matched the listing. The next relocation gate creates and
+assembles three perturbed ROMs and parses their listings; it remains unrun in
+this low-memory pass, as does the fresh emulator runtime gate. The verified
+symbol result does not stand in for either of those checks.
