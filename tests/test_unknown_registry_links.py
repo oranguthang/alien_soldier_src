@@ -32,6 +32,9 @@ VISUAL_UNKNOWN_IDS = {
         ),
     ),
 }
+REVIEWED_VISUAL_ADDRESSES = {
+    "0x04079E", "0x040AF6", "0x042A10",
+}
 UNKNOWN_EVIDENCE_IDS = {
     "CODE-001": (
         "0x040CEC", "Boss_SnakeUnreferencedReturn", "src/bosses/snake.s"
@@ -83,7 +86,9 @@ class UnknownRegistryLinkTests(unittest.TestCase):
         referenced_tags: list[str] = []
         for path in (ROOT / "src").rglob("*.s"):
             source = path.read_text(encoding="utf-8")
-            referenced_tags.extend(re.findall(r"(?m)^; UNKNOWN (VIS-\d{3}):", source))
+            referenced_tags.extend(
+                re.findall(r"(?m)^; (?:UNKNOWN|REVIEWED) (VIS-\d{3}):", source)
+            )
         self.assertEqual(set(VISUAL_UNKNOWN_IDS), set(referenced_tags))
         self.assertEqual(7, len(referenced_tags))
 
@@ -96,22 +101,26 @@ class UnknownRegistryLinkTests(unittest.TestCase):
         expected_addresses: set[str] = set()
         for unknown_id, members in VISUAL_UNKNOWN_IDS.items():
             section = registry_section(registry, unknown_id)
-            self.assertIn("- **Status:** open", section)
-            self.assertIn("- **Confidence:** low", section)
+            self.assertIn("- **Status:**", section)
+            self.assertIn("- **Confidence:**", section)
             self.assertIn("- **Experiment:**", section)
             for address, name, relative in members:
                 with self.subTest(id=unknown_id, address=address):
                     expected_addresses.add(address)
                     self.assertEqual(name, audit[address]["current_name"])
-                    self.assertEqual("hypothesis", audit[address]["evidence"])
+                    reviewed = address in REVIEWED_VISUAL_ADDRESSES
+                    self.assertEqual(
+                        "runtime" if reviewed else "hypothesis",
+                        audit[address]["evidence"],
+                    )
                     self.assertIn(f"`{relative}`", section)
                     source = (ROOT / relative).read_text(encoding="utf-8")
                     self.assertRegex(
                         source,
-                        rf"(?m)^; UNKNOWN {unknown_id}:[^\n]*\n^{re.escape(name)}:",
+                        rf"(?m)^; {'REVIEWED' if reviewed else 'UNKNOWN'} {unknown_id}:[^\n]*\n^{re.escape(name)}:",
                     )
         self.assertEqual(
-            expected_addresses,
+            expected_addresses - REVIEWED_VISUAL_ADDRESSES,
             {
                 address for address, record in audit.items()
                 if record.get("evidence") == "hypothesis"

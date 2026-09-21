@@ -1,4 +1,4 @@
-; UNKNOWN VIS-002: visual owner awaits pinned same-frame evidence; see docs/unknowns.md
+; REVIEWED VIS-002: pinned TAS frame 28000 shows Snake head type $298; see docs/unknowns.md
 Boss_SnakeMain:                                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4079E
                 tst.w   4(a5)
                 beq.w   Boss_SnakeStateDispatch
@@ -256,7 +256,7 @@ Boss_SnakeInactiveState:                                ; DATA XREF: ROM:0004085
 ; End of function Boss_SnakeInactiveState
 
 ; Main handler for Snake segment
-; UNKNOWN VIS-002: segment belongs to the provisional root identity; see docs/unknowns.md
+; REVIEWED VIS-002: pinned TAS frame 28000 shows 23 Snake segments type $29C; see docs/unknowns.md
 Boss_SnakeSegmentMain:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_40AF6
                 bsr.w   Boss_SnakeAdvanceAnimation
                 tst.b   $21(a5)

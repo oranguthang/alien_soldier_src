@@ -42,8 +42,9 @@ byte.
   palette-command, and 17 standalone or banked palette-command records were
   then reviewed. The curated `NAME-002` detector has zero matches. One hundred
   fifty-six of 156 repeated-basis groups have exact-member reviews; none remain
-  open in that queue. Seven boss-identity records remain visual hypotheses
-  (`NAME-003`); closing the repeated-basis queue does not resolve them.
+  open in that queue. Four boss-identity records remain visual hypotheses
+  (`NAME-003`); pinned TAS states and human review resolved the two Snake
+  records and the type-`$1EC` Sunset Sting controller.
 - **Provenance is retained.** 16,053 `; was:` markers map current definitions to
   the imported labels they replaced.
 - **Cross-reference comments stay navigable.** Imported `CODE XREF`, `DATA XREF`

@@ -1991,3 +1991,18 @@ do not appear. The page marks those three questions as unobserved rather than
 turning the visible later form into unsupported evidence for them. The page
 does not promote the seven audit records by itself; a review or role-neutral
 renaming is still required.
+
+The human reviewer identified the fat bomb-dropping bird at TAS frame 22,000
+as an ordinary enemy, confirmed the Snake head and all 23 body segments at
+frame 28,000, and identified both the vertically stretched appearance at
+frame 32,124 and the flower-like pre-fight appearance at frame 32,200 as
+Sunset Sting. Paired states distinguish the bird (type `$90`, slot 5) from
+the type-`$390` linked-chain controller (slot 2); the latter's children are
+below the image at frame 22,000, so `VIS-001` remains open. At frame 32,124
+the stretched Sunset Sting is already type `$1EC`, slot 0, state `$8002`;
+it does not identify type `$1C0`. The two Snake records and the `$1EC`
+Sunset Sting record now have runtime evidence in `config/name_audit.json`.
+Four visual hypotheses remain: the chain's claimed Gusthead ownership,
+the `$1C0` and `$1C8` Sunset handlers, and type-`$1EC` state `$10`'s
+appearance. The reviewer has not seen the latter two appearances; no claim
+that they are absent from all game routes follows from this TAS window.

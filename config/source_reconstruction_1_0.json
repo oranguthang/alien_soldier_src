@@ -462,7 +462,7 @@
     {
       "id": "provisional_boss_visual_identities",
       "status": "partial",
-      "reason": "Seven exact-address boss-name records have hypothesis-level visual identities. Static dispatch or object-family evidence does not independently establish the pictured boss.",
+      "reason": "Four exact-address boss-name records retain hypothesis-level visual identities. Pinned same-frame evidence plus human review resolved two Snake records and the type-$1EC Sunset Sting controller; static dispatch alone still does not establish the remaining pictured forms or chain owner.",
       "registry": "NAME-003",
       "control": "make release-audit recounts hypothesis_name_records and refuses tag-ready status until the count is zero. Pinned runtime evidence must confirm each identity, or its name must become behavior-only."
     },
@@ -721,7 +721,7 @@
     "definitions": 16938,
     "dma_transferred_payloads": 289,
     "generic_evidence_bases": 0,
-    "hypothesis_name_records": 7,
+    "hypothesis_name_records": 4,
     "modules": 398,
     "name_audit_records": 15843,
     "provenance_mappings": 16053,

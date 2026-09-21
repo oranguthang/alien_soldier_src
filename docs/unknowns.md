@@ -4,55 +4,63 @@ The machine-readable thresholds live in `config/source_policy.json`.
 
 ## Active visual-identity unknowns
 
-These stable IDs track the three encounter-level experiments behind the seven
-`NAME-003` hypothesis records. Source comments cite each ID. The `CODE` and
+These stable IDs track the three encounter-level experiments originally behind
+seven `NAME-003` hypothesis records. Three identities now have pinned
+same-frame and human visual evidence; four remain hypotheses. Source comments
+cite each ID. The `CODE` and
 `DATA` entries below cover the seven exact-address name-audit records whose
 evidence level is `unknown`; the remaining text is a historical investigation
 log, not a claim that every other unknown has been converted to this index.
 Keep an entry and its evidence history when it is resolved.
 
-### VIS-001 Gusthead linked-chain controller identity
+### VIS-001 Linked-chain controller identity before Gusthead
 
 - **Status:** open
 - **Confidence:** low
 - **Location:** `src/bosses/gusthead_linked_chain.s`, `$0310E6`
 - **Evidence:** The type-`$390` controller owns an eight-object chain of types
-  `$394` and `$398`. A provisional unpinned trace placed it at TAS frame
-  21,989 before the documented Gusthead encounter; that does not bind its
-  rendered appearance to this handler.
-- **Experiment:** Under the pinned emulator, capture the encounter frame and
-  save both the screenshot and same-frame object type or PC state proving that
-  the pictured object reaches `$0310E6`. If it does not, use a role-only name.
+  `$394` and `$398`. At pinned TAS frames 21,989 and 22,000 it is in slot 2;
+  the visible fat bird dropping shots is instead the separate type-`$90`
+  enemy in slot 5, identified by the human reviewer. The `$390` controller
+  has no sprite mapping in those states, and its children at frame 22,000
+  are at Y `$170`, below the captured 224-pixel image. The bird screenshot
+  therefore cannot establish Gusthead ownership or the chain's appearance.
+- **Experiment:** Capture a frame where type-`$394/$398` parts are actually
+  visible, paired with their same-frame state and the `$390` controller.
+  If a Gusthead-specific relationship remains unproved, use role-only names.
 
 ### VIS-002 Stage 13 chained boss identity
 
-- **Status:** open
-- **Confidence:** low
+- **Status:** resolved
+- **Confidence:** high
 - **Location:** `src/bosses/snake.s`, `$04079E` and `$040AF6`
-- **Evidence:** Type `$298` creates a 23-child chain of type `$29C`. An
-  unpinned replay placed both types in the Stage 13 Snake encounter at TAS
-  frames 27,720–28,480; the object relationship is static, but the visual
-  identity is not pinned to those handlers.
-- **Experiment:** Capture a frame of the head and segments under the pinned
-  emulator with the same-frame object types or PCs for both handlers. If the
-  image does not establish Snake ownership, use role-only names.
+- **Evidence:** Pinned TAS frame 28,000 shows the Snake head and body. Its
+  paired `.genstate` has type `$298` in slot 0, state `$04`, and 23 type-`$29C`
+  children in slots 1–23. The human reviewer confirmed both the boss identity
+  and that these children are its segments.
+- **Experiment:** Completed with `reference/tas/028000.png` and
+  `reference/tas/028000.genstate`; the archive is local and ignored by Git.
 
 ### VIS-003 Sunset Sting form and state identities
 
-- **Status:** open
-- **Confidence:** low
+- **Status:** partially resolved
+- **Confidence:** mixed
 - **Location:** `src/bosses/sunset_sting_core.s` at `$040CEE`,
   `src/bosses/sunset_sting_attacks.s` at `$0418FC`, and
   `src/bosses/sunset_sting_main.s` at `$042A10` and `$04309E`
 - **Evidence:** The object-dispatch table binds types `$1C0`, `$1C8`, and
-  `$1EC` to the first three handlers. State `$10` at `$04309E` belongs to
-  the type-`$1EC` machine and refills the boss counter while oscillating.
-  A provisional replay showed Sunset Sting, but did not pin a frame to each
-  form or settle the visual meaning of that state.
-- **Experiment:** Locate the encounter in the pinned TAS replay; save
-  screenshots and same-frame object types or PCs for all three forms, plus
-  state `$10` when visible. If an identity cannot be established, keep the
-  static behaviour and replace only the visual claim.
+  `$1EC` to the first three handlers. The human reviewer identified the
+  vertically stretched Sunset Sting at pinned frame 32,124 and the flower-like
+  pre-fight appearance at frame 32,200. Both are type `$1EC`, slot 0; frame
+  32,124 is state `$8002`. Thus the stretched appearance is **not** evidence
+  for the type-`$1C0` handler. In every TAS state from 31,960 through 33,480,
+  `$1C0` and `$1C8` are absent, as is type-`$1EC` state with low byte `$10`.
+  This does not prove that the other handlers or state are unreachable in the
+  game. The `$04309E` handler adds to `BossCombatCounter`; its source does not
+  by itself establish visible health restoration.
+- **Experiment:** Keep `$1C0`, `$1C8`, and `$04309E` visually unconfirmed.
+  Look for a different route or movie before assigning appearances; preserve
+  the statically established counter/oscillation behaviour meanwhile.
 
 ## Active unknown-evidence records
 
