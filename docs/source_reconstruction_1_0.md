@@ -81,7 +81,6 @@ that limits it. They are stated here rather than left implicit.
 | `LAYOUT-001` | Module sizes: 233 of 398 modules sit inside the preferred 200–700 line band, 149 are shorter and 16 are longer. All 16 longer modules are boss-specific and remain below 1000 lines. | partial |
 | `TOOL-001` | Four exploratory commands remain outside release evidence; their source operations address modules. The obsolete pointer debugger is retired, and `verify-relocation` checks pointers across the current layout. | unsupported |
 | `TOOL-002` | The monolithic asset splitter is retired; `make split` extracts canonical data under the asset manifest. | unsupported |
-| `RELEASE-001` | The development-state aggregate gate passed on `d00b6ddf`, and the owner accepted the explicit unknowns for 1.0 on 22 September 2026. The final clean-tree `tag-ready` gate and annotated tag remain pending. | planned |
 | `commit_body_convention` | Commits made before this manifest carry a title and attribution without a body. | partial |
 | `frame_image_comparison` | Pixel comparison. The runtime layer checks state, not frames. | planned |
 | `linux_aggregate_gate` | A gate run on Linux. The vendored Linux toolchain is present but untested. | partial |
@@ -126,8 +125,12 @@ with a release description, pointing either to the checked commit or to that
 metadata commit's parent. A later source change cannot silently inherit the
 old tag as evidence for a new release.
 
-An earlier local `source-reconstruction-1.0` tag was removed while separating
-the preservation branch from later authoring work. The owner's review accepted
-the explicit unknowns, and this isolated branch is now a `tag-ready` candidate.
-The full gate must still pass on this exact commit before the annotated 1.0 tag
-is created; no 1.0 tag currently exists.
+The earlier local tag was archived as
+`archive/source-reconstruction-1.0-pre-rewrite` while the preservation branch
+was separated from later authoring work. The owner's review accepted the
+explicit unknowns on 22 September 2026. On clean candidate `8833b9d3`, the
+complete `make release-check` passed: 589 assets, 398 modules, 2,236 relocated
+pointer references, and 12 runtime scenarios covering 124,660 frames with 78
+named RAM expectations. Annotated tag object `3ba1c62a` identifies that checked
+candidate. This metadata-only successor marks the manifest `tagged` without
+changing source, assets, tests, or release gates.

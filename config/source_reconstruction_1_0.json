@@ -7,7 +7,7 @@
   },
   "release_kind": "preservation",
   "tag": "source-reconstruction-1.0",
-  "status": "tag-ready",
+  "status": "tagged",
   "predecessor": null,
   "predecessor_note": "First release of this project. The delta below is the whole reachable history, a6f370d to the release commit.",
   "reference": {
@@ -388,8 +388,8 @@
       }
     },
     "tag_integrity": {
-      "status": "planned",
-      "statement": "The final source-reconstruction-1.0 tag will be created on the isolated 1.0 commit only after the full release gate passes there.",
+      "status": "satisfied",
+      "statement": "Annotated tag object 3ba1c62a2482b6be6683b4998d8feb8f7a446688 identifies checked candidate 8833b9d34b847a8557c2891d20bb7b4c2c42faf7 after its full clean-tree release gate passed.",
       "evidence": {
         "targets": [
           "release-check"
@@ -399,10 +399,7 @@
         ],
         "scenarios": [],
         "artifacts": []
-      },
-      "excluded": [
-        "RELEASE-001"
-      ]
+      }
     },
     "commit_history": {
       "status": "partial",
@@ -508,13 +505,6 @@
       "id": "authoring_tools",
       "status": "not_applicable",
       "reason": "Editors and content tools belong to a later release. 1.0 ships extraction and verification only."
-    },
-    {
-      "id": "final_release_tag",
-      "status": "planned",
-      "reason": "The earlier local tag was removed while separating the preservation branch from later authoring work. The development-state aggregate gate passed on d00b6ddf, and the owner accepted explicit unknowns for 1.0 on 22 September 2026; the clean-tree tag-ready gate and annotated 1.0 tag remain pending.",
-      "registry": "RELEASE-001",
-      "control": "The manifest remains in development; tag-ready requires a clean tree and an unused tag name before the final release-check and annotated tag."
     },
     {
       "id": "commit_body_convention",
