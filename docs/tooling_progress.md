@@ -2119,3 +2119,10 @@ also distinguishes a fresh-output gate from the clean Git tree required at
 `tag-ready`. A separate `make semantic-audit` run reports 16,053 provenance
 mappings, 513 binary-backed `_End` aliases with no actionable missing records,
 and all 156 repeated-basis groups reviewed with none open.
+
+A read-only follow-up on the six remaining `unknown` exact-address records
+scanned the canonical 2 MiB ROM for each address encoded as a big-endian
+longword. None of `$040CEC`, `$0586F2`, `$058BA0`, `$059BAA`, `$08277C` or
+`$011356` occurs in that form. The result is recorded in the active unknowns
+register and local review HTML. It does not close any record: PC-relative and
+computed routes remain possible, and no runtime PC hit or selector was shown.

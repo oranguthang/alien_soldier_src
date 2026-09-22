@@ -70,6 +70,11 @@ Keep an entry and its evidence history when it is resolved.
 
 The code entries below are *statically unreferenced*, not proven impossible to
 execute. An indirect dispatch or an unobserved input could still reach them.
+An exact big-endian longword scan of the canonical 2 MiB Japanese ROM found
+zero copies of each of the six open addresses (`$040CEC`, `$0586F2`,
+`$058BA0`, `$059BAA`, `$08277C`, `$011356`). This rules out a literal 32-bit
+absolute pointer to those entry addresses in the image; it does not rule out
+PC-relative references, computed addresses, or other indirect selection.
 
 ### CODE-001 Snake trailing return
 
