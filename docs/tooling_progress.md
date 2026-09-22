@@ -2126,3 +2126,17 @@ longword. None of `$040CEC`, `$0586F2`, `$058BA0`, `$059BAA`, `$08277C` or
 `$011356` occurs in that form. The result is recorded in the active unknowns
 register and local review HTML. It does not close any record: PC-relative and
 computed routes remain possible, and no runtime PC hit or selector was shown.
+
+The owner then reviewed all fifteen questions in the local HTML and accepted
+the still-open visual, code, data, archive and Stage 4 items as noncritical
+for Source 1.0. The exported answers do not provide entry traces for the five
+isolated returns, a selector for the transfer tuple, or a reproducible Stage 4
+failure; those claims remain unknown. Dormant artwork names stay neutral and
+the proposed cut-content activation is deferred to later modding work.
+
+The owner's Gusthead identification at TAS frame 22,643 has a paired PNG and
+genstate. The state contains a type-`$1B0` root in slot 0 and sixteen
+type-`$1BC` parts in slots 1–16. Their mapping pointers select the existing
+Gusthead root/segment mapping symbols; no type-`$390/$394/$398` object is
+active in that capture. This corroborates the already named Gusthead family
+without promoting the separate type-`$390` chain to a boss identity.

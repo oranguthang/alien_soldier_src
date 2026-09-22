@@ -14,6 +14,17 @@ of this document is an investigation log; earlier interpretations there are
 superseded by the active entries and `docs/dormant_entity_1c0.md`.
 Keep an entry and its evidence history when it is resolved.
 
+On 22 September 2026, the project owner reviewed all fifteen questions in the
+local Source 1.0 HTML and accepted the remaining visual, code, data, archive,
+and Stage 4 questions as noncritical for this preservation release. The five
+returns without a demonstrated entry path and the unselected transfer tuple
+remain `unknown`, not
+assertions of dead code. Unverified dormant-entity artwork names stay neutral;
+enabling cut content and exploring Jampan/dialogue patches belong to a later
+modding effort. The Stage 4 rendering report remains an unreproduced
+observation. This is a scope decision, not new runtime evidence or proof that
+any unselected content is unreachable in every stock-game route.
+
 ### VIS-001 Type-$390 linked-chain controller identity
 
 - **Status:** resolved for source naming; visual identity open
@@ -26,7 +37,14 @@ Keep an entry and its evidence history when it is resolved.
   has no sprite mapping in those states, and its children at frame 22,000
   are at Y `$170`, below the captured 224-pixel image. The bird screenshot
   therefore cannot establish Gusthead ownership or the chain's appearance.
-  The source now uses role-only type-$390 names.
+  A later paired capture, `reference/tas/022643.png` and `.genstate`, was
+  identified by the human reviewer as Gusthead. Its object pool has a
+  type-`$1B0` root in slot 0 and sixteen type-`$1BC` parts in slots 1–16;
+  their mapping addresses select `Boss_GustheadRootMappingA` and the
+  `Boss_GustheadSegmentMapping*` family. No `$390/$394/$398` object is active
+  in that capture. This independently corroborates the existing Gusthead
+  root/segment names, but does not identify the earlier type-`$390` chain.
+  The source keeps role-only type-`$390` names.
 - **Experiment:** Capture a frame where type-`$394/$398` parts are actually
   visible, paired with their same-frame state and the `$390` controller.
   A boss-specific name requires that additional evidence; role-only names do

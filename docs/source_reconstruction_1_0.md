@@ -81,7 +81,7 @@ that limits it. They are stated here rather than left implicit.
 | `LAYOUT-001` | Module sizes: 233 of 398 modules sit inside the preferred 200–700 line band, 149 are shorter and 16 are longer. All 16 longer modules are boss-specific and remain below 1000 lines. | partial |
 | `TOOL-001` | Four exploratory commands remain outside release evidence; their source operations address modules. The obsolete pointer debugger is retired, and `verify-relocation` checks pointers across the current layout. | unsupported |
 | `TOOL-002` | The monolithic asset splitter is retired; `make split` extracts canonical data under the asset manifest. | unsupported |
-| `RELEASE-001` | The development-state aggregate gate passed on `d00b6ddf`; the final `tag-ready` gate and annotated 1.0 tag remain pending review. | planned |
+| `RELEASE-001` | The development-state aggregate gate passed on `d00b6ddf`, and the owner accepted the explicit unknowns for 1.0 on 22 September 2026. The final clean-tree `tag-ready` gate and annotated tag remain pending. | planned |
 | `commit_body_convention` | Commits made before this manifest carry a title and attribution without a body. | partial |
 | `frame_image_comparison` | Pixel comparison. The runtime layer checks state, not frames. | planned |
 | `linux_aggregate_gate` | A gate run on Linux. The vendored Linux toolchain is present but untested. | partial |
