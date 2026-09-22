@@ -421,8 +421,11 @@ def audit(root: Path, contract: dict) -> tuple[list[str], dict[str, int]]:
     runtime = load(root, "config/runtime_scenarios.json")
     toolchain = load(root, "config/toolchain.json")
 
-    if contract.get("release") != "0.5" or contract.get("status") != "development":
-        errors.append("0.5 must remain explicitly marked as a development release")
+    if (
+        contract.get("release") != "Source Reconstruction 1.0"
+        or contract.get("status") != "active"
+    ):
+        errors.append("release contract must identify Source Reconstruction 1.0 and remain active")
     if contract.get("target_contract") != "Source Reconstruction 1.0":
         errors.append("target contract is not Source Reconstruction 1.0")
     if source_contract.get("release", {}).get("name") != contract.get("target_contract"):
@@ -558,7 +561,7 @@ def audit(root: Path, contract: dict) -> tuple[list[str], dict[str, int]]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--contract", default="config/release_0_5.json")
+    parser.add_argument("--contract", default="config/release_contract.json")
     args = parser.parse_args()
     root = Path.cwd()
     contract = load(root, args.contract)

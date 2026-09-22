@@ -49,7 +49,7 @@
       "version": "docker-mingw-build",
       "role": "Replays recorded inputs and captures runtime evidence",
       "source": "https://github.com/oranguthang/gens_automation.git",
-      "source_commit": "f62b2cf50cb1697eff335e846c8270e7b81f2d2a",
+      "source_commit": "e14b92535acf85755321788634bf9179b621d8c0",
       "provenance": "source-built",
       "verification": "make verify-toolchain",
       "identity": "source_commit",
@@ -76,7 +76,7 @@
       "shell": "sh",
       "language_versions": {"python": ">=3.9", "make": "GNU Make"},
       "supported_status": "partial",
-      "evidence": "The binaries are vendored but the complete 0.5 gate has not run on Linux"
+      "evidence": "The binaries are vendored but the complete Source Reconstruction 1.0 gate has not run on Linux"
     }
   ]
 }

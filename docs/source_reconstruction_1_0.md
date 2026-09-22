@@ -127,6 +127,7 @@ metadata commit's parent. A later source change cannot silently inherit the
 old tag as evidence for a new release.
 
 An earlier local `source-reconstruction-1.0` tag was removed while separating
-the preservation branch from later authoring work. This isolated branch remains
-in `development` until the reviewed commit passes its final `tag-ready` gate;
-no 1.0 tag currently exists.
+the preservation branch from later authoring work. The owner's review accepted
+the explicit unknowns, and this isolated branch is now a `tag-ready` candidate.
+The full gate must still pass on this exact commit before the annotated 1.0 tag
+is created; no 1.0 tag currently exists.

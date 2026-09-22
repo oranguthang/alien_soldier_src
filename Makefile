@@ -97,7 +97,7 @@ build: check-init check-assets verify-toolchain
 	@echo "Build complete: $(ROM)"
 
 # Permanent preservation gate: assemble from source and require the canonical
-# Japanese cartridge image byte for byte. The European ROM is not a 0.5 profile.
+# Japanese cartridge image byte for byte. The European ROM is not in this profile.
 verify: check-init check-assets verify-toolchain
 	@$(PYTHON) $(SCRIPTS_DIR)/build_rom.py \
 		--source $(SRC) \
@@ -192,7 +192,7 @@ runtime-validate:
 
 release-audit:
 	@$(PYTHON) $(SCRIPTS_DIR)/release_audit.py \
-		--contract config/release_0_5.json
+		--contract config/release_contract.json
 
 # Ordered, clean-room release gate. Sub-makes are intentional: each phase is
 # visible in logs and no stale build/listing/runtime output can satisfy it.

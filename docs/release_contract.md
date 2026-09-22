@@ -1,7 +1,8 @@
-# Release 0.5 work contract
+# Source Reconstruction 1.0 release contract
 
-Release 0.5 is the development name for the preservation-first Source
-Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
+This contract defines the preservation-first Source Reconstruction 1.0 release
+interface. Release lifecycle state is recorded separately in
+`config/source_reconstruction_1_0.json`.
 
 ## Completed foundations
 
@@ -35,14 +36,14 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
 - `make clean` is restricted to reproducible build/runtime outputs and Python
   caches; extracted assets, traces, workflow files, and source backups survive.
 - The machine-readable release contract and static audit are wired through
-  `config/release_0_5.json` and `make release-audit`.
+  `config/release_contract.json` and `make release-audit`.
 - Mechanical assembly style is linted: column-zero definitions, entrypoint-only
   includes, lowercase paths, final newlines, and a 200-character line ceiling.
 - Negative-path tests reject missing, altered, or stale assets; changed
   toolchain files; non-canonical ROM input; byte divergence; weakened release
   scope; and incorrect runtime state.
 
-## Reconstruction backlog after 0.5
+## Remaining reconstruction backlog
 
 The contract does not require invented semantics. No live address-derived
 definitions remain in executable, preserved-ROM, or RAM source. The exact-

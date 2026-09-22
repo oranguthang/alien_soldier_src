@@ -1,6 +1,6 @@
 # Tooling status
 
-The release interface is the list in `config/release_0_5.json`. Those commands
+The release interface is the list in `config/release_contract.json`. Those commands
 are module-aware and are covered by the release gate.
 
 The exploratory commands `analyze`, `find-unanalyzed`, `prepare-batch`, and

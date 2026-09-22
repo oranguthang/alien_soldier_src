@@ -1610,5 +1610,5 @@ executable references use one of 33 contextual views.
   `hypothesis`.
 
 The current file is therefore an address inventory, not yet a fully semantic
-RAM map. Release 0.5 work must promote the state variables used by its six
+RAM map. Source Reconstruction 1.0 work must promote the state variables used by its six
 runtime scenarios and document their evidence.

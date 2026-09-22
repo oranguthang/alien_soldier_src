@@ -1,6 +1,6 @@
 # Release check
 
-`make release-check` is the single ordered release 0.5 gate. It runs:
+`make release-check` is the single ordered Source Reconstruction 1.0 gate. It runs:
 
 1. private asset identity and range policy;
 2. source and project lint: style, naming vocabulary, provenance, branch-target
@@ -28,10 +28,10 @@ extracted segments, movies, traces, workflow files, source backups and emulator
 configuration. Each runtime scenario is replayed and its declared pair is
 captured anew.
 
-The declarative inputs are in `config/release_0_5.json` for the gate itself and
-`config/source_reconstruction_1_0.json` for the release manifest. Release 0.5 remains a
-development label aimed at Source Reconstruction 1.0; a passing gate does not
-rename the release or silently add the European ROM profile.
+The declarative inputs are in `config/release_contract.json` for the gate itself
+and `config/source_reconstruction_1_0.json` for the release manifest. A passing
+gate validates the declared Source Reconstruction 1.0 candidate; it does not
+create or move a release tag or silently add the European ROM profile.
 
 ## Counters are recounted, not trusted
 

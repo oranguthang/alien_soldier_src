@@ -1,6 +1,6 @@
 # Source Reconstruction 1.0 modularization plan
 
-This document is the working plan for turning the preservation-complete 0.5
+This document is the working plan for turning the preservation-complete baseline
 source into a semantic Source Reconstruction 1.0 source tree. The machine-
 readable destination contract is `config/source_reconstruction_1_0.json`.
 
@@ -55,7 +55,7 @@ there are no pre-approved exceptions.
 - Add a full-source formatter with a check mode.
 - Make layout and lint understand nested semantic modules.
 - Add path, size, vocabulary, provenance, and address-derived-name gates.
-- Keep the current 0.5 release gate green while the stricter 1.0 thresholds
+- Keep the preservation release gate green while the stricter 1.0 thresholds
   burn down; only switch the release contract when every threshold is met.
 
 ### 2. Rebuild the system and opening region

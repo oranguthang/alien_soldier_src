@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CONTRACT = ROOT / "config" / "source_reconstruction_1_0.json"
 LAYOUT = ROOT / "config" / "rom_layout.json"
 POLICY = ROOT / "config" / "source_policy.json"
-RELEASE = ROOT / "config" / "release_0_5.json"
+RELEASE = ROOT / "config" / "release_contract.json"
 
 
 class SourceReconstructionContractTests(unittest.TestCase):

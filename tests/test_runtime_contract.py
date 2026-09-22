@@ -18,7 +18,7 @@ from validate_runtime_scenarios import number, ram_symbols  # noqa: E402
 class RuntimeContractTests(unittest.TestCase):
     def test_named_scenarios_resolve_ram_symbols(self) -> None:
         config = json.loads((ROOT / "config/runtime_scenarios.json").read_text(encoding="utf-8"))
-        contract = json.loads((ROOT / "config/release_0_5.json").read_text(encoding="utf-8"))
+        contract = json.loads((ROOT / "config/release_contract.json").read_text(encoding="utf-8"))
         symbols = ram_symbols(ROOT / "src/ram_addrs.inc")
         self.assertEqual(
             contract["required_runtime_ids"],

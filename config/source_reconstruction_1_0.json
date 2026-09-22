@@ -7,7 +7,7 @@
   },
   "release_kind": "preservation",
   "tag": "source-reconstruction-1.0",
-  "status": "development",
+  "status": "tag-ready",
   "predecessor": null,
   "predecessor_note": "First release of this project. The delta below is the whole reachable history, a6f370d to the release commit.",
   "reference": {
@@ -126,7 +126,7 @@
           "verify"
         ],
         "files": [
-          "config/release_0_5.json",
+          "config/release_contract.json",
           "scripts/compare_roms.py",
           "config/rom_layout.json"
         ],
@@ -436,7 +436,7 @@
       "status": "unsupported",
       "reason": "Only the Japanese cartridge is accepted. A region variant would need its own identity, extraction and runtime evidence, none of which exists.",
       "registry": "PROFILE-001",
-      "control": "config/release_0_5.json names the profile as excluded and make verify accepts the Japanese image alone."
+      "control": "config/release_contract.json names the profile as excluded and make verify accepts the Japanese image alone."
     },
     {
       "id": "z80_sound_driver_source",
@@ -478,7 +478,7 @@
       "status": "unsupported",
       "reason": "The exploratory commands analyze, find-unanalyzed, prepare-batch and rename remain outside release evidence. Their source operations address ROM-ordered modules, but the emulator analysis path has not been rerun under the pinned runtime contract. The obsolete debug-pointers and report-pointers CLIs refuse to run; make verify-relocation is the module-aware pointer gate. Batch reports and rename flags do not establish semantic correctness.",
       "registry": "TOOL-001",
-      "control": "They are outside the release interface in config/release_0_5.json, and docs/tooling_status.md states that their output is not evidence."
+      "control": "They are outside the release interface in config/release_contract.json, and docs/tooling_status.md states that their output is not evidence."
     },
     {
       "id": "legacy_asset_splitter",
@@ -625,7 +625,7 @@
       "rule_id": "docs/ document names",
       "actual_path": "docs/source_map.md, docs/ram_map.md, docs/release_check.md",
       "reason": "The corpus is flat and the documents are named for what this project calls them rather than for the generic titles.",
-      "equivalent_control": "docs/index.md maps every document to the question it answers, and config/release_0_5.json lists the required documents that make release-audit checks."
+      "equivalent_control": "docs/index.md maps every document to the question it answers, and config/release_contract.json lists the required documents that make release-audit checks."
     }
   ],
   "licensing": [
@@ -672,7 +672,7 @@
     "docs/payload_archives.md",
     "docs/provenance.md",
     "docs/ram_map.md",
-    "docs/release_0_5.md",
+    "docs/release_contract.md",
     "docs/release_check.md",
     "docs/runtime.md",
     "docs/source_layout.md",

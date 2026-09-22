@@ -39,7 +39,7 @@ def check_files(entries: list[dict], errors: list[str], notes: list[str]) -> int
         digest = sha256_of(path)
         if entry.get("observed_only"):
             if digest != entry["sha256"] or size != entry["size"]:
-                notes.append(f"{path} differs from the observed 0.5 runtime build")
+                notes.append(f"{path} differs from the observed pinned runtime build")
             continue
         if size != entry["size"]:
             errors.append(f"{path} is {size} bytes, expected {entry['size']}")

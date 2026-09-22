@@ -40,7 +40,7 @@ class ReleaseAuditTests(unittest.TestCase):
 
     def test_repository_contract_passes_static_audit(self) -> None:
         contract = json.loads(
-            (ROOT / "config/release_0_5.json").read_text(encoding="utf-8")
+            (ROOT / "config/release_contract.json").read_text(encoding="utf-8")
         )
         errors, stats = release_audit.audit(ROOT, contract)
         errors = [error for error in errors if not error.startswith("tag-ready status claimed")]
@@ -52,7 +52,7 @@ class ReleaseAuditTests(unittest.TestCase):
 
     def test_a_drifted_counter_is_rejected(self) -> None:
         contract = json.loads(
-            (ROOT / "config/release_0_5.json").read_text(encoding="utf-8")
+            (ROOT / "config/release_contract.json").read_text(encoding="utf-8")
         )
         manifest = self._manifest()
         manifest["counters"]["modules"] += 1
@@ -134,7 +134,7 @@ class ReleaseAuditTests(unittest.TestCase):
 
     def test_weakened_scope_and_threshold_are_rejected(self) -> None:
         contract = json.loads(
-            (ROOT / "config/release_0_5.json").read_text(encoding="utf-8")
+            (ROOT / "config/release_contract.json").read_text(encoding="utf-8")
         )
         contract = copy.deepcopy(contract)
         contract["excluded_profiles"] = []
@@ -145,7 +145,7 @@ class ReleaseAuditTests(unittest.TestCase):
 
     def test_weakened_source_ceiling_is_rejected(self) -> None:
         contract = json.loads(
-            (ROOT / "config/release_0_5.json").read_text(encoding="utf-8")
+            (ROOT / "config/release_contract.json").read_text(encoding="utf-8")
         )
         contract = copy.deepcopy(contract)
         contract["thresholds"]["max_module_lines"] = 6000

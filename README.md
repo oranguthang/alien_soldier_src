@@ -211,8 +211,8 @@ make stop               # Kill all running Gens emulator instances
 - `make verify` validates the user-supplied dump against `assets/manifest.json` and
   then compares every output byte directly with it.
 - The original checksum and region checks are preserved. Modified gameplay builds
-  are outside the 0.5 preservation profile.
-- The active 0.5 work contract is tracked in `docs/release_0_5.md`; source
+  are outside the Source Reconstruction 1.0 preservation profile.
+- The release contract is tracked in `docs/release_contract.md`; source
   partitioning rules and naming confidence are documented in `docs/source_layout.md`.
 
 ## Binary Trace System

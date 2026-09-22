@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "release": "0.5",
-  "status": "development",
+  "release": "Source Reconstruction 1.0",
+  "status": "active",
   "target_contract": "Source Reconstruction 1.0",
   "canonical_profile": {
     "id": "japan",
@@ -13,7 +13,7 @@
   "excluded_profiles": [
     {
       "id": "europe",
-      "reason": "Not part of the preservation-first 0.5 profile; any future region variant must be explicit."
+      "reason": "Not part of the preservation-first Source Reconstruction 1.0 profile; any future region variant must be explicit."
     }
   ],
   "thresholds": {
@@ -51,7 +51,7 @@
     "docs/naming.md",
     "docs/provenance.md",
     "docs/ram_map.md",
-    "docs/release_0_5.md",
+    "docs/release_contract.md",
     "docs/release_check.md",
     "docs/runtime.md",
     "docs/source_layout.md",
